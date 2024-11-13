@@ -1,0 +1,291 @@
+{
+  "course-code": "seattle-code-201d106",
+  "lectures": {
+    "module-01": {
+      "class-01": {
+        "title": "Introduction to Development",
+        "link": "https://zoom.us/rec/share/niZrU2L9lE4Hf4keE9XfDfOR5RN_RYWqHcTGqF6YW0TtT5LHGz_1fJ7yg6pg2Lw.k4752nDTdWIoUSFf",
+        "date": "1698044400000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-02": {
+        "title": "Basics of HTML, CSS & JS",
+        "link": "https://zoom.us/rec/share/9bpP8X7z1qlqV3jQJAuimpKewv6-TNerINo8e17cu3ZopPGzQwTYQUEGzJ5pD2GH.THheVYldBz3B-TLH",
+        "date": "1698130800000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-03": {
+        "title": "HTML Lists, Control Flow with JS, and the CSS Box Model",
+        "link": "https://zoom.us/rec/share/816fSRVBKk5p1S0__o5Hi37CgkUD63N-ZIlyKu29Yyx63O5X9ZxA9IVQ30gn6d7R.ymAsPT65V3jkK8wK",
+        "date": "1698217200000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-04": {
+        "title": "JS Functions, Pair Programming, and Intro to CSS Layout",
+        "link": "https://zoom.us/rec/share/5zCHDnBzgMrEh8ZKDIJgFgk0ahy7L7uooWKoKJTIIOj2_XVLZl0T5Ao-lvERvOlO.XGyFbzqxTsSbMFsY",
+        "date": "1698303600000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-05": {
+        "title": "CSS for Images, Color, Text & Git Branching",
+        "link": "https://zoom.us/rec/share/M34kCC6X2u2JwAFH39Y15NLfPb-OcqJCLuVR2qYilF62aDTgtZ7GVcplZThw-xhK._Z1n6oMe7NtFei-4",
+        "date": "1698390000000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      }
+    },
+    "module-02": {
+      "class-06": {
+        "title": "The DOM, Domain Modeling, and Introduction to Objects",
+        "link": "https://zoom.us/rec/share/zWk0mE_EjKzATb9eITQGD49t-bssWcKRyJqemHrzRrcsClJsV4MapWbqHb5o3D3t.GcfiJhjD1jWS8guG",
+        "date": "1698649200000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-07": {
+        "title": "Object-Oriented Programming with Constructor Functions: HTML Tables",
+        "link": "https://zoom.us/rec/share/m3JRwQm6IM_8I-u0_XS1bTobhFx9DcNarJ7E67yjmt8s_l-VUnezonUp3V_3BB7e.3xfHPt3KjAMHI_rs",
+        "date": "1698735600000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-08": {
+        "title": "More Topics in CSS Layouts",
+        "link": "https://zoom.us/rec/share/pk3poq1LN3ocm067CUwtbu50jAho2JNQl_Ds9D527o0OtkSUlOCkIltE-_K_jQ4-.bPAR_VhkHop6dz-l",
+        "date": "1698822000000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-09": {
+        "title": "HTML Forms and JS Events",
+        "link": "https://zoom.us/rec/share/2zl-e16kAGDuusU2pJTPZzhJ6MQWTsVWn98eQKL0qjNIhOPp5gK69wCV9ac5zVgy.pkE1FXmHDweVskwh",
+        "date": "1698908400000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-10": {
+        "title": "JS Debugging and More CSS Layout",
+        "link": "https://zoom.us/rec/share/Pjhh9Gu5SgmOKf-23U26BFsftZr6k-4UkoBLJSXNRUvD2f3NeQ71Czy09d7ifmzl.l316N9oS1QtAWUSf",
+        "date": "1698994800000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      }
+    },
+    "module-03": {
+      "class-11": {
+        "title": "Audio/Video, Practical Info, and Getting the Vote Tracker Started",
+        "link": "https://zoom.us/rec/share/btnL2cVApNG3lxdXL2D12P-HSY9GAHYYqhoRxpABZUWc4-YC_isPfjuKYLMR_o6z.AnXBF8hSdctXDTYQ",
+        "date": "1699257600000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-12": {
+        "title": "Adding a chart to the Vote Tracker App",
+        "link": "https://zoom.us/rec/share/3xGpDLW6Nsls2LqQW9i37f11LH1N8bpCWNiyE3weJJe6VB20UKCWlMjFK5wnVV15.HKTlpv6i-PX7qFvV",
+        "date": "1699344000000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-13": {
+        "title": "Application State with Local Storage API",
+        "link": "https://zoom.us/rec/share/fifopCdI5R1UeFgvq2KWvZfyntci0Q5U0ldgm3eV_jWRhLGKm7IxaMuZjvL2NfBE.ezhQK5O61jxp3YXb",
+        "date": "1699430400000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      },
+      "class-14": {
+        "title": "CSS Animations; Intermediate JS Topics; Using Local Storage to Share Data Between Two Pages",
+        "link": "https://zoom.us/rec/share/KTIoaehvZEXs9oOc4INWsbW2GDG7q1LYMQQmq2I5nXWUfx6OZrz-nDfTIJiTXYCa.WZLml6v1svFNp0dF",
+        "date": "1699516800000",
+        "instructor": "JB Tellez",
+        "sessions": {
+          "session-01": {
+            "title": "Warmup/Review"
+          },
+          "session-02": {
+            "title": "Lecture"
+          },
+          "session-03": {
+            "title": "Demo"
+          },
+          "session-04": {
+            "title": "Lab Prep"
+          }
+        }
+      }
+    }
+  }
+}

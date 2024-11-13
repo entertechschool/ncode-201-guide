@@ -1,0 +1,3 @@
+<!-- 
+No because even though this would make the container with the class isenguard display:block, the default display value of images is inline so they would remain inline unless we tell them specifically to be something else. -->
+### No, porque a pesar de que esto haría que el contenedor con la clase isenguard display:block, el valor de visualización predeterminado de las imágenes es en línea, por lo que permanecerían en línea a menos que les digamos específicamente que sean otra cosa.
