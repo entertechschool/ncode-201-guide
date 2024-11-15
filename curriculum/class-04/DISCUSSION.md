@@ -12,7 +12,7 @@ La lectura de este articulo es obligatoria.
 
 ### Recursos Extra
 Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
--[Bootstrap](https://www.hostinger.es/tutoriales/que-es-bootstrap){:target="_blank"}
+- [Bootstrap](https://www.hostinger.es/tutoriales/que-es-bootstrap){:target="_blank"}
 
 
 
