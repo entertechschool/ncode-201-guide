@@ -12,17 +12,16 @@ La lectura de este articulo es obligatoria.
 
 ### Recursos Extra
 Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-- [¿Cómo empiezo a diseñar mi sitio web? ](https://developer.mozilla.org/es/docs/Learn/Common_questions/Design_and_accessibility/Thinking_before_coding){:target="_blank"}
-- [Metadatos en HTML](https://developer.mozilla.org/es/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML){:target="_blank"}
 - [Cómo se estructura el CSS](https://developer.mozilla.org/es/docs/Learn/CSS/First_steps/How_CSS_is_structured){:target="_blank"}
 - [Media-query](https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries/Using_media_queries){:target="_blank"}
+- [Unidades de medida](https://www.tutorialspoint.com/css/css_measurement_units.htm)
 
 
 ## Responde
 1. ¿Cuáles son las ventajas del uso de HTML semántico en comparación con el uso de etiquetas genéricas como <div> y <span>?
 2. ¿Qué etiquetas semánticas son esenciales para estructurar correctamente una página web y qué función desempeñan?
 3. ¿Cuál es la función principal de las media queries en CSS y cómo contribuyen al diseño responsivo de una página web?
-4. ¿Qué operadores lógicos se pueden utilizar en las media queries para crear consultas más complejas y cómo afectan su funcionamiento?
+4. ¿Cuáles son las diferencias clave entre las unidades absolutas y relativas en CSS, y en qué situaciones es más apropiado utilizar cada tipo?
 
 ## Instrucciones de envío
 - Comparte lo que aprendiste agregando una **Respuesta** a continuación. Además, agrega tu **Respuesta** en tu repositorio `reading-notes` en el directorio `201` en el archivo `read02.md`.
