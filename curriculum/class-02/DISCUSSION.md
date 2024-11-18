@@ -24,7 +24,8 @@ Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu lab
 4. ¿Cuáles son las diferencias clave entre las unidades absolutas y relativas en CSS, y en qué situaciones es más apropiado utilizar cada tipo?
 
 ## Instrucciones de envío
-- Comparte lo que aprendiste agregando una **Respuesta** a continuación. Además, agrega tu **Respuesta** en tu repositorio `reading-notes` en el directorio `201` en el archivo `read02.md`.
-- Escribe lo que aprendiste de forma ordenada, según las preguntas planteadas en la sección anterior.
-- Comparte el enlace a tu repositorio como parte de tu **Respuesta**.
-- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la respuesta que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
+- Agrega las preguntas y respuestas de esta actividad a tu archivo `read02.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+- Agrega en la **Respuesta** a esta actividad:
+    - El enlace de tu repositorio publicado en **GitHub Pages**.
+    - Y también, las respuestas que desarrollaste.
+- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
