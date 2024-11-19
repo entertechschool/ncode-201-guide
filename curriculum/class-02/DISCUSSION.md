@@ -13,7 +13,7 @@ La lectura de este articulo es obligatoria.
 ### Recursos Extra
 Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
 - [Media-query](https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries/Using_media_queries){:target="_blank"}
-- [Unidades de medida](https://www.tutorialspoint.com/css/css_measurement_units.htm)
+- [Unidades de medida](https://www.tutorialspoint.com/css/css_measurement_units.htm){:target="_blank"}
 
 
 ## Responde
