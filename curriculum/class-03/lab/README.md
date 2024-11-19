@@ -21,23 +21,70 @@ Para este laboratorio continuaras escribiendo en el codigo del laboratorio anter
       - El título `<h2>`.
       - El párrafo `<p>`.
       - El enlace `<a>`.  
-3. En tu archivo `styles.css`, agrega reglas para:
-   - **Barra de Navegación**:
-      - Utiliza **flexbox** para ajustar los elementos de tu etiqueta `<nav>`.
-      - Utiliza `position:fixed` para fijar tu etiqueta `<nav>`.
-      - Agrega estilos de manera que tu barra de navegación se visualice correctamente.
-   - **Main**:
-      - Utiliza **flexbox** para ajustar el contenido. De manera que las etiquetas `<section>` se visualizen centradas en medio de la pagina, una de bajo de otra con una separación entre ellas.
-      - Agrega estilos de manera que el contenido de **main** se visualize correctamente.
-   - **Section**:
-      - Agrega estilos que permitan visualizar correctamente las etiquetas `<h2>`,`<p>` y `<a>`.
-      - Agrega estilos a la etiqueta `<a>` de manera que se visualize como un boton (`border-radius`,`background-color`,etc).
-   - **media-queries**:
-      - Haz que tu página sea **responsive**, cuando el ancho de la pantalla sea menor a 600px, asegura que la barra de navegación se reubique en la parte inferior de la página y se visualice correctamente.
-      - Considera que los estilos y elementos de la barra de navegación deben adaptarse para mantener una experiencia de usuario fluida en pantallas pequeñas.           
-
-### Logros adicionales
-- A manera de que puedas explorar nuevos propiedades en CSS, utiliza la propiedad `hover` de manera que cuando pases el mouse por encima de los elementos `<a>` este cambie el **color de fondo** o el **color texto**.
-  
+3. Agrega estilos a tu archivo `styles.css` para modidicar la **Barra de Navegación**
+   -  Crea una barra de navegación fija en la parte inferior de la pantalla.
+   -  Dale una altura del 10% del `viewport` (10vh).
+   -  Aplica un degradado de color verde (#1bce89) a azul (#001482) en 45 grados.
+   -  Usa flexbox para:
+      - Activar flexbox `Display:flex`.  
+      - Distribuir los enlaces uniformemente con `justify-content`.
+      - Centrar los elementos en medio de la barra de navegación `align-items`.
+   -  Estiliza los enlaces para que:
+      - No tengan subrayado.
+      - Sean de color blanco.
+      - Tengan texto en negrita.
+4. Agrega estilos a tu archivo `styles.css` para modificar el **Contenedor Principal (`<main>`)**
+   - El main debe:
+      - Ocupar todo el ancho disponible.
+      - Tener una altura del 90% del viewport.
+      - Tener un padding de 1rem en todos los lados.
+5. Agrega estilos a tu archivo `styles.css` para modificar el **Contenedor Flexible (`<div class=container>`)**
+   - Use flexbox en dirección columna (`flex-direction`).
+   - Centre el contenido `justify-content`.
+   - Tenga un espacio de 1rem entre elementos (`gap`).
+   - Permita scroll si el contenido excede el viewport.
+6. Agrega estilos a tu archivo `styles.css` para modificar las **Secciones de Contenido (`<section>`)**
+   - Cada `<section>` debe:
+      - Ocupar el 100% del ancho disponible.
+      - Tener fondo blanco.
+      - Incluir bordes redondeados (0.5rem).
+      - Tener una sombra suave `box-shadow`.
+   - La imagen dentro de cada `<section>`:
+      - Debe ocupar todo el ancho.
+      - Tener una altura fija de 200px.
+      - Usar `object-fit: cover` para mantener la proporción.
+   - El contenedor de texto debe tener un `padding` de 1.5rem.
+   - Estiliza el título h2:
+      - Color azul oscuro (#2c3e50).
+      - Tamaño de letra de 1.5rem.
+      - Margen inferior de 1rem.
+   - Para el párrafo:
+      - Color gris (#666).
+      - Altura de línea de 1.6.
+      - Margen inferior de 1.5rem.
+   - El enlace debe:
+      - Mostrarse como bloque en línea.
+      - Tener `padding` de 0.8rem vertical y 1.5rem horizontal.
+      - Fondo azul (#3498db).
+      - Texto blanco.
+      - Bordes redondeados (6px).
+      - Incluir una transición suave al hover.
+      - Cambiar a un azul más oscuro (#2980b9) al hover.
+7. Agrega **Diseño Responsivo** a tu página:
+   - Cuando la pantalla supere los 600px:
+      - La barra de navegación debe:
+         - Moverse a la parte superior.
+         - Alinear los enlaces al final con `gap` de 2rem.
+         - Incluir `padding-right` de 2rem.
+      - El `<main>` debe:
+         - Eliminar el margen inferior.
+         - Añadir margen superior de 10vh.
+      - Las secciones deben:
+         - Tener un ancho fijo de 300px.
+      - El contenedor flexible (`<div class="container">`) debe:
+         - Cambiar a dirección fila `flex-direction`.
+         - Permitir wrapping `flex-wrap`.
+         - Aumentar el padding y gap a 2rem.     
+                                                    
 ### Instrucciones de envío
 Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
