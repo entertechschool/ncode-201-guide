@@ -1,4 +1,4 @@
-﻿# Lab 02: Conceptos Web Fundamentales
+﻿# Lab 02: Web semántica y responsiva
 
 A lo largo de los laboratorios del módulo irás avanzando en el contenido, diseño y responsividad de este proyecto.
 
