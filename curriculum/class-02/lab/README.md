@@ -8,8 +8,8 @@ Para este laboratorio usarás como base el codigo del laboratorio anterior.
 
 ## Instrucciones
 1. En tu archivo `index.html`, crea una etiqueta `<nav>` y dentro de ella agrega:
-   - Un elemento <a> y coloca como contenido **Home**. Este debe redirigir a la pagina principal.
-   - Un elemento <a> y coloca como contenido **README**. Este debe redirigir a tu archivo `README.md`.
+   - Un elemento <a> y coloca como contenido `Home`. Este debe redirigir a la pagina principal.
+   - Un elemento <a> y coloca como contenido `README`. Este debe redirigir a tu archivo `README.md`.
      
 2. En tu archivo `index.html`, crea una etiqueta `<main>` y dentro de ella agrega un breve resumen sobre los conceptos de `HTML`, `CSS`, `JavaScript`, `HTTP` y `Cliente-servidor`. Para cada resumen crea una etiqueta `div` y agrega los siguientes elementos:
    - Una etiqueta `<img>` utilizando imagenes placeholder `src="https://placehold.co/400x200"`.
