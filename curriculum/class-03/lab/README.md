@@ -1,4 +1,4 @@
-﻿# Lab 03: 
+﻿# Lab 03: Web moderna con flexbox, box-model
 
 A lo largo de los laboratorios del módulo irás avanzando en el contenido, diseño y responsividad de este proyecto.
 
@@ -7,11 +7,21 @@ A lo largo de los laboratorios del módulo irás avanzando en el contenido, dise
 Para este laboratorio continuaras escribiendo en el codigo del laboratorio anterior.
 
 ## Instrucciones
-1. En tu archivo `index.html`, agrega una etiqueta `<section>` para cada uno de los siguientes temas **HTML**, **CSS**, **JavaScript** y **HTTP**. Dentro de cada etiqueta `<section>` agrega lo siguiente:
-   - Una etiqueta `<h2>` y coloca como contenido el titulo.
-   - Una etiqueta `<p>` y coloca como contenido el breve resumen.
-   - Una etiqueta `<a>` que rediriga a la página donde obtuviste la información.
-2. En tu archivo `styles.css`, agrega reglas para:
+1. Modifica el archivo `index.html` siguiendo estos pasos:
+   - Dentro de la etiqueta `<main>`, crea un nuevo elemento `<div>`.
+   - Asígnale a este `<div>` la clase container usando el atributo `class="container"`.
+   - Mueve todas las etiquetas `<section>` existentes dentro de este nuevo `<div>`.
+2. Modifica la estructura interna de cada `<section>` en tu archivo `index.html` siguiendo estos pasos:
+   - Añade una etiqueta `<img>` como primer elemento dentro de cada `<section>`, justo antes del `<h2>`.
+   - Configura los atributos de cada `<img>` de esta manera:
+      - `src="https://placehold.co/400x200"` → Para mostrar una imagen placeholder.
+      - `alt="..."` → Incluye una descripción específica para cada imagen.
+   - Después de la etiqueta `<img>`, añade un nuevo elemento `<div>`.
+   - Mueve dentro de este nuevo `<div>` los siguientes elementos en este orden:
+      - El título `<h2>`.
+      - El párrafo `<p>`.
+      - El enlace `<a>`.  
+3. En tu archivo `styles.css`, agrega reglas para:
    - **Barra de Navegación**:
       - Utiliza **flexbox** para ajustar los elementos de tu etiqueta `<nav>`.
       - Utiliza `position:fixed` para fijar tu etiqueta `<nav>`.
