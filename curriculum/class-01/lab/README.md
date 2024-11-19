@@ -1,53 +1,91 @@
-# Lab 01: Explicando la Web Moderna
+# Lab 01: Creando la Web Moderna
 
-En esta guía encontrarás 3 ejercicios que tienes que realizar.
+Este laboratorio es el inicio de tu primer proyecto individual en Code 201. A lo largo de los laboratorios del módulo irás avanzando en el contenido, diseño y responsividad de este proyecto.
 
-## Configuración
-1. **Accede a VScode:**
-    - Haz clic en la pestaña **File o Archivos**.
-    - Selecciona la opción **Open Folder**.
-    - Crea una carpeta llamada **web-moderna**.
-    - Haz clic en **Abrir**.
-      
-## Instrucciones 
+##  Configuración y documentación
 
-1. **Crea tu repositorio usando VScode**:
-    - Abre la termina de VScode. Haz clic en **Terminal**, luego haz clic en **New Terminal**  
-    - Inicializa Git usando el comando `git init`.
-    - Crea un archivo README.md utilizando `echo "# Web Moderna" > README.md`
-    - Realiza tu primer commit utilizando `git commit -m "Initial commit"`.
-2. **Publica tu repositorio en GitHub**
-    - Presiona el comando `Ctrl+Shift+P` **(Windows)** o `Cmd+Shift+P` **(Mac)**
-    - Escribe **"GitHub: Publish to GitHub"**
-    - Selecciona **"Publish to GitHub public repository"**
-    - Confirma el nombre **"web-moderna"**
-    - Verifica tu repositorio en **github.com/tu-usuario/web-moderna**  
+Para este laboratorio usarás tu terminal (GitBash en windows), VS Code y tu cuenta de GitHub.
 
-3.**Crea la estructura de proyecto**:
-proyecto/
-├── index.html
-├── assets/
-│   ├── images/
-│   │   └── (archivos de imágenes)
-│   ├── icons/
-│   │   └── (archivos de iconos)
-│   └── fonts/
-│       └── (archivos de fuentes)
-├── css/
-│   ├── style.css
-│   ├── normalize.css
-│   └── components/
-│       ├── header.css
-│       ├── footer.css
-│       └── buttons.css
-├── js/
-│   ├── main.js
-│   ├── utils/
-│   │   └── helpers.js
-│   └── components/
-│       ├── header.js
-│       └── footer.js
-└── README.md
+## Instrucciones
+1. Crea el directorio para tu proyecto: `~/dev/[usuario_github]/web-moderna`.
+   - En tu terminal escribe `cd ` para ir al directorio raíz.
+   - Luego ingresa al directorio **dev** (si no lo tienes, créalo con `mkdir dev`).
+   - Crea el directorio (si no lo tienes) con el mismo nombre de tu usuario de github, por ejemplo: `mkdir mi_usuario`.
+   - Ingresa al directorio **mi_usuario** y crea el directorio **web-moderna**.
+  
+   > 💡 Es una buena práctica que escribas los nombres de tus directorios siempre en minúsculas y sin utilizar espacios en blanco.
+   > Puedes utilizar los guiones (- / _) para separar las palabras.
 
-## Instrucciones de Entrega
-Una vez hayas completado tu actividad, envia el enlace publico de tu página de Notion en canvas.
+2. Agregando los archivos iniciales al proyecto.
+   - Abre tu directorio **web-moderna** en VS Code, puedes hacerlo con el comando `code .` si es que estás en la terminal.
+   - Crea los archivos: index.html, styles.css, README.md y .eslintrc.json
+   - Agrega una estructura básica en cada archivo.
+   - Para el archivo **.eslint.json** utiliza el siguiente contenido:
+```js
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-unused-vars": "warn",
+    "no-console": "warn"
+  }
+}
+```
+
+3. Sincronizar el repositorio.
+   - En el menú lateral, dale clic a la opción **Control de código fuente**.
+   - Presiona el botón **Inicializar Repositorio Git**
+   - Luego, en el campo de Mensaje, escribe: **Commit inicial** y presiona **Confirmación**
+   - A continuación aparecerá el botón **Publicar Branch** dale clic.
+   - Aparecerá un dialogo para que elijas qué tipo de repositorio crear. Selecciona **público**.
+   - Finalmente, ve a tu cuenta de Github desde tu navegador y verifica que se haya creado el repositorio.
+  
+4. Agregando contenido al `README.md`
+   - Agrega una sección llamada **Autor** y dentro de ella:
+       - Coloca tu **Nombre completo**
+       - Coloca el **Nombre del curso**
+       - Coloca tu **email**
+       - Coloca la **Fecha de creación** del proyecto 
+   - Agrega una sección llamada **Sobre mí** y dentro de ella:
+       - Coloca una breve descripción sobre ti y tus intereses profesionales
+   - Agrega una sección llamada **eslint** y dentro de ella:
+       - Coloca un resumen explicando el contenido del archivo `eslint.json`. Pidele a la **inteligencia artificial** que te explique para que se usa cada parte de este archivo.
+   - Agrega una sección llamada ** Despliegue** y dentro de ella:
+       - Coloca un enlace hacia tu página desplegada en **GitHub Pages**          
+   
+6. Agregando contenido a index.html
+   - En la cabezera `<head>` identifica la etiqueta `<title>` y modifica el contenido por **web-moderna**. 
+   - Agrega la etiqueta `<h1>` y coloca como contenido **La web moderna**.
+   - Agrega la etiqueta `<footer>` y añade como contenido la etiqueta `<a>` para vincularlo con tu archivo `README.md`, no olvides usar el atributo `target` para que el contenido se muestre en una pestaña nueva.   
+   
+7. Agregando reglas a styles.css
+   - Utiliza el selector `*` y agrega las siguientes propiedades:
+       - `margin: 0;`
+       - `padding: 0;`
+       - `box-sizing: border-box;`
+   - Utiliza el selector `body`, agrega como propiedad el tipo de familia utilizando `font-family` y elige la fuente `'Segoe UI', system-ui, sans-serif`, define el color de fondo utilizando la etiqueta `background-color` y usa el color `#f5f5f5` y por ultimo utiliza un `padding` de `2rem`.
+  
+8. Publicando en Github Pages
+   
+   - En el repositorio de tu proyecto, selecciona la opción `Settings`. 
+   - Luego, selecciona la opción `pages`.
+   - Por ultimo, elige como rama `main` a `/root` y haz clic en `save`. Recuerda que esto puede tardar unos minutos.
+
+### Logros adicionales
+- Añade dentro de la etiqueta `<footer>` una lista no ordenada `<ul>` y coloca como **items** tus redes sociales utilizando la etiqueta <a>, esta debe poder redirigir a tus cuentas. 
+  
+
+
+### Instrucciones de envío
+- Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
