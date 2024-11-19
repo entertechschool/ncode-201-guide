@@ -60,17 +60,20 @@ Para este laboratorio usarás tu terminal (GitBash en windows), VS Code y tu cue
    - Agrega una sección llamada **Sobre el Proyecto** y dentro de ella:
        - Coloca la siguiente descripción en un párrafo:
          > En "La Web Moderna" podrás leer los conceptos clave que todo Desarrollador de Software debe saber para crear aplicaciones web.
-   - Agrega una sección llamada **eslint** y dentro de ella:
-       - Explica cada línea del contenido de tu archivo `eslintrc.json`. Para esta actividad, pídele ayuda a ChatGPT, Claude AI o Gemini.
+   - Agrega una sección llamada **eslintrc** y dentro de ella:
+       - Explica cada línea del contenido de tu archivo `.eslintrc.json`. Para esta actividad, pídele ayuda a ChatGPT, Claude AI o Gemini.
    - Agrega una sección llamada **Despliegue** y dentro de ella:
        - Coloca un enlace hacia tu página desplegada en **GitHub Pages**.
    
-6. Agregando contenido a index.html
+6. Agregando contenido a `index.html`
    - En la cabecera `<head>` identifica la etiqueta `<title>` y modifica el contenido por **La Web Moderna**.
-   - En el `body`, agrega la etiqueta `<h1>` y coloca como contenido **La Web Moderna**.
-   - Agrega la etiqueta `<footer>` y añade como contenido la etiqueta `<a>` para vincularlo con tu archivo `README.md`.
-   
-7. Agregando reglas a styles.css
+   - En el `body`, agrega la etiqueta `<nav>` y dentro de ella añade:
+      - Una etiqueta `<a>` y coloca como contenido **GitHub**. Recuerda que debe redigir a tu cuenta.
+      - Una etiqueta `<a>` y coloca como contenido **README**. Recuerda que debe redirigir a tu archivo. 
+   - En el `body`, agrega la etiqueta `<main>` y dentro de ella añade:
+      - La etiqueta `<h1>` y coloca como contenido **La Web Moderna**.
+      
+7. Agregando reglas a `styles.css`
    - Utiliza el selector `*` y agrega las siguientes propiedades:
        - `margin: 0;`
        - `padding: 0;`
@@ -78,15 +81,7 @@ Para este laboratorio usarás tu terminal (GitBash en windows), VS Code y tu cue
    - Utiliza el selector `body`, agrega como propiedad el tipo de familia utilizando `font-family` y elige la fuente `'Segoe UI', system-ui, sans-serif`, define el color de fondo utilizando la etiqueta `background-color` y usa el color `#f5f5f5`.
   
 8. Publicando en Github Pages
-   
-   - En el repositorio de tu proyecto, selecciona la opción `Settings`. 
-   - Luego, selecciona la opción `pages`.
-   - Por ultimo, elige como rama `main` a `/root` y haz clic en `save`. Recuerda que esto puede tardar unos minutos.
-
-### Logros adicionales
-- Añade dentro de la etiqueta `<footer>` una lista no ordenada `<ul>` y coloca como **items** tus redes sociales utilizando la etiqueta <a>, esta debe poder redirigir a tus cuentas. 
-  
-
-
+   - En el repositorio de tu proyecto, selecciona la opción `Settings` y despliega tu página en GitHub Pages. 
+    
 ### Instrucciones de envío
 - Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
