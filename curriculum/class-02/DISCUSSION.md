@@ -12,7 +12,6 @@ La lectura de este articulo es obligatoria.
 
 ### Recursos Extra
 Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-- [Cómo se estructura el CSS](https://developer.mozilla.org/es/docs/Learn/CSS/First_steps/How_CSS_is_structured){:target="_blank"}
 - [Media-query](https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries/Using_media_queries){:target="_blank"}
 - [Unidades de medida](https://www.tutorialspoint.com/css/css_measurement_units.htm)
 
