@@ -20,7 +20,7 @@ Para este laboratorio usarás tu terminal (GitBash en windows), VS Code y tu cue
    - Abre tu directorio **web-moderna** en VS Code, puedes hacerlo con el comando `code .` si es que estás en la terminal.
    - Crea los archivos: index.html, styles.css, README.md y .eslintrc.json
    - Agrega una estructura básica en cada archivo.
-   - Para el archivo **.eslint.json** utiliza el siguiente contenido:
+   - Para el archivo **.eslintrc.json** utiliza el siguiente contenido:
 ```js
 {
   "env": {
@@ -57,24 +57,25 @@ Para este laboratorio usarás tu terminal (GitBash en windows), VS Code y tu cue
        - Coloca el **Nombre del curso**
        - Coloca tu **email**
        - Coloca la **Fecha de creación** del proyecto 
-   - Agrega una sección llamada **Sobre mí** y dentro de ella:
-       - Coloca una breve descripción sobre ti y tus intereses profesionales
+   - Agrega una sección llamada **Sobre el Proyecto** y dentro de ella:
+       - Coloca la siguiente descripción en un párrafo:
+         > En "La Web Moderna" podrás leer los conceptos clave que todo Desarrollador de Software debe saber para crear aplicaciones web.
    - Agrega una sección llamada **eslint** y dentro de ella:
-       - Coloca un resumen explicando el contenido del archivo `eslint.json`. Pidele a la **inteligencia artificial** que te explique para que se usa cada parte de este archivo.
-   - Agrega una sección llamada ** Despliegue** y dentro de ella:
-       - Coloca un enlace hacia tu página desplegada en **GitHub Pages**          
+       - Explica cada línea del contenido de tu archivo `eslintrc.json`. Para esta actividad, pídele ayuda a ChatGPT, Claude AI o Gemini.
+   - Agrega una sección llamada **Despliegue** y dentro de ella:
+       - Coloca un enlace hacia tu página desplegada en **GitHub Pages**.
    
 6. Agregando contenido a index.html
-   - En la cabezera `<head>` identifica la etiqueta `<title>` y modifica el contenido por **web-moderna**. 
-   - Agrega la etiqueta `<h1>` y coloca como contenido **La web moderna**.
-   - Agrega la etiqueta `<footer>` y añade como contenido la etiqueta `<a>` para vincularlo con tu archivo `README.md`, no olvides usar el atributo `target` para que el contenido se muestre en una pestaña nueva.   
+   - En la cabecera `<head>` identifica la etiqueta `<title>` y modifica el contenido por **La Web Moderna**.
+   - En el `body`, agrega la etiqueta `<h1>` y coloca como contenido **La Web Moderna**.
+   - Agrega la etiqueta `<footer>` y añade como contenido la etiqueta `<a>` para vincularlo con tu archivo `README.md`.
    
 7. Agregando reglas a styles.css
    - Utiliza el selector `*` y agrega las siguientes propiedades:
        - `margin: 0;`
        - `padding: 0;`
        - `box-sizing: border-box;`
-   - Utiliza el selector `body`, agrega como propiedad el tipo de familia utilizando `font-family` y elige la fuente `'Segoe UI', system-ui, sans-serif`, define el color de fondo utilizando la etiqueta `background-color` y usa el color `#f5f5f5` y por ultimo utiliza un `padding` de `2rem`.
+   - Utiliza el selector `body`, agrega como propiedad el tipo de familia utilizando `font-family` y elige la fuente `'Segoe UI', system-ui, sans-serif`, define el color de fondo utilizando la etiqueta `background-color` y usa el color `#f5f5f5`.
   
 8. Publicando en Github Pages
    
