@@ -1,4 +1,4 @@
-﻿# Lab 02: La Web Moderna
+﻿# Lab 02: Conceptos Web Fundamentales
 
 A lo largo de los laboratorios del módulo irás avanzando en el contenido, diseño y responsividad de este proyecto.
 
