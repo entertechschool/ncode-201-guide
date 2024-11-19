@@ -4,7 +4,7 @@ A lo largo de los laboratorios del módulo irás avanzando en el contenido, dise
 
 ##  Configuración y documentación
 
-Para este laboratorio continuaras escribiendo en el codigo del laboratorio anterior.
+Este laboratorio es una continuación del trabajo previo. Utilizarás como base el código que desarrollaste en el laboratorio anterior, por lo que asegúrate de tenerlo disponible antes de comenzar. Deberás agregar las nuevas funcionalidades sobre esa base de código existente.
 
 ## Instrucciones
 1. En tu archivo `index.html`, agrega una etiqueta `<section>` para cada uno de los siguientes temas **HTML**, **CSS**, **JavaScript** y **HTTP**. Dentro de cada etiqueta `<section>` agrega lo siguiente:
