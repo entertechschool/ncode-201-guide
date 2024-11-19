@@ -28,4 +28,4 @@ Para este laboratorio usarás como base el codigo del laboratorio anterior.
 - A manera de que puedas explorar nuevos propiedades en CSS, utiliza la propiedad `hover` de manera que cuando pases el mouse por encima de los elementos `<a>` este cambie el color de fondo o el color texto.
   
 ### Instrucciones de envío
-- Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
+Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
