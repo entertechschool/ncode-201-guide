@@ -1,39 +1,34 @@
-﻿## Lecturas: Imágenes, Color, Texto
+# Read 05: Estructuras de Control y Datos en JavaScript
 
-A continuación encontrarás material de lectura, ejemplos de código y algunos recursos adicionales de apoyo para el tema de esta clase y la próxima.
+## Reflexiona y debate
+A continuación se muestra una colección de recursos que describen los temas de la clase.
+Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo (sin conocimientos técnicos) interesado en aprender sobre esto.
 
-Revisa las instrucciones de envío para orientarte sobre cómo completar y enviar esta tarea.
+## Lectura
+La lectura de este articulo es obligatoria.
 
-## Lecturas
+- [Estructuras condicionales en JavaScript](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/conditionals){:target="_blank"}
 
-### [Medios en HTML](https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding){:target="_blank"}
+## Recursos Extra
+Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
 
-[Utilizar Imágenes In HTML](https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding/Images_in_HTML){:target="_blank"}.
-Lee [Common Image Types](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types){:target="_blank"} y [Choosing Image Formats](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#choosing_an_image_format){:target="_blank"}.
+- [Arreglos en JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array){:target="_blank"}
+- [Bucles en JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Loops_and_iteration){:target="_blank"}
 
-1. ¿Cuál es un caso práctico del atributo `alt` en una página web?
-1. ¿Cómo puedes mejorar la accesibilidad de las imágenes en un documento HTML?
-1. Da un ejemplo en el que el elemento `figure` sería útil en un documento HTML.
-1. Describe la diferencia entre una imágen `gif` y una imágen `svg`, imagina que se lo estás explicando a una persona mayor de tu comunidad.
-1. ¿Qué tipo de imagen usarías para mostrar una captura de pantalla en tu página web y por qué?
+## Responde
 
-### [Aprende CSS](https://developer.mozilla.org/es/docs/Learn/CSS){:target="_blank"}
+1. ¿Cuáles son los diferentes tipos de estructuras condicionales en JavaScript y en qué situaciones deberías usar cada una?
+2. En el contexto de arreglos en JavaScript, ¿cuál es la diferencia entre los métodos push(), unshift() y splice(), y cuándo usarías cada uno?
+3. ¿Qué diferencias existen entre los bucles for, while y do...while? Proporciona un ejemplo práctico de uso para cada uno.
+4. ¿Cómo se puede recorrer un arreglo en JavaScript utilizando diferentes tipos de bucles y cuál consideras más eficiente según el caso de uso?
 
-[Using Color in CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Applying_color){:target="_blank"}.
-[Styling HTML Text Elements](https://developer.mozilla.org/es/docs/Learn/CSS/Styling_text/Fundamentals){:target="_blank"}
+## Instrucciones de envío
 
-1. Describe la diferencia entre un color de primer plano y un color de fondo de un elemento HTML, imagina que estás hablando con una personas sin conocimientos técnicos
-1. Tu amigo te pide que le des un retoque a su blog. ¿Cómo utilizarías color para darle carácter a su blog?
-1. ¿Qué debes tener en cuenta al escoger tipos de letra para un documento HTML?
-1. ¿Cuál es la relación entre `font-size`, `font-weight`, y `font-style` con los elementos de texto en HTML?
-1. Describe dos formas de añadir espaciado alrededor de los caracteres mostrados en un elemento `h1`.
+- Agrega las preguntas y respuestas de esta actividad a tu archivo `read05.md` en tu directorio 201 de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+- Agrega en la Respuesta a esta actividad:
 
-Si tienes preguntas o comentarios sobre las lecturas, ¡publícalas en el canal de Slack de la clase!
+ - El enlace de tu repositorio publicado en GitHub Pages.
+Y también, las respuestas que desarrollaste.
 
-<!--
-## Recursos adicionales
 
-### Videos
-
-### Marcadores/Lectura rápida
- -->
+- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
