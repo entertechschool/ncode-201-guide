@@ -18,8 +18,8 @@ Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu lab
 ## Responde
 
 1. ¿Cuáles son los diferentes tipos de estructuras condicionales en JavaScript y en qué situaciones deberías usar cada una?
-2. En el contexto de arreglos en JavaScript, ¿cuál es la diferencia entre los métodos push(), unshift() y splice(), y cuándo usarías cada uno?
-3. ¿Qué diferencias existen entre los bucles for, while y do...while? Proporciona un ejemplo práctico de uso para cada uno.
+2. En el contexto de arreglos en JavaScript, ¿cuál es la diferencia entre los métodos `push()`, `unshift()` y `splice()`, y cuándo usarías cada uno?
+3. ¿Qué diferencias existen entre los bucles `for`, `while` y `do...while`? Proporciona un ejemplo práctico de uso para cada uno.
 4. ¿Cómo se puede recorrer un arreglo en JavaScript utilizando diferentes tipos de bucles y cuál consideras más eficiente según el caso de uso?
 
 ## Instrucciones de envío
