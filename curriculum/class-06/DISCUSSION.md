@@ -1,43 +1,32 @@
-﻿# Lecturas: Descripción del problema, Objetos y el DOM
+# Read 06: Paradigmas de la programación 1
 
-A continuación encontrarás material de lectura, ejemplos de código y algunos recursos adicionales de apoyo para el tema de esta clase y la próxima.
+## Reflexiona y debate
+A continuación se muestra una colección de recursos que describen los temas de la clase.
+Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo (sin conocimientos técnicos) interesado en aprender sobre esto.
 
-Revisa las instrucciones de envío para orientarte sobre cómo completar y enviar esta tarea.
+## Lectura
+La lectura de este artículo es obligatoria.
 
-## Lecturas
+- [Programación Funcional JavaScript](https://www.freecodecamp.org/news/functional-programming-in-javascript-explained-in-plain-english/){:target="_blank"}
 
-[Conceptos básicos de los objetos JavaScript](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics){:target="_blank"}
+## Recursos Extra
+Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
 
-1. ¿Cómo le describirías un objeto a un amigo sin conocimiento técnico con el que creciste?
-1. ¿Cuáles son algunas de las ventajas de crear objetos literales?
-1. ¿En qué se diferencian los objetos de los arrays?
-1. Da un ejemplo acerca de los momentos en los que necesitarías utilizar bracket notation para acceder a la propiedad de un objeto en vez de dot notation.
-1. Evalúa el siguiente código. ¿A qué se refiere el término `this` y cuál es la ventaja de utilizarlo?
+- [Principio DRY](https://codeyourapps.com/el-principio-dry-no-te-repitas/){:target="_blank"}
+- [Metodos de programación funcional](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array#métodos_de_instancia){:target="_blank"}
+## Responde
 
-```js
-const dog = {
-  name: 'Spot',
-  age: 2,
-  color: 'white with black spots',
-  humanAge: function (){
-    console.log(`${this.name} is ${this.age*7} in human years`);
-  }
-}
-```
+1. ¿Qué es la programación funcional y cuáles son sus principales características que la diferencian de otros paradigmas de programación?
+2. ¿Cómo aplicarías el principio DRY en un proyecto de JavaScript? Proporciona un ejemplo práctico de código antes y después de aplicar este principio.
+3. ¿Cuáles son las ventajas de utilizar métodos funcionales como `map()`, `filter()` y `reduce()` en lugar de bucles tradicionales?
+4. ¿De qué manera el principio DRY y la programación funcional se complementan entre sí para escribir código más mantenible y escalable?
 
-[Introducción al DOM](https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model/Introduction){:target="_blank"}
+## Instrucciones de envío
 
-1. ¿Qué es el DOM?
-1. Describe brevemente la relación entre el DOM y JavaScript.
+- Agrega las preguntas y respuestas de esta actividad a tu archivo `read06.md` en tu directorio 201 de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+- Agrega en la Respuesta a esta actividad:
 
-## Marcadores y Repaso
-<!--Aquí-->
-[¿Por qué parece tan difícil programar?](https://www.uv.es/vimupi/programar.html){:target=”_blank”}
+  - El enlace de tu repositorio publicado en GitHub Pages.
+Y también, las respuestas que desarrollaste.
 
-[What’s the difference between primitive values and object references in JavaScript?](https://betterprogramming.pub/intermediate-javascript-whats-the-difference-between-primitive-values-and-object-references-e863d70677b){:target="_blank"}
-
-<!--
-## Recursos adicionales
-
-### Videos
- -->
+- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
