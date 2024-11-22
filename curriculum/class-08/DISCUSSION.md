@@ -24,7 +24,7 @@ Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu lab
 
 ## Instrucciones de envío
 
-- Agrega las preguntas y respuestas de esta actividad a tu archivo read08.md en tu directorio 201 de tu respositorio reading-notes. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+- Agrega las preguntas y respuestas de esta actividad a tu archivo `read08.md` en tu directorio 201 de tu respositorio reading-notes. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
 - Agrega en la Respuesta a esta actividad:
  - El enlace de tu repositorio publicado en GitHub Pages.
 Y también, las respuestas que desarrollaste.
