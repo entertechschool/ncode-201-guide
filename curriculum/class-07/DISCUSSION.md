@@ -1,37 +1,34 @@
-﻿## Lecturas: Programación orientada a objetos, Tablas en HTML
+# Read 07: Paradigmas de la programación 2
 
-A continuación encontrarás material de lectura, ejemplos de código y algunos recursos adicionales de apoyo para el tema de esta clase y la próxima.
+## Reflexiona y debate
+A continuación se muestra una colección de recursos que describen los temas de la clase.
+Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo (sin conocimientos técnicos) interesado en aprender sobre esto.
 
-Revisa las instrucciones de envío para orientarte sobre cómo completar y enviar esta tarea.
+## Lectura
+La lectura de este artículo es obligatoria.
 
-## Lecturas
+- [Trabajando con Objetos en JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Working_with_objects){:target="_blank"}
 
-[Domain Modeling](https://github.com/codefellows/domain_modeling#domain-modeling){:target="_blank"}
+## Recursos Extra
+Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
 
-1. Explica por qué necesitamos los modelos de dominio.
+- [Programación Orientada a Objetos en JavaScript](https://lenguajejs.com/javascript/oop/que-es/){:target="_blank"}
+- [Clases en JavaScript](https://lenguajejs.com/javascript/oop/clases/){:target="_blank"}
 
-[Conceptos básicos de las tablas HTML](https://developer.mozilla.org/es/docs/Learn/HTML/Tables/Basics){:target="_blank"}
+## Responde
 
-1. ¿Por qué no se debe utilizar tablas para los layout de página?
-1. Enumera y describe 3 diferentes elementos semánticos HTML utilizados en un `<table>`.
+1. ¿Qué es la abstracción en programación y cómo se implementa utilizando objetos en JavaScript? Proporciona un ejemplo práctico.
+2. ¿Cuáles son los cuatro pilares de la Programación Orientada a Objetos y cómo se aplican en JavaScript?
+3. ¿Cuál es la diferencia entre un objeto literal y una clase en JavaScript? ¿Cuándo deberías usar cada uno?
+4. ¿Cómo implementarías la herencia en JavaScript utilizando clases? Proporciona un ejemplo que demuestre la relación padre-hijo entre dos clases.
 
-[Introducción a los Constructores](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics#introducing_constructors){:target="_blank"}
+## Instrucciones de envío
 
-1. ¿Qué es un constructor y cuáles son las ventajas de utilizarlo?
-1. ¿Cómo es que el término `this` se diferencia cuando se utiliza en un objeto literal y cuando se utiliza en un constructor?
-<!--Este-->
-[Herencia prototípica](https://es.javascript.info/prototype-inheritance){:target="_blank"}
-[Prototipos nativos](https://es.javascript.info/native-prototypes){:target="_blank"}
+- Agrega las preguntas y respuestas de esta actividad a tu archivo read07.md en tu directorio 201 de tu respositorio reading-notes. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+- Agrega en la Respuesta a esta actividad:
 
-1. Explica los prototipos y las herencias por medio de una analogía sobre tu experiencia laboral previa.
-   - *NOTA: Esta es una pregunta común en las entrevistas para desarrolladores front end*
+   - El enlace de tu repositorio publicado en GitHub Pages.
+Y también, las respuestas que desarrollaste.
 
-## Marcadores y Repaso
 
-[Funciones avanzadas de las tablas HTML y accesibilidad](https://developer.mozilla.org/es/docs/Learn/HTML/Tables/Advanced){:target="_blank"}
-
-<!--
-## Recursos adicionales
-
-### Videos
- -->
+- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).﻿
