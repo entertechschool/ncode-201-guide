@@ -14,8 +14,8 @@ Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu lab
 
 - [Principio DRY](https://codeyourapps.com/el-principio-dry-no-te-repitas/){:target="_blank"}
 - [Metodos de programación funcional](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array#métodos_de_instancia){:target="_blank"}
+  
 ## Responde
-
 1. ¿Qué es la programación funcional y cuáles son sus principales características que la diferencian de otros paradigmas de programación?
 2. ¿Cómo aplicarías el principio DRY en un proyecto de JavaScript? Proporciona un ejemplo práctico de código antes y después de aplicar este principio.
 3. ¿Cuáles son las ventajas de utilizar métodos funcionales como `map()`, `filter()` y `reduce()` en lugar de bucles tradicionales?
