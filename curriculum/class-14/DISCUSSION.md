@@ -1,43 +1,30 @@
-﻿# Lecturas:
+# Read 14: Eventos en JavaScript
 
-A continuación encontrarás material de lectura, ejemplos de código y algunos recursos adicionales de apoyo para el tema de esta clase y la próxima.
+## Reflexiona y debate
 
-Revisa las instrucciones de envío para orientarte sobre cómo completar y enviar esta tarea.
+A continuación se muestra una colección de recursos que describen los temas de la clase.
 
-## Lecturas
+Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
 
-[CSS Transforms](http://learn.shayhowe.com/advanced-html-css/css-transforms/){:target="_blank"}
+### Lectura
+La lectura de este artículo es obligatoria.
+* [Introducción a Eventos en JavaScript](https://es.javascript.info/introduction-browser-events){:target="_blank"}
 
-1. ¿Qué le permite al desarrollador hacer un CSS transform a un elemento?
-1. Da un ejemplo de un transform y cómo puedes utiliarlo en un página web.
+### Recursos Extra
+Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
+* [Objeto Event](https://es.javascript.info/event-details){:target="_blank"}
+* [Eventos del Navegador](https://developer.mozilla.org/es/docs/Web/API/Event){:target="_blank"}
 
-[Transiciones CSS](https://lenguajecss.com/css/animaciones/transiciones/){:target="_blank"}
-[Animaciones CSS](https://lenguajecss.com/css/animaciones/animaciones/){:target="_blank"}
+## Responde
+1. ¿Qué es `addEventListener` y cuál es su sintaxis básica? Explica las diferentes formas de agregar un evento a un elemento.
+2. ¿Qué información proporciona el objeto Event y cómo podemos acceder a sus propiedades más comunes? Proporciona ejemplos prácticos.
+3. ¿Cuál es la diferencia entre event bubbling y event capturing? ¿Cómo puedes prevenir el comportamiento por defecto de un evento?
+4. Describe un caso práctico donde utilizarías múltiples event listeners en un mismo elemento y cómo manejarías la propagación de eventos.
 
-1. ¿Qué le permite al desarrollador hacer un CSS transition a un elemento?
-1. ¿En qué se diferencia un CSS animation de un CSS transition?
+## Instrucciones de envío
+* Agrega las preguntas y respuestas de esta actividad a tu archivo `read14.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+* Agrega en la **Respuesta** a esta actividad:
+    * El enlace de tu repositorio publicado en **GitHub Pages**.
+    * Y también, las respuestas que desarrollaste.
+* Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
 
-[8 simple CSS3 transitions that will wow your users](http://www.webdesignerdepot.com/2014/05/8-simple-css3-transitions-that-will-wow-your-users){:target="_blank"}
-
-1. ¿Cuáles son los beneficios de utilizar CSS transitions en páginas web?
-1. ¿Cómo este tema encaja con tus metas a largo plazo?
-
-<!-- NOTA: Puede que los "videos" no sean relevantes para todas las clases. Omite esta sección o cualquiera de las secciones a continuación si no tienes nada que mostrarles a tus estudiantes aquí -->
-<!-- ## Videos -->
-
-<!-- [Name of Video](https://linktovideohere){:target="_blank"} -->
-
-<!-- Mézclalo! Crea las preguntas con respuestas puntuales, llena los espacios en blanco, o preguntas de opinión/abiertas -->
-<!-- 1. Pregunta 1
-1. Pregunta 2
-1. Pregunta 3 -->
-
-### Marcadores/Lectura rápida
-
-[Pure CSS Bounce Animation](http://codepen.io/dp_lewis/pen/gCfBv){:target="_blank"}
-
-[6 Buttons animated](http://codepen.io/retyui/pen/ByoaXV){:target="_blank"}
-
-[CSS3 Animations: Keyframes](http://codepen.io/akshaychauhan/pen/oAfae){:target="_blank"}
-
-[404](http://codepen.io/kieranfivestars/pen/MYdQxX){:target="_blank"}
