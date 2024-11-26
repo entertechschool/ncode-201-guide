@@ -1,27 +1,30 @@
-﻿# Lecturas:
+﻿# Read 13: Animaciones básicas con CSS
 
-A continuación encontrarás material de lectura, ejemplos de código y algunos recursos adicionales de apoyo para el tema de esta clase y la próxima.
+## Reflexiona y debate
 
-Revisa las instrucciones de envío para orientarte sobre cómo completar y enviar esta tarea.
+A continuación se muestra una colección de recursos que describen los temas de la clase.
 
-## Lecturas
+Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
 
-[Local Storage and How To Use It On Websites](https://www.smashingmagazine.com/2010/10/local-storage-and-how-to-use-it/){:target="_blank"}
+### Lectura
+La lectura de este artículo es obligatoria.
+* [Pseudo-selectores y Transiciones](https://lenguajecss.com/css/selectores/pseudoclases/){:target="_blank"}
 
-1. ¿Por qué un desarrollador utilizaría el local storage para una aplicación web?
-1. ¿Qué información no se puede guardar en el local storage?
-1. ¿Qué tipo de datos se pueden guardar en el local storage? ¿Cómo puedes convertirlo a ese tipo de archivo antes de guardarlo?
+### Recursos Extra
+Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
+* [Transiciones y Animaciones en CSS](https://www.w3schools.com/css/css3_transitions.asp){:target="_blank"}
+* [Generadores CSS - MDN Web Docs](https://developer.mozilla.org/es/docs/Web/CSS/CSS_animations){:target="_blank"}
 
-<!-- NOTA: Puede que los "videos" no sean relevantes para todas las clases. Omite esta sección o cualquiera de las secciones a continuación si no tienes nada que mostrarles a tus estudiantes aquí -->
-<!-- ## Videos -->
+## Responde
+1. ¿Qué son los pseudo-selectores en CSS y cuáles son los más comúnmente utilizados? Proporciona ejemplos prácticos de cómo y cuándo usarlos.
+2. Explica cómo funcionan las transiciones en CSS. ¿Qué propiedades son animables y cuáles no? Da ejemplos de diferentes tipos de transiciones.
+3. ¿Cuáles son las ventajas de usar generadores CSS online? Menciona algunos generadores populares y para qué tipo de estilos son más útiles.
+4. ¿Cómo podrías combinar pseudo-selectores con transiciones para crear interacciones más dinámicas? Proporciona un ejemplo práctico.
 
-<!-- [Name of Video](https://linktovideohere){:target="_blank"} -->
+## Instrucciones de envío
+* Agrega las preguntas y respuestas de esta actividad a tu archivo `read13.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
+* Agrega en la **Respuesta** a esta actividad:
+    * El enlace de tu repositorio publicado en **GitHub Pages**.
+    * Y también, las respuestas que desarrollaste.
+* Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
 
-<!-- Mézclalo! Crea las preguntas con respuestas puntuales, llena los espacios en blanco, o preguntas de opinión/abiertas -->
-<!-- 1. Pregunta 1
-1. Pregunta 2
-1. Pregunta 3 -->
-
-### Marcadores/Lectura rápida
-
-["The Past, Present, and Future of Local Storage for Web Applications"](http://diveinto.html5doctor.com/storage.html){:target="_blank"}
