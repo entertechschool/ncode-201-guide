@@ -2,11 +2,14 @@
 
 ## Descripción General
 En este laboratorio, recrearás la página web del laboratorio anterior pero ahora utilizando el framework Bootstrap. Aprenderás a utilizar los componentes y clases de Bootstrap para crear un diseño responsivo y profesional de manera más eficiente.
+
 ## Configuraciones
 - Crea un repositorio llamado `web-moderna-bootstrap`.
 - Clona tu repositorio a tu computadora local en la ruta `~/dev/[usuario_github]`.
-- Ingresa a tu VScode usado `code .` y trabaja tu proyecto. 
-## Instrucciones 
+- Ingresa a tu VScode usado `code .` y trabaja tu proyecto.
+  
+## Instrucciones
+
 1. Estructura HTML
    - Incluye Bootstrap en tu proyecto utilizando el CDN `https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css`.
    - Implementa una barra de navegación (`navbar`) de Bootstrap con dos enlaces: **"GitHub"** y **"README"**.
