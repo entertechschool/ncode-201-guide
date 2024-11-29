@@ -53,11 +53,6 @@ En este laboratorio, mejorarás la aplicación de Biblioteca Personal aplicando 
 - Crea una función de búsqueda avanzada que combine múltiples criterios.
 - Implementa un sistema de etiquetas para los libros.
 
-## Pruebas y Validación
-- Asegúrate de que todas las funciones antiguas sigan funcionando.
-- Verifica que no haya código duplicado.
-- Comprueba que las nuevas funciones sean reutilizables.
-
 ## Instrucciones de envío
 - Actualiza el README.md con:
   - Las mejoras implementadas
