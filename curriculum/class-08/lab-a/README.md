@@ -1,86 +1,86 @@
-
-# Lab 08: Biblioteca Personal - Manipulación Avanzada de Strings y Arrays
+# Lab 08: Manipulación Avanzada de Strings y Arrays en Sistema de Calificaciones
 
 ## Descripción General
-En este laboratorio final del módulo, mejorarás tu Biblioteca Personal implementando funcionalidades avanzadas de manipulación de strings y arrays. Optimizarás las búsquedas, el filtrado y la presentación de datos.
+En este laboratorio final, implementarás funcionalidades avanzadas de manipulación de strings y arrays en tu sistema de gestión de estudiantes. Mejorarás las búsquedas, el filtrado y la presentación de datos.
 
 ## Configuraciones
-* Continúa trabajando en tu repositorio `biblioteca-personal`.
-* Crea una nueva rama llamada `feature/metodos_adicionales`.
+* Continúa trabajando en tu repositorio `sistema-calificaciones-js`.
+* Crea una nueva rama llamada `feature/metodos-adicionales`.
 * Asegúrate de tener las funcionalidades de los Labs 06, 07 y 08 funcionando correctamente.
 
 ## Instrucciones 
 
-### 1. Mejora del Sistema de Búsqueda
-* Implementa una búsqueda avanzada que incluya:
-  ```javascript
-  class BuscadorAvanzado {
-    constructor(biblioteca) {
-      this.biblioteca = biblioteca;
+### 1. Manipulación Avanzada de Strings
+```javascript
+class ProcesadorTexto {
+    constructor() {
+        this.nombresPropios = new Set();
     }
 
-    buscarPorCoincidenciaParcial(texto) {
-      // Usar includes() o indexOf()
+    formatearNombre(nombre) {
+        // Implementar capitalización correcta
+        // "juan pérez" -> "Juan Pérez"
     }
 
-    buscarPorExpresionRegular(patron) {
-      // Implementar búsqueda con RegExp
+    generarCodigo(estudiante) {
+        // Generar código único usando partes del nombre y fecha
     }
 
-    buscarPorMultiplesCriterios(criterios) {
-      // Combinar diferentes métodos de búsqueda
+    busquedaInteligente(texto) {
+        // Implementar búsqueda que ignore acentos y mayúsculas
+        // Manejar errores comunes de escritura
     }
-  }
-  ```
+}
+```
 
-### 2. Transformación de Datos
-* Implementa métodos para formatear la información:
-  ```javascript
-  class FormateadorLibros {
-    formatearTitulo(titulo) {
-      // Capitalizar palabras, remover espacios extras
-    }
-
-    formatearAutor(autor) {
-      // Estandarizar formato de nombres
+### 2. Operaciones Avanzadas con Arrays
+```javascript
+class AnalizadorDatos {
+    constructor(estudiantes) {
+        this.estudiantes = estudiantes;
     }
 
-    generarCodigo() {
-      // Crear código único combinando strings
+    agruparPorRendimiento() {
+        // Usar reduce para crear grupos por promedio
     }
 
-    generarCitaBibliografica() {
-      // Formato APA o similar
+    ordenarPorMultiplesCriterios(criterios) {
+        // Implementar ordenamiento por múltiples campos
     }
-  }
-  ```
 
-### 3. Sistema de Etiquetas
-* Desarrolla un sistema de etiquetas para los libros:
-  * Implementa métodos para agregar/eliminar etiquetas
-  * Permite búsqueda por etiquetas
-  * Sugiere etiquetas basadas en el contenido
+    obtenerEstadisticasAvanzadas() {
+        // Calcular percentiles, medianas, modas
+    }
+}
+```
 
-### 4. Reportes y Exportación
-* Crea funciones para generar diferentes tipos de reportes:
-  * Lista de libros en formato tabla
-  * Estadísticas de la biblioteca
-  * Histórico de préstamos
-  * Exportación a diferentes formatos (CSV, JSON)
+### 3. Sistema de Reportes
+* Implementar generación de reportes usando:
+  * Formato tabular con padStart/padEnd
+  * Alineación de columnas
+  * Totales y subtotales
+  * Exportación en diferentes formatos
+
+### 4. Búsqueda y Filtrado Avanzado
+* Implementar:
+  * Búsqueda con expresiones regulares
+  * Filtros combinados
+  * Autocompletado
+  * Sugerencias de búsqueda
 
 ## Logros adicionales
-* Implementa un sistema de autocompletado para búsquedas
-* Agrega corrección ortográfica básica en las búsquedas
-* Crea un sistema de recomendaciones basado en etiquetas
-* Implementa ordenamiento por múltiples criterios
+* Implementa un sistema de autocorrección
+* Agrega formato condicional en reportes
+* Crea visualizaciones de datos
+* Implementa exportación a diferentes formatos
 
 ## Instrucciones de envío
 * Actualiza el README.md con:
   * Documentación de las nuevas funcionalidades
-  * Ejemplos de uso del sistema de búsqueda avanzada
-  * Muestras de los diferentes tipos de reportes
-* Crea un Pull Request de tu rama `feature/metodos_adicionales` a `main`
+  * Ejemplos de reportes generados
+  * Guía de uso de búsquedas avanzadas
+* Crea un Pull Request de tu rama `feature/metodos-adicionales` a `main`
 * Envía los enlaces de:
   * Tu repositorio en GitHub
-  * El Pull Request
+  * El Pull Request creado
   * La página publicada en GitHub Pages
