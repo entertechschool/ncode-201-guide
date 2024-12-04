@@ -1,78 +1,100 @@
-# Lab 05: Manipulación de Datos en JavaScript
+# Laboratorio 05: Gestión de Presupuesto Personal 🏦
 
-## Descripción General
-En este laboratorio, iniciarás el desarrollo de un sistema de gestión de estudiantes. Implementarás las estructuras básicas de control, manejo de arreglos y bucles para gestionar la información de los estudiantes y sus calificaciones.
+## Descripción
+En este laboratorio, construirás una aplicación web para gestionar presupuestos personales que permite a los usuarios registrar y visualizar sus ingresos y gastos. Este ejercicio te ayudará a practicar conceptos fundamentales de JavaScript como condicionales, arreglos y bucles.
 
-## Configuraciones
-* Crea un repositorio llamado `sistema-calificaciones-js`.
-* Clona tu repositorio a tu computadora local en la ruta `~/dev/[usuario_github]`.
-* Crea los archivos: `index.html`, `script.js`, `styles.css`.
+## 🎯 Objetivos de Aprendizaje
+- Implementar lógica de programación usando estructuras de control
+- Manipular arreglos para almacenar y gestionar datos
+- Crear funciones que procesen entrada de usuario
+- Actualizar el DOM dinámicamente basado en datos
 
-## Instrucciones 
+## 🚀 Setup Inicial
 
-### 1. Estructura Base de Datos
-* Implementa un arreglo de objetos para almacenar datos de estudiantes:
-  ```javascript
-  const estudiantes = [
-    {
-      id: 1,
-      nombre: "Juan",
-      calificaciones: [85, 90, 78],
-      asistencia: true,
-      estado: "activo"
-    }
-  ];
-  ```
+### 1. Crea y configura el Repositorio
+- En tu cuenta de Github crea un nuevo repositorio llamado: `personal-budget`
+>
+> (Recuerda agregar un README.md desde la creación).
+>
+- En tu sistema operativo, clona el repositorio.
+```bash
+# Clonar el repositorio de git
+cd dev
+git clone [https://...]
+```
 
-### 2. Funciones de Control
-* Implementa las siguientes funciones:
-  ```javascript
-  // Agregar estudiante con validaciones
-  function agregarEstudiante(nombre, calificaciones) {
-    // Validar datos
-    // Crear objeto estudiante
-    // Agregar al arreglo
-  }
+### 2. Estructura de Archivos
+```
+personal-budget/
+├── index.html
+├── styles.css
+├── app.js
+```
 
-  // Calcular promedio usando bucles
-  function calcularPromedio(calificaciones) {
-    // Usar for o reduce para calcular
-  }
+### 3. Aprendiendo con IA
+Para este laboratorio, necesitarás aprender a nivel inicial, cómo manejar el evento del envío de un formulario en HTML, para que desde Javascript puedas capturar los datos. Por esto, vas a usar un agente de IA para lograr hacerlo.
 
-  // Filtrar estudiantes por estado
-  function filtrarPorEstado(estado) {
-    // Usar filter para encontrar estudiantes
-  }
-  ```
+- Utiliza un prompt similar al ejemplo para lograr aprender este nuevo concepto:
 
-### 3. Condicionales y Validaciones
-* Implementa la lógica para:
-  * Validar que las calificaciones estén entre 0 y 100
-  * Determinar si un estudiante aprobó (promedio ≥ 70)
-  * Clasificar estudiantes según promedio:
-    * Excelente: ≥ 90
-    * Bueno: ≥ 80
-    * Regular: ≥ 70
-    * Necesita Mejorar: < 70
+```
+Soy estudiante de desarrollo web y estoy aprendiendo JavaScript. Necesito ayuda para entender cómo trabajar con formularios HTML y JavaScript.
 
-### 4. Implementación de Bucles
-* Utiliza diferentes tipos de bucles para:
-  * Mostrar lista de estudiantes
-  * Calcular promedios
-  * Actualizar estados
-  * Generar reportes
+Específicamente necesito:
+1. Entender cómo obtener los datos cuando el usuario envía un formulario
+2. Aprender a usar el evento onSubmit
+3. Ver un ejemplo básico de cómo prevenir que el formulario recargue la página
+
+Mi conocimiento actual incluye:
+- HTML básico y formularios
+- JavaScript: variables, funciones, condicionales
+- Conceptos básicos del DOM
+
+¿Podrías mostrarme un ejemplo simple paso a paso que incluya:
+- El HTML del formulario
+- El JavaScript necesario para capturar los datos
+- Una explicación de cada parte del código?
+```
+
+## Instrucciones
+
+### 1. HTML (index.html)
+Debe incluir:
+- Formulario con:
+  - Campo para el monto
+  - Selector de tipo (ingreso/gasto)
+  - Botón de submit
+- Sección para mostrar balance total
+- Lista para mostrar transacciones
+- Enlaces a archivos CSS y JavaScript
+
+### 2. JavaScript (app.js)
+
+- Define un array vacío `transacciones` para almacenar las transacciones.
+
+- Implementa la función `registrarTransaccion` que:
+
+    - Reciba los parámetros tipo y monto.
+    - Use condicionales (if/else) para validar y clasificar la transacción.
+    - Almacene la transacción como un string en el formato "Ingreso: 500".
+
+- Implementa un bucle for para iterar sobre las transacciones y mostrarlas en el navegador.
+
+### 3. CSS (styles.css)
+
+- Aplica un diseño de layout responsivo usando media-queries.
 
 ## Logros adicionales
-* Implementa búsqueda de estudiantes por nombre
-* Agrega ordenamiento por promedio
-* Crea un sistema de rangos basado en asistencia y calificaciones
-* Implementa persistencia de datos usando localStorage
+
+Si completas las instrucciones principales, intenta implementar las siguientes mejoras:
+
+1. **Ordenar transacciones**: Usa el método `sort` para mostrar las transacciones en orden descendente o ascendente según el monto.
+2. **Validaciones avanzadas**:
+    - Asegúrate de que los montos sean números positivos.
+    - Muestra un mensaje de error si el campo de monto está vacío o es inválido.
+3. **Estilizar interacciones**:
+    - Aplica estilos dinámicos para diferenciar visualmente los ingresos y gastos en la lista.
+
 
 ## Instrucciones de envío
-* En el README.md incluye:
-  * Descripción del proyecto
-  * Funcionalidades implementadas
-  * Ejemplos de uso
-* Envía el enlace de:
-  * Tu repositorio en GitHub
-  * Tu página publicada en GitHub Pages
+- Publica la página usando GitHub Pages.
+- Envía el enlace de tu repositorio en GitHub y tu sitio publicado.
