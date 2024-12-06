@@ -30,7 +30,7 @@ personal-budget/
 ```
 
 ### 3. Aprendiendo con IA
-Para este laboratorio, necesitarás aprender más sobre programación funcional en JavaScript. Usa un prompt similar a este:
+Para este laboratorio, necesitarás reforzar tus conocimientos sobre programación funcional en JavaScript. Usa un prompt similar a este:
 
 ```
 Soy estudiante de desarrollo web y estoy aprendiendo JavaScript. Necesito entender mejor los conceptos de programación funcional:
@@ -51,27 +51,28 @@ Ten en cuenta que, si bien la IA es una herramienta poderosa para el aprendizaje
 
 > 💻 La práctica activa de escribir código, cometer errores y depurarlos es esencial para construir una base sólida de habilidades técnicas. Recuerda: la IA debe ser tu apoyo para aprender, no **un atajo para evitar el proceso de aprendizaje**.
 
-## Instrucciones
+## ✅ Instrucciones
 
 ### 1. Refactorización del HTML (index.html)
 - Mejora la estructura semántica del HTML usando las etiquetas adecuadas (main, section, h2, etc.)
-- Incluye los nuevos archivos JavaScript modularizados
+- Incluye los nuevos archivos JavaScript modularizados (el orden es importante)
 - Implementa un contenedor para el balance total con esta estructura:
-    - section > h2 **Balance: $ XXX**
+    - section > h2 **Balance: XXX**
     - _Debe tener el diseño de una tarjeta_
 
 ### 2. Modularización de JavaScript
 
 #### utils.js
 - Implementa funciones utilitarias puras:
+- `calcularBalance(transacciones)`
 ```javascript
-// Ejemplo de función pura para calcular el balance
 const calcularBalance = (transacciones) => {
   return transacciones.reduce((total, trans) => {
     // lógica del cálculo
   }, 0);
 };
 ```
+- `formatearMonto(monto, moneda)`
 
 #### validators.js
 Crea funciones de validación:
@@ -85,7 +86,7 @@ Refactoriza el código principal:
 3. Elimina cualquier variable global innecesaria
 
 ### 3. Mejoras en CSS
-> ⚠️ Si tu proyecto actualmente utiliza bootstrap u otra librería, tendrás que remover estas librerías externas para poder trabajar este punto.
+> ⚠️ Si tu proyecto actualmente utiliza bootstrap, tendrás que remover esta librería externa para poder trabajar este punto.
 
 Organiza tu archivo styles.css siguiendo estas pautas:
 
@@ -115,12 +116,10 @@ Organiza tu archivo styles.css siguiendo estas pautas:
     ```bash
     git commit -m "feat: agrega funciones puras para cálculos"
     git commit -m "refactor: modulariza código en utils.js"
-    git commit -m "style: implementa variales css"
+    git commit -m "style: implementa variables css"
     ```
 - Documenta al menos 3 cambios en el archivo `README.md`:
-```md
-## Lab 06 - Refactorización
-### Cambios implementados:
+```
 - Modularización de...
 - Implementación de..
 - Mejoras de...

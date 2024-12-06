@@ -2,14 +2,17 @@
 const form = document.getElementById("transaction-form");
 const balanceAmount = document.getElementById("balance-amount");
 const transactionsList = document.getElementById("transactions-list");
-let transacciones = [];
+let transacciones = []; // Almacenará solo números (+ para ingresos, - para gastos)
 
 // Actualizar balance
 function actualizarBalance() {
-	const balance = calcularBalance(transacciones);
+	// Suma todos los números del array (positivos y negativos)
+	const balance = transacciones.reduce(function (acc, monto) {
+		return acc + monto;
+	}, 0);
+
 	balanceAmount.textContent = formatearMonto(balance);
 
-	// Actualizar clase según el balance
 	balanceAmount.classList.remove("low-balance", "regular-balance", "extra-balance");
 	balanceAmount.classList.add(getBalanceClass(balance));
 }
@@ -19,8 +22,23 @@ function actualizarListaTransacciones() {
 	transactionsList.innerHTML = "";
 	const fragmento = document.createDocumentFragment();
 
-	transacciones.map(crearElementoTransaccion).forEach(function (elemento) {
-		fragmento.appendChild(elemento);
+	transacciones.forEach(function (monto) {
+		const li = document.createElement("li");
+		li.className = "transaction-item";
+
+		const esIngreso = monto > 0;
+		const montoAbsoluto = Math.abs(monto);
+		const tipoClase = esIngreso ? "text-success" : "text-danger";
+		const tipoTexto = esIngreso ? "ingreso" : "gasto";
+
+		li.innerHTML = `
+   		<span>${tipoTexto}</span>
+   		<span class="${tipoClase}">
+   			${formatearMonto(montoAbsoluto)}
+   		</span>
+   	`;
+
+		fragmento.appendChild(li);
 	});
 
 	transactionsList.appendChild(fragmento);
@@ -28,11 +46,10 @@ function actualizarListaTransacciones() {
 
 // Agregar nueva transacción
 function agregarTransaccion(monto, tipo) {
-	transacciones.push({
-		monto: monto,
-		tipo: tipo,
-		fecha: new Date(),
-	});
+	// Si es gasto, convertimos el monto a negativo
+	const montoFinal = tipo === "gasto" ? -monto : monto;
+
+	transacciones.push(montoFinal);
 
 	actualizarBalance();
 	actualizarListaTransacciones();

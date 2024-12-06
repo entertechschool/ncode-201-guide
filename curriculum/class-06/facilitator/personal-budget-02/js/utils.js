@@ -28,22 +28,3 @@ function formatearMonto(monto, moneda = "S/ ") {
 	// Agrega la moneda al inicio
 	return moneda + numeroFormateado;
 }
-
-// Crea el elemento HTML para una transacción
-function crearElementoTransaccion(transaccion) {
-	const li = document.createElement("li");
-	li.className = "transaction-item";
-
-	const montoFormateado = formatearMonto(transaccion.monto);
-
-	const tipoClase = transaccion.tipo === "ingreso" ? "text-success" : "text-danger";
-
-	li.innerHTML = `
-        <span>${transaccion.tipo}</span>
-        <span class="${tipoClase}">
-            ${montoFormateado}
-        </span>
-    `;
-
-	return li;
-}
