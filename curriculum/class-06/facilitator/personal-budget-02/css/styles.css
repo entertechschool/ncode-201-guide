@@ -1,0 +1,116 @@
+/* Variables */
+:root {
+    --color-primary: #2557a7;
+    --color-success: #28a745;
+    --color-danger: #dc3545;
+    --color-warning: #ffc107;
+    --color-text: #333333;
+    --color-background: #f8f9fa;
+    
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    
+    --border-radius: 8px;
+    --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    padding: var(--spacing-md);
+}
+
+/* Utilidades */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Componentes */
+.balance-display {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: var(--spacing-md) 0;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+}
+
+.btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.transactions-list {
+    list-style: none;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid #ddd;
+}
+
+/* Clases para el balance */
+.low-balance {
+    color: var(--color-danger);
+    font-size: 2rem;
+}
+
+.regular-balance {
+    color: var(--color-warning);
+    font-size: 2.5rem;
+}
+
+.extra-balance {
+    color: var(--color-success);
+    font-size: 3rem;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+    .container {
+        padding: var(--spacing-lg);
+    }
+}
