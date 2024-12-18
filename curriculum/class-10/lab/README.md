@@ -1,58 +1,193 @@
-﻿# Resumen de la tarea: Laboratorio 10
+﻿# Laboratorio 10: Implementando Ventas en el Sistema 🛍️
 
-Lee este documento por completo antes de comenzar con el laboratorio. Puedes ver esta tarea en una nueva pestaña
-[AQUÍ](https://entertechschool.github.io/code-201-guide/curriculum/class-10/lab-a/){:target="_blank"}
+## Descripción
+Continuando con el desarrollo de la aplicación de ventas, implementaremos el módulo de ventas que permitirá registrar transacciones entre clientes y productos. Este módulo integrará los objetos Customer y Product creados en el laboratorio anterior.
 
-## Descripción del problema
+## 🎯 Objetivos de Aprendizaje
+- Implementar relaciones entre objetos usando funciones constructoras
+- Manejar colecciones de objetos en JavaScript
+- Gestionar el estado de múltiples objetos relacionados
+- Aplicar validaciones complejas entre objetos
 
-Tu jefe se te acerca justo antes de la hora del almuerzo: "Ok, justo tomamos este trabajo, pero lo necesito en mi escritorio (bueno, en mi bandeja de entrada) en cuantro horas.  No tiene que ser perfecto... solo lo más parecido a perfecto que puedas lograr en ese tiempo."
+## 📋 Historias de Usuario
 
-En el laboratorio de hoy, construirás una página web basada en los assets provisionales de diseño proporcionados. Esta tarea consiste bastante de HTML y CSS, no tanto de JS como lo hemos estado haciendo esta semana. De hecho, puedes elegir hacer este proyecto sin JS, o solo añadir un poco como toque final.
+### HU 1: Registro de Ventas
+Como vendedor, necesito registrar nuevas ventas en el sistema.
+- Seleccionar un cliente existente
+- Agregar múltiples productos con sus cantidades
+- Ver el total de la venta calculado automáticamente
+- Confirmar la venta solo si hay stock suficiente
 
-Solo tienes 2 horas para completar esta tarea.
+### HU 2: Actualización Automática
+Como vendedor, necesito que el sistema se actualice automáticamente:
+- El stock de productos debe reducirse al confirmar una venta
+- El contador de compras del cliente debe incrementarse
+- La lista de ventas debe actualizarse en tiempo real
 
-## Instrucciones
+## ✅ Instrucciones
 
-Tu trabajo es crear una página que se vea **exactamente** igual que la vista previa a continuación. En tu repositorio de la clase en GitHub, en el directorio de hoy, encontrarás todos los assets necesarios para completar esta tarea además de una versión más grande esta imagen.
+### 1. Nuevo Modelo de Ventas
 
-![Chocolate Pizza Preview](./lab-assets/PREVIEW.jpg)
+#### js/models/Sale.js
+```javascript
+function Sale(customer, date = new Date()) {
+    // Validar que customer sea instancia de Customer
+    if (!(customer instanceof Customer)) {
+        throw new Error('Cliente inválido');
+    }
 
-Utiliza tus notas de la clase, tus lecturas, compañeros o el internet para que te ayuden a terminar el laboratorio. Investiga lo que necesites y no tengas miedo de intentar técnicas diferentes.
+    // Propiedades:
+    // - id (Date.now())
+    // - customer
+    // - products (array vacío para iniciar)
+    // - total (inicia en 0)
+    // - date
+    // - status ('pending' | 'completed' | 'cancelled')
+}
 
-Crea un nuevo repositorio llamado **chocolate-pizza**. Si tienes un compañero para este laboratorio, sigue el flujo de trabajo de pair programming en el que un usuario le hace un fork al otro, para que puedan practicar sus procesos de Git. Asegúrate de hacer commits frecuentes, y siempre haz un trabajo en ramas. Antes de comenzar, piensa en una estrategia para abordar este proyecto. Antes de escribir tu código, piensa en un orden práctico para hacer el trabajo:
+// Métodos del prototipo:
+Sale.prototype.addProduct = function(product, quantity) {
+    // Validar que product sea instancia de Product
+    // Validar stock suficiente
+    // Agregar al array products: { product, quantity }
+    // Actualizar total
+};
 
-- ¿Cuándo deberías concentrarte en el estilo?
-- ¿Cuándo deberías tomar una decisión acerca de un esquema de layout?
-- ¿Cuándo deberías construir la estructura del HTML?
-- ¿Cuándo deberías añadir JS? ¿Vas a añadir JS?
+Sale.prototype.removeProduct = function(productId) {
+    // Eliminar producto del array
+    // Actualizar total
+};
 
-***Si tienes un compañero, asegúrate de "cambiar" los roles de driver y navigator para que cada uno tenga el mismo tiempo***.
+Sale.prototype.calculateTotal = function() {
+    // Sumar (producto.price * cantidad) de cada item
+};
 
-Sugerencia: Configura tu directorio de trabajo así:
+Sale.prototype.complete = function() {
+    // Validar que haya productos
+    // Actualizar stock de cada producto
+    // Incrementar contador del cliente
+    // Cambiar status a 'completed'
+};
 
-- index.html
-- style.css
-- app.js *(si eliges utilizar JS)*
-- img/   *(un directorio que contenga todas tus imágenes)*
+Sale.prototype.renderUI = function() {
+    // Retornar elemento HTML con el detalle de la venta
+};
+```
 
-Si quieres cambiar de nombre a cualquiera de los archivos de imagen, siéntete libre de hacerlo. Lo mismo se aplica para todo lo que se te ocurra para hacer el trabajo.
+### 2. Actualizaciones a Modelos Existentes
 
-### Logros Adicionales
+#### Product.js - Agregar:
+```javascript
+Product.prototype.hasStock = function(quantity) {
+    return this.stock >= quantity;
+};
+```
 
-Después de completas los requerimientos enumerados previamente, puedes elegir completar estos desafíos implementando algunos o todos los elementos siguientes en tu aplicación:
+#### Customer.js - Agregar:
+```javascript
+Customer.prototype.incrementPurchases = function() {
+    this.totalPurchases++;
+};
+```
 
-1. Añade algo de JavaScript a tu página.
-   - ¡Haz que las casillas se marquen utilizando JavaScript!
-1. Actualiza tu código y optimízalo.
+### 3. HTML y UI
 
-## Recursos
+Agregar nueva pestaña de ventas:
+```html
+<div class="tab-pane" id="sales">
+    <div class="row">
+        <!-- Formulario de Venta -->
+        <div class="col-md-8">
+            <h3>Nueva Venta</h3>
+            <form id="sale-form">
+                <!-- Select para cliente -->
+                <!-- Select para producto -->
+                <!-- Input para cantidad -->
+                <!-- Botón para agregar producto -->
+                <!-- Lista de productos agregados -->
+                <!-- Total -->
+                <!-- Botón confirmar venta -->
+            </form>
+        </div>
+        
+        <!-- Lista de Ventas -->
+        <div class="col-md-4">
+            <h3>Ventas Realizadas</h3>
+            <ul id="sales-list" class="list-group">
+            </ul>
+        </div>
+    </div>
+</div>
+```
 
-Consulta el repositorio diario de la clase para ver los assets necesarios para este laboratorio así como una versión más grande de la imagen ubicada más arriba.
+### 4. Lógica de Ventas (app.js)
 
-## Instrucciones de envío
+```javascript
+// Variables para la venta en curso
+let currentSale = null;
 
-- Envía el enlace de tu PR más reciente de tu rama del repositorio de GitHub para este proyecto.
-- Añade un comentario a tu envío en Canvas con las respuestas a las siguientes preguntas
-  - ¿Cómo te fue, en general?
-  - ¿Qué observaciones o preguntas tienes acerca de lo que hemos aprendido hasta ahora?
-  - ¿Cuánto tiempo te tomó terminar esta tarea? Y, antes de que comenzaras, ¿cuánto tiempo creiste que te tomaría terminar esta tarea?
+function initNewSale() {
+    // Crear nueva venta con el cliente seleccionado
+    // Limpiar formulario
+}
+
+function handleAddProduct(event) {
+    // Prevenir default
+    // Obtener producto y cantidad seleccionados
+    // Agregar a la venta actual
+    // Actualizar UI
+}
+
+function handleCompleteSale(event) {
+    // Prevenir default
+    // Completar venta
+    // Actualizar UI de productos (stock)
+    // Actualizar UI de cliente (compras)
+    // Actualizar lista de ventas
+    // Iniciar nueva venta
+}
+```
+
+## ⭐️ Logros Adicionales
+
+1. **Cancelar Venta**
+- Implementar método `cancel()` en Sale
+- Agregar botón para cancelar venta en curso
+- Restaurar stock si la venta estaba en proceso
+
+2. **Resumen de Venta**
+- Implementar método `getSummary()` en Sale
+- Mostrar modal con detalle al hacer click en una venta
+- Incluir información del cliente y productos
+
+## ⚠️ Errores Comunes a Evitar
+
+1. **Manejo de Referencias**
+```javascript
+// ❌ MAL: Guardar solo IDs
+this.products.push(productId);
+
+// ✅ BIEN: Guardar objeto completo
+this.products.push({ product: product, quantity: quantity });
+```
+
+2. **Validaciones de Stock**
+```javascript
+// ❌ MAL: Validar al final
+completeSale() {
+    // Muy tarde para validar stock
+
+// ✅ BIEN: Validar al agregar
+addProduct() {
+    if (!product.hasStock(quantity)) {
+        throw new Error('Stock insuficiente');
+    }
+}
+```
+
+## Instrucciones de Envío
+- Crea un Pull Request llamado **lab10** (`dev > main`) con tus cambios.
+- En el PR incluye:
+  - Capturas de una venta completa
+  - Ejemplo de validaciones funcionando
+- Comparte el link del PR y del sitio desplegado
