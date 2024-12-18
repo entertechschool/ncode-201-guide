@@ -20,7 +20,7 @@
 
 ## ✅ Solución Paso a Paso
 
-[Ir al proyecto](./index.html)
+[Ir al proyecto](./sales-app/)
 
 ## 📝 Preguntas Frecuentes de Estudiantes
 
