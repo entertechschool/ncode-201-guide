@@ -1,86 +1,109 @@
-# Lab 08: Manipulación Avanzada de Strings y Arrays en Sistema de Calificaciones
+# Laboratorio 08: Métodos de String y Array en el Gestor de Presupuesto 🔍
 
-## Descripción General
-En este laboratorio final, implementarás funcionalidades avanzadas de manipulación de strings y arrays en tu sistema de gestión de estudiantes. Mejorarás las búsquedas, el filtrado y la presentación de datos.
+## Descripción
+En este laboratorio, implementarás los métodos más comunes de los objetos String y Array para mejorar tu gestor de presupuesto personal.
 
-## Configuraciones
-* Continúa trabajando en tu repositorio `sistema-calificaciones-js`.
-* Crea una nueva rama llamada `feature/metodos-adicionales`.
-* Asegúrate de tener las funcionalidades de los Labs 06, 07 y 08 funcionando correctamente.
+> En este laboratorio tendrás diversos ejercicios que puedes implementar. Intenta hacer tantos como puedas.
 
-## Instrucciones 
+## 🎯 Objetivos de Aprendizaje
+- Implementar métodos nativos del objeto String para manipular texto
+- Utilizar métodos avanzados del objeto Array para gestionar colecciones
 
-### 1. Manipulación Avanzada de Strings
-```javascript
-class ProcesadorTexto {
-    constructor() {
-        this.nombresPropios = new Set();
-    }
+## 🚀 Setup Inicial
 
-    formatearNombre(nombre) {
-        // Implementar capitalización correcta
-        // "juan pérez" -> "Juan Pérez"
-    }
-
-    generarCodigo(estudiante) {
-        // Generar código único usando partes del nombre y fecha
-    }
-
-    busquedaInteligente(texto) {
-        // Implementar búsqueda que ignore acentos y mayúsculas
-        // Manejar errores comunes de escritura
-    }
-}
+```bash
+git checkout -b lab-08-array-string
 ```
 
-### 2. Operaciones Avanzadas con Arrays
+## ✅ Instrucciones
+
+### js/Budget.js:
+
+1. `findTransactionById`
 ```javascript
-class AnalizadorDatos {
-    constructor(estudiantes) {
-        this.estudiantes = estudiantes;
-    }
-
-    agruparPorRendimiento() {
-        // Usar reduce para crear grupos por promedio
-    }
-
-    ordenarPorMultiplesCriterios(criterios) {
-        // Implementar ordenamiento por múltiples campos
-    }
-
-    obtenerEstadisticasAvanzadas() {
-        // Calcular percentiles, medianas, modas
-    }
-}
+// Usa Array.find() para buscar una transacción por su id
+// Retorna la transacción encontrada o undefined
 ```
 
-### 3. Sistema de Reportes
-* Implementar generación de reportes usando:
-  * Formato tabular con padStart/padEnd
-  * Alineación de columnas
-  * Totales y subtotales
-  * Exportación en diferentes formatos
+2. `filterTransactionsByType`
+```javascript
+// Usa Array.filter() para obtener solo las transacciones de un tipo específico
+// Retorna un nuevo array con las transacciones filtradas
+```
 
-### 4. Búsqueda y Filtrado Avanzado
-* Implementar:
-  * Búsqueda con expresiones regulares
-  * Filtros combinados
-  * Autocompletado
-  * Sugerencias de búsqueda
+3. `getTotalByType`
+```javascript
+// Usa Array.reduce() para sumar todos los montos de un tipo específico
+// Retorna el total como número
+```
 
-## Logros adicionales
-* Implementa un sistema de autocorrección
-* Agrega formato condicional en reportes
-* Crea visualizaciones de datos
-* Implementa exportación a diferentes formatos
+### js/Transaction.js:
 
-## Instrucciones de envío
-* Actualiza el README.md con:
-  * Documentación de las nuevas funcionalidades
-  * Ejemplos de reportes generados
-  * Guía de uso de búsquedas avanzadas
-* Crea un Pull Request de tu rama `feature/metodos-adicionales` a `main`
-* Envía los enlaces de:
-  * Tu repositorio en GitHub
-  * El Pull Request creado
-  * La página publicada en GitHub Pages
+4. `updateCategories`
+```javascript
+// Usa Array.map() para actualizar las categorías de todas las transacciones
+// Retorna un nuevo array con las transacciones actualizadas
+```
+
+5. `hasTransactionsOverAmount`
+```javascript
+// Usa Array.some() para verificar si existe alguna transacción sobre cierto monto
+// Retorna true/false
+```
+
+6. `areAllTransactionsValid`
+```javascript
+// Usa Array.every() para verificar que todas las transacciones tengan montos positivos
+// Retorna true/false
+```
+
+7. `formatDescription`
+```javascript
+// Usa String.trim() para eliminar espacios en blanco al inicio y final
+// Retorna la descripción limpia
+```
+
+8. `getTransactionType`
+```javascript
+// Usa String.toLowerCase() para normalizar el tipo de transacción
+// Retorna 'ingreso' o 'gasto' en minúsculas
+```
+
+9. `splitTags`
+```javascript
+// Usa String.split() para convertir un string de tags en array
+// Ejemplo: "comida,casa,servicios" → ["comida", "casa", "servicios"]
+```
+
+### js/app.js:
+
+10. `searchTransactions`
+```javascript
+// Usa String.includes() para buscar transacciones por descripción
+// Actualiza la lista mostrando solo las coincidencias
+```
+
+11. `formatAmount`
+```javascript
+// Usa String.replace() para dar formato a los montos
+// Ejemplo: 1000 → "1,000.00"
+```
+
+12. `getMonthName`
+```javascript
+// Usa String.slice() para extraer y formatear el nombre del mes de una fecha
+// Retorna el nombre del mes en español
+```
+
+### Control de Versiones
+Realiza commits descriptivos por cada función desarrollada:
+```bash
+git commit -m "feat: nombre de función implementada"
+```
+
+## Instrucciones de Envío
+- Actualiza el sitio en GitHub Pages
+- Crea un Pull Request desde `lab-08-array-string` a `main`
+- En la descripción del PR, incluye:
+  - Lista de métodos String/Array implementados
+- Comparte el link de tu repositorio y tu sitio publicado
