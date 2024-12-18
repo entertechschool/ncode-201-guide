@@ -68,13 +68,13 @@ Mi conocimiento actual:
 Como vendedor, necesito registrar nuevos productos en el sistema para mantener un catálogo actualizado.
 - Registrar nombre, precio y stock inicial
 - Ver el listado de productos registrados
-- Visualizar el precio formateado en moneda local
+- Actualizar el stock de los productos.
 
 ### HU 2: Gestión de Clientes
 Como vendedor, necesito registrar los datos de mis clientes para darles seguimiento.
 - Registrar nombre y email del cliente
 - Ver el listado de clientes registrados
-- Mantener un contador de compras por cliente
+- Actualizar el email de mis clientes.
 
 
 ## ✅ Instrucciones
