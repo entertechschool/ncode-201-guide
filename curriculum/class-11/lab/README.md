@@ -1,218 +1,82 @@
-﻿# Laboratorio 11: Manipulación del DOM con Prototipos 🔄
+﻿# Laboratorio 11: Sistema de Ventas con IA (Copilot) 🤖
 
 ## Descripción
-En este laboratorio, continuarás desarrollando el sistema de ventas enfocándote en la manipulación del DOM mediante prototipos. Implementarás una interfaz dinámica que permita visualizar y actualizar el estado de productos, clientes y ventas de manera eficiente y mantenible.
+En este laboratorio, reconstruirás el sistema de ventas utilizando IA como herramienta principal de desarrollo. 
+El objetivo es aprender a colaborar efectivamente con IA mientras repasamos y aplicamos los conceptos de POO vistos en las clases anteriores, mientras profundizamos nuestros conocimientos sobre el DOM.
 
 ## 🎯 Objetivos de Aprendizaje
-- Manipular el DOM de forma estructurada usando prototipos
-- Implementar patrones de delegación de eventos
-- Mantener sincronizado el estado de los objetos con la UI
-- Aplicar el principio DRY en la manipulación del DOM
+- Aprender a trabajar con un copiloto de IA.
+- Abordar un nuevo proyecto desde la perspectiva de un desarrollador/arquitecto.
+- Validar y mejorar código generado por IA
+- Profundizar en el entendimiento del DOM.
+    - El objeto "document"
+    - Elementos de HTML como objetos
+
+## 🚀 Setup Inicial
+1. Nuevo repositorio en Github: `sales-system`
+
+2. Estructura del Proyecto
+```
+sales-system/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── models/
+│   │   ├── Product.js
+│   │   ├── Customer.js
+│   │   └── Sale.js
+│   └── app.js
+└── README.md
+```
 
 ## 📋 Historias de Usuario
 
-### HU 1: Visualización Dinámica
-Como vendedor, necesito que la interfaz se actualice automáticamente cuando:
-- Agrego/elimino productos de una venta
-- Cambio el estado de una venta
-- Actualizo el stock de productos
+### HU 1: Gestión de Productos
+Como vendedor, necesito registrar nuevos productos en el sistema para mantener un catálogo actualizado.
+- Registrar nombre, precio y stock inicial
+- Ver el listado de productos registrados
+- Actualizar el stock de los productos.
 
-### HU 2: Interacción Eficiente
-Como vendedor, necesito poder:
-- Editar productos directamente en la lista
-- Ver detalles expandibles de cada venta
-- Filtrar ventas por estado o cliente
+### HU 2: Gestión de Clientes
+Como vendedor, necesito registrar los datos de mis clientes para darles seguimiento.
+- Registrar nombre y email del cliente
+- Ver el listado de clientes registrados
+- Actualizar el email de mis clientes.
 
-## 🚀 Setup Inicial
+### HU 3: Registro de Ventas
+Como vendedor, necesito registrar nuevas ventas en el sistema.
+- Seleccionar un cliente existente
+- Agregar múltiples productos con sus cantidades
+- Ver el total de la venta calculado automáticamente
+- Confirmar la venta solo si hay stock suficiente
 
-### 1. Estructura del Proyecto
-```bash
-git checkout -b lab-11-dom
+### HU 4: Actualización Automática
+Como vendedor, necesito que el sistema se actualice automáticamente:
+- El stock de productos debe reducirse al confirmar una venta
+- El contador de compras del cliente debe incrementarse
+- La lista de ventas debe actualizarse en tiempo real
 
-# Nuevos archivos
-touch js/ui/DOMManager.js
-touch js/ui/EventHandler.js
-```
+## 💡 Pasos sugeridos de Implementación
 
-### 2. Aprendiendo con IA
-```
-Soy estudiante de desarrollo web y necesito entender:
+1. Configurar Copilot en VS Code.
 
-1. Cómo mantener sincronizados objetos JavaScript con el DOM
-2. Mejores prácticas para crear/actualizar elementos dinámicamente
-3. Patrones para manejar eventos en listas dinámicas
+2. Detallar los objetivos del proyecto y las características técnicas en el archivo README.md
+    - Modelos: Atributos de cada modelo de datos (Product, Customer, Sale).
+    - DOM: Métodos o acciones a implementar en el prototipo de cada modelo.
+    - UI: Los elementos presentes en la Interfaz de la aplicación.
 
-Mi conocimiento incluye:
-- JavaScript: prototipos, constructores
-- DOM: createElement, appendChild
-- Eventos: addEventListener
-```
+3. Escribir un primer Prompt en el chat de Copilot y probar los 2 modelos disponibles.
 
-## ✅ Instrucciones
+4. Afinar el prompt para que tu copiloto de IA te brinde la solución más cercana a tu expectativa.
 
-### 1. Gestor del DOM (DOMManager.js)
+5. Realizar commits frecuentes, por cada funcionalidad nueva o corregida.
 
-```javascript
-function DOMManager() {
-    this.containers = {
-        products: document.getElementById('products-list'),
-        customers: document.getElementById('customers-list'),
-        sales: document.getElementById('sales-list')
-    };
-}
+5. Probar el funcionamiento de la solución.
 
-DOMManager.prototype.createProductCard = function(product) {
-    const card = document.createElement('div');
-    card.classList.add('card', 'mb-3', 'product-card');
-    card.dataset.productId = product.id;
-    
-    card.innerHTML = `
-        <div class="card-body">
-            <h5 class="card-title">${product.name}</h5>
-            <div class="stock-control">
-                <button class="btn btn-sm btn-danger">-</button>
-                <span class="mx-2">${product.stock}</span>
-                <button class="btn btn-sm btn-success">+</button>
-            </div>
-        </div>
-    `;
-    
-    return card;
-};
-
-DOMManager.prototype.updateProductCard = function(product) {
-    const card = document.querySelector(`[data-product-id="${product.id}"]`);
-    if (!card) return;
-    
-    // Actualizar solo lo necesario
-    card.querySelector('.card-title').textContent = product.name;
-    card.querySelector('.stock-control span').textContent = product.stock;
-};
-
-// Métodos similares para Customer y Sale...
-```
-
-### 2. Manejador de Eventos (EventHandler.js)
-
-```javascript
-function EventHandler(domManager) {
-    this.domManager = domManager;
-    this.setupEventListeners();
-}
-
-EventHandler.prototype.setupEventListeners = function() {
-    // Delegación de eventos para productos
-    this.domManager.containers.products.addEventListener('click', (e) => {
-        const productCard = e.target.closest('.product-card');
-        if (!productCard) return;
-
-        if (e.target.matches('.btn-danger')) {
-            this.handleDecrementStock(productCard);
-        } else if (e.target.matches('.btn-success')) {
-            this.handleIncrementStock(productCard);
-        }
-    });
-
-    // Más manejadores de eventos...
-};
-
-EventHandler.prototype.handleDecrementStock = function(productCard) {
-    const productId = productCard.dataset.productId;
-    const product = // obtener producto por id
-    
-    try {
-        product.updateStock(-1);
-        this.domManager.updateProductCard(product);
-    } catch (error) {
-        alert('No hay suficiente stock');
-    }
-};
-```
-
-### 3. Actualizaciones a los Modelos
-
-#### Product.js
-```javascript
-Product.prototype.toCardElement = function() {
-    return this.domManager.createProductCard(this);
-};
-
-Product.prototype.updateDOM = function() {
-    this.domManager.updateProductCard(this);
-};
-```
-
-#### Sale.js
-```javascript
-Sale.prototype.toListElement = function() {
-    return this.domManager.createSaleItem(this);
-};
-
-Sale.prototype.expandDetails = function() {
-    this.domManager.showSaleDetails(this);
-};
-```
-
-### 4. Inicialización (app.js)
-
-```javascript
-// Inicialización
-const domManager = new DOMManager();
-const eventHandler = new EventHandler(domManager);
-
-// Crear instancias iniciales
-const product1 = new Product('Laptop', 1299.99, 10);
-product1.toCardElement(); // Agregar al DOM
-
-// Actualizar UI
-function refreshUI() {
-    domManager.refreshAll();
-}
-```
-
-## ⭐️ Logros Adicionales
-
-1. **Animaciones Suaves**
-```javascript
-DOMManager.prototype.animateUpdate = function(element) {
-    element.classList.add('highlight');
-    setTimeout(() => {
-        element.classList.remove('highlight');
-    }, 1000);
-};
-```
-
-2. **Modo Edición Inline**
-```javascript
-DOMManager.prototype.enableEditMode = function(element) {
-    // Convertir texto en input
-    // Manejar guardado al perder foco
-};
-```
-
-## ⚠️ Errores Comunes
-
-1. **Manipulación Excesiva del DOM**
-```javascript
-// ❌ MAL: Recrear todo el elemento
-card.innerHTML = `<div>...</div>`;
-
-// ✅ BIEN: Actualizar solo lo necesario
-card.querySelector('.stock').textContent = newValue;
-```
-
-2. **Event Listeners Duplicados**
-```javascript
-// ❌ MAL: Agregar listener a cada botón
-buttons.forEach(btn => btn.addEventListener('click', handler));
-
-// ✅ BIEN: Usar delegación de eventos
-container.addEventListener('click', handleClick);
-```
+6. Desplegar tu aplicación en Github pages.
 
 ## Instrucciones de Envío
-- Crea un Pull Request desde `lab-11-dom` a `main`
-- Incluye en el PR:
-  - Ejemplos de manipulación del DOM
-  - Demo de eventos funcionando
-- Comparte el link del PR y tu sitio desplegado
+- Agrega al README un encabezado:
+    - ¿Qué es el DOM? (con la mejor explicación que has logrado obtener de la IA)
+- Comparte el link del repositorio y el de tu sitio desplegado
