@@ -1,106 +1,218 @@
-﻿# Laboratorio: Odd Duck Products
+﻿# Laboratorio 11: Manipulación del DOM con Prototipos 🔄
 
-Lee el documento por completo antes de comenzar con el trabajo del laboratorio. Para ver esta tarea de laboratorio en su propia pestaña, haz click [AQUÍ](https://entertechschool.github.io/code-201-guide/curriculum/class-11/lab/){:target="_blank"}
+## Descripción
+En este laboratorio, continuarás desarrollando el sistema de ventas enfocándote en la manipulación del DOM mediante prototipos. Implementarás una interfaz dinámica que permita visualizar y actualizar el estado de productos, clientes y ventas de manera eficiente y mantenible.
 
-## Descripción del problema
+## 🎯 Objetivos de Aprendizaje
+- Manipular el DOM de forma estructurada usando prototipos
+- Implementar patrones de delegación de eventos
+- Mantener sincronizado el estado de los objetos con la UI
+- Aplicar el principio DRY en la manipulación del DOM
 
-Odd Duck Product Co está tratando de decidir en qué proyecto de su departamento I+D debería invertir a continuación para vender. Te pidieron crear una página web que puedan ejecutar en un kiosco en la entrada principal de su campus. Cuando un empleado pase por ahí, puede votar por 1 de 3 productos mostrados que crea que debe ser el siguiente producto en salir al mercado. Después de recolectar los datos, les gustaría unos buenos gráficos para visualizar los resultados.
+## 📋 Historias de Usuario
 
-Para que este proyecto de recolección de datos sea efectivo, Odd Duck quiere que construyas una app que muestre tres productos potenciales uno al lado del otro sin que se favorezca un producto en particular. Necesitarás gestionar el tamaño y la relación de aspecto de las imágenes.
+### HU 1: Visualización Dinámica
+Como vendedor, necesito que la interfaz se actualice automáticamente cuando:
+- Agrego/elimino productos de una venta
+- Cambio el estado de una venta
+- Actualizo el stock de productos
 
-Ya que el propósito de la app es que los miembros del personal escojan qué producto, de las 3 imágenes mostradas, estarían más interesados en ver como una nueva creación, necesitarás almacenar cada voto anónimo, calcular el total y mostrar los resultados.
+### HU 2: Interacción Eficiente
+Como vendedor, necesito poder:
+- Editar productos directamente en la lista
+- Ver detalles expandibles de cada venta
+- Filtrar ventas por estado o cliente
 
-Para que el proceso de selección del producto sea lo más imparcial posible, te han indicado que no permitas que los resultados se muestren a los usuarios hasta que haya un total de 25 selecciones.
+## 🚀 Setup Inicial
 
-El equipo de marketing no solo está interesado en el número total de clicks, sino también en el porcentaje de veces que un elemento ha sido elegido cuando se ha mostrado. Así que también necesitarás dar seguimiento de la cantidad de veces que cada imagen se ha mostrado y hacer los cálculos.
+### 1. Estructura del Proyecto
+```bash
+git checkout -b lab-11-dom
 
-También eres responsable del aspecto y estilo de la app, así que no te olvides de aplicar una fuente personalizada, paleta de colores, layout con HTML semántico, etc.
+# Nuevos archivos
+touch js/ui/DOMManager.js
+touch js/ui/EventHandler.js
+```
 
-## Historias de usuario
+### 2. Aprendiendo con IA
+```
+Soy estudiante de desarrollo web y necesito entender:
 
-Las historias de usuario son un recurso utlizado para identificar cuáles deben ser las funcionalidades y el diseño de un producto considerando los intereses y motivaciones de personas con distintos puntos de vista. Se presentan de la siguiente forma:
+1. Cómo mantener sincronizados objetos JavaScript con el DOM
+2. Mejores prácticas para crear/actualizar elementos dinámicamente
+3. Patrones para manejar eventos en listas dinámicas
 
-> Como un(a) _____, quiero _____, para que ____
+Mi conocimiento incluye:
+- JavaScript: prototipos, constructores
+- DOM: createElement, appendChild
+- Eventos: addEventListener
+```
 
-Este layout permite que un cliente le indique a un equipo el tipo de interacción que está esperando y permite que el equipo desarrollador piense en una solución que se acomode a las necesidades del cliente.
+## ✅ Instrucciones
 
-El equipo desarrollador creará una categoría llamada *__Tareas de funcionalidad__* las cuales son tareas individuales que deberán ser completadas por el desarrollador para completar la historia del usuario. Una vez se hayan completado las tareas de un usuario individual, también se completa la historia del usuario. 
+### 1. Gestor del DOM (DOMManager.js)
 
-A continuación se encuentran los requisitos para el laboratorio en este formato. Piensa en cuáles serían las tareas de funcionalidad para cada historia, una vez que termines, o te atasques, revisa la tarea proporcionada para ver cuáles son las tareas reales para cada historia.
+```javascript
+function DOMManager() {
+    this.containers = {
+        products: document.getElementById('products-list'),
+        customers: document.getElementById('customers-list'),
+        sales: document.getElementById('sales-list')
+    };
+}
 
-## Instrucciones
+DOMManager.prototype.createProductCard = function(product) {
+    const card = document.createElement('div');
+    card.classList.add('card', 'mb-3', 'product-card');
+    card.dataset.productId = product.id;
+    
+    card.innerHTML = `
+        <div class="card-body">
+            <h5 class="card-title">${product.name}</h5>
+            <div class="stock-control">
+                <button class="btn btn-sm btn-danger">-</button>
+                <span class="mx-2">${product.stock}</span>
+                <button class="btn btn-sm btn-success">+</button>
+            </div>
+        </div>
+    `;
+    
+    return card;
+};
 
-1. Como usuario, me gustaría mostrar tres productos únicos al azar para que los espectadores puedan escoger un favorito.
+DOMManager.prototype.updateProductCard = function(product) {
+    const card = document.querySelector(`[data-product-id="${product.id}"]`);
+    if (!card) return;
+    
+    // Actualizar solo lo necesario
+    card.querySelector('.card-title').textContent = product.name;
+    card.querySelector('.stock-control span').textContent = product.stock;
+};
 
-    - Crea una función constructora que cree un objeto asociado con cada producto, y que tenga las siguientes características:
-        1. Nombre del producto
-        1. Ruta de la imagen
-        1. Veces que la imagen ha sido mostrada
+// Métodos similares para Customer y Sale...
+```
 
-    - Crea un algoritmo que genere al azar tres imágenes únicas de productos desde el directorio de las imágenes y muéstralas una al lado de la otra en la ventana del navegador. 
+### 2. Manejador de Eventos (EventHandler.js)
 
-    - Por cada una de las tres imágenes, incrementa la propiedad de veces en la que se ha mostrado en uno.
+```javascript
+function EventHandler(domManager) {
+    this.domManager = domManager;
+    this.setupEventListeners();
+}
 
-    - Añade un event listener a la sección de la página HTML en donde se van a mostrar las imágenes.
+EventHandler.prototype.setupEventListeners = function() {
+    // Delegación de eventos para productos
+    this.domManager.containers.products.addEventListener('click', (e) => {
+        const productCard = e.target.closest('.product-card');
+        if (!productCard) return;
 
-    - Una vez que los usuarios hagan 'click' a un producto, genera tres nuevos productos para que el usuario escoja.
+        if (e.target.matches('.btn-danger')) {
+            this.handleDecrementStock(productCard);
+        } else if (e.target.matches('.btn-success')) {
+            this.handleIncrementStock(productCard);
+        }
+    });
 
-1. Como usuario, me gustaría monitorear las selecciones hechas por los espectadores para así poder determinar con qué productos comienzo la producción.
-    - En la función constructora, define una propiedad que tenga el número de veces que un producto ha sido seleccionado.
+    // Más manejadores de eventos...
+};
 
-    - Después de cada selección hecha por el usuario, actualiza la propiedad recién añadida para que se refleje si se le ha dado click.
+EventHandler.prototype.handleDecrementStock = function(productCard) {
+    const productId = productCard.dataset.productId;
+    const product = // obtener producto por id
+    
+    try {
+        product.updateStock(-1);
+        this.domManager.updateProductCard(product);
+    } catch (error) {
+        alert('No hay suficiente stock');
+    }
+};
+```
 
-1. Como usuario, me gustaría controlar el número de rondas que se le presenta a un usuario para que pueda controlar la duración de la votación.
-    - Por defecto, se le presenta el usuario 25 rondas de votos antes de terminar la sesión.
-    - Almacena el número de rondas en una variable que permita que el número sea cambiado fácilmente para propósitos de depuración y pruebas.
+### 3. Actualizaciones a los Modelos
 
-1. Como usuario, me gustaría ver un informe de los resultados después de que todas las rondas de votos hayan terminado para que pueda evaluar qué productos fueron los más populares.
-    - Crea una propiedad adjunta a la función constructora que le dé seguimiento a todos los productos que están siendo considerados.
+#### Product.js
+```javascript
+Product.prototype.toCardElement = function() {
+    return this.domManager.createProductCard(this);
+};
 
-    - Una vez que las rondas de votos se hayan terminado, elimina los event listeners del producto.
+Product.prototype.updateDOM = function() {
+    this.domManager.updateProductCard(this);
+};
+```
 
-    - Añade un botón con el texto `Ver Resultados`, y que cuando se le haga click muestre todos los productos seguido de los votos recibidos y el número de veces que se ha visto cada uno. Ejemplo: `plátano tiene 3 votos, y se ha visto 5 veces.`
-      - > NOTA: Los nombre de los productos mostrados deben coincidir con el nombre del archivo del producto. Ejemplo: el producto representado con `dog-duck.jpg` se debe mostrar al usuario exactamente como "dog-duck" cuando se muestren los resultados.
+#### Sale.js
+```javascript
+Sale.prototype.toListElement = function() {
+    return this.domManager.createSaleItem(this);
+};
 
-1. Utilizando Lighthouse en las Herramientas para desarrolladores de Chrome, analiza la accesibilidad de tu aplicación.
+Sale.prototype.expandDetails = function() {
+    this.domManager.showSaleDetails(this);
+};
+```
 
-    - En este módulo, intenta obtener una puntuación mayor a 80. Haz los ajustes necesarios en base al informe para obtener esa puntuación.
-    - Añade una captura de pantalla de tu puntuación a tu archivo README.md.
+### 4. Inicialización (app.js)
 
-### Logros Adicionales
+```javascript
+// Inicialización
+const domManager = new DOMManager();
+const eventHandler = new EventHandler(domManager);
 
-- Gestiona la visualización y votación de un número arbitrario de imágenes.
-- Utilizando una variable, declara en tu JS cuántas imágenes se van a mostrar.
-- En base a ese valor, crea de forma dinámica ese mismo número de etiquetas ```<img>```
-- También, en base a ese valor, asegúrate de que tu selector aleatorio esté gestionando apropiadamente el número específico de imágenes que se van a mostrar y el seguimiento de repeticiones.
+// Crear instancias iniciales
+const product1 = new Product('Laptop', 1299.99, 10);
+product1.toCardElement(); // Agregar al DOM
 
-## Recursos
+// Actualizar UI
+function refreshUI() {
+    domManager.refreshAll();
+}
+```
 
-Los assets para este laboratorio se pueden encontrar en tu carpeta `class11/lab/assets` de tu repositorio diario de la clase.
+## ⭐️ Logros Adicionales
 
-En tu repositorio de la clase está un wireframe sugerido para seguir mientras construyes tu aplicación de Odd Duck Products.
+1. **Animaciones Suaves**
+```javascript
+DOMManager.prototype.animateUpdate = function(element) {
+    element.classList.add('highlight');
+    setTimeout(() => {
+        element.classList.remove('highlight');
+    }, 1000);
+};
+```
 
-### Guía de estilo de desarrollo
+2. **Modo Edición Inline**
+```javascript
+DOMManager.prototype.enableEditMode = function(element) {
+    // Convertir texto en input
+    // Manejar guardado al perder foco
+};
+```
 
-- Crea un nuevo repositorio para este proyecto multi-labotatorio llamado `odd-duck`.
+## ⚠️ Errores Comunes
 
-- Estructura tu repositorio con los archivos usuales README, CSS, JS, y HTML, además de un directorio `img/`.
+1. **Manipulación Excesiva del DOM**
+```javascript
+// ❌ MAL: Recrear todo el elemento
+card.innerHTML = `<div>...</div>`;
 
-- Incluye en tu repositorio un archivo `.eslintrc.json` cuyos contenidos sean copiados del archivo `eslintrc.json` en el repositorio de la clase.
+// ✅ BIEN: Actualizar solo lo necesario
+card.querySelector('.stock').textContent = newValue;
+```
 
--Extrae los assets del directorio `assets/` y colócales en tu directorio de imágenes.
+2. **Event Listeners Duplicados**
+```javascript
+// ❌ MAL: Agregar listener a cada botón
+buttons.forEach(btn => btn.addEventListener('click', handler));
 
-- Haz el trabajo de hoy en una rama llamada `lab11`.
+// ✅ BIEN: Usar delegación de eventos
+container.addEventListener('click', handleClick);
+```
 
-Esta es una tarea individual por hoy, pero tienen permitido colaborar con sus compañeros si quieren. Solo asegúrense de que si lo hacen, anoten la colaboración en su archivo README. 
-
-## Instrucciones de envío
-
-1. Cuando tu trabajo esté terminado y listo para enviarse, abre un Pull Request de tu rama actual hacia `main`.
-1. Envía el link de la Pull request anteriormente mencionada a Canvas.
-1. Añade un comentario al envío de Canvas con respuestas a las siguientes preguntas.
-    - ¿Cómo te fue, en general?
-    - ¿Qué observaciones o preguntas tienes acerca de lo que hemos aprendido hasta ahora?
-    - ¿Cuánto tiempo te tomó terminar esta tarea? Y, antes de que comenzaras, ¿cuánto tiempo creiste que te tomaría terminar esta tarea?
-1. Completa el merge de tu rama actual a `main`.
-1. Una vez que hayas completado tu merge, despliega tu repositorio de GitHub utilizando [Github Pages](https://docs.github.com/es/pages/getting-started-with-github-pages/creating-a-github-pages-site#creating-your-site){:  target="_blank"}. Envía el enlace a tu repositorio de GitHub para este proyecto.
+## Instrucciones de Envío
+- Crea un Pull Request desde `lab-11-dom` a `main`
+- Incluye en el PR:
+  - Ejemplos de manipulación del DOM
+  - Demo de eventos funcionando
+- Comparte el link del PR y tu sitio desplegado
