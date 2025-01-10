@@ -1,20 +1,3 @@
-﻿// index.html
-
-
-// css/styles.css
-
-
-// js/models/Product.js
-
-
-// js/app.js
-// Almacenamiento de datos
-let products = [];
-let currentSortConfig = {
-    column: null,
-    direction: 'asc'
-};
-
 // Funciones de búsqueda
 function searchTable(tableId, searchText) {
     const tbody = document.querySelector(`#${tableId} tbody`);
