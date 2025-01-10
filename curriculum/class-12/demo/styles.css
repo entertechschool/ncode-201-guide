@@ -1,0 +1,32 @@
+.table-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toolbar {
+    padding: 10px 0;
+}
+
+.table th[data-sort] {
+    cursor: pointer;
+    position: relative;
+}
+
+.table th[data-sort]::after {
+    content: '⇅';
+    position: absolute;
+    right: 8px;
+    opacity: 0.5;
+}
+
+.table th[data-sort].sort-asc::after {
+    content: '↑';
+    opacity: 1;
+}
+
+.table th[data-sort].sort-desc::after {
+    content: '↓';
+    opacity: 1;
+}

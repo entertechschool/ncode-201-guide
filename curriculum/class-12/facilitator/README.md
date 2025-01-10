@@ -1,77 +1,288 @@
-﻿# Guía del Instructor: Añadir un gráfico a la app Vote Tracker
+﻿Tienes razón. Voy a refactorizar la guía del laboratorio para hacerla más accesible y mantener un nivel de complejidad adecuado para el curso Code 201.
 
-## Resumen
 
-El objetivo de esta clase es utilizar una librería de terceros para que los estudiantes puedan proporcionar una representación gráfica de los datos de clicks que han recolectado del vote tracker. Esto involucra la conversación sobre el elemento `<canvas>`, que es donde la librería de gráficos hace su trabajo.
 
-### ¿Qué lugar ocupa este tema?
+# Laboratorio 12: Mejorando la Interfaz con DOM Avanzado 🎨
 
-**¿Qué hicimos?**:
+## Descripción
+En este laboratorio, mejorarás la interfaz de usuario del sistema de ventas aplicando conceptos avanzados del DOM. Aprenderás a crear tablas dinámicas, implementar búsquedas y usar Bootstrap Offcanvas para formularios.
 
-En la clase anterior, los estudiantes comenzaron con su nuevo proyecto, Odd Duck Products. 
+## 🎯 Objetivos de Aprendizaje
+- Manipular el DOM para crear interfaces dinámicas
+- Utilizar atributos data- para almacenar información en elementos HTML
+- Implementar formularios modales con Bootstrap Offcanvas
+- Crear funciones de búsqueda y ordenamiento para tablas
 
-**¿En qué nos centraremos en esta clase?**:
+## 🚀 Setup Inicial
 
-En esta clase, los estudiantes aprenderán a utilizar una librería de terceros en su aplicación. Utilizarán el elemento `<canvas>` para mostrar sus votos recolectados en un gráfico de barras.
+### 1. Preparación del Repositorio
+```bash
+git checkout -b lab-12-ui
+```
 
-**¿Qué haremos?**:
+### 2. Estructura de Archivos
+```
+sales-system/
+├── index.html
+├── css/
+│   └── styles.css
+└── js/
+    ├── models/
+    │   ├── Product.js  (ya existe)
+    │   ├── Customer.js (ya existe)
+    │   └── Sale.js     (ya existe)
+    └── app.js
+```
 
-En la siguiente clase, los estudiantes aprenderán a almacenar los datos de su aplicación utilizando el local storage.
+### 3. Aprendiendo con IA
+Para este laboratorio, necesitarás entender mejor cómo trabajar con tablas dinámicas. Usa un prompt similar a este:
 
-## Objetivos de aprendizaje
+```
+Soy estudiante de desarrollo web y necesito entender:
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+1. ¿Cómo crear filas de tabla dinámicamente con JavaScript?
+2. ¿Cómo implementar búsqueda en una tabla usando el DOM?
+3. ¿Cómo ordenar una tabla al hacer click en los encabezados?
 
-## Preparativos
+Mi conocimiento actual incluye:
+- Manipulación básica del DOM
+- Eventos en JavaScript
+- Prototipos y constructores
+```
 
-1. Hojea las lecturas y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa la demostración de código.
+## 📋 Historias de Usuario
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+### HU1: Visualización en Tablas
+Como usuario, necesito ver los datos organizados en tablas que me permitan:
+- Buscar registros fácilmente
+- Ordenar por columnas
+- Ver claramente las acciones disponibles (editar/eliminar)
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+### HU2: Formularios en Offcanvas
+Como usuario, necesito que los formularios:
+- Se abran en un panel lateral
+- No interrumpan la visualización de la tabla
+- Se limpien al cerrarse
 
-### Revisión del código
+## ✅ Instrucciones
 
-- Dependiendo del grupo, una demostración de la maquetación podría ser mas adecuado.
+### 1. HTML Base
 
-### Resumen de Canvas + ChartJS
+```html
+<!-- Tabla de Productos (ejemplo) -->
+<div class="table-container">
+    <!-- Barra de búsqueda -->
+    <div class="toolbar">
+        <input type="search" 
+               class="form-control w-25" 
+               data-table="products"
+               placeholder="Buscar...">
+        
+        <button class="btn btn-primary" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target="#productForm">
+            Nuevo Producto
+        </button>
+    </div>
 
-- **¿Por qué?**
-  - ¡Las librerías de terceros nos ayudarán a ahorrar tiempo ya que no necesitamos desarrollar la funcionalidad que la librería proporciona!
-- **¿Qué?**
-  - El elemento `<canvas>` se utiliza para crear gráficos utilizando JavaScript.
-  - Chart.js es una librería de JavaScript de terceros para visualización de datos, la cual soporta bastantes tipos de datos diferentes.
-- **¿Cómo?**
-  - Entra a la [documentación de Chart.js](https://www.chartjs.org/docs/latest/getting-started/) y mírala con los estudiantes
-  - Crea un archivo `index.html` e incluye el elemento `<canvas>` y la etiqueta script necesaria proporcionada en la documentación de Chart.js.
-  - Crea un archivo `app.js` y construye el código para crear el gráfico.
-  - Muéstrale a los estudianes cómo cambiar el código para que tu gráfico muestre diferentes datos o colores en el gráfico de barras.
+    <!-- Tabla -->
+    <table class="table" id="productsTable">
+        <thead>
+            <tr>
+                <th data-sort="name">Nombre</th>
+                <th data-sort="price">Precio</th>
+                <th data-sort="stock">Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-### Preparación para el laboratorio
+<!-- Formulario en Offcanvas -->
+<div class="offcanvas offcanvas-end" id="productForm">
+    <div class="offcanvas-header">
+        <h5>Nuevo Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="productFormContent">
+            <input type="hidden" name="id">
+            <!-- campos del formulario -->
+        </form>
+    </div>
+</div>
+```
 
-- **¿Por qué?**
-  - Les proporciona a los estudiantes las herramientas para que cumplan con su laboratorio.
-- **¿Qué?**
-  - El instructor hará una demostración acerca de añador un gráfico a la aplicación Goat Vote Tracker.
-- **¿Cómo?**
-  - Sigue los mismos pasos durante la demostración de código con la librería Chart.js.
+### 2. CSS Necesario
 
-## Notas de Laboratorio
+```css
+/* Estilos para las tablas */
+.table-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-Debido a la gran cantidad de trabajo del laboratorio anterior, esta clase es para ponerse al día. El único requisito del laboratorio es tomar los datos de la lista y mostrarlos como un gráfico utilizando la librería Chart.js.
+/* Indicador de ordenamiento */
+.table th[data-sort] {
+    cursor: pointer;
+    position: relative;
+}
 
-Recuérdale a los estudiantes que necesitan tener todas las funcionalidades antes de seguir con la implementación del gráfico. Si no sus aplicación aún no monitoréan los clicks y votos, aún no es un buen momento para implementar el gráfico.
+.table th[data-sort]::after {
+    content: '↕';
+    margin-left: 5px;
+    opacity: 0.5;
+}
 
-## ¿Qué cambió desde la clase anterior?
+.table th.sort-asc::after {
+    content: '↑';
+    opacity: 1;
+}
 
-No hubieron grandes cambios desde la clase anterior.
+.table th.sort-desc::after {
+    content: '↓';
+    opacity: 1;
+}
+```
 
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+### 3. Funciones para el DOM
 
-Muchos estudiantes llegarán a esta clase sin tener la primera parte del laboratorio completa. Asegúrale a los estudiantes que esto es normal en este punto del curso y que la tarea de este laboratorio es menos pesada para darles más tiempo para ponerse al día. Dependiendo del grupo, se podría necesitar una revisión del código más larga.
+```javascript
+// Funciones de búsqueda
+function searchTable(tableId, searchText) {
+    const table = document.getElementById(tableId);
+    const rows = table.querySelectorAll('tbody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchText.toLowerCase()) 
+            ? '' 
+            : 'none';
+    });
+}
 
-## Comentarios Geneales
+// Funciones de ordenamiento
+function sortTable(tableId, column, direction = 'asc') {
+    const table = document.getElementById(tableId);
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    
+    rows.sort((a, b) => {
+        const aValue = a.querySelector(`td[data-${column}]`).textContent;
+        const bValue = b.querySelector(`td[data-${column}]`).textContent;
+        return direction === 'asc' 
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+    });
+    
+    // Limpiar y reagregar filas ordenadas
+    const tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+}
 
-Una cosa más para comenzar a hacer en este momento es mirar a los proyectos de grupos anteriores para que los estudiantes puedan comenzar a calcular el alcance de los proyectos en general. Queremos hablar de los proyectos exitosos así como de los que tienen ciertas partes que necesitan más trabajo con el UI/UX.
+// Funciones de renderizado
+function renderProductRow(product) {
+    return `
+        <tr data-id="${product.id}">
+            <td data-name>${product.name}</td>
+            <td data-price>${product.getFormattedPrice()}</td>
+            <td data-stock>${product.stock}</td>
+            <td>
+                <button class="btn btn-sm btn-outline-primary" 
+                        onclick="editProduct(${product.id})">
+                    Editar
+                </button>
+                <button class="btn btn-sm btn-outline-danger"
+                        onclick="deleteProduct(${product.id})">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+    `;
+}
+
+// Funciones de formulario
+function handleProductForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    const product = new Product(
+        formData.get('name'),
+        formData.get('price'),
+        formData.get('stock')
+    );
+    
+    // Agregar producto y actualizar tabla
+    products.push(product);
+    refreshProductsTable();
+    
+    // Cerrar y limpiar formulario
+    const offcanvas = bootstrap.Offcanvas.getInstance(
+        document.getElementById('productForm')
+    );
+    offcanvas.hide();
+    form.reset();
+}
+```
+
+### 4. Event Listeners
+
+```javascript
+// Búsqueda en tiempo real
+document.querySelectorAll('input[data-table]').forEach(input => {
+    input.addEventListener('input', (e) => {
+        const tableId = e.target.dataset.table + 'Table';
+        searchTable(tableId, e.target.value);
+    });
+});
+
+// Ordenamiento por columnas
+document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', (e) => {
+        const column = e.target.dataset.sort;
+        const currentDir = e.target.classList.contains('sort-asc') 
+            ? 'desc' 
+            : 'asc';
+            
+        // Actualizar estados de ordenamiento
+        document.querySelectorAll('th').forEach(el => 
+            el.classList.remove('sort-asc', 'sort-desc')
+        );
+        e.target.classList.add(`sort-${currentDir}`);
+        
+        // Ordenar tabla
+        const tableId = e.target.closest('table').id;
+        sortTable(tableId, column, currentDir);
+    });
+});
+```
+
+## ⭐️ Logros Adicionales
+
+1. **Persistencia del Ordenamiento**
+- Guardar la columna y dirección de ordenamiento en localStorage
+- Restaurar al cargar la página
+
+2. **Búsqueda Avanzada**
+- Permitir buscar por columnas específicas
+- Agregar filtros (rango de precios, stock mínimo, etc.)
+
+## Instrucciones de Envío
+- Crea un Pull Request desde `lab-12-ui` a `main`
+- En el PR incluye:
+  - Capturas de la interfaz mejorada
+  - Ejemplos de búsqueda y ordenamiento funcionando
+- Comparte el link del PR y del sitio desplegado
+
+Esta versión simplificada:
+1. Elimina los managers complejos
+2. Usa funciones más directas y comprensibles
+3. Mantiene la separación de responsabilidades
+4. Es más apropiada para el nivel del curso
+5. Facilita la comprensión de los conceptos del DOM
+
+¿Te parece que esta versión es más adecuada para el nivel del curso?

@@ -6,8 +6,8 @@ En este laboratorio, mejorarás la interfaz de usuario del sistema de ventas imp
 ## 🎯 Objetivos de Aprendizaje
 - Implementar interfaces dinámicas usando manipulación avanzada del DOM
 - Utilizar atributos data- y la propiedad dataset para manejar datos en elementos HTML
-- Crear componentes reutilizables para formularios usando Bootstrap Offcanvas
-- Implementar funcionalidades de búsqueda y ordenamiento en tablas dinámicas
+- Implementar formularios modales con Bootstrap Offcanvas
+- Crear funciones de búsqueda y ordenamiento para tablas
 
 ## 🚀 Setup Inicial
 
@@ -16,11 +16,18 @@ En este laboratorio, mejorarás la interfaz de usuario del sistema de ventas imp
 git checkout -b lab-12-ui
 ```
 
-### 2. Actualización de Dependencias
-```html
-<!-- Asegúrate de tener Bootstrap 5.3 o superior -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+### 2. Estructura de Archivos
+```
+sales-system/
+├── index.html
+├── css/
+│   └── styles.css
+└── js/
+    ├── models/
+    │   ├── Product.js  (ya existe)
+    │   ├── Customer.js (ya existe)
+    │   └── Sale.js     (ya existe)
+    └── app.js
 ```
 
 ### 3. Aprendiendo con IA
@@ -41,179 +48,133 @@ Mi conocimiento actual incluye:
 
 ## 📋 Historias de Usuario
 
-### HU1: Interfaz de Tablas
-Como usuario, necesito ver los datos en tablas ordenadas y buscables para encontrar información rápidamente.
-- Ver productos, clientes y ventas en tablas separadas
-- Buscar registros por cualquier campo
-- Ordenar registros por columnas específicas
+### HU1: Visualización en Tablas
+Como usuario, necesito ver los datos organizados en tablas que me permitan:
+- Buscar registros fácilmente
+- Ordenar por columnas
+- Ver claramente las acciones disponibles (editar/eliminar)
 
-### HU2: Formularios Modales
-Como usuario, necesito formularios que no interrumpan mi flujo de trabajo.
-- Agregar/editar registros en paneles laterales
-- Ver formularios sin perder el contexto de la tabla
-- Recibir feedback visual de las acciones realizadas
+### HU2: Formularios en Offcanvas
+Como usuario, necesito que los formularios:
+- Se abran en un panel lateral
+- No interrumpan la visualización de la tabla
+- Se limpien al cerrarse
 
 ## ✅ Instrucciones
 
-### 1. Implementación de Tablas Dinámicas
+### 1. HTML Base
 
-#### HTML Base para Tablas
 ```html
+<!-- Tabla de Productos (ejemplo) -->
 <div class="table-container">
-  <!-- Barra de herramientas -->
-  <div class="toolbar">
-    <input type="search" class="search-input" data-table="products-table">
-    <button class="btn-add" data-bs-toggle="offcanvas" data-bs-target="#productForm">
-      Nuevo
-    </button>
-  </div>
+    <!-- Barra de búsqueda -->
+    <div class="toolbar">
+        <input type="search" 
+               class="form-control w-25" 
+               data-table="products"
+               placeholder="Buscar...">
+        
+        <button class="btn btn-primary" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target="#productForm">
+            Nuevo Producto
+        </button>
+    </div>
 
-  <!-- Tabla -->
-  <table class="table" id="productsTable">
-    <thead>
-      <tr>
-        <th data-sort="name">Nombre</th>
-        <th data-sort="price">Precio</th>
-        <!-- más columnas -->
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Se llena dinámicamente -->
-    </tbody>
-  </table>
+    <!-- Tabla -->
+    <table class="table" id="productsTable">
+        <thead>
+            <tr>
+                <th data-sort="name">Nombre</th>
+                <th data-sort="price">Precio</th>
+                <th data-sort="stock">Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
-```
 
-#### Implementación del Offcanvas
-```html
+<!-- Formulario en Offcanvas -->
 <div class="offcanvas offcanvas-end" id="productForm">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Nuevo Producto</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
-    <form id="productFormContent" data-model="product">
-      <!-- campos del formulario -->
-    </form>
-  </div>
+    <div class="offcanvas-header">
+        <h5>Nuevo Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="productFormContent">
+            <input type="hidden" name="id">
+            <!-- campos del formulario -->
+        </form>
+    </div>
 </div>
 ```
 
-### 2. JavaScript para Tablas Dinámicas
+### 2. CSS Necesario
 
-#### TableManager.js
-```javascript
-function TableManager(tableId) {
-    this.table = document.getElementById(tableId);
-    this.tbody = this.table.querySelector('tbody');
-    this.headers = this.table.querySelectorAll('th[data-sort]');
+```css
+/* Estilos para las tablas */
+.table-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-TableManager.prototype.init = function() {
-    // Inicializar búsqueda
-    // Inicializar ordenamiento
-    // Configurar observadores
-};
-
-TableManager.prototype.search = function(query) {
-    // Implementar búsqueda en todas las columnas
-};
-
-TableManager.prototype.sort = function(column, direction) {
-    // Implementar ordenamiento por columna
-};
-
-TableManager.prototype.render = function(data) {
-    // Renderizar datos en la tabla
-};
-```
-
-### 3. Implementación de Formularios Dinámicos
-
-#### FormManager.js
-```javascript
-function FormManager(formId, model) {
-    this.form = document.getElementById(formId);
-    this.model = model;
-    this.offcanvas = bootstrap.Offcanvas.getInstance(
-        this.form.closest('.offcanvas')
-    );
+/* Indicador de ordenamiento */
+.table th[data-sort] {
+    cursor: pointer;
+    position: relative;
 }
 
-FormManager.prototype.init = function() {
-    // Configurar eventos del formulario
-    // Manejar submit
-    // Limpiar al cerrar
-};
+.table th[data-sort]::after {
+    content: '↕';
+    margin-left: 5px;
+    opacity: 0.5;
+}
 
-FormManager.prototype.populateForm = function(data) {
-    // Llenar formulario para edición
-};
+.table th.sort-asc::after {
+    content: '↑';
+    opacity: 1;
+}
 
-FormManager.prototype.getFormData = function() {
-    // Obtener datos del formulario
-};
-```
-
-### 4. Integración en app.js
-
-```javascript
-// Inicializar managers
-const productTable = new TableManager('productsTable');
-const productForm = new FormManager('productFormContent', 'product');
-
-// Conectar modelos con UI
-Product.prototype.toTableRow = function() {
-    // Crear tr con datos del producto
-    // Agregar data-attributes necesarios
-};
-
-// Actualizar métodos existentes para usar nuevos managers
-function handleNewProduct(event) {
-    // Usar FormManager para procesar datos
-    // Actualizar tabla usando TableManager
+.table th.sort-desc::after {
+    content: '↓';
+    opacity: 1;
 }
 ```
 
-## ⭐️ Logros Adicionales
+### 3. Event Listeners
 
-1. **Persistencia de Ordenamiento**
-- Guardar el estado de ordenamiento en localStorage
-- Restaurar al cargar la página
-
-2. **Búsqueda Avanzada**
-- Permitir búsqueda por rangos en campos numéricos
-- Implementar filtros múltiples
-
-## ⚠️ Errores Comunes a Evitar
-
-1. **Manejo del DOM**
 ```javascript
-// ❌ MAL: Múltiples queries al DOM
-rows.forEach(row => {
-    document.querySelector(/* ... */);
+// Búsqueda en tiempo real
+document.querySelectorAll('input[data-table]').forEach(input => {
+    input.addEventListener('input', (e) => {
+        const tableId = e.target.dataset.table + 'Table';
+        // Crear la función searchTable utilizando dataset para obtener el contenido concatenado de cada row.
+        // searchTable(tableId, e.target.value); 
+    });
 });
 
-// ✅ BIEN: Cachear referencias al DOM
-const rowsContainer = document.querySelector(/* ... */);
-rows.forEach(row => {
-    // usar rowsContainer
-});
-```
-
-2. **Eventos y Performance**
-```javascript
-// ❌ MAL: Evento por cada fila
-rows.forEach(row => {
-    row.addEventListener(/* ... */);
-});
-
-// ✅ BIEN: Delegación de eventos
-table.addEventListener('click', event => {
-    const row = event.target.closest('tr');
-    if (row) {
-        // manejar evento
-    }
+// Ordenamiento por columnas
+document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', (e) => {
+        const column = e.target.dataset.sort;
+        const currentDir = e.target.classList.contains('sort-asc') 
+            ? 'desc' 
+            : 'asc';
+            
+        // Actualizar estados de ordenamiento
+        document.querySelectorAll('th').forEach(el => 
+            el.classList.remove('sort-asc', 'sort-desc')
+        );
+        e.target.classList.add(`sort-${currentDir}`);
+        
+        // Ordenar tabla
+        const tableId = e.target.closest('table').id;
+        // Crear la función sortTable
+        // sortTable(tableId, column, currentDir);
+    });
 });
 ```
 

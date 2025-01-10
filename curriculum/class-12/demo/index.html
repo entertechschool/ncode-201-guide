@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ventas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Navegación por tabs -->
+        <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="products-tab" data-bs-toggle="tab" href="#products" role="tab">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="customers-tab" data-bs-toggle="tab" href="#customers" role="tab">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab">Ventas</a>
+            </li>
+        </ul>
+
+        <!-- Contenido de los tabs -->
+        <div class="tab-content" id="mainTabContent">
+            <!-- Tab Productos -->
+            <div class="tab-pane fade show active" id="products" role="tabpanel">
+                <div class="table-container">
+                    <div class="toolbar d-flex justify-content-between align-items-center my-3">
+                        <input type="search" class="form-control w-25" placeholder="Buscar productos..." 
+                               data-table="products-table">
+                        <button class="btn btn-primary" data-bs-toggle="offcanvas" 
+                                data-bs-target="#productForm">
+                            Nuevo Producto
+                        </button>
+                    </div>
+
+                    <table class="table" id="productsTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="name">Nombre</th>
+                                <th data-sort="price">Precio</th>
+                                <th data-sort="stock">Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Clientes -->
+            <div class="tab-pane fade" id="customers" role="tabpanel">
+                <div class="table-container">
+                    <div class="toolbar d-flex justify-content-between align-items-center my-3">
+                        <input type="search" class="form-control w-25" placeholder="Buscar clientes..." 
+                               data-table="customers-table">
+                        <button class="btn btn-primary" data-bs-toggle="offcanvas" 
+                                data-bs-target="#customerForm">
+                            Nuevo Cliente
+                        </button>
+                    </div>
+
+                    <table class="table" id="customersTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="name">Nombre</th>
+                                <th data-sort="email">Email</th>
+                                <th data-sort="purchases">Compras</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Ventas -->
+            <div class="tab-pane fade" id="sales" role="tabpanel">
+                <div class="table-container">
+                    <div class="toolbar d-flex justify-content-between align-items-center my-3">
+                        <input type="search" class="form-control w-25" placeholder="Buscar ventas..." 
+                               data-table="sales-table">
+                        <button class="btn btn-primary" data-bs-toggle="offcanvas" 
+                                data-bs-target="#saleForm">
+                            Nueva Venta
+                        </button>
+                    </div>
+
+                    <table class="table" id="salesTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="date">Fecha</th>
+                                <th data-sort="customer">Cliente</th>
+                                <th data-sort="total">Total</th>
+                                <th data-sort="status">Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas Producto -->
+    <div class="offcanvas offcanvas-end" id="productForm">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Nuevo Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="productFormContent" data-model="product">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Precio</label>
+                    <input type="number" class="form-control" name="price" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Stock</label>
+                    <input type="number" class="form-control" name="stock" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Offcanvas Cliente -->
+    <div class="offcanvas offcanvas-end" id="customerForm">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Nuevo Cliente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="customerFormContent" data-model="customer">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Offcanvas Venta -->
+    <div class="offcanvas offcanvas-end" id="saleForm">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Nueva Venta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="saleFormContent" data-model="sale">
+                <div class="mb-3">
+                    <label class="form-label">Cliente</label>
+                    <select class="form-select" name="customer" required></select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Productos</label>
+                    <div id="productsList"></div>
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" id="addProductBtn">
+                        Agregar Producto
+                    </button>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Total</label>
+                    <input type="text" class="form-control" id="saleTotal" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">Completar Venta</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/managers/TableManager.js"></script>
+    <script src="js/managers/FormManager.js"></script>
+    <script src="js/models/Product.js"></script>
+    <script src="js/models/Customer.js"></script>
+    <script src="js/models/Sale.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
