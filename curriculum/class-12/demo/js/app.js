@@ -1,3 +1,10 @@
+// Almacenamiento de datos
+let products = [];
+let currentSortConfig = {
+    column: null,
+    direction: 'asc'
+};
+
 // Funciones de búsqueda
 function searchTable(tableId, searchText) {
     const tbody = document.querySelector(`#${tableId} tbody`);
