@@ -1,42 +1,134 @@
-﻿# Laboratorio: Odd Duck Products - Persistencia de datos
+﻿# Laboratorio 13: Animaciones CSS en el Vote Tracker 🎯
 
-## Descripción del problema
+## Descripción
+En este laboratorio, iniciarás el desarrollo de una aplicación de votación (Vote Tracker) de productos de tecnología. Implementarás el layout de la interfaz y las animaciones CSS para mejorar la experiencia del usuario. Aprenderás a usar pseudo-selectores y transiciones mientras construyes una interfaz interactiva y atractiva.
 
-¡La descripción del problema de Odd Duck Products se puede encontrar [AQUÍ](https://entertechschool.github.io/code-201-guide/curriculum/class-11/lab/){:target="_blank"}
+**Esta laboratorio se centra en la interfaz. En los siguientes laboratorios, te centrarás en las funcionalidades y la persistencia de datos**.
 
-## Instrucciones
+## 🎯 Objetivos de Aprendizaje
+- Implementar animaciones CSS usando pseudo-selectores y transiciones
+- Utilizar IA para generar y entender código CSS más complejo
+- Crear interfaces interactivas que respondan al comportamiento del usuario
 
-A continuación se encuentran los requisitos para el laboratorio en formato de historias de usuario. Piensa en cuáles serían las tareas de funcionalidad para cada historia, una vez que termines, o te atasques, revisa la tarea proporcionada para ver cuáles son las tareas reales para cada historia.
+## 🚀 Setup Inicial
 
-1. Como usuario, me gustaría que mis datos monitoreen persistentemente el total entre actualizaciones de página, para que pueda dar seguimiento al número total de votos.
+### 1. Preparación del Repositorio:
+- Crea un nuevo repositorio con el nombre `vote-tracker`
+- Clona el repositorio en tu local:
+```bash
+git clone [URL_REPOSITORIO]
+cd vote-tracker
+git checkout -b lab-13-animations
+```
 
-      - Implementa el local storage en tu aplicación actual
-      - Asegúrate de que los datos persistan a pesar de las actualizaciones y reinicios del navegador
+### 2. Estructura de Archivos
+```
+vote-tracker/
+├── index.html
+├── stats.html
+├── css/
+│   ├── reset.css
+│   └── styles.css
+├── js/
+│   ├── app.js
+│   └── Product.js
+└── README.md
+```
 
-**Pistas**:
+### 3. Layout
+- Utiliza una herramienta de IA para generar una interfaz responsiva con estas características:
+    - header: 10% del viewport
+        - Logo + navbar (Productos, Estadísticas)
+    - body: 80% del viewport
+        - Contenedor que envolverá a los productos que van a aparecer
+        - Distribución en columna hasta 400px, luego en fila
+    - footer: 10% del viewport
 
-1. Guarda el array de los productos en el local storage como un string en formato JSON
-1. Extrae el array de productos desde el local storage y utiliza la función `JSON.Parse()`. Recuerda, si tu constructor utiliza métodos `prototype`, tendrás que enviar cada elemento del array de vuelta a la función constructora.
+## 📋 Historias de Usuario
 
-1. Ejecuta un informe de Accesibilidad de Lighthouse. Haz los cambios necesarios a tu aplicación en base al informe para obtener una puntuación mayor a 80.
+### HU1: Visualización de Productos
+Como usuario, necesito ver dos productos lado a lado para poder compararlos y elegir mi favorito:
+- Ver imágenes de igual tamaño
+- Tener indicadores visuales al pasar el mouse sobre cada producto
+- Ver una animación suave al seleccionar un producto
 
-    - Añade una captura de pantalla de tu puntuación a tu archivo README.md.
+### HU2: Feedback Visual
+Como usuario, necesito feedback visual claro cuando interactúo con la aplicación:
+- Ver cuál producto está seleccionado
+- Recibir confirmación visual al registrar mi voto
+- Ver transiciones suaves entre diferentes estados de la interfaz
 
-### Logros Adicionales
+## 🛠️ Requerimientos Técnicos
 
-No hay logros adicionales para esta tarea
+### CSS
+1. Implementar al menos 3 pseudo-selectores diferentes:
+   - `:hover` para efectos al pasar el mouse
+   - `:active` para el estado de click
+   - `:nth-child()` para estilos alternados
 
-## Recursos
+2. Crear transiciones para:
+   - Cambios de tamaño
+   - Cambios de opacidad
+   - Transformaciones (scale, etc)
 
-Consulta el wireframe proporcionado como referencia para tu app
+3. Usar variables CSS para:
+   - Colores principales
+   - Tiempos de transición
+   - Valores de transformación
 
-## Instrucciones de envío
+### JavaScript
+1. Agregar/remover clases para:
+   - Marcar elementos seleccionados
+   - Activar animaciones
+   - Gestionar estados de la interfaz
 
-1. Cuando tu trabajo esté terminado y listo para enviarse, abre un Pull Request de tu rama actual hacia `main`.
-1. Envía el link de la Pull request anteriormente mencionada a Canvas.
-1. Añade un comentario al envío de Canvas con respuestas a las siguientes preguntas.
-    - ¿Cómo te fue, en general?
-    - ¿Qué observaciones o preguntas tienes acerca de lo que hemos aprendido hasta ahora?
-    - ¿Cuánto tiempo te tomó terminar esta tarea? Y, antes de que comenzaras, ¿cuánto tiempo creiste que te tomaría terminar esta tarea?
-1. Completa el merge de tu rama actual a `main`.
-1. Una vez que hayas completado tu merge, despliega tu repositorio de GitHub utilizando [Github Pages](https://docs.github.com/es/pages/getting-started-with-github-pages/creating-a-github-pages-site#creating-your-site){:  target="_blank"}. Envía el enlace a tu repositorio de GitHub para este proyecto.
+### Prompt Engineering
+Desarrollar prompts efectivos para:
+- Generar código CSS para animaciones específicas
+- Entender mejores prácticas de transiciones
+- Debuggear problemas de animación
+
+## 🎨 Guía de Estilos
+
+### Variables CSS Requeridas
+```css
+:root {
+  /* Colores */
+  --primary-color: ...
+  --secondary-color: ...
+  --accent-color: ...
+
+  /* Transiciones */
+  --transition-fast: ...
+  --transition-normal: ...
+  --transition-slow: ...
+}
+```
+
+### Elementos a Animar
+1. Contenedores de productos
+2. Botones de votación
+3. Mensajes de feedback
+4. Contador de los ciclos
+
+## 🌟 Logros Adicionales
+1. Implementar animaciones personalizadas con @keyframes
+2. Crear un modo oscuro
+
+## 📝 Instrucciones de Envío
+1. Actualiza el README.md con:
+   - Descripción del proyecto
+   - Los valores de tus variables CSS
+   - La imagen del wireframe de tu layout (laptop y celular)
+
+2. Crea un Pull Request que incluya:
+   - Todos los cambios en la rama lab-13-animations
+
+3. Despliega en GitHub Pages
+
+4. Entrega:
+   - URL del repositorio
+   - URL del sitio desplegado
+   - URL del Pull Request
+
+
