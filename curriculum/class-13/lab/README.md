@@ -45,11 +45,13 @@ vote-tracker/
     - footer: 10% del viewport
 
 ### 4. Recursos
+- [Logo Vote Tracker](./assets/vote_tracker_logo.png){:target="_blank"}
 - [JSON de Productos](./assets/products.json){:target="_blank"}
-- 3 Productos de muestra:
-    - [game_boy_color.png](./assets/game_boy_color.png){:target="_blank"}
-    - [ipod_classic.png](./assets/ipod_classic.png){:target="_blank"}
-    - [playstation_2.png](./assets/playstation_2.png){:target="_blank"}
+
+**Productos de muestra:**
+- [game_boy_color.png](./assets/game_boy_color.png){:target="_blank"}
+- [ipod_classic.png](./assets/ipod_classic.png){:target="_blank"}
+- [playstation_2.png](./assets/playstation_2.png){:target="_blank"}
 
 ## 📋 Historias de Usuario
 
