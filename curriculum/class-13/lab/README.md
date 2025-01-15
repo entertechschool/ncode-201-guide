@@ -44,6 +44,13 @@ vote-tracker/
         - Distribución en columna hasta 400px, luego en fila
     - footer: 10% del viewport
 
+### 4. Recursos
+- [JSON de Productos](./assets/products.json){:target="_blank"}
+- 3 Productos de muestra:
+    - [game_boy_color.png](./assets/game_boy_color.png){:target="_blank"}
+    - [ipod_classic.png](./assets/ipod_classic.png){:target="_blank"}
+    - [playstation_2.png](./assets/playstation_2.png){:target="_blank"}
+
 ## 📋 Historias de Usuario
 
 ### HU1: Visualización de Productos
