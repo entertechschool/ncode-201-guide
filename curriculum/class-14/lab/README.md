@@ -102,27 +102,20 @@ Implementa la navegación completa con el teclado.
    - URL del sitio desplegado
 
 ## ⚠️ Errores Comunes a Evitar
-
-1. **Manejo de Eventos**
 ```javascript
 // ❌ MAL: Usar onclick en HTML
 <button onclick="handleClick()">
 
 // ✅ BIEN: Usar addEventListener
 button.addEventListener('click', handleClick);
-```
 
-2. **Event Delegation**
-```javascript
+
 // ❌ MAL: Agregar listeners a cada producto
 products.forEach(p => p.addEventListener(...))
 
 // ✅ BIEN: Usar delegación en el contenedor
 container.addEventListener('click', handleProductClick);
-```
 
-3. **Event Object**
-```javascript
 // ❌ MAL: No prevenir comportamiento default
 form.addEventListener('submit', () => {})
 
