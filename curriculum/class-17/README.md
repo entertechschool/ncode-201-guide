@@ -1,25 +1,157 @@
-﻿# Semana del proyecto: Hito 2
+# Laboratorio 17: Descubriendo el Proyecto Final 🔍
 
-## Fase de desarrollo
+## Descripción
+En este laboratorio, trabajarás con tu equipo para analizar un problema real de una empresa, definir los requerimientos iniciales y crear la documentación base del proyecto. Aprenderás a usar herramientas de IA para explorar soluciones técnicas y documentarlas efectivamente.
 
-Ahora que tu proyecto ha iniciado, así es como debes organizar los esfuerzos de desarrollo de tu equipo:
+## 🎯 Objetivos de Aprendizaje
+- Analizar y documentar requerimientos técnicos para una solución web
+- Comprender cómo utilizar la metodología AGILE en gestión de proyectos
+- Crear historias de usuario efectivas que guíen el desarrollo
+- Utilizar IA estratégicamente para explorar soluciones técnicas
 
-* Utiliza [GitHub Issues](https://guides.github.com/features/issues/) u otra herramienta de gestión de proyectos para administrar y dividir el trabajo entre los miembros de tu equipo.
-* Crea nuevos issues que tomen entre 30 minutos - 2 horas en completar.
-* Utiliza etiquetas e hitos como tu equipo vea conveniente, pero deja todos los issues creados recientemente como **unassigned**.
-* Asígnate un issue cuando te compremetas a trabajar en él.
-* Una vez esté asignado, crea una rama utilizando una nomenclatura consistente y semántica.
+## 🧠 Conceptos Clave
+1. Análisis de requerimientos
+2. Gestión ágil de proyectos
+3. Historias de usuario
+4. Documentación técnica
+5. Alcance del proyecto (scope)
+6. Arquitectura de solución web
 
-Este será un dia lleno de productividad, en el que escribirán muchas líneas de código y los proyectos estarán comenzando a tomar forma. Estos son algunos consejos de seguridad útiles:
+## 🚀 Setup Inicial
 
-1. Sé prudente y cuidadoso con Git. Apégate los planes y procesos que estableciste con tu equipo. Ten en claro que van a aparecer fallos, especialmente merge conflicts. No te preocupes, solo resuélvelos conforme aparezcan. Recuerda que el equipo de instructores ha solucionado bastantes merge conflicts y puede ayudarte a resolverlos.
+### 1. Repositorio grupal
+```bash
+# Crear nuevo repositorio en GitHub
+nombre-proyecto/
+├── docs/
+│   ├── team.md
+│   ├── requirements.md
+│   ├── user-stories.md
+│   └── wireframes/ <-- imagenes
+├── README.md
+└── .gitignore
+```
 
-1. No te olvides de que el pair programming es una buena forma de mantenerse avanzando y mantener a todos los miembros del equipo comprometidos y frescos.
+### 2. Configuración de Github
+- Agregar integrantes
+- Crear ramas necesarias
 
-1. Dejen sus laptops y caminen cada cierto tiempo.  Los descansos frecuentes aumentan la productividad.
+### 3. Configurar Trello
+- Crear nuevo board: `nombre-proyecto`
+- Columnas iniciales:
+  - Backlog
+  - To Do
+  - In Progress
+  - Done
 
-1. Tengan reuniones regulares con sus equipos, lejos de sus laptops, para hablar de los procesos y resultados y para asegurarse de que todos estén cómodos y tengan claro cómo van las cosas.
+### 4. Roles del Equipo
+> `team.md`
+- Definir líder técnico
+- Asignar roles complementarios:
+  - Documentación
+  - Frontend
+  - Gestión de datos
 
-1. Siempre ten en mente la experiencia de tu usuario final. Toma el tiempo necesario para ver tu aplicación como si la estuvieras viendo por primera vez.
+## 📋 Retos a Cumplir
 
-1. Lo más importante: Concéntrate y persiste hacia lograr terminar tu funcionalidad principal. Ya deberías tener identificados tus desafíos más grandes y tus problemas más difíciles. Soluciona esto hoy si no lo has hecho ya. No te dejes tentar por el CSS, las imágenes y hacer las cosas bonitas. Deja eso para después a menos que tu equipo ya esté en camino a terminar los MVP.
+### 1. Documento de Requerimientos (requirements.md)
+Usando IA como asistente de documentación:
+
+a) Analizar el problema:
+- Descripción del negocio
+- Dolor actual (pain point)
+- Beneficios esperados
+
+b) Definir el alcance:
+- Funcionalidades core
+- Restricciones técnicas
+- Entregables mínimos
+
+c) Wireframes y bocetos:
+- Mapa del sitio
+- Interfaces de baja fidelidad
+- Flujos
+
+d) Estructurar el documento:
+- Ordenar lógicamente
+- Filtrar los resultados clave
+- Mantener el formato markdown
+
+### 2. Historias de Usuario (user-stories.md)
+Para cada funcionalidad core:
+
+```markdown
+### Historia de Usuario: [Título]
+Como [rol]
+Quiero [acción]
+Para [beneficio]
+
+#### Criterios de Aceptación:
+1. Dado [contexto]
+   Cuando [evento]
+   Entonces [resultado]
+
+#### Notas Técnicas:
+- Componentes necesarios
+- Modelos de datos
+- Interacciones
+```
+
+### 3. README.md del Proyecto
+Documentar:
+- Descripción general
+- Tecnologías a utilizar
+- Enlaces a los documentos (`docs/`)
+
+## 🛠️ Herramientas de IA Recomendadas
+
+### 1. Para Análisis
+Prompt sugerido:
+```
+Actúa como consultor técnico. Necesito analizar este problema:
+[descripción del problema]
+
+Por favor ayúdame a:
+1. Identificar los principales pain points
+2. Sugerir posibles soluciones técnicas
+3. Listar consideraciones importantes
+```
+
+### 2. Para Documentación
+Prompt sugerido:
+```
+Eres un Technical Writer. Necesito documentar:
+[aspecto técnico]
+
+Por favor genera:
+1. Descripción clara y concisa
+2. Ejemplos relevantes
+3. Consideraciones técnicas importantes
+```
+
+## 📤 Instrucciones de Envío
+
+### Entregables Grupales
+1. Link al repositorio con:
+   - README.md completo
+   - Documentos en /docs
+   - Todos los integrantes como colaboradores
+
+2. Link al board de Trello con:
+   - Historias de usuario como cards
+   - Miembros asignados
+   - Labels organizados
+
+## ⚠️ Consideraciones Importantes
+- Mantén el alcance realista para 3 sprints
+- Mantén el concepto de MVP
+- Enfócate en funcionalidades core
+- Documenta asunciones importantes
+- Usa la IA como herramienta de apoyo, no como solución completa
+
+## 💡 Consejos para el Éxito
+- Divide el tiempo equitativamente entre análisis y documentación
+- Valida ideas con el instructor
+- Itera sobre la documentación
+- Usa diagramas simples cuando sea necesario
+- Mantén las historias de usuario enfocadas y específicas
