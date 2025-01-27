@@ -9,9 +9,13 @@ En este laboratorio, trabajarás con tu equipo para analizar un problema real de
 - Crear historias de usuario efectivas que guíen el desarrollo
 - Utilizar IA estratégicamente para explorar soluciones técnicas
 
+> 🔴 **IMPORTANTE:** \
+> Este es el inicio del proyecto final. Será realizado a lo largo de 4 laboratorios y al finalizar se presentará la solución en un Demo Day. \
+> Es muy importante considerar que se busca la **implementación de una solución a nivel de MVP**, y no una solución perfecta, ya que el tiempo será el principal desafío.
+
 ## 🧠 Conceptos Clave
 1. Análisis de requerimientos
-2. Gestión ágil de proyectos
+2. Gestión ágil de proyectos y MVP
 3. Historias de usuario
 4. Documentación técnica
 5. Alcance del proyecto (scope)
@@ -43,6 +47,7 @@ nombre-proyecto/
   - To Do
   - In Progress
   - Done
+- Labels de sprints
 
 ### 4. Roles del Equipo
 > `team.md`
