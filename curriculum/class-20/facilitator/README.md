@@ -1,3 +1,13 @@
+# Demo Day
+
+- 7-9pm: Ajustes finales
+- 9-10pm: Presentación en vivo
+    - 10 minutos por grupo
+    - +5 minutos de preguntas
+
+- No necesitan slides.
+- Debe ser una demo en vivo de la solución implementada.
+
 ## Notas para el Instructor:
 
 1. Para aprobar, el proyecto debe obtener al menos:
