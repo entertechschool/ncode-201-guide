@@ -1,5 +1,29 @@
 # Clase 1: HTML5 Semántico y Accesibilidad
 
+## Estructura
+
+| **Fase** | **Duración** | **Descripción**|
+| --- | --- | --- |
+| **1. Intro** | 10 min | Breve contextualización de los objetivos de la sesión. Se explica la importancia de la estructura semántica, la accesibilidad y el uso de IA.<br><br>**Objetivo**: motivar a los estudiantes y vincularlos al tema. |
+| **2. Conceptos Clave** | 30 min | Presentación de etiquetas HTML5 semánticas, atributos de accesibilidad y ejemplos de prompts para IA.<br><br>**Objetivo**: proporcionar el marco teórico y los ejemplos antes de pasar a la práctica. |
+| **3. Práctica _(BLEND)_** | 115 min | Los estudiantes crean su propia landing page con etiquetas semánticas y elementos de accesibilidad. Se promueve el uso de IA de forma guiada. |
+| **4. Feedback** | 25 min | Revisión grupal de algunos ejemplos. Validación de accesibilidad (lector de pantalla y W3C Validator). Resolución de dudas, conclusiones y adelanto de temas para la siguiente clase.|
+
+## Estrategias de Enseñanza y Aprendizaje 
+> 📕 Basado en Principios de Andragogía
+
+1. **Conexión con la Experiencia Previa** \
+Según Malcolm Knowles, los adultos aprenden mejor cuando pueden relacionar el nuevo contenido con experiencias pasadas. En este laboratorio, se estimula a los estudiantes a compartir ejemplos o proyectos previos, para así conectar la teoría de HTML semántico y accesibilidad con situaciones reales de su entorno laboral o personal.
+
+2. **Resolución de Problemas Relevantes** \
+Las personas adultas suelen preferir aprender algo que perciban como útil para resolver problemas concretos. Por ello, la actividad se centra en construir una landing page real, con un enfoque directo en la accesibilidad (que impacta de manera significativa en la calidad de un sitio web).
+
+3. **Aprendizaje Colaborativo y Autonomía** \
+Fomentar la colaboración entre pares (peer-learning) y la interacción con el instructor permite intercambio de perspectivas y refuerza la motivación intrínseca. A la vez, se promueve la autonomía para que cada estudiante investigue y explore herramientas de IA, validando de forma activa la información obtenida.
+
+4. **Retroalimentación Inmediata y Reflexión** \
+La retroalimentación continua (tanto del instructor como de la IA y de los compañeros) impulsa la autoevaluación y la mejora constante. Al final de la sesión, se reserva un espacio para reflexionar sobre los aciertos, dificultades y aprendizajes clave, lo cual refuerza la retención y la transferencia de conocimiento a otros contextos.
+
 ## Objetivos de Aprendizaje
 
 ### 1. Construir una Estructura Semántica Sólida
@@ -14,15 +38,176 @@
 
 ## Conceptos Clave
 
-1. **HTML5 Semántico**  
-   - Etiquetas clave: `<header>`, `<main>`, `<section>`, `<footer>`.
-   - Jerarquía de encabezados (`<h1>`, `<h2>`, `<h3>`).
+### 1. HTML5 Semántico
+HTML5 introdujo varias etiquetas que describen mejor la naturaleza del contenido (header, nav, main, section, article, aside, footer). Estas etiquetas semánticas facilitan la lectura y la mantenibilidad del código, además de mejorar la accesibilidad y el SEO.
 
-2. **Accesibilidad en la Web (A11y)**  
-   - Uso de `alt` en imágenes.
-   - Roles de accesibilidad básicos (`role="navigation"`, etc.).
-   - Atributos ARIA cuando sea pertinente.
+**¿Por qué es Importante?**
+Facilita que buscadores y lectores de pantalla (assistive technologies) comprendan la estructura del contenido.
+Provee mayor legibilidad y mantenimiento a largo plazo.
 
-3. **Prompt Engineering Básico**  
-   - Formular preguntas concretas a la IA para obtener código de ejemplo o sugerencias de etiquetado.
-   - Validar y ajustar manualmente lo generado por IA.
+> - Etiquetas clave: `<header>`, `<main>`, `<section>`, `<footer>`.
+> - Jerarquía de encabezados (`<h1>`, `<h2>`, `<h3>`).
+
+### 2. Accesibilidad en la Web (A11y)
+
+La accesibilidad web engloba las prácticas que permiten a usuarios con limitaciones (visuales, auditivas, motoras, cognitivas) interactuar correctamente con un sitio. Un sitio accesible respeta estándares de lectura secuencial, uso de etiquetas descriptivas y atributos que orientan a las tecnologías de asistencia.
+
+**¿Por qué es Importante?**
+Incrementa la audiencia potencial al eliminar barreras de interacción.
+Cumplir con estándares de accesibilidad (WCAG, ARIA) es un requerimiento legal en muchos países y un factor de responsabilidad social.
+
+> - Uso de `alt` en imágenes.
+> - Roles de accesibilidad básicos (`role="navigation"`, etc.).
+> - Atributos ARIA cuando sea pertinente.
+
+### 3. Prompt Engineering Básico
+La IA puede ayudar a generar o refinar código, sin embargo, la calidad de la respuesta depende en gran medida de la calidad del prompt. Se debe preguntar de forma específica y clara, indicando contexto, detalles y restricciones.
+
+**Tips para el Instructor** \
+Muestre cómo evaluar la respuesta de la IA (¿cumple con los estándares semánticos? ¿incorpora alt en imágenes?).
+Estimule la edición manual posterior para ajustar estilos o mejorar la accesibilidad según las buenas prácticas.
+
+> - Formular preguntas concretas a la IA para obtener código de ejemplo o sugerencias de etiquetado.
+> - Validar y ajustar manualmente lo generado por IA.
+
+## Siguiente Paso ⏭
+En el próximo laboratorio, los estudiantes aprenderán a aplicar CSS Layout con Flexbox para dar estilo y estructura visual a la landing page que han comenzado a construir. ¡Sigue fomentando la exploración y el aprendizaje continuo!
+
+---
+
+# Solución - “Product Landing Page / Lab 01”
+
+A continuación se presenta un ejemplo de cómo podría lucir el código **HTML** y **CSS** que cumple con los requisitos del Laboratorio 1: HTML5 Semántico y Accesibilidad. Este ejemplo es meramente ilustrativo, y los estudiantes pueden ajustarlo según el producto que elijan.
+
+### index.html
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mi Producto Estrella</title>
+  <!-- Enlaza tu archivo CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Encabezado principal semántico -->
+  <header role="banner">
+    <h1>Mi Producto Estrella</h1>
+    <p>El producto que cambiará tu forma de ver el mundo.</p>
+    <!-- Imagen con texto alternativo -->
+    <img src="img/logo.png" alt="Logotipo de Mi Producto Estrella" />
+  </header>
+
+  <!-- Menú de navegación accesible -->
+  <nav role="navigation" aria-label="Menú principal">
+    <ul>
+      <li><a href="#caracteristicas">Características</a></li>
+      <li><a href="#planes">Planes</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main role="main">
+    <section id="caracteristicas">
+      <h2>Características Principales</h2>
+      <p>
+        Explica de forma detallada las bondades de tu producto, a quién está dirigido y por qué es útil.
+      </p>
+    </section>
+
+    <section id="planes">
+      <h2>Planes y Precios</h2>
+      <p>
+        Describe los diferentes planes de compra o suscripción, destacando beneficios y costos.
+      </p>
+    </section>
+
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>
+        Proporciona detalles para que los visitantes puedan comunicarse contigo: un formulario, un correo o un número de teléfono.
+      </p>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer role="contentinfo">
+    <p>&copy; 2025 Mi Producto Estrella. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
+```
+
+### styles.css
+```css
+/* Ejemplo básico de hoja de estilo con reset y variables */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg-color: #f7f7f7;
+  --text-color: #333;
+  --accent-color: #007bff;
+}
+
+/* Estilos globales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Contenedores semánticos */
+header,
+nav,
+main,
+footer {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 1rem;
+}
+
+/* Header */
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+/* Navegación */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--accent-color);
+}
+
+/* Secciones principales */
+main section {
+  margin: 2rem 0;
+}
+
+main h2 {
+  margin-bottom: 0.5rem;
+}
+
+main p {
+  margin-top: 0.5rem;
+}
+
+/* Footer */
+footer p {
+  text-align: center;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+```

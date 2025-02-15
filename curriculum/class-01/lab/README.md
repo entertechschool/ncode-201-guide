@@ -2,8 +2,6 @@
 
 ¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, nos enfocaremos en la estructura semántica de HTML5 y en la aplicación de buenas prácticas de accesibilidad para garantizar que tu sitio sea inclusivo.
 
----
-
 ## 🎯 Objetivos de Aprendizaje
 
 1. Construir una Estructura Semántica Sólida
@@ -12,8 +10,6 @@
 
 3. Uso Responsable de IA
 
----
-
 ## Conceptos Clave
 
 1. **HTML5 Semántico**  
@@ -21,8 +17,6 @@
 2. **Accesibilidad en la Web (A11y)**
 
 3. **Prompt Engineering Básico**  
-
----
 
 ## 🚀 Setup Inicial
 
@@ -49,8 +43,6 @@
 - En `index.html`, coloca el markup mínimo: `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`.
 - En `styles.css`, configura estilos iniciales como `reset` o variables de color (opcional).
 
----
-
 ## 🏆 Historias de Usuario
 
 1. **HU1: Sección Principal (Hero) con Encabezado Semántico**  
@@ -66,8 +58,6 @@
 - **Criterios de Aceptación**:  
   - Uso de `<nav>` para el menú principal.  
   - Anclas (`<a>`) con textos descriptivos o `aria-label` si fuera necesario.
-
----
 
 ## 🛠️ Requerimientos Técnicos
 
@@ -85,25 +75,18 @@
 - Generar al menos **un prompt** para la IA solicitando sugerencias sobre la estructura semántica.
 - Explicar los ajustes manuales que le hiciste a la propuesta de la IA para garantizar accesibilidad.
 
----
-
 ## 📝 Instrucciones de Entrega
 
-1. **Documentación en README**  
-- Explica la estructura semántica que elegiste y justifica tus etiquetas.  
-- Incluye el prompt usado con la IA y describe cómo validaste la respuesta.
+1. **Documentación en README**
+    - Explica la estructura semántica que elegiste y justifica tus etiquetas.  
+    - Incluye el prompt usado con la IA y describe cómo validaste la respuesta.
 
-2. **Pull Request**  
-- Crea un Pull Request de tu rama `lab1` hacia `main`.  
-- Describe los cambios realizados y, si lo deseas, agrega capturas de pantalla.
+2. **Despliegue**
+    - Activa GitHub Pages en el repositorio y adjunta la URL de tu landing page accesible.
 
-3. **Deploy Opcional**  
-- Activa GitHub Pages en el repositorio y adjunta la URL de tu landing page accesible.
-
-4. **Entrega Final**  
-- URL del repositorio con la rama `lab1`.  
-- URL del Pull Request.  
-- (Opcional) URL del despliegue en GitHub Pages.
+3. **Entrega Final**
+    - URL del repositorio
+    - URL del sitio desplegado en GitHub Pages
 
 ---
 
