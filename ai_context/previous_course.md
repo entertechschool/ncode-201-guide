@@ -13,3 +13,10 @@ Un estudiante que ha llevado este curso (previo a Code 201) sale con una base s�
 5. Uso de IA en Desarrollo: Explora cómo aprovechar herramientas de inteligencia artificial, como ChatGPT, para mejorar y optimizar la escritura de código, gestionando prompts y contextos.
 
 6. Control de Versiones y Flujo Colaborativo: Comprende la importancia de trabajar con repositorios, ramas y pull requests en GitHub, incluyendo la resolución de conflictos y la documentación con Markdown.
+
+## Tópicos que no se cubrieron en este curso
+
+- Git Branching
+- Frameworks o librerías de CSS / Javascript
+- Eventos en Javascript
+- Paradigmas de Programación

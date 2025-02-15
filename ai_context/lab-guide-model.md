@@ -1,147 +1,109 @@
-# Laboratorio 13: Animaciones CSS en el Vote Tracker 🎯
+# Laboratorio 1: HTML5 Semántico y Accesibilidad
 
-En este laboratorio, iniciarás el desarrollo de una aplicación de votación (Vote Tracker) de productos de tecnología. Implementarás el layout de la interfaz y las animaciones CSS para mejorar la experiencia del usuario. Aprenderás a usar pseudo-selectores y transiciones mientras construyes una interfaz interactiva y atractiva.
-
-**Esta laboratorio se centra en la interfaz. En los siguientes laboratorios, te centrarás en las funcionalidades y la persistencia de datos**.
+¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, nos enfocaremos en la estructura semántica de HTML5 y en la aplicación de buenas prácticas de accesibilidad para garantizar que tu sitio sea inclusivo.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar animaciones CSS usando pseudo-selectores y transiciones
-- Utilizar IA para generar y entender código CSS más complejo
-- Crear interfaces interactivas que respondan al comportamiento del usuario
+
+1. Construir una Estructura Semántica Sólida
+
+2. Introducir Principios de Accesibilidad
+
+3. Uso Responsable de IA
 
 ## Conceptos Clave
-- CSS Layout
-- Pseudo-selectores
-- Transiciones
+
+1. **HTML5 Semántico**  
+
+2. **Accesibilidad en la Web (A11y)**
+
+3. **Prompt Engineering Básico**  
 
 ## 🚀 Setup Inicial
 
-### 1. Preparación del Repositorio:
-- Crea un nuevo repositorio con el nombre `vote-tracker`
-- Clona el repositorio en tu local:
-```bash
-git clone [URL_REPOSITORIO]
-cd vote-tracker
-git checkout -b lab-13-animations
-```
+1. **Repositorio**  
+   - Crea un repositorio nuevo en GitHub, por ejemplo: `product-landing-page`.
+   - Clona el repositorio en tu máquina local.
 
-### 2. Estructura de Archivos
-```
-vote-tracker/
-├── index.html
-├── stats.html
-├── css/
-│   ├── reset.css
-│   └── styles.css
-├── js/
-│   ├── app.js
-│   └── Product.js
-└── README.md
-```
+2. **Consejos PRO:**
+    - Es una buena idea tener una carpeta `dev` en tu computadora, y dentro, tener una carpeta con el nombre de tu usuario de github (idéntico).
+    - Dentro de la carpeta con tu nombre de usuario, puedes clonar este nuevo repositorio.
 
-### 3. Layout
-- Utiliza una herramienta de IA para generar una interfaz responsiva con estas características:
-    - header: 10% del viewport
-        - Logo + navbar (Productos, Estadísticas)
-    - body: 80% del viewport
-        - Contenedor que envolverá a los productos que van a aparecer
-        - Distribución en columna hasta 400px, luego en fila
-    - footer: 10% del viewport
+3. **Estructura de Archivos**
+   Organiza tu proyecto con la siguiente estructura inicial:
+   ```
+   product-landing-page/ 
+   ├── index.html 
+   ├── css/ 
+   │ └── styles.css 
+   ├── img/ 
+   └── README.md
+   ```
 
-### 4. Recursos
-- [Logo Vote Tracker](./assets/vote_tracker_logo.png){:target="_blank"}
-- [JSON de Productos](./assets/products.json){:target="_blank"}
+4. **Contenido Base**
+- En `index.html`, coloca el markup mínimo: `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`.
+- En `styles.css`, configura estilos iniciales como `reset` o variables de color (opcional).
 
-**Productos de muestra:**
-- [game_boy_color.png](./assets/game_boy_color.png){:target="_blank"}
-- [ipod_classic.png](./assets/ipod_classic.png){:target="_blank"}
-- [playstation_2.png](./assets/playstation_2.png){:target="_blank"}
+## 🏆 Historias de Usuario
 
-## 📋 Historias de Usuario
+1. **HU1: Sección Principal (Hero) con Encabezado Semántico**  
+“Como visitante, quiero ver inmediatamente el nombre del producto y una breve descripción, para comprender la propuesta de valor y navegar fácilmente a más detalles.”
 
-### HU1: Visualización de Productos
-Como usuario, necesito ver dos productos lado a lado para poder compararlos y elegir mi favorito:
-- Ver imágenes de igual tamaño
-- Tener indicadores visuales al pasar el mouse sobre cada producto
-- Ver una animación suave al seleccionar un producto
+- **Criterios de Aceptación**:  
+  - Uso de `<header>` con un `<h1>` claro que describa el producto.  
+  - Un texto de descripción en un `<p>` o `<section>`.
 
-### HU2: Feedback Visual
-Como usuario, necesito feedback visual claro cuando interactúo con la aplicación:
-- Ver cuál producto está seleccionado
-- Recibir confirmación visual al registrar mi voto
-- Ver transiciones suaves entre diferentes estados de la interfaz
+2. **HU2: Navegación Accesible**  
+“Como usuario con lector de pantalla, quiero un menú de navegación semánticamente correcto, para explorar la landing page fácilmente usando atajos de teclado.”
+
+- **Criterios de Aceptación**:  
+  - Uso de `<nav>` para el menú principal.  
+  - Anclas (`<a>`) con textos descriptivos o `aria-label` si fuera necesario.
 
 ## 🛠️ Requerimientos Técnicos
 
-### CSS
-1. Implementar al menos 3 pseudo-selectores diferentes:
-   - `:hover` para efectos al pasar el mouse
-   - `:active` para el estado de click
-   - `:nth-child()` para estilos alternados
+1. **HTML5 Semántico**  
+- Al menos 3 secciones semánticas (`header`, `main`, `footer`).
+- Jerarquía coherente de encabezados (`<h1>`, `<h2>`, `<h3>`).
+- Evitar `<div>` innecesarios si existe una etiqueta semántica más apropiada.
 
-2. Crear transiciones para:
-   - Cambios de tamaño
-   - Cambios de opacidad
-   - Transformaciones (scale, etc)
+2. **Accesibilidad**  
+- Todas las imágenes deben tener atributo `alt`.
+- Orden lógico del contenido para lectores de pantalla.
+- Usar ARIA en casos puntuales (`role="banner"`, `role="main"`, etc.) si se justifica.
 
-3. Usar variables CSS para:
-   - Colores principales
-   - Tiempos de transición
-   - Valores de transformación
-
-### JavaScript
-1. Agregar/remover clases para:
-   - Marcar elementos seleccionados
-   - Activar animaciones
-   - Gestionar estados de la interfaz
-
-### Prompt Engineering
-Desarrollar prompts efectivos para:
-- Generar código CSS para animaciones específicas
-- Entender mejores prácticas de transiciones
-- Debuggear problemas de animación
-
-## 🎨 Guía de Estilos
-
-### Variables CSS Requeridas
-```css
-:root {
-  /* Colores */
-  --primary-color: ...
-  --secondary-color: ...
-  --accent-color: ...
-
-  /* Transiciones */
-  --transition-fast: ...
-  --transition-normal: ...
-  --transition-slow: ...
-}
-```
-
-### Elementos a Animar
-1. Contenedores de productos
-2. Botones de votación
-3. Mensajes de feedback
-4. Contador de los ciclos
+3. **Prompt Engineering**  
+- Generar al menos **un prompt** para la IA solicitando sugerencias sobre la estructura semántica.
+- Explicar los ajustes manuales que le hiciste a la propuesta de la IA para garantizar accesibilidad.
 
 ## 🌟 Logros Adicionales
-1. Implementar animaciones personalizadas con @keyframes
-2. Crear un modo oscuro
+- **Logro 1: Implementar un Modo Oscuro (Dark Mode)** \
+Configura variables de CSS (por ejemplo, `--bg-color` y `--text-color`) para habilitar un esquema de colores alternativo. Permite que el usuario cambie entre modo claro y oscuro mediante un botón o detectando la preferencia del sistema operativo.
 
-## 📝 Instrucciones de Envío
-1. Actualiza el README.md con:
-   - Descripción del proyecto
-   - Los valores de tus variables CSS
-   - La imagen del wireframe de tu layout (laptop y celular)
+- **Logro 2: Microinteracciones y Transiciones** \
+Agrega pequeñas animaciones o transiciones en elementos clave (por ejemplo, al pasar el ratón sobre los enlaces de navegación o al hacer clic en un botón). Esto mejora la experiencia de usuario y hace que la interfaz luzca más dinámica y profesional.
 
-2. Crea un Pull Request que incluya:
-   - Todos los cambios en la rama lab-13-animations
+## 📝 Instrucciones de Entrega
 
-3. Despliega en GitHub Pages
+1. **Documentación en README**
+    - Explica la estructura semántica que elegiste y justifica tus etiquetas.  
+    - Incluye el prompt usado con la IA y describe cómo validaste la respuesta.
 
-4. Entrega:
-   - URL del repositorio
-   - URL del sitio desplegado
-   - URL del Pull Request
+2. **Despliegue**
+    - Activa GitHub Pages en el repositorio y adjunta la URL de tu landing page accesible.
 
+3. **Entrega Final**
+    - URL del repositorio
+    - URL del sitio desplegado en GitHub Pages
 
+---
+
+## 💡 Tips y Sugerencias
+
+1. **Valida tu HTML**  
+- Utiliza la [W3C Validator](https://validator.w3.org/) para comprobar la semántica y detectar posibles errores.
+
+2. **Prueba con un Lector de Pantalla**  
+- VoiceOver (macOS/iOS), NVDA (Windows) o ChromeVox (extensión de Chrome) para verificar la navegación.
+
+3. **IA como Apoyo, no como Sustituto**  
+- Pregunta, analiza y refina las sugerencias. Asegúrate de que cumplan con los lineamientos de accesibilidad.
