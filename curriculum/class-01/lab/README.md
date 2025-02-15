@@ -1,87 +1,119 @@
-# Lab 01: Creando la Web Moderna
+# Laboratorio 1: HTML5 Semántico y Accesibilidad
 
-Este laboratorio es el inicio de tu primer proyecto individual en Code 201. A lo largo de los laboratorios del módulo irás avanzando en el contenido, diseño y responsividad de este proyecto.
+¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, nos enfocaremos en la estructura semántica de HTML5 y en la aplicación de buenas prácticas de accesibilidad para garantizar que tu sitio sea inclusivo.
 
-##  Configuración y documentación
+---
 
-Para este laboratorio usarás tu terminal (GitBash en windows), VS Code y tu cuenta de GitHub.
+## 🎯 Objetivos de Aprendizaje
 
-## Instrucciones
-1. Crea el directorio para tu proyecto: `~/dev/[usuario_github]/web-moderna`.
-   - En tu terminal escribe `cd ` para ir al directorio raíz.
-   - Luego ingresa al directorio **dev** (si no lo tienes, créalo con `mkdir dev`).
-   - Crea el directorio (si no lo tienes) con el mismo nombre de tu usuario de github, por ejemplo: `mkdir mi_usuario`.
-   - Ingresa al directorio **mi_usuario** y crea el directorio **web-moderna**.
-  
-   > 💡 Es una buena práctica que escribas los nombres de tus directorios siempre en minúsculas y sin utilizar espacios en blanco.
-   > Puedes utilizar los guiones (- / _) para separar las palabras.
+1. Construir una Estructura Semántica Sólida
 
-2. Agregando los archivos iniciales al proyecto.
-   - Abre tu directorio **web-moderna** en VS Code, puedes hacerlo con el comando `code .` si es que estás en la terminal.
-   - Crea los archivos: index.html, styles.css, README.md y .eslintrc.json
-   - Agrega una estructura básica en cada archivo.
-   - Para el archivo **.eslintrc.json** utiliza el siguiente contenido:
-```js
-{
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": ["eslint:recommended"],
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "rules": {
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
-    "no-unused-vars": "warn",
-    "no-console": "warn"
-  }
-}
-```
+2. Introducir Principios de Accesibilidad
 
-3. Sincronizar el repositorio.
-   - En el menú lateral, dale clic a la opción **Control de código fuente**.
-   - Presiona el botón **Inicializar Repositorio Git**
-   - Luego, en el campo de Mensaje, escribe: **Commit inicial** y presiona **Confirmación**
-   - A continuación aparecerá el botón **Publicar Branch** dale clic.
-   - Aparecerá un dialogo para que elijas qué tipo de repositorio crear. Selecciona **público**.
-   - Finalmente, ve a tu cuenta de Github desde tu navegador y verifica que se haya creado el repositorio.
-  
-4. Agregando contenido al `README.md`
-   - Agrega una sección llamada **Autor** y dentro de ella:
-       - Coloca tu **Nombre completo**
-       - Coloca el **Nombre del curso**
-       - Coloca tu **email**
-       - Coloca la **Fecha de creación** del proyecto 
-   - Agrega una sección llamada **Sobre el Proyecto** y dentro de ella:
-       - Coloca la siguiente descripción en un párrafo:
-         > En "La Web Moderna" podrás leer los conceptos clave que todo Desarrollador de Software debe saber para crear aplicaciones web.
-   - Agrega una sección llamada **eslintrc** y dentro de ella:
-       - Explica cada línea del contenido de tu archivo `.eslintrc.json`. Para esta actividad, pídele ayuda a ChatGPT, Claude AI o Gemini.
-   - Agrega una sección llamada **Despliegue** y dentro de ella:
-       - Coloca un enlace hacia tu página desplegada en **GitHub Pages**.
-   
-6. Agregando contenido a `index.html`
-   - En la cabecera `<head>` identifica la etiqueta `<title>` y modifica el contenido por **La Web Moderna**.
-   - En el `body`, agrega la etiqueta `<nav>` y dentro de ella añade:
-      - Una etiqueta `<a>` y coloca como contenido **GitHub**. Recuerda que debe redigir a tu cuenta.
-      - Una etiqueta `<a>` y coloca como contenido **README**. Recuerda que debe redirigir a tu archivo. 
-   - En el `body`, agrega la etiqueta `<main>` y dentro de ella añade:
-      - La etiqueta `<h1>` y coloca como contenido **La Web Moderna**.
-      
-7. Agregando reglas a `styles.css`
-   - Utiliza el selector `*` y agrega las siguientes propiedades:
-       - `margin: 0;`
-       - `padding: 0;`
-       - `box-sizing: border-box;`
-   - Utiliza el selector `body`, agrega como propiedad el tipo de familia utilizando `font-family` y elige la fuente `'Segoe UI', system-ui, sans-serif`, define el color de fondo utilizando la etiqueta `background-color` y usa el color `#f5f5f5`.
-  
-8. Publicando en Github Pages
-   - En el repositorio de tu proyecto, selecciona la opción `Settings` y despliega tu página en GitHub Pages. 
-    
-### Instrucciones de envío
-- Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
+3. Uso Responsable de IA
+
+---
+
+## Conceptos Clave
+
+1. **HTML5 Semántico**  
+
+2. **Accesibilidad en la Web (A11y)**
+
+3. **Prompt Engineering Básico**  
+
+---
+
+## 🚀 Setup Inicial
+
+1. **Repositorio**  
+   - Crea un repositorio nuevo en GitHub, por ejemplo: `product-landing-page`.
+   - Clona el repositorio en tu máquina local.
+> 💡 Consejo PRO: \
+> Es una buena idea tener una carpeta `dev` en tu computadora, y dentro, tener una carpeta con el nombre de tu usuario de github (idéntico).
+> Dentro de la carpeta con tu nombre de usuario, puedes clonar este nuevo repositorio.
+
+
+2. **Estructura de Archivos**  
+   Organiza tu proyecto con la siguiente estructura inicial:
+   ```
+   product-landing-page/ 
+   ├── index.html 
+   ├── css/ 
+   │ └── styles.css 
+   ├── img/ 
+   └── README.md
+   ```
+
+3. **Contenido Base**  
+- En `index.html`, coloca el markup mínimo: `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`.
+- En `styles.css`, configura estilos iniciales como `reset` o variables de color (opcional).
+
+---
+
+## 🏆 Historias de Usuario
+
+1. **HU1: Sección Principal (Hero) con Encabezado Semántico**  
+“Como visitante, quiero ver inmediatamente el nombre del producto y una breve descripción, para comprender la propuesta de valor y navegar fácilmente a más detalles.”
+
+- **Criterios de Aceptación**:  
+  - Uso de `<header>` con un `<h1>` claro que describa el producto.  
+  - Un texto de descripción en un `<p>` o `<section>`.
+
+2. **HU2: Navegación Accesible**  
+“Como usuario con lector de pantalla, quiero un menú de navegación semánticamente correcto, para explorar la landing page fácilmente usando atajos de teclado.”
+
+- **Criterios de Aceptación**:  
+  - Uso de `<nav>` para el menú principal.  
+  - Anclas (`<a>`) con textos descriptivos o `aria-label` si fuera necesario.
+
+---
+
+## 🛠️ Requerimientos Técnicos
+
+1. **HTML5 Semántico**  
+- Al menos 3 secciones semánticas (`header`, `main`, `footer`).
+- Jerarquía coherente de encabezados (`<h1>`, `<h2>`, `<h3>`).
+- Evitar `<div>` innecesarios si existe una etiqueta semántica más apropiada.
+
+2. **Accesibilidad**  
+- Todas las imágenes deben tener atributo `alt`.
+- Orden lógico del contenido para lectores de pantalla.
+- Usar ARIA en casos puntuales (`role="banner"`, `role="main"`, etc.) si se justifica.
+
+3. **Prompt Engineering**  
+- Generar al menos **un prompt** para la IA solicitando sugerencias sobre la estructura semántica.
+- Explicar los ajustes manuales que le hiciste a la propuesta de la IA para garantizar accesibilidad.
+
+---
+
+## 📝 Instrucciones de Entrega
+
+1. **Documentación en README**  
+- Explica la estructura semántica que elegiste y justifica tus etiquetas.  
+- Incluye el prompt usado con la IA y describe cómo validaste la respuesta.
+
+2. **Pull Request**  
+- Crea un Pull Request de tu rama `lab1` hacia `main`.  
+- Describe los cambios realizados y, si lo deseas, agrega capturas de pantalla.
+
+3. **Deploy Opcional**  
+- Activa GitHub Pages en el repositorio y adjunta la URL de tu landing page accesible.
+
+4. **Entrega Final**  
+- URL del repositorio con la rama `lab1`.  
+- URL del Pull Request.  
+- (Opcional) URL del despliegue en GitHub Pages.
+
+---
+
+## 💡 Tips y Sugerencias
+
+1. **Valida tu HTML**  
+- Utiliza la [W3C Validator](https://validator.w3.org/) para comprobar la semántica y detectar posibles errores.
+
+2. **Prueba con un Lector de Pantalla**  
+- VoiceOver (macOS/iOS), NVDA (Windows) o ChromeVox (extensión de Chrome) para verificar la navegación.
+
+3. **IA como Apoyo, no como Sustituto**  
+- Pregunta, analiza y refina las sugerencias. Asegúrate de que cumplan con los lineamientos de accesibilidad.
