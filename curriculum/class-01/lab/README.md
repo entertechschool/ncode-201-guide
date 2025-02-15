@@ -75,6 +75,13 @@
 - Generar al menos **un prompt** para la IA solicitando sugerencias sobre la estructura semántica.
 - Explicar los ajustes manuales que le hiciste a la propuesta de la IA para garantizar accesibilidad.
 
+## 🌟 Logros Adicionales
+- **Logro 1: Implementar un Modo Oscuro (Dark Mode)** \
+Configura variables de CSS (por ejemplo, `--bg-color` y `--text-color`) para habilitar un esquema de colores alternativo. Permite que el usuario cambie entre modo claro y oscuro mediante un botón o detectando la preferencia del sistema operativo.
+
+- **Logro 2: Microinteracciones y Transiciones** \
+Agrega pequeñas animaciones o transiciones en elementos clave (por ejemplo, al pasar el ratón sobre los enlaces de navegación o al hacer clic en un botón). Esto mejora la experiencia de usuario y hace que la interfaz luzca más dinámica y profesional.
+
 ## 📝 Instrucciones de Entrega
 
 1. **Documentación en README**
