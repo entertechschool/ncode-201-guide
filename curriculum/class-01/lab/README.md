@@ -100,7 +100,7 @@ Agrega pequeñas animaciones o transiciones en elementos clave (por ejemplo, al 
 ## 💡 Tips y Sugerencias
 
 1. **Valida tu HTML**  
-- Utiliza la [W3C Validator](https://validator.w3.org/) para comprobar la semántica y detectar posibles errores.
+- Utiliza la [W3C Validator](https://validator.w3.org/){:target="_blank"} para comprobar la semántica y detectar posibles errores.
 
 2. **Prueba con un Lector de Pantalla**  
 - VoiceOver (macOS/iOS), NVDA (Windows) o ChromeVox (extensión de Chrome) para verificar la navegación.

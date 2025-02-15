@@ -1,30 +1,27 @@
-﻿# Read 01: Introducción a la Web Moderna
+# Read 01: Introducción a la Web Moderna
 
-## Reflexiona y debate
+Hace unos años, en un pequeño taller de desarrollo web, un estudiante llamado Manuel se enfrentó a un problema peculiar: tras semanas creando la página de un evento comunitario, su amiga Lucía, que usa un lector de pantalla debido a una discapacidad visual, no podía navegar con fluidez por el sitio. El menú no era claro, las imágenes carecían de texto alternativo y la estructura confundía a la herramienta de asistencia. Fue entonces cuando Manuel entendió que construir un sitio web va más allá de diseñar algo “bonito”; se trata de **construir para todos**.
 
-A continuación se muestra una colección de recursos que describen los temas de la clase.
+Inspirado por esta experiencia, Manuel decidió profundizar en dos temas clave que marcarían su carrera como desarrollador: la semántica en HTML5, que le permitiría organizar y describir cada parte de la página de forma lógica, y los principios de accesibilidad, que garantizan que cualquier persona, con o sin limitaciones, pueda usar sin obstáculos sus creaciones. Lo más interesante es que, en ese mismo camino, descubrió que la inteligencia artificial podría brindarle orientación y ejemplos de código; pero al final, comprendió que **su criterio humano** sigue siendo el pilar fundamental para un resultado de calidad y verdaderamente inclusivo.
 
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
+## Artículos a leer
 
-### Lectura
-La lectura de este articulo es obligatoria.
-- [Cómo funciona la web](https://developer.mozilla.org/es/docs/Learn/Getting_started_with_the_web/How_the_Web_works){:target="_blank"}
+1. **MDN Web Docs – Conceptos de Semántica en HTML**  
+   [https://developer.mozilla.org/es/docs/Glossary/semantics](https://developer.mozilla.org/es/docs/Glossary/semantics){:target="_blank"} 
+   Un vistazo conciso a qué significa “semántica” y por qué es la base de la estructura en HTML5.
 
-### Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-- [Entorno de desarrollo](https://aws.amazon.com/es/what-is/ide/){:target="_blank"}
+2. **Introducción a la Accesibilidad (W3C)**  
+   [https://www.w3.org/WAI/fundamentals/accessibility-intro/](https://www.w3.org/WAI/fundamentals/accessibility-intro/){:target="_blank"}
+   Un panorama general de los principios básicos de la accesibilidad y su importancia social y legal.
 
+3. **Cómo escribir mejores prompts para la IA**  
+   [https://www.promptingguide.ai/](https://www.promptingguide.ai/){:target="_blank"}
+   Consejos prácticos para obtener respuestas más precisas y útiles al interactuar con herramientas de inteligencia artificial.
 
-## Responde
-1. ¿Qué roles desempeñan los clientes y los servidores en el funcionamiento de la web?
-2. ¿Cómo se realiza la comunicación entre un navegador y un servidor al acceder a un sitio web?
-3. ¿Cuáles son las principales ventajas de utilizar un IDE en la nube en comparación con un IDE local?
-4. ¿Qué funciones automatizadas comunes se encuentran en la mayoría de los IDE, y por qué son importantes para los desarrolladores?
+---
 
-## Instrucciones de envío
-- Agrega las preguntas y respuestas de esta actividad a tu archivo `read01.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-- Agrega en la **Respuesta** a esta actividad:
-    - El enlace de tu repositorio publicado en **GitHub Pages**.
-    - Y también, las respuestas que desarrollaste.
-- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
+## Reflexiones
 
+1. ¿Cuáles son las etiquetas semánticas que más te llaman la atención y por qué crees que son útiles?
+2. Piensa en tu última visita a un sitio web: ¿notaste algo que pudiera ser un obstáculo para una persona con discapacidad visual o auditiva?
+3. ¿Cómo crees que podrías usar la IA para agilizar tu trabajo, sin perder la rigurosidad técnica?
