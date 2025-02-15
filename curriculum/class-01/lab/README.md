@@ -23,12 +23,12 @@
 1. **Repositorio**  
    - Crea un repositorio nuevo en GitHub, por ejemplo: `product-landing-page`.
    - Clona el repositorio en tu máquina local.
-> 💡 Consejo PRO: \
-> Es una buena idea tener una carpeta `dev` en tu computadora, y dentro, tener una carpeta con el nombre de tu usuario de github (idéntico).
-> Dentro de la carpeta con tu nombre de usuario, puedes clonar este nuevo repositorio.
 
+2. **Consejos PRO:**
+    - Es una buena idea tener una carpeta `dev` en tu computadora, y dentro, tener una carpeta con el nombre de tu usuario de github (idéntico).
+    - Dentro de la carpeta con tu nombre de usuario, puedes clonar este nuevo repositorio.
 
-2. **Estructura de Archivos**  
+3. **Estructura de Archivos**
    Organiza tu proyecto con la siguiente estructura inicial:
    ```
    product-landing-page/ 
@@ -39,7 +39,7 @@
    └── README.md
    ```
 
-3. **Contenido Base**  
+4. **Contenido Base**
 - En `index.html`, coloca el markup mínimo: `<!DOCTYPE html>`, `<html>`, `<head>`, `<body>`.
 - En `styles.css`, configura estilos iniciales como `reset` o variables de color (opcional).
 
