@@ -1,9 +1,12 @@
 # Lectura y Debate 01
 
-## 🎯 Introducción a los Objetivos de la Lectura
-En esta primera clase, conocerás los fundamentos del **HTML5 semántico** y la **accesibilidad web** (A11y), así como el rol de la **IA** para potenciar el desarrollo. Con esta lectura previa, buscamos que reflexiones sobre cómo estos temas se integran y por qué son esenciales para crear proyectos web inclusivos, escalables y de alta calidad.
+## 🎯 Objetivos de la Lectura y el Debate
+Sabemos que leer te da las bases, pero **debatir en clase** concreta rápidamente el aprendizaje. 
+La lectura y el debate están profundamente relacionados, **no hay sentido en el uno sin el otro**.
 
-## 🔑 Conceptos Clave en Breve (HTML5 Semántico, Accesibilidad, IA)
+A través de esta guía, nos prepararemos para un debate dinámico con tus compañeros y el instructor, mientras vamos aprendiendo de forma entretenida sobre los conceptos clave a tratar.
+
+## 🔑 Conceptos Clave a profundizar
 - **HTML5 Semántico:** Uso de etiquetas (`<header>`, `<nav>`, `<section>`, `<footer>`) que describen la función del contenido, facilitando la lectura y navegación, tanto para usuarios como para motores de búsqueda.
 - **Accesibilidad (A11y):** Aplicar prácticas (como texto alternativo, roles ARIA, orden lógico de encabezados) para que cualquier persona, sin importar sus limitaciones, pueda interactuar con tu sitio.
 - **IA en Desarrollo Web:** Herramientas como ChatGPT pueden generar ejemplos de código y sugerencias semánticas, pero requieres validarlas para asegurar calidad y conformidad con buenas prácticas.
