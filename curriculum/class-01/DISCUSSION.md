@@ -18,7 +18,7 @@ En esta primera clase, conocerás los fundamentos del **HTML5 semántico** y la 
 - **Cómo escribir mejores prompts para la IA**  
   [https://www.promptingguide.ai/es](https://www.promptingguide.ai/es){:target="_blank"}
 
-## ☑️ Lista de Mitos y Realidades para Analizar
+## ☑️ Lista de Mitos y Verdades para Analizar
 1. Usar `<div>` para cada sección del sitio es la mejor forma de estructurar una página.  
 2. Aplicar roles y atributos ARIA es imprescindible para mejorar la accesibilidad de un sitio.  
 3. La semántica HTML no influye en absoluto en el posicionamiento SEO de una página.  
@@ -35,4 +35,4 @@ En esta primera clase, conocerás los fundamentos del **HTML5 semántico** y la 
 14. Un buen uso de HTML5 semántico hace el proyecto más mantenible y promueve la colaboración entre desarrolladores.  
 15. La accesibilidad es un requerimiento opcional y solo aplica en organizaciones públicas o gubernamentales.
 
-> **Instrucción:** Identifica cuáles crees que son mitos y cuáles son realidades. Prepárate para justificar tus respuestas con evidencia de lecturas o experiencias.
+> **Instrucción:** Identifica cuáles crees que son mitos y cuáles son verdades. Prepárate para justificar tus respuestas con evidencia de lecturas o experiencias.

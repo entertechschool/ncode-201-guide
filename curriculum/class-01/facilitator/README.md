@@ -5,7 +5,7 @@
 | **Fase** | **Duración** | **Descripción**|
 | --- | --- | --- |
 | **1. Intro** | 10 min | Breve contextualización de los objetivos de la sesión. Se explica la importancia de la estructura semántica, la accesibilidad y el uso de IA.<br><br>**Objetivo**: motivar a los estudiantes y vincularlos al tema. |
-| **2. Conceptos Clave** | 30 min | Presentación de etiquetas HTML5 semánticas, atributos de accesibilidad y ejemplos de prompts para IA.<br><br>**Objetivo**: proporcionar el marco teórico y los ejemplos antes de pasar a la práctica. |
+| **2. Conceptos Clave y Debate** | 30 min | Presentación de etiquetas HTML5 semánticas, atributos de accesibilidad y ejemplos de prompts para IA.<br><br>**Objetivo**: proporcionar el marco teórico y los ejemplos antes de pasar a la práctica. |
 | **3. Práctica _(BLEND)_** | 115 min | Los estudiantes crean su propia landing page con etiquetas semánticas y elementos de accesibilidad. Se promueve el uso de IA de forma guiada. |
 | **4. Feedback** | 25 min | Revisión grupal de algunos ejemplos. Validación de accesibilidad (lector de pantalla y W3C Validator). Resolución de dudas, conclusiones y adelanto de temas para la siguiente clase.|
 
@@ -75,7 +75,56 @@ En el próximo laboratorio, los estudiantes aprenderán a aplicar CSS Layout con
 
 ---
 
-# Solución - “Product Landing Page / Lab 01”
+# Solucionario
+
+## Mitos y Verdades:
+
+1. ❌ *"Usar `<div>` para cada sección del sitio es la mejor forma de estructurar una página"*
+   - Los elementos semánticos como `<section>`, `<article>`, `<nav>` proporcionan mejor estructura y significado al contenido.
+
+2. ✅ *"Aplicar roles y atributos ARIA es imprescindible para mejorar la accesibilidad de un sitio"*
+   - ARIA complementa HTML cuando la semántica nativa no es suficiente.
+
+3. ❌ *"La semántica HTML no influye en absoluto en el posicionamiento SEO de una página"*
+   - El HTML semántico es un factor importante para el SEO y ayuda a los motores de búsqueda a entender el contenido.
+
+4. ✅ *"La IA puede generar código HTML y sugerir etiquetas semánticas, pero el desarrollador debe revisarlas antes de usarlas"*
+   - La supervisión humana es crucial para garantizar la calidad y corrección del código.
+
+5. ❌ *"Colocar texto alternativo (`alt`) en imágenes solo sirve para mejorar el resultado en la búsqueda de Google"*
+   - El atributo `alt` es crucial para usuarios con lectores de pantalla y cuando las imágenes no cargan.
+
+6. ❌ *"Solo las personas con discapacidad visual se benefician de los sitios accesibles"*
+   - La accesibilidad beneficia a usuarios con diferentes discapacidades, usuarios móviles y mejora la experiencia general.
+
+7. ✅ *"Las etiquetas `<header>`, `<main>` y `<footer>` ordenan el contenido y facilitan su lectura"*
+   - Estos elementos proporcionan una estructura clara y consistente al documento.
+
+8. ✅ *"Incluso en proyectos pequeños, la accesibilidad y la semántica siguen siendo factores esenciales"*
+   - El tamaño del proyecto no determina la importancia de las buenas prácticas.
+
+9. ✅ *"Un orden lógico de encabezados (h1, h2, h3…) facilita la navegación con lectores de pantalla"*
+   - La jerarquía correcta de encabezados mejora la navegación y comprensión del contenido.
+
+10. ✅ *"Los motores de búsqueda suelen priorizar sitios con estructura semántica y contenido ordenado"*
+    - El HTML semántico ayuda a los motores de búsqueda a entender mejor el contenido.
+
+11. ❌ *"No se pueden combinar elementos semánticos con otros más genéricos como `<div>` o `<span>` en el mismo documento HTML"*
+   - Es perfectamente válido y común combinar elementos semánticos con genéricos según la necesidad.
+
+12. ✅ *"Implementar accesibilidad puede requerir ajustes de código, pero beneficia a todo tipo de usuarios a largo plazo"*
+    - La inversión en accesibilidad mejora la experiencia general del sitio.
+
+13. ❌ *"La IA, al ser imparcial, siempre provee sugerencias de accesibilidad 100% correctas"*
+   - La IA puede cometer errores y sus sugerencias deben ser validadas por desarrolladores.
+
+14. ✅ *"Un buen uso de HTML5 semántico hace el proyecto más mantenible y promueve la colaboración entre desarrolladores"*
+    - El código semántico es más legible y facilita el mantenimiento.
+
+15. ❌ *"La accesibilidad es un requerimiento opcional y solo aplica en organizaciones públicas o gubernamentales"*
+   - La accesibilidad es una responsabilidad universal que beneficia a todos los usuarios.
+
+## “Product Landing Page / Lab 01”
 
 A continuación se presenta un ejemplo de cómo podría lucir el código **HTML** y **CSS** que cumple con los requisitos del Laboratorio 1: HTML5 Semántico y Accesibilidad. Este ejemplo es meramente ilustrativo, y los estudiantes pueden ajustarlo según el producto que elijan.
 
