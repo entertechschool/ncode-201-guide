@@ -10,13 +10,13 @@ En esta primera clase, conocerás los fundamentos del **HTML5 semántico** y la 
 
 ## 📚 Artículos recomendados para leer
 - **HTML Semántico: Qué Es y Cómo Usarlo Correctamente**  
-  [https://es.semrush.com/blog/html-semantico/](https://es.semrush.com/blog/html-semantico/)
+  [https://es.semrush.com/blog/html-semantico/](https://es.semrush.com/blog/html-semantico/){:target="_blank"}
 
 - **Introducción a la Accesibilidad (W3C)**  
-  [https://www.w3.org/WAI/fundamentals/accessibility-intro/es](https://www.w3.org/WAI/fundamentals/accessibility-intro/es)
+  [https://www.w3.org/WAI/fundamentals/accessibility-intro/es](https://www.w3.org/WAI/fundamentals/accessibility-intro/es){:target="_blank"}
 
 - **Cómo escribir mejores prompts para la IA**  
-  [https://www.promptingguide.ai/es](https://www.promptingguide.ai/es)
+  [https://www.promptingguide.ai/es](https://www.promptingguide.ai/es){:target="_blank"}
 
 ## ☑️ Lista de Mitos y Realidades para Analizar
 1. Usar `<div>` para cada sección del sitio es la mejor forma de estructurar una página.  
@@ -36,16 +36,3 @@ En esta primera clase, conocerás los fundamentos del **HTML5 semántico** y la 
 15. La accesibilidad es un requerimiento opcional y solo aplica en organizaciones públicas o gubernamentales.
 
 > **Instrucción:** Identifica cuáles crees que son mitos y cuáles son realidades. Prepárate para justificar tus respuestas con evidencia de lecturas o experiencias.
-
-## 📝 Instrucciones de Entrega y Participación en el Debate
-1. **Entrega de tarea**
-- Agrega la lista completa con un indicador por enunciado que indique cuál es Mito o Realidad, en tu archivo `read01.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-- Comparte el link del sitio publicado en GitHub Pages, como entrega de esta tarea.
-
-2. **Participación en el Debate**
-- Identifica 3 enunciados (de la lista anterior) que te resulten especialmente controvertidos o interesantes.
-- Prepara un breve comentario antes de la clase, explicando por qué piensas que cada uno es mito o realidad.
-- Cuando el instructor pregunte por alguno de los enunciados que elegiste, tendrás la oportunidad de exponer tus argumentos.
-
-> **Prepárate** para responder sobre otros enunciados de la lista, porque el instructor te podría preguntar.
-
