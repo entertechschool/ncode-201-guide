@@ -2,23 +2,29 @@
 
 ¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, nos enfocaremos en la estructura semántica de HTML5 y en la aplicación de buenas prácticas de accesibilidad para garantizar que tu sitio sea inclusivo.
 
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 30, 50 y 80 minutos). Es importante mantenerse al día con estos checkpoints para aprovechar el feedback y las discusiones grupales.
+
 ## 🎯 Objetivos de Aprendizaje
 
 1. Construir una Estructura Semántica Sólida
-
 2. Introducir Principios de Accesibilidad
-
 3. Uso Responsable de IA
 
-## Conceptos Clave
+## 🔑 Conceptos Clave
 
 1. **HTML5 Semántico**  
-
 2. **Accesibilidad en la Web (A11y)**
+3. **Prompt Engineering Básico**
 
-3. **Prompt Engineering Básico**  
+### ✅ Checkpoints de Validación
 
-## 🚀 Setup Inicial
+Durante el desarrollo del laboratorio, haremos tres validaciones grupales para asegurar que vamos por buen camino:
+
+> **[30'] Check 1:** Validación de estructura semántica inicial \
+> **[50'] Check 2:** Prompts y Outputs de IA \
+> **[80'] Check 3:** Accesibilidad
+
+## ⚙️ Setup Inicial
 
 1. **Repositorio**  
    - Crea un repositorio nuevo en GitHub, por ejemplo: `product-landing-page`.
@@ -34,7 +40,7 @@
    product-landing-page/ 
    ├── index.html 
    ├── css/ 
-   │ └── styles.css 
+   │ └── styles.css
    ├── img/ 
    └── README.md
    ```
@@ -45,19 +51,42 @@
 
 ## 🏆 Historias de Usuario
 
-1. **HU1: Sección Principal (Hero) con Encabezado Semántico**  
-“Como visitante, quiero ver inmediatamente el nombre del producto y una breve descripción, para comprender la propuesta de valor y navegar fácilmente a más detalles.”
-
-- **Criterios de Aceptación**:  
-  - Uso de `<header>` con un `<h1>` claro que describa el producto.  
-  - Un texto de descripción en un `<p>` o `<section>`.
-
-2. **HU2: Navegación Accesible**  
+1. **HU1: Navegación Accesible**  
 “Como usuario con lector de pantalla, quiero un menú de navegación semánticamente correcto, para explorar la landing page fácilmente usando atajos de teclado.”
 
-- **Criterios de Aceptación**:  
-  - Uso de `<nav>` para el menú principal.  
-  - Anclas (`<a>`) con textos descriptivos o `aria-label` si fuera necesario.
+  - **Criterios de Aceptación**:  
+    - Uso de `<nav>` para el menú principal dentro del `<header>`
+    - Anclas (`<a>`) con textos descriptivos o `aria-label` si fuera necesario.
+
+2. **HU2: Sección Principal "Hero"**  
+"Como visitante, necesito entender inmediatamente qué producto se ofrece y su valor principal."
+
+  - **Criterios de Aceptación**:  
+    - Ubicado como primera sección dentro de `<main>`
+    - Un `<section id="hero">` como contenedor
+    - Un `<h1>` con el nombre del producto
+    - Un tagline o descripción corta en `<p>`
+
+3. **HU3: Secciones Informativas del Producto**  
+"Como visitante, quiero conocer las características, opciones de envío y formas de pago disponibles para evaluar si el producto se ajusta a mis necesidades."
+
+  - **Criterios de Aceptación**:
+    - Utilizar correctamente la jerarquía de encabezados (h1 - h3).
+    - Usar estructura semántica apropiada para listar características.
+    - **[Características]**: Mostrar al menos 3 características clave, con título, descripción y elemento visual.
+    - **[Opciones de envío]**: Presentar las zonas de cobertura disponibles (como listas). También los tipos de envío y costos.
+    - **[Opciones de pago]**: Listar los métodos de pago aceptados, promociones o descuentos.
+
+4. **HU4: Footer con Información de Contacto**
+"Como visitante, quiero encontrar fácilmente la información de contacto y enlaces importantes al final de la página, para poder comunicarme con la empresa o acceder a recursos adicionales."
+
+  - **Criterios de Aceptación**:
+    - Email de contacto
+    - Teléfono de soporte
+    - Horarios de atención
+    - Enlaces Importantes: Términos y condiciones
+    - Redes sociales
+
 
 ## 🛠️ Requerimientos Técnicos
 
@@ -71,7 +100,20 @@
 - Orden lógico del contenido para lectores de pantalla.
 - Usar ARIA en casos puntuales (`role="banner"`, `role="main"`, etc.) si se justifica.
 
-3. **Prompt Engineering**  
+3. **Estilos CSS Básicos**
+- Implementar un CSS reset o normalizer para consistencia entre navegadores
+- Aplicar estilos de tipografía:
+  - Fuente principal legible (tamaño mínimo 16px)
+  - Paleta de colores consistente (definir variables CSS)
+- Espaciado y márgenes básicos:
+  - Márgenes entre secciones
+  - Padding internos consistentes
+  - Ancho máximo para el contenido (evitar líneas muy largas)
+- Contraste adecuado para accesibilidad **(de 3:1 a 5:1)**
+
+> 👀 No es necesario que sea responsive en esta etapa
+
+4. **Prompt Engineering**
 - Generar al menos **un prompt** para la IA solicitando sugerencias sobre la estructura semántica.
 - Explicar los ajustes manuales que le hiciste a la propuesta de la IA para garantizar accesibilidad.
 
@@ -100,10 +142,12 @@ Agrega pequeñas animaciones o transiciones en elementos clave (por ejemplo, al 
 ## 💡 Tips y Sugerencias
 
 1. **Valida tu HTML**  
-- Utiliza la [W3C Validator](https://validator.w3.org/) para comprobar la semántica y detectar posibles errores.
+- Utiliza la [W3C Validator](https://validator.w3.org/){:target="_blank"} para comprobar la semántica y detectar posibles errores.
 
-2. **Prueba con un Lector de Pantalla**  
+2. Utiliza [Contrastchecker](https://webaim.org/resources/contrastchecker/){:target="_blank"} para mejorar el constraste.
+
+3. **Prueba con un Lector de Pantalla**  
 - VoiceOver (macOS/iOS), NVDA (Windows) o ChromeVox (extensión de Chrome) para verificar la navegación.
 
-3. **IA como Apoyo, no como Sustituto**  
+4. **IA como Apoyo, no como Sustituto**  
 - Pregunta, analiza y refina las sugerencias. Asegúrate de que cumplan con los lineamientos de accesibilidad.

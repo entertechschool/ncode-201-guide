@@ -20,3 +20,11 @@ Un estudiante que ha llevado este curso (previo a Code 201) sale con una base s�
 - Frameworks o librerías de CSS / Javascript
 - Eventos en Javascript
 - Paradigmas de Programación
+
+## Proyecto Final del curso:
+Los estudiantes que aprobaron este curso y pasaron a Code 201, lograron realizar un proyecto:
+- Perfil de Linktree:
+    - Replicaron una página de un modelo de plantilla que ofrece la aplicación Linktree.
+    - Utilizaron HTML, CSS y ligeramente Javascript para insertar 1 o 2 contenidos.
+    - Hicieron una demostración en vivo de 3 minutos.
+    - Publicaron su proyecto en Github Pages.

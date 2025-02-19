@@ -2,6 +2,8 @@
 
 ¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, nos enfocaremos en la estructura semántica de HTML5 y en la aplicación de buenas prácticas de accesibilidad para garantizar que tu sitio sea inclusivo.
 
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 30, 50 y 80 minutos). Es importante mantenerse al día con estos checkpoints para aprovechar el feedback y las discusiones grupales.
+
 ## 🎯 Objetivos de Aprendizaje
 
 1. Construir una Estructura Semántica Sólida
@@ -12,7 +14,15 @@
 
 1. **HTML5 Semántico**  
 2. **Accesibilidad en la Web (A11y)**
-3. **Prompt Engineering Básico**  
+3. **Prompt Engineering Básico**
+
+### ✅ Checkpoints de Validación
+
+Durante el desarrollo del laboratorio, haremos tres validaciones grupales para asegurar que vamos por buen camino:
+
+> **[30'] Check 1:** Validación de estructura semántica inicial \
+> **[50'] Check 2:** Prompts y Outputs de IA \
+> **[80'] Check 3:** Accesibilidad
 
 ## ⚙️ Setup Inicial
 

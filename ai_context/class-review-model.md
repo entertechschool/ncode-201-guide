@@ -1,4 +1,4 @@
-﻿> 📦 **Módulo 1:** Clase 1 de 4
+> 📦 **Módulo 1:** Clase 1 de 4
 
 # Clase 01: HTML5 Semántico y Accesibilidad
 

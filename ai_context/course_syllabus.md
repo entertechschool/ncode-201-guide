@@ -17,7 +17,9 @@
 
 4. **Cultivar Competencias Profesionales (Soft Skills)**  
    - Fortalecer la comunicación efectiva, el trabajo en equipo y la mentalidad de crecimiento.  
-   - Construir redes de contacto (networking) con profesionales y compañeros para el futuro profesional.  
+   - Construir redes de contacto (networking) con profesionales y compañeros para el futuro profesional.
+   - Desarrollar pensamiento crítico y capacidad de argumentación técnica a través de debates estructurados.
+   - Fortalecer la comunicación efectiva mediante la participación en discusiones técnicas guiadas.
 
 5. **Preparar el Camino hacia Code 301**  
    - Sentar las bases conceptuales y prácticas necesarias para enfrentar desafíos más complejos en el siguiente curso.  
@@ -29,6 +31,11 @@ Nuestra escuela se basa en estos **cuatro pilares fundamentales** para garantiza
 
 ### 1. Fundamentos Sólidos Primero
 - Aseguramos que cada estudiante desarrolle una comprensión firme de los **conceptos fundamentales**.
+- Utilizamos debates técnicos guiados que fomentan:
+  - Comprensión profunda de conceptos fundamentales.
+  - Capacidad de argumentación técnica.
+  - Análisis crítico de diferentes soluciones.
+  - Exposición a diversos puntos de vista y experiencias.
 - Damos prioridad a:
   - **Estructura y semántica** en el desarrollo web.
   - **Lógica de programación** y manejo de datos.
@@ -55,22 +62,49 @@ Nuestra escuela se basa en estos **cuatro pilares fundamentales** para garantiza
 ## Cómo se Implementa el Sistema
 
 1. **Estructura de Clase**  
-   - Nuestras clases "blend" son una mezcla entre lo **conceptual** y **práctico**. El instructor introduce conceptos clave mientras van explorando los retos planteados en la guía del laboratorio.
-   - Los materiales de clase (guías, demos y ejercicios) se elaboran con la ayuda de IA cuando sea pertinente.
-   - Cada clase dura 3 horas. 35% conceptuales y demostrativos + 65% prácticos y autónomos, con soporte del instructor y de la IA.
+   - Nuestras clases "blend" duran 3 horas e integran tres componentes esenciales:
+     a) Conceptual (10%): Introducción de conceptos clave.
+     b) Debate técnico (20%): Discusión guiada de conceptos y soluciones.
+     c) Práctico (60%): Desarrollo autónomo con soporte y puntos de validación.
+     d) Feedback y conclusiones (10%): El instructor destaca los aciertos y advierte sobre las decisiones o conceptos por mejorar.
+   - Los debates se estructuran alrededor de:
+     - Análisis de diferentes enfoques de solución.
+     - Discusión de mejores prácticas.
+     - Evaluación de trade-offs en decisiones técnicas.
+     - Reflexión sobre implicaciones en casos reales.
 
 2. **Roles de IA y Humanos**  
    - El **instructor** asume el rol de mentor: valida la información generada por la IA y la contextualiza para la clase.
    - El **estudiante** emplea la IA como herramienta de aprendizaje, en la resolución de ejercicios, la búsqueda de recursos y la generación de código, sin embargo, debe sustentar sus decisiones técninas frente al **instructor**.
 
-3. **Guías de Laboratorio y Evaluación**
+3. **Debates y Discusiones Técnicas**
+   - El **instructor** actúa como moderador y facilitador:
+     - Plantea preguntas detonadoras.
+     - Guía la discusión hacia puntos clave.
+     - Asegura la participación equilibrada.
+     - Sintetiza conclusiones relevantes.
+   
+   - Los **estudiantes** participan activamente:
+     - Realizan lecturas y reflexionan sobre lo que se aprenderá en clase.
+     - Preparan argumentos técnicos fundamentados.
+     - Comparten experiencias y perspectivas.
+     - Cuestionan y analizan diferentes enfoques.
+     - Practican la comunicación técnica efectiva.
+   
+   - La **IA** apoya el proceso:
+     - Proporciona ejemplos para discusión.
+     - Sugiere escenarios de debate.
+     - Ofrece diferentes perspectivas técnicas.
+     - Ayuda a validar argumentos técnicos.
+
+4. **Guías de Laboratorio y Evaluación**
    - Cada clase tiene una guía de laboratorio. En cada módulo (4 clases), se trabajan 4 laboratorios progresivos que culminan en un proyecto real.
    - En cada clase se introduce un nuevo tema central y entre 3-5 conceptos clave asociados.
    - Solo se evalúa la presentación del proyecto del módulo en vivo. Para ello, usamos una rúbrica de evaluación del módulo.
    - Se evalúa de forma individual a cada estudiante, a excepción de los módulos donde se trabaja un proyecto grupal, donde la evaluación es personal y grupal.
    - Empleamos un lenguaje claro, estructura, emojis en los encabezados y algunos tips cuando es necesario.
 
-4. **Responsabilidad y Ética**  
+5. **Responsabilidad y Ética**  
    - Se enfatiza la importancia de **comprender y justificar** las soluciones propuestas, incluso si fueron generadas o asistidas por IA.
    - Cualquier contenido o fragmento de código generado por IA debe ser revisado y ajustado para **asegurar la calidad** y **evitar plagio** o mal uso.
 
