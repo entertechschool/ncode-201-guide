@@ -15,11 +15,8 @@
 - **flex-wrap** y **flex-grow**  
 - **Media queries** para responsividad
 
-### ✅ Checkpoints de Validación
-
-> **[30'] Check 1:** Estructura Flexbox inicial (header, main, footer)  
-> **[50'] Check 2:** Alineación y distribución de elementos en el main  
-> **[80'] Check 3:** Responsividad y pruebas visuales en diferentes tamaños
+### ⏱️ Checkpoints de Validación
+> **Nota:** Este laboratorio incluye tres momentos de validación grupal (a los 30, 50 y 80 minutos). Aprovecha estos momentos para recibir feedback y participar en las discusiones grupales.
 
 ## 🏗️ Setup Inicial
 
@@ -41,8 +38,8 @@
     - Menú principal con `display: flex` y alineación horizontal
     - Uso de `justify-content: space-between` para distribuir los elementos
 
-2. **HU2: Sección Principal Adaptable**  
-"Como visitante, quiero que la sección principal se ajuste a diferentes tamaños de pantalla manteniendo su diseño."  
+2. **HU2: Secciones Adaptables**  
+"Como visitante, quiero que cada sección se ajuste a diferentes tamaños de pantalla manteniendo su diseño."
   - **Criterios de Aceptación:**  
     - Contenido centrado con `align-items: center`
     - Ajuste mediante `flex-wrap` en pantallas pequeñas
@@ -67,16 +64,16 @@
 - **Logro 1: Sección de Testimonios**  
 Agrega una nueva sección titulada “Testimonios” en la misma página, mostrando opiniones de clientes en formato de tarjetas (cards). Utiliza Flexbox para organizar las tarjetas de forma adaptable y estética.
 
-- **Logro 2: Animaciones con CSS** *(Sugerido)*  
+- **Logro 2: Animaciones con CSS** 
 Implementa microinteracciones o animaciones sutiles en elementos clave, como botones, imágenes de la galería o enlaces del menú. Usa propiedades como `transition` y `transform` para lograr efectos visuales atractivos.
 
 ## 📝 Instrucciones de Entrega
 
 1. **Documentación en README**  
-   - Describe cómo usaste Flexbox y su impacto en la responsividad.
+   - Crea una sección donde especifiques los'break points' de tus media-queries implementados.
 
 2. **Despliegue**  
-   - Publica la nueva versión en GitHub Pages y actualiza la URL.
+   - Publica la nueva versión en GitHub Pages.
 
 3. **Entrega Final**  
    - URL del repositorio  
@@ -88,4 +85,4 @@ Implementa microinteracciones o animaciones sutiles en elementos clave, como bot
 
 - Usa `gap` para separar los elementos dentro de los contenedores Flexbox.
 - Mantén el código CSS limpio y comentado.
-- Valida la página usando herramientas como [W3C Validator](https://validator.w3.org/).
+- Valida la página usando herramientas como [W3C Validator](https://validator.w3.org/){:target="_blank"}

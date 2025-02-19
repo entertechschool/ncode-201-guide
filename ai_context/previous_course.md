@@ -1,4 +1,4 @@
-# Code 101 - Elementals Software Development
+# Resumen del Curso Previo: Code 101 - Elementals Software Development
 
 Un estudiante que ha llevado este curso (previo a Code 201) sale con una base sólida en los siguientes puntos:
 

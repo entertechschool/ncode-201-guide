@@ -1,4 +1,4 @@
-# Guía de Lectura y Debate 02: CSS Layout con Flexbox
+# Lectura y Debate 02: CSS Layout con Flexbox
 
 ## 🎯 Objetivos de la Lectura y el Debate
 Sabemos que leer te da las bases, pero **debatir en clase** concreta rápidamente el aprendizaje.  
