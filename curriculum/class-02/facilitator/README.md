@@ -1,134 +1,168 @@
-﻿# Guía del Instructor: Conceptos básicos de HTML,CSS, y JS
+﻿# Guía del Facilitador: Clase 02 - CSS Layout con Flexbox
 
-## Resumen
+## ❄️ Previo a la Clase
 
-Esta clase de centra en practicar con JavaScript, una introducción a los tipos de datos, condicionales y arrays. También le enseñarás a los estudiantes sobre Git y Github a un nivel más profundo. El laboratorio de hoy requerirá que los estudiantes creen un nuevo repositorio y realicen su tarea de laboratorio usando el flujo de trabajo de git a un nivel básico.
+### Resumen de la clase anterior
 
-### ¿Qué lugar ocupa este tema?
+En nuestra primera clase desarrollamos una landing page enfocándonos en HTML5 semántico y accesibilidad web (A11y). Trabajamos con historias de usuario para implementar una estructura que sea tanto semántica como accesible, utilizando IA como herramienta de apoyo para optimizar nuestro código.
 
-**¿Qué hicimos?**:
-En la clase anterior hicimos una introducción a los alumnos acerca de la construcción de una página HTML con funcionalidades CSS internas e in-line y JavaScript integradas.
+**Elementos clave implementados:**
+- Estructura HTML5 semántica (header, nav, main, sections, footer)
+- Atributos de accesibilidad (roles ARIA, alt en imágenes)
+- Jerarquía coherente de encabezados (h1-h3)
 
-**¿En qué nos centraremos en esta clase?**:
-En esta clase, aprenderemos sobre más conceptos básicos de JavaScript con tipos de datos, condicionales y arrays. Los alumnos también aprenderan un nuevo flujo de trabajo de git y cómo estructurar sus proyectos en el futuro.
+### Estructura Resumida
 
-**¿Qué haremos?**:
-En la siguiente clase nos centraremos en repasar acerca de los arrays a un nivel más profundo. Los alumnos aprenderán todo acerca del control de flujo con bucles en JavaScript y lógica condicional.
+| **Fase** | **Descripción** |
+| --- | --- |
+| **[Intro](#1-intro-15-min)**<br>15 min | Contextualización y activación de conocimientos previos.<br>🎯 Conectar Flexbox con la clase anterior y destacar su importancia en el diseño moderno. |
+| **[Debate Conceptual](#2-debate-conceptual-30-min)**<br>30 min | Discusión guiada sobre las ventajas de Flexbox y su comparación con métodos tradicionales.<br>🎯 Construir conocimiento colaborativo a través del análisis crítico y debate técnico. |
+| **[Demo Técnica](#3-demostración-técnica-20-min)**<br>20 min | Demostración en vivo de Flexbox y sus aplicaciones prácticas.<br>🎯 Mostrar buenas prácticas y cómo integrar IA para optimizar el diseño. |
+| **[Laboratorio](#4-laboratorio-y-checkpoints-100-min)**<br>100 min | Desarrollo de la landing page con tres checkpoints:<br>- ☑️ [30'] Estructura Flexbox básica<br>- ☑️ [50'] Galería de imágenes del producto<br>- ☑️ [80'] Sección de Testimonios usando cards |
+| **[Cierre](#5-cierre-15-min)**<br>15 min | Retroalimentación, revisión de soluciones destacadas y preparación para la siguiente clase. |
 
-## Objetivos de aprendizaje
+### Estrategias de Enseñanza y Aprendizaje
+> 📕 **Basado en Principios de Andragogía**
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de hoy.
+1. **Conexión con la Experiencia Previa:** Relacionar Flexbox con experiencias pasadas de diseño web y el uso de layouts tradicionales.
+2. **Resolución de Problemas Relevantes:** Diseñar una landing page que se ajuste correctamente a diferentes tamaños de pantalla.
+3. **Aprendizaje Colaborativo y Autonomía:** Incentivar la discusión en grupo y el aprendizaje autónomo.
+4. **Retroalimentación Inmediata y Reflexión:** Asegurar comentarios constantes durante los checkpoints y en el cierre.
 
-## Preparativos
+## 🔥 Durante la Clase
 
-1. Hojea las lecturas diarias y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Prepárate para presentar la revisión del código y por qué es importante. Una búsqueda en línea acerca de "¿Por qué debería revisar mi código?" producirá algunos resultados como punto de partida.
+### 1. Intro (15 min)
+##### 🎯 Objetivos de Aprendizaje
+> **1. Comprender el funcionamiento de Flexbox:**  
+> “Flexbox facilita la organización y alineación de elementos en un contenedor, permitiendo crear layouts responsivos de manera sencilla. Conocer cómo funcionan sus propiedades principales es esencial para diseñar interfaces adaptables a distintos dispositivos.”
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+> **2. Alinear y distribuir elementos de forma flexible:**  
+> “El uso de propiedades como `justify-content` y `align-items` permite controlar la disposición de los elementos, mejorando la estética y la usabilidad del sitio. Comprender cómo aplicar estas propiedades garantiza un diseño visualmente atractivo y coherente.”
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+> **3. Integrar IA como apoyo en el diseño web:**  
+> “La IA puede ofrecer sugerencias para el uso de Flexbox, ayudando a optimizar el diseño de layouts. Sin embargo, es fundamental validar las recomendaciones generadas y adaptarlas según las buenas prácticas y las necesidades específicas del proyecto.”
 
-### Presenta los nuevo tipos de tareas en Canvas
+##### 🔑 Conceptos Clave
 
-- Registros de aprendizaje
-- Cuestionarios
+> **1. CSS Flexbox:**  
+> Flexbox es un modelo de diseño de CSS que permite organizar y alinear elementos de manera flexible dentro de un contenedor. Facilita la creación de layouts responsivos y adaptables a distintos tamaños de pantalla.  
+> **¿Por qué es Importante?**  
+> Simplifica la disposición de los elementos, elimina la necesidad de hacks antiguos como floats y garantiza una mejor experiencia visual y de usabilidad.  
+> - Propiedades clave: `display: flex`, `justify-content`, `align-items`, `flex-wrap`, `flex-grow`.  
+> - Aplicación en diferentes ejes: Main axis y Cross axis.
 
-### Revisión del código
+> **2. Diseño Responsivo con Media Queries:**  
+> Las media queries permiten adaptar el diseño de una página según las dimensiones del dispositivo. Combinadas con Flexbox, logran interfaces fluidas y bien estructuradas.  
+> **¿Por qué es Importante?**  
+> Asegura que la página se visualice correctamente en dispositivos móviles, tablets y pantallas de escritorio.  
+> - Sintaxis básica: `@media (max-width: 768px) { ... }`
 
-- **¿Por qué?**
-  - Es importante que los alumnos se familiaricen con la revisión del código.
-    - Los estudiantes deberán estar preparados para las revisiones de código que se les realizará cuando estén dentro de la industria.
-    - Los estudiantes podrán acostumbrarse a las críticas, tomarlas de forma objetiva y aprender de cada revisión.
-      - **¡Recuérdales a los estudiantes que las revisiones de código son un espacio seguro!**
-    - Una perspectiva nueva puede identificar errores o sugerir cómo hacer que el código sea más legible.
-- **¿Qué?**
-  - La tarea de laboratorio anterior.
-    - Pídele a un alumno que sea voluntario para que su código sea revisado.
-- **¿Cómo?**
-  - El instructor deberá abrir el código del estudiante en VSCode.
-  - Revisa el código línea por línea y haz que una persona diferente explique cada línea.
-    - Pregúntale al estudiante por qué el código fue escrito de esta forma o lo que hace.
-  - Arregla el código erróneo en colaboración con los alumnos.
+> **3. IA como Apoyo en el Diseño:**  
+> La IA puede ofrecer ejemplos y sugerencias para aplicar Flexbox, optimizando el tiempo de desarrollo. Sin embargo, es crucial validar y ajustar las recomendaciones para garantizar que cumplan con los estándares de accesibilidad y buenas prácticas.  
+> **¿Por qué es Importante?**  
+> Acelera el proceso de diseño, facilita la resolución de problemas comunes y permite explorar diferentes enfoques creativos.
 
-### Repaso de HTML/CSS
+### 2. Debate Conceptual (30 min)
 
-- **¿Por qué?**
-  - Es un buen repaso para los estudiantes que no tomaron los cursos 101 o 102 así como aquellos que se han inscrito en esta clase.
-- **¿Qué?**
-  - Etiquetas de encabezado/párrafo en HTML
-  - Listas en HTML (`<ol>` y `<ul>`)
-  - Ids/clases en CSS
-  - Valores específicos
-  - CSS Reset
-- **¿Cómo?**
-  - El instructor podrá escoger demostrar estos conceptos en codepen.io para que pueda ser compartido con la clase y se le haga un push al repositorio de la clase.
+> **1. Flexbox y sus Aplicaciones**  
+> 1. ❌ *"Flexbox solo funciona para diseños horizontales"*  
+> - Flexbox permite organizar elementos tanto en dirección horizontal como vertical.  
+> - La propiedad `flex-direction` controla la orientación del main axis.
+>
+> 2. ✅ *"flex-wrap permite que los elementos se ajusten automáticamente en múltiples líneas"*  
+> - Evita que los elementos se desborden del contenedor.  
+> - Permite que los elementos se reorganicen en líneas adicionales si no hay espacio suficiente.
+>
+> 3. ❌ *"Con Flexbox, ya no es necesario usar media queries"*  
+> - Aunque Flexbox facilita el diseño responsivo, las media queries siguen siendo necesarias para adaptar la disposición y el tamaño de los elementos.
+>
+> **2. Propiedades Principales**  
+> 4. ✅ *"justify-content: space-between distribuye los elementos dejando espacios iguales entre ellos"*  
+> - Deja un espacio uniforme entre los elementos, alineando el primero al inicio y el último al final del contenedor.
+>
+> 5. ❌ *"Flexbox no es adecuado para crear layouts completos"*  
+> - Flexbox es ideal para componentes y secciones, pero también puede usarse en layouts completos, especialmente si son lineales o simples.
+>
+> **3. Flexbox y la IA**  
+> 6. ✅ *"La IA puede generar ejemplos de Flexbox, pero siempre deben validarse"*  
+> - La IA puede acelerar el diseño, pero es esencial revisar y ajustar las soluciones generadas para garantizar su calidad y accesibilidad.
+>
+> **4. Otras Propiedades y Consideraciones**  
+> 7. ✅ *"flex-grow permite que los elementos crezcan para ocupar espacio adicional"*  
+> - Controla cuánto espacio adicional ocupará un elemento en relación con los demás.
+>
+> 8. ❌ *"Usar demasiados `<div>` afecta la semántica del documento"*  
+> - Un uso excesivo de `<div>` puede dificultar la comprensión del contenido, por lo que es mejor usar etiquetas semánticas siempre que sea posible.
+>
+> 9. ❌ *"Flexbox no funciona bien en navegadores antiguos"*  
+> - La compatibilidad de Flexbox es amplia en navegadores modernos, aunque versiones muy antiguas podrían tener limitaciones.
+>
+> 10. ✅ *"align-items controla la alineación vertical de los elementos"*  
+> - Alinea los elementos a lo largo del cross axis, con valores como `stretch`, `center`, `flex-start`, y `flex-end`.
 
-### JavaScript
+### 3. Demostración Técnica (20 min)
+- Muestra ejemplos en vivo usando `display: flex`, `justify-content`, `align-items`, y `flex-wrap`.
+- Explica cómo usar media queries para adaptar el diseño.
+- Responde dudas y ofrece tips para un uso eficiente de Flexbox.
 
-- **¿Por qué?**
-  - Una buena introducción a los conceptos básicos en JavaScript que seguirán desarrollando mientras continúen con los laboratorios.
-- **¿Qué?**
-  - Abarca los siguientes tipos de datos:
-    - Strings (puede ser un repaso del laboratorio anterior)
-    - Booleans
-    - Numbers
-  - Condicionales
-  - Arrays
-- **¿Cómo?**
-  - El instructor puede escoger utilizar una herramienta como [Repl.it](https://replit.com) la cual podrá ser compartida con la clase o se le puede hacer un push al repositorio de la clase.
-  - Los tipos de datos se pueden repasar de forma verbal o se pueden demostrar utilizando el operador `typeof`.
-  - Demostración de las declaraciones `if/else`.
-  - Haz una introducción sobre los operadores lógicos y de igualdad.
-  - Demostración de los arrays.
+### 4. Laboratorio y Checkpoints (100 min)
 
-### Git vs GitHub
+> 💻 **Objetivo**: Aplicar Flexbox para crear una landing page responsiva y flexible, utilizando IA como herramienta de apoyo.
 
-- **¿Por qué?**
-  - Es importante que los alumnos entiendan la diferencia entre git y GitHub.
-  - Los alumnos aprenderán el flujo de trabajo de git *a-c-p* que será necesario para sus tareas de laboratorio.
-- **¿Qué?**
-  - Git: Control de Versiones (VCS) - en nuestra máquina local para monitorear los cambios en nuestros proyectos mediante una serie de commits y ramas.
-  - GitHub: Una página web - "la nube" que almacena nuestro código para que podramos compartir/colaborar entre equipos.
-- **¿Cómo?**
-  - Puedes utilizar los [diagramas en la pizarra](whiteboard-diagrams/git-vs-github.png).
-    - Habla sobre la diferencia entre git y GitHub.
-    - Explica el flujo de trabajo de git que los estudiantes van a utilizar: *a-c-p*.
-  - Ve a GitHub, muéstrale a los estudiantes cómo crear un repositorio y clonarlo a sus carpetas del proyecto 201 en sus equipos.
-  - Guíalos con la configuración del proyecto y la estructura de los archivos: 
-    - Añade directorios/archivos desde la línea de comandos para que los alumnos repasen los conceptos aprendidos al día anterior.
-    - Los alumnos utilizarán los archivos `.eslintrc.json` y `.gitignore` del directorio `configs` del repositorio del curso. También se ha porporcionado un archivo `.markdownlint.json` pero no es necesario que esté incluido en la configuración del proyecto 201. Los instructores pueden escoger cómo entregarle esto a los alumnos.
+> **1. Checkpoint 1: Estructura Flexbox Básica [30']**
+> - Desarrollo autónomo por 25 min.
+> - Compartir código por Slack (bloque de código).
+> - Validación del instructor con 2-3 casos (10 min.):
+>   - ✅ Implementación correcta de `display: flex` en el header, main y footer.
+>   - ✅ Alineación de elementos con `justify-content` y `align-items`.
+>   - ✅ Uso adecuado de etiquetas semánticas en lugar de `<div>`.
+>   - ❌ Evitar el uso excesivo de anidamientos innecesarios.
 
-### Revisión del Laboratorio
+> **2. Checkpoint 2: Galería de Imágenes del Producto [50']**
+> - Desarrollo autónomo por 35 min.
+> - Compartir código y capturas de pantalla del resultado visual.
+> - Validación del instructor con 2-3 casos (15 min.):
+>   - ✅ Estructura de la galería utilizando `flex-wrap` para permitir múltiples líneas.
+>   - ✅ Espaciado uniforme entre las imágenes usando `gap`.
+>   - ✅ Aplicación de media queries para ajustar el número de columnas en distintos tamaños de pantalla.
+>   - ❌ Evitar distorsiones de las imágenes y garantizar el uso de atributos `alt`.
 
-- **¿Por qué?**
-  - Les proporciona a los estudiantes las herramientas para que cumplan con su laboratorio.
-- **¿Qué?**
-  - Revisa las instrucciones del laboratorio 02, y de nuevo habla acerca de la nueva estructura de archivos.
-- **¿Cómo?**
-  - Demuestra cómo enlazar archivos CSS separados, así como el archivo Javascript.
-  - Guíalos con las instrucciones del laboratorio.
-  - Demuestra un ejemplo con una pregunta del nuevo cuestionario y validando el input del usuario. 
+> **3. Checkpoint 3: Sección de Testimonios usando Cards [80']**
+> - Desarrollo autónomo por 35 min.
+> - Compartir código y explicación del diseño en Slack.
+> - Validación del instructor con 2-3 casos (15 min.):
+>   - ✅ Organización de las cards utilizando `flex-wrap` y `justify-content` para una distribución equilibrada.
+>   - ✅ Aplicación de `align-items` para alinear el contenido de cada card.
+>   - ✅ Uso de media queries para ajustar el número de cards mostradas según el tamaño de la pantalla.
+>   - ❌ Evitar el uso de medidas fijas que dificulten la adaptabilidad.
 
-## Notas de Laboratorio
+### 5. Cierre (15 min)
 
-La "guía" con GitHub está dirigida a preparar a los estudiantes para comenzar con su laboratorio. Asegúrate de que todos tengan el repositorio clonado a sus máquinas locales y que hayan hecho un ciclo de flujo de trabajo a-c-p por lo menos una vez.
+> 💡 **Objetivo**: Consolidar aprendizajes clave y preparar el camino para la siguiente sesión.
 
-## ¿Qué cambió desde la clase anterior?
+> 1. **"Flexbox Simplifica el Diseño"**  
+>  - Permite organizar elementos de manera flexible y eficiente.  
+>  - Facilita la creación de layouts responsivos sin hacks antiguos.  
+>  - Mejora la experiencia del usuario al adaptar el diseño a diferentes dispositivos.
 
-Se les enseñará a los estudiantes a colocar sus CSS en un archivo externo así como su JavaScript.
+> 2. **"Responsividad es Clave"**  
+>  - Flexbox junto con media queries asegura una visualización óptima en distintos tamaños de pantalla.  
+>  - Adaptar los elementos correctamente mejora la usabilidad y el diseño visual.
 
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+> 3. **"La IA es Co-piloto, No Piloto"**  
+>  - Acelera el diseño pero requiere supervisión y ajustes manuales.  
+>  - El criterio humano es esencial para garantizar accesibilidad y buenas prácticas.  
+>  - La IA apoya la creatividad, pero el desarrollador es quien toma las decisiones.
 
-Claves SSH en GitHub y tokens HTTP.
+> 4. **"Código Limpio, Diseño Consistente"**  
+>  - Un código ordenado facilita el mantenimiento y la escalabilidad del proyecto.  
+>  - Usar Flexbox correctamente mejora la legibilidad y la colaboración entre desarrolladores.
 
-- **Documentación útil de GitHub para entregar a los estudiantes**
-  - [Generación de una nueva clave SSH - GitHub](https://docs.github.com/es/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-  - [Creando un token de acceso personal - GitHub](https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+> 5. **"Diseñar para Todos"**  
+>  - La responsividad y accesibilidad benefician a todos los usuarios.  
+>  - Cada decisión de diseño impacta directamente en la experiencia del usuario final.  
+>  - Crear interfaces claras y adaptables es parte del compromiso profesional.
 
-## Comentarios Geneales
+### Siguiente Paso ⏭  
+En la próxima clase, los estudiantes explorarán **CSS Grid Layout**, ampliando sus habilidades para crear estructuras visuales más complejas y adaptables.
 
-Esta sesión de revisión de código es bastante importante ya que será la primera vez en la que los estudiantes verán el código de sus compañeros. Para algunos estudiantes, la idea de mostrar su código a otra persona, mucho menos a toda una clase es exasperante — así que sé paciente, sensible y empático. De nuevo, presta atención a la sintaxis y estilo de sus códigos. Incentiva a los alumnos a que lean y expliquen su código a la clase. Incluso puedes pedirle a los alumnos que lean y expliquen el código de sus compañeros. Esto le proporciona a los alumnos una oportunidad para practiar la lectura de código y los ayuda a entender la importancia de la sintaxis y estilos adecuados, y cómo se relaciona con comparir código.
-
-**Recordatorio importante en el Laboratorio 05c**: Esta es una tarea acerca de la práctia de los selectores CSS que deberá ser publicada al final de la Clase 2. La publicamos con antelación para que los estudiantes puedan tomarse unos días en completar estos tutoriales conforme se adaptan a su flujo de trabajo. Este laboratorio se llama 05c porque se deberá entregar al mismo tiempo que el Laboratorio 05a y el 05b. **No te olvides de bajar hasta la Clase 05 para publicar este laboratorio en Canvas.**

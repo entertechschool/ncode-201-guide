@@ -1,30 +1,35 @@
-# Read 02: HTML5 y CSS
+# Guía de Lectura y Debate 02: CSS Layout con Flexbox
 
-## Reflexiona y debate
+## 🎯 Objetivos de la Lectura y el Debate
+Sabemos que leer te da las bases, pero **debatir en clase** concreta rápidamente el aprendizaje.  
+La lectura y el debate están profundamente relacionados, **no hay sentido en el uno sin el otro**.
 
-A continuación se muestra una colección de recursos que describen los temas de la clase.
+A través de esta guía, nos prepararemos para un debate dinámico con tus compañeros y el instructor, mientras vamos aprendiendo de forma entretenida sobre los conceptos clave a tratar.
 
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
+## 🔑 Conceptos Clave a Profundizar
+- **CSS Flexbox:** Modelo de diseño que permite alinear y distribuir elementos de forma flexible en un contenedor.
+- **Propiedades Principales:** `display: flex`, `justify-content`, `align-items`, `flex-wrap`, `flex-grow`, y su uso en diseño responsivo.
+- **Responsividad y Accesibilidad:** Cómo Flexbox contribuye a un diseño adaptable, accesible y ordenado.
+- **IA en Diseño Web:** La IA puede generar ejemplos de Flexbox, pero es necesario validarlos y ajustarlos para garantizar buenas prácticas.
 
-### Lectura
-La lectura de este articulo es obligatoria.
-- [Semantica HTML](https://developer.mozilla.org/es/docs/Web/HTML/Element){:target="_blank"}
+## 📚 Artículos Recomendados para Leer
+- **CSS Flexbox: La Guía Definitiva para Principiantes**  
+  [https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox](https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox){:target="_blank"}
 
-### Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-- [Media-query](https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries/Using_media_queries){:target="_blank"}
-- [Unidades de medida](https://www.tutorialspoint.com/css/css_measurement_units.htm){:target="_blank"}
+- **Diseño Web Responsivo con CSS Flexbox**  
+  [https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/){:target="_blank"}
 
+## ☑️ Lista de Mitos y Verdades para Analizar
+1. Flexbox solo funciona para diseños horizontales.
+2. `flex-wrap` permite que los elementos se ajusten automáticamente en múltiples líneas.
+3. Con Flexbox, ya no es necesario usar media queries.
+4. `justify-content: space-between` distribuye los elementos dejando espacios iguales entre ellos.
+5. Flexbox no es adecuado para crear layouts completos.
+6. La IA puede generar ejemplos de Flexbox, pero siempre deben validarse.
+7. `flex-grow` permite que los elementos crezcan para ocupar espacio adicional.
+8. Usar demasiados `<div>` afecta la semántica del documento.
+9. Flexbox no funciona bien en navegadores antiguos.
+10. La propiedad `align-items` controla la alineación vertical de los elementos.
 
-## Responde
-1. ¿Cuáles son las ventajas del uso de HTML semántico en comparación con el uso de etiquetas genéricas como <div> y <span>?
-2. ¿Qué etiquetas semánticas son esenciales para estructurar correctamente una página web y qué función desempeñan?
-3. ¿Cuál es la función principal de las media queries en CSS y cómo contribuyen al diseño responsivo de una página web?
-4. ¿Cuáles son las diferencias clave entre las unidades absolutas y relativas en CSS, y en qué situaciones es más apropiado utilizar cada tipo?
+> **Instrucción:** Identifica cuáles crees que son mitos y cuáles son verdades. Prepárate para justificar tus respuestas con evidencia de las lecturas o experiencias propias.
 
-## Instrucciones de envío
-- Agrega las preguntas y respuestas de esta actividad a tu archivo `read02.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-- Agrega en la **Respuesta** a esta actividad:
-    - El enlace de tu repositorio publicado en **GitHub Pages**.
-    - Y también, las respuestas que desarrollaste.
-- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).

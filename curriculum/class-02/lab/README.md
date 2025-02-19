@@ -1,33 +1,91 @@
-﻿# Lab 02: Web semántica y responsiva
+﻿# Laboratorio 2: CSS Layout con Flexbox
 
-A lo largo de los laboratorios del módulo irás avanzando en el contenido, diseño y responsividad de este proyecto.
+¡Bienvenido al segundo laboratorio de la Landing Page de tu **producto**! En este paso, aplicarás las técnicas de **CSS Flexbox** para organizar visualmente la estructura de tu página, manteniendo la coherencia y accesibilidad.
 
-##  Configuración y documentación
+## 🎯 Objetivos de Aprendizaje
 
-Este laboratorio es una continuación del trabajo previo. Utilizarás como base el código que desarrollaste en el laboratorio anterior, por lo que asegúrate de tenerlo disponible antes de comenzar. Deberás agregar las nuevas funcionalidades sobre esa base de código existente.
+1. Construir un Layout Responsivo utilizando Flexbox
+2. Alinear y distribuir elementos de forma flexible
+3. Mantener la accesibilidad visual en diferentes tamaños de pantalla
 
-## Instrucciones
-1. En tu archivo `index.html`, agrega una etiqueta `<section>` para cada uno de los siguientes temas **HTML**, **CSS**, **JavaScript** y **HTTP**. Dentro de cada etiqueta `<section>` agrega lo siguiente:
-   - Una etiqueta `<h2>` y coloca como contenido el titulo.
-   - Una etiqueta `<p>` y coloca como contenido el breve resumen.
-   - Una etiqueta `<a>` que rediriga a la página donde obtuviste la información.
-2. En tu archivo `styles.css`, agrega reglas para:
-   - **Barra de Navegación**:
-      - Utiliza **flexbox** para ajustar los elementos de tu etiqueta `<nav>`.
-      - Utiliza `position:fixed` para fijar tu etiqueta `<nav>`.
-      - Agrega estilos de manera que tu barra de navegación se visualice correctamente.
-   - **Main**:
-      - Utiliza **flexbox** para ajustar el contenido. De manera que las etiquetas `<section>` se visualizen centradas en medio de la pagina, una de bajo de otra con una separación entre ellas.
-      - Agrega estilos de manera que el contenido de **main** se visualize correctamente.
-   - **Section**:
-      - Agrega estilos que permitan visualizar correctamente las etiquetas `<h2>`,`<p>` y `<a>`.
-      - Agrega estilos a la etiqueta `<a>` de manera que se visualize como un boton (`border-radius`,`background-color`,etc).
-   - **media-queries**:
-      - Haz que tu página sea **responsive**, cuando el ancho de la pantalla sea menor a 600px, asegura que la barra de navegación se reubique en la parte inferior de la página y se visualice correctamente.
-      - Considera que los estilos y elementos de la barra de navegación deben adaptarse para mantener una experiencia de usuario fluida en pantallas pequeñas.           
+## 🔑 Conceptos Clave
 
-### Logros adicionales
-- A manera de que puedas explorar nuevos propiedades en CSS, utiliza la propiedad `hover` de manera que cuando pases el mouse por encima de los elementos `<a>` este cambie el **color de fondo** o el **color texto**.
-  
-### Instrucciones de envío
-Responde a esta actividad y comparte la URL de tu página desplegada en GitHub Pages.
+- **display: flex**  
+- **justify-content** y **align-items**  
+- **flex-wrap** y **flex-grow**  
+- **Media queries** para responsividad
+
+### ✅ Checkpoints de Validación
+
+> **[30'] Check 1:** Estructura Flexbox inicial (header, main, footer)  
+> **[50'] Check 2:** Alineación y distribución de elementos en el main  
+> **[80'] Check 3:** Responsividad y pruebas visuales en diferentes tamaños
+
+## 🏗️ Setup Inicial
+
+1. **Repositorio**  
+   - Usa el repositorio de la clase anterior.
+
+2. **Archivos CSS:**
+   - Mantén `styles.css` y amplíalo con nuevas reglas de Flexbox.
+
+3. **Contenido Base:**
+   - Evita usar `<div>` de manera excesiva. Utiliza etiquetas semánticas para estructurar las secciones.
+   - Aplica **overflow** cuando el contenido exceda el espacio visible.
+
+## 📋 Historias de Usuario
+
+1. **HU1: Navegación Flexible**  
+"Como usuario, quiero que el menú de navegación se alinee horizontalmente y se ajuste automáticamente en pantallas pequeñas."  
+  - **Criterios de Aceptación:**  
+    - Menú principal con `display: flex` y alineación horizontal
+    - Uso de `justify-content: space-between` para distribuir los elementos
+
+2. **HU2: Sección Principal Adaptable**  
+"Como visitante, quiero que la sección principal se ajuste a diferentes tamaños de pantalla manteniendo su diseño."  
+  - **Criterios de Aceptación:**  
+    - Contenido centrado con `align-items: center`
+    - Ajuste mediante `flex-wrap` en pantallas pequeñas
+
+3. **HU3: Galería de Imágenes del Producto**  
+"Como usuario, quiero ver una sección llamada 'Galería de Imágenes' con fotos del producto dispuestas en una cuadrícula flexible."  
+  - **Criterios de Aceptación:**  
+    - Nueva sección `<section>` titulada “Galería de Imágenes”
+    - Galería con `display: flex` y `flex-wrap: wrap`
+    - Uso de media queries para cambiar el número de columnas
+
+## 🛠️ Requerimientos Técnicos
+
+- Utilizar `display: flex` en los principales contenedores (`header`, `main`, `footer`).
+- Alinear elementos usando `justify-content` y `align-items`.
+- Crear la sección de galería utilizando `flex-wrap`.
+- Aplicar media queries para adaptar el diseño a tamaños pequeños y medianos.
+- Usar `overflow` para controlar el contenido que excede los límites.
+
+## 🏆 Logros Adicionales
+
+- **Logro 1: Sección de Testimonios**  
+Agrega una nueva sección titulada “Testimonios” en la misma página, mostrando opiniones de clientes en formato de tarjetas (cards). Utiliza Flexbox para organizar las tarjetas de forma adaptable y estética.
+
+- **Logro 2: Animaciones con CSS** *(Sugerido)*  
+Implementa microinteracciones o animaciones sutiles en elementos clave, como botones, imágenes de la galería o enlaces del menú. Usa propiedades como `transition` y `transform` para lograr efectos visuales atractivos.
+
+## 📝 Instrucciones de Entrega
+
+1. **Documentación en README**  
+   - Describe cómo usaste Flexbox y su impacto en la responsividad.
+
+2. **Despliegue**  
+   - Publica la nueva versión en GitHub Pages y actualiza la URL.
+
+3. **Entrega Final**  
+   - URL del repositorio  
+   - URL de la página desplegada
+
+---
+
+## 💡 Tips y Buenas Prácticas
+
+- Usa `gap` para separar los elementos dentro de los contenedores Flexbox.
+- Mantén el código CSS limpio y comentado.
+- Valida la página usando herramientas como [W3C Validator](https://validator.w3.org/).
