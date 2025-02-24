@@ -6,8 +6,6 @@
 2. **Analizar escenarios reales**: Discutir ejemplos de implementación en sitios web modernos, identificando patrones y buenas prácticas para layouts complejos.  
 3. **Debatir el impacto en la industria**: Valorar cómo CSS Grid facilita el trabajo en equipo y la escalabilidad de proyectos, comparándolo con Flexbox y otros enfoques.  
 
----
-
 ## 🔑 Conceptos Clave
 
 ### 1. Estructura Grid y Contenedores

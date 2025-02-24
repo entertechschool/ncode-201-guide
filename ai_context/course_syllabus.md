@@ -25,91 +25,6 @@
    - Sentar las bases conceptuales y prácticas necesarias para enfrentar desafíos más complejos en el siguiente curso.  
    - Al término de Code 201 (2.5 meses), el estudiante estará listo para profundizar en Code 301 (4.5 meses) y completar su formación como **Software Developer** listo para el mercado laboral.
 
-## Sistema
-
-Nuestra escuela se basa en estos **cuatro pilares fundamentales** para garantizar que el proceso de aprendizaje sea **efectivo**, **dinámico** y **vanguardista**.
-
-### 1. Fundamentos Sólidos Primero
-- Aseguramos que cada estudiante desarrolle una comprensión firme de los **conceptos fundamentales**.
-- Utilizamos debates técnicos guiados que fomentan:
-  - Comprensión profunda de conceptos fundamentales.
-  - Capacidad de argumentación técnica.
-  - Análisis crítico de diferentes soluciones.
-  - Exposición a diversos puntos de vista y experiencias.
-- Damos prioridad a:
-  - **Estructura y semántica** en el desarrollo web.
-  - **Lógica de programación** y manejo de datos.
-  - **Buenas prácticas** en la organización de proyectos y control de versiones.
-- Solo tras adquirir estos fundamentos se avanza a temáticas más avanzadas o especializadas.
-
-### 2. Uso de IA en el ADN del Instructor y Estudiante
-- **IA como Aliada**: Incorporamos herramientas de inteligencia artificial (como ChatGPT) en la planificación, generación y explicación de contenidos.
-- **Aprendizaje Acelerado**: Fomentamos el uso de IA para resolver dudas, ilustrar ejemplos y proponer ejercicios prácticos.
-- **Responsabilidad y Ética**: Enseñamos a usar la IA de forma responsable, comprendiendo sus limitaciones y validando sus respuestas.
-
-### 3. Aprendizaje Basado en Proyectos
-- **Proyectos Reales**: Cada módulo culmina en la creación de un **proyecto funcional**, aplicando los conocimientos adquiridos.
-- **Equipos de Trabajo**: Se promueve la **colaboración** e interacción entre pares, emulando entornos de desarrollo del mundo real.
-- **Problemas Reales**: Algunos módulos son dedicados exclusivamente a trabajar un proyecto para una empresa real, en grupos.
-
-### 4. Networking y competencias profesionales
-- **Colaboración Efectiva**: Fomentamos la comunicación clara y el trabajo en equipo, esenciales para cualquier entorno de desarrollo profesional.
-- **Networking**: Promovemos la creación de redes de contacto con mentores, profesionales de la industria y compañeros de clase.
-- **Crecimiento Profesional**: Se impulsa la adquisición de habilidades blandas como la empatía, la mentalidad de crecimiento, resolución de conflictos y la gestión del tiempo, que complementan la formación técnica.
-
----
-
-## Cómo se Implementa el Sistema
-
-1. **Estructura de Clase**  
-   - Nuestras clases "blend" duran 3 horas e integran tres componentes esenciales:
-     a) Conceptual (10%): Introducción de conceptos clave.
-     b) Debate técnico (20%): Discusión guiada de conceptos y soluciones.
-     c) Práctico (60%): Desarrollo autónomo con soporte y puntos de validación.
-     d) Feedback y conclusiones (10%): El instructor destaca los aciertos y advierte sobre las decisiones o conceptos por mejorar.
-   - Los debates se estructuran alrededor de:
-     - Análisis de diferentes enfoques de solución.
-     - Discusión de mejores prácticas.
-     - Evaluación de trade-offs en decisiones técnicas.
-     - Reflexión sobre implicaciones en casos reales.
-
-2. **Roles de IA y Humanos**  
-   - El **instructor** asume el rol de mentor: valida la información generada por la IA y la contextualiza para la clase.
-   - El **estudiante** emplea la IA como herramienta de aprendizaje, en la resolución de ejercicios, la búsqueda de recursos y la generación de código, sin embargo, debe sustentar sus decisiones técninas frente al **instructor**.
-
-3. **Debates y Discusiones Técnicas**
-   - El **instructor** actúa como moderador y facilitador:
-     - Plantea preguntas detonadoras.
-     - Guía la discusión hacia puntos clave.
-     - Asegura la participación equilibrada.
-     - Sintetiza conclusiones relevantes.
-   
-   - Los **estudiantes** participan activamente:
-     - Realizan lecturas y reflexionan sobre lo que se aprenderá en clase.
-     - Preparan argumentos técnicos fundamentados.
-     - Comparten experiencias y perspectivas.
-     - Cuestionan y analizan diferentes enfoques.
-     - Practican la comunicación técnica efectiva.
-   
-   - La **IA** apoya el proceso:
-     - Proporciona ejemplos para discusión.
-     - Sugiere escenarios de debate.
-     - Ofrece diferentes perspectivas técnicas.
-     - Ayuda a validar argumentos técnicos.
-
-4. **Guías de Laboratorio y Evaluación**
-   - Cada clase tiene una guía de laboratorio. En cada módulo (4 clases), se trabajan 4 laboratorios progresivos que culminan en un proyecto real.
-   - En cada clase se introduce un nuevo tema central y entre 3-5 conceptos clave asociados.
-   - Solo se evalúa la presentación del proyecto del módulo en vivo. Para ello, usamos una rúbrica de evaluación del módulo.
-   - Se evalúa de forma individual a cada estudiante, a excepción de los módulos donde se trabaja un proyecto grupal, donde la evaluación es personal y grupal.
-   - Empleamos un lenguaje claro, estructura, emojis en los encabezados y algunos tips cuando es necesario.
-
-5. **Responsabilidad y Ética**  
-   - Se enfatiza la importancia de **comprender y justificar** las soluciones propuestas, incluso si fueron generadas o asistidas por IA.
-   - Cualquier contenido o fragmento de código generado por IA debe ser revisado y ajustado para **asegurar la calidad** y **evitar plagio** o mal uso.
-
-Este sistema de aprendizaje busca equilibrar la **profundidad** de los fundamentos, el **poder de la IA** y la **práctica constante** a través de proyectos. Con estas directrices, esperamos que la IA pueda generar y mejorar contenido didáctico que potencie las habilidades de los estudiantes y los prepare para los **desafíos reales** del mercado laboral en desarrollo de software.
-
 ## Módulos y Clases
 
 ### Módulo 1: Fundamentos de la Web Moderna
@@ -117,6 +32,9 @@ Este sistema de aprendizaje busca equilibrar la **profundidad** de los fundament
 2. **CSS Layout con Flexbox** (180 min, blend)
 3. **CSS Grid Layout** (180 min, blend)
 4. **Frameworks CSS Modernos** (180 min, blend)
+
+> #### Proyecto Integrador: **Product Landing Page**.
+> Un Landing Page que mostrará las caraterísticas clave de un producto, y que permite la navegación usando estándares actuales de semántica y accesibilidad. Adicionalmente, está consutrído con un Layout Responsive, utilizando tecnologías como Flexbox, Grid y frameworks modernos.
 
 ### Módulo 2: Fundamentos de Programación
 5. **Programación Imperativa** (180 min, blend)
