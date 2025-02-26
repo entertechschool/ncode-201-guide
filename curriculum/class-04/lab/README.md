@@ -1,60 +1,56 @@
-# Lab 04: Web moderna con Bootstrap
+# 💻 Laboratorio 04: Frameworks CSS Modernos
 
-## Descripción General
-En este laboratorio, recrearás la página web del laboratorio anterior pero ahora utilizando el framework Bootstrap. Aprenderás a utilizar los componentes y clases de Bootstrap para crear un diseño responsivo y profesional de manera más eficiente.
+¡Bienvenido al cuarto laboratorio del proyecto **Product Landing Page**! En este paso nos enfocaremos en integrar frameworks CSS modernos, combinando **Bootstrap** y **Tailwind CSS** para mejorar la apariencia y la eficiencia del desarrollo web.
 
-## Configuraciones
-- Crea un repositorio llamado `web-moderna-bootstrap`.
-- Clona tu repositorio a tu computadora local en la ruta `~/dev/[usuario_github]`.
-- Ingresa a tu VScode usado `code .` y trabaja tu proyecto.
-  
-## Instrucciones
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 30 y 60 minutos). Mantenerse al día con estos checkpoints es clave para aprovechar el feedback y las discusiones grupales.
 
-1. Estructura HTML
-   - Incluye Bootstrap en tu proyecto utilizando el CDN `https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css`.
-   - Implementa una barra de navegación (`navbar`) de Bootstrap con dos enlaces: **"GitHub"** y **"README"**.
-   - Agrega un contenedor principal usando las clases de grid de Bootstrap.
-   - Cada tarjeta debe ser un componente `card` de Bootstrap que incluya:
-      - Una imagen (utiliza placehold.co para generar imágenes de 400x200 píxeles).
-      - Un título usando la clase `card-title`.
-      - Un texto descriptivo usando la clase `card-text`.
-      - Un botón "Ver más" usando las clases de botones de Bootstrap.
+## 🎯 **Objetivos de Aprendizaje**
 
-2. Imágenes
-   - Para las imágenes de las tarjetas:
-      - Utiliza el servicio `placehold.co`
-      - Dimensiones requeridas: 400x200 píxeles.
-      - Ejemplo de URL: `https://placehold.co/400x200`
-      - Usa la clase `card-img-top` de Bootstrap.
-      - Asegúrate de incluir un atributo `alt` descriptivo para cada imagen.
+1. Integrar frameworks CSS modernos para estilizar interfaces.
+2. Aplicar componentes predefinidos y utilidades para agilizar el desarrollo.
+3. Trabajar con ramas en Git.
 
-3. Componentes de Bootstrap a utilizar:
-   - Navbar:
-      - Usa el componente `navbar` de Bootstrap.
-      - Implementa el comportamiento responsive con `navbar-expand-lg`.
-      - Utiliza las clases de color de Bootstrap para el fondo.
-      - Agrega la clase `fixed-bottom` para móvil y `fixed-top` para desktop.
+## 🔑 **Conceptos Clave**
 
-4. Sistema de Grid:
-   - Utiliza las clases de columnas responsive de Bootstrap:
-      - `col-12` para vista móvil.
-      - `col-md-4` o `col-lg-4` para vista desktop.
-   - Implementa `row` y `g-4` para el espaciado entre tarjetas.
+1. **Components Class:** Uso de componentes predefinidos como botones, tarjetas y menús de navegación para agilizar el desarrollo.
+2. **Utility Class:** Aplicación de clases de utilidad para ajustes rápidos de diseño, espaciado, alineación y colores.
+3. **Rama:** Línea independiente de desarrollo dentro del repositorio Git, utilizada para trabajar en funcionalidades específicas.
 
-5. Diseño Responsive:
-   - Móvil: tamaños menores a 768px (breakpoint md de Bootstrap)
-      - Las tarjetas ocuparán el ancho completo.
-      - Navbar fija en la parte inferior.
-   - Desktop: tamaños mayores a 768px
-      - Las tarjetas se organizarán en una grilla de 3 columnas.
-      - Navbar fija en la parte superior.
+## ⚙️ **Setup Inicial**
 
-## Logros adicionales
-- Personaliza los colores usando las clases de utilidad de Bootstrap.
-- Implementa efectos hover en los botones usando las clases de Bootstrap.
-- Agrega sombras usando las clases `shadow` de Bootstrap.
-- Utiliza las clases de espaciado de Bootstrap (`m-` y `p-`) para mantener consistencia.
-- Considera usar el componente `container-fluid` para anchos completos.
+1. **Repositorio**  
+   - Usa el repositorio del proyecto `product-landing-page`.
+   - Crea dos ramas específicas: `bootstrap` para la página de Compra y `tailwind` para las páginas de Landing Page y Testimonios.
 
-## Instrucciones de envío
-Envía el enlace de tu repositorio y la página publicada
+2. **Instalación del Framework:**
+   - Configura Bootstrap 5 mediante CDN o NPM.
+   - Integra Tailwind CSS para personalización adicional.
+
+## 🛠️ **Requerimientos Técnicos**
+
+1. **Página de Compra:** Utiliza Bootstrap para proporcionar una apariencia más convencional y generar confianza en el proceso de compra. Desarrolla esta parte en la rama `bootstrap`.
+2. **Landing Page principal y Testimonios:** Usa Tailwind CSS para estilizar estas páginas, permitiendo un diseño más libre y creativo. Desarrolla esta parte en la rama `tailwind`.
+3. **Mezclar ramas:** Al terminar los trabajos en la rama `bootstrap`, sube tus cambios al repositorio remoto, y genera un Pull Request hacia la rama principal `main`. **Para hacer esto con la rama `tailwind` necesitarás hacer un proceso adicional con ayuda de tu instructor**.
+
+## 🌟 **Logros Adicionales**
+
+- **Logro 1: Personalización de Colores**  
+Configura la paleta de Bootstrap adaptarla al branding del producto.
+
+- **Logro 2: Animaciones y Transiciones**  
+Implementa animaciones sutiles utilizando las clases de tailwind.
+
+## 📝 **Instrucciones de Entrega**
+
+1. **Documentación en README**  
+    - Responde con qué librería/framework te sentiste más cómodo trabajando y por qué (Bootstrap / Tailwind CSS).
+    - Muestra los comandos utilizados para crear, cambiar y fusionar las ramas.
+
+2. **Despliegue**  
+    - Actualiza la versión desplegada en GitHub Pages.
+
+3. **Entrega Final**  
+    - URL del repositorio
+    - URL del sitio desplegado en GitHub Pages
+
+
