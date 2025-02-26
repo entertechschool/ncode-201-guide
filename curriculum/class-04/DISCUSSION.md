@@ -1,31 +1,39 @@
-# Read 04: Librerías Externas
+# Lectura y Debate 04
+**Tema Central: Frameworks CSS Modernos**  
 
-## Reflexiona y debate
+## 🎯 **Objetivos de la Lectura y el Debate**
 
-A continuación se muestra una colección de recursos que describen los temas de la clase.
+1. Comprender las diferencias conceptuales entre Bootstrap y Tailwind CSS.
+2. Analizar las ventajas y desafíos de usar cada framework en distintos escenarios.
+3. Reflexionar sobre las mejores prácticas al trabajar con ramas en Git.
 
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
+## 🔑 **Conceptos Clave**
 
-### Lectura
-La lectura de este articulo es obligatoria.
-- [jQuery](https://www.javatpoint.com/what-is-jquery){:target="_blank"}
+1. **Bootstrap:** Framework con componentes visuales predefinidos y diseño consistente.
+2. **Tailwind CSS:** Framework basado en clases de utilidad para un diseño altamente personalizable.
+3. **Ramas en Git:** Líneas independientes de desarrollo que permiten trabajar de forma modular y colaborativa.
 
-### Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-- [Bootstrap](https://www.hostinger.es/tutoriales/que-es-bootstrap){:target="_blank"}
+## 📚 **Artículos Recomendados para Leer**
 
+- [Documentación Oficial de Bootstrap](https://getbootstrap.com/){:target="_blank"}
 
+- [Documentación Oficial de Tailwind CSS](https://tailwindcss.com/){:target="_blank"}
 
-## Responde
-1. ¿Cuáles son las principales características de Bootstrap que lo hacen ideal para el desarrollo de sitios web responsivos?
-2. ¿Cómo facilita Bootstrap la personalización de estilos en comparación con el desarrollo CSS desde cero?
-3. ¿Qué es jQuery y cuál es su principal objetivo en el desarrollo web?
-4. ¿Por qué se dice que jQuery permite "escribir menos y hacer más"?
+- [Guía Oficial de Git - Ramificaciones en Git - ¿Qué es una rama?](https://git-scm.com/book/es/v2/Ramificaciones-en-Git-%C2%BFQu%C3%A9-es-una-rama%3F){:target="_blank"}
 
+## 🧠 Lista de Reflexiones para Analizar
 
-## Instrucciones de envío
-- Agrega las preguntas y respuestas de esta actividad a tu archivo `read04.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-- Agrega en la **Respuesta** a esta actividad:
-    - El enlace de tu repositorio publicado en **GitHub Pages**.
-    - Y también, las respuestas que desarrollaste.
-- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
+1. ¿Cómo difieren las Component Classes y Utility Classes en su uso diario?
+2. ¿Cuándo es más eficiente utilizar Component Classes en lugar de Utility Classes?
+3. ¿Cómo afecta el uso de Utility Classes a la legibilidad del código?
+4. ¿En qué tipos de proyectos prefieres usar Bootstrap? ¿Por qué?
+5. ¿Cuáles son las ventajas principales de Tailwind CSS frente a otros frameworks?
+6. ¿Cómo impacta la elección del framework en el tiempo de desarrollo?
+7. ¿Por qué es esencial usar ramas en Git al trabajar en equipos?
+8. ¿Cómo ayuda el uso de ramas a mantener la estabilidad del código principal?
+9. ¿Qué desafíos has enfrentado al fusionar ramas y cómo los resolviste?
+
+> **Instrucción:**  
+> - Lee cuidadosamente los artículos sugeridos para comprender los fundamentos de CSS Grid.  
+> - Identifica cuáles de las afirmaciones anteriores son mitos y cuáles son verdades.  
+> - Prepara tus argumentos con base en los ejemplos y la documentación para defender tu postura en clase.  
