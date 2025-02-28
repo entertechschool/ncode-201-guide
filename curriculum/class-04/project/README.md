@@ -1,4 +1,5 @@
-# Proyecto Final - Módulo 1  
+# Proyecto del Módulo 1  
+
 **Product Landing Page**
 
 Este proyecto consolida todo lo aprendido durante el **Módulo 1: Fundamentos de la Web Moderna**. El objetivo es que cada estudiante refine y complete su **Product Landing Page**, integrando accesibilidad, semántica, Flexbox, Grid y frameworks CSS modernos.
@@ -25,6 +26,11 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
         - [Condición 1: Qué debe estar presente o cumplirse para considerar esta historia completada]
         - [Condición 2: Validaciones o comportamientos esperados]
         - [Condición 3: Accesibilidad o consideraciones de diseño]
+
+### Implementación:
+- Cada **Historia de Usuario** debe estar implementada en una rama con un nombre coherente. Una vez que la implementación cumpla con los **criterios de aceptación** propuestos hacer Pull Request a la rama `main`.
+
+- El uso de herramientas de Inteligencia Artificial está permitido ✅ sin embargo, **solo debes implementar código que puedas explicar técnicamente**.
 
 ## ☑️ Rúbrica de Evaluación 
 
