@@ -33,23 +33,26 @@
 3. **CSS Grid Layout** (180 min, blend)
 4. **Frameworks CSS Modernos** (180 min, blend)
 
-> #### Proyecto Integrador: **Product Landing Page**.
+> #### Proyecto Integrador: **Product Landing Page**
 > Un Landing Page que mostrará las caraterísticas clave de un producto, y que permite la navegación usando estándares actuales de semántica y accesibilidad. Adicionalmente, está consutrído con un Layout Responsive, utilizando tecnologías como Flexbox, Grid y frameworks modernos.
 
 ### Módulo 2: Fundamentos de Programación
 5. **Programación Imperativa** (180 min, blend)
 6. **Programación Funcional** (180 min, blend)
 7. **Programación Orientada a Objetos** (180 min, blend)
-8. **Tipos de Objetos** (180 min, blend)
+8. **Prototipos en JavaScript** (180 min, blend)
+
+> #### Proyecto Integrador: **Gestor de Presupuesto Personal**
+> Una aplicación web sencilla que permite gestionar un presupuesto mensual, registrando ingresos y gastos, categorizándolos y visualizando un balance actualizado. El proyecto evoluciona clase a clase, pasando de una solución imperativa a un sistema basado en objetos, con cálculos funcionales y extensión por medio de prototipos.
 
 ### Módulo 3: Aplicaciones Web con Objetos
-9. **Prototipos en JavaScript** (180 min, blend)
+9. **DOM como API de Objetos** (180 min, blend)
 10. **Funciones y Callbacks** (180 min, blend)
-11. **DOM como API de Objetos** (180 min, blend)
-12. **Manipulación del DOM** (180 min, blend)
+11. **Event Handling Básico** (180 min, blend)
+12. **Promesas en Javascript** (180 min, blend)
 
-### Módulo 4: Eventos y Persistencia
-13. **Event Handling Básico** (180 min, blend)
+### Módulo 4: Estado y Persistencia
+13. **Modelado de Estado (Patrón Store)** (180 min, blend)
 14. **App State Management** (180 min, blend)
 15. **JSON y LocalStorage** (180 min, blend)
 16. **Persistencia y Sincronización** (180 min, blend)

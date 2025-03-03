@@ -1,100 +1,102 @@
-# Laboratorio 05: Gestión de Presupuesto Personal 🏦
+# Laboratorio 5: Programación Imperativa
 
-## Descripción
-En este laboratorio, construirás una aplicación web para gestionar presupuestos personales que permite a los usuarios registrar y visualizar sus ingresos y gastos. Este ejercicio te ayudará a practicar conceptos fundamentales de JavaScript como condicionales, arreglos y bucles.
+¡Bienvenido al primer laboratorio del proyecto **Gestor de Presupuesto Personal**! En este laboratorio, aplicarás **programación imperativa** para resolver un ejercicio práctico de control de flujo y funciones básicas. Crearás un programa que simula un **sistema de registro de actividades diarias**.
+
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 30 y 60 minutos). Es importante mantenerse al día con estos checkpoints para aprovechar el feedback y las discusiones grupales.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar lógica de programación usando estructuras de control
-- Manipular arreglos para almacenar y gestionar datos
-- Crear funciones que procesen entrada de usuario
-- Actualizar el DOM dinámicamente basado en datos
 
-## 🚀 Setup Inicial
+1. **Comprender y aplicar estructuras de control de flujo para resolver problemas secuenciales.**  
+   Utilizar condicionales (`if`, `else`) y bucles (`for`, `while`) para controlar el flujo de ejecución y tomar decisiones en función de condiciones específicas.
 
-### 1. Crea y configura el Repositorio
-- En tu cuenta de Github crea un nuevo repositorio llamado: `personal-budget`
->
-> (Recuerda agregar un README.md desde la creación).
->
-- En tu sistema operativo, clona el repositorio.
-```bash
-# Clonar el repositorio de git
-cd dev
-git clone [https://...]
+2. **Desarrollar funciones imperativas para resolver tareas específicas en un contexto procedural.**  
+   Crear funciones que describan paso a paso cómo realizar tareas concretas, ejecutando acciones directamente o modificando variables globales.
+
+## 🔑 Conceptos Clave
+
+1. **Estructuras de Control de Flujo**  
+   Herramientas fundamentales para controlar el orden de ejecución del código, permitiendo evaluar condiciones (`if`) y repetir acciones (`for`, `while`).
+
+2. **Funciones Imperativas**  
+   Bloques de código que ejecutan instrucciones secuenciales para resolver un problema específico, generalmente modificando directamente variables globales o mostrando resultados inmediatos.
+
+## ⚙️ Setup Inicial
+
+1. **Repositorio:**  
+   Crea un repositorio nuevo llamado: `personal-budget` y clónalo en tu máquina local.
+
+2. **Estructura de Archivos:**  
+   Dentro de tu repositorio, crea la siguiente estructura:
+   ```
+   personal-budget/
+   ├── index.html
+   ├── app.js
+   ├── README.md
+   ```
+
+## 📋 Historias de Usuario (HU)
+
+### HU1 - Registrar Actividad
+> _"Como usuario, quiero registrar el nombre y duración de una actividad, para llevar un control de mi tiempo."_
+
+- **Criterios de Aceptación:**
+    - El sistema solicita el nombre y duración.
+    - Si el nombre está vacío o la duración es menor o igual a cero, muestra un mensaje de error.
+    - Si los datos son válidos, se guarda la actividad.
+- **⏱️ Checkpoint 1 ~ 30 min:** Revisar la función `registrarActividad()`: validaciones y estructura básica.
+
+### HU2 - Mostrar Resumen
+> _"Como usuario, quiero ver cuántas actividades registré y el tiempo total dedicado."_
+
+- **Criterios de Aceptación:**
+    - El sistema muestra la cantidad de actividades registradas.
+    - El sistema muestra el total de minutos dedicados.
+- **⏱️ Checkpoint 2 ~ 60 min:** Validar el correcto uso de `for` o `while` para recorrer el array de actividades.
+
+## 🛠️ Requerimientos Técnicos
+
+1. Utilizar **`prompt()`** para capturar datos del usuario y **`console.log()`** para mostrar información.
+2. Utilizar **`if/else`** para validar cada actividad antes de registrarla.
+3. Utilizar un **bucle `while`** para permitir el registro de múltiples actividades hasta que el usuario decida salir.
+4. Crear al menos **3 funciones imperativas**:
+    - `registrarActividad()`: solicita datos y valida antes de guardar.
+    - `calcularTiempoTotal()`: recorre el array y suma duraciones.
+    - `mostrarResumen()`: muestra la cantidad de actividades y el total de minutos.
+
+## 🌟 Logros Adicionales
+
+- **Logro 1:** Permitir registrar una **categoría** por actividad (ej. trabajo, ejercicio, ocio).
+- **Logro 2:** Mostrar un resumen adicional por categoría (cuánto tiempo dedicó a cada una).
+
+---
+
+## 📝 Instrucciones de Entrega
+
+1. **README.md**  
+    Incluye una breve explicación de cómo funciona el programa y un listado de las funciones creadas.
+
+2. **Entrega Final**  
+    - URL del repositorio en GitHub.
+    - Captura de pantalla de la ejecución final en consola.
+
+---
+
+## 🧑‍💻 Ejemplo de Flujo Esperado (en consola)
+
 ```
+Registro de Actividades
+-----------------------
+Nombre de la actividad: Estudiar JS
+Duración (minutos): 90
 
-### 2. Estructura de Archivos
+¿Registrar otra actividad? (si/no): si
+Nombre de la actividad: Correr
+Duración (minutos): 30
+
+¿Registrar otra actividad? (si/no): no
+
+Resumen Final
+-----------------------
+Total de actividades: 2
+Tiempo total: 120 minutos
 ```
-personal-budget/
-├── index.html
-├── styles.css
-├── app.js
-```
-
-### 3. Aprendiendo con IA
-Para este laboratorio, necesitarás aprender a nivel inicial, cómo manejar el evento del envío de un formulario en HTML, para que desde Javascript puedas capturar los datos. Por esto, vas a usar un agente de IA para lograr hacerlo.
-
-- Utiliza un prompt similar al ejemplo para lograr aprender este nuevo concepto:
-
-```
-Soy estudiante de desarrollo web y estoy aprendiendo JavaScript. Necesito ayuda para entender cómo trabajar con formularios HTML y JavaScript.
-
-Específicamente necesito:
-1. Entender cómo obtener los datos cuando el usuario envía un formulario
-2. Aprender a usar el evento onSubmit
-3. Ver un ejemplo básico de cómo prevenir que el formulario recargue la página
-
-Mi conocimiento actual incluye:
-- HTML básico y formularios
-- JavaScript: variables, funciones, condicionales
-- Conceptos básicos del DOM
-
-¿Podrías mostrarme un ejemplo simple paso a paso que incluya:
-- El HTML del formulario
-- El JavaScript necesario para capturar los datos
-- Una explicación de cada parte del código?
-```
-
-## Instrucciones
-
-### 1. HTML (index.html)
-Debe incluir:
-- Formulario con:
-  - Campo para el monto
-  - Selector de tipo (ingreso/gasto)
-  - Botón de submit
-- Sección para mostrar balance total
-- Lista para mostrar transacciones
-- Enlaces a archivos CSS y JavaScript
-
-### 2. JavaScript (app.js)
-
-- Define un array vacío `transacciones` para almacenar las transacciones.
-
-- Implementa la función `registrarTransaccion` que:
-
-    - Reciba los parámetros tipo y monto.
-    - Use condicionales (if/else) para validar y clasificar la transacción.
-    - Almacene la transacción como un string en el formato "Ingreso: 500".
-
-- Implementa un bucle for para iterar sobre las transacciones y mostrarlas en el navegador.
-
-### 3. CSS (styles.css)
-
-- Aplica un diseño de layout responsivo usando media-queries.
-
-## Logros adicionales
-
-Si completas las instrucciones principales, intenta implementar las siguientes mejoras:
-
-1. **Ordenar transacciones**: Usa el método `sort` para mostrar las transacciones en orden descendente o ascendente según el monto.
-2. **Validaciones avanzadas**:
-    - Asegúrate de que los montos sean números positivos.
-    - Muestra un mensaje de error si el campo de monto está vacío o es inválido.
-3. **Estilizar interacciones**:
-    - Aplica estilos dinámicos para diferenciar visualmente los ingresos y gastos en la lista.
-
-
-## Instrucciones de envío
-- Publica la página usando GitHub Pages.
-- Envía el enlace de tu repositorio en GitHub y tu sitio publicado.
