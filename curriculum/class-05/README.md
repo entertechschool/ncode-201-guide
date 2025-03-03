@@ -1,48 +1,57 @@
-﻿# CSS: Imágenes, Color, Texto y Git Branching
+﻿> 📦 **Módulo 2:** Clase 1 de 4  
+
+# Clase 05: Programación Imperativa
 
 ## Resumen
+En la Clase 05 exploramos el **paradigma imperativo**, uno de los enfoques más directos y utilizados al iniciar la programación. Aplicamos este paradigma para crear un primer **Gestor de Presupuesto Personal**, desarrollando funciones básicas que gestionan el registro y la validación de actividades diarias.
 
-En esta clase nos apartaremos del proyecto de cuestionario "About me". Tendrás otras dos tareas de laboratorio para entregar que te ayudarán con CSS y a aprender un nuevo flujo de trabajo de git
+También reflexionamos sobre las **limitaciones del enfoque imperativo** en aplicaciones crecientes y preparamos el terreno para explorar alternativas más robustas en futuras clases.
 
-## Descripción general
+## Estructura sugerida
 
-- Revisión del código de la tarea de laboratorio anterior.
-- Demostración de código
-  - Imágenes en HTML
-  - Repaso de funciones
-- Vista previa del laboratorio y preparación
+| **Fase**                  | **Duración** | **Descripción**                                                                                     |
+|---------------------------|--------------|-----------------------------------------------------------------------------------------------------|
+| **1. Introducción**       | 15 min       | Activación de conocimientos previos sobre funciones, variables y control de flujo.                  |
+| **2. Debate Conceptual**  | 30 min       | Discusión sobre las ventajas y desventajas del enfoque imperativo.                                  |
+| **3. Demo Técnica**       | 20 min       | Ejemplificación en vivo de funciones imperativas para registrar actividades y calcular el total.    |
+| **4. Laboratorio**        | 100 min      | Implementación práctica del Gestor de Presupuesto Personal con `prompt()`, `console.log()` y arrays.|
+| **5. Cierre**             | 15 min       | Conclusiones, retroalimentación y preparación para la introducción a la programación funcional.     |
 
-## Objetivos de aprendizaje
 
-### Los estudiantes podrán
+## Resultados esperados
 
-#### Describir y definir
+Al concluir la Clase 05, los estudiantes estarán preparados para construir flujos básicos de programas con **control de flujo secuencial**, validar datos de entrada y organizar el código en **funciones imperativas**. En detalle:
 
-- Formatos de imágenes (JPG, GIF, PNG) y las fortalezas/debilidades de cada formato.
-- La importancia de GitHub y las ramas.
+### Podrán hacer
 
-#### Ejecutar
+1. **Controlar el Flujo de un Programa Secuencialmente**  
+   Utilizar estructuras como `if`, `else`, `for` y `while` para procesar y validar datos de entrada de usuarios.
+   
+2. **Organizar Tareas en Funciones Imperativas**  
+   Crear funciones simples y acopladas que resuelven tareas específicas como registrar datos, calcular totales y mostrar resúmenes.
 
-- Publicar una página web estática en GitHub page desde una rama en específico.
-- Aplicar imágenes, color y formato al texto para modificar una página en HTML.
-- Gestionar un repositorio con git mediante el uso de ramas y merging.
+### Podrán explicar
 
-## Notas
+1. **Cómo Funciona el Flujo Imperativo**  
+   Describir cómo las instrucciones se ejecutan una tras otra, modificando variables globales y manteniendo el estado en estructuras simples (arrays).
 
-1. ¿Cuáles son los 2 atributos requeridos de la etiqueta `<img>`?
+2. **Ventajas y Limitaciones de la Programación Imperativa**  
+   Justificar cuándo es apropiado utilizar este enfoque en pequeños scripts y por qué puede volverse difícil de mantener en sistemas más complejos.
 
-1. ¿Cuál es la diferencia entre los tipos de letra Serif y Sans-serif?
+### Podrán implementar
 
-1. ¿Cuál es el propósito del branching?
+1. **Funciones Básicas para Registro y Cálculo**  
+   Crear funciones `registrarActividad()`, `calcularTiempoTotal()` y `mostrarResumen()` que resuelven un flujo inicial de registro y resumen.
+   
+2. **Control de Flujo y Validaciones**  
+   Aplicar condicionales y bucles para gestionar la interacción con el usuario a través de `prompt()` y mostrar resultados con `console.log()`.
 
-1. Llena el espacio en blanco: Para crear una nueva rama en el terminal, utiliza `git checkout ____ <nombre de la rama>`.
+---
 
-1. ¿Qué es un PR o pull request?
+## Glosario de Nuevos Términos
 
-## Demostración de código para el laboratorio
-
-El laboratorio de esta clase está 'aislado', en el sentido de que no está conectado con el proyecto "About me".
-
-Trabajarán de forma individual. El flujo de trabajo de GitHub de hoy también es diferente, y está diseñado para que practiques con ramas, la cual es la última parte importante de Git que nos queda por abordar. Necesitamos dedicarle un poco de tiempo, y practicar con ella, para que entiendas lo que estás haciendo.
-
-Los conceptos que veremos en esta tarea de laboratorio (funciones que reciben input y devuelven un output) serán MUY MUY útiles para tí en el siguiente gran proyecto. De forma ideal, continuarás trabajando en pequeños problemas como este para practicar más.
+- **Programación Imperativa:** Enfoque que describe *cómo* se debe realizar cada paso de una tarea, ejecutando instrucciones secuenciales.
+- **Estructuras de Control:** Herramientas como `if`, `else`, `for` y `while`, utilizadas para controlar el flujo de un programa.
+- **Variable Global:** Variable accesible desde cualquier función o parte del programa, común en programas imperativos pequeños.
+- **Función Acoplada:** Función que depende directamente de variables globales u otras funciones, típica en programación imperativa.
+- **Refactorización:** Proceso de mejorar el diseño interno de un programa sin cambiar su comportamiento externo.
