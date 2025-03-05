@@ -1,150 +1,116 @@
-# Laboratorio 06: Refactorizando el Gestor de Presupuesto 🔄
+# Laboratorio 06: Programación Funcional
 
-## Descripción
-En este laboratorio, mejorarás la aplicación de gestión de presupuestos personales del Lab 05, implementando los principios de programación funcional y DRY (Don't Repeat Yourself). Transformarás el código existente para hacerlo más eficiente, mantenible y escalable.
+En el sexto laboratorio seguimos avanzando el proyecto **Personal Budget**. En este laboratorio aplicarás **Programación Funcional** para resolver un conjunto de ejercicios prácticos enfocados en la transformación y manipulación de datos financieros. Aprenderás a utilizar funciones puras y funciones de orden superior como `map()`, `filter()` y `find()` para mejorar el manejo del presupuesto.
+
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye **dos momentos de validación grupal** (a los **30 y 60 minutos**). Mantente al día con estos checkpoints para recibir retroalimentación valiosa y aclarar dudas con tus compañeros e instructor.
 
 ## 🎯 Objetivos de Aprendizaje
-- Aplicar principios de programación funcional en JavaScript
-- Implementar el principio DRY para eliminar código redundante
-- Crear funciones puras que procesan datos sin efectos secundarios
-- Refactorizar código existente para mejorar su calidad y mantenibilidad
 
-## 🚀 Setup Inicial
+1. **Comprender el paradigma funcional y su diferencia con el paradigma imperativo.**  
+   Identificar cómo cambia la forma de resolver problemas cuando el enfoque es funcional en lugar de procedural.
 
-### 1. Preparación del Repositorio
-- Asegúrate de estar trabajando en una nueva rama:
-```bash
-git checkout -b lab-06-refactor
+2. **Aplicar funciones puras para resolver tareas específicas.**  
+   Asegurar que las funciones dependan exclusivamente de sus parámetros de entrada y no generen efectos secundarios.
+
+3. **Utilizar funciones de orden superior para transformar arrays y objetos.**  
+   Practicar con `map()`, `filter()` y `find()` para manipular colecciones de datos financieros de manera declarativa.
+
+## 🔑 Conceptos Clave
+
+| Concepto | Definición |
+|---|---|
+| **Programación Funcional** | Paradigma basado en funciones puras, evitando efectos secundarios y promoviendo inmutabilidad. |
+| **Funciones Puras** | Funciones cuyo resultado depende únicamente de sus argumentos y no modifican el estado global. |
+| **Funciones de Orden Superior** | Funciones que reciben o retornan otras funciones (por ejemplo: `map`, `filter`, `find`). |
+| **Declaración vs. Invocación** | Diferencia entre declarar (definir) una función y ejecutarla (invocarla). |
+| **Principio DRY** | (Don’t Repeat Yourself) Principio que promueve reutilizar código mediante funciones generales, evitando duplicidad. |
+
+## ⚙️ Setup Inicial
+
+1. **Repositorio:**  
+   Continúa trabajando en tu repositorio existente del proyecto `personal-budget`.  
+   
+2. **Estructura de Archivos:**  
+   Verifica que mantengas la siguiente estructura:
+   ```
+   personal-budget/
+   ├── index.html
+   ├── app.js
+   ├── README.md
+   ```
+
+3. **Configuración Base:**  
+   - Enlaza `app.js` desde `index.html`.
+   - Actualiza el `README.md` agregando:
+     - ¿Qué es una función pura?
+     - Diferencias entre imperativo y funcional.
+
+## 📋 Historias de Usuario (HU)
+
+### HU1 - Listar nombres de movimientos
+> _"Como usuario, quiero obtener una lista simple con los nombres de mis movimientos financieros registrados para revisarlos fácilmente."_
+
+- **Criterios de Aceptación:**
+    - Usar `map()` para obtener solo los nombres de los movimientos registrados.
+    - Mostrar la lista en consola.
+
+- **⏱️ Checkpoint 1 ~ 30 min:**  
+  Validar la creación y uso correcto de una función pura con `map()`.
+
+### HU2 - Filtrar egresos mayores a $100
+> _"Como usuario, quiero identificar rápidamente mis gastos mayores a $100 para analizar mejor mi presupuesto."_
+
+- **Criterios de Aceptación:**
+    - Usar `filter()` para obtener solo los egresos con montos mayores a $100.
+    - Mostrar el resultado filtrado en consola.
+
+### HU3 - Buscar movimiento por nombre
+> _"Como usuario, necesito buscar un movimiento específico por su nombre para revisar rápidamente sus detalles."_
+
+- **Criterios de Aceptación:**
+    - Usar `find()` para localizar un movimiento según el nombre indicado.
+    - Mostrar el movimiento encontrado o un mensaje claro si no existe.
+
+- **⏱️ Checkpoint 2 ~ 60 min:**  
+  Validar uso correcto y resultado esperado en funciones `filter()` y `find()`.
+
+
+## 🛠️ Requerimientos Técnicos
+
+| Requerimiento | Descripción |
+|---|---|
+| **Funciones Puras** | Implementa cada historia usando funciones puras sin modificar directamente el array original. |
+| **Composición Funcional** | Prefiere combinar funciones pequeñas y específicas para resolver problemas complejos. |
+| **Inmutabilidad** | No modificar directamente los arrays o los objetos originales. Crear nuevas copias cuando sea necesario. |
+
+## 🌟 Logros Adicionales
+
+- **Logro 1:** Crear una función pura que ordene los movimientos por monto, de mayor a menor, sin modificar el array original.
+- **Logro 2:** Componer una función que combine `filter()` y `map()` para obtener solo los nombres de los movimientos de tipo ingreso.
+
+## 📝 Instrucciones de Entrega
+
+1. **README.md Documentado**  
+   Debe incluir:
+   - Comparación personal entre paradigmas imperativo y funcional.
+   - Reflexión sobre cómo aplicaste el principio DRY.
+
+2. **Entrega Final**  
+   - URL del repositorio en GitHub.
+
+## 🧑‍💻 Ejemplo de Salida Esperada (en consola)
+
 ```
+Nombres de movimientos registrados:
+['Cena', 'Consultoría', 'Supermercado', 'Libro JavaScript']
 
-### 2. Estructura de Archivos Mejorada
+Egresos mayores a $100:
+[
+  { nombre: 'Supermercado', tipo: 'Egreso', monto: 150.00 },
+  { nombre: 'Compra online', tipo: 'Egreso', monto: 120.00 }
+]
+
+Buscar movimiento por nombre: 'Cena'
+Resultado encontrado:
+{ nombre: 'Cena', tipo: 'Egreso', monto: 45.50 }
 ```
-personal-budget/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   ├── app.js
-│   ├── utils.js
-│   └── validators.js
-```
-
-### 3. Aprendiendo con IA
-Para este laboratorio, necesitarás reforzar tus conocimientos sobre programación funcional en JavaScript. Usa un prompt similar a este:
-
-```
-Soy estudiante de desarrollo web y estoy aprendiendo JavaScript. Necesito entender mejor los conceptos de programación funcional:
-
-1. Qué son las funciones puras (con ejemplos)
-2. Usar métodos de array como map, filter y reduce
-3. Ver ejemplos de cómo refactorizar código usando estos conceptos
-
-Mi conocimiento actual incluye:
-- JavaScript básico: variables, funciones, arrays
-- Bucles for y while
-- Manipulación básica del DOM
-```
-
-### 4. Precauciones 🔴
-
-Ten en cuenta que, si bien la IA es una herramienta poderosa para el aprendizaje, **usarla en exceso puede obstaculizar tu desarrollo como programador**. Está bien consultarla para entender conceptos específicos (como el uso de programación funcional en el punto 3), pero **resolver el laboratorio completo con IA te privará de la valiosa experiencia** de enfrentarte a problemas reales y desarrollar tu propio 🧠 pensamiento lógico. 
-
-> 💻 La práctica activa de escribir código, cometer errores y depurarlos es esencial para construir una base sólida de habilidades técnicas. Recuerda: la IA debe ser tu apoyo para aprender, no **un atajo para evitar el proceso de aprendizaje**.
-
-## ✅ Instrucciones
-
-### 1. Refactorización del HTML (index.html)
-- Mejora la estructura semántica del HTML usando las etiquetas adecuadas (main, section, h2, etc.)
-- Incluye los nuevos archivos JavaScript modularizados (el orden es importante)
-- Implementa un contenedor para el balance total con esta estructura:
-    - section > h2 **Balance: XXX**
-    - _Debe tener el diseño de una tarjeta_
-
-### 2. Modularización de JavaScript
-
-#### utils.js
-- Implementa funciones utilitarias puras:
-- `calcularBalance(transacciones)`
-```javascript
-const calcularBalance = (transacciones) => {
-  return transacciones.reduce((total, trans) => {
-    // lógica del cálculo
-  }, 0);
-};
-```
-- `formatearMonto(monto, moneda)`
-
-#### validators.js
-Crea funciones de validación:
-- `validarMonto(monto)`
-- `validarTipo(tipo)`
-
-#### app.js
-Refactoriza el código principal:
-1. Reemplaza los bucles for por métodos funcionales (map, filter, reduce)
-2. Implementa funciones específicas para cada tarea
-3. Elimina cualquier variable global innecesaria
-
-### 3. Mejoras en CSS
-> ⚠️ Si tu proyecto actualmente utiliza bootstrap, tendrás que remover esta librería externa para poder trabajar este punto.
-
-Organiza tu archivo styles.css siguiendo estas pautas:
-
-- Define al menos 3 variables CSS para elementos comunes:
-```css
-/* Ejemplo: */
-:root {
-  --color-primary: #2557a7;
-  --border-radius: 4px;
-}
-```
-- Implementa al menos 3 clases utilitarias reutilizables:
-```css
-/* Ejemplo: */
-.text-primary {
-    color: var(--color-primary);
-}
-.rounded {
-    border-radius: var(--border-radius);
-}
-```
-
-### 4. Control de versiones con Git
-- Realiza al menos 3 commits significativos y descriptivos:
-    - Haz commits pequeños y frecuentes
-    - Usa mensajes claros que sigan esta estructura
-    ```bash
-    git commit -m "feat: agrega funciones puras para cálculos"
-    git commit -m "refactor: modulariza código en utils.js"
-    git commit -m "style: implementa variables css"
-    ```
-- Documenta al menos 3 cambios en el archivo `README.md`:
-```
-- Modularización de...
-- Implementación de..
-- Mejoras de...
-- Optimización de...
-```
-
-- Crea un Pull Request:
-    - Sube tus cambios a GitHub
-    - Crea un PR desde la rama `lab-06-refactor` a `main`
-    - En la descripción del PR, detalla **qué cambios realizaste**
-    - Confirma el PR y haz el merge con main, desde Github.
-
-
-## Logros adicionales
-
-1. **Estilos dinámicos para el balance:** Crea una función pura `getBalanceClass` que determine la clase según el monto:
-```
-hasta 500 => .low-balance
-hasta 1000 => .regular-balance
-superior a 1000 => .extra-balance
-```
-Esta función debe utilizar la propiedad `classList` del elemento del DOM.
-
-Estas clases deben estar creadas en tu hoja de estilos `styles.css` y deben mostrar el balance en 3 colores diferentes según el monto.
-
-## Instrucciones de envío
-- Publica la página usando GitHub Pages
-- Envía los enlaces de tu repositorio, sitio publicado y también del Pull Request realizado.

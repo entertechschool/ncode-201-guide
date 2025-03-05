@@ -1,4 +1,4 @@
-# 💻 Laboratorio 04: Frameworks CSS Modernos
+# Laboratorio 04: Frameworks CSS Modernos
 
 ¡Bienvenido al cuarto laboratorio del proyecto **Product Landing Page**! En este paso nos enfocaremos en integrar frameworks CSS modernos, combinando **Bootstrap** y **Tailwind CSS** para mejorar la apariencia y la eficiencia del desarrollo web.
 
