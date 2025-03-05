@@ -1,32 +1,47 @@
-# Read 06: Paradigmas de la programación 1
+# Lectura y Debate 06
+**Tema Central: Programación Funcional en JavaScript**
 
-## Reflexiona y debate
-A continuación se muestra una colección de recursos que describen los temas de la clase.
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo (sin conocimientos técnicos) interesado en aprender sobre esto.
+## 🎯 **Objetivos de la Lectura y el Debate**
 
-## Lectura
-La lectura de este artículo es obligatoria .
+1. **Comprender el paradigma funcional y su diferencia con el paradigma imperativo.**  
+   Identificar cómo cambia la forma de resolver problemas cuando el enfoque es funcional en lugar de procedural.
 
-- [Programación Funcional JavaScript](https://www.freecodecamp.org/news/functional-programming-in-javascript-explained-in-plain-english/){:target="_blank"}
+2. **Aplicar funciones puras para resolver tareas específicas.**  
+   Asegurar que las funciones dependan exclusivamente de sus parámetros de entrada y no generen efectos secundarios.
 
-## Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
+3. **Utilizar funciones de orden superior para transformar datos.**  
+   Practicar con métodos como `map()`, `filter()` y `find()` para gestionar datos de manera eficiente y declarativa.
 
-- [Principio DRY](https://codeyourapps.com/el-principio-dry-no-te-repitas/){:target="_blank"}
-- [Metodos de programación funcional](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array#métodos_de_instancia){:target="_blank"}
-  
-## Responde
-1. ¿Qué es la programación funcional y cuáles son sus principales características que la diferencian de otros paradigmas de programación?
-2. ¿Cómo aplicarías el principio DRY en un proyecto de JavaScript? Proporciona un ejemplo práctico de código antes y después de aplicar este principio.
-3. ¿Cuáles son las ventajas de utilizar métodos funcionales como `map()`, `filter()` y `reduce()` en lugar de bucles tradicionales?
-4. ¿De qué manera el principio DRY y la programación funcional se complementan entre sí para escribir código más mantenible y escalable?
+## 🔑 **Conceptos Clave**
 
-## Instrucciones de envío
+| Concepto | Definición |
+|---|---|
+| **Programación Funcional** | Paradigma basado en funciones puras, evitando efectos secundarios y promoviendo inmutabilidad. |
+| **Funciones Puras** | Funciones cuyo resultado depende únicamente de sus argumentos y no modifican el estado global. |
+| **Funciones de Orden Superior** | Funciones que reciben otras funciones como parámetros o retornan funciones como resultado (`map`, `filter`, `find`). |
+| **Declarativo vs Imperativo** | Declarar claramente "qué queremos hacer" en lugar de detallar paso a paso "cómo hacerlo". |
+| **Principio DRY** | (Don’t Repeat Yourself) Promueve reutilizar código mediante funciones generales, evitando duplicidad. |
 
-- Agrega las preguntas y respuestas de esta actividad a tu archivo `read06.md` en tu directorio 201 de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-- Agrega en la Respuesta a esta actividad:
+## 📚 **Artículos Recomendados para Leer**
+- [Introducción a programación funcional en JavaScript — Parte 1](https://medium.com/@lupomontero/introducción-a-la-programación-funcional-en-javascript-parte-1-e0b1d0b2142e){:target="_blank"}
+- [Introducción a la programación funcional en JavaScript — Parte 2: Funciones Puras](https://medium.com/@lupomontero/introducción-a-la-programación-funcional-en-javascript-parte-2-funciones-puras-b99e08c2895d){:target="_blank"}
+- [Funciones de Orden Superior: `map`, `filter`, `find`](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map){:target="_blank"}
+- [DRY and WET in Javascript (EN)](https://medium.com/carlosrojasdev/d-r-y-and-w-e-t-in-javascript-67863d628ee1){:target="_blank"}
 
-  - El enlace de tu repositorio publicado en GitHub Pages.
-Y también, las respuestas que desarrollaste.
+## 🧠 **Lista de Reflexiones para Analizar**
 
-- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
+1. ¿Qué diferencias fundamentales encuentras entre resolver un problema con programación imperativa y hacerlo con programación funcional?
+
+2. ¿En qué situaciones específicas crees que es más ventajoso aplicar funciones puras, y en cuáles no lo sería?
+
+3. ¿Qué rol juegan las funciones de orden superior como `map()`, `filter()` y `find()` en la calidad y legibilidad del código?
+
+4. ¿Por qué la programación funcional facilita las pruebas unitarias y el debugging?
+
+5. ¿Cómo puedes integrar efectivamente el paradigma funcional en proyectos que originalmente fueron construidos con un enfoque imperativo?
+
+
+> **Instrucción:**  
+> - Lee cuidadosamente los artículos sugeridos para comprender los fundamentos de CSS Grid.  
+> - Identifica cuáles de las afirmaciones anteriores son mitos y cuáles son verdades.  
+> - Prepara tus argumentos con base en los ejemplos y la documentación para defender tu postura en clase.  

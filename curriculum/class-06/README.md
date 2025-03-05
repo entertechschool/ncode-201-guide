@@ -1,42 +1,75 @@
-﻿# El DOM, Modelos de dominio e Introducción a los objetos
+﻿> 📦 **Módulo 2:** Clase 2 de 4
 
-## Descripción general
+# Clase 06: Programación Funcional en JavaScript
 
-- Revisión del código de la tarea de laboratorio de la clase anterior.
-- Demostración de código
-  - Objetos literales
-  - Manipulación del DOM
-- Introducción al nuevo proyecto y descripción del problema
-- Vista previa del laboratorio y preparación
+## Resumen
 
-## Objetivos de aprendizaje
+En la Clase 06 continuamos profundizando en el proyecto práctico **Personal Budget**, enfocándonos ahora en el paradigma funcional en JavaScript. Para ello, trabajamos con 2 recursos clave:
 
-### Los estudiantes podrán
+1. **Guía de Lectura y Debate:**  
+   Los estudiantes llegan preparados habiendo leído sobre funciones puras, programación funcional y métodos como `map()`, `filter()` y `find()`, listos para discutir críticamente cómo aplicar estos conceptos.
 
-#### Describir y definir
+2. **Guía de Laboratorio:**  
+   Aplicación práctica inmediata de los conceptos discutidos, usando funciones puras y métodos funcionales en JavaScript para manipular datos financieros.
 
-- Un documento HTML como un objeto que puede ser manipulado con JavaScript.
-- Objetos literales en JavaScript.
-  - Acceder y reasignar sus propiedades y métodos.
-- Dot and Bracket Notation para objetos de JavaScript.
+## Estructura Sugerida de la Clase
 
-#### Ejecutar
+| **Fase** | **Duración**  | **Descripción** |
+| ---- | ---- | ---- |
+| **1. Introducción**                 | 15 min       | Contextualización, conexión con la clase previa sobre programación imperativa y activación de conocimientos previos |
+| **2. Debate Conceptual y Demo Técnica** | 45 min  | Discusión sobre reflexiones clave al mismo tiempo que se muestran ejemplos en pantalla usando funciones puras y métodos funcionales |
+| **3. Laboratorio**                  | 100 min      | Desarrollo del laboratorio con dos checkpoints: a los 30 y 60 minutos (validación grupal y feedback técnico) |
+| **5. Cierre**                         | 15 min      | Síntesis de aprendizajes clave y preparación para la próxima clase |
 
-- Transporta un problema cotidiano a un modelo de código utilizando las historias de usuario y requerimientos técnicos proporcionados.
-- Añadir de forma dinámica nuevas etiquetas en HTML (listas) al DOM utilizando JavaScript desde un array.
-- Crear un objeto en JavaScript utilizando notaciones de objetos literales.
-- Gestionar un objeto de JavaScript utilizando dot and bracket Notation.
+## Resultados esperados
 
-## Notas
+Al culminar esta clase, los estudiantes habrán consolidado una comprensión crítica del paradigma funcional en JavaScript, comprendiendo sus ventajas y limitaciones respecto a la programación imperativa. Además, sabrán cuándo es conveniente aplicar funciones puras y métodos funcionales en proyectos reales.
 
-1. ¿Qué es el DOM?
+En detalle, los estudiantes...
 
-1. ¿Qué es la manipulación del DOM?
+### Podrán hacer
+1. **Comparar paradigmas imperativo y funcional:**  
+   Ser capaces de identificar claramente cuándo elegir uno u otro paradigma según la problemática específica.
 
-1. ¿Qué son los objetos de JavaScript?
+2. **Crear funciones puras para tareas concretas:**  
+   Resolver problemas mediante funciones que eviten modificar estados globales, mejorando la predictibilidad del código.
 
-1. ¿Qué son los métodos de JavaScript?
+3. **Utilizar métodos funcionales (map, filter, find):**  
+   Manipular y transformar datos financieros mediante funciones de orden superior de forma clara, eficiente y declarativa.
 
-### Reuniones individuales
+### Podrán explicar
 
-El instructor tendra una reunión individual de 15 minutos con cada uno de los estudiantes durante la próxima semana: esta será una oportunidad para revisar tu progreso, responder cualquier pregunta que tengas, y explicar cualquier tema que el instructor vea adecuado, como tus planes futuros en el curso. Comenzaremos con el proceso de agendar estas reuniones pronto.
+1. **Ventajas del paradigma funcional:**  
+   Argumentarán por qué la programación funcional puede mejorar la mantenibilidad, legibilidad y calidad general del código.
+
+2. **Impacto de la inmutabilidad:**  
+   Identificarán claramente cómo mantener estructuras de datos inmutables previene errores comunes y facilita tareas de debugging y testing.
+
+3. **Integración efectiva con código imperativo:**  
+   Justificarán cómo combinar enfoques funcionales e imperativos para mejorar proyectos existentes sin necesidad de reestructurarlos completamente.
+
+### Podrán implementar
+
+- Crear funciones puras para operaciones financieras básicas (suma de gastos, búsqueda de movimientos específicos).
+- Aplicar métodos funcionales como `map()`, `filter()` y `find()` para manipular datos del presupuesto.
+- Implementar el principio DRY creando funciones reutilizables, evitando la repetición de código.
+
+## Glosario de Nuevos Términos
+
+- **Programación Funcional:**  
+  Paradigma basado en funciones puras, evitando efectos secundarios y promoviendo inmutabilidad.
+
+- **Funciones Puras:**  
+  Funciones cuyo resultado depende únicamente de sus argumentos y no modifican el estado global.
+
+- **Funciones de Orden Superior:**  
+  Funciones que reciben otras funciones como parámetros o retornan funciones como resultado (`map`, `filter`, `find`).
+
+- **Inmutabilidad:**  
+  Principio que evita modificar directamente estructuras de datos, generando nuevas copias ante cambios.
+
+- **Declarativo vs Imperativo:**  
+  Diferencia entre especificar qué hacer (declarativo) frente a cómo hacerlo paso a paso (imperativo).
+
+- **Principio DRY (Don’t Repeat Yourself):**  
+  Principio que promueve reutilizar código mediante funciones generales, evitando la duplicidad.

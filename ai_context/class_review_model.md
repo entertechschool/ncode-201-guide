@@ -10,17 +10,14 @@ En la Clase 01 se combinan tres recursos clave para consolidar los fundamentos d
 
 2. **Guía de Laboratorio:** Orientada a la práctica, impulsando la construcción de una estructura semántica sólida y la implementación de buenas prácticas de accesibilidad en una página web.
 
-3. **Guía de Facilitador (Instructor):** Contiene la estrategia didáctica para integrar teoría y práctica, promoviendo la participación activa y la retroalimentación inmediata.
-
 ## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción** |
 | --- | --- | --- |
-| **1. Introducción** | 15 min | Contextualización y activación |
-| **2. Debate Conceptual** | 30 min | Discusión de mitos y verdades |
-| **3. Demo Técnica** | 20 min | Implementación guiada |
-| **4. Laboratorio** | 100 min | Desarrollo con 3 checkpoints: a los 30, 50 y 80 minutos (debate grupal y validación) |
-| **5. Cierre** | 15 min | Feedback y Conclusiones |
+| **1. Introducción** | 15 min | Contextualización, conexión con la clase previa y activación |
+| **2. Debate Conceptual y Demo técnica** | 45 min | Discusión sobre las reflexiones planteadas para analizar al mismo tiempo que se visualiza en pantalla unos ejemplos de código planteados por el instructor |
+| **3. Laboratorio** | 100 min | Desarrollo e implementación de los requerido en la guía del laboratorio con 2 checkpoints: a los 30 y 60 minutos (debate grupal y validación) |
+| **5. Cierre** | 20 min | Feedback, Refuerzo y Conclusiones |
 
 ---
 
