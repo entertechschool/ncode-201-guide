@@ -1,105 +1,143 @@
-﻿# Guía del Instructor: El DOM e Introducción a los objetos
+﻿# Guía de Facilitación - Clase 06: Programación Funcional en JavaScript
 
-## Resumen
+## ❄️ Previo a la clase:
 
-Este es el inicio de una nuevo proyecto. Durante los siguientes 4 laboratorios, los estudiantes construirán poco a poco una aplicación que utilizará y manipulará el DOM. En esta clase presentaremos estos nuevos conceptos y comenzaremos con Salmon Cookies.
+### Estructura resumida
 
-### ¿Qué lugar ocupa este tema?
+| **Fase** | **Descripción** |
+| --- | --- |
+| **[Intro](#1-intro-15-min)**<br>15min | Contextualización, conexión con la programación imperativa y activación de conocimientos previos.<br>🎯 Reforzar la importancia del paradigma funcional en el desarrollo moderno de software. |
+| **[Debate y Demo](#2-debate-y-demo-45-min)**<br>45min | Discusión sobre reflexiones clave de la guía de lectura mientras se muestran ejemplos técnicos prácticos en pantalla.<br>🎯 Promover la comprensión profunda mediante análisis crítico de casos reales. |
+| **[Laboratorio](#3-laboratorio-y-checkpoints-100-min)**<br>100 min | Implementación práctica del paradigma funcional en JavaScript, trabajando en el proyecto "Personal Budget" con checkpoints claros:<br>- ☑️ [30'] Funciones puras y uso de `map()`<br>- ☑️ [60'] Implementación de `filter()` y `find()` |
+| **[Cierre](#3-cierre-15-min)**<br>15 min | Retroalimentación, conclusiones del día y preparación hacia la próxima sesión sobre programación orientada a objetos. |
 
-**¿Qué hicimos?**:
-En la clase anterior terminamos con el proyecto de la primera semana. Los estudiantes profundizarán en las funciones con su sentencia return, CSS styling, y un nuevo flujo de trabajo de git creando ramas.
+---
 
-**¿En qué nos centraremos en esta clase?**:
-En esta clase comenzaremos con un nuevo proyecto. Los estudiantes aprenderán acerca de los objetos literales y manipular el DOM.
+## Estrategias de Enseñanza y Aprendizaje  
+> 📕 Basado en Principios de Andragogía
 
-**¿Qué haremos?**:
-En la siguiente clase nos centraremos en refactorizar nuestro código y elimar todos los objetos literales para crear una función constructora. Los estudiantes también aprenderán acerca de las tablas en HTML y más acerca de la manipulación del DOM.
+1. **Conexión con la Experiencia Previa**  
+   - Inicia conectando con experiencias concretas del laboratorio anterior sobre programación imperativa, destacando cómo el paradigma funcional podría simplificar el manejo de datos y estado.
 
-## Objetivos de aprendizaje
+2. **Resolución de Problemas Relevantes**  
+   - Destaca cómo empresas reales utilizan programación funcional para reducir errores, facilitar debugging y mejorar la mantenibilidad del código.  
+   - Usa ejemplos prácticos relacionados con la gestión de finanzas personales para conectar inmediatamente con el proyecto “Personal Budget”.
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+3. **Aprendizaje Colaborativo y Autonomía**  
+   - Fomenta que los estudiantes compartan enfoques variados al resolver ejercicios usando métodos funcionales, valorando soluciones creativas y diversas.
+   - Incentiva el uso responsable de IA para generar sugerencias de funciones puras, insistiendo en la revisión crítica de los outputs.
 
-## Preparativos
+4. **Retroalimentación Inmediata y Reflexión**  
+   - En cada checkpoint valida grupalmente el trabajo realizado, proporcionando retroalimentación específica sobre implementación funcional, claridad y adherencia al paradigma.
+   - Reserva el cierre para consolidar aprendizajes y proyectar aplicaciones futuras de estos conceptos.
 
-1. Hojea las lecturas de la clase y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa las demostraciones de código y asegúrate de que sepas como recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Sube tu repositorio de la clase a una carpeta de GitHub que contenga la carpeta `assets` ubicada en la carpeta `lab`. Los estudiantes necesitarán de estos datos para completar su laboratorio.
-1. Anuncia que vas a comenzar con las reuniones individuales con los estudiantes. Consulta los "Comentario Generales" más abajo para más información acerca de en qué consistirán las reuniones.
+---
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+## 🔥 Durante la clase
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+### 1. Intro (15 min)
+#### 🎯 Objetivos de Aprendizaje
+> **1. Comprender el paradigma funcional y su diferencia con el paradigma imperativo:**  
+> “El paradigma funcional transforma la manera en que resolvemos problemas en JavaScript. Se centra en funciones puras que no producen efectos secundarios, lo cual garantiza que el código sea más predecible, testeable y sencillo de mantener.”
 
-### Revisión del código
+> **2. Aplicar funciones puras para resolver tareas específicas:**  
+> “Las funciones puras siempre devuelven el mismo resultado para un mismo input, lo que simplifica enormemente tareas repetitivas y previene errores asociados a cambios imprevistos en el estado global.”
 
-### Notaciones de objetos literales
+> **3. Utilizar funciones de orden superior para transformar datos:**  
+> “Métodos como `map()`, `filter()` y `find()` ofrecen formas más limpias, breves y expresivas de manipular colecciones, facilitando la lectura y el mantenimiento del código.”
 
-- **¿Por qué?**
-  - Los objetos de JavaScript son formas convenientes y poderosas de agrupar datos y funciones.
-- **¿Qué?**
-  - Los objetos pueden almacenar datos como **propiedades**, las cuales están representadas como parejas `key: value`, y pueden tener **métodos**, los cuales son funciones asociadas al objeto.
-- **¿Cómo?**
-  - Escribe un objeto literal en Replit o en un editor de texto.
-    - Descompón la sintaxis.
-    - Muestra cómo aparece en la consola.
-  - Demuesta cómo acceder a la propiedad de un valor utilizando dot notation y bracket notation.
-  - Demuestra añadir una nueva propiedad al objeto desde afuera del objeto.
-  - Demuestra añadir un método al objeto.
-  - Habla acerca del término `this` al referirse a objetos literales.
+---
 
-### El DOM y Manipulación del DOM
+## 🔥 Desarrollo de la Clase (180 min.)
 
-- **¿Por qué?**
-  - La manipulación del DOM se utiliza para cambiar la estructura, estilo y contenido del documento.
-- **¿Qué?**
-  - Modelo de Objeto de Documento - representa la unión del HTML y CSS para crear un documento que utilizaremos en nuestro navegadores.
-- **¿Cómo?**
-  - Utiliza esto como preparación para el laboratorio y para la demostración en clase. 
-  - Construye una estructura HTML básica pero crea un elemento `section` de inicio con un `id` específico.
-  - Crea tus objetos literales y llena la información necesaria.
-  - Demuesta los 4 pasos del procedimento de manipulación del DOM:
-    - Toma el section del HTML con el id específico del DOM a modificar.
-    - Crea un elemento.
-    - Dale contenido.
-    - Agrégalo al elemento padre o DOM.
+### 1. Intro (15 min)
+- **Contextualización (5 min)**  
+  - Relaciona la sesión anterior sobre programación imperativa y adelanta cómo el paradigma funcional resuelve algunos problemas típicos que se enfrentaron previamente.
 
-### Preparación para el laboratorio
+- **Activación de conocimientos previos** (10 min):  
+  - Pregunta breve: _“¿Qué dificultades encontraron al usar variables globales o modificar directamente arrays en clases previas?”_  
+  - Conecta esas dificultades con las soluciones que aporta el paradigma funcional.
 
-## Notas de Laboratorio
+## 💬 2. Debate y Demo (45 min)
+Discusión guiada y demo simultánea.
 
-Así como en el proyecto About Me, este nuevo proyecto de laboratorio será mejorado a lo largo de varios laboratorios. Para este laboratorio, los estudiantes solo tendrán permitido utilizar notaciones de objetos literales, NO constructores. Probablemente habrán estudiantes que querrán utlizar constructores, así que asegúrate de que esperen hasta el laboratorio 7.
+### Debate (25 min)
+**Preguntas para detonar el debate:**  
+- ¿En qué situaciones específicas usarías programación funcional en lugar de imperativa?
+- ¿Qué ventajas prácticas identifican al usar funciones puras para resolver tareas específicas?
+- ¿Qué impacto tiene la inmutabilidad en proyectos reales?
 
-Este es el primer contacto con las descripciones del problema y tener que construir algo con especificaciones concretas y datos de muestra. Toma tu tiempo para explicar la descripción del problema a la clase y resaltar elementos específicos a tener en cuenta. Por ejemplo, se les dará algunos datos pero necesitan idear la lógica para los otros requisitos técnicos.
+Anota conclusiones clave en pantalla o pizarrón virtual compartido.
 
-Diferencia el contenido de cada archivo HTML. La página `index.html` deberá ser pensada como la página de cara al consumidor, la cual contiene las ubicaciones, horas, marca, fuentes, etc. La página `sales.html` deberá ser pensada como la página de cara al administrador. Para este laboratorio, la página tendrá una lista de las previsiones de ventas por hora. En el siguiente laboratorio, esos datos serán convertidos a una tabla. En el laboratorio de la Clase 8, también añadirán un formulario a esta página para que el administrador pueda añadir nuevas tiendas a la tabla.
+#### 🖥️ Demo Técnica (simultánea al debate, 20 min):
 
-Recuérdale a los estudiantes que las historias de usuario dan algunos requisitos. Deberán leer la descripción del problema y las historias de usuario con cuidado para determinar los requisitos del laboratorio.
+- Demuestra claramente en pantalla la diferencia entre un código imperativo y uno funcional resolviendo la misma tarea (ejemplo: sumar gastos totales).
+- Muestra claramente el uso práctico de:
+  - `map()` para extraer nombres de objetos.
+  - `filter()` para obtener movimientos mayores a un valor específico.
+  - `find()` para buscar elementos específicos en un array.
+- Explica claramente los conceptos en código y responde dudas técnicas.
 
-Este laboratorio es grande, así que aconseja a los alumnos a que vayan por partes. También recomienda que los estudiantes vuelvan a escribir cada objeto en vez de copiar y pegar código de un objeto a otro. Es tentador copiar y pegar para ganar tiempo, pero entre más escriban el código, más rápido construirán una memoria muscular mediante la repetición.
+---
 
-## ¿Qué cambió desde la clase anterior?
+## 🚀 3. Laboratorio y Checkpoints (100 min)
 
-Los estudiantes estarán comenzando un nuevo proyecto esta semana.
+> **Objetivo**: Practicar y validar la aplicación del paradigma funcional mediante el desarrollo del proyecto "Personal Budget".
 
-### ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+#### 1. Checkpoint 1 (≈30'): Funciones Puras y `map()`
+- Los estudiantes desarrollan funciones puras para obtener listas específicas de datos (nombres de movimientos financieros) sin modificar datos originales.
+- Valida ejemplos puntuales de estudiantes (2-3 casos).
+- Revisa que:
+  - ✅ Las funciones sean puras (sin modificar arrays originales).
+  - ✅ Uso correcto del método `map()`.
 
-El contenido de esta clase y el laboratorio pueden ser decisivos para muchos estudiantes. Prepárate para que surja mucha inseguridad durante las reuniones individuales.
+#### 2. Checkpoint 2 (≈60'): Uso de `filter()` y `find()`
+- Los estudiantes implementan funcionalidades concretas, como:
+  - Mostrar egresos superiores a cierta cantidad (`filter()`).
+  - Buscar movimientos específicos por nombre (`find()`).
+- Realiza validación grupal:
+  - Confirma que el código sea declarativo, funcional y legible.
 
-## Comentarios Geneales
+---
 
-Ejemplo del flujo de una reunión individual:
+## 🎯 4. Cierre (15 min)
 
-1. "¿Cómo te va en la clase?"
-1. "Esto es lo que veo..." (Saca el registro de calificaciones para verificar el progreso del alumno y su respuesta a la encuesta en Survey Monkey para tratar cualquier asunto)
-1. "Revisemos la autoevaluación que ya has completado..."
-1. "¿Hay algo de lo que quieras hablar, o tienes alguna pregunta para mí?"
-1. "Ya que tenemos algunos minutos, hablemos acerca del brainstorming y hagamos un problema simple en la pizarra."
+### Presentación de Avances (10 min)
+- Invita a 2-3 estudiantes a compartir brevemente cómo resolvieron tareas usando funciones puras y métodos funcionales.
+- Destaca buenas prácticas observadas en sus soluciones.
 
-Hemos encontrado que las reuniones individuales regulares con los estudiantes tienen resultados beneficiosos en la relación estudiante/instructor, monitorear el progreso del estudiante, responder las preguntas de los estudiantes, hacer que los estudiantes practiquen brainstorming en las pizarras, y un incremento general del éxito y la satisfacción de los estudiantes.
+### Conclusiones Clave (5 min)
+- Reitera ventajas del paradigma funcional (mantenibilidad, claridad, testing más sencillo).
+- Resalta el valor agregado de funciones puras y de métodos de orden superior en la manipulación de datos.
 
-### Revisión de las tareas de Orientación Profesional
+---
 
-Habla brevemente de las próximas tareas de Orientación Profesional:
+## 🚨 Dificultades Frecuentes y Estrategias de Solución
 
-Búsqueda de trabajo dirigida: Los estudiantes comenzarán a investigar empresas y crearán una hoja de cálculo para darles seguimiento mientras realizan su investigación. Recuérdale a los estudiantes que envíen esta tarea como un documento de Google con acceso compartido para que los instructores puedan ver y calificar la tarea.
+| Dificultad Común | Estrategia |
+|---|---|
+| Dificultad en identificar cuándo usar funciones puras | Clarifica constantemente que las funciones puras no deben depender ni modificar variables externas. |
+| Confusión con métodos funcionales (`map`, `filter`, `find`) | Usa ejemplos prácticos y sencillos antes de aumentar complejidad. Revisa grupalmente en vivo. |
+| Tendencia a modificar arrays originales accidentalmente | Recuerda insistentemente usar métodos que retornan nuevos arrays (`slice`, `[...array]`). |
+
+---
+
+## 🤖 IA como herramienta
+- Motiva a los estudiantes a usar IA como apoyo, no como sustituto.  
+- Sugiere prompts específicos como:
+  ```
+  "Escribe una función pura en JavaScript que reciba un array de objetos y retorne un nuevo array con solo los nombres utilizando map."
+  ```
+- Siempre recalca la validación manual y crítica del código generado.
+
+---
+
+## 🧑‍🏫 Tu Rol como Instructor
+- Facilita activamente el debate.
+- Proporciona feedback técnico constante en checkpoints.
+- Promueve reflexión crítica sobre decisiones técnicas.
+
+---
+
+## 📌 Próxima Sesión:
+Anuncia que en la siguiente clase abordarán la **Programación Orientada a Objetos**, ampliando su dominio de diferentes paradigmas y fortaleciendo su desarrollo integral como profesionales.
