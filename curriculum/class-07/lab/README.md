@@ -1,198 +1,111 @@
-# Laboratorio 07: POO en el Gestor de Presupuesto 🧪
+# Laboratorio 07: Programación Orientada a Objetos
 
-## Descripción
-En este laboratorio, evolucionarás tu aplicación de gestión de presupuestos personales implementando Programación Orientada a Objetos mediante funciones constructoras. Transformarás las transacciones en objetos y organizarás el código usando prototipos para mejorar su estructura y mantenibilidad.
+¡Continuamos con el proyecto **Personal Budget**, esta vez llevando el código hacia un enfoque orientado a objetos! En este laboratorio, aprenderás a **crear objetos** en JavaScript, encapsulando datos y lógica en entidades más organizadas.
+
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye **dos momentos de validación** (aprox. a los 30 y 60 minutos). Participar activamente te permitirá intercambiar criterios con tus compañeros, reforzando la conexión entre la **discusión teórica** y la **implementación práctica**.
+
+---
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar funciones constructoras en JavaScript
-- Utilizar el prototipo para compartir métodos
-- Transformar funciones independientes en métodos de objetos
-- Crear objetos relacionados que trabajen juntos
 
-## 🚀 Setup Inicial
+1. **Implementar Funciones Constructoras en JavaScript**  
+   Crear entidades de tu presupuesto (por ejemplo, “Movimiento”, “Usuario” u otros) usando la sintaxis tradicional con `function Nombre(...) { … }` y la palabra clave `new`.  
+   
+2. **Encapsular Datos y Lógica**  
+   Refactorizar tu código “plano” (arrays o variables sueltas) para que la validación y manejo de datos estén dentro de los objetos, promoviendo un diseño más organizado y escalable.  
 
-### 1. Preparación del Repositorio
-```bash
-git checkout -b lab-07-objetos
-```
+3. **Integrar la Orientación a Objetos en el Flujo de la Aplicación**  
+   Sustituir partes clave del código existente, asegurando que las instancias creadas con funciones constructoras realicen las operaciones de registro, cálculo y visualización de forma coherente.  
 
-### 2. Nueva Estructura de Archivos
-```
-personal-budget/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   ├── app.js
-│   ├── utils.js
-│   ├── validators.js
-│   ├── Transaction.js   <-- Nuevo
-│   └── Budget.js        <-- Nuevo
-```
+4. **Primer Vistazo a los Prototipos y DOM**  
+   (Opcional) Crear un método (por ejemplo, `render()`) asignado al prototipo para mostrar la información de cada objeto en la interfaz web, sentando la base para profundizar en prototipos en una clase futura.
 
-### 3. Aprendiendo con IA
-Para este laboratorio, necesitarás comprender los fundamentos de POO con funciones constructoras en JavaScript. Usa un prompt similar a este:
+## 🔑 Conceptos Clave
 
-```
-Soy estudiante de desarrollo web aprendiendo JavaScript. Necesito entender:
+- **Objetos**: Estructuras que contienen propiedades y métodos relacionados, unificando datos y comportamientos.
+- **Abstracción**: Principio para simplificar la realidad, enfocándose en los atributos y métodos esenciales (por ejemplo, qué datos representa un “Movimiento” y qué hace).
+- **Programación Orientada a Objetos**: Paradigma que organiza el código en entidades llamadas objetos, facilitando escalabilidad y mantenibilidad.
+- **Funciones Constructoras**: Mecanismo “clásico” de JavaScript para crear objetos y reutilizar propiedades y métodos, previo a la introducción formal de clases en ES6.
 
-1. Qué son las funciones constructoras y cómo usarlas
-2. Cómo funciona el prototipo en JavaScript
-3. Ver ejemplos de cómo agregar métodos al prototipo
-4. Diferencias entre this en funciones constructoras vs funciones normales
+## ⚙️ Setup Inicial
 
-Mi conocimiento incluye:
-- JavaScript: variables, funciones, arrays
-- Programación funcional básica
-- Manipulación del DOM
-```
+1. **Repositorio**  
+   - Continúa usando el repositorio existente: `personal-budget`.  
 
-### 4. Precauciones 🔴
-Recuerda que la IA es una herramienta de apoyo. Para este laboratorio:
-- Intenta diseñar la estructura de objetos por tu cuenta
-- Usa la IA para entender conceptos específicos de prototipos
-- Escribe el código tú mismo, incluso si cometes errores
-- Aprende a debuggear usando console.log para ver el valor de 'this'
+2. **Configuraciones Previas**  
+   - Verifica que tu proyecto ya soporta la lógica de gastos/ingresos (de laboratorios anteriores).
+   - Decide qué parte del flujo refactorizarás primero con objetos (por ejemplo, el registro de movimientos).
 
-## ✅ Instrucciones
+---
 
-### 1. Definición de Constructores y Prototipos
+## 📋 Historias de Usuario (HU)
 
-#### Transaction.js
-```javascript
-// Constructor
-function Transaction(type, amount) {
-// - id único (usar Date.now())
-// - tipo (ingreso/gasto)
-// - descripción
-// - monto
-// - fecha de creación
-}
+### HU1 - Crear Objeto “Movimiento”
+> _“Como desarrollador, quiero representar cada movimiento (ingreso o egreso) con un objeto, para encapsular la validación y el almacenamiento de datos.”_
 
-Transaction.prototype.getFormattedDate = function() {
-  // Retorna la fecha como String en formato legible
-};
+- **Criterios de Aceptación**:
+  1. Definir la función constructora `Movimiento(tipo, monto, descripcion)` que asigne valores a `this`.
+  2. Validar datos mínimos (tipo válido, monto mayor que 0, descripción no vacía).
+  3. Instanciar al menos un objeto usando `new Movimiento(...)`.
 
-Transaction.prototype.getSignedAmount = function() {
-  // Retorna el monto con signo según tipo
-};
-```
-
-#### Budget.js
-```javascript
-// Constructor
-function Budget() {
-  // Inicializa un array vacío para las transacciones
-}
-
-Budget.prototype.add()
-// Agrega una nueva transacción al array
-
-Budget.prototype.remove()
-// Elimina una transacción por id
-
-Budget.prototype.calculateTotal()
-// Calcula el total sumando los montos con signo
-```
-
-### 2. Modificaciones en utils.js
-Mueve las funciones de cálculo existentes al prototipo de Budget:
-
-```js
-// Convertir estas funciones:
-calcularBalance()
-formatearMonto()
-
-// En métodos del prototipo de Budget:
-Budget.prototype.calculateBalance()
-Budget.prototype.formatAmount()
-```
-
-### 3. Modificaciones en validators.js
-Agrega validaciones para objetos:
-```js
-// Agregar estas funciones:
-function isValidTransaction(transaction)
-// Valida que la transacción tenga todas las propiedades necesarias
-
-function isValidBudget(budget)
-// Valida que el presupuesto sea una instancia correcta de Budget
-```
+> **Checkpoint 1 (~30 min)**: Validar que la función constructora cree objetos correctamente y maneje los datos esperados.
 
 
-### 4. Modificaciones en app.js
-Actualiza el código principal para usar los constructores:
-```js
-// Crear instancias globales
-var presupuesto = new Budget();
+### HU2 - Refactorizar el Registro de Movimientos
+> _“Como usuario, quiero seguir registrando mis ingresos y egresos, pero ahora manteniendo cada uno como un objeto independiente, con su propia lógica de validación básica.”_
 
-// En el evento submit:
-function handleSubmit(event) {
-  // 1. Crear nueva transacción con el constructor
-  // 2. Agregar al presupuesto usando el método add
-  // 3. Actualizar UI usando los métodos del prototipo
-}
-```
+- **Criterios de Aceptación**:
+  1. Reemplazar el antiguo proceso de registro (posiblemente basado en arrays u objetos literales) por instancias de `Movimiento`.
+  2. Mantener la funcionalidad previa (ej. prompts, input en el DOM) y al final almacenar los objetos resultantes en un array global `movimientos` (o similar).
+  3. Verificar que los cálculos de totales, filtros o resúmenes sigan funcionando (aunque ahora cada entrada es un objeto).
 
-### 5. Mejoras en el HTML
-```html
-<form id="transaction-form">
-  <input type="text" id="description" placeholder="Descripción" required>
-  <input type="number" id="amount" placeholder="Monto" required>
-  <select id="type">
-    <option value="ingreso">Ingreso</option>
-    <option value="gasto">Gasto</option>
-  </select>
-  <button type="submit">Agregar</button>
-</form>
+> **Checkpoint 2 (~60 min)**: Revisar el flujo de registro; cada nuevo movimiento debe ser un **objeto** creado con la función constructora.
 
-<div id="transactions-container">
-  <h3>Total: $<span id="total">0.00</span></h3>
-  <ul id="transactions-list"></ul>
-</div>
-```
 
-### 6. Control de Versiones
-- Realiza commits descriptivos siguiendo el formato:
-```bash
-git commit -m "feat: implementa constructor Transaction"
-git commit -m "feat: implementa constructor Budget"
-git commit -m "refactor: utils y validators"
-git commit -m "refactor: html y app"
-```
+### HU3 - Renderizar Objetos en el DOM
+> _“Como usuario, quiero ver una representación de cada movimiento en la interfaz web, facilitando la visualización de mi presupuesto.”_
+
+- **Criterios de Aceptación**:
+  1. Crear un método (por ejemplo, `Movimiento.prototype.render = function() { … }`) que devuelva o inserte un bloque HTML representando el movimiento.
+  2. Tras registrar un movimiento, llamar a `movimiento.render()` para mostrarlo en la interfaz.
+
+*(Esta historia te prepara para la siguiente clase, donde profundizarás en prototipos y herencia prototipal.)*
+
+
+## 🛠️ Requerimientos Técnicos
+
+1. **Uso de Funciones Constructoras**  
+- Definir funciones como `function Movimiento(tipo, monto, descripcion) { … }`.
+- Usar `new Movimiento()` para crear instancias.  
+
+2. **Encapsular la Lógica de Validación**  
+- Validar datos en el constructor o en funciones auxiliares, lanzando mensajes de error o retornando algo manejable si el input es incorrecto.  
+
+3. **Integrar Objetos en el Flujo del Proyecto**  
+- Reemplazar estructuras planas por objetos en las partes clave (por ejemplo, cada registro de gasto/ingreso se maneja ahora con una instancia de `Movimiento`).  
+
+4. **Renderización en el DOM**  
+- Implementa un método `render` para conectar la lógica con la capa de presentación (DOM).
 
 ## 🌟 Logros Adicionales
 
-1. **Validación de Objetos**
+1. **Logro 1: Métodos Auxiliares**  
+- Crear métodos específicos dentro del constructor (o asociados a cada instancia) para formatear montos, calcular impuestos, etc.  
+- Evitar la dispersión de lógica por todo el código, centralizando las acciones en su objeto correspondiente.
 
-Implementa un método en el prototipo de Transaction que valide:
+2. **Logro 2: Reporte de Validaciones**  
+- Configurar un sistema que acumule los errores de validación (por ejemplo, en un array) y los muestre en la interfaz, en lugar de solo usar `alert()` o `console.log()`.
 
-- Que el monto sea positivo
-- Que el tipo sea uno de los permitidos
-- Que la descripción no esté vacía
-- El método debe retornar true/false según la validación
-- Úsalo antes de agregar nuevas transacciones
+3. **Logro 3: Vista en Tabla o Tarjetas (DOM)**  
+- Dar estilo a la representación de cada movimiento (ya sea en una tabla o tarjetas), aprovechando Bootstrap, Tailwind o CSS propio.
 
-2. **Categorización de Transacciones**
 
-Agrega una propiedad 'categoría' al constructor Transaction
-Implementa un método que filtre transacciones por categoría
-- Las categorías para gastos deben ser:
-  - Alimentación
-  - Transporte
-  - Servicios
-  - Otros
+## 📝 Instrucciones de Entrega
 
-- Las categorías para ingresos deben ser:
-  - Salario
-  - Ventas
-  - Otros
+1. **Despliegue**  
+- Publica la nueva versión del proyecto en GitHub Pages o el método que uses.  
+- Verifica que el registro y visualización de los objetos funcionen correctamente.
 
-- Muestra subtotales por categoría
-
-## Instrucciones de Envío
-- Actualiza el sitio en GitHub Pages
-- Crea un Pull Request desde la rama `lab-07-poo` > `main`
-- Incluye en el PR:
-  - Lista de cambios implementados
-  - Explicación de cómo usaste los prototipos para mejorar tu código
+2. **Entrega Final**  
+- URL del repositorio.  
+- URL del proyecto desplegado.
