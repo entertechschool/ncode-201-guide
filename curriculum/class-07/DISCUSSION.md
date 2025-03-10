@@ -22,13 +22,13 @@ En esta guía, encontrarás los recursos y las pautas para **prepararte antes de
 ---
 
 ## 🔑 Conceptos Clave
-| Concepto  | Definición  |
+| Concepto | Definición  |
 |----|----|
-| **Programación Funcional**    | Paradigma basado en funciones puras, evitando efectos secundarios y promoviendo la inmutabilidad.                     |
-| **Funciones Puras**           | Funciones cuyo resultado depende exclusivamente de sus argumentos y que no modifican el estado global de la aplicación. |
-| **Funciones de Orden Superior** | Funciones que reciben otras funciones como parámetros o retornan funciones como resultado (por ejemplo, `map`, `filter`, `find`). |
-| **Declarativo vs Imperativo** | El enfoque declarativo describe *qué* se quiere lograr, mientras que el imperativo detalla *cómo* llevarlo a cabo paso a paso. |
-| **Principio DRY**             | *(Don’t Repeat Yourself)* Promueve la reutilización de código mediante funciones o módulos generales, evitando duplicidad. |
+| **Objetos**                             | Estructuras que combinan propiedades y métodos, unificando datos y comportamientos. Fundamentales para mejorar la **organización** y la **reutilización** de código. |
+| **Abstracción**                         | Foco en los rasgos relevantes de un elemento, ignorando detalles que no aportan valor directo. Permite crear un modelo simplificado de la realidad en el software.    |
+| **Programación Orientada a Objetos**    | Paradigma que organiza el desarrollo en términos de objetos que se comunican entre sí. Posibilita escalabilidad y mantenimiento a mediano y largo plazo.              |
+| **Funciones Constructoras**             | Mecanismo tradicional de JavaScript para crear objetos antes de la introducción formal de la sintaxis de clases. Uso de la palabra clave `new` para instanciar y de `this` para asignar propiedades. |
+
 
 ## 📚 Lecturas y Recursos Recomendados
 
