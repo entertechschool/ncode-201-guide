@@ -1,89 +1,69 @@
-﻿# Guía del Instructor: Programación orientada a objetos con funciones constructoras y tablas HTML
+﻿> 📦 **Módulo 2:** Clase 3 de 4
+
+# Clase 07: Programación Orientada a Objetos con Funciones Constructoras
 
 ## Resumen
 
-Esta es la primera de las dos clases más difíciles del curso. La introducción de la herencia con funciones constructoras, además de añadir otra dimensión al renderizado dinámico del DOM al crear una tabla en vez de listas de datos almacenados en arrays puede ser demasiado para lo que la mayoría de los estudiantes pueden comprender en un dia, especialmente si aún tienen problemas pendientes de la Clase 6.
+En la Clase 07 continuamos avanzando en el proyecto **Personal Budget**, enfocándonos ahora en la **Programación Orientada a Objetos (POO)** utilizando **funciones constructoras** en JavaScript. Para ello, trabajamos con 2 recursos principales:
 
-### ¿Qué lugar ocupa este tema?
+1. **Guía de Lectura y Debate**  
+   En esta guía, los estudiantes llegaron preparados con el contexto de objetos, abstracción y el uso de `function Nombre(...) { ... }` para crear instancias, listos para debatir sobre las ventajas de la POO frente a estructuras planas o abordajes puramente imperativos.
 
-**¿Qué hicimos?**:
-En la clase anterior los estudiantes aprendieron sobre los objetos literales y la manipulación del DOM.
+2. **Guía de Laboratorio**  
+   A través de la práctica inmediata, se aplicaron estos conceptos creando y manipulando objetos en el proyecto, refactorizando parte del código para encapsular datos y comportamientos dentro de funciones constructoras.
 
-**¿En qué nos centraremos en esta clase?**:
-En esta clase, aprenderemos acerca de las funciones constructoras y más acerca de la manipulación del DOM. Los estudiantes crearán una función constructora para instanciar tiendas y refactorizar sus listas no ordenadas en una tabla HTML.
+---
 
-**¿Qué haremos?**:
-La siguiente clase se centrará en CSS layouts con una introducción al wireframe de una página. Los estudiantes también profundizarán en los Arrays bidimencionales y bucles anidados.
+## Estructura Sugerida de la Clase
 
-## Objetivos de aprendizaje
+| **Fase**                         | **Duración** | **Descripción**                                                                                                                                                                                                                     |
+|---------------------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **1. Introducción**             | 15 min       | Contextualización y activación de conocimientos previos (programación imperativa y funcional). Se prepara el camino para comprender la orientación a objetos y por qué JavaScript soporta este paradigma a través de funciones constructoras. |
+| **2. Debate Conceptual y Demo Técnica** | 45 min       | Discusión sobre aspectos fundamentales de la POO (abstracción, encapsulación, ventajas frente a estructuras planas). Se muestra cómo crear objetos con `function Constructor(...) {}` y se ejemplifican validaciones o métodos básicos.       |
+| **3. Laboratorio**              | 100 min      | Trabajo práctico en el proyecto “Personal Budget”, refactorizando el manejo de ingresos/egresos con objetos (funciones constructoras). Se establecen dos checkpoints: a los 30 y 60 minutos, con revisiones grupales y feedback técnico.        |
+| **4. Cierre**                   | 15 min       | Síntesis de aprendizajes clave y preparación para la siguiente clase, adelantando el tema de prototipos y la integración de métodos para mostrar objetos en el DOM.                                                                |
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+---
 
-## Preparativos
+## Resultados Esperados
 
-1. Hojea las lecturas de la clase y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
+Al concluir esta clase, los estudiantes habrán **incorporado el paradigma orientado a objetos** en el flujo de su aplicación, comprendiendo cómo la encapsulación puede mejorar la mantenibilidad y la escalabilidad del código.
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+En concreto, los estudiantes…
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+### Podrán hacer
+1. **Crear Objetos con Funciones Constructoras**  
+   - Definir y utilizar `function Movimiento(tipo, monto, descripcion) { ... }` para instanciar objetos de manera repetible.
 
-### Revisión del código
+2. **Refactorizar Código Procedural a un Modelo OOP**  
+   - Sustituir estructuras planas (arrays sueltos) por objetos que agrupen datos y comportamientos (valores y validaciones).
 
-### Funciones constructoras
+3. **Realizar Validaciones Dentro de un Objeto**  
+   - Encapsular la lógica de verificación (por ejemplo, `monto > 0`, `tipo` válido) directamente en la función constructora, mejorando la coherencia del sistema.
 
-- **¿Por qué?**
-  - Las funciones constructoras se utilizan para inicializar objetos con el estado por defecto o inicial.
-- **¿Qué?**
-  - Un constructor es una función utilizada para crear instancias de objetos.
-- **¿Cómo?**
-  - Utiliza una herramienta como Replit o VSCode para demostrar el uso de los constructores.
-  - Descompónla anatomía de un constructor y cómo la sintaxis es diferente a la de los objetos literales.
-  - Explica cómo el término `this` es diferente a los constructores.
+### Podrán explicar
+1. **Principio de Abstracción y Encapsulación**  
+   - Argumentar cómo la orientación a objetos facilita la simplificación de la realidad (abstracción) y el aislamiento de detalles internos (encapsulación).
 
-### Prototipos
+2. **Ventajas de la POO Frente a Otros Paradigmas**  
+   - Exponer por qué agrupar datos y métodos bajo un mismo “contrato” puede otorgar escalabilidad y mantenibilidad, en comparación con enfoques puramente imperativos o funcionales.
 
-- **¿Por qué?**
-  - Con los prototipos, los objetos creados por la función constructora heredarán métodos y propiedades.
-- **¿Qué?**
-  - Un métodos que estará disponible para todos los objetos instanciados por la función constructora.
-- **¿Cómo?**
-  - Demuestra la diferencia entre añadir un método a un objeto creado vs añadir un método de prototipo al constructor.
+3. **Uso de la Palabra Clave `this` y `new`**  
+   - Justificar cómo `this` se relaciona con el objeto recién creado, distinguiendo así entre variables locales y propiedades de instancia.
 
-### Tablas en HTML
+### Podrán implementar
+- **Instancias de Objetos** para manejar movimientos (ingresos/egresos) en “Personal Budget”.  
+- **Lógica de Validación Interna**, evitando datos inválidos y manteniendo la coherencia del sistema.  
+- **Refactor Práctico** de partes del código legacy, sustituyendo arreglos y funciones dispersas por un esquema orientado a objetos.
 
-- **¿Por qué?**
-  - Las tablas son una buena forma de mostrar datos en una página.
-- **¿Qué?**
-  - Las tablas de HTML consisten en el elemento `<table>` y uno o más elementos `<tr>`, `<th>`, y `<td>`.
-- **¿Cómo?**
-  - Demuesta cómo añadir una tabla al archivo HTML.
-  - Demuestra cómo los estudiantes tendrán que generar sus tablas para el laboratorio utilizando JavaScript.
+---
 
-### Preparación para el laboratorio
+## Glosario de Nuevos Términos
 
-- **¿Por qué?**
-  - Les proporciona a los estudiantes las herramientas para que cumplan con su laboratorio.
-- **¿Qué?**
-  - Revisa las instrucciones del Laboratorio 07 en Canvas.
-- **¿Cómo?**
-  - Consulta las notas del laboratorio a continuación.
+- **Objetos**: Estructuras que combinan datos (propiedades) y comportamientos (métodos).
+- **Abstracción**: Enfoque para simplificar la realidad, resaltando solo los rasgos esenciales.
+- **POO (Programación Orientada a Objetos)**: Paradigma que modela el software en términos de objetos que se comunican entre sí.
+- **Funciones Constructoras**: Forma tradicional en JavaScript de crear objetos antes de ES6, utilizando la palabra clave `new`.
+- **Encapsulación**: Técnica para ocultar los detalles de implementación y exponer solo los métodos o propiedades necesarias.
+- **Prototipo** (mención breve): Mecanismo que define métodos compartidos por las instancias creadas a partir de una función constructora (tema a profundizar en la siguiente clase).
 
-## Notas de Laboratorio
-
-Para este laboratorio, los estudiantes tendrán que refactorizar todos sus objetos literales para la tienda de galletas en una sola función constructora con múltiples instancias. El segundo componente de este laboratorio será convertir los elementos de la lista del trabajo de laboratorio anterior a una tabla que se genere dinámicamente al DOM de su archivo JavaScript.
-
-Todos los métodos para la función constructora deberán ser heredados utilizando la propiedad `.prototype`.
-
-Aconseja que los estudiantes abarquen este laboratorio poco a poco y que definan lo que planean hacer antes de escribir el código. También incentiva a que los estudiantes escriban la funcionalidad de la forma más larga primero para que funcione, y que luego lo refactorizen a bucles, funciones, etc.
-
-Algunas dificultades comunes para este laboratorio incluyen agregar elementos hijos al elemento padre en el órden correcto, el uso incorrecto de `this`, y averiguar cómo acceder a los datos en cada objeto individual. Prepárate para una revisión de código más detallada en la próxima clase.
-
-## ¿Qué cambió desde la clase anterior?
-
-Los estudiantes refactorizarán lo que hicieron en el laboratorio anterior y cambiarán de objetos literales a funciones constructoras.
-
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
-
-Los estudiantes crearán ramas para cada día del laboratorio. Espera ver a estudiantes que se encuentran con problemas al utilizar git.
