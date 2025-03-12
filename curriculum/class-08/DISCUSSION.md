@@ -1,33 +1,29 @@
-# Read 08: Tipos de Objetos
+# Lectura y Debate 08
 
-## Reflexiona y debate
-A continuación se muestra una colección de recursos que describen los temas de la clase.
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo (sin conocimientos técnicos) interesado en aprender sobre esto.
+## 🎯 Objetivos de la Lectura y el Debate
+Debatir en esta sesión te permitirá profundizar en el funcionamiento de la herencia prototipal en JavaScript. A través del análisis crítico, comprenderás cómo se conecta la cadena de prototipos (prototype chain), diferenciarás entre `prototype` y `__proto__`, y explorarás el uso de funciones constructoras para crear objetos. Este debate te ayudará a aplicar estos conceptos en el desarrollo de aplicaciones modernas y escalables.
 
-## Lectura
-La lectura de este artículo es obligatoria .
+## 🔑 Conceptos Clave a profundizar
+- **Prototype Chain:** Comprender cómo los objetos en JavaScript se enlazan y comparten métodos y propiedades a través de una cadena de prototipos.
+- **`__proto__` vs. `prototype`:** Diferenciar entre la referencia interna que tiene cada objeto (`__proto__`) y la propiedad `prototype` de las funciones constructoras, fundamental para establecer la herencia.
+- **Funciones Constructoras:** Utilizar funciones constructoras para crear objetos que compartan métodos mediante el prototipo, facilitando la implementación de patrones de herencia.
 
-- [Objeto String en JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String){:target="_blank"}
+## 📚 Artículos recomendados para leer
+- [MDN Web Docs - Inheritance and the prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain){:target="_blank"}
 
-## Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
+- [MDN Web Docs - Working with objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects){:target="_blank"}
 
-- [Manipulación de Strings en JavaScript](https://es.javascript.info/string){:target="_blank"}
-- [Métodos de Array](https://es.javascript.info/array-methods){:target="_blank"}
+- [Understanding __proto__ and prototype in JavaScript](https://blog.bitsrc.io/understanding-prototype-proto-and-prototype-in-javascript-fd8d19cdb3d7){:target="_blank"}
 
-## Responde
+## ☑️ Lista de Mitos y Verdades para Analizar
+1. "El `prototype` de una función y el `__proto__` de un objeto son exactamente lo mismo."  
 
-1. ¿Cuál es la diferencia entre un string primitivo y un objeto String en JavaScript? ¿En qué situaciones conviene usar cada uno?
-2. Explica cómo funcionan y en qué casos utilizarías los métodos `substring()`, `slice()` y `split()` del objeto String.
-3. ¿Qué diferencia existe entre los métodos `push()`, `pop()`, `shift()` y `unshift()` del objeto Array? Proporciona ejemplos de uso.
-4. ¿Cómo utilizarías los métodos de Array para transformar y filtrar datos en una colección? Da un ejemplo práctico utilizando map(), filter() o reduce().
+2. "La cadena de prototipos permite la reutilización de métodos y propiedades, lo cual es esencial para la herencia en JavaScript."
 
-## Instrucciones de envío
+3. "Las funciones constructoras son obsoletas y no se usan en el desarrollo moderno de JavaScript."  
 
-- Agrega las preguntas y respuestas de esta actividad a tu archivo `read08.md` en tu directorio 201 de tu respositorio reading-notes. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-- Agrega en la Respuesta a esta actividad:
- - El enlace de tu repositorio publicado en GitHub Pages.
-Y también, las respuestas que desarrollaste.
-- Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
+4. "Manipular correctamente `__proto__` puede mejorar la reutilización de código, pero su uso inadecuado puede generar problemas de seguridad y mantenimiento."
 
+5. "Modificar el `prototype` de una función siempre afecta a todas las instancias existentes sin excepción."  
 
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas recomendadas o basándote en tus experiencias previas.
