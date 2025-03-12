@@ -1,109 +1,105 @@
-# Laboratorio 08: Métodos de String y Array en el Gestor de Presupuesto 🔍
+# Laboratorio 08: Prototipos en JavaScript
 
-## Descripción
-En este laboratorio, implementarás los métodos más comunes de los objetos String y Array para mejorar tu gestor de presupuesto personal.
+¡Bienvenido al Laboratorio 08 del proyecto **Personal Budget**! En este laboratorio, profundizaremos en el uso de prototipos en JavaScript para implementar herencia prototipal en nuestro proyecto. Además, trasladaremos los inputs y outputs gestionados previamente en consola a una interfaz de usuario web sencilla, utilizando HTML, CSS y frameworks modernos (Bootstrap o Tailwind). Esto permitirá que la aplicación sea visual, interactiva y funcional para el usuario final.
 
-> En este laboratorio tendrás diversos ejercicios que puedes implementar. Intenta hacer tantos como puedas.
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye varios momentos de validación grupal. Se realizarán checkpoints específicos para cada Historia de Usuario seleccionada, permitiendo recibir feedback y ajustar la implementación en tiempo real.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar métodos nativos del objeto String para manipular texto
-- Utilizar métodos avanzados del objeto Array para gestionar colecciones
 
-## 🚀 Setup Inicial
+1. **Comprender la cadena de prototipos (prototype chain) en JavaScript:**  
+   Identificar cómo los objetos se conectan y comparten métodos a través de la cadena de prototipos.
 
-```bash
-git checkout -b lab-08-array-string
-```
+2. **Diferenciar `prototype` y `__proto__`:**  
+   Reconocer la diferencia entre la propiedad `prototype` de las funciones constructoras y la propiedad interna `__proto__` de las instancias, y aplicar estos conceptos en la implementación de herencia.
 
-## ✅ Instrucciones
+## 🔑 Conceptos Clave
 
-### js/Budget.js:
+1. **Prototype Chain:**  
+   Mecanismo que permite a los objetos acceder a propiedades y métodos definidos en sus prototipos y en la cadena de prototipos superior.
 
-1. `findTransactionById`
-```javascript
-// Usa Array.find() para buscar una transacción por su id
-// Retorna la transacción encontrada o undefined
-```
+2. **`__proto__` vs. `prototype`:**  
+   Diferencia entre la referencia interna que tiene cada objeto (`__proto__`) y la propiedad `prototype` de las funciones constructoras que se utiliza para establecer la herencia.
 
-2. `filterTransactionsByType`
-```javascript
-// Usa Array.filter() para obtener solo las transacciones de un tipo específico
-// Retorna un nuevo array con las transacciones filtradas
-```
+3. **Funciones Constructoras:**  
+   Patrón tradicional para crear objetos en JavaScript, permitiendo compartir métodos y propiedades a través del prototipo.
 
-3. `getTotalByType`
-```javascript
-// Usa Array.reduce() para sumar todos los montos de un tipo específico
-// Retorna el total como número
-```
+## ⚙️ Setup Inicial
 
-### js/Transaction.js:
+1. **Repositorio**  
+   - Continúa usando el repositorio existente: `personal-budget`.  
 
-4. `updateCategories`
-```javascript
-// Usa Array.map() para actualizar las categorías de todas las transacciones
-// Retorna un nuevo array con las transacciones actualizadas
-```
+2. **Estructura de Archivos:**  
+   Organiza tu proyecto con la siguiente estructura mínima:
 
-5. `hasTransactionsOverAmount`
-```javascript
-// Usa Array.some() para verificar si existe alguna transacción sobre cierto monto
-// Retorna true/false
-```
+   ```
+   personal-budget/ 
+   ├── index.html 
+   ├── css/ 
+   │ └── styles.css 
+   ├── js/ 
+   │ └── app.js 
+   └── README.md
+   ```
 
-6. `areAllTransactionsValid`
-```javascript
-// Usa Array.every() para verificar que todas las transacciones tengan montos positivos
-// Retorna true/false
-```
+3. **Contenido Base:**  
+- En `index.html`, incluye la estructura semántica básica (`<header>`, `<main>`, `<footer>`) y el formulario para registrar movimientos.
+- En `styles.css`, define estilos iniciales y, si lo prefieres, integra un framework como Bootstrap o Tailwind para facilitar un diseño responsivo y atractivo.
+- En `app.js`, implementa la lógica de prototipos y la integración con la UI.
 
-7. `formatDescription`
-```javascript
-// Usa String.trim() para eliminar espacios en blanco al inicio y final
-// Retorna la descripción limpia
-```
+## 🏆 Historias de Usuario
 
-8. `getTransactionType`
-```javascript
-// Usa String.toLowerCase() para normalizar el tipo de transacción
-// Retorna 'ingreso' o 'gasto' en minúsculas
-```
+### HU1: Crear UI para la aplicación
+> _"Como usuario, quiero disponer de una interfaz web sencilla y clara, construida con HTML y CSS, para trasladar los inputs y outputs en un entorno visual interactivo. La UI incluirá un formulario para capturar datos de cada movimiento (tipo, monto y descripción) y un área para visualizar los movimientos registrados, facilitando la interacción y el seguimiento del presupuesto de manera accesible y responsiva"_.
 
-9. `splitTags`
-```javascript
-// Usa String.split() para convertir un string de tags en array
-// Ejemplo: "comida,casa,servicios" → ["comida", "casa", "servicios"]
-```
+**Criterios de Aceptación:**  
+  1. Crear una estructura semántica en HTML que incluya secciones como `<header>`, `<main>` y `<footer>`.
+  2. Diseñar un formulario con campos para "Tipo", "Monto" y "Descripción", utilizando elementos apropiados (`<input>`, `<select>`, `<textarea>`).
+  3. Aplicar estilos sencillos y responsivos con CSS o mediante Bootstrap/Tailwind.
+  4. Incluir una sección en el DOM para mostrar los movimientos registrados de forma clara.
 
-### js/app.js:
+> **Checkpoint 1 (~20 min)**: Se revisará la correcta estructura del HTML, la aplicación de estilos y la integración inicial del formulario con el área de visualización.
 
-10. `searchTransactions`
-```javascript
-// Usa String.includes() para buscar transacciones por descripción
-// Actualiza la lista mostrando solo las coincidencias
-```
 
-11. `formatAmount`
-```javascript
-// Usa String.replace() para dar formato a los montos
-// Ejemplo: 1000 → "1,000.00"
-```
+### HU2: Herencia Prototipal para Movimientos Diferenciados
+> _"Como usuario, quiero que los movimientos se clasifiquen en 'Ingreso' y 'Egreso' mediante herencia prototipal, de modo que ambos tipos compartan métodos comunes y tengan validaciones específicas adaptadas a cada caso. Al registrar un movimiento, se instanciará automáticamente el objeto adecuado (ya sea Ingreso o Egreso), garantizando la aplicación correcta de las validaciones generales y específicas."_
 
-12. `getMonthName`
-```javascript
-// Usa String.slice() para extraer y formatear el nombre del mes de una fecha
-// Retorna el nombre del mes en español
-```
+**Criterios de Aceptación:**  
+  1. Definir una función constructora base `Movimiento` que actúe como prototipo para derivar subtipos.  
+  2. Crear funciones constructoras específicas para `Ingreso` y `Egreso`, utilizando técnicas de herencia (por ejemplo, `Object.create()` o asignación del `prototype`) para heredar de `Movimiento`.  
+  3. Implementar métodos comunes en el prototipo de `Movimiento` (por ejemplo, validaciones básicas y métodos de renderización) que sean reutilizables por ambas subclases.  
+  4. Establecer validaciones específicas en cada subclase, como asegurar que el monto sea mayor a cero y que la descripción no esté vacía.  
+  5. Verificar que al registrar un movimiento se instancie el objeto correcto y se ejecuten tanto las validaciones generales como las particulares.
 
-### Control de Versiones
-Realiza commits descriptivos por cada función desarrollada:
-```bash
-git commit -m "feat: nombre de función implementada"
-```
+> **Checkpoint 2 (~50 min):** Se evaluará la correcta creación de los subtipos, la adecuada configuración de la cadena de prototipos y la ejecución precisa de las validaciones.
 
-## Instrucciones de Envío
-- Actualiza el sitio en GitHub Pages
-- Crea un Pull Request desde `lab-08-array-string` a `main`
-- En la descripción del PR, incluye:
-  - Lista de métodos String/Array implementados
-- Comparte el link de tu repositorio y tu sitio publicado
+### HU3: Actualización Automática de Totales mediante Herencia
+> _"Como usuario, quiero que la suma total de ingresos y egresos se actualice automáticamente al registrar un movimiento, aprovechando métodos heredados a través de la cadena de prototipos. Esto permitirá mantener un resumen financiero actualizado en tiempo real sin requerir acciones adicionales, mejorando la experiencia de monitoreo y control del presupuesto."_
+
+**Criterios de Aceptación:**  
+  1. Implementar un método en el prototipo (por ejemplo, `recalcularTotales`) que recorra el array global de movimientos y calcule los totales de ingresos y egresos.  
+  2. Asegurarse de que este método se invoque automáticamente cada vez que se registre un nuevo movimiento.  
+  3. Integrar la actualización de totales con la interfaz de usuario para que los nuevos valores se muestren de forma inmediata en pantalla.  
+  4. Validar que el cálculo de totales sea preciso y que la actualización se realice de forma eficiente.
+
+> **Checkpoint 3 (~80 min):** Se revisará la integración del método `recalcularTotales`, verificando la exactitud de los cálculos, la actualización en tiempo real de la interfaz y la invocación automática del método tras el registro de nuevos movimientos.
+
+## ⭐️ Logros Adicionales
+
+- **Logro 1: Mostrar Mensaje de Confirmación**  
+Como usuario, quiero ver un mensaje de confirmación en la interfaz cada vez que un movimiento se registre exitosamente, para recibir retroalimentación inmediata.
+
+- **Logro 2: Resetear Formulario Automáticamente**  
+Como usuario, deseo que el formulario se restablezca automáticamente después de registrar un movimiento, facilitando el ingreso de nuevos datos sin intervención manual.
+
+## 📝 Instrucciones de Entrega
+
+1. **Documentación en README:**  
+- Agrega una sección con encabezado: **Backlog**
+- En esta sección enumera al menos 5 posibles HU nuevas que implementarías en la aplicación.
+
+2. **Despliegue:**  
+- Publica la nueva versión del proyecto en GitHub Pages o en la plataforma que utilices para el despliegue.
+
+3. **Entrega Final:**  
+- URL del repositorio.
+- URL del proyecto desplegado.
