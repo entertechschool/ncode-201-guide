@@ -13,7 +13,7 @@ Debatir en esta sesión te permitirá profundizar en el funcionamiento de la her
 
 - [MDN Web Docs - Working with objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects){:target="_blank"}
 
-- [Understanding __proto__ and prototype in JavaScript](https://blog.bitsrc.io/understanding-prototype-proto-and-prototype-in-javascript-fd8d19cdb3d7){:target="_blank"}
+- [Youtube: ¿Que son los PROTOTIPOS y como funcionan en JavaScript?](https://www.youtube.com/watch?v=TWSI9SybwmI){:target="_blank"}
 
 ## ☑️ Lista de Mitos y Verdades para Analizar
 1. "El `prototype` de una función y el `__proto__` de un objeto son exactamente lo mismo."  
