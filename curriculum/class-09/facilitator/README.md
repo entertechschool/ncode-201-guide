@@ -1,87 +1,75 @@
-﻿# Guía del Instructor: Formularios en HTML y Events en JS
+﻿# Clase 09: DOM como API de Objetos
 
-## Resumen
+## ❄️ Previo a la clase:
 
-Esta es la segunda de las dos clases más difíciles del curso. Los formularios de HTML tienen muchas partes para gestionar, y luego está el lado de los eventos de JavaScript para manejar el envío del formulario. De nuevo, es bastante material nuevo, con bastante complejidad, y todo el mismo tiempo.
+### Estructura resumida
 
-### ¿Qué lugar ocupa este tema?
+| **Fase** | **Descripción** |
+| --- | --- |
+| **[Intro](#1-intro-15-min)**<br>15 min | Contextualización y repaso breve de JavaScript OOP y DOM básico.<br>🎯 Reactivar conocimiento previo y conectar con la sesión actual. |
+| **[Debate Conceptual](#2-debate-conceptual-30-min)**<br>30 min | Discusión sobre manipulación avanzada del DOM, selección dinámica y uso práctico de Regex.<br>🎯 Construcción colaborativa de conocimiento mediante análisis crítico. |
+| **[Demo Técnica](#3-demostración-técnica-20-min)**<br>20 min | Ejemplo práctico de selección de nodos, manipulación del DOM y aplicación de Regex.<br>🎯 Modelar buenas prácticas de implementación. |
+| **[Laboratorio](#4-laboratorio-y-checkpoints-100-min)**<br>100 min | Desarrollo guiado del editor Markdown con tres checkpoints:<br>- ☑️ [30'] Barra de herramientas flotante funcional<br>- ☑️ [60'] Generación del Preview HTML usando Regex<br>- ☑️ [90'] Aplicación dinámica de estilos con `querySelectorAll()`<br>🎯 Aplicación práctica intensiva y validación continua. |
+| **[Cierre](#5-cierre-10-min)**<br>10 min | Retroalimentación sobre logros, dificultades y aprendizajes clave.<br>🎯 Consolidar y proyectar conocimientos. |
 
-**¿Qué hicimos?**:
-En la clase anterior abarcamos la herencia prototípica y la importancia de hacer wireframing para una página.
+## 🔥 Durante la clase
 
-**¿En qué nos centraremos en esta clase?**:
-En esta clase abarcaremos los eventos de JavaScript y el event handling. Esta clase también abarca los formularios de HTML.
+### Estructura Detallada (180 min.)
 
-**¿Qué haremos?**:
-En la siguiente clase hablaremos sobre la depuración de código y revisaremos los diferentes tipos de mensajes de error que podemos encontrar en nuestra consola.
+#### 1. Intro (15 min)
+- 🎯 **Objetivos:** Reactivar conocimientos sobre JavaScript OOP, manipulación básica del DOM y presentación breve del tema DOM como colección de objetos.
+- 🔑 **Activación:** Preguntas rápidas para refrescar lo aprendido.
 
-## Objetivos de aprendizaje
+#### 2. Debate Conceptual (30 min)
+- **DOM como Árbol de Objetos:** ¿Por qué es relevante entender el DOM como objetos interconectados?
+- **querySelector vs querySelectorAll:** Discusión sobre casos de uso concretos y diferencias en resultados.
+- **Regex y su utilidad práctica:** Ventajas y limitaciones del uso de Regex para transformar contenido de texto.
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+#### 2. Demostración Técnica (20 min)
+- Selección dinámica y modificación del DOM con JavaScript puro.
+- Implementación en vivo de conversión básica de Markdown a HTML usando Regex (`.replace()` y patrones simples).
+- Tips sobre debugging básico en consola.
 
-## Preparativos
+#### 3. Laboratorio y Checkpoints (100 min)
 
-1. Hojea las lecturas y prepárate en caso de que los alumnos tengan preguntas
-1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Revisa los [diagramas en la pizarra](https://code-fellows.invisionapp.com/freehand/201-Whiteboards-8r4qFnMn2) en la cuenta de Invision de Code Fellow o [aquí](whiteboards/class09WB.png) para la clase.
+> 💻 **Objetivo:** Implementar la barra de herramientas flotante, conversión dinámica Markdown–HTML con Regex y manipulación dinámica de nodos.
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+- **Checkpoint 1: Barra de Herramientas (30')**
+  - Verificar barra fija en posiciones correctas según el dispositivo.
+  - Asegurar áreas visibles claramente para editor y preview.
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+- **Checkpoint 2: Preview HTML usando Regex (60')**
+  - Validar conversión exitosa desde Markdown a HTML (encabezados y listas).
+  - Uso correcto de Regex y método `.replace()`.
 
-### Revisión del código
+- **Checkpoint 3: Estilo Dinámico con querySelectorAll (90')**
+  - Seleccionar correctamente nodos (encabezados).
+  - Aplicar dinámicamente estilos al DOM mediante JavaScript puro.
 
-### Eventos de JavaScript
+#### 3. Laboratorio y Checkpoints (100 min)
+- Apoyar individualmente, resolver dudas técnicas.
+- Estimular revisión cruzada entre estudiantes.
+- Validar y corregir errores puntuales.
 
-- **¿Por qué?**
-  - Los eventos proporcionan una interfaz dinámica a la página web.
-- **¿Qué?**
-  - Los eventos son acciones o acontecimientos que les ocurren a los elementos en HTML. Se puede escribir código en JavaScript para reaccionar a estos eventos.
-- **¿Cómo?**
-  - Comienza con una demostración básica de un evento y event listeners en un elemento `<div>` en CodePen o VSCode.
-  - Divide los pasos con el event handling.
-    - Toma un elento para escuchar.
-    - Añade el método `addEventListener()` y pasa los 2 argumentos del tipo de evento y la función callback/event handler.
-    - Construye la función event handler. Puedes demostrarlo como una función anónima inline o una función callback definida por separado.
+#### 4. Cierre (10 min)
 
-### Formularios en HTML
+- 💡 **Conclusiones clave:**
+  - La importancia de manipular el DOM con una visión orientada a objetos.
+  - Ventajas prácticas y limitaciones reales del uso de Regex.
+  - Principios fundamentales del uso eficiente del DOM y selección múltiple de elementos.
 
-- **¿Por qué?**
-  - Esta es una buena forma de recolectar información e input de los usuarios.
-- **¿Qué?**
-  - Un formulario HTML representa una sección del documento que contiene controles interactivos para enviar información.
-- **¿Cómo?**
-  - Demuestra la construcción de un formulario utilizando los siguientes elementos semánticos:
-    - `<form>`
-    - `<fieldset>`
-    - `<legend>`
-    - `<label>`
-    - `<input>`
-  - Añade event handling al botón del formulario.
-  - Demuestra tomando los datos de un formulario en el momento del envío con una función event handler.
+- 📌 **Siguiente Paso:**
+La próxima clase profundizará en funciones avanzadas y callbacks para gestionar dinámicamente la transformación Markdown–HTML y optimizar la interacción con la interfaz.
 
-### Preparación para el laboratorio
+---
 
-- **¿Por qué?**
-  - Les proporciona a los estudiantes las herramientas para que cumplan con su laboratorio.
-- **¿Qué?**
-  - Revisa las instrucciones del Laboratorio 09 en Canvas.
-- **¿Cómo?**
-  - Consulta las notas del laboratorio a continuación.
+# Solucionario breve (para el Facilitador)
 
-## Notas de Laboratorio
+- `querySelector` devuelve solo un elemento (el primero), mientras que `querySelectorAll` retorna una lista estática (NodeList).
+- Regex ofrece flexibilidad para transformar texto, pero puede resultar complejo en estructuras de texto muy anidadas.
+- Es fundamental manejar eventos de manera eficiente para lograr buena interactividad, especialmente en interfaces dinámicas como esta.
 
-Esta es la tercera clase difícil seguida. Una de las partes menos intuitivas es que los campos de input convertirán los numbers a strings, así que siempre es útil un recordatorio acerca de utilizar `parseInt` o `Number`.
+📌 **Tips Adicionales:**
+- Recomienda herramientas como Regex101.com para validar y refinar expresiones regulares.
+- Usa Chrome DevTools para depuración rápida y efectiva del DOM.
 
-## ¿Qué cambió desde la clase anterior?
-
-En la clase anterior, los alumnos tuvieron un descanso de JavaScripts para profundizar en CSS layouts y los wireframes.
-
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
-
-Espers que los estudiantes tengan dificultades llamando a sus funciones en el órden correcto, o que se olviden de llevar los datos a un array.
-
-También es común encontrarse con errores tipográficos o confusiones acerca de los nombres.
-
-Algunos estudiantes han tenido dificultades al borrar la fila del footer, reemplazarla con datos del formulario y luego volver a llenar la fila del footer.
