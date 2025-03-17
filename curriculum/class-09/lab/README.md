@@ -1,204 +1,95 @@
-﻿# Laboratorio 09: Sistema de Ventas con Prototipos 🛍️
+﻿# Laboratorio 09: DOM como API de Objetos
 
-En este laboratorio, iniciarás el desarrollo de una aplicación de gestión de ventas usando Programación Orientada a Objetos mediante funciones constructoras. Implementarás la base del sistema con productos, clientes y ventas, estableciendo las relaciones entre estos objetos mediante prototipos.
+¡Bienvenido al noveno laboratorio del proyecto integrador **Editor Avanzado de Markdown en Vivo**! En esta sesión comenzarás a trabajar activamente con la manipulación avanzada del DOM (Document Object Model), aplicando conceptos de JavaScript orientado a objetos para generar una interfaz dinámica y responsiva.
+
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye dos momentos de validación grupal (a los 30, 60 y 90 minutos). Mantenerse al día es clave para aprovechar al máximo la retroalimentación del instructor y de tus compañeros.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar un sistema de objetos relacionados usando funciones constructoras
-- Establecer relaciones modelo/instancia efectivas
-- Utilizar prototipos para compartir comportamiento entre objetos
-- Mantener la separación de responsabilidades entre modelos
 
-## 🚀 Setup Inicial
+1. Manipular el DOM como colección de objetos mediante propiedades y métodos JavaScript.
+2. Comprender la Jerarquía DOM y sus relaciones (padres, hijos, hermanos).
 
-### 1. Estructura del Proyecto
-```bash
-# Crear y configurar el repositorio
-git init sales-app
-cd sales-app
+## 🔑 Conceptos Clave
 
-# Crear estructura de archivos
-mkdir css js
-mkdir js/models
-touch index.html css/styles.css js/app.js js/models/{Product,Customer}.js
-```
+1. DOM como Árbol de Objetos
+2. Selección dinámica de Nodos (`querySelector`, `querySelectorAll`)
+3. Regex básico
 
-### 2. Sincronizar con GitHub
-- Publica tu repositorio local el GitHub desde VS Code.
-- Luego, crea y muévete a la rama `dev` para empezar a trabajar.
+## ⚙️ Setup Inicial
 
-### 3. Configuración de Archivos
-```html
-<!-- index.html -->
+1. **Repositorio:**
+   - Crea un nuevo repositorio en tu cuenta de GitHub llamado `markdown-editor` y clónalo en tu local.
+   - Inicialmente trabaja sobre la rama `main`.
 
-<!-- dentro de head -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="css/styles.css" rel="stylesheet">
+2. **Estructura de Archivos:**
+   Tu proyecto debe mantener esta estructura mínima:
+   ```
+   markdown-editor/
+   ├── index.html
+   ├── css/
+   │ └── styles.css
+   ├── js/
+   │ └── app.js
+   └── README.md
+   ```
 
-<!-- dentro de body -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/models/Product.js"></script>
-<script src="js/models/Customer.js"></script>
-<script src="js/app.js"></script>
-```
-
-### 4. Aprendiendo con IA
-Usa este prompt para entender mejor el contexto de `this`:
-```
-Necesito entender el comportamiento de 'this' en JavaScript:
-
-1. ¿Cómo funciona 'this' dentro de:
-   - Funciones constructoras
-   - Métodos del prototipo
-   - Callbacks de eventos
-
-2. Muestra ejemplos de:
-   - Uso correcto de 'this' en constructores
-   - Errores comunes y cómo evitarlos
-   - Cómo mantener el contexto en callbacks
-
-Mi conocimiento actual:
-- Sé crear funciones constructoras básicas
-- Entiendo qué es el prototipo
-- He trabajado con eventos del DOM
-```
+3. **Contenido Base:**
+- Prepara en `index.html` una estructura semántica básica (`header`, `main`, `footer`) con áreas claramente definidas para la barra de herramientas, editor y preview.
+- Revisa la documentación de [TailwindCSS](https://tailwindcss.com/docs/installation/play-cdn){:target="_blank"} para agregar este framework.
 
 ## 📋 Historias de Usuario
 
-### HU 1: Gestión de Productos
-Como vendedor, necesito registrar nuevos productos en el sistema para mantener un catálogo actualizado.
-- Registrar nombre, precio y stock inicial
-- Ver el listado de productos registrados
-- Actualizar el stock de los productos.
+### HU1: Barra de herramientas con botón "Generar Vista Previa"
+"Como usuario, deseo una barra de herramientas con un único botón llamado 'Generar Vista Previa', ubicada en la parte superior en desktop y en la parte inferior en dispositivos móviles, manteniendo siempre visible tanto el editor como la vista previa."
 
-### HU 2: Gestión de Clientes
-Como vendedor, necesito registrar los datos de mis clientes para darles seguimiento.
-- Registrar nombre y email del cliente
-- Ver el listado de clientes registrados
-- Actualizar el email de mis clientes.
+**Criterios de Aceptación:**
+- La barra de herramientas está fija (top móvil / top desktop).
+- Editor y Preview visibles simultáneamente.
+- Scroll automático cuando el contenido exceda espacio.
 
+- **Checkpoint 1 (30 min)**:
+  - Barra ubicada y visible según el dispositivo.
+  - Zonas claramente definidas (editor y preview).
 
-## ✅ Instrucciones
+### HU2: Generación de Preview usando Regex
 
-### 1. Implementación de Modelos
+"Como usuario, al hacer clic en el botón 'Generar Vista Previa', deseo que el contenido Markdown de los **Encabezados** y las **listas** del editor se transforme en HTML utilizando únicamente métodos `.replace()` y expresiones regulares."
 
-#### js/models/Product.js
-```javascript
-function Product(name, price, stock) {
-    // Propiedades:
-    // - id (generar con Date.now())
-    // - name
-    // - price
-    // - stock
-    // - createdAt (new Date())
-}
+**Criterios de Aceptación:**
+- Botón funcional para generar preview.
+- Transformación de encabezados y listas Markdown a HTML mediante Regex.
+- El preview HTML refleja cambios al instante.
 
-// Métodos del prototipo:
-Product.prototype.updateStock = function(quantity) {
-    // Actualiza el stock y valida que no sea negativo
-};
+- **Checkpoint 2 (60 min)**:
+  - Botón funcional generando correctamente HTML desde Markdown.
+  - Ejemplos básicos de Markdown (títulos, listas).
 
-Product.prototype.getFormattedPrice = function() {
-    // Retorna el precio formateado como moneda (S/ 1,500.00)
-};
+### HU 3: Aplicar estilo dinámico a los encabezados
 
-Product.prototype.getProductInfo = function() {
-    // retorna: Pelota Adidas - S/ 389.00 (Stock: 14)
-};
+"Como usuario, quiero tener un botón **Contrastar Encabezados** que altere todos los encabezados generados en la vista previa HTML y se muestren automáticamente con un estilo diferenciado (color y tamaño). Al hacer clic nuevamente, debo quitar el contraste."
 
-Product.prototype.renderUI = function() {
-    // retornar un elemento HTML `li` con la información del producto
-};
-```
+**Criterios de Aceptación:**  
+- Debes utilizar `querySelectorAll()` para seleccionar todos los elementos de título generados (`<h1>`, `<h2>`, `<h3>`...).  
+- Aplicar dinámicamente estilos específicos usando JavaScript puro, modificando propiedades del DOM.  
+- Los cambios visuales deben reflejarse inmediatamente en el preview.
 
-#### js/models/Customer.js
-```javascript
-function Customer(name, email) {
-    // Propiedades:
-    // - id
-    // - name
-    // - email
-    // - totalPurchases (inicia en 0)
-    // - createdAt
-}
+- **Checkpoint 3 (90 min)**:
+  - Botón tipo "Toggle" funcionando.
+  - Estilos aplicados vía JavaScript.
 
-// Métodos del prototipo:
-Customer.prototype.updateEmail = function(email) {
-    // Actualiza el email
-};
+## 🌟 Logros Adicionales (Opcionales)
 
-Customer.prototype.renderUI = function() {
-    // retornar un elemento HTML `li` con la información del cliente
-};
-```
+- **Logro 1: Transformar contenido en negrita e itálica**
+  - Usar el regex para detectar frases en negrita e itálica y convertirlos a sus elementos respectivos de HTML.
 
-#### Validaciones en general:
-```js
-// En Product
-if (!name || typeof price !== 'number' || price <= 0 || stock < 0) {
-    throw new Error('Datos inválidos');
-}
+- **Logro 2: Contador de palabras/caracteres dinámico**
+  - Contador actualizado automáticamente al escribir texto en el editor.
 
-// En Customer
-if (!name || !email || !email.includes('@')) {
-    throw new Error('Datos inválidos');
-}
-```
+## 📝 Instrucciones de Entrega
 
-### 2. HTML y UI
-- Implementa un Layout con pestañas (tabs) para cada módulo
-    - Módulo de productos
-    - Módulo de clientes
-- Según el módulo, implementa un formulario para:
-    - Registro de productos
-    - Registro de clientes
-- Según el módulo, implementa un lista para:
-    - Mostrar productos y actualizar stock
-    - Mostrar clientes y actualizar email
+1. **Despliegue**
+   - Publica los cambios en GitHub Pages y proporciona el enlace correspondiente.
 
-### 3. Lógica y Eventos
-En app.js, implementa:
-```javascript
-
-// Funciones para manejar los formularios
-function handleNewProduct(event) {
-    // Prevenir el comportamiento default
-    // Crear nuevo producto
-    // Actualizar UI
-}
-
-function handleNewCustomer(event) {
-    // Prevenir el comportamiento default
-    // Crear nuevo cliente
-    // Actualizar UI
-}
-
-// Funciones para manejar los updates
-function handleUpdateProduct(event) {
-    // Actualizar el stock de un producto
-    // Actualizar UI
-}
-
-function handleUpdateCustomer(event) {
-    // Actualizar el email de un cliente
-    // Actualizar UI
-}
-```
-
-## ⭐️ Logros Adicionales
-
-1. **Búsqueda de Productos y Clientes**
-- Agregar campo de búsqueda que filtre la lista
-- Implementar métodos en los prototipos:
-```js
-Product.prototype.matches = function(query) {
-    // Busca en nombre del producto
-};
-Customer.prototype.matches = function(query) {
-    // Busca en nombre y email
-};
-```
-
-## Instrucciones de Envío
-- Crea un Pull Request llamado **lab09** (`dev > main`) con tus cambios.
-    - En este PR: incluye capturas de pantalla del sistema funcionando.
-- Comparte el link del PR y del sitio desplegado, como respuesta a esta tarea.
+2. **Entrega Final**
+   - URL del repositorio.
+   - URL del proyecto desplegado en GitHub Pages.

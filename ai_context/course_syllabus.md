@@ -32,6 +32,7 @@
 2. **CSS Layout con Flexbox** (180 min, blend)
 3. **CSS Grid Layout** (180 min, blend)
 4. **Frameworks CSS Modernos** (180 min, blend)
+- **Presentación del Proyecto Integrador** (180 min, demo)
 
 > #### Proyecto Integrador: **Product Landing Page**
 > Un Landing Page que mostrará las caraterísticas clave de un producto, y que permite la navegación usando estándares actuales de semántica y accesibilidad. Adicionalmente, está consutrído con un Layout Responsive, utilizando tecnologías como Flexbox, Grid y frameworks modernos.
@@ -41,6 +42,7 @@
 6. **Programación Funcional** (180 min, blend)
 7. **Programación Orientada a Objetos** (180 min, blend)
 8. **Prototipos en JavaScript** (180 min, blend)
+- **Presentación del Proyecto Integrador** (180 min, demo)
 
 > #### Proyecto Integrador: **Gestor de Presupuesto Personal**
 > Una aplicación web sencilla que permite gestionar un presupuesto mensual, registrando ingresos y gastos, categorizándolos y visualizando un balance actualizado. El proyecto evoluciona clase a clase, pasando de una solución imperativa a un sistema basado en objetos, con cálculos funcionales y extensión por medio de prototipos.
@@ -50,12 +52,32 @@
 10. **Funciones y Callbacks** (180 min, blend)
 11. **Event Handling Básico** (180 min, blend)
 12. **Promesas en Javascript** (180 min, blend)
+- **Presentación del Proyecto Integrador** (180 min, demo)
+
+#### Subtemas complementarios:
+- Regex (Expresiones Regulares).
+- Librerías Externas (importadas vía CDN).
+- Técnicas de Depuración.
+- Principio DRY (Don't repeat your self).
+
+> #### Proyecto Integrador: **Editor de Markdown en vivo**
+> El proyecto consiste en desarrollar un Editor de Markdown con vista previa en tiempo real, donde los estudiantes implementarán la manipulación dinámica del DOM para reflejar los cambios de formato, organizarán la lógica de transformación mediante funciones y callbacks, controlarán los eventos (por ejemplo, al teclear o cargar un archivo) para refrescar la interfaz al instante, y finalmente incorporarán procesos asíncronos con Promesas para realizar importaciones o exportaciones de contenido, cubriendo así todos los temas fundamentales del Módulo 3.
+>
+> **Características clave**:
+> - Estilización con Tailwind CSS
+> - Barra de herramientas flotante
+> - Importar archivos .md
+> - Contador de palabras y caracteres
+> - Diseño responsivo
+> - Exportar contenido generado como HTML
+> - Exportar contenido generado en formato PDF
 
 ### Módulo 4: Estado y Persistencia
 13. **Modelado de Estado (Patrón Store)** (180 min, blend)
 14. **App State Management** (180 min, blend)
 15. **JSON y LocalStorage** (180 min, blend)
 16. **Persistencia y Sincronización** (180 min, blend)
+- **Presentación del Proyecto Integrador** (180 min, demo)
 
 ### Módulo 5: Proyecto Real
 17. **Ideation + Research + Stories** (180 min, project)
