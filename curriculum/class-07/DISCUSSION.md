@@ -23,7 +23,7 @@ En esta guía, encontrarás los recursos y las pautas para **prepararte antes de
 
 ## 🔑 Conceptos Clave
 | Concepto | Definición  |
-|----|----|
+|---|---|
 | **Objetos**                             | Estructuras que combinan propiedades y métodos, unificando datos y comportamientos. Fundamentales para mejorar la **organización** y la **reutilización** de código. |
 | **Abstracción**                         | Foco en los rasgos relevantes de un elemento, ignorando detalles que no aportan valor directo. Permite crear un modelo simplificado de la realidad en el software.    |
 | **Programación Orientada a Objetos**    | Paradigma que organiza el desarrollo en términos de objetos que se comunican entre sí. Posibilita escalabilidad y mantenimiento a mediano y largo plazo.              |
