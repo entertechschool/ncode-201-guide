@@ -1,4 +1,4 @@
-﻿### Laboratorio 10: Funciones y Callbacks en JavaScript
+﻿# Laboratorio 10: Funciones y Callbacks en JavaScript
 
 ¡Bienvenido al décimo laboratorio del proyecto integrador **Editor Avanzado de Markdown en Vivo**! En esta sesión profundizarás en el uso de **funciones de primera clase, funciones de orden superior y callbacks**, aplicándolos en la transformación dinámica del contenido del editor Markdown en HTML, mejorando su interactividad.  
 
