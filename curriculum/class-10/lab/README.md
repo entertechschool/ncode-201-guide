@@ -1,193 +1,114 @@
-﻿# Laboratorio 10: Implementando Ventas en el Sistema 🛍️
+﻿### Laboratorio 10: Funciones y Callbacks en JavaScript
 
-## Descripción
-Continuando con el desarrollo de la aplicación de ventas, implementaremos el módulo de ventas que permitirá registrar transacciones entre clientes y productos. Este módulo integrará los objetos Customer y Product creados en el laboratorio anterior.
+¡Bienvenido al décimo laboratorio del proyecto integrador **Editor Avanzado de Markdown en Vivo**! En esta sesión profundizarás en el uso de **funciones de primera clase, funciones de orden superior y callbacks**, aplicándolos en la transformación dinámica del contenido del editor Markdown en HTML, mejorando su interactividad.  
 
-## 🎯 Objetivos de Aprendizaje
-- Implementar relaciones entre objetos usando funciones constructoras
-- Manejar colecciones de objetos en JavaScript
-- Gestionar el estado de múltiples objetos relacionados
-- Aplicar validaciones complejas entre objetos
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 45, 60 y 75 minutos). Mantenerse al día es clave para recibir retroalimentación efectiva del instructor y de los compañeros.  
+
+## 🎯 **Objetivos de Aprendizaje**  
+
+1. **Comprender el concepto de funciones como objetos de primera clase** y su importancia en JavaScript.  
+2. **Implementar funciones de orden superior con callbacks** para modularizar el código y mejorar su reutilización.  
+3. **Diferenciar entre funciones declarativas, expresiones de función y funciones anónimas** y su aplicación en programación funcional.  
+
+## 🔑 **Conceptos Clave**  
+
+1. **Funciones de Primera Clase**  
+2. **Callbacks**  
+3. **Funciones de Orden Superior**  
+
+## ⚙️ **Setup Inicial**  
+
+1. **Repositorio:**  
+   - Continúa trabajando sobre el repositorio del laboratorio anterior (`markdown-editor`).  
+   - Crea una nueva rama `lab10-funciones-callbacks`.  
+
+2. **Estructura de Archivos:**  
+   Mantén la estructura del proyecto asegurando la organización modular del código:  
+   ```
+   markdown-editor/
+   ├── index.html
+   ├── css/
+   │   └── styles.css
+   ├── js/
+   │   ├── app.js
+   │   ├── format.js       <-- (nuevo archivo para funciones de formato)
+   │   ├── lists.js        <-- (nuevo archivo para listas dinámicas)
+   │   ├── blocks.js    <-- (nuevo archivo para resaltado de bloques de código)
+   └── README.md
+   ```  
+
+3. **Configuración Base:**  
+   - Verifica que `index.html` contenga una estructura semántica clara (`header`, `main`, `footer`).  
+   - Asegúrate de enlazar los nuevos archivos `.js` en el `index.html`.  
+   - Define las funciones de transformación en los archivos correspondientes (`format.js`, `lists.js`, `blocks.js`).  
+
 
 ## 📋 Historias de Usuario
 
-### HU 1: Registro de Ventas
-Como vendedor, necesito registrar nuevas ventas en el sistema.
-- Seleccionar un cliente existente
-- Agregar múltiples productos con sus cantidades
-- Ver el total de la venta calculado automáticamente
-- Confirmar la venta solo si hay stock suficiente
+### HU1: Botón para Alternar el Formato de Texto
 
-### HU 2: Actualización Automática
-Como vendedor, necesito que el sistema se actualice automáticamente:
-- El stock de productos debe reducirse al confirmar una venta
-- El contador de compras del cliente debe incrementarse
-- La lista de ventas debe actualizarse en tiempo real
+📌 *"Como usuario, quiero un botón que aplique o quite automáticamente un formato (negrita o cursiva) al texto seleccionado en el editor, utilizando una función de orden superior."*  
 
-## ✅ Instrucciones
+**Criterios de Aceptación:**  
+- Implementar un botón **"Aplicar Formato"** que alterne entre negrita y cursiva.  
+- Usar **una función de orden superior** que reciba un callback para aplicar o quitar formato.  
+- Formatos soportados:  
+  - **Negrita:** `**texto**`  
+  - **Cursiva:** `*texto*`  
+- Mantener la estructura del `textarea` sin alterar el resto del contenido.  
 
-### 1. Nuevo Modelo de Ventas
+- **Checkpoint 1 (45 min)**:  
+  🔍 **Revisión:**  
+  - La función de orden superior debe ejecutar un callback correctamente.  
+  - El botón debe alternar entre aplicar y quitar formato.  
+  - No se deben afectar otras partes del texto.  
 
-#### js/models/Sale.js
-```javascript
-function Sale(customer, date = new Date()) {
-    // Validar que customer sea instancia de Customer
-    if (!(customer instanceof Customer)) {
-        throw new Error('Cliente inválido');
-    }
+### HU2: Generación de Listas Numéricas Dinámicamente
 
-    // Propiedades:
-    // - id (Date.now())
-    // - customer
-    // - products (array vacío para iniciar)
-    // - total (inicia en 0)
-    // - date
-    // - status ('pending' | 'completed' | 'cancelled')
-}
+📌 *"Como usuario, quiero que al escribir listas numeradas (`1. Item 1`, `2. Item 2`), el editor las transforme en listas HTML `<ol>` sin necesidad de presionar un botón manualmente, utilizando una función de orden superior."*  
 
-// Métodos del prototipo:
-Sale.prototype.addProduct = function(product, quantity) {
-    // Validar que product sea instancia de Product
-    // Validar stock suficiente
-    // Agregar al array products: { product, quantity }
-    // Actualizar total
-};
+**Criterios de Aceptación:**  
+- Detectar automáticamente cuando el usuario escribe una lista numerada en el editor (`1. Item 1`, `2. Item 2` …).  
+- Utilizar una **función de orden superior** que reciba un callback para transformar cada línea en un `<li>`.  
+- Convertir listas numeradas en `<ol>` al presionar el botón **"Generar Vista Previa"**.  
+- Mantener la numeración correcta en HTML.  
 
-Sale.prototype.removeProduct = function(productId) {
-    // Eliminar producto del array
-    // Actualizar total
-};
+- **Checkpoint 2 (60 min)**:  
+  🔍 **Revisión:**  
+  - La función de orden superior debe aplicar correctamente el callback.  
+  - Se debe generar una estructura válida `<ol><li>Item</li></ol>`.  
+  - La numeración debe mantenerse intacta en la conversión.  
 
-Sale.prototype.calculateTotal = function() {
-    // Sumar (producto.price * cantidad) de cada item
-};
 
-Sale.prototype.complete = function() {
-    // Validar que haya productos
-    // Actualizar stock de cada producto
-    // Incrementar contador del cliente
-    // Cambiar status a 'completed'
-};
+### HU3: Resaltado Dinámico de Código en el Preview
 
-Sale.prototype.renderUI = function() {
-    // Retornar elemento HTML con el detalle de la venta
-};
-```
+📌 *"Como usuario, quiero que al escribir código en el editor dentro de triple backticks (```) se aplique resaltado automático en la vista previa, utilizando funciones de primera clase para transformar el contenido."*  
 
-### 2. Actualizaciones a Modelos Existentes
+**Criterios de Aceptación:**  
+- Detectar automáticamente cuando el usuario ingresa código entre triple backticks (` ``` `).  
+- Usar una **función de primera clase** para encapsular la lógica de transformación.  
+- Aplicar una clase CSS de resaltado al bloque de código en la vista previa (`<pre><code>`).  
+- Permitir múltiples bloques de código en un mismo documento sin interferencias.  
 
-#### Product.js - Agregar:
-```javascript
-Product.prototype.hasStock = function(quantity) {
-    return this.stock >= quantity;
-};
-```
+- **Checkpoint 3 (75 min)**:  
+  🔍 **Revisión:**  
+  - La detección de código entre triple backticks debe funcionar correctamente.  
+  - La función de primera clase debe ser reutilizable.  
+  - La estructura generada debe ser `<pre><code>contenido</code></pre>`.  
+  - La sintaxis debe reflejarse correctamente en la vista previa con estilos de resaltado.  
 
-#### Customer.js - Agregar:
-```javascript
-Customer.prototype.incrementPurchases = function() {
-    this.totalPurchases++;
-};
-```
 
-### 3. HTML y UI
+## 🌟 **Logros Adicionales (Opcionales)**  
 
-Agregar nueva pestaña de ventas:
-```html
-<div class="tab-pane" id="sales">
-    <div class="row">
-        <!-- Formulario de Venta -->
-        <div class="col-md-8">
-            <h3>Nueva Venta</h3>
-            <form id="sale-form">
-                <!-- Select para cliente -->
-                <!-- Select para producto -->
-                <!-- Input para cantidad -->
-                <!-- Botón para agregar producto -->
-                <!-- Lista de productos agregados -->
-                <!-- Total -->
-                <!-- Botón confirmar venta -->
-            </form>
-        </div>
-        
-        <!-- Lista de Ventas -->
-        <div class="col-md-4">
-            <h3>Ventas Realizadas</h3>
-            <ul id="sales-list" class="list-group">
-            </ul>
-        </div>
-    </div>
-</div>
-```
+📌 **Logro 1: Atajos de Teclado para Formateo Rápido**  
+*"Como usuario, quiero poder aplicar formato de negrita (`Ctrl+B`) y cursiva (`Ctrl+I`) mediante atajos de teclado en el editor."*  
 
-### 4. Lógica de Ventas (app.js)
+## 📝 **Instrucciones de Entrega**  
 
-```javascript
-// Variables para la venta en curso
-let currentSale = null;
+1. **Despliegue**  
+   - Publica los cambios en GitHub Pages y proporciona el enlace correspondiente.  
 
-function initNewSale() {
-    // Crear nueva venta con el cliente seleccionado
-    // Limpiar formulario
-}
+2. **Entrega Final**  
+   - URL del repositorio en GitHub.  
+   - URL del proyecto desplegado en GitHub Pages.  
 
-function handleAddProduct(event) {
-    // Prevenir default
-    // Obtener producto y cantidad seleccionados
-    // Agregar a la venta actual
-    // Actualizar UI
-}
-
-function handleCompleteSale(event) {
-    // Prevenir default
-    // Completar venta
-    // Actualizar UI de productos (stock)
-    // Actualizar UI de cliente (compras)
-    // Actualizar lista de ventas
-    // Iniciar nueva venta
-}
-```
-
-## ⭐️ Logros Adicionales
-
-1. **Cancelar Venta**
-- Implementar método `cancel()` en Sale
-- Agregar botón para cancelar venta en curso
-- Restaurar stock si la venta estaba en proceso
-
-2. **Resumen de Venta**
-- Implementar método `getSummary()` en Sale
-- Mostrar modal con detalle al hacer click en una venta
-- Incluir información del cliente y productos
-
-## ⚠️ Errores Comunes a Evitar
-
-1. **Manejo de Referencias**
-```javascript
-// ❌ MAL: Guardar solo IDs
-this.products.push(productId);
-
-// ✅ BIEN: Guardar objeto completo
-this.products.push({ product: product, quantity: quantity });
-```
-
-2. **Validaciones de Stock**
-```javascript
-// ❌ MAL: Validar al final
-completeSale() {
-    // Muy tarde para validar stock
-
-// ✅ BIEN: Validar al agregar
-addProduct() {
-    if (!product.hasStock(quantity)) {
-        throw new Error('Stock insuficiente');
-    }
-}
-```
-
-## Instrucciones de Envío
-- Crea un Pull Request llamado **lab10** (`dev > main`) con tus cambios.
-- En el PR incluye:
-  - Capturas de una venta completa
-  - Ejemplo de validaciones funcionando
-- Comparte el link del PR y del sitio desplegado
