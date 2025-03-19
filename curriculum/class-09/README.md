@@ -1,4 +1,4 @@
-﻿📦 **Módulo 3:** Clase 09 de 12
+﻿> 📦 **Módulo 3:** Clase 09 de 12
 
 # Clase 09: DOM como API de Objetos
 
