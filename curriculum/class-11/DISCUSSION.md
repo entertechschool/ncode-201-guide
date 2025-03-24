@@ -1,30 +1,43 @@
-# Read 11: Document Object Model
+# Debate 11
 
-## Reflexiona y debate
+## 🎯 Objetivos de la Preparación para el Debate
 
-A continuación se muestra una colección de recursos que describen los temas de la clase.
+La discusión en esta sesión está orientada a fortalecer tu capacidad para capturar y gestionar eventos básicos en JavaScript. A través del debate crítico, explorarás cómo implementar **event listeners**, manipular el **event object** y emplear eficazmente funciones **callback** para crear aplicaciones web interactivas. Al debatir estos conceptos, profundizarás en tu comprensión técnica y desarrollarás habilidades prácticas esenciales para la implementación del proyecto integrador.
 
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
+## 🔑 Conceptos Clave a profundizar
 
-### Lectura
-La lectura de este artículo es obligatoria.
-* [Introducción al DOM](https://es.javascript.info/document){:target="_blank"}
+- **Event Listener:**
+  Comprender cómo registrar eventos mediante el método `addEventListener` para que los elementos HTML reaccionen dinámicamente a interacciones del usuario.
 
-### Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-* [Navegación por el DOM](https://es.javascript.info/dom-navigation){:target="_blank"}
-* [Manipulación de elementos](https://es.javascript.info/modifying-document){:target="_blank"}
+- **Event Object:**
+  Explorar el objeto evento generado automáticamente, sus propiedades y cómo usarlo para obtener información específica sobre la interacción del usuario.
 
-## Responde
-1. ¿Qué es el objeto "document" y cuál es su importancia en la manipulación del DOM? Proporciona ejemplos de métodos comunes del objeto document.
-2. ¿Cómo puedes acceder y modificar los elementos HTML utilizando JavaScript? Explica las diferentes formas de seleccionar elementos del DOM.
-3. ¿Cuál es la diferencia entre los métodos `innerHTML`, `textContent` y `innerText`? ¿Cuándo deberías usar cada uno?
-4. Explica cómo puedes crear, modificar y eliminar elementos HTML dinámicamente usando JavaScript. Proporciona ejemplos prácticos de cada operación.
+- **Callback:**
+  Entender cómo definir y utilizar funciones callback que gestionen la respuesta a eventos específicos, permitiendo modularidad y claridad en el código.
 
-## Instrucciones de envío
-* Agrega las preguntas y respuestas de esta actividad a tu archivo `read11.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-* Agrega en la **Respuesta** a esta actividad:
-    * El enlace de tu repositorio publicado en **GitHub Pages**.
-    * Y también, las respuestas que desarrollaste.
-* Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
+
+## 🤖 Prompt sugerido para interacción con IA
+
+Utiliza el siguiente prompt cuidadosamente diseñado para conversar con ChatGPT y obtener los conocimientos esenciales antes del debate en clase:
+
+> **Prompt:**
+> "Actúa como instructor experto en JavaScript y desarrollo web. Explícame detalladamente cómo funcionan los event listeners en JavaScript, incluyendo el método `addEventListener`. Detalla qué es el event object, qué información contiene y cómo puedo aprovecharlo en eventos comunes como `click`, `input` o `submit`. Finalmente, explícame qué es un callback, cuál es su rol dentro de los eventos y dame un ejemplo práctico de implementación combinando estos tres conceptos. Usa un lenguaje claro y proporciona ejemplos de código breves pero completos."
+
+## 🧠 Reflexiones Clave para Analizar
+
+1. ¿Qué ventajas ofrecen los event listeners frente a otros métodos tradicionales de gestión de eventos (por ejemplo, atributos HTML)?
+
+2. ¿Cómo impacta en la experiencia del usuario manejar adecuadamente el objeto evento en aplicaciones web?
+
+3. ¿Cuáles son los criterios que debes considerar para elegir entre funciones anónimas o funciones nombradas como callbacks?
+
+4. ¿Qué implicaciones tiene la correcta eliminación de event listeners en la gestión del rendimiento de una aplicación?
+
+5. ¿De qué manera facilita el uso de callbacks la modularidad y la reutilización del código en proyectos de desarrollo?
+
+6. ¿Cómo podemos prevenir errores comunes relacionados con la gestión de eventos al implementar event listeners y callbacks?
+
+---
+
+> **Instrucción:** Utiliza las reflexiones anteriores como guía para profundizar en tu preparación y argumentar tus respuestas durante el debate en clase. Prepárate para aportar experiencias prácticas o ejemplos concretos obtenidos mediante la interacción con la IA.
 
