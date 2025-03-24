@@ -1,82 +1,79 @@
-﻿# Laboratorio 11: Sistema de Ventas con IA (Copilot) 🤖
+﻿# Laboratorio 11: Event Handling Básico en JavaScript
 
-## Descripción
-En este laboratorio, reconstruirás el sistema de ventas utilizando IA como herramienta principal de desarrollo. 
-El objetivo es aprender a colaborar efectivamente con IA mientras repasamos y aplicamos los conceptos de POO vistos en las clases anteriores, mientras profundizamos nuestros conocimientos sobre el DOM.
+¡Bienvenido al laboratorio 11 del proyecto integrador **Editor Avanzado de Markdown en Vivo**! En este laboratorio profundizaremos en la captura y gestión básica de eventos utilizando JavaScript puro para crear una interfaz dinámica e interactiva, mejorando significativamente la experiencia del usuario.
 
 ## 🎯 Objetivos de Aprendizaje
-- Aprender a trabajar con un copiloto de IA.
-- Abordar un nuevo proyecto desde la perspectiva de un desarrollador/arquitecto.
-- Validar y mejorar código generado por IA
-- Profundizar en el entendimiento del DOM.
-    - El objeto "document"
-    - Elementos de HTML como objetos
 
-## 🚀 Setup Inicial
-1. Nuevo repositorio en Github: `sales-system`
+1. Capturar eventos básicos del DOM usando JavaScript puro.
+2. Implementar manejadores de eventos que modifiquen el DOM dinámicamente.
 
-2. Estructura del Proyecto
+## 🔑 Conceptos Clave
+
+1. **Event Listener:** Método para registrar eventos en elementos específicos.
+2. **Event Object:** Objeto generado automáticamente por el navegador que contiene información sobre el evento ocurrido.
+3. **Callback:** Función que se ejecuta en respuesta a un evento registrado, gestionando dinámicamente los cambios en la interfaz.
+
+## ⚙️ Setup Inicial
+
+1. **Repositorio**  
+   - Continúa usando tu repositorio existente: `markdown-editor`.  
+   - Crea una nueva rama para esta clase llamada `lab11-event-handling`.
+
+2. **Archivos y estructura inicial**
+
+Tu proyecto debe seguir esta estructura:
 ```
-sales-system/
+markdown-editor/
 ├── index.html
 ├── css/
-│   └── styles.css
+│ └── styles.css
 ├── js/
-│   ├── models/
-│   │   ├── Product.js
-│   │   ├── Customer.js
-│   │   └── Sale.js
-│   └── app.js
+│ └── app.js
 └── README.md
 ```
 
+3. **Contenido base:**
+- Asegúrate de tener una estructura HTML semántica clara (`header`, `main`, `footer`).
+- Continúa usando Tailwind CSS o CSS propio para el diseño.
+
 ## 📋 Historias de Usuario
 
-### HU 1: Gestión de Productos
-Como vendedor, necesito registrar nuevos productos en el sistema para mantener un catálogo actualizado.
-- Registrar nombre, precio y stock inicial
-- Ver el listado de productos registrados
-- Actualizar el stock de los productos.
+### HU1: Mostrar Preview al Escribir
+> *"Como usuario, quiero que la vista previa del Markdown se actualice automáticamente mientras escribo en el editor, sin necesidad de pulsar un botón adicional."*
 
-### HU 2: Gestión de Clientes
-Como vendedor, necesito registrar los datos de mis clientes para darles seguimiento.
-- Registrar nombre y email del cliente
-- Ver el listado de clientes registrados
-- Actualizar el email de mis clientes.
+- **Checkpoint 1 (30 min):**  Actualización automática del preview al escribir.
+- **Criterios de Aceptación:**
+  - La vista previa se actualiza automáticamente cada vez que se escribe o modifica texto en el editor.
+  - No debe requerir interacción adicional (botones o clics).
 
-### HU 3: Registro de Ventas
-Como vendedor, necesito registrar nuevas ventas en el sistema.
-- Seleccionar un cliente existente
-- Agregar múltiples productos con sus cantidades
-- Ver el total de la venta calculado automáticamente
-- Confirmar la venta solo si hay stock suficiente
+### HU2: Botón Limpiar Editor
+> *"Como usuario, necesito un botón para limpiar rápidamente todo el contenido del editor y la vista previa generada, facilitando empezar un nuevo documento desde cero."*
 
-### HU 4: Actualización Automática
-Como vendedor, necesito que el sistema se actualice automáticamente:
-- El stock de productos debe reducirse al confirmar una venta
-- El contador de compras del cliente debe incrementarse
-- La lista de ventas debe actualizarse en tiempo real
+- **Checkpoint 2 (60 min):** Botón de limpiar editor funcionando correctamente.
+- **Criterios de Aceptación:**
+  - Al hacer clic en el botón "Limpiar", tanto el editor como la vista previa deben quedar vacíos inmediatamente.
 
-## 💡 Pasos sugeridos de Implementación
+### HU3: Contador dinámico de palabras y caracteres
+> *"Como usuario, deseo visualizar en tiempo real el conteo de palabras y caracteres escritos en el editor, permitiéndome mantener control sobre la extensión del texto."*
 
-1. Configurar Copilot en VS Code.
+- **Checkpoint 3 (90 min):**  Contador dinámico de palabras y caracteres operativo.
+- **Criterios de Aceptación:**
+  - El contador se actualiza en tiempo real mostrando palabras y caracteres mientras el usuario escribe.
 
-2. Detallar los objetivos del proyecto y las características técnicas en el archivo README.md
-    - Modelos: Atributos de cada modelo de datos (Product, Customer, Sale).
-    - DOM: Métodos o acciones a implementar en el prototipo de cada modelo.
-    - UI: Los elementos presentes en la Interfaz de la aplicación.
+## 🌟 Logros Adicionales (Opcionales)
 
-3. Escribir un primer Prompt en el chat de Copilot y probar los 2 modelos disponibles.
+### Logro 1: Menú desplegable para elegir temas (light/dark)
+> *"Como usuario, quiero seleccionar desde un menú desplegable un tema claro u oscuro para mejorar mi experiencia visual mientras trabajo."*
 
-4. Afinar el prompt para que tu copiloto de IA te brinde la solución más cercana a tu expectativa.
+## 📝 Instrucciones de Entrega
 
-5. Realizar commits frecuentes, por cada funcionalidad nueva o corregida.
+1. **Mezcla de Ramas**  
+   - Genera un Pull Request de tu nueva rama hacia `main`.
+   - Mezcla las ramas.
 
-5. Probar el funcionamiento de la solución.
+2. **Despliegue**  
+   - Actualiza tu versión en GitHub Pages.
 
-6. Desplegar tu aplicación en Github pages.
-
-## Instrucciones de Envío
-- Agrega al README un encabezado:
-    - ¿Qué es el DOM? (con la mejor explicación que has logrado obtener de la IA)
-- Comparte el link del repositorio y el de tu sitio desplegado
+3. **Entrega Final**  
+   - URL del repositorio
+   - URL del proyecto desplegado
