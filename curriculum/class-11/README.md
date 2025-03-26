@@ -13,8 +13,8 @@ En la Clase 11 exploramos cómo capturar y gestionar eventos básicos en JavaScr
 
 ## Estructura sugerida
 
-| **Fase**                       | **Duración** | **Descripción**                                                                                |
-|--------------------------------|--------------|------------------------------------------------------------------------------------------------|
+| **Fase** | **Duración** | **Descripción** |
+|---------|--------------|------------|
 | **1. Ejercicio de Descubrimiento** | 20 min       | Actividad práctica para descubrir y activar conocimientos previos sobre eventos en JavaScript. |
 | **2. Debate y Demo Técnica**   | 30 min       | Discusión guiada sobre listeners, objeto evento y callbacks, combinada con demostraciones prácticas en vivo. |
 | **3. Laboratorio**             | 100 min      | Desarrollo de funcionalidades interactivas con validación en checkpoints:                      |
