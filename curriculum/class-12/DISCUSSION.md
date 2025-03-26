@@ -1,30 +1,26 @@
-# Read 12: Manipulando el DOM
+# Debate 12
 
-## Reflexiona y debate
+## 🎯 Objetivos de la Preparación para el Debate
+Esta discusión busca que los estudiantes:
+1. **Identifiquen los fundamentos de las Promesas y la asincronía en JavaScript**, comprendiendo las ventajas de no bloquear la UI y cómo orquestar múltiples tareas en paralelo o secuencia.
+2. **Reflexionen sobre la importancia del manejo de excepciones (try/catch)** para garantizar la estabilidad del flujo asíncrono y ofrecer retroalimentación adecuada al usuario.
 
-A continuación se muestra una colección de recursos que describen los temas de la clase.
+## 🔑 Conceptos Clave a profundizar
+- **Promesa**: Objeto que representa la finalización (o falla) de una operación asíncrona, con sus métodos (`then()`, `catch()`, `finally()`).
+- **Asincronía**: Capacidad de ejecutar tareas prolongadas sin congelar la interfaz principal, devolviendo el control a la aplicación mientras se procesan operaciones en segundo plano.
+- **Manejo de Excepciones (try/catch)**: Técnica fundamental para capturar escenarios inesperados y actuar sin detener todo el flujo asíncrono, informando con claridad al usuario.
 
-Revisa estos recursos y agrega una nueva entrada a este foro que resuma los temas que aprendiste como si estuvieras presentando el material a un amigo **(sin conocimientos técnicos)** interesado en aprender sobre esto.
+## 🔍 Prompt para preparar con la IA
+Utiliza tu herramienta de IA favorita (ChatGPT, Claude, u otra) y prueba el siguiente prompt. En lugar de pedir soluciones concretas, busca claridad en los conceptos y fundamentos:
 
-### Lectura
-La lectura de este artículo es obligatoria.
-* [Modificando el Documento](https://es.javascript.info/modifying-document){:target="_blank"}
+> Estoy estudiando los conceptos fundamentales de software con Javascript y recién iniciaré a estudiar sobre las promesas y la asincronia. Estoy construyendo un Editor de Markdown que debe leer archivos de forma asíncrona y exportar su contenido sin bloquear la aplicación. Quiero entender por qué la asincronía es clave en este flujo, qué beneficios ofrecen las Promesas frente a callbacks tradicionales, y cómo el bloque try/catch me ayuda a controlar posibles fallos. Además, me interesa la diferencia entender cómo usar .then() y .catch().
 
-### Recursos Extra
-Siempre es bueno tener a la mano estos recursos, sobre todo para realizar tu laboratorio.
-* [Formularios y Controles](https://es.javascript.info/forms-controls){:target="_blank"}
+## 🧠 Reflexiones para analizar críticamente
 
-## Responde
-1. ¿Cuáles son los diferentes métodos para crear elementos DOM en JavaScript? Explica las diferencias entre `createElement()`, `cloneNode()` y crear elementos usando `innerHTML`.
-2. ¿Cómo se agregan elementos al DOM? Describe las diferencias entre `appendChild()`, `insertBefore()` y `insertAdjacentElement()`.
-3. Cuando trabajas con tablas en JavaScript, ¿cuáles son las propiedades y métodos más importantes que debes conocer? Proporciona ejemplos de cómo crear una tabla dinámicamente.
-4. ¿Cómo puedes acceder y manipular los datos de un formulario usando JavaScript? Explica cómo validar datos de formulario antes de enviarlos.
+1. **¿De qué manera las Promesas contribuyen a que la experiencia de usuario sea fluida y evite bloqueos, en comparación con un enfoque sincrónico?**  
+2. **¿Cómo influye la claridad con que manejamos excepciones en la mantenibilidad y confiabilidad del proyecto?**  
+3. **¿En qué escenarios sería más conveniente utilizar `async/await` frente a `then()/.catch()`, y qué implicaciones tiene para la legibilidad del código?**  
+4. **¿Qué pasa si no proporcionamos feedback al usuario mientras se lee un archivo grande o se exporta un documento largo a PDF?**  
+5. **¿Cómo afectan las buenas prácticas de asincronía (spinners, mensajes de error) a la percepción de robustez del Editor de Markdown?**  
 
-## Instrucciones de envío
-* Agrega las preguntas y respuestas de esta actividad a tu archivo `read12.md` en tu directorio `201` de tu respositorio `reading-notes`. Recuerda seguir utilizando markdown y tu mejor criterio para estructurar el contenido.
-* Agrega en la **Respuesta** a esta actividad:
-    * El enlace de tu repositorio publicado en **GitHub Pages**.
-    * Y también, las respuestas que desarrollaste.
-* Una vez enviada tu respuesta, revisa las respuestas de tus compañeros. Escoge la que te haya parecido más útil y agrégale un comentario positivo (recuerda que esta es una actividad de foro).
-
-
+> **Instrucción:** Ejecuta el prompt con la IA, revisa las respuestas y compáralas con tus conocimientos. Reflexiona: ¿qué ideas principales sobre asincronía y manejo de excepciones reafirman tus lecturas? ¿Qué nuevas preguntas emergen para debatir en clase? Lleva ejemplos concretos y comentarios al aula para debatir en vivo.

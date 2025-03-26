@@ -1,186 +1,99 @@
-# Laboratorio 12: Mejorando la Interfaz con DOM Avanzado 🎨
+# Laboratorio 12: Manejo de Promesas en el Editor Markdown
 
-## Descripción
-En este laboratorio, mejorarás la interfaz de usuario del sistema de ventas implementando patrones avanzados de manipulación del DOM. Aprenderás a crear interfaces dinámicas y eficientes utilizando características modernas de Bootstrap y JavaScript.
+¡Bienvenido al **laboratorio 12** de tu proyecto integrador! En este paso, implementaremos operaciones asíncronas usando Promesas y la instrucción try/catch para robustecer aún más tu editor de Markdown. Tu objetivo es manejar carga de archivos, transformación del contenido y exportación a PDF sin bloquear la aplicación ni exponerla a fallas críticas.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar interfaces dinámicas usando manipulación avanzada del DOM
-- Utilizar atributos data- y la propiedad dataset para manejar datos en elementos HTML
-- Implementar formularios modales con Bootstrap Offcanvas
-- Crear funciones de búsqueda y ordenamiento para tablas
 
-## 🚀 Setup Inicial
+1. **Comprender el concepto de Promesas en JavaScript**  
+   - Explorar qué son, cómo funcionan y su relevancia para procesar tareas que toman tiempo sin bloquear la interfaz.  
+   - Reconocer en qué escenarios resulta más conveniente usarlas respecto a callbacks tradicionales.
 
-### 1. Preparación del Repositorio
-```bash
-git checkout -b lab-12-ui
-```
+2. **Gestionar operaciones asíncronas y su flujo**  
+   - Encadenar y controlar promesas para orquestar varias acciones en secuencia.  
+   - Emplear `try/catch` o `.catch()` para detectar y manejar excepciones de manera no bloqueante.
 
-### 2. Estructura de Archivos
-```
-sales-system/
-├── index.html
-├── css/
-│   └── styles.css
-└── js/
-    ├── models/
-    │   ├── Product.js  (ya existe)
-    │   ├── Customer.js (ya existe)
-    │   └── Sale.js     (ya existe)
-    └── app.js
-```
+## 🔑 Conceptos Clave
 
-### 3. Aprendiendo con IA
-Para este laboratorio, necesitarás entender mejor los atributos data- y el dataset. Usa un prompt similar a este:
+1. **Promesa**  
+   Objeto que representa el resultado pendiente de una operación asíncrona, junto con métodos (`then()`, `catch()`, `finally()`) para manejar su resolución o rechazo.
 
-```
-Soy estudiante de desarrollo web y necesito entender:
+2. **Asincronía**  
+   Estrategia que permite a JavaScript realizar tareas que toman tiempo (lecturas de archivos, transformaciones) sin interrumpir la experiencia del usuario.
 
-1. ¿Qué son los atributos data- en HTML?
-2. ¿Cómo acceder a ellos usando dataset en JavaScript?
-3. ¿Cuáles son las mejores prácticas para usar data- en tablas dinámicas?
+3. **Manejo de Excepciones (try/catch)**  
+   Bloques que encapsulan el código con potencial de fallo, permitiendo capturar excepciones para tratarlas o informar al usuario adecuadamente.
 
-Mi conocimiento actual incluye:
-- Manipulación básica del DOM
-- Eventos en JavaScript
-- Bootstrap 5
-```
+## ⚙️ Setup Inicial
 
-## 📋 Historias de Usuario
+1. **Repositorio**  
+   - Continúa trabajando en tu repositorio del editor de Markdown.  
+   - Crea una rama nueva llamada `lab12-promesas`.
 
-### HU1: Visualización en Tablas
-Como usuario, necesito ver los datos organizados en tablas que me permitan:
-- Buscar registros fácilmente
-- Ordenar por columnas
-- Ver claramente las acciones disponibles (editar/eliminar)
+2. **Estructura de Archivos**  
+   Tu proyecto debe mantener la misma organización establecida:  
+   ```bash
+    markdown-editor/
+    ├── index.html
+    ├── css/
+    │ └── styles.css
+    ├── js/
+    │ └── app.js
+    └── README.md
+   ```
+3. **Configuración Base**  
+   - Verifica que la lógica previa (parser, preview, etc.) siga funcionando.  
+   - No introduzcas otros recursos (API externas, storage) aún; céntrate en Promesas y try/catch.
 
-### HU2: Formularios en Offcanvas
-Como usuario, necesito que los formularios:
-- Se abran en un panel lateral
-- No interrumpan la visualización de la tabla
-- Se limpien al cerrarse
+## 🏆 Historias de Usuario
 
-## ✅ Instrucciones
+1. **HU1: Carga de Archivo Local con FileReader**  
+   > *"Como usuario, deseo seleccionar un archivo `.md` desde mi equipo y cargarlo en el editor de forma asíncrona."*  
+   - **Criterios de Aceptación**:  
+     - Uso de la API FileReader envuelta en una promesa.  
+     - Indicador de “Cargando…” mientras se procesa el archivo.  
+     - Actualización del editor (y preview) al resolver la promesa.  
+     - Manejo de excepción ante lectura fallida (archivo inválido).
 
-### 1. HTML Base
+   - **[30'] Checkpoint 1:** Validación de la funcionalidad de **carga de archivo** con FileReader.
 
-```html
-<!-- Tabla de Productos (ejemplo) -->
-<div class="table-container">
-    <!-- Barra de búsqueda -->
-    <div class="toolbar">
-        <input type="search" 
-               class="form-control w-25" 
-               data-table="products"
-               placeholder="Buscar...">
-        
-        <button class="btn btn-primary" 
-                data-bs-toggle="offcanvas" 
-                data-bs-target="#productForm">
-            Nuevo Producto
-        </button>
-    </div>
+2. **HU2: Transformación con Manejo de Excepciones**  
+   > *"Como usuario, quiero que la transformación Markdown → HTML maneje excepciones sin detener la aplicación, avisándome si hay sintaxis inválida."*  
+   - **Criterios de Aceptación**:  
+     - Lógica de transformación presentada como promesa o simulada asíncronamente.  
+     - Bloque try/catch (o `.catch()`) para gestionar excepciones durante el parse.  
+     - Mensaje de excepción no bloqueante en la UI.  
+     - Notificación de éxito si todo procede bien. 
 
-    <!-- Tabla -->
-    <table class="table" id="productsTable">
-        <thead>
-            <tr>
-                <th data-sort="name">Nombre</th>
-                <th data-sort="price">Precio</th>
-                <th data-sort="stock">Stock</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+   - **[60'] Checkpoint 2:** Verificación de la **transformación con manejo de excepciones** en la lógica .
 
-<!-- Formulario en Offcanvas -->
-<div class="offcanvas offcanvas-end" id="productForm">
-    <div class="offcanvas-header">
-        <h5>Nuevo Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <form id="productFormContent">
-            <input type="hidden" name="id">
-            <!-- campos del formulario -->
-        </form>
-    </div>
-</div>
-```
+3. **HU3: Exportar el Documento a PDF**  
+   > *"Como usuario, quiero poder exportar el contenido renderizado a un archivo PDF de forma asíncrona, recibiendo notificaciones de progreso y error."*  
+   - **Criterios de Aceptación**:  
+     - Botón “Exportar a PDF” que dispara la operación (simulada o real) retornando una promesa.  
+     - Indicador de “Exportando…” mientras dure el proceso.  
+     - Si la promesa se resuelve, descarga o muestra el PDF.  
+     - Manejo de excepción con mensaje al usuario (“No se pudo generar el PDF”).
 
-### 2. CSS Necesario
+   - **[90'] Checkpoint 3:** Revisión de la **exportación a PDF** de forma asíncrona.
 
-```css
-/* Estilos para las tablas */
-.table-container {
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
 
-/* Indicador de ordenamiento */
-.table th[data-sort] {
-    cursor: pointer;
-    position: relative;
-}
+## 🌟 Logros Adicionales
 
-.table th[data-sort]::after {
-    content: '↕';
-    margin-left: 5px;
-    opacity: 0.5;
-}
+1. **Logro 1: Emular tiempos de carga variables**  
+   - Usa un retraso aleatorio (con `setTimeout`) para simular distintas duraciones de lectura o exportación, probando la robustez de la UI.
 
-.table th.sort-asc::after {
-    content: '↑';
-    opacity: 1;
-}
+2. **Logro 2: Botón Cancelar Operación**  
+   - Implementa una forma rudimentaria de cancelar la operación asíncrona, deshabilitando el botón “Exportar” o “Cargar” y mostrando un aviso de anulación.
 
-.table th.sort-desc::after {
-    content: '↓';
-    opacity: 1;
-}
-```
+## 📝 Instrucciones de Entrega
 
-### 3. Event Listeners
+1. **Documentación en README**  
+   - Explica cómo usaste las promesas o el bloque try/catch en cada historia de usuario.  
+   - Añade capturas de pantalla de los mensajes de “cargando…” y de error.
 
-```javascript
-// Búsqueda en tiempo real
-document.querySelectorAll('input[data-table]').forEach(input => {
-    input.addEventListener('input', (e) => {
-        const tableId = e.target.dataset.table + 'Table';
-        // Crear la función searchTable utilizando dataset para obtener el contenido concatenado de cada row.
-        // searchTable(tableId, e.target.value); 
-    });
-});
+2. **Despliegue**  
+   - Fusiona tu rama `lab12-promesas` a `main` y actualiza la versión desplegada en GitHub Pages (o la plataforma que uses).
 
-// Ordenamiento por columnas
-document.querySelectorAll('th[data-sort]').forEach(th => {
-    th.addEventListener('click', (e) => {
-        const column = e.target.dataset.sort;
-        const currentDir = e.target.classList.contains('sort-asc') 
-            ? 'desc' 
-            : 'asc';
-            
-        // Actualizar estados de ordenamiento
-        document.querySelectorAll('th').forEach(el => 
-            el.classList.remove('sort-asc', 'sort-desc')
-        );
-        e.target.classList.add(`sort-${currentDir}`);
-        
-        // Ordenar tabla
-        const tableId = e.target.closest('table').id;
-        // Crear la función sortTable
-        // sortTable(tableId, column, currentDir);
-    });
-});
-```
-
-## Instrucciones de Envío
-- Crea un Pull Request desde `lab-12-ui` a `main`
-- En el PR incluye:
-  - Capturas de la nueva interfaz
-  - Ejemplos de búsqueda y ordenamiento funcionando
-- Comparte el link del PR y del sitio desplegado
+3. **Entrega Final**  
+   - URL del repositorio.  
+   - URL del sitio desplegado.
