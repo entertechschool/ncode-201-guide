@@ -55,11 +55,11 @@
 - **Presentación del Proyecto Integrador** (180 min, demo)
 
 #### Subtemas complementarios:
-- Regex (Expresiones Regulares).
-- Librerías Externas (importadas vía CDN).
-- Técnicas de Depuración.
-- Try - Catch.
-- Principio DRY (Don't repeat your self).
+- Regex (Expresiones Regulares)
+- Librerías Externas (importadas vía CDN)
+- Técnicas de Depuración
+- Try - Catch
+- Principio DRY (Don't repeat your self)
 
 > #### Proyecto Integrador: **Editor de Markdown en vivo**
 > El proyecto consiste en desarrollar un Editor de Markdown con vista previa en tiempo real, donde los estudiantes implementarán la manipulación dinámica del DOM para reflejar los cambios de formato, organizarán la lógica de transformación mediante funciones y callbacks, controlarán los eventos (por ejemplo, al teclear o cargar un archivo) para refrescar la interfaz al instante, y finalmente incorporarán una gestión efectiva de excepciones para realizar importaciones o exportaciones de contenido previniendo posibles errores, cubriendo así todos los temas fundamentales del Módulo 3.
@@ -79,6 +79,22 @@
 15. **JSON y LocalStorage** (180 min, blend)
 16. **Persistencia y Sincronización** (180 min, blend)
 - **Presentación del Proyecto Integrador** (180 min, demo)
+
+#### Subtemas complementarios:
+- Estado una aplicación
+- Mutabilidad vs Inmutabilidad
+- Serialización y Deserialización
+- Operador ternario
+
+> #### Proyecto Integrador: **Gestor de Plantillas para WhatsApp**
+> Este proyecto consiste en desarrollar una aplicación web interactiva para gestionar plantillas personalizadas destinadas a facilitar la atención rápida y efectiva de clientes o usuarios a través de WhatsApp. La aplicación permitirá crear, editar, eliminar y consultar fácilmente las plantillas guardadas, ofreciendo funcionalidades avanzadas como filtrado rápido mediante hashtags relacionados. Se utilizarán técnicas avanzadas de gestión del estado centralizado, persistencia de datos mediante JSON y LocalStorage, y una interfaz responsiva diseñada para maximizar la usabilidad tanto en escritorio como en dispositivos móviles.
+>
+> **Características clave**:
+> - Creación, edición y eliminación (CRUD) intuitiva de plantillas.
+> - Filtrado rápido de plantillas por hashtags (#ventas, #soporte, #preguntas).
+> - Persistencia robusta en LocalStorage, asegurando continuidad del trabajo.
+> - Interfaz clara, simple y altamente responsiva.
+> - Copia rápida de contenido al portapapeles para facilitar el uso inmediato en WhatsApp Web.
 
 ### Módulo 5: Proyecto Real
 17. **Ideation + Research + Stories** (180 min, project)
