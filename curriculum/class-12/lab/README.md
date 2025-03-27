@@ -48,10 +48,10 @@
 
 1. **HU1: Carga de Archivo Local con FileReader**  
    > *"Como usuario, deseo seleccionar un archivo `.md` desde mi equipo y cargarlo en el editor de forma asíncrona."*  
-   - **Criterios de Aceptación**:  
-     - Uso de la API FileReader envuelta en una promesa.  
-     - Indicador de “Cargando…” mientras se procesa el archivo.  
-     - Actualización del editor (y preview) al resolver la promesa.  
+   - **Criterios de Aceptación**:
+     - Uso de la API FileReader envuelta en una promesa.
+     - Indicador de “Cargando…” mientras se procesa el archivo.
+     - Actualización del editor (y preview) al resolver la promesa.
      - Manejo de excepción ante lectura fallida (archivo inválido).
 
    - **[30'] Checkpoint 1:** Validación de la funcionalidad de **carga de archivo** con FileReader.
