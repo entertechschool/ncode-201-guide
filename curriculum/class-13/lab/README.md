@@ -1,143 +1,86 @@
-﻿# Laboratorio 13: Animaciones CSS en el Vote Tracker 🎯
+﻿# Laboratorio 13: Modelado de Objetos y Estado
 
-## Descripción
-En este laboratorio, iniciarás el desarrollo de una aplicación de votación (Vote Tracker) de productos de tecnología. Implementarás el layout de la interfaz y las animaciones CSS para mejorar la experiencia del usuario. Aprenderás a usar pseudo-selectores y transiciones mientras construyes una interfaz interactiva y atractiva.
-
-**Esta laboratorio se centra en la interfaz. En los siguientes laboratorios, te centrarás en las funcionalidades y la persistencia de datos**.
+¡Bienvenido al primer laboratorio del proyecto integrador **Gestor de Plantillas para WhatsApp**! En este laboratorio aprenderás a crear objetos utilizando la sintaxis moderna `class` en JavaScript y a gestionar estados locales y globales, preparándote para manejar aplicaciones más complejas de forma organizada.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar animaciones CSS usando pseudo-selectores y transiciones
-- Utilizar IA para generar y entender código CSS más complejo
-- Crear interfaces interactivas que respondan al comportamiento del usuario
 
-## 🚀 Setup Inicial
+1. Comprender y aplicar la sintaxis moderna de clases (`class`) en JavaScript como alternativa a las funciones constructoras, identificando claramente su equivalencia.
+2. Comprender el concepto de estado en aplicaciones, diferenciando claramente entre estado local y estado global.
 
-### 1. Preparación del Repositorio:
-- Crea un nuevo repositorio con el nombre `vote-tracker`
-- Clona el repositorio en tu local:
-```bash
-git clone [URL_REPOSITORIO]
-cd vote-tracker
-git checkout -b lab-13-animations
-```
+## 🔑 Conceptos Clave
 
-### 2. Estructura de Archivos
-```
-vote-tracker/
-├── index.html
-├── stats.html
-├── css/
-│   ├── reset.css
-│   └── styles.css
-├── js/
-│   ├── app.js
-│   └── Product.js
-└── README.md
-```
+- **Clases**
+- **Estado**
+- **Estado Local vs Estado Global**
 
-### 3. Layout
-- Utiliza una herramienta de IA para generar una interfaz responsiva con estas características:
-    - header: 10% del viewport
-        - Logo + navbar (Productos, Estadísticas)
-    - body: 80% del viewport
-        - Contenedor que envolverá a los productos que van a aparecer
-        - Distribución en columna hasta 400px, luego en fila
-    - footer: 10% del viewport
+## ⚙️ Setup Inicial
 
-### 4. Recursos
-- [Logo Vote Tracker](./assets/vote_tracker_logo.png){:target="_blank"}
-- [JSON de Productos](./assets/products.json){:target="_blank"}
+1. **Repositorio**
+   - Crea un nuevo repositorio llamado `whatsapp-templates` en GitHub y clónalo en tu máquina local.
 
-**Productos de muestra:**
-- [game_boy_color.png](./assets/game_boy_color.png){:target="_blank"}
-- [ipod_classic.png](./assets/ipod_classic.png){:target="_blank"}
-- [playstation_2.png](./assets/playstation_2.png){:target="_blank"}
+2. **Estructura de Archivos:**
+   ```
+   whatsapp-templates/
+   ├── index.html
+   ├── css/
+   │   └── styles.css
+   ├── js/
+   │   ├── app.js
+   │   └── models/
+   │       └── Template.js
+   └── README.md
+   ```
 
-## 📋 Historias de Usuario
+3. **Configuración Base:**
+   - En `index.html`, crea una estructura semántica básica (`header`, `main`, `footer`).
+   - En `styles.css`, establece estilos iniciales básicos.
 
-### HU1: Visualización de Productos
-Como usuario, necesito ver dos productos lado a lado para poder compararlos y elegir mi favorito:
-- Ver imágenes de igual tamaño
-- Tener indicadores visuales al pasar el mouse sobre cada producto
-- Ver una animación suave al seleccionar un producto
+## 🏆 Historias de Usuario
 
-### HU2: Feedback Visual
-Como usuario, necesito feedback visual claro cuando interactúo con la aplicación:
-- Ver cuál producto está seleccionado
-- Recibir confirmación visual al registrar mi voto
-- Ver transiciones suaves entre diferentes estados de la interfaz
+### HU1: Crear clase Template
+> *"Como desarrollador, quiero crear una clase `Template` utilizando la sintaxis moderna (`class`) en JavaScript, que tenga tres propiedades predefinidas (título, mensaje, hashtag) y dos propiedades adicionales definidas por mí, para representar consistentemente objetos plantilla."*
 
-## 🛠️ Requerimientos Técnicos
+- **Criterios de Aceptación:**
+  - Clase Template correctamente definida usando sintaxis `class`.
+  - Constructor inicializa al menos tres propiedades dadas (título, mensaje, hashtag) y dos adicionales elegidas por el desarrollador.
 
-### CSS
-1. Implementar al menos 3 pseudo-selectores diferentes:
-   - `:hover` para efectos al pasar el mouse
-   - `:active` para el estado de click
-   - `:nth-child()` para estilos alternados
+- **⏱️ Checkpoint 1 (30 min):**
+  🔍 **Validación:** Clase creada correctamente con las propiedades definidas.
 
-2. Crear transiciones para:
-   - Cambios de tamaño
-   - Cambios de opacidad
-   - Transformaciones (scale, etc)
+### HU2: Gestionar plantillas en estado global
+> *"Como desarrollador, quiero crear y gestionar múltiples plantillas en un array global para representar el estado global de la aplicación."*
 
-3. Usar variables CSS para:
-   - Colores principales
-   - Tiempos de transición
-   - Valores de transformación
+- **Criterios de Aceptación:**
+  - Existencia clara de un array global para almacenar plantillas.
+  - Funciones claras para añadir y eliminar plantillas del estado global.
 
-### JavaScript
-1. Agregar/remover clases para:
-   - Marcar elementos seleccionados
-   - Activar animaciones
-   - Gestionar estados de la interfaz
+- **⏱️ Checkpoint 2 (60 min):**
+  🔍 **Validación:** Array global funcional para añadir y eliminar plantillas.
 
-### Prompt Engineering
-Desarrollar prompts efectivos para:
-- Generar código CSS para animaciones específicas
-- Entender mejores prácticas de transiciones
-- Debuggear problemas de animación
+### HU3: Renderizar plantillas mostrando estado local y global
+> *"Como usuario, quiero visualizar en pantalla las plantillas con sus valores de estado local (ej. hashtags) y el estado global (lista general)."*
 
-## 🎨 Guía de Estilos
+- **Criterios de Aceptación:**
+  - Método `render` en Template muestra claramente el estado local.
+  - Función global de renderizado muestra claramente todas las plantillas almacenadas.
 
-### Variables CSS Requeridas
-```css
-:root {
-  /* Colores */
-  --primary-color: ...
-  --secondary-color: ...
-  --accent-color: ...
+- **⏱️ Checkpoint 3 (90 min):**
+  🔍 **Validación:** Renderización dinámica funcional, mostrando diferenciación clara entre estado local y global.
 
-  /* Transiciones */
-  --transition-fast: ...
-  --transition-normal: ...
-  --transition-slow: ...
-}
-```
+## 🌟 Logros Adicionales (Opcionales)
 
-### Elementos a Animar
-1. Contenedores de productos
-2. Botones de votación
-3. Mensajes de feedback
-4. Contador de los ciclos
+### HU4: Modo Grilla
+> "Como usuario, quiero tener la opción de ver las plantillas en forma de grilla o lista, con un estado adicional en la aplicación."
 
-## 🌟 Logros Adicionales
-1. Implementar animaciones personalizadas con @keyframes
-2. Crear un modo oscuro
+## 📝 Instrucciones de Entrega
 
-## 📝 Instrucciones de Envío
-1. Actualiza el README.md con:
-   - Descripción del proyecto
-   - Los valores de tus variables CSS
-   - La imagen del wireframe de tu layout (laptop y celular)
+1. **Documentación en README:**
+   - 👉 Descripción técnica de las propiedades y métodos de la clase `Template` implementada.
 
-2. Crea un Pull Request que incluya:
-   - Todos los cambios en la rama lab-13-animations
+2. **Despliegue:**
+   - Publica el proyecto actualizado en GitHub Pages.
 
-3. Despliega en GitHub Pages
-
-4. Entrega:
-   - URL del repositorio
-   - URL del sitio desplegado
-   - URL del Pull Request
-
+3. **Entrega Final:**
+   - URL del repositorio.
+   - URL del proyecto desplegado en GitHub Pages.
 

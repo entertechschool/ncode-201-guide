@@ -1,7 +1,7 @@
 # Debate 12
 
 ## 🎯 Objetivos de la Preparación para el Debate
-Esta discusión busca que los estudiantes:
+> Esta discusión busca que los estudiantes:
 1. **Identifiquen los fundamentos de las Promesas y la asincronía en JavaScript**, comprendiendo las ventajas de no bloquear la UI y cómo orquestar múltiples tareas en paralelo o secuencia.
 2. **Reflexionen sobre la importancia del manejo de excepciones (try/catch)** para garantizar la estabilidad del flujo asíncrono y ofrecer retroalimentación adecuada al usuario.
 

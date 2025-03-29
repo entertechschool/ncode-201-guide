@@ -74,13 +74,14 @@
 > - Exportar contenido generado en formato PDF
 
 ### Módulo 4: Estado y Persistencia
-13. **Modelado de Estado (Patrón Store)** (180 min, blend)
-14. **App State Management** (180 min, blend)
+13. **Modelado de Objetos y Estado** (180 min, blend)
+14. **App State Management (Patrón Store)** (180 min, blend)
 15. **JSON y LocalStorage** (180 min, blend)
 16. **Persistencia y Sincronización** (180 min, blend)
 - **Presentación del Proyecto Integrador** (180 min, demo)
 
 #### Subtemas complementarios:
+- Clases en Javascript (sintaxis moderna)
 - Estado una aplicación
 - Mutabilidad vs Inmutabilidad
 - Serialización y Deserialización
