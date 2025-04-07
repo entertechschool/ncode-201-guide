@@ -1,102 +1,94 @@
-﻿# Laboratorio 15: Persistencia Local en el Vote Tracker 💾
+﻿# Laboratorio 15: JSON y LocalStorage
 
-## Descripción
-En este laboratorio, implementarás la persistencia de datos en tu aplicación Vote Tracker utilizando LocalStorage y JSON. Aprenderás a mantener el estado de tu aplicación entre sesiones del navegador y a estructurar tus datos de manera eficiente.
+¡Bienvenido al Laboratorio 15 del proyecto integrador **Gestor de Plantillas para WhatsApp**! En este laboratorio aprenderás cómo persistir información usando JSON y LocalStorage, integrando estos conceptos al estado centralizado del proyecto, asegurando que las plantillas estén disponibles en todo momento.
+
+> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal a los 30, 45 y 60 minutos. Participa activamente para obtener feedback crítico y valioso.
 
 ## 🎯 Objetivos de Aprendizaje
-- Implementar persistencia de datos usando LocalStorage y JSON
-- Gestionar el estado (state) de una aplicación web
-- Mantener la integridad de los datos entre sesiones del navegador
 
-## 🧠 Conceptos Clave
-1. Estado de la Aplicación (App State)
-2. Serialización/Deserialización con JSON
-3. API del LocalStorage
-4. Patrones de persistencia de datos
-5. Manejo de errores en el almacenamiento local
+1. Serializar y deserializar objetos JavaScript utilizando JSON para almacenar y recuperar datos desde LocalStorage.
+2. Integrar técnicas de persistencia con el manejo del estado centralizado (Store).
+3. Aplicar operadores ternarios para simplificar validaciones en la persistencia de datos.
 
-## 🚀 Setup Inicial
+## 🔑 Conceptos Clave
 
-### Nueva Estructura de Archivos
-```
-vote-tracker/
-├── stats.html       <-- Nuevo
-├── js/
-│   ├── app.js
-│   ├── Product.js
-│   └── storage.js   <-- Nuevo
-```
+- **Serialización y Deserialización:** Convertir datos estructurados en texto plano (serialización) y recuperarlos nuevamente a su formato original (deserialización).
+- **LocalStorage (getItem, setItem, removeItem):** API del navegador para almacenar datos localmente de forma persistente en formato clave-valor.
+- **Mutabilidad vs Inmutabilidad:** Diferencia entre modificar directamente los datos existentes (mutabilidad) y generar nuevas copias para realizar cambios (inmutabilidad).
+- **Operador ternario:** Operador condicional simplificado que permite escribir sentencias if-else en una sola línea.
 
-### Control de Versiones
-```bash
-git checkout -b lab-15-persistence
-```
 
-## 📋 Historias de Usuario
+## ⚙️ Setup Inicial
 
-### HU1: Persistencia de Votos
-Como usuario, necesito que mis votos se mantengan entre sesiones para:
-- Ver mis votaciones anteriores al recargar la página
-- No perder el progreso de mis votaciones
+1. **Repositorio**
+   - Continúa usando tu repositorio existente del proyecto integrador `whatsapp-templates`.
+   - Crea una nueva rama `lab15-localstorage` para este laboratorio.
 
-### HU2: Resumen de Estadísticas
-Como usuario, necesito acceder a un resumen de todas mis votaciones para:
-- Ver el total de votos por producto
-- Identificar mis productos más y menos votados
+2. **Estructura de Archivos**
+   Asegura la siguiente organización:
+   ```
+   whatsapp-templates/
+   ├── index.html
+   ├── css/
+   │   └── styles.css
+   ├── js/
+   │   ├── app.js
+   │   └── store.js
+   │   └── persistence.js (nuevo)
+   │   └── models/
+   │       └── Template.js
+   └── README.md
+   ```
 
-### HU3: Gestión de Datos
-Como usuario, necesito poder gestionar mis datos guardados:
-- Reiniciar las votaciones si lo deseo
-- Ver cuándo fue mi última votación
+3. **Configuración Base**
+- Verifica que tu aplicación actualmente maneje CRUD básico en memoria (Store).
+- Asegúrate de enlazar el nuevo archivo `persistence.js` en tu `index.html`.
 
-## 🛠️ Requerimientos Técnicos
+## 🏆 Historias de Usuario
 
-### 1. Estructura del State
-Define la estructura del estado de la aplicación:
-- Productos y sus votos
-- Categorías y los votos asociados
+### HU1: Guardar Plantillas en LocalStorage
+> _"Como usuario, deseo que mis plantillas guardadas permanezcan disponibles después de recargar o cerrar la aplicación."_
 
-### 2. Módulo de Storage (storage.js)
-Implementa métodos para:
-- Guardar/Cargar el state
-- Validar datos del LocalStorage
-- Manejar errores de almacenamiento
-- Limpiar datos antiguos
+**Criterios de Aceptación:**
+- Implementar función `guardarPlantillas()` que serialice las plantillas del Store y las guarde en LocalStorage.
+- Llamar automáticamente a esta función tras cada acción CRUD (crear, editar o eliminar).
 
-### 3. Integración con Product.js
-Actualiza el constructor Product para:
-- Cargar votos previos al inicializar
-- Mantener sus datos sincronizados con LocalStorage
-- Validar la integridad de sus datos
+- **Checkpoint 1 (30 min):** Las plantillas se guardan correctamente en LocalStorage usando la serialización con JSON.
 
-### 4. Manejo de Errores
-Implementa manejo de casos como:
-- LocalStorage no disponible
-- Datos corruptos
+### HU2: Cargar Plantillas desde LocalStorage
+> _"Como usuario, quiero que al iniciar la aplicación se carguen automáticamente las plantillas previamente guardadas."_
 
-## ⭐️ Logros Adicionalesx 
+**Criterios de Aceptación:**
+- Implementar función `cargarPlantillas()` que lea los datos desde LocalStorage y los deserialice.
+- Manejar caso inicial donde LocalStorage esté vacío usando un operador ternario para inicializar adecuadamente el Store.
 
-1. **Exportación de Datos**
-- Permite exportar estadísticas en formato JSON
+- **Checkpoint 2 (60 min):** Las plantillas previamente guardadas se cargan correctamente al refrescar la aplicación; usando apropiadamente el operador ternario para simplificar el código.
 
-## 📤 Instrucciones de Envío
+### HU3: Eliminar Todas las Plantillas (Función Reset)
+> _"Como usuario, quiero un botón para eliminar todas las plantillas guardadas, tanto en el Store como en LocalStorage, para reiniciar fácilmente mi colección."_
 
-1. Actualiza el README.md con:
-   - Explicación del sistema de persistencia
-   - Estructura del state
-   - Diagrama del flujo de datos
+**Criterios de Aceptación:**
+- Crear función `resetearPlantillas()` que limpie el Store y LocalStorage.
+- Integrar botón "Eliminar Todo" en la interfaz.
 
-2. Crea un Pull Request que incluya:
-   - Capturas del LocalStorage funcionando
-   - Ejemplos de datos persistidos
-   - Tests de casos de error manejados
+- **Checkpoint 3 (90 min):** Validar la eliminación correcta en ambos lugares. Tener una confirmación visual inmediata tras realizar la acción.
 
-3. Despliega en GitHub Pages y verifica que:
-   - Los datos persisten entre recargas
-   - Las estadísticas se mantienen
-   - La limpieza de datos funciona
+## 🌟 Logros Adicionales (Opcionales)
 
-4. Entrega:
-   - URL del repositorio
-   - URL del sitio desplegado
-   - URL del Pull Request
+- **Logro 1: Mensajes de Retroalimentación Visual**
+  - Implementar mensajes dinámicos (toast notifications) confirmando acciones exitosas de persistencia.
+
+- **Logro 2: Validación Robusta de JSON**
+  - Validar robustamente los datos leídos desde LocalStorage, evitando fallos en caso de corrupción o modificación manual por parte del usuario.
+
+---
+
+## 📝 Instrucciones de Entrega
+
+1. **Despliegue**
+   - Mezcla tu rama hacia la rama `main`
+   - Publica los cambios realizados en GitHub Pages.
+
+2. **Entrega Final**
+   - URL del repositorio actualizado.
+   - URL del proyecto desplegado en GitHub Pages.
