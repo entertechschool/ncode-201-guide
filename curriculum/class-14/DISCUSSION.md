@@ -2,7 +2,7 @@
 
 ¡Bienvenido a la sesión de preparación para el debate del laboratorio **Gestor de Plantillas para WhatsApp**! Esta guía está diseñada para que llegues a clase con ideas claras sobre cómo estructurar el estado de una aplicación utilizando el patrón Store, y comprendas por qué la inmutabilidad es un principio clave en la gestión del estado.
 
-## 🌟 Objetivos del Debate
+## 🎯 Objetivos del Debate
 
 - Comprender qué es un **patrón de diseño** y por qué el patrón Store es una solución efectiva para gestionar el estado en aplicaciones web.
 - Analizar el concepto de **mutabilidad vs inmutabilidad** y su impacto directo en la confiabilidad y escalabilidad del código.
