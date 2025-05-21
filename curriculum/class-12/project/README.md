@@ -13,7 +13,7 @@ Este proyecto consolida todo lo aprendido durante el **Módulo 3: Aplicaciones W
 | **Lab 9: DOM como API de Objetos** | Crear la interfaz dinámica del editor, transformando contenido Markdown a HTML mediante manipulación avanzada del DOM y Regex. |
 | **Lab 10: Funciones y Callbacks en JavaScript** | Modularizar la transformación del contenido mediante funciones de orden superior y callbacks para formatear texto y generar listas automáticamente. |
 | **Lab 11: Event Handling Básico** | Mejorar la interactividad del editor implementando manejo dinámico de eventos como escritura, clics y actualización automática del contenido HTML. |
-| **Lab 12: Promesas en JavaScript** | Incorporar procesos asíncronos mediante promesas para importar y exportar contenido Markdown, mejorando la experiencia del usuario. |
+| **Lab 12: Excepciones en JavaScript** | Incorporar procesos asíncronos mediante promesas para importar y exportar contenido Markdown, mejorando la experiencia del usuario. |
 
 ## 🎯 Retos
 
