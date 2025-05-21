@@ -1,89 +1,82 @@
-# Laboratorio 12: Manejo de Promesas en el Editor Markdown
+# Laboratorio 12: Manejo de Excepciones en Javascript
 
-¡Bienvenido al **laboratorio 12** de tu proyecto integrador! En este paso, implementaremos operaciones asíncronas usando Promesas y la instrucción try/catch para robustecer aún más tu editor de Markdown. Tu objetivo es manejar carga de archivos, transformación del contenido y exportación a PDF sin bloquear la aplicación ni exponerla a fallas críticas.
+📘 Bienvenido al **laboratorio 12** de tu proyecto integrador. En esta sesión trabajaremos exclusivamente el manejo de **excepciones en operaciones de validación y transformación de texto Markdown**, sin depender de carga de archivos externos. El objetivo es robustecer el editor capturando errores en entradas erróneas o mal estructuradas por parte del usuario.
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. **Comprender el concepto de Promesas en JavaScript**  
-   - Explorar qué son, cómo funcionan y su relevancia para procesar tareas que toman tiempo sin bloquear la interfaz.  
-   - Reconocer en qué escenarios resulta más conveniente usarlas respecto a callbacks tradicionales.
+1. **Comprender el concepto de Excepciones en JavaScript**  
+   - Qué es una excepción, cuándo ocurre y cómo debe manejarse.  
+   - Su utilidad para anticipar fallas y brindar retroalimentación controlada.
 
-2. **Gestionar operaciones asíncronas y su flujo**  
-   - Encadenar y controlar promesas para orquestar varias acciones en secuencia.  
-   - Emplear `try/catch` o `.catch()` para detectar y manejar excepciones de manera no bloqueante.
+2. **Manejar validaciones con `try/catch` y `throw`**  
+   - Detectar entradas vacías, sintaxis mal estructurada o uso incorrecto de Markdown.  
+   - Lanzar errores personalizados que ayuden al usuario a corregir su contenido.
 
 ## 🔑 Conceptos Clave
 
-1. **Promesa**  
-   Objeto que representa el resultado pendiente de una operación asíncrona, junto con métodos (`then()`, `catch()`, `finally()`) para manejar su resolución o rechazo.
+1. **Excepción**  
+   Evento inesperado que interrumpe la ejecución normal del programa.
 
-2. **Asincronía**  
-   Estrategia que permite a JavaScript realizar tareas que toman tiempo (lecturas de archivos, transformaciones) sin interrumpir la experiencia del usuario.
+2. **try...catch**  
+   Estructura para capturar y manejar errores sin detener el flujo general de ejecución.
 
-3. **Manejo de Excepciones (try/catch)**  
-   Bloques que encapsulan el código con potencial de fallo, permitiendo capturar excepciones para tratarlas o informar al usuario adecuadamente.
+3. **throw**  
+   Herramienta para lanzar manualmente un error con un mensaje específico cuando se detecta una condición inválida.
 
 ## ⚙️ Setup Inicial
 
 1. **Repositorio**  
    - Continúa trabajando en tu repositorio del editor de Markdown.  
-   - Crea una rama nueva llamada `lab12-promesas`.
+   - Crea una rama nueva llamada `lab12-excepciones`.
 
-2. **Estructura de Archivos**  
-   Tu proyecto debe mantener la misma organización establecida:  
-   ```bash
-    markdown-editor/
-    ├── index.html
-    ├── css/
-    │ └── styles.css
-    ├── js/
-    │ └── app.js
-    └── README.md
+2. **Librería Marked**
+   - Enlaza marked vía CDN en tu index.html:
+   ```html
+   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
    ```
-3. **Configuración Base**  
-   - Verifica que la lógica previa (parser, preview, etc.) siga funcionando.  
-   - No introduzcas otros recursos (API externas, storage) aún; céntrate en Promesas y try/catch.
+   > Es importante importar la librería marked ANTES de tu script de lógica `app.js`
+
+
 
 ## 🏆 Historias de Usuario
 
-1. **HU1: Carga de Archivo Local con FileReader**  
-   > *"Como usuario, deseo seleccionar un archivo `.md` desde mi equipo y cargarlo en el editor de forma asíncrona."*  
-   - **Criterios de Aceptación**:
-     - Uso de la API FileReader envuelta en una promesa.
-     - Indicador de “Cargando…” mientras se procesa el archivo.
-     - Actualización del editor (y preview) al resolver la promesa.
-     - Manejo de excepción ante lectura fallida (archivo inválido).
+1. **HU1: Validación de entrada vacía**  
+   > "Como usuario, quiero recibir un mensaje si intento procesar Markdown sin haber escrito nada."
 
-   - **[30'] Checkpoint 1:** Validación de la funcionalidad de **carga de archivo** con FileReader.
+   - Criterios de aceptación:
+     - Validación con `if` dentro de `try`.
+     - `throw new Error("No se ingresó contenido")`.
+     - Mensaje claro mostrado en la interfaz.
+   
+   - **[30'] Checkpoint 1:** Validación de entrada vacía o inválida con `throw`.
 
-2. **HU2: Transformación con Manejo de Excepciones**  
-   > *"Como usuario, quiero que la transformación Markdown → HTML maneje excepciones sin detener la aplicación, avisándome si hay sintaxis inválida."*  
-   - **Criterios de Aceptación**:  
-     - Lógica de transformación presentada como promesa o simulada asíncronamente.  
-     - Bloque try/catch (o `.catch()`) para gestionar excepciones durante el parse.  
-     - Mensaje de excepción no bloqueante en la UI.  
-     - Notificación de éxito si todo procede bien. 
+2. **HU2: Validación de sintaxis Markdown mal formada**  
+   > "Como usuario, quiero que el sistema detecte si escribí encabezados o listas con errores."
 
-   - **[60'] Checkpoint 2:** Verificación de la **transformación con manejo de excepciones** en la lógica .
+   - Criterios de aceptación:
+     - Detección de patrones como `##Título`, `-elemento` sin espacio, etc.
+     - Lanzar errores con `throw` y capturarlos con `catch`.
+     - Mensajes descriptivos en UI sin detener el flujo.
+   
+   - **[60'] Checkpoint 2:** Manejo adecuado de errores durante la conversión con `marked()`.
 
-3. **HU3: Exportar el Documento a PDF**  
-   > *"Como usuario, quiero poder exportar el contenido renderizado a un archivo PDF de forma asíncrona, recibiendo notificaciones de progreso y error."*  
-   - **Criterios de Aceptación**:  
-     - Botón “Exportar a PDF” que dispara la operación (simulada o real) retornando una promesa.  
-     - Indicador de “Exportando…” mientras dure el proceso.  
-     - Si la promesa se resuelve, descarga o muestra el PDF.  
-     - Manejo de excepción con mensaje al usuario (“No se pudo generar el PDF”).
+3. **HU3: Manejo general de errores inesperados en la conversión**  
+   > "Como usuario, quiero que si hay un error interno durante la conversión, se me notifique sin que el editor se bloquee."
 
-   - **[90'] Checkpoint 3:** Revisión de la **exportación a PDF** de forma asíncrona.
+   - Criterios de aceptación:
+     - Envolver `marked()` en `try/catch`.
+     - Captura de errores con `console.error` + alerta visual o log en interfaz.
+   
+   - **[90'] Checkpoint 3:** Comunicación clara al usuario de errores capturados.
 
 
 ## 🌟 Logros Adicionales
 
-1. **Logro 1: Emular tiempos de carga variables**  
-   - Usa un retraso aleatorio (con `setTimeout`) para simular distintas duraciones de lectura o exportación, probando la robustez de la UI.
+1. **Logro 1: Simular errores intencionales**  
+   - Crear un botón que inyecte texto erróneo para probar el manejo de excepciones.
 
-2. **Logro 2: Botón Cancelar Operación**  
-   - Implementa una forma rudimentaria de cancelar la operación asíncrona, deshabilitando el botón “Exportar” o “Cargar” y mostrando un aviso de anulación.
+2. **Logro 2: Cancelar la conversión en caso de error**  
+   - Impedir ejecución de `marked()` si se detecta fallo previo.
 
 ## 📝 Instrucciones de Entrega
 
@@ -92,7 +85,7 @@
    - Añade capturas de pantalla de los mensajes de “cargando…” y de error.
 
 2. **Despliegue**  
-   - Fusiona tu rama `lab12-promesas` a `main` y actualiza la versión desplegada en GitHub Pages (o la plataforma que uses).
+   - Fusiona tu rama `lab12-excepciones` a `main` y actualiza la versión desplegada en GitHub Pages (o la plataforma que uses).
 
 3. **Entrega Final**  
    - URL del repositorio.  
