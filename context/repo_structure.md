@@ -63,7 +63,7 @@ ncode-201-guide/
 Para acceder eficientemente a los recursos:
 
 1. Determina primero el número de clase (01-20)
-2. Identifica el tipo de recurso (revisión general, guía de debate, laboratorio, slides)
+2. Identifica el tipo de recurso (revisión general o resumen o preparación, laboratorio, slides)
 3. Utiliza la estructura estandarizada para formar la ruta:
    - `curriculum/class-XX/README.md` para revisión general de la clase y guía de preparación
    - `curriculum/class-XX/lab/README.md` para laboratorio
