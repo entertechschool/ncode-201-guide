@@ -34,6 +34,7 @@ En la Clase 13 iniciamos el módulo sobre **Estado y Persistencia**, centrándon
 
 ### ➤ Recursos para investigar
 > **Usa este prompt para conversar con un modelo de IA y aclarar tus ideas:**
+
 ```
 Asume el rol de un mentor experimentado en desarrollo web que utiliza un enfoque socrático para enseñar. Estoy preparándome para un debate técnico sobre "Modelado de Objetos y Estado en JavaScript". Hasta ahora domino objetos con funciones constructoras y prototipos, pero ahora debo analizar críticamente las clases modernas en JavaScript.
 
