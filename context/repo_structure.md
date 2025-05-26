@@ -48,7 +48,7 @@ ncode-201-guide/
 │       ├── [estructura similar]
 ```
 
-## Convención de Nomenclatura
+### Convención de Nomenclatura
 
 - Las carpetas de clase siguen el formato: `class-XX` donde XX es el número de la sesión (del 01 al 12)
 - Los archivos principales tienen nombres estandarizados:
@@ -57,7 +57,8 @@ ncode-201-guide/
     - `lab/README.md`: Guía con las instrucciones específicas para el laboratorio
   - Carpeta `slides/`: Contiene materiales relacionados con los slides de moderación.
     - `slides/README.md`: Archivo de input que tiene el contenido de los slides generados por una aplicación hecha con "reveal.js"
-## Acceso Eficiente
+
+### Acceso Eficiente
 
 Para acceder eficientemente a los recursos:
 
@@ -68,7 +69,7 @@ Para acceder eficientemente a los recursos:
    - `curriculum/class-XX/lab/README.md` para laboratorio
    - `curriculum/class-XX/slides/README.md` para slides
 
-## Recursos Especiales
+### Recursos Especiales
 
 Es posible que existan recursos adicionales dentro de cada carpeta de clase, que pueden incluir:
 - Presentaciones
