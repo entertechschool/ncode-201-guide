@@ -44,13 +44,13 @@ ncode-201-guide/
 │   ├── class-02/
 │   │   ├── [estructura similar]
 ...
-│   └── class-12/
+│   └── class-20/
 │       ├── [estructura similar]
 ```
 
 ### Convención de Nomenclatura
 
-- Las carpetas de clase siguen el formato: `class-XX` donde XX es el número de la sesión (del 01 al 12)
+- Las carpetas de clase siguen el formato: `class-XX` donde XX es el número de la sesión (del 01 al 20)
 - Los archivos principales tienen nombres estandarizados:
   - `README.md`: Contiene la revisión general de la clase y guía de preparación para el estudiante
   - Carpeta `lab/`: Contiene materiales relacionados con el laboratorio práctico
