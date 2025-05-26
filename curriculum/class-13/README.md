@@ -1,4 +1,4 @@
-﻿📦 **Módulo 4:** Clase 13 de 16
+﻿> 📦 **Módulo 4:** Clase 13 de 16
 
 # Clase 13: Modelado de Objetos y Estado
 
@@ -18,6 +18,9 @@ En la Clase 13 iniciamos el módulo sobre **Estado y Persistencia**, centrándon
 | **2. Debate Técnico y Demo**    | 45 min       | Discusión crítica sobre ventajas y diferencias entre clases modernas (`class`) y funciones constructoras tradicionales. Análisis del estado local y global en aplicaciones web con demostración práctica.|
 | **3. Laboratorio Práctico**     | 100 min      | Implementación guiada de objetos utilizando clases (`class`), gestionando claramente estados locales y globales. Checkpoints estructurados a los 30, 60 y 90 minutos. |
 | **4. Síntesis y Proyección**    | 20 min       | Consolidación de aprendizajes, retroalimentación grupal y anticipación al próximo tema sobre gestión avanzada del estado.|
+
+---
+preparacion
 
 ---
 
