@@ -6,21 +6,56 @@
 
 En la Clase 13 iniciamos el módulo sobre **Estado y Persistencia**, centrándonos en el modelado de objetos utilizando la sintaxis moderna de clases en JavaScript y la diferenciación clara entre estado local y estado global. Esta clase integra tres elementos clave:
 
-1. **Guía de Lectura y Debate:** Preparación previa enfocada en reflexionar críticamente sobre las ventajas del uso de clases en JavaScript y la importancia de gestionar claramente el estado local y global.
-
-2. **Guía de Laboratorio:** Aplicación práctica donde los estudiantes crearon clases (`class`) para representar objetos del proyecto integrador, gestionando claramente sus estados locales y globales.
-
 ## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción** |
-|---------|--------------|------------|
-| **1. Refuerzo Práctico Inicial**| 15 min       | Ejercicio rápido para activar conocimientos previos sobre objetos y funciones constructoras.|
-| **2. Debate Técnico y Demo**    | 45 min       | Discusión crítica sobre ventajas y diferencias entre clases modernas (`class`) y funciones constructoras tradicionales. Análisis del estado local y global en aplicaciones web con demostración práctica.|
-| **3. Laboratorio Práctico**     | 100 min      | Implementación guiada de objetos utilizando clases (`class`), gestionando claramente estados locales y globales. Checkpoints estructurados a los 30, 60 y 90 minutos. |
-| **4. Síntesis y Proyección**    | 20 min       | Consolidación de aprendizajes, retroalimentación grupal y anticipación al próximo tema sobre gestión avanzada del estado.|
+|---------|--------------|-----------------|
+| **1. Refuerzo Práctico Inicial** | 30 min | Ejercicios rápidos para activar conocimientos previos sobre objetos y funciones constructoras. |
+| **2. Debate Técnico y Demo** | 20 min | Discusión crítica sobre ventajas y diferencias entre clases modernas (`class`) y funciones constructoras tradicionales. Análisis del estado local y global en aplicaciones web con demostración práctica. |
+| **Break** | 10 min | Descanso previo al laboratorio |
+| **3. Laboratorio Práctico** | 100 min | Implementación guiada de objetos utilizando clases (`class`), gestionando claramente estados locales y globales. Checkpoints estructurados a los 30, 60 y 90 minutos. |
+| **4. Síntesis** | 20 min | Consolidación de aprendizajes, retroalimentación grupal y anticipación al próximo tema sobre gestión avanzada del estado. |
 
----
-preparacion
+## 🧐 Preparación para la clase
+
+### ➤ Reflexiones a plantearse
+
+> Antes de llegar a clase, reflexiona sobre estas preguntas y apóyate de los recursos sugeridos o de herramientas de IA:
+
+1. ¿Por qué crees que JavaScript introdujo la sintaxis de clases modernas (`class`), considerando que anteriormente existían funciones constructoras?
+
+2. ¿En qué situaciones de tu vida diaria observas claramente la existencia de estados locales y globales?
+
+3. ¿Qué beneficios piensas que podría tener una aplicación que mantiene claramente diferenciados los estados locales y globales?
+
+4. ¿Puedes imaginar algún problema que surgiría si una aplicación utilizara únicamente un estado global para todo?
+
+5. ¿Cómo crees que la organización efectiva del estado puede facilitar la tarea de mantener y expandir aplicaciones web?
+
+### ➤ Recursos para investigar
+> **Usa este prompt para conversar con un modelo de IA y aclarar tus ideas:**
+```
+Asume el rol de un mentor experimentado en desarrollo web que utiliza un enfoque socrático para enseñar. Estoy preparándome para un debate técnico sobre "Modelado de Objetos y Estado en JavaScript". Hasta ahora domino objetos con funciones constructoras y prototipos, pero ahora debo analizar críticamente las clases modernas en JavaScript.
+
+TEMAS A EXPLORAR:
+1. Clases en JavaScript: funcionamiento interno y comparación con funciones constructoras
+2. Estado en aplicaciones web: concepto fundamental y tipos
+3. Estado local vs Estado global: diferencias, ventajas y desventajas
+
+INSTRUCCIONES DE INTERACCIÓN:
+1. Responde de manera concisa (máximo 4-5 líneas por respuesta)
+2. Proporciona SIEMPRE un ejemplo de código mínimo pero funcional
+3. Al final, SIEMPRE dame la opción de comprobar que estoy aprendiendo (con una pregunta sencilla) o de continuar al siguiente tema a explorar.
+4. Si te pido comparaciones, utiliza una tabla simple para contrastar conceptos
+
+RESTRICCIONES:
+- Limítate al JavaScript vanilla (ES6+) sin mencionar React, Angular u otros frameworks
+- No introduzcas conceptos avanzados que no estén directamente relacionados con el modelado de objetos y estado
+- Evita respuestas extensas; prefiero una conversación paso a paso donde pueda cuestionar cada concepto
+- Cuando llegues al último tema a explorar, ayudame a reflexionar final sobre todo lo aprendido.
+
+Comencemos con el tema 1: ¿Cómo funcionan internamente las clases en JavaScript y en qué se diferencian de las funciones constructoras tradicionales?
+```
 
 ---
 

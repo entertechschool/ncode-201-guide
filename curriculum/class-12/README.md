@@ -6,8 +6,6 @@
 
 En esta clase profundizaremos en el manejo de **excepciones en JavaScript**, desarrollando criterios sólidos para detectar, capturar y gestionar errores de forma estructurada. Se abordará el uso adecuado de `try`, `catch`, `finally` y `throw`, así como la creación de errores personalizados. Esta sesión prepara al estudiante para una interacción más consciente con los errores que surgen tanto en el desarrollo como en el uso de herramientas con IA, fortaleciendo su capacidad de depuración y resiliencia técnica.
 
----
-
 ## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción** |
