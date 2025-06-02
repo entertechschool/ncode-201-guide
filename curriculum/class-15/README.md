@@ -6,14 +6,41 @@
 
 En la clase 15 profundizamos en cómo utilizar **JSON y LocalStorage** para asegurar la persistencia robusta del estado en aplicaciones web. Aplicamos conceptos clave de serialización y deserialización de datos, integrando estas técnicas con un manejo centralizado del estado (Store). Además, fortalecimos la práctica de análisis crítico de código generado por inteligencia artificial (IA), explorando sus beneficios y limitaciones.
 
-## Estructura de la clase
+## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción** |
-| -------- | ------------ | ---------------- |
-| **Refuerzo Práctico Inicial** | 15 min | Ejercicios breves sobre estado centralizado (Store) y conceptos básicos de JSON. |
-| **Debate Técnico y Demo** | 45 min | Debate crítico sobre JSON y LocalStorage, incluyendo análisis en vivo de fragmentos generados por IA. Demo técnica de serialización y deserialización. |
-| **Laboratorio Práctico** | 100 min | Implementación hands-on de persistencia robusta en el proyecto integrador "Gestor de Plantillas para WhatsApp", con checkpoints específicos a los 30, 45 y 60 minutos. |
-| **Síntesis y Refuerzo** | 20 min | Resumen grupal, revisión crítica de implementaciones destacadas y preparación para próximos temas. |
+|---------|--------------|-----------------|
+| **1. Refuerzo Práctico Inicial** | 30 min | Ejercicios rápidos para activar conocimientos sobre el estado de una aplicación y el problema de la persistencia. |
+| **2. Debate Técnico y Demo** | 20 min | Debate crítico sobre JSON y LocalStorage. Demo técnica de serialización y deserialización. |
+| **Break** | 10 min | Descanso previo al laboratorio |
+| **3. Laboratorio Práctico** | 100 min | Implementación hands-on de persistencia en el navegador con JSON y LocalStorage en el proyecto integrador. |
+| **4. Síntesis** | 20 min | Consolidación de aprendizajes, retroalimentación grupal y revisión crítica de implementaciones destacadas |
+
+## 🧐 Preparación para la clase
+
+### ➤ Reflexiones a plantearse
+
+> Antes de llegar a clase, reflexiona sobre estas preguntas y apóyate de los recursos sugeridos o de herramientas de IA:
+
+1. Piensa en 2 situaciones en donde la persistencia de los datos en una aplicación web es imprescindible.
+
+2. ¿Cuáles son los métodos que tiene una aplicación web para guardar información (persistencia) en el lado del cliente (navegador)?
+
+3. ¿En qué situaciones es más conveniente almacenar información en LocalStorage comparado con otros métodos de almacenamiento persistente (como IndexedDB o bases de datos)?
+
+4. ¿Qué ventajas concretas tiene utilizar JSON como formato de almacenamiento en aplicaciones web modernas?
+
+5. ¿Por qué es importante aplicar técnicas de inmutabilidad en el manejo de datos del estado cuando trabajamos con persistencia?
+
+6. ¿Consideras adecuado el operador ternario en todos los casos de validación? ¿Cuándo podría reducir la claridad del código?
+
+### ➤ Recursos para investigar
+> **Usa este prompt para conversar con un modelo de IA y aclarar tus ideas:**
+
+> Eres un mentor experto en desarrollo web frontend. Me orientarás sabiendo que tengo conocimientos en formación sobre Javascript (Algoritmos, Estructuras de datos, DOM y gestión del estado). Quiero aprender sobre persistencia de datos en el navegador. ¿Cuáles son los métodos disponibles? ¿Cuál es el más utilizado? ¿Qué es JSON y porqué se utiliza por defecto? ¿Cómo me puede ayudar el operador ternario en la gestión de LocalStorage?
+INSTRUCCIONES: Dame respuestas concisas y muy bien planificadas. Con una secuencia coherente en cuanto a complejidad. Proporciona ejemplos muy simples con comentarios concisos. Hazme preguntas para validar mi aprendizaje antes de pasar a un siguiente concepto. 
+RESTRICCIONES: no profundices en ejemplos sobre métodos que no necesito aprender ahora, como sessionStorage, cookies, indexedDB.
+Empieza generando una tabla donde me especifiques la ruta que seguiremos y los 5 conceptos ordenados que vamos a aprender.
 
 ---
 
@@ -21,33 +48,37 @@ En la clase 15 profundizamos en cómo utilizar **JSON y LocalStorage** para aseg
 
 Al finalizar esta clase, los estudiantes podrán:
 
-### Podrán hacer
-1. **Persistencia de Estado con LocalStorage:**  
+1. **Configurar persistencia de Estado con LocalStorage:**  
    Guardar, cargar y eliminar datos de forma persistente usando JSON y LocalStorage, asegurando continuidad y robustez en aplicaciones web.
 
-2. **Integración con Estado Centralizado:**  
+2. **Implementar un Estado Centralizado:**  
    Vincular efectivamente la persistencia con el patrón de estado centralizado (Store), reflejando cambios inmediatos y automáticos en la interfaz de usuario.
 
-3. **Simplificación de Validaciones con Operador Ternario:**  
+3. **Simplificar validaciones usando el Operador Ternario:**  
    Usar operadores ternarios eficientemente para validaciones simples y asignaciones condicionales durante la persistencia de datos.
 
-### Podrán explicar
-1. **Serialización y Deserialización JSON:**  
+4. **Explicar la serialización y deserialización con JSON:**  
    El proceso técnico y las ventajas de convertir objetos JavaScript a formato JSON y viceversa para almacenamiento persistente.
 
-2. **Ventajas y Limitaciones del LocalStorage:**  
+5. **Comprender las ventajas y limitaciones del LocalStorage:**  
    Justificar el uso apropiado de LocalStorage, reconociendo escenarios ideales y limitaciones técnicas concretas.
 
-3. **Concepto de Inmutabilidad vs Mutabilidad en Persistencia:**  
-   Argumentar críticamente sobre por qué es preferible adoptar patrones inmutables al manejar datos persistentes en una aplicación frontend.
+---
 
-### Podrán implementar
-1. **Funciones de Persistencia:**  
-   Crear funciones robustas (`guardarPlantillas()`, `cargarPlantillas()`, `resetearPlantillas()`) integradas con el Store, asegurando que la información se mantenga correctamente tras acciones del usuario.
+## Glosario de nuevos términos
 
-2. **Manejo de Estado Inicial:**  
-   Cargar el estado inicial de una aplicación usando datos almacenados en LocalStorage, aplicando técnicas de deserialización y validación inicial con operadores ternarios.
+- **Persistencia de datos:** Capacidad de una aplicación para mantener datos guardados entre sesiones, evitando que se pierdan al cerrar o actualizar el navegador.
 
-3. **Validación Crítica de Código Generado por IA:**  
-   Identificar posibles errores, malas prácticas o mejoras en código generado por IA, optimizando y ajustando estas soluciones para una aplicación real.
+- **LocalStorage:** Mecanismo del navegador que permite almacenar datos de manera persistente (hasta que el usuario los borre), accesibles incluso tras recargar la página.
 
+- **JSON (JavaScript Object Notation):** Formato de texto ligero para estructurar datos. Se usa para enviar y guardar información entre cliente y servidor o en almacenamiento local. Muy legible y compatible con JavaScript.
+
+- **Serialización:** Proceso de convertir un objeto JavaScript en una cadena de texto (JSON) para poder almacenarlo o enviarlo.
+
+- **Deserialización:** Inversa de la serialización: convertir una cadena JSON de vuelta a un objeto JavaScript utilizable.
+
+- **Estado Centralizado (Store):** Patrón de diseño donde el estado de la aplicación se concentra en un único objeto fuente, facilitando control, trazabilidad y sincronización con la UI.
+
+- **Operador Ternario:** Forma concisa de hacer condicionales (`condición ? valorSiVerdadero : valorSiFalso`). Útil para simplificar asignaciones o decisiones rápidas.
+
+- **Inmutabilidad:** Principio de no modificar directamente estructuras de datos existentes, sino crear nuevas versiones modificadas. Facilita el control del estado y la depuración.

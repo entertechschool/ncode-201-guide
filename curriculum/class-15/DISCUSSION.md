@@ -35,7 +35,10 @@ Este debate te permitirá profundizar en el manejo de persistencia en aplicacion
 
 **Usa este prompt para conversar con un modelo de IA antes de la clase y fortalecer tus ideas:**
 
-> "Eres un experto en desarrollo web frontend. Explícame brevemente qué son JSON y LocalStorage, cómo funcionan juntos para persistir datos en aplicaciones web, y proporciona un ejemplo práctico con JavaScript mostrando claramente cómo guardar, recuperar y eliminar información. Incluye también consejos de buenas prácticas al usar LocalStorage."
+> Eres un mentor experto en desarrollo web frontend. Me orientarás sabiendo que tengo conocimientos en formación sobre Javascript (Algoritmos, Estructuras de datos, DOM y gestión del estado). Quiero aprender sobre persistencia de datos en el navegador. ¿Cuáles son los métodos disponibles? ¿Cuál es el más utilizado? ¿Qué es JSON y porqué se utiliza por defecto?
+INSTRUCCIONES: Dame respuestas concisas y muy bien planificadas. Con una secuencia coherente en cuanto a complejidad. Proporciona ejemplos muy simples con comentarios concisos. Hazme preguntas para validar mi aprendizaje antes de pasar a un siguiente concepto. 
+RESTRICCIONES: no profundices en ejemplos sobre métodos que no necesito aprender ahora, como sessionStorage, cookies, indexedDB.
+Empieza generando una tabla donde me especifiques la ruta que seguiremos y los 4 conceptos ordenados que vamos a aprender.
 
 Asegúrate de analizar críticamente la respuesta generada por la IA y compararla con tus conocimientos previos.
 
