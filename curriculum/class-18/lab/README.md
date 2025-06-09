@@ -19,6 +19,7 @@ En este laboratorio hacemos un punto de validación sobre el diseño estructural
 > Un Modelo de Dominio es una forma simple de representar las cosas importantes que existen en una aplicación y qué datos tiene cada una. Sirve para entender qué entidades (como usuarios, productos, reservas) necesitamos manejar, qué información tiene cada una, y cómo se relacionan con las acciones del usuario o del sistema.
 
 _Ejemplo:_
+
 ```md
 ## Entidad 1: Producto
 - **Descripción:** Elemento que se muestra en el catálogo de la tienda.
@@ -59,7 +60,7 @@ _Ejemplo:_
   * Funciones para actulizar el estado.
 
 _Ejemplo:_
->
+
 ```js
 function Producto(nombre, stock = 1) {
   this._nombre = nombre;
