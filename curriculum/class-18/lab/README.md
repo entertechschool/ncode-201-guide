@@ -84,7 +84,33 @@ function addProducto(producto) {
 * Validar con el instructor si el modelo refleja bien lo que la app necesita manejar.
 * Si usan herramientas visuales (como Figma o diagrams.net), pueden vincular la imagen en el `domain-model.md`.
 
-## 📝 Instrucciones de Envío
+Perfecto. Aquí tienes la sección **“Instrucciones de Entrega”** para agregar al laboratorio de la Clase 19:
+
+---
+
+## 📦 Instrucciones de Entrega
+
+Al finalizar el laboratorio, cada equipo debe subir un archivo llamado `demo-plan.md` en la raíz de su repositorio. Este archivo debe contener:
+
+### ✅ 1. Lista de funcionalidades clave
+
+Enumerar **3 funcionalidades principales** que debe mostrar el proyecto en la demo final. Para cada una incluir:
+
+* Nombre de la funcionalidad (ej. “Reservar cita”, “Agregar producto al carrito”).
+* Breve descripción de lo que permite al usuario hacer.
+
+### 🔧 2. Plan técnico de cierre
+
+Describir el plan de trabajo desde hoy hasta la presentación final, incluyendo:
+
+* ¿Qué queda pendiente por implementar o mejorar en cada funcionalidad?
+* ¿Quién se encargará de cada parte? (roles asignados)
+* ¿Qué herramientas o estrategias usarán para organizar el trabajo? (issues, GitHub Projects, reuniones, etc.)
+
+---
+
+¿Te gustaría que integre esto ya en un archivo `README.md` final del laboratorio de Clase 19 para cargarlo al repositorio?
+
 
 ### Entrega Individual
 1. Link al repositorio con:
