@@ -1,75 +1,78 @@
-﻿> 📦 **Módulo 1:** Clase 1 de 4
+﻿📦 **Módulo 1:** Clase 1 de 4
 
 # Clase 01: HTML5 Semántico y Accesibilidad
 
 ## Resumen
 
-En la Clase 01 se combinan tres recursos clave para consolidar los fundamentos de HTML5 semántico y accesibilidad web (A11y), así como el uso responsable de IA:
+En esta clase se introducen los fundamentos de **HTML5 semántico** y **accesibilidad web (A11y)**, estableciendo las bases para construir interfaces inclusivas desde el inicio del desarrollo. A través de una guía de lectura y debate, los estudiantes confrontan mitos comunes sobre la semántica, exploran buenas prácticas de accesibilidad y evalúan el rol de la inteligencia artificial como herramienta de soporte en estos procesos.
 
-1. **Guía de Lectura y Debate:** Actividad dirigida a los estudiantes, para que lleguen preparados para una discusión crítica sobre mitos y verdades de la semántica, la accesibilidad y la IA.
+Posteriormente, en el laboratorio, implementan una estructura web semántica accesible, utilizando etiquetas adecuadas, atributos ARIA, jerarquías de encabezado y prompts para refinar el código con IA.
 
-2. **Guía de Laboratorio:** Orientada a la práctica, impulsando la construcción de una estructura semántica sólida y la implementación de buenas prácticas de accesibilidad en una página web.
-
-3. **Guía de Facilitador (Instructor):** Contiene la estrategia didáctica para integrar teoría y práctica, promoviendo la participación activa y la retroalimentación inmediata.
+---
 
 ## Estructura sugerida
 
-| **Fase** | **Duración** | **Descripción** |
-| --- | --- | --- |
-| **1. Introducción** | 15 min | Contextualización y activación |
-| **2. Debate Conceptual** | 30 min | Discusión de mitos y verdades |
-| **3. Demo Técnica** | 20 min | Implementación guiada |
-| **4. Laboratorio** | 100 min | Desarrollo con 3 checkpoints: a los 30, 50 y 80 minutos (debate grupal y validación) |
-| **5. Cierre** | 15 min | Feedback y Conclusiones |
+| **Fase**                 | **Duración** | **Descripción**                                                                                        |
+| ------------------------ | ------------ | ------------------------------------------------------------------------------------------------------ |
+| **1. Introducción**      | 15 min       | Activación del tema a partir de ejemplos no accesibles y preguntas provocadoras sobre IA.              |
+| **2. Debate Conceptual** | 30 min       | Discusión guiada sobre mitos y verdades del HTML semántico, la accesibilidad y la IA en el desarrollo. |
+| **3. Demo Técnica**      | 20 min       | Maquetado básico guiado mostrando estructura semántica, etiquetas ARIA y jerarquías de encabezado.     |
+| **4. Laboratorio**       | 100 min      | Desarrollo de una página HTML con tres checkpoints colaborativos (30, 50 y 80 min).                    |
+| **5. Cierre**            | 15 min       | Retroalimentación cruzada, resolución de dudas y conexión con la clase siguiente.                      |
+
+---
+
+## 📌 Preparación para la clase
+
+> Antes de la clase, reflexiona sobre el rol que tiene la semántica y la accesibilidad desde la primera línea de código. Considera también cómo la inteligencia artificial puede ser una aliada o una amenaza en estos procesos. El objetivo es fomentar criterios, no repetir definiciones.
+
+#### 🧠 Preguntas reflexivas
+
+* ¿Por qué debería importarte la accesibilidad al comenzar un nuevo proyecto web?
+* ¿Cómo crees que afecta la estructura semántica al posicionamiento y mantenimiento de una página?
+* ¿Puede una IA identificar correctamente elementos semánticos y accesibles? ¿Cómo validarías sus sugerencias?
+* ¿A quién excluyes si ignoras buenas prácticas de accesibilidad?
+
+
+#### 🧠 Lista de Mitos y Verdades para Analizar
+
+1. Usar `<div>` para cada sección del sitio es la mejor forma de estructurar una página.  
+2. La IA puede generar código HTML y sugerir etiquetas semánticas, pero el desarrollador debe revisarlas antes de usarlas.  
+3. Colocar texto alternativo (`alt`) en imágenes solo sirve para mejorar el resultado en la búsqueda de Google.  
+4. Solo las personas con discapacidad visual se benefician de los sitios accesibles.
+5. Un buen uso de HTML5 semántico hace el proyecto más mantenible y promueve la colaboración entre desarrolladores.  
+
+#### 📚 Artículos sugeridos
+- **HTML Semántico: Qué Es y Cómo Usarlo Correctamente**  
+  [https://es.semrush.com/blog/html-semantico/](https://es.semrush.com/blog/html-semantico/){:target="_blank"}
+
+- **Introducción a la Accesibilidad (W3C)**  
+  [https://www.w3.org/WAI/fundamentals/accessibility-intro/es](https://www.w3.org/WAI/fundamentals/accessibility-intro/es){:target="_blank"}
+
+- **Cómo escribir mejores prompts para la IA**  
+  [https://www.promptingguide.ai/es](https://www.promptingguide.ai/es){:target="_blank"}
 
 ---
 
 ## Resultados esperados
 
-Al culminar esta clase, los estudiantes habrán desarrollado una comprensión sólida de las bases semánticas de HTML, habrán practicado metodologías de accesibilidad y adquirido criterios para integrar herramientas de IA con responsabilidad en su flujo de trabajo. Esto sienta los cimientos para futuras implementaciones más avanzadas en el desarrollo web.
+Al finalizar esta clase, el estudiante será capaz de:
 
-En detalle, los estudiantes...
+* Construir una estructura HTML semántica básica.
+* Implementar atributos y roles de accesibilidad fundamentales (ARIA).
+* Redactar y aplicar texto alternativo en imágenes.
+* Utilizar prompts en IA para refinar maquetado, evaluando sus sugerencias críticamente.
+* Organizar jerarquías de encabezado que favorezcan la navegación con lectores de pantalla.
 
-### Podrán hacer
-1. **Diseñar Estructuras Web Semánticas:** A partir de los lineamientos teóricos y el debate en clase, podrán construir páginas HTML con etiquetas semánticas que destaquen la función de cada sección.
-
-2. **Implementar Accesibilidad Básica:** Aplicarán atributos y roles para asegurar un recorrido claro y accesible para personas con diferentes necesidades, cumpliendo así estándares esenciales de usabilidad.
-
-3. **Validar y Refinar Código con IA:** Solicitarán sugerencias a la IA para maquetado y accesibilidad, reconociendo la necesidad de ajustar y evaluar el código antes de implementarlo en un entorno real.
-
-### Podrán explicar
-
-1. **Razonamiento de la Estructura Semántica:** Al finalizar la clase, podrán justificar por qué han elegido ciertas etiquetas en lugar de <div> genéricos, defendiendo la coherencia y la semántica de su proyecto.
-
-2. **Beneficios de la Accesibilidad:** Podrán describir cómo la inclusión de texto alternativo, roles ARIA y un orden lógico de encabezados favorece la experiencia de usuarios con diferentes capacidades, y cómo esto impacta positivamente en el SEO.
-
-3. **Uso Ético y Responsable de la IA:** Al llevar a cabo prompts para la generación de código, sabrán argumentar los criterios para filtrar, corregir o descartar las sugerencias automáticas que no cumplan los requisitos de accesibilidad o semántica.
-
-### Podrán implementar
-1. Crear un documento HTML con estructura semántica base: uso de `<header>`, `<main>`, `<section>` y `<footer>`.
-2. Implementar atributos y roles ARIA fundamentales: reforzando la accesibilidad para diferentes tipos de usuarios.
-3. Incorporar texto alternativo (alt) en imágenes: beneficiando a personas con discapacidad visual y mejorando el SEO.
-4. Aprovechar la IA para generar o refinar código: validando las propuestas de la IA según estándares de calidad y accesibilidad.
-5. Organizar jerarquías de encabezados para facilitar la navegación en lectores de pantalla con h1, h2 y h3.
+---
 
 ## Glosario de Nuevos Términos
-- **A11y**: Abreviatura numérica de "Accessibility" (11 letras entre 'A' y 'y'), referente a prácticas de accesibilidad web.
 
-- **ARIA** (Accessible Rich Internet Applications): Conjunto de atributos que definen formas de hacer el contenido web más accesible.
-
-- **Alt text**: Texto alternativo que describe imágenes para usuarios con lectores de pantalla.
-
-- **Screen reader**: Software que permite a usuarios con discapacidad visual escuchar el contenido de una página web.
-
-- **DOM** (Document Object Model): Estructura jerárquica que representa cómo se organizan los elementos HTML.
-
-- **Role attribute**: Atributo que define el propósito de un elemento para tecnologías asistivas.
-
-- **Keyboard navigation**: Capacidad de navegar un sitio web utilizando solo el teclado.
-
-- **Dark mode**: Esquema de colores alternativo que reduce la intensidad de luz emitida por la pantalla.
-
-- **Prompt engineering**: Técnica para formular instrucciones efectivas a sistemas de IA.
-
-- **Microinteractions**: Animaciones sutiles que proporcionan retroalimentación visual al usuario.
-
+* **A11y**: Abreviatura de "accessibility". Prácticas para que productos digitales sean utilizables por todos.
+* **ARIA**: Atributos que mejoran la accesibilidad en aplicaciones web complejas.
+* **Alt text**: Descripción textual de una imagen para usuarios con discapacidad visual.
+* **Screen reader**: Software que convierte texto digital en audio para navegar sitios.
+* **DOM**: Representación estructurada de una página web.
+* **Role attribute**: Indica el rol de un elemento para las tecnologías asistivas.
+* **Keyboard navigation**: Capacidad de moverse por un sitio solo con el teclado.
+* **Prompt engineering**: Técnica para generar instrucciones eficaces para IA.

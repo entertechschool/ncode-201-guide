@@ -1,0 +1,92 @@
+# Clase 01: HTML5 Semántico y Accesibilidad
+
+* Primera piedra de la web accesible e inclusiva.
+* Aprendemos a estructurar con sentido, no solo con `<div>`.
+* Introducimos el uso crítico de la IA como asistente de desarrollo.
+
+---
+
+## 🎯 Objetivos de la Clase
+
+**Al finalizar la clase, podrás:**
+
+* Construir una página HTML con estructura semántica.
+* Aplicar atributos de accesibilidad básicos (alt, roles ARIA).
+* Usar prompts en IA para generar/refinar código.
+* Justificar tus decisiones semánticas y de accesibilidad.
+
+---
+
+## 🔑 Conceptos Clave
+
+* **HTML5 Semántico**: Estructura con etiquetas que tienen significado.
+* **Accesibilidad (A11y)**: Inclusión de personas con distintas capacidades.
+* **Alt text**: Descripción alternativa de imágenes.
+* **ARIA**: Atributos que ayudan a lectoras de pantalla.
+* **Prompt Engineering**: Redacción efectiva para pedir ayuda a la IA.
+
+---
+
+## 📖 Debate Crítico
+
+**Verdadero o Falso:**
+
+* Usar `<div>` para cada sección es la mejor forma de estructurar una página.
+* La IA puede sugerir semántica, pero el desarrollador decide.
+* El `alt` solo sirve para mejorar el SEO.
+* Sitios accesibles benefician solo a personas con discapacidad visual.
+* HTML5 semántico mejora la colaboración entre devs.
+
+---
+
+## 🧪 Laboratorio - Estructura Inicial
+
+* Repositorio: `product-landing-page`
+* Archivos mínimos: `index.html`, `styles.css`, carpeta `img`
+* Markup base en HTML + estilo inicial
+
+**Checkpoints:** 30', 50', 80'
+
+> 📦 Entrega y Documentación
+
+* README explicando estructura semántica
+* URL del repositorio + GitHub Pages desplegado
+
+---
+
+## 📋 Historias de Usuario
+
+* **HU1:** Menú navegable con lector de pantalla (`<nav>`)  
+* **HU2:** Sección "Hero" con `<h1>` y descripción  
+* **HU3:** Características, envío y pagos con jerarquía de encabezados  
+* **HU4:** Footer con contacto, redes y términos
+
+---
+
+## ⚙️ Requerimientos Técnicos
+
+* Semántica HTML5: `<header>`, `<main>`, `<footer>`
+* Accesibilidad: alt en imágenes, ARIA, orden lógico
+* CSS básico: reset, tipografía legible, contraste, layout limpio
+* 1 prompt a IA + validación crítica de resultados
+
+---
+
+## 🌟 Logros Extra
+
+* **Dark Mode**: Variables CSS y toggle de modo oscuro
+* **Microinteracciones**: Transiciones suaves en botones o links
+
+---
+
+## 🧠 Discusión Final
+
+* ¿Qué rol tiene la semántica en el mantenimiento de un proyecto?
+* ¿Quién se beneficia realmente de un sitio accesible?
+* ¿Cómo combinar IA con responsabilidad técnica?
+
+> **Reflexiones:**
+
+- ¿Qué curiosidades nuevas te llevas?
+- ¿Qué concepto has podido aclarar mejor?
+- ¿En qué aspecto sientes que tienes un mayor dominio ahora?

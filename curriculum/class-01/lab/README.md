@@ -128,7 +128,6 @@ Agrega pequeñas animaciones o transiciones en elementos clave (por ejemplo, al 
 
 1. **Documentación en README**
     - Explica la estructura semántica que elegiste y justifica tus etiquetas.  
-    - Incluye el prompt usado con la IA y describe cómo validaste la respuesta.
 
 2. **Despliegue**
     - Activa GitHub Pages en el repositorio y adjunta la URL de tu landing page accesible.
