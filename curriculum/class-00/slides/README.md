@@ -2,18 +2,27 @@
 
 ### 🎯 Objetivo General
 
-Convertirte en un **Desarrollador Web con sólidos fundamentos**,
-capaz de construir aplicaciones web interactivas,
-con pensamiento crítico y dominio de JavaScript moderno.
+Convertirte en un **Programador con sólidos fundamentos en Algoritmos y Estructura de Datos**,
+capaz de construir aplicaciones web interactivas, con pensamiento crítico y apoyo eficiente de herramientas de IA.
 
----
-
-🔧 Aprenderás:
-- HTML5, CSS moderno (Flexbox, Grid)
+#### 🔧 Aprenderás:
+- HTML5 y CSS moderno (Flexbox, Grid y Responsividad)
 - Programación en JavaScript (imperativa, funcional, OOP)
 - Manipulación del DOM, eventos y estado de aplicaciones
 - Persistencia local con JSON y LocalStorage
 - Proyecto final con enfoque real y validación de usuarios
+
+---
+
+## Estructura:
+
+📅 **Duración total del curso**: 10 semanas (5 módulos)
+
+🧩 **Cada Módulo tiene**: 
+- 4 clases en vivo + laboratorios a entregar
+- 1 presentación de proyecto + defensa técnica
+
+> 🏁 Evaluación basada en asistencias, participación y entregas.
 
 ---
 
@@ -79,22 +88,27 @@ con pensamiento crítico y dominio de JavaScript moderno.
 
 🔍 Evaluación: funcionalidad, código limpio, experiencia de usuario y presentación técnica.
 
-
 ---
 
 ## ¿Cómo son las clases y cuánto dura el curso?
 
-🕒 **Cada clase dura 3 horas (180 min)** y sigue el sistema LCT:
+> 🕒 **Cada clase dura 3 horas (180 min)** y sigue esta estructura:
 
-- 🔥 Refuerzo práctico inicial (15 min)
-- 💬 Debate técnico + Demostración (45 min)
-- 🛠️ Laboratorio guiado con checkpoints (100 min)
-- 🧠 Síntesis y conexión con próximos temas (20 min)
+- 🔥 **Introducción:** conexión con la clase anterior y contexto (15 min)
+- 💬 **Demo Inicial y Debate:** ejercicios de refuerzo y activación del debate (30 min)
+- 🛠️ **Laboratorio:** ejercicios guiados con checkpoints (120 min)
+- 🧠 **Síntesis y cierre:** reflexiones y conclusiones finales (15 min)
 
-> 👉 Debes llegar a cada clase con conceptos técnicos repasados. 
+> 👉 **Debes llegar a cada clase con conceptos técnicos repasados**.
 
-📅 **Duración total del curso**: 10 semanas  
-🧩 5 módulos → 4 clases por módulo + 1 clase de proyecto  
+- ⏳ Se espera 1 hora de preparación autónoma previo a cada clase.
+
+---
+
+## Evaluación y Promedio final
+
+📅 **Duración total del curso**: 10 semanas
+🧩 5 módulos → 4 clases por módulo + 1 presentación de proyecto
 🧪 Evaluación basada en participación, entregas y defensa técnica
 
 🎯 Aprenderás haciendo, debatiendo y construyendo soluciones reales desde el día 1.
