@@ -1,3 +1,30 @@
+![Enter Logo](https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/enter_logo_white.png)
+
+<style>
+.grid-single {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.grid-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.avatar img {
+  max-width: 180px !important;
+  border-radius: 100% !important;
+}
+</style>
+
+---
+
 ## Code 201: Fundamentos de Desarrollo Web
 
 ### 🎯 Objetivo General
@@ -11,6 +38,39 @@ capaz de construir aplicaciones web interactivas, con pensamiento crítico y apo
 - Manipulación del DOM, eventos y estado de aplicaciones
 - Persistencia local con JSON y LocalStorage
 - Proyecto final con enfoque real y validación de usuarios
+
+## Equipo Enter
+
+<div class="grid-double">
+  <div class="card">
+    <div class="avatar">
+      <img src="https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/team/jose_revilla_sq.png" alt="Pepe Revilla - Director General">
+    </div>
+    <h3>Pepe Revilla</h3>
+    <p>Director General</p>
+  </div>
+  <div class="card">
+    <div class="avatar">
+      <img src="https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/team/bruno_diaz_sq.png" alt="Bruno Díaz - Director de Programas">
+    </div>
+    <h3>Bruno Díaz</h3>
+    <p>Director de Programas</p>
+  </div>
+  <div class="card">
+    <div class="avatar">
+      <img src="https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/team/gabriela_castillo_sq.png" alt="Gabriela Castillo - Éxito Estudiantil">
+    </div>
+    <h3>Gabriela Castillo</h3>
+    <p>Éxito Estudiantil</p>
+  </div>
+  <div class="card">
+    <div class="avatar">
+      <img sclass="img-rounded" src="https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/team/claudia_merino_sq.png" alt="Claudia Merino - Administración y Finanzas">
+    </div>
+    <h3>Claudia Merino</h3>
+    <p>Administración y Finanzas</p>
+  </div>
+</div>
 
 ---
 
@@ -107,8 +167,54 @@ capaz de construir aplicaciones web interactivas, con pensamiento crítico y apo
 
 ## Evaluación y Promedio final
 
-📅 **Duración total del curso**: 10 semanas
-🧩 5 módulos → 4 clases por módulo + 1 presentación de proyecto
-🧪 Evaluación basada en participación, entregas y defensa técnica
+- Nota de cada Módulo:
+    - Asistencia y Participación: 30%
+    - Cumplimiento de Entregables: 20%
+    - Proyecto Integrador: 50%
 
-🎯 Aprenderás haciendo, debatiendo y construyendo soluciones reales desde el día 1.
+- Nota Final:
+    - Promedio de los 4 módulos: 40%
+    - Nota del Proyecto Final (Módulo 5): 60% 
+
+> 🏆 **La nota mínima aprobatoria es 70 / 100**
+
+---
+
+## Instructor Principal
+
+> **Arnold Gallegos** 👨‍🏫
+
+<div class="grid-single">
+  <div class="card">
+    <div class="avatar">
+      <img src="https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/team/arnold_gallegos_sq.png" alt="Arnold Gallegos - Instructor Principal">
+    </div>
+    <h3>Arnold Gallegos</h3>
+    <p>Fullstack Developer</p>
+    <p>4+ años de experiencia en proyectos fullstack con Javascript y Python</p>
+  </div>
+</div>
+
+---
+
+## 🎙️ Preséntate
+- Nombre y edad
+- De donde vienes
+- Qué serie / película / música te gusta
+
+* Tienes 60 segundos ⏳
+
+---
+
+## Asistencia Académica
+
+<div class="grid-single">
+  <div class="card">
+    <div class="avatar">
+      <img src="https://entertechschool.github.io/ncode-101-guide/curriculum/class-01/slides/team/gabriela_castillo_sq.png" alt="Gabriela Castillo - Asistencia Académica">
+    </div>
+    <h3>Gabriela Castillo</h3>
+    <p>Soporte y éxito del estudiante</p>
+  </div>
+</div>
+
