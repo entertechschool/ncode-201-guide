@@ -39,6 +39,8 @@ capaz de construir aplicaciones web interactivas, con pensamiento crítico y apo
 - Persistencia local con JSON y LocalStorage
 - Proyecto final con enfoque real y validación de usuarios
 
+---
+
 ## Equipo Enter
 
 <div class="grid-double">
@@ -81,6 +83,7 @@ capaz de construir aplicaciones web interactivas, con pensamiento crítico y apo
 🧩 **Cada Módulo tiene**: 
 - 4 clases en vivo + laboratorios a entregar
 - 1 presentación de proyecto + defensa técnica
+    - En coordinación con el instructor. Suele ser fines de semana.
 
 > 🏁 Evaluación basada en asistencias, participación y entregas.
 
