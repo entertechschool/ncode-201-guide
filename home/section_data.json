@@ -1,0 +1,19 @@
+[
+    {
+        "section_name": "code-201n7",
+        "course_name": "Code 201 - Fundamentals",
+        "course_description": "Fundamentos del desarrollo de software web, en donde te convertirás en un Programador con sólidos fundamentos en Algoritmos y Estructura de Datos, capaz de construir aplicaciones web interactivas, con pensamiento crítico y apoyo eficiente de herramientas de IA.",
+        "zoom_link": "https://us06web.zoom.us/j/84987965862",
+        "whatsapp_link": "https://chat.whatsapp.com/JSnAUEqmjVE4RyOs6zQrNq",
+        "calendar_link": "https://entertechschool.github.io/public/code-201/calendar/?section=code-201n7",
+        "class_schedule": "Lunes y Miércoles: 19:00 - 22:00",
+        "instructor_name": "Arnold Gallegos",
+        "instructor_email": "arnold.gallegosm@gmail.com",
+        "instructor_phone": "+51 987654321",
+        "instructor_image": "https://via.placeholder.com/150",
+        "academic_support": "Gabriela Castillo",
+        "academic_support_email": "gabriela@enter.edu.pe",
+        "academic_support_phone": "+51 987654321",
+        "academic_support_image": "https://via.placeholder.com/150"
+    }
+]

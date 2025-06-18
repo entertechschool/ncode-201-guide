@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code 201 - Fundamentals | Enter Tech School</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+               <img src="../assets/enter_logo_black.png" alt="Enter Tech School Logo">
+            </div>
+            <div>
+                <h1>Code 201 - Fundamentals</h1>
+            </div>
+        </header>
+        <main>
+            <section>
+                <p id="course-description"></p>
+            </section>
+            <section class="course-info">
+                <div class="info-item">
+                    <h3>Enlace de Zoom</h3>
+                    <a id="zoom-link" href="https://us06web.zoom.us/j/87976984497" class="custom-button" target="_blank">
+                        <img src="../assets/svg/zoom.svg" alt="Zoom Icon" class="button-icon">  Unirse a la Reunión
+                    </a>
+                </div>
+
+                <div class="info-item">
+                    <h3>Grupo de Whatsapp</h3>
+                    <a id="whatsapp-link" href="https://chat.whatsapp.com/BBlbnux5Vpf9xlsd7GLb3H" class="custom-button" target="_blank">
+                        <img src="../assets/svg/whatsapp.svg" alt="Whatsapp Icon" class="button-icon"> Unirse a la comunidad
+                    </a>
+                </div>
+                
+                <div class="info-item">
+                    <h3>Instructor Principal</h3>
+                    <p id="instructor-name">Arnold Gallegos / <a id="instructor-email" href="mailto:arnold.gallegosm@gmail.com">arnold.gallegosm@gmail.com</a></p>
+                </div>
+
+                <div class="info-item">
+                    <h3>Asistencia Académica</h3>
+                    <p id="academic-support">Gabriela Castillo / <a id="academic-support-email" href="mailto:gabriela@enter.edu.pe">gabriela@enter.edu.pe</a></p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>Horario de Clases en Vivo</h3>
+                    <p id="class-schedule">Martes, Jueves y Viernes: 19:00 - 22:00</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>Calendario de Clases</h3>
+                    <a id="calendar-link" href="https://entertechschool.github.io/public/code-101/calendar/" class="custom-button" target="_blank">
+                        <img src="../assets/svg/calendar.svg" alt="Calendar Icon" class="button-icon"> Ver Calendario
+                    </a>
+                </div>
+
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2025 Enter Tech School. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Obtener los datos desde el archivo section_data.json
+        fetch('section_data.json')
+            .then(response => response.json())
+            .then(data => {
+                const section = data[0];
+                const { course_name, course_description, zoom_link, whatsapp_link, calendar_link, instructor_name, instructor_email, instructor_phone, instructor_image } = section;
+                
+                // Actualizar el contenido de la página con los datos obtenidos
+                document.querySelector('h1').textContent = course_name;
+                document.querySelector('p#course-description').textContent = course_description;
+                document.querySelector('a#zoom-link').href = zoom_link;
+                document.querySelector('a#whatsapp-link').href = whatsapp_link;
+                document.querySelector('a#calendar-link').href = calendar_link;
+                
+                // Actualizar la información del instructor
+                document.querySelector('.instructor-name').textContent = instructor_name;
+                document.querySelector('.instructor-email').href = `mailto:${instructor_email}`;
+                document.querySelector('.instructor-phone').textContent = instructor_phone;
+                
+                // Actualizar la imagen del instructor
+                const instructorImage = document.querySelector('.instructor-image');
+                if (instructorImage) {
+                    instructorImage.src = instructor_image;
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener los datos:', error);
+            });
+
+        // Script simple para animar la entrada de elementos
+        document.addEventListener('DOMContentLoaded', function() {
+            const h1 = document.querySelector('h1');
+            const courseInfo = document.querySelector('.course-info');
+            
+        });
+    </script>
+</body>
+</html>

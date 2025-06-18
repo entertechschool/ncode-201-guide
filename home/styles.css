@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+@font-face {
+    font-family: "Naston";
+    src: url("../assets/css/naston.ttf");
+}
+
+:root {
+    --primary: #bd33e7;
+    --primary-dark: #6422ce;
+    --primary-gradient: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.8) 0%,
+            rgba(29, 183, 93, 0.3) 20%,
+            rgba(214, 67, 18, 0.4) 40%,
+            rgba(190, 48, 69, 0.4) 60%,
+            rgba(52, 152, 219, 0.3) 80%,
+            rgba(255, 255, 255, 0.8) 100%);
+    --accent-color: #ffffff;
+    --text-color: #7f0a81;
+    --hover-color: rgba(44, 62, 80, 0.1);
+    --whatsapp-color: #25D366;
+    --zoom-color: #2D8CFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background: var(--primary-gradient);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.6;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 1) 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+}
+
+header img {
+    width: 180px;
+}
+
+header h1 {
+    font-family: "Naston";
+    margin: 0px;
+    font-size: 2.5rem;
+    color: #000;
+}
+
+main {
+    flex: 1;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--text-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+#course-description {
+    font-family: "Work Sans", sans-serif;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+    color: #333;
+    text-align: justify;
+}
+
+.course-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../assets/svg/grid_texture.svg") repeat center center;
+    opacity: 0.2;
+    mask-image: radial-gradient(circle at center, black 0%, transparent 95%);
+    -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 95%);
+    z-index: -1;
+}
+
+.course-info {
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.35) 60%);
+    border: 1px solid rgba(255, 189, 111, 0.8);
+    border-radius: 12px;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.info-item {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 300px;
+}
+
+.info-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.8));
+}
+
+.info-item p,
+.info-item a {
+    font-size: 1.1rem;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--text-color);
+}
+
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    background: linear-gradient(to top right, rgba(191, 88, 32, 1), rgba(172, 63, 208, 1));
+    max-width: fit-content;
+    color: #ffffff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    transition: all 0.5s ease;
+}
+
+.custom-button:hover {
+    background: linear-gradient(to top, rgba(191, 88, 32, 1), rgba(172, 63, 208, 1));
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.custom-button i {
+    margin-right: 0.5rem;
+}
+
+.button-icon {
+    width: 20px;
+    height: 20px;
+    color: #fff !important;
+    filter: #fff !important;
+    stroke: #fff !important;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    header img {
+        width: 120px;
+    }
+
+    .course-info {
+        padding: 1.5rem;
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        gap: 3rem;
+    }
+
+    #course-description {
+        font-size: 0.8rem;
+    }
+}
