@@ -132,12 +132,12 @@ product-landing-page/
 
 ## ⭐️ Logros adicionales
 
-### ⭐️ Logro 1: Modo Oscuro
+### 🏆 Logro 1: Modo Oscuro
 
 * Usa variables CSS (`--bg-color`, `--text-color`).
 * Agrega un botón que cambie entre modo claro y oscuro.
 
-### ⭐️ Logro 2: Microinteracciones
+### 🏆 Logro 2: Microinteracciones
 
 * Agrega transiciones en botones.
 * Resalta enlaces al pasar el mouse.

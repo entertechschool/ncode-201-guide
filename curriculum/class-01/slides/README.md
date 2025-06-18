@@ -51,24 +51,6 @@
 
 ---
 
-## 📋 Historias de Usuario
-
-* **HU1:** Menú navegable con lector de pantalla (`<nav>`)  
-* **HU2:** Sección "Hero" con `<h1>` y descripción  
-* **HU3:** Características, envío y pagos con jerarquía de encabezados  
-* **HU4:** Footer con contacto, redes y términos
-
----
-
-## ⚙️ Requerimientos Técnicos
-
-* Semántica HTML5: `<header>`, `<main>`, `<footer>`
-* Accesibilidad: alt en imágenes, ARIA, orden lógico
-* CSS básico: reset, tipografía legible, contraste, layout limpio
-* 1 prompt a IA + validación crítica de resultados
-
----
-
 ## 🌟 Logros Extra
 
 * **Dark Mode**: Variables CSS y toggle de modo oscuro

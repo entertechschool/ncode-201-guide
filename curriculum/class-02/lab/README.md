@@ -1,87 +1,130 @@
-﻿# Laboratorio 2: CSS Layout con Flexbox
+﻿# Laboratorio 02: CSS Layout con Flexbox
 
 ¡Bienvenido al segundo laboratorio de la Landing Page de tu **producto**! En este paso, aplicarás las técnicas de **CSS Flexbox** para organizar visualmente la estructura de tu página, manteniendo la coherencia y accesibilidad.
 
-## 🎯 Objetivos de Aprendizaje
+---
 
-1. Construir un Layout Responsivo utilizando Flexbox
-2. Alinear y distribuir elementos de forma flexible
-3. Mantener la accesibilidad visual en diferentes tamaños de pantalla
+### 🌟 Objetivos de Aprendizaje
 
-## 🔑 Conceptos Clave
-- **CSS Flexbox:** Modelo de diseño que permite alinear y distribuir elementos de forma flexible en un contenedor.
-- **Propiedades Principales:** `display: flex`, `justify-content`, `align-items`, `flex-wrap`, `flex-grow`, y su uso en diseño responsivo.
-- **Responsividad y Accesibilidad:** Cómo Flexbox contribuye a un diseño adaptable, accesible y ordenado.
-- **IA en Diseño Web:** La IA puede generar ejemplos de Flexbox, pero es necesario validarlos y ajustarlos para garantizar buenas prácticas.
+* Construir un layout responsivo utilizando Flexbox.
+* Alinear y distribuir elementos de forma flexible.
+* Mantener la accesibilidad visual en diferentes tamaños de pantalla.
 
-### ⏱️ Checkpoints de Validación
-> **Nota:** Este laboratorio incluye tres momentos de validación grupal (a los 30, 50 y 80 minutos). Aprovecha estos momentos para recibir feedback y participar en las discusiones grupales.
+### 🔑 Conceptos Clave
 
-## 🏗️ Setup Inicial
-
-1. **Repositorio**  
-   - Usa el repositorio de la clase anterior.
-
-2. **Archivos CSS:**
-   - Mantén `styles.css` y amplíalo con nuevas reglas de Flexbox.
-
-3. **Contenido Base:**
-   - Evita usar `<div>` de manera excesiva. Utiliza etiquetas semánticas para estructurar las secciones.
-   - Aplica **overflow** cuando el contenido exceda el espacio visible.
-
-## 📋 Historias de Usuario
-
-1. **HU1: Navegación Flexible**  
-"Como usuario, quiero que el menú de navegación se alinee horizontalmente y se ajuste automáticamente en pantallas pequeñas."  
-  - **Criterios de Aceptación:**  
-    - Menú principal con `display: flex` y alineación horizontal
-    - Uso de `justify-content: space-between` para distribuir los elementos
-
-2. **HU2: Secciones Adaptables**  
-"Como visitante, quiero que cada sección se ajuste a diferentes tamaños de pantalla manteniendo su diseño."
-  - **Criterios de Aceptación:**  
-    - Contenido centrado con `align-items: center`
-    - Ajuste mediante `flex-wrap` en pantallas pequeñas
-
-3. **HU3: Galería de Imágenes del Producto**  
-"Como usuario, quiero ver una sección llamada 'Galería de Imágenes' con fotos del producto dispuestas en una cuadrícula flexible."  
-  - **Criterios de Aceptación:**  
-    - Nueva sección `<section>` titulada “Galería de Imágenes”
-    - Galería con `display: flex` y `flex-wrap: wrap`
-    - Uso de media queries para cambiar el número de columnas
-
-## 🛠️ Requerimientos Técnicos
-
-- Utilizar `display: flex` en los principales contenedores (`header`, `main`, `footer`).
-- Alinear elementos usando `justify-content` y `align-items`.
-- Crear la sección de galería utilizando `flex-wrap`.
-- Aplicar media queries para adaptar el diseño a tamaños pequeños y medianos.
-- Usar `overflow` para controlar el contenido que excede los límites.
-
-## 🏆 Logros Adicionales
-
-- **Logro 1: Sección de Testimonios**  
-Agrega una nueva sección titulada “Testimonios” en la misma página, mostrando opiniones de clientes en formato de tarjetas (cards). Utiliza Flexbox para organizar las tarjetas de forma adaptable y estética.
-
-- **Logro 2: Animaciones con CSS** 
-Implementa microinteracciones o animaciones sutiles en elementos clave, como botones, imágenes de la galería o enlaces del menú. Usa propiedades como `transition` y `transform` para lograr efectos visuales atractivos.
-
-## 📝 Instrucciones de Entrega
-
-1. **Documentación en README**  
-   - Crea una sección donde especifiques los'break points' de tus media-queries implementados.
-
-2. **Despliegue**  
-   - Publica la nueva versión en GitHub Pages.
-
-3. **Entrega Final**  
-   - URL del repositorio  
-   - URL de la página desplegada
+* **CSS Flexbox**: Modelo de diseño que permite alinear y distribuir elementos de forma flexible en un contenedor.
+* **Propiedades principales**: `display: flex`, `justify-content`, `align-items`, `flex-wrap`, `flex-grow`.
+* **Responsividad y accesibilidad visual**.
+* **IA en diseño web**: Validar y ajustar sugerencias generadas por IA.
 
 ---
 
-## 💡 Tips y Buenas Prácticas
+## Parte 1 – Configuración del Proyecto y Estilos Base
 
-- Usa `gap` para separar los elementos dentro de los contenedores Flexbox.
-- Mantén el código CSS limpio y comentado.
-- Valida la página usando herramientas como [W3C Validator](https://validator.w3.org/){:target="_blank"}
+> **Requisitos previos:** Reutiliza el repositorio del laboratorio anterior.
+
+1. Abre el archivo `styles.css` y asegúrate de tener estilos base definidos (tipografía, colores, etc.).
+2. En `index.html`, mantén el uso de etiquetas semánticas. Evita `<div>` innecesarios.
+3. Aplica `overflow` si el contenido excede el espacio visible.
+
+```css
+/* Ejemplo */
+main {
+  overflow-x: auto;
+}
+```
+
+🏆 **Reto autónomo:**
+- Agrega una sección llamada "Términos y Condiciones" al final del `footer`. Asegúrate de aplicar estilos con Flexbox para organizar el texto y enlaces legales de forma legible y ordenada.
+
+---
+
+## Parte 2 – Flexbox en Navegación y Secciones
+
+1. En `header`, aplica Flexbox para organizar la navegación horizontalmente:
+
+```css
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+```
+
+2. Asegúrate que los enlaces estén separados y alineados de forma coherente.
+3. Aplica Flexbox también en las secciones principales dentro de `main` para organizar el contenido.
+
+🏆 **Reto autónomo:**
+- Transforma la sección “Características” en una grilla de tarjetas con íconos, usando Flexbox. Cada tarjeta debe tener un título, una breve descripción y un ícono representativo.
+
+---
+
+## Parte 3 – Galería de Imágenes con Flexbox y Media Queries
+
+1. Agrega una nueva sección al final de `main`:
+
+```html
+<section id="galeria">
+  <h2>Galería de Imágenes</h2>
+  <div class="galeria">
+    <img src="img1.jpg" alt="...">
+    <img src="img2.jpg" alt="...">
+    <img src="img3.jpg" alt="...">
+    <!-- Agrega más imágenes -->
+  </div>
+</section>
+```
+
+2. Estilos CSS con Flexbox:
+
+```css
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.galeria img {
+  width: 200px;
+  height: auto;
+}
+```
+
+3. Aplica media queries para ajustar el número de columnas según el ancho de la pantalla.
+
+🏆 **Reto autónomo:**
+- Agrega una pequeña descripción textual debajo de cada imagen de la galería usando Flexbox. Asegúrate de que la imagen y su texto se mantengan agrupados incluso en pantallas pequeñas.
+
+---
+
+## ⭐️ Logros adicionales
+
+### 🏆 Logro 1: Sección de Testimonios
+
+* Agrega una sección "Testimonios" con opiniones en tarjetas.
+* Usa `display: flex` para que se adapten según el espacio disponible.
+
+#### 🏆 Logro 2: Animaciones con CSS
+
+* Agrega transiciones suaves en botones e imágenes.
+* Usa `transform`, `transition`, `hover` para crear microinteracciones.
+
+---
+
+## 📝 Instrucciones de Entrega
+
+* Actualiza el `README.md` incluyendo los `break points` usados en media queries.
+* Publica la página en GitHub Pages.
+* Entrega:
+
+  * URL del repositorio
+  * URL del despliegue en GitHub Pages
+
+---
+
+## 💡 Tips Finales
+
+* Usa `gap` para separar elementos en Flexbox.
+* Comenta tu CSS para facilitar su lectura.
+* Valida tu HTML con [W3C Validator](https://validator.w3.org/)
+* Prueba en dispositivos móviles o con vista responsive en navegador.

@@ -12,23 +12,14 @@ Posteriormente, en el laboratorio, implementan una estructura web semántica acc
 
 ## Estructura sugerida
 
-| **Fase**                 | **Duración** | **Descripción**                                                                                        |
-| ------------------------ | ------------ | ------------------------------------------------------------------------------------------------------ |
-| **1. Introducción**      | 15 min       | Activación del tema a partir de ejemplos no accesibles y preguntas provocadoras sobre IA.              |
-| **2. Debate Conceptual** | 30 min       | Discusión guiada sobre mitos y verdades del HTML semántico, la accesibilidad y la IA en el desarrollo. |
-| **3. Demo Técnica**      | 20 min       | Maquetado básico guiado mostrando estructura semántica, etiquetas ARIA y jerarquías de encabezado.     |
-| **4. Laboratorio**       | 100 min      | Desarrollo de una página HTML con tres checkpoints colaborativos (30, 50 y 80 min).                    |
-| **5. Cierre**            | 15 min       | Retroalimentación cruzada, resolución de dudas y conexión con la clase siguiente.                      |
-
-
 | **Fase**   | **Duración** | **Descripción** |
 | --- | --- | --- |
 | **1. Introducción y Contexto de la clase** | 15 min | Se plantea el objetivo de hacer accesible un sitio web. Se discuten ejemplo del alcance y poder de la IA en el desarrollo de código. |
 | **2. Parte 1**   | 45 min | Crear la estructura base del proyecto recordando Git y Github. |
-| **3. Parte 2**   | 45 min | Aplicamos estructura Semántica a la Landing Page.   |
-| **5. Break 2**   | 10 min | Segundo Descanso      |
-| **6. Parte 3**   | 50 min | Estado global con `zustand`: creación de store con middleware `persist`, reemplazo de `useContext`, demostración de persistencia tras reload y limpieza de props innecesarias.    |
-| **7. Síntesis**  | 10 min | Revisión colectiva de decisiones técnicas: se invita a reflexionar cuál de las tres integraciones representa un salto profesional más decisivo y por qué. |
+| **3. Parte 2**   | 45 min | Debate y ejercicios sobre aplicar estructura Semántica a la Landing Page.   |
+| **4. Parte 3**   | 30 min | Debate y ejercicios sobre Atributos de accesibilidad Básica. |
+| **5. Parte 4**   | 30 min | Debaje y ejercicios sobre Programar con IA. |
+| **6. Síntesis**  | 15 min | Feedback, reflexiones y conclusiones. |
 
 ---
 

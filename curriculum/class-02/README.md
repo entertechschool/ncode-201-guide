@@ -10,11 +10,11 @@ En esta clase integramos tres recursos esenciales para consolidar los fundamento
 
 | **Fase** | **Duración** | **Descripción** |
 | --- | --- | --- |
-| **1. Introducción** | 15 min | Contextualización y activación |
-| **2. Debate Conceptual** | 30 min | Discusión sobre ventajas y usos de Flexbox en diseño responsivo y accesible |
-| **3. Demo Técnica** | 20 min | Implementación guiada de layouts básicos con Flexbox |
-| **4. Laboratorio** | 100 min | Desarrollo con 3 checkpoints: a los 30, 50 y 80 minutos (revisión grupal y validación) |
-| **5. Cierre** | 15 min | Feedback y conclusiones |
+| **1. Introducción y Contexto de la clase** | 15 min | Se plantea el objetivo de hacer accesible un sitio web. Se discuten ejemplos del alcance y poder de la IA en el desarrollo de código. |
+| **2. Parte 1 – Configuración del Proyecto y Estilos Base** | 30 min | Organizar carpetas, preparar `styles.css`, aplicar `overflow` si es necesario. Reto: Agregar sección "Términos y Condiciones" en el `footer` usando Flexbox. |
+| **3. Parte 2 – Flexbox en Navegación y Secciones** | 60 min | Aplicar `display: flex`, `justify-content`, `align-items`. Organizar menú de navegación y secciones principales. Reto: transformar “Características” en tarjetas con íconos. |
+| **4. Parte 3 – Galería de Imágenes y Media Queries** | 60 min | Crear sección “Galería de Imágenes” con `flex-wrap` y `media queries`. Reto: Añadir descripción a cada imagen, agrupando con Flexbox. |
+| **5. Síntesis y Cierre** | 15 min | Feedback grupal, revisión de avances y reflexiones finales sobre Flexbox e impacto visual. |
 
 ---
 
@@ -39,12 +39,11 @@ En esta clase integramos tres recursos esenciales para consolidar los fundamento
 
 #### 📚 Artículos sugeridos
 
-- **CSS Flexbox: La Guía Definitiva para Principiantes**  
-  [https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox](https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox){:target="_blank"}
+- **CSS Flexbox: La Guía Definitiva para Principiantes** 
+ [https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox](https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox){:target="_blank"}
 
-- **Diseño Web Responsivo con CSS Flexbox**  
-  [https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/){:target="_blank"}
-
+- **Diseño Web Responsivo con CSS Flexbox** 
+ [https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/){:target="_blank"}
 
 ---
 
