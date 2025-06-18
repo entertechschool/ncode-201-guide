@@ -40,7 +40,9 @@ Posteriormente, en el laboratorio, implementan una estructura web semántica acc
 2. La IA puede generar código HTML y sugerir etiquetas semánticas, pero el desarrollador debe revisarlas antes de usarlas.  
 3. Colocar texto alternativo (`alt`) en imágenes solo sirve para mejorar el resultado en la búsqueda de Google.  
 4. Solo las personas con discapacidad visual se benefician de los sitios accesibles.
-5. Un buen uso de HTML5 semántico hace el proyecto más mantenible y promueve la colaboración entre desarrolladores.  
+5. Un buen uso de HTML5 semántico hace el proyecto más mantenible y promueve la colaboración entre desarrolladores.
+
+> **Identifica** cuáles crees que son mitos y cuáles son verdades. Prepárate para justificar tus respuestas con evidencia de lecturas o experiencias.
 
 #### 📚 Artículos sugeridos
 - **HTML Semántico: Qué Es y Cómo Usarlo Correctamente**  

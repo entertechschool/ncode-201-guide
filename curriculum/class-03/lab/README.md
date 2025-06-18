@@ -12,7 +12,7 @@ En este tercer laboratorio de tu **Product Landing Page**, aplicaremos los conoc
 
 ## 🔑 Conceptos Clave
 
-- **Contenedor y Elementos Grid**  
+- **Contenedor y Elementos Grid**
 - **Filas, Columnas y Áreas**  
 - **Espaciado y Alineación**  
 - **Responsividad y Adaptabilidad**

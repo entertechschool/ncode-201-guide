@@ -4,13 +4,7 @@
 
 ## Resumen
 
-En la Clase 02 se integran tres recursos esenciales para consolidar los fundamentos de CSS Layout con Flexbox, manteniendo el enfoque en buenas prácticas de diseño y estructura visual accesible:
-
-1. **Guía de Lectura y Debate:** Actividad dirigida a los estudiantes, enfocada en comprender los principios fundamentales de Flexbox y su impacto en el diseño responsivo y la accesibilidad.
-
-2. **Guía de Laboratorio:** Ejercicio práctico centrado en la creación de una estructura visual utilizando Flexbox para organizar y distribuir elementos en la landing page iniciada en la clase anterior.
-
-3. **Guía de Facilitador (Instructor):** Estrategia didáctica para integrar teoría y práctica, incentivando la resolución autónoma de problemas de diseño mediante Flexbox.
+En esta clase integramos tres recursos esenciales para consolidar los fundamentos de CSS Layout con Flexbox, manteniendo el enfoque en buenas prácticas de diseño y estructura visual accesible. Nos enfocamos en comprender los principios fundamentales de Flexbox y su impacto en el diseño responsivo y la accesibilidad.
 
 ## Estructura sugerida
 
@@ -21,6 +15,36 @@ En la Clase 02 se integran tres recursos esenciales para consolidar los fundamen
 | **3. Demo Técnica** | 20 min | Implementación guiada de layouts básicos con Flexbox |
 | **4. Laboratorio** | 100 min | Desarrollo con 3 checkpoints: a los 30, 50 y 80 minutos (revisión grupal y validación) |
 | **5. Cierre** | 15 min | Feedback y conclusiones |
+
+---
+
+## 📌 Preparación para la clase
+
+> Antes de llegar a clase, piensa en estas preguntas y conversa con tus compañeros o una IA si lo deseas:
+
+#### 🧠 Lista de Mitos y Verdades para Analizar
+
+1. Flexbox solo funciona para diseños horizontales.
+2. `flex-wrap` permite que los elementos se ajusten automáticamente en múltiples líneas.
+3. Con Flexbox, ya no es necesario usar media queries.
+4. `justify-content: space-between` distribuye los elementos dejando espacios iguales entre ellos.
+5. Flexbox no es adecuado para crear layouts completos.
+6. La IA puede generar ejemplos de Flexbox, pero siempre deben validarse.
+7. `flex-grow` permite que los elementos crezcan para ocupar espacio adicional.
+8. Usar demasiados `<div>` afecta la semántica del documento.
+9. Flexbox no funciona bien en navegadores antiguos.
+10. La propiedad `align-items` controla la alineación vertical de los elementos.
+
+> **Identifica** cuáles crees que son mitos y cuáles son verdades. Prepárate para justificar tus respuestas con evidencia de lecturas o experiencias.
+
+#### 📚 Artículos sugeridos
+
+- **CSS Flexbox: La Guía Definitiva para Principiantes**  
+  [https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox](https://developer.mozilla.org/es/docs/Learn/CSS/CSS_layout/Flexbox){:target="_blank"}
+
+- **Diseño Web Responsivo con CSS Flexbox**  
+  [https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/){:target="_blank"}
+
 
 ---
 
@@ -55,9 +79,3 @@ Al finalizar esta clase, los estudiantes habrán adquirido competencias esencial
 - **media queries:** Reglas de CSS que permiten aplicar estilos según el tamaño y características del dispositivo.
 - **overflow:** Propiedad CSS que controla el comportamiento del contenido que excede los límites de su contenedor.
 - **wrapper:** Elemento contenedor utilizado para agrupar otros elementos y facilitar su manipulación y diseño.
-
----
-
-### Siguiente Paso ⏭
-En la próxima clase, los estudiantes ampliarán sus conocimientos de diseño con **CSS Grid Layout**, explorando técnicas avanzadas para crear estructuras visuales más complejas y adaptables. ¡Continuamos potenciando habilidades para el desarrollo web profesional!
-

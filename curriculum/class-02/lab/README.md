@@ -9,11 +9,10 @@
 3. Mantener la accesibilidad visual en diferentes tamaños de pantalla
 
 ## 🔑 Conceptos Clave
-
-- **display: flex**  
-- **justify-content** y **align-items**  
-- **flex-wrap** y **flex-grow**  
-- **Media queries** para responsividad
+- **CSS Flexbox:** Modelo de diseño que permite alinear y distribuir elementos de forma flexible en un contenedor.
+- **Propiedades Principales:** `display: flex`, `justify-content`, `align-items`, `flex-wrap`, `flex-grow`, y su uso en diseño responsivo.
+- **Responsividad y Accesibilidad:** Cómo Flexbox contribuye a un diseño adaptable, accesible y ordenado.
+- **IA en Diseño Web:** La IA puede generar ejemplos de Flexbox, pero es necesario validarlos y ajustarlos para garantizar buenas prácticas.
 
 ### ⏱️ Checkpoints de Validación
 > **Nota:** Este laboratorio incluye tres momentos de validación grupal (a los 30, 50 y 80 minutos). Aprovecha estos momentos para recibir feedback y participar en las discusiones grupales.

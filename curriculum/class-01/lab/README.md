@@ -12,9 +12,9 @@
 
 ## 🔑 Conceptos Clave
 
-1. **HTML5 Semántico**  
-2. **Accesibilidad en la Web (A11y)**
-3. **Prompt Engineering Básico**
+- **HTML5 Semántico:**  Uso de etiquetas (`<header>`, `<nav>`, `<section>`, `<footer>`) que describen la función del contenido, facilitando la lectura y navegación, tanto para usuarios como para motores de búsqueda.
+2. **Accesibilidad en la Web (A11y):** Aplicar prácticas (como texto alternativo, roles ARIA, orden lógico de encabezados) para que cualquier persona, sin importar sus limitaciones, pueda interactuar con tu sitio.
+3. **Prompt Engineering Básico:** Herramientas como ChatGPT pueden generar ejemplos de código y sugerencias semánticas, pero requieres validarlas para asegurar calidad y conformidad con buenas prácticas.
 
 ### ✅ Checkpoints de Validación
 

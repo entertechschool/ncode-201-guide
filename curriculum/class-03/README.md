@@ -3,23 +3,45 @@
 # Clase 03: CSS Grid Layout
 
 ## Resumen
-En la Clase 03 se profundiza en el sistema de **CSS Grid Layout**, proporcionando a los estudiantes las herramientas necesarias para diseñar interfaces web de manera más flexible y potente que con enfoques tradicionales. La clase combina tres recursos clave para reforzar la teoría y la práctica:
-
-1. **Guía de Lectura y Debate:** Donde los estudiantes exploran artículos y discuten conceptos avanzados de Grid, analizando casos de uso y comparando con otras técnicas de layout.
-
-2. **Guía de Laboratorio:** Orientada a la implementación, retando a los estudiantes a crear layouts complejos y responsivos utilizando Grid en una página del proyecto que iniciaron.
-
-3. **Guía de Facilitador (Instructor):** Brinda la estrategia de enseñanza para facilitar la comprensión conceptual y asegurar el aprendizaje colaborativo en cada etapa de la clase.
+En esta clase profundizamos en el sistema de **CSS Grid Layout**, proporcionando a los estudiantes las herramientas necesarias para diseñar interfaces web de manera más flexible y potente que con enfoques tradicionales. La orientación de la clase es la implementación de layouts complejos y responsivos utilizando Grid en una página del proyecto que iniciaron.
 
 ## Estructura sugerida
 
-| **Fase**                  | **Duración** | **Descripción**                                                                                     |
-|---------------------------|--------------|-----------------------------------------------------------------------------------------------------|
+| **Fase** | **Duración** | **Descripción** |
+| --- | --- | --- |
 | **1. Introducción**       | 15 min       | Activación de conocimientos previos y motivación sobre la importancia de Grid.                      |
 | **2. Debate Conceptual**  | 30 min       | Discusión de características, ventajas y ejemplos reales de CSS Grid.                               |
 | **3. Demo Técnica**       | 20 min       | Ejemplificación en vivo de la sintaxis de Grid y resolución de layout con múltiples secciones.      |
 | **4. Laboratorio**        | 100 min      | Implementación práctica con 3 checkpoints: diseño de layouts, corrección grupal y optimización.     |
 | **5. Cierre**             | 15 min       | Conclusiones, retroalimentación y preparación para la siguiente clase (Frameworks CSS Modernos).    |
+
+---
+
+## 📌 Preparación para la clase
+
+> Antes de llegar a clase, piensa en estas preguntas y conversa con tus compañeros o una IA si lo deseas:
+
+#### 🧠 Lista de Mitos y Verdades para Analizar
+1. "CSS Grid reemplaza totalmente la necesidad de Flexbox"
+2. "Grid no es todavía una tecnología estable y confiable para proyectos en producción"
+3. "Usar `display: grid;` garantiza automáticamente que tu sitio sea responsive"
+4. "El uso de Grid Template Areas no aporta un valor real; es solo un ‘alias’ de filas y columnas"
+5. "Las propiedades de alineación (justify-content, align-content) no funcionan igual en Grid que en Flexbox"
+6. "Para layouts simples, Grid es demasiado complejo y no vale la pena"
+7. "Combinar Grid y Flexbox en un mismo proyecto genera confusión y no es recomendable"
+
+> **Identifica** cuáles crees que son mitos y cuáles son verdades. Prepárate para justificar tus respuestas con evidencia de lecturas o experiencias.
+
+#### 📚 Recursos sugeridos
+
+1. **"Guía Completa de CSS Grid" en CSS-Tricks**  
+   [https://css-tricks.com/snippets/css/complete-guide-grid/](https://css-tricks.com/snippets/css/complete-guide-grid/){:target="_blank"}  
+
+2. **"Aprendiendo CSS Grid" (MDN Web Docs)**  
+   [https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout){:target="_blank"}  
+
+3. **"Layout moderno con CSS Grid" (Blog de CanIUse)**  
+   [https://blog.caniuse.com/layout-modern-css-grid/](https://blog.caniuse.com/layout-modern-css-grid/){:target="_blank"}  
 
 ---
 
@@ -60,7 +82,3 @@ Al concluir la Clase 03, los estudiantes habrán aprendido los fundamentos de **
 - **Fraction (fr) Unit**: Unidad de Grid que representa una fracción del espacio disponible en el contenedor.
 - **Implicit vs. Explicit Grid**: Diferenciación entre las celdas definidas en la declaración de grid y las filas/columnas que se crean automáticamente.
 - **Auto-Placement**: Mecanismo de CSS Grid para ubicar items automáticamente según la configuración declarada.
-
----
-
-Al finalizar esta sesión, los estudiantes estarán listos para adoptar **Frameworks CSS Modernos** en la siguiente clase, habiendo dominado los fundamentos de Grid para estructurar proyectos de manera organizada, eficiente y escalable.
