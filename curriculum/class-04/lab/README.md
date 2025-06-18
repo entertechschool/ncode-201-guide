@@ -1,56 +1,126 @@
 # Laboratorio 04: Frameworks CSS Modernos
 
-¡Bienvenido al cuarto laboratorio del proyecto **Product Landing Page**! En este paso nos enfocaremos en integrar frameworks CSS modernos, combinando **Bootstrap** y **Tailwind CSS** para mejorar la apariencia y la eficiencia del desarrollo web.
+En este laboratorio integrarás **Bootstrap** y **Tailwind CSS** en tu Product Landing Page, aprendiendo a usar componentes y utilidades predefinidas para agilizar tu desarrollo.
 
-> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 30 y 60 minutos). Mantenerse al día con estos checkpoints es clave para aprovechar el feedback y las discusiones grupales.
+### 🎯 Objetivos de Aprendizaje
 
-## 🎯 **Objetivos de Aprendizaje**
+* Integrar frameworks CSS modernos para estilizar interfaces.
+* Aplicar componentes y clases de utilidad.
+* Utilizar ramas de Git para organizar el trabajo.
 
-1. Integrar frameworks CSS modernos para estilizar interfaces.
-2. Aplicar componentes predefinidos y utilidades para agilizar el desarrollo.
-3. Trabajar con ramas en Git.
+### 🔑 Conceptos Clave
 
-## 🔑 **Conceptos Clave**
+* **Component Class:** Componentes preconstruidos como botones, tarjetas y menús, que aceleran la maquetación.
+* **Utility Class:** Clases específicas que permiten aplicar estilos directamente desde HTML.
+* **Rama (Branch):** Línea de desarrollo paralela en Git para trabajar sin afectar la versión principal.
 
-1. **Components Class:** Uso de componentes predefinidos como botones, tarjetas y menús de navegación para agilizar el desarrollo.
-2. **Utility Class:** Aplicación de clases de utilidad para ajustes rápidos de diseño, espaciado, alineación y colores.
-3. **Rama:** Línea independiente de desarrollo dentro del repositorio Git, utilizada para trabajar en funcionalidades específicas.
+---
 
-## ⚙️ **Setup Inicial**
+## Parte 1 – Ramas y Setup de Bootstrap
 
-1. **Repositorio**  
-   - Usa el repositorio del proyecto `product-landing-page`.
-   - Crea dos ramas específicas: `bootstrap` para la página de Compra y `tailwind` para las páginas de Landing Page y Testimonios.
+> Requisitos previos: Tener el repositorio base actualizado.
 
-2. **Instalación del Framework:**
-   - Configura Bootstrap 5 mediante CDN o NPM.
-   - Integra Tailwind CSS para personalización adicional.
+1. Crea y cámbiate a una rama nueva:
 
-## 🛠️ **Requerimientos Técnicos**
+```bash
+git checkout -b bootstrap
+```
 
-1. **Página de Compra:** Utiliza Bootstrap para proporcionar una apariencia más convencional y generar confianza en el proceso de compra. Desarrolla esta parte en la rama `bootstrap`.
-2. **Landing Page principal y Testimonios:** Usa Tailwind CSS para estilizar estas páginas, permitiendo un diseño más libre y creativo. Desarrolla esta parte en la rama `tailwind`.
-3. **Mezclar ramas:** Al terminar los trabajos en la rama `bootstrap`, sube tus cambios al repositorio remoto, y genera un Pull Request hacia la rama principal `main`. **Para hacer esto con la rama `tailwind` necesitarás hacer un proceso adicional con ayuda de tu instructor**.
+2. Abre `compra.html` y enlaza Bootstrap desde CDN:
 
-## 🌟 **Logros Adicionales**
+```html
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+```
 
-- **Logro 1: Personalización de Colores**  
-Configura la paleta de Bootstrap adaptarla al branding del producto.
+3. Reestructura el layout usando clases de Bootstrap (`container`, `row`, `col`, `card`, `btn`, etc.).
 
-- **Logro 2: Animaciones y Transiciones**  
-Implementa animaciones sutiles utilizando las clases de tailwind.
+> Tip: Usa los componentes oficiales de Bootstrap desde [getbootstrap.com](https://getbootstrap.com).
 
-## 📝 **Instrucciones de Entrega**
+🏆 **Reto autónomo:**
 
-1. **Documentación en README**  
-    - Responde con qué librería/framework te sentiste más cómodo trabajando y por qué (Bootstrap / Tailwind CSS).
-    - Muestra los comandos utilizados para crear, cambiar y fusionar las ramas.
+* Personaliza los colores del botón principal adaptándolo al branding del producto mediante variables de Bootstrap.
 
-2. **Despliegue**  
-    - Actualiza la versión desplegada en GitHub Pages.
+---
 
-3. **Entrega Final**  
-    - URL del repositorio
-    - URL del sitio desplegado en GitHub Pages
+## Parte 2 – Tailwind CSS en Landing Page y Testimonios
 
+1. Asegúrate de estar en la rama `main` antes de crear la nueva rama:
 
+```bash
+git checkout main
+git pull
+```
+
+2. Luego crea y cámbiate a la rama:
+
+```bash
+git checkout -b tailwind
+```
+
+3. Configura Tailwind CSS (usando CDN o instalación simple):
+
+```html
+<script src="https://cdn.tailwindcss.com"></script>
+```
+
+4. Aplica clases utilitarias en `index.html` y `testimonios.html` para organizar y estilizar la página.
+
+> Tip: Usa la documentación oficial [tailwindcss.com/docs](https://tailwindcss.com/docs) para copiar clases rápidas.
+
+🏆 **Reto autónomo:**
+
+* Aplica una animación sutil en los botones de la sección “Características” y en las tarjetas de testimonios.
+
+---
+
+## Parte 3 – Fusión de ramas y Pull Request
+
+1. Sube ambas ramas al repositorio remoto:
+
+```bash
+git push origin bootstrap
+git push origin tailwind
+```
+
+2. En GitHub, crea un Pull Request desde `bootstrap` hacia `main`.
+
+   * Revísalo, valida los cambios y haz el merge.
+
+3. Luego cambia a `main`, actualízala y crea otro Pull Request desde `tailwind`:
+
+```bash
+git checkout main
+git pull origin main
+```
+
+4. Resuelve cualquier conflicto si aparece, o pide apoyo a tu instructor para completar la fusión.
+
+> Tip: Siempre actualiza tu rama `main` antes de fusionar nuevas ramas para evitar sobrescribir cambios.
+
+🏆 **Reto autónomo:**
+
+* Crea una nueva rama `landing-v2` desde `main` e implementa una mejora visual que hayas aprendido, como reorganizar secciones con clases utilitarias nuevas.
+
+---
+
+## ⭐ Logros Adicionales
+
+### 🏆 Logro 1: Personalización de Bootstrap
+
+* Cambia colores y tipografía mediante variables CSS.
+
+### 🏆 Logro 2: Microinteracciones con Tailwind
+
+* Usa `transition`, `hover`, `ease-in-out`, etc., para enriquecer botones y tarjetas.
+
+---
+
+## 📝 Instrucciones de Entrega
+
+* Actualiza el README incluyendo:
+  * Qué framework te resultó más cómodo y por qué.
+  * Comandos usados para trabajar con ramas.
+* Publica el proyecto actualizado en GitHub Pages.
+* Entrega:
+  * URL del repositorio
+  * URL del despliegue en GitHub Pages

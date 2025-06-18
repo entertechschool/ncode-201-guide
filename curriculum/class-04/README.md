@@ -9,11 +9,11 @@ En la Clase 04 se exploran los frameworks **Bootstrap** y **Tailwind CSS** como 
 
 | **Fase** | **Duración** | **Descripción** |
 | --- | --- | --- |
-| **1. Introducción** | 15 min | Activación de conocimientos previos y motivación sobre el uso de frameworks CSS. |
-| **2. Debate Conceptual** | 30 min | Discusión sobre Bootstrap vs. Tailwind CSS y las ventajas de cada uno. |
-| **3. Demo Técnica** | 20 min | Ejemplificación en vivo del uso de clases de componentes y de utilidad, y flujo de trabajo con Git. |
-| **4. Laboratorio** | 100 min | Implementación práctica con Bootstrap y Tailwind, y gestión de ramas en Git. |
-| **5. Cierre** | 15 min | Conclusiones, retroalimentación y preparación para el proyecto final del curso. |
+| **1. Introducción y contexto** | 15 min | Presentación del objetivo: usar frameworks CSS para maquetar más rápido. Comparación inicial entre CSS tradicional, Bootstrap y Tailwind. |
+| **2. Parte 1 – Rama Bootstrap y componentes convencionales** | 40 min | Crear rama `bootstrap`, aplicar componentes predefinidos en la página de compra (tarjetas, botones, formularios). |
+| **3. Parte 2 – Rama Tailwind y layout personalizado** | 40 min | Crear rama `tailwind` desde `main`, aplicar clases utilitarias en la landing page y testimonios. |
+| **4. Parte 3 – Pull Requests y gestión de ramas** | 60 min | Subir ramas, generar Pull Requests hacia `main`, resolver conflictos y practicar flujo colaborativo. |
+| **5. Cierre y Síntesis** | 15 min | Discusión comparativa Bootstrap vs Tailwind, revisión de ramas, experiencia con frameworks y Git. |
 
 ---
 

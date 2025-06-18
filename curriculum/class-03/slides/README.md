@@ -28,7 +28,7 @@ Diseñar y maquetar páginas web responsivas utilizando **CSS Grid**, organizand
 
 ## Ejemplo de un layour con Grid
 
-![wirefram_grid](../lab/wireframes.png)
+![wireframe_grid](./wireframe.png)
 
 ---
 

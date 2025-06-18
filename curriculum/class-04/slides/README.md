@@ -1,131 +1,98 @@
-# Clase 201-04: Frameworks CSS Modernos
+# Clase 04 – Frameworks CSS Modernos
 
-## Enter Tech School
+## 🎯 Objetivo General
 
----
-
-## Agenda
-
-- ¿Qué es React?
-- Componentes y JSX
-- Estado y Propiedades
-- Ejercicio Práctico
+Explorar y aplicar frameworks CSS modernos como **Bootstrap** y **Tailwind CSS** para agilizar la creación de interfaces visuales en el proyecto de la Landing Page.
 
 ---
 
-## ¿Qué es React?
+## 💡 ¿Por qué usar Frameworks CSS?
 
-- Biblioteca JavaScript para construir interfaces de usuario
-- Desarrollada por Facebook (ahora Meta)
-- Basada en componentes reutilizables
+* Aceleran el desarrollo usando componentes preconstruidos.
+* Garantizan consistencia visual sin escribir todo desde cero.
+* Permiten enfocarse en estructura y accesibilidad.
 
---
-
-### Ventajas de React
-
-- Virtual DOM para renderizado eficiente
-- Flujo de datos unidireccional
-- Gran ecosistema y comunidad
-- Compatible con otras bibliotecas/frameworks
+> "Los frameworks CSS son como tener una caja de herramientas lista: solo necesitas ensamblar las piezas."
 
 ---
 
-## Componentes y JSX
+## 🛠️ Bootstrap vs Tailwind
 
-```jsx
-// Un componente funcional simple
-function Saludo(props) {
-  return <h1>¡Hola, {props.nombre}!</h1>;
-}
+| Característica       | Bootstrap                    | Tailwind CSS                    |
+| -------------------- | ---------------------------- | ------------------------------- |
+| Estilo               | Prediseñado                  | Altamente personalizable        |
+| Filosofía            | Componentes listos para usar | Utilidades que componen estilos |
+| Curva de aprendizaje | Más suave para principiantes | Requiere conocer muchas clases  |
+| Flexibilidad         | Limitada sin sobrescribir    | Alta, desde el HTML             |
 
-// Uso del componente
-<Saludo nombre="Estudiante" />
+---
+
+## 🔢 Parte 1: Bootstrap y Rama `bootstrap`
+
+### Componente: Tarjeta de Producto
+
+```html
+<div class="card" style="width: 18rem;">
+  <img src="img/producto.jpg" class="card-img-top" alt="Imagen del producto">
+  <div class="card-body">
+    <h5 class="card-title">Producto Destacado</h5>
+    <p class="card-text">Descripción breve del producto.</p>
+    <a href="#" class="btn btn-primary">Comprar ahora</a>
+  </div>
+</div>
 ```
 
---
-
-### Tipos de componentes
-
-1. **Componentes funcionales**:
-   - Más simples y modernos
-   - Usan Hooks para estado y efectos
-
-2. **Componentes de clase**:
-   - Tradicionales
-   - Métodos de ciclo de vida
+> Tip: Copia componentes desde [getbootstrap.com](https://getbootstrap.com) y adáptalos a tu proyecto.
 
 ---
 
-## Estado y Props
+## 🔢 Parte 2: Tailwind CSS en la Rama `tailwind`
 
-- **Props**: Datos pasados de un componente padre a hijo
-- **Estado**: Datos gestionados dentro del componente
+### Componente: Testimonio
 
---
-
-### Ejemplo de Estado (Hooks)
-
-```jsx
-import React, { useState } from 'react';
-
-function Contador() {
-  // Declara una variable de estado llamada "contador"
-  const [contador, setContador] = useState(0);
-
-  return (
-    <div>
-      <p>Has hecho clic {contador} veces</p>
-      <button onClick={() => setContador(contador + 1)}>
-        Haz clic
-      </button>
-    </div>
-  );
-}
+```html
+<div class="bg-white p-6 rounded-lg shadow-md max-w-sm">
+  <h2 class="text-xl font-bold mb-2">Testimonio</h2>
+  <p class="text-gray-700">“Este producto superó mis expectativas.”</p>
+  <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Leer más
+  </button>
+</div>
 ```
 
+> Tip: Usa clases como bloques de Lego. La documentación en [tailwindcss.com/docs](https://tailwindcss.com/docs) te muestra todo lo que puedes construir.
+
 ---
 
-## Ejercicio Práctico
+## 📂 Parte 3: Ramas y Pull Requests
 
-Crear un componente `TarjetaUsuario` que:
+1. Sube ambas ramas:
 
-1. Reciba props para nombre, email y avatar
-2. Tenga un estado para "mostrar detalles"
-3. Muestre u oculte el email al hacer clic
-
---
-
-### Solución
-
-```jsx
-function TarjetaUsuario({ nombre, email, avatar }) {
-  const [mostrarDetalles, setMostrarDetalles] = useState(false);
-  
-  return (
-    <div className="tarjeta">
-      <img src={avatar} alt={nombre} />
-      <h3>{nombre}</h3>
-      
-      {mostrarDetalles && <p>{email}</p>}
-      
-      <button onClick={() => setMostrarDetalles(!mostrarDetalles)}>
-        {mostrarDetalles ? 'Ocultar detalles' : 'Mostrar detalles'}
-      </button>
-    </div>
-  );
-}
+```bash
+git push origin bootstrap
+git push origin tailwind
 ```
 
+2. Crea un Pull Request de `bootstrap` a `main`. Revisa, comenta y fusiona.
+
+3. Luego, cambia a `main` y crea un Pull Request desde `tailwind`. Revisa conflictos o solicita ayuda si es necesario.
+
+```bash
+git checkout main
+git pull origin main
+```
+
+> Tip: Siempre sincroniza tu rama `main` antes de comenzar una nueva para evitar conflictos más adelante.
+
 ---
 
-## Recursos Adicionales
+## 🤔 Discusión Final
 
-- [Documentación oficial de React](https://reactjs.org/)
-- [Tutorial de React](https://reactjs.org/tutorial/tutorial.html)
-- [Create React App](https://create-react-app.dev/)
+* ¿Qué diferencias notaste entre Bootstrap y Tailwind?
+* ¿Con cuál te sentiste más cómodo al estilizar?
+* ¿Qué parte del trabajo con ramas en Git te pareció más desafiante?
 
----
-
-# ¡Gracias!
-
-## ¿Preguntas?
+> **Reflexiones:**
+>
+> * ¿Cuál framework usarías en tu próximo proyecto y por qué?
+> * ¿Qué superpoder visual sentiste que ganaste hoy?
