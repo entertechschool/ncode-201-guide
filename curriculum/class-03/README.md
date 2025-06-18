@@ -9,11 +9,12 @@ En esta clase profundizamos en el sistema de **CSS Grid Layout**, proporcionando
 
 | **Fase** | **Duración** | **Descripción** |
 | --- | --- | --- |
-| **1. Introducción**       | 15 min       | Activación de conocimientos previos y motivación sobre la importancia de Grid.                      |
-| **2. Debate Conceptual**  | 30 min       | Discusión de características, ventajas y ejemplos reales de CSS Grid.                               |
-| **3. Demo Técnica**       | 20 min       | Ejemplificación en vivo de la sintaxis de Grid y resolución de layout con múltiples secciones.      |
-| **4. Laboratorio**        | 100 min      | Implementación práctica con 3 checkpoints: diseño de layouts, corrección grupal y optimización.     |
-| **5. Cierre**             | 15 min       | Conclusiones, retroalimentación y preparación para la siguiente clase (Frameworks CSS Modernos).    |
+| **1. Introducción y contexto**  | 15 min  | Presentación del objetivo: maquetar páginas con Grid. Revisión rápida del rol de Grid frente a Flexbox. |
+| **2. Parte 1 – Crear nuevas páginas y layout base con Grid** | 40 min  | Creación de `testimonios.html` y `compra.html`, aplicación de `grid-template-areas`, y estructura semántica común. |
+| **3. Parte 2 – Página de Testimonios**   | 40 min  | Implementar tarjetas de testimonios y sidebar con filtros usando Grid. |
+| **4. Parte 3 – Página de Compra y Media Queries** | 60 min  | Maquetar layout de compra y aplicar media queries para responsividad.  |
+| **5. Cierre y Síntesis** | 15 min  | Reflexión final sobre Grid, revisión de retos, validación visual y entrega. |
+
 
 ---
 

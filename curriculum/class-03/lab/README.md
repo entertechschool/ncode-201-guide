@@ -1,106 +1,142 @@
 ﻿# Laboratorio 03: CSS Layout con Grid
 
-En este tercer laboratorio de tu **Product Landing Page**, aplicaremos los conocimientos debatidos en la sesión anterior sobre **CSS Grid**, a la que en este documento nos referiremos como “grilla”. A lo largo de la práctica, seguirás consolidando la base de accesibilidad y semántica que construiste en laboratorios previos y, ahora, crearás **un layout dinámico** con **barra superior (navbar)** y **barra lateral (sidebar)**, especialmente para las nuevas páginas de “Testimonios” y "Comprar".
+En este laboratorio vamos a aplicar **CSS Grid** para diseñar un layout con **navbar** y **sidebar**. Creamos dos nuevas páginas: "Testimonios" y "Compra", fortaleciendo los principios de accesibilidad y semántica.
 
-> ⏱️ **Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (aprox. a los 30, 50 y 80 minutos). Participar activamente en ellos te permitirá intercambiar criterios con tus compañeros e instructor, reforzando la conexión entre la **Lectura y Debate** y la **Implementación Práctica**.
+---
 
-## 🎯 Objetivos de Aprendizaje
+### 🎯 Objetivos de Aprendizaje
 
-1. Comprender la esencia de CSS Grid
-2. Diseñar Layouts complejos y responsivos con Grid
-3. Aplicación en un escenario real
+* Comprender cómo usar CSS Grid para maquetar.
+* Diseñar layouts responsivos con navbar y sidebar.
+* Mantener accesibilidad y estructura semántica.
 
-## 🔑 Conceptos Clave
+### 🔑 Conceptos Clave
 
-- **Contenedor y Elementos Grid**
-- **Filas, Columnas y Áreas**  
-- **Espaciado y Alineación**  
-- **Responsividad y Adaptabilidad**
+* **Contenedor Grid y elementos hijos**: El contenedor define el sistema de grilla y los hijos se acomodan en sus celdas.
+* **Grid Template Areas y repeat()**: Permiten nombrar y repetir secciones de la grilla para facilitar el diseño.
+* **Responsividad con media queries**: Permiten adaptar el layout según el ancho del dispositivo.
+* **Semántica y Accesibilidad**: Usar etiquetas y atributos que mejoran la experiencia para todos los usuarios.
 
-## ⚙️ Setup Inicial
+---
 
-1. **Repositorio**  
-   - Continúa trabajando en tu mismo repositorio local.  
-   - Asegurate de tener actualizado el repositorio con `git pull`.
+## Parte 1 – Estructura y Nuevas Páginas
 
-2. **Archivos y Estructura**  
-   Tu proyecto debería lucir así:
-   ```
-   product-landing-page/
-   ├── index.html
-   ├── testimonios.html  <-- nueva página de testimonios
-   ├── compra.html  <-- nueva página de compra
-   ├── css/
-   │   └── styles.css
-   ├── img/
-   └── README.md
-   ```
+> Requisitos previos: Tener el repositorio de la Landing Page.
 
-## 📋 Historias de Usuario
+1. Agrega dos archivos nuevos:
 
-1. **HU1: Página de Testimonios**  
-   > *"Como usuario, deseo ver una página aparte de testimonios organizada en una grilla con una **barra superior** (navbar) y un **sidebar** de filtros, para poder navegar y filtrar los comentarios fácilmente."*  
-   - **Criterios de Aceptación**:  
-     - Barra superior fija (o anclada) en la parte superior de la página.  
-     - Sidebar a la izquierda en pantallas grandes y reacomodado debajo del navbar en pantallas pequeñas.  
-     - Sección central que muestre los testimonios de forma clara (tarjetas o lista).  
-     - El DOM debe mantener una estructura semántica (nav, aside, main).  
+   * `testimonios.html`
+   * `compra.html`
 
-2. **HU2: Página de Compra**  
-   > *"Como cliente, necesito acceder a una página de compra que incluya un layout con navbar y sidebar, para conocer los detalles del producto y finalizar mi adquisición de manera intuitiva."*  
-   - **Criterios de Aceptación**:  
-     - Navbar en la parte superior para la navegación general.  
-     - Sidebar con opciones o pasos de compra (e.g., selección de variantes, cálculo de envío, métodos de pago), aunque no sean funcionales aún.  
-     - Sección principal para mostrar el resumen del producto y un formulario o botón para completar la compra (simulado).  
-     - Responsividad: en pantallas pequeñas, el sidebar se reubica para no dificultar la visualización principal.  
+2. Estructura inicial en HTML para ambas páginas:
 
-3. **HU3: Layout Responsivo en Todas las Páginas**  
-   > *"Como usuario que navega desde un teléfono, quiero que **todas las páginas del sitio** se adapten al ancho de mi dispositivo, evitando el scroll horizontal y manteniendo la accesibilidad."*  
-   - **Criterios de Aceptación**:  
-     - Uso de CSS Grid con breakpoints (media queries) para reorganizar las columnas en una sola columna cuando el ancho sea reducido.  
-     - Preservar etiquetas semánticas (header, nav, main, aside, footer, etc.) y atributos de accesibilidad (`alt` en imágenes, roles si aplican).  
-     - El contenido debe conservar márgenes o espacios adecuados (`gap`, `padding`) que faciliten la lectura y la interacción en pantalla pequeña.
+```html
+<body>
+  <header>...</header>
+  <nav>...</nav>
+  <aside>...</aside>
+  <main>...</main>
+  <footer>...</footer>
+</body>
+```
 
-## Wireframes de referencia
+3. Aplica `display: grid` en el `body` o contenedor principal con áreas de grilla.
 
-![wireframes](./wireframes.png)
+```css
+body {
+  display: grid;
+  grid-template-areas: 
+    "header header"
+    "nav nav"
+    "sidebar main"
+    "footer footer";
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
+}
+```
 
-## ☑️ Requerimientos Técnicos
+> Tip: Usa `grid-template-areas` para mantener tu layout visualmente organizado.
 
-1. **Uso de CSS Grid en Todas las Páginas:**  
-   - Cada página (incluyendo la principal, la de testimonios y la de compra) debe implementar un contenedor con `display: grid;` para organizar la barra superior, la barra lateral y la sección central.
+🏆 **Reto autónomo:**
 
-2. **Navbar y Sidebar Responsivos:**  
-   - La barra superior (navbar) se mantendrá en la parte superior.  
-   - El sidebar se ubicará a la izquierda en pantallas grandes y se reacomodará debajo del navbar en pantallas pequeñas, evitando scroll horizontal.
+* Aplica esta estructura también a `index.html` para unificar el layout del sitio completo.
 
-3. **Media Queries para Breakpoints Móviles:**  
-   - Definir al menos un breakpoint que reorganice la grilla a una sola columna (o mínima cantidad de columnas) cuando el ancho de la ventana sea reducido.  
-   - Ajustar tipografía, espaciados (`gap`, `padding`) y disposición para mejorar la usabilidad en dispositivos móviles.
+---
 
-4. **Estructura Semántica y Accesible:**  
-   - Mantener etiquetas como `<header>`, `<nav>`, `<aside>`, `<main>`, `<footer>` donde corresponda, y utilizar atributos de accesibilidad (p.ej. `aria-label`, `alt` en imágenes).  
-   - Verificar que la posición visual con Grid no afecte el orden lógico en el DOM para lectores de pantalla.
+## Parte 2 – Layout de Testimonios
 
-5. **Contenido Representativo en Testimonios y Compra:**  
-   - En la página de **Testimonios**, mostrar al menos un listado o tarjetas con comentarios de usuarios y filtros simulados en el sidebar.  
-   - En la página de **Compra**, incluir un resumen de producto y pasos de compra (opciones de envío, métodos de pago, etc.) para validar la coherencia del layout y la responsividad.
+1. En `testimonios.html`, crea tarjetas de testimonios dentro del `<main>`.
+2. Sidebar con opciones para filtrar testimonios (simulado).
+3. Navbar superior con enlaces principales.
 
-## ⭐️ Logros Adicionales
+```css
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+```
 
-1. **Logro 1: Botón “Comprar” con Mensaje Predeterminado en WhatsApp**  
-   - Implementar un **botón** en la página de Compra que, al hacer clic, redireccione a **WhatsApp Web** (o la app móvil) abriendo la conversación con un número predeterminado.  
-   - Incluir un **mensaje inicial** automático (p. ej. “Hola, vengo desde la página de Compra y me interesa este producto.”), asegurándose de abrir el enlace en una **nueva pestaña** o ventana.
+> Tip: Usa `gap` en lugar de `margin` para separar tarjetas dentro de la grilla.
 
-2. **Logro 2: Personalizar el Mensaje con Opciones Seleccionadas**  
-   - Ajustar la **URL de WhatsApp** para que el **mensaje predeterminado** incluya las opciones elegidas en la página de Compra (por ejemplo, color, tamaño, método de envío).  
-   - Permitir que el texto del botón o el mensaje se actualice dinámicamente según las variables del producto, brindando al cliente un **resumen de su selección** antes de confirmar la compra via WhatsApp.
+🏆 **Reto autónomo:**
+
+* Diseña el sidebar con una sección "Filtrar por categoría" usando listas accesibles (`<ul>` + roles si aplica).
+
+---
+
+## Parte 3 – Layout de Compra y Grid Responsivo
+
+1. En `compra.html`, crea una sección central con resumen de producto y formulario de compra.
+2. Sidebar con pasos de compra (simulado): opciones, envío, pago.
+3. Agrega media queries para reorganizar el grid en pantallas pequeñas:
+
+```css
+@media (max-width: 768px) {
+  body {
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "sidebar"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+}
+```
+
+> Tip: Usa media queries para adaptar el contenido sin perder estructura ni legibilidad.
+
+🏆 **Reto autónomo:**
+
+* Agrega un botón de "Comprar por WhatsApp" con un enlace que incluya un mensaje automático.
+
+---
+
+## ⭐ Logros Adicionales
+
+### Logro 1: WhatsApp con mensaje predeterminado
+
+* Botón en la página de compra que abre WhatsApp con un mensaje como:
+
+```html
+<a href="https://wa.me/51999999999?text=Hola,%20me%20interesa%20el%20producto." target="_blank">
+  Comprar por WhatsApp
+</a>
+```
+
+### Logro 2: Personalización del mensaje
+
+* Hacer que el mensaje se actualice según selección del usuario (color, envío, pago).
+* Puede simularse con valores estáticos en una versión inicial.
+
+---
 
 ## 📝 Instrucciones de Entrega
 
-2. **Despliegue**  
-   - Publica la nueva versión en GitHub Pages.
+* Publica tu sitio actualizado en GitHub Pages.
+* Asegúrate que `testimonios.html`, `compra.html` y `index.html` compartan el layout Grid.
+* Entrega:
 
-3. **Entrega Final**  
-   - URL del repositorio  
-   - URL de la página desplegada
+  * URL del repositorio
+  * URL del sitio en GitHub Pages
