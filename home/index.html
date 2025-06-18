@@ -71,11 +71,12 @@
             .then(response => response.json())
             .then(data => {
                 const section = data[0];
-                const { course_name, course_description, zoom_link, whatsapp_link, calendar_link, instructor_name, instructor_email, instructor_phone, instructor_image } = section;
+                const { course_name, course_description, zoom_link, whatsapp_link, calendar_link, class_schedule, instructor_name, instructor_email, instructor_phone, instructor_image } = section;
                 
                 // Actualizar el contenido de la página con los datos obtenidos
                 document.querySelector('h1').textContent = course_name;
                 document.querySelector('p#course-description').textContent = course_description;
+                document.querySelector('p#class-schedule').textContent = class_schedule;
                 document.querySelector('a#zoom-link').href = zoom_link;
                 document.querySelector('a#whatsapp-link').href = whatsapp_link;
                 document.querySelector('a#calendar-link').href = calendar_link;
