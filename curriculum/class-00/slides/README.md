@@ -171,15 +171,17 @@ capaz de construir aplicaciones web interactivas, con pensamiento crítico y apo
 ## Evaluación y Promedio final
 
 - Nota de cada Módulo:
-    - Asistencia y Participación: 30%
-    - Cumplimiento de Entregables: 20%
-    - Proyecto Integrador: 50%
+    - AP: Asistencia y Participación: 30%
+    - CE: Cumplimiento de Entregables: 20%
+    - PI: Proyecto Integrador: 50%
+> Nota del módulo = 0.3*AP + 0.2*CE + 0.5PI
 
 - Nota Final:
-    - Promedio de los 4 módulos: 40%
-    - Nota del Proyecto Final (Módulo 5): 60% 
+    - PM: Promedio de los 4 módulos: 40%
+    - PF: Nota del Proyecto Final (Módulo 5): 60%
+> Nota Final = 0.4*PM + 0.6*PF
 
-> 🏆 **La nota mínima aprobatoria es 70 / 100**
+> 🏆 **La nota final mínima aprobatoria es 70 / 100**
 
 ---
 

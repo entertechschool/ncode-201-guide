@@ -42,15 +42,12 @@
 ## 🧪 Laboratorio - Estructura Inicial
 
 * Repositorio: `product-landing-page`
-* Archivos mínimos: `index.html`, `styles.css`, carpeta `img`
-* Markup base en HTML + estilo inicial
 
-**Checkpoints:** 30', 50', 80'
-
-> 📦 Entrega y Documentación
-
-* README explicando estructura semántica
-* URL del repositorio + GitHub Pages desplegado
+- Parte 1: Estructura base del proyecto recordando Git y Github.
+- Parte 2: Estructura Semántica.
+- Parte 3: Atributos de accesibilidad Básica.
+- Parte 4: Programando con IA.
+- ⭐️ 2 Logros Adicionales.
 
 ---
 

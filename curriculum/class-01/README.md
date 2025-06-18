@@ -20,6 +20,16 @@ Posteriormente, en el laboratorio, implementan una estructura web semántica acc
 | **4. Laboratorio**       | 100 min      | Desarrollo de una página HTML con tres checkpoints colaborativos (30, 50 y 80 min).                    |
 | **5. Cierre**            | 15 min       | Retroalimentación cruzada, resolución de dudas y conexión con la clase siguiente.                      |
 
+
+| **Fase**   | **Duración** | **Descripción** |
+| --- | --- | --- |
+| **1. Introducción y Contexto de la clase** | 15 min | Se plantea el objetivo de hacer accesible un sitio web. Se discuten ejemplo del alcance y poder de la IA en el desarrollo de código. |
+| **2. Parte 1**   | 45 min | Crear la estructura base del proyecto recordando Git y Github. |
+| **3. Parte 2**   | 45 min | Aplicamos estructura Semántica a la Landing Page.   |
+| **5. Break 2**   | 10 min | Segundo Descanso      |
+| **6. Parte 3**   | 50 min | Estado global con `zustand`: creación de store con middleware `persist`, reemplazo de `useContext`, demostración de persistencia tras reload y limpieza de props innecesarias.    |
+| **7. Síntesis**  | 10 min | Revisión colectiva de decisiones técnicas: se invita a reflexionar cuál de las tres integraciones representa un salto profesional más decisivo y por qué. |
+
 ---
 
 ## 📌 Preparación para la clase
