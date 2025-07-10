@@ -1,143 +1,271 @@
-﻿# Guía de Facilitación - Clase 06: Programación Funcional en JavaScript
+﻿# Guía del Facilitador: Programación Funcional
 
-## ❄️ Previo a la clase:
+## 1. El momento pedagógico clave
 
-### Estructura resumida
+Los estudiantes llegan a esta clase habiendo dominado la programación imperativa desde la clase anterior, donde construyeron lógica paso a paso modificando variables directamente. El momento de transformación conceptual que defines aquí es el "click" donde comprenden que pueden resolver problemas sin modificar el estado original de los datos. Este paradigm shift representa el paso de pensar en "instrucciones secuenciales" a "transformaciones de datos".
 
-| **Fase** | **Descripción** |
-| --- | --- |
-| **[Intro](#1-intro-15-min)**<br>15min | Contextualización, conexión con la programación imperativa y activación de conocimientos previos.<br>🎯 Reforzar la importancia del paradigma funcional en el desarrollo moderno de software. |
-| **[Debate y Demo](#2-debate-y-demo-45-min)**<br>45min | Discusión sobre reflexiones clave de la guía de lectura mientras se muestran ejemplos técnicos prácticos en pantalla.<br>🎯 Promover la comprensión profunda mediante análisis crítico de casos reales. |
-| **[Laboratorio](#3-laboratorio-y-checkpoints-100-min)**<br>100 min | Implementación práctica del paradigma funcional en JavaScript, trabajando en el proyecto "Personal Budget" con checkpoints claros:<br>- ☑️ [30'] Funciones puras y uso de `map()`<br>- ☑️ [60'] Implementación de `filter()` y `find()` |
-| **[Cierre](#3-cierre-15-min)**<br>15 min | Retroalimentación, conclusiones del día y preparación hacia la próxima sesión sobre programación orientada a objetos. |
+```javascript
+// ANTES: Pensamiento imperativo (clase anterior)
+let totalIngresos = 0;
+for (let i = 0; i < movimientos.length; i++) {
+  if (movimientos[i].tipo === 'ingreso') {
+    totalIngresos += movimientos[i].valor; // ❌ Modifica estado externo
+  }
+}
 
----
+// DESPUÉS: Pensamiento funcional (esta clase)
+const totalIngresos = movimientos
+  .filter(mov => mov.tipo === 'ingreso')    // 🔄 Filtra sin modificar original
+  .map(mov => mov.valor)                    // 🔄 Extrae valores
+  .reduce((total, valor) => total + valor, 0); // 🔄 Suma sin efectos secundarios
+```
 
-## Estrategias de Enseñanza y Aprendizaje  
-> 📕 Basado en Principios de Andragogía
+Este cambio fundamental los prepara para React (donde la inmutabilidad es crítica), arquitecturas modernas de frontend, y patrones profesionales donde la predictibilidad del código es esencial para equipos colaborativos.
 
-1. **Conexión con la Experiencia Previa**  
-   - Inicia conectando con experiencias concretas del laboratorio anterior sobre programación imperativa, destacando cómo el paradigma funcional podría simplificar el manejo de datos y estado.
+## 2. Funciones Puras: Más que eliminación de bugs
 
-2. **Resolución de Problemas Relevantes**  
-   - Destaca cómo empresas reales utilizan programación funcional para reducir errores, facilitar debugging y mejorar la mantenibilidad del código.  
-   - Usa ejemplos prácticos relacionados con la gestión de finanzas personales para conectar inmediatamente con el proyecto “Personal Budget”.
+El concepto de funciones puras trasciende la simple corrección sintáctica y se convierte en filosofía de diseño profesional. En equipos reales, las funciones puras facilitan testing automatizado, debugging colaborativo, y refactoring seguro. Los estudiantes deben comprender que no se trata solo de "reglas académicas", sino de principios que hacen código mantenible en aplicaciones de producción.
 
-3. **Aprendizaje Colaborativo y Autonomía**  
-   - Fomenta que los estudiantes compartan enfoques variados al resolver ejercicios usando métodos funcionales, valorando soluciones creativas y diversas.
-   - Incentiva el uso responsable de IA para generar sugerencias de funciones puras, insistiendo en la revisión crítica de los outputs.
+```javascript
+// Función pura que demuestra principios profesionales
+const calcularRendimientoMensual = (movimientos, mes) => {
+  // ✅ Entrada predecible: mismos parámetros = mismo resultado
+  const movimientosMes = movimientos.filter(mov => 
+    new Date(mov.fecha).getMonth() === mes
+  );
+  
+  const ingresos = movimientosMes
+    .filter(mov => mov.tipo === 'ingreso')
+    .reduce((sum, mov) => sum + mov.valor, 0);
+    
+  const gastos = movimientosMes
+    .filter(mov => mov.tipo === 'gasto')
+    .reduce((sum, mov) => sum + mov.valor, 0);
+  
+  // ✅ Sin efectos secundarios: no modifica arrays originales
+  // ✅ Testeable: fácil escribir unit tests
+  // ✅ Debuggeable: cualquier desarrollador puede razonar sobre el flujo
+  return { ingresos, gastos, balance: ingresos - gastos };
+};
+```
 
-4. **Retroalimentación Inmediata y Reflexión**  
-   - En cada checkpoint valida grupalmente el trabajo realizado, proporcionando retroalimentación específica sobre implementación funcional, claridad y adherencia al paradigma.
-   - Reserva el cierre para consolidar aprendizajes y proyectar aplicaciones futuras de estos conceptos.
+Esta filosofía de diseño los prepara para frameworks donde la inmutabilidad es fundamental (React, Redux) y para arquitecturas modernas donde la composabilidad de funciones permite sistemas escalables.
 
----
+## 3. Métodos Funcionales vs. la complejidad innecesaria
 
-## 🔥 Durante la clase
+En lugar de introducir patrones complejos como map/reduce/filter simultáneamente, priorizamos una progresión pedagógica donde cada método resuelve una necesidad específica y reconocible. Esta decisión evita la "parálisis por análisis" típica de estudiantes que intentan memorizar sintaxis sin comprender propósitos.
 
-### 1. Intro (15 min)
-#### 🎯 Objetivos de Aprendizaje
-> **1. Comprender el paradigma funcional y su diferencia con el paradigma imperativo:**  
-> “El paradigma funcional transforma la manera en que resolvemos problemas en JavaScript. Se centra en funciones puras que no producen efectos secundarios, lo cual garantiza que el código sea más predecible, testeable y sencillo de mantener.”
+```javascript
+// Progresión pedagógica: un concepto por vez
+// 1. EXTRACCIÓN simple con map()
+const nombres = movimientos.map(mov => mov.nombre);
+// "Quiero solo los nombres" → map()
 
-> **2. Aplicar funciones puras para resolver tareas específicas:**  
-> “Las funciones puras siempre devuelven el mismo resultado para un mismo input, lo que simplifica enormemente tareas repetitivas y previene errores asociados a cambios imprevistos en el estado global.”
+// 2. SELECCIÓN condicional con filter()  
+const ingresos = movimientos.filter(mov => mov.tipo === 'ingreso');
+// "Quiero solo los que cumplan X condición" → filter()
 
-> **3. Utilizar funciones de orden superior para transformar datos:**  
-> “Métodos como `map()`, `filter()` y `find()` ofrecen formas más limpias, breves y expresivas de manipular colecciones, facilitando la lectura y el mantenimiento del código.”
+// 3. BÚSQUEDA específica con find()
+const salario = movimientos.find(mov => mov.nombre === 'Salario');
+// "Quiero encontrar uno específico" → find()
 
----
+// 4. COMPOSICIÓN: combinar conceptos dominados
+const promedioPorTipo = (movimientos, tipo) => {
+  const filtrados = movimientos.filter(mov => mov.tipo === tipo);
+  const valores = filtrados.map(mov => mov.valor);
+  const total = valores.reduce((sum, val) => sum + val, 0);
+  return filtrados.length > 0 ? total / filtrados.length : 0;
+};
+```
 
-## 🔥 Desarrollo de la Clase (180 min.)
+Esta aproximación gradual evita abrumar con abstracción prematura mientras construye confianza en cada herramienta individual antes de la composición.
 
-### 1. Intro (15 min)
-- **Contextualización (5 min)**  
-  - Relaciona la sesión anterior sobre programación imperativa y adelanta cómo el paradigma funcional resuelve algunos problemas típicos que se enfrentaron previamente.
+## 4. El método map(): Sintaxis con propósito
 
-- **Activación de conocimientos previos** (10 min):  
-  - Pregunta breve: _“¿Qué dificultades encontraron al usar variables globales o modificar directamente arrays en clases previas?”_  
-  - Conecta esas dificultades con las soluciones que aporta el paradigma funcional.
+Los estudiantes inicialmente perciben `map()` como "sintaxis más complicada" para hacer lo mismo que un loop. La confusión pedagógicamente valiosa surge cuando intentan usar `map()` para operaciones que requieren `filter()` o viceversa. Este es el momento perfecto para consolidar el concepto de "transformación 1:1".
 
-## 💬 2. Debate y Demo (45 min)
-Discusión guiada y demo simultánea.
+```javascript
+// Confusión típica: "¿Por qué map() si for loop es más fácil?"
+// Ejemplo que demuestra el valor de map()
 
-### Debate (25 min)
-**Preguntas para detonar el debate:**  
-- ¿En qué situaciones específicas usarías programación funcional en lugar de imperativa?
-- ¿Qué ventajas prácticas identifican al usar funciones puras para resolver tareas específicas?
-- ¿Qué impacto tiene la inmutabilidad en proyectos reales?
+// ❌ Loop imperativo: enfoque en "cómo"
+const resultados = [];
+for (let i = 0; i < movimientos.length; i++) {
+  resultados.push({
+    descripcion: movimientos[i].nombre,
+    esIngreso: movimientos[i].tipo === 'ingreso',
+    valorFormateado: `$${movimientos[i].valor.toLocaleString()}`
+  });
+}
 
-Anota conclusiones clave en pantalla o pizarrón virtual compartido.
+// ✅ map() funcional: enfoque en "qué"
+const resultados = movimientos.map(mov => ({
+  descripcion: mov.nombre,
+  esIngreso: mov.tipo === 'ingreso',
+  valorFormateado: `$${mov.valor.toLocaleString()}`
+}));
+// Mismo tamaño entrada = mismo tamaño salida (transformación 1:1)
+// Código que expresa intención claramente
+// Fácil de componer con otros métodos
+```
 
-#### 🖥️ Demo Técnica (simultánea al debate, 20 min):
+Esta confusión inicial cataliza la discusión sobre legibilidad, intención del código, y composabilidad - conceptos que serán fundamentales cuando trabajen en equipos.
 
-- Demuestra claramente en pantalla la diferencia entre un código imperativo y uno funcional resolviendo la misma tarea (ejemplo: sumar gastos totales).
-- Muestra claramente el uso práctico de:
-  - `map()` para extraer nombres de objetos.
-  - `filter()` para obtener movimientos mayores a un valor específico.
-  - `find()` para buscar elementos específicos en un array.
-- Explica claramente los conceptos en código y responde dudas técnicas.
+## 5. Inmutabilidad: La unidad fundamental
 
----
+El concepto de immutabilidad trasciende JavaScript y se convierte en patrón de pensamiento que aplicarán en React state management, arquitecturas de datos, y debugging colaborativo. Los estudiantes deben comprender que la immutabilidad no es "complicación académica" sino ventaja competitiva en desarrollo profesional.
 
-## 🚀 3. Laboratorio y Checkpoints (100 min)
+Los principios universales que internalizan incluyen:
+- **Predictibilidad**: Estado que no cambia inesperadamente permite razonamiento claro sobre el código
+- **Debugging**: Datos que no mutan facilitan tracking de cambios y identificación de bugs  
+- **Testabilidad**: Funciones que no modifican inputs permiten testing paralelo y determinístico
 
-> **Objetivo**: Practicar y validar la aplicación del paradigma funcional mediante el desarrollo del proyecto "Personal Budget".
+```javascript
+// Ejemplo que demuestra principios en acción profesional
+const actualizarMovimiento = (movimientos, id, cambios) => {
+  // ✅ Inmutable: retorna nuevo array sin modificar original
+  return movimientos.map(mov => 
+    mov.id === id 
+      ? { ...mov, ...cambios } // Nuevo objeto con cambios
+      : mov                    // Objeto original sin tocar
+  );
+  
+  // Este patrón es idéntico al usado en React para state updates
+  // Será familiar cuando lleguen a useState() y setState()
+  // Facilita time-travel debugging en Redux DevTools
+};
 
-#### 1. Checkpoint 1 (≈30'): Funciones Puras y `map()`
-- Los estudiantes desarrollan funciones puras para obtener listas específicas de datos (nombres de movimientos financieros) sin modificar datos originales.
-- Valida ejemplos puntuales de estudiantes (2-3 casos).
-- Revisa que:
-  - ✅ Las funciones sean puras (sin modificar arrays originales).
-  - ✅ Uso correcto del método `map()`.
+// Validación de inmutabilidad
+const movimientosOriginales = [/* data */];
+const movimientosActualizados = actualizarMovimiento(movimientosOriginales, 1, { valor: 1000 });
+console.log(movimientosOriginales === movimientosActualizados); // false ✅
+console.log(movimientosOriginales[0] === movimientosActualizados[0]); // true ✅ (no cambió)
+```
 
-#### 2. Checkpoint 2 (≈60'): Uso de `filter()` y `find()`
-- Los estudiantes implementan funcionalidades concretas, como:
-  - Mostrar egresos superiores a cierta cantidad (`filter()`).
-  - Buscar movimientos específicos por nombre (`find()`).
-- Realiza validación grupal:
-  - Confirma que el código sea declarativo, funcional y legible.
+## 6. Reduce como agregación: Pragmatismo sobre purismo
 
----
+Aunque `reduce()` es poderoso, priorizamos casos de uso específicos y reconocibles (sumas, promedios) sobre demostraciones abstractas de versatilidad. Esta decisión pedagógica evita abrumar con un método que puede hacer "todo" y se enfoca en patrones que realmente utilizarán en proyectos profesionales.
 
-## 🎯 4. Cierre (15 min)
+```javascript
+// ✅ Uso pragmático: agregaciones financieras comunes
+const estadisticasFinancieras = (movimientos) => {
+  // Suma simple con reduce - patrón más común
+  const totalIngresos = movimientos
+    .filter(mov => mov.tipo === 'ingreso')
+    .reduce((total, mov) => total + mov.valor, 0);
+  
+  // Agrupación práctica con reduce  
+  const porTipo = movimientos.reduce((grupos, mov) => {
+    if (!grupos[mov.tipo]) grupos[mov.tipo] = [];
+    grupos[mov.tipo].push(mov);
+    return grupos;
+  }, {});
+  
+  return { totalIngresos, porTipo };
+  // Funciones que realmente necesitarán en proyectos reales
+  // No abstracciones que solo existen en tutorials
+};
 
-### Presentación de Avances (10 min)
-- Invita a 2-3 estudiantes a compartir brevemente cómo resolvieron tareas usando funciones puras y métodos funcionales.
-- Destaca buenas prácticas observadas en sus soluciones.
+// ❌ Evitamos demostraciones "show-off" de reduce
+// que confunden más que clarificar en esta etapa
+```
 
-### Conclusiones Clave (5 min)
-- Reitera ventajas del paradigma funcional (mantenibilidad, claridad, testing más sencillo).
-- Resalta el valor agregado de funciones puras y de métodos de orden superior en la manipulación de datos.
+Esta aproximación construye confianza con casos de uso reconocibles antes de expandir hacia abstracciones más complejas en clases futuras.
 
----
+## 7. Gestión de la frustración inicial
 
-## 🚨 Dificultades Frecuentes y Estrategias de Solución
+Los estudiantes experimentan frustración específica cuando perciben que "pueden hacer lo mismo más fácil con for loops". Esta resistencia inicial es pedagógicamente valiosa porque indica que están evaluando trade-offs - exactamente el tipo de pensamiento crítico que queremos desarrollar.
 
-| Dificultad Común | Estrategia |
-|---|---|
-| Dificultad en identificar cuándo usar funciones puras | Clarifica constantemente que las funciones puras no deben depender ni modificar variables externas. |
-| Confusión con métodos funcionales (`map`, `filter`, `find`) | Usa ejemplos prácticos y sencillos antes de aumentar complejidad. Revisa grupalmente en vivo. |
-| Tendencia a modificar arrays originales accidentalmente | Recuerda insistentemente usar métodos que retornan nuevos arrays (`slice`, `[...array]`). |
+**Frustración típica:** "¿Por qué usar `filter().map().reduce()` cuando un for loop hace todo junto?"
 
----
+**Estrategia de facilitación:** Demuestra escenarios donde el código imperativo se vuelve difícil de mantener, especialmente cuando necesitan modificar lógica específica. Usa ejemplos donde cada método funcional permite cambios quirúrgicos sin afectar otros aspectos.
 
-## 🤖 IA como herramienta
-- Motiva a los estudiantes a usar IA como apoyo, no como sustituto.  
-- Sugiere prompts específicos como:
-  ```
-  "Escribe una función pura en JavaScript que reciba un array de objetos y retorne un nuevo array con solo los nombres utilizando map."
-  ```
-- Siempre recalca la validación manual y crítica del código generado.
+**Pregunta clave para la clase:** "Si mañana te piden cambiar cómo calculas los totales pero mantener igual la lógica de filtrado, ¿cuál código es más fácil de modificar?"
 
----
+```javascript
+// Demostración de mantenibilidad
+// ANTES: lógica entrelazada en loop imperativo
+let total = 0;
+for (let mov of movimientos) {
+  if (mov.tipo === 'ingreso' && mov.valor > 500) { // ❌ Lógica mezclada
+    total += mov.valor * 1.1; // ❌ Cálculo mezclado
+  }
+}
 
-## 🧑‍🏫 Tu Rol como Instructor
-- Facilita activamente el debate.
-- Proporciona feedback técnico constante en checkpoints.
-- Promueve reflexión crítica sobre decisiones técnicas.
+// DESPUÉS: lógica separada y modificable
+const total = movimientos
+  .filter(mov => mov.tipo === 'ingreso')    // 🔧 Solo cambias aquí el filtrado
+  .filter(mov => mov.valor > 500)          // 🔧 Solo cambias aquí el criterio
+  .map(mov => mov.valor * 1.1)             // 🔧 Solo cambias aquí el cálculo
+  .reduce((sum, val) => sum + val, 0);     // 🔧 Solo cambias aquí la agregación
+```
 
----
+## 8. El error más común: Confundir map() con forEach()
 
-## 📌 Próxima Sesión:
-Anuncia que en la siguiente clase abordarán la **Programación Orientada a Objetos**, ampliando su dominio de diferentes paradigmas y fortaleciendo su desarrollo integral como profesionales.
+```javascript
+// ❌ Error típico: usar map() para efectos secundarios
+movimientos.map(mov => {
+  console.log(mov.nombre); // ❌ Side effect en map()
+  // Estudiantes esperan que "haga algo" con cada elemento
+});
+
+// ❌ Error típico: no capturar retorno de map()
+movimientos.map(mov => ({
+  ...mov,
+  valorFormateado: `$${mov.valor}`
+})); // ❌ Pierde el resultado transformado
+
+// ✅ Versión correcta: map() para transformar, forEach() para efectos
+const movimientosFormateados = movimientos.map(mov => ({
+  ...mov,
+  valorFormateado: `$${mov.valor}`
+})); // ✅ Captura transformación
+
+movimientos.forEach(mov => {
+  console.log(mov.nombre); // ✅ Efecto secundario apropiado
+});
+```
+
+Este error es pedagógicamente perfecto porque fuerza la conversación sobre propósito de cada método. Los estudiantes que cometen este error están demostrando que entienden la sintaxis pero necesitan claridad conceptual sobre cuándo usar cada herramienta.
+
+## 9. Señales de comprensión exitosa
+
+Al final de la clase, busca estas evidencias de comprensión genuina:
+
+- **Vocabulario apropiado**: Usan naturalmente "transformar", "filtrar", "inmutable" en contexto correcto
+- **Pensamiento declarativo**: Describen problemas como "quiero obtener X de Y" en lugar de "primero hago esto, luego esto"
+- **Comprensión del flujo**: Pueden explicar el pipeline de datos sin mencionar variables temporales
+
+**Pregunta de validación final:** "Si necesitas obtener el promedio de gastos mayores a $300, ¿qué métodos usarías y en qué orden?" 
+
+Solo pueden responder correctamente (`filter().map().reduce()`) si realmente internalizaron que cada método tiene un propósito específico y que se pueden componer secuencialmente.
+
+## 10. Preparación para la siguiente clase
+
+Los conceptos de esta clase son prerrequisito directo para programación orientada a objetos (Clase 07). La inmutabilidad que practican aquí será fundamental cuando trabajen con métodos de clase que no deben modificar propiedades internas. La composición de funciones prepara la mentalidad para encapsulación de comportamientos en objetos.
+
+**Conceptos que DEBEN estar sólidos:**
+- Funciones puras (validar con: ¿puede predecir el output sin ejecutar?)
+- Inmutabilidad básica (validar con: ¿original se mantiene sin cambios?)
+
+**Conceptos que pueden seguir madurando:**
+- Composición compleja de métodos funcionales
+- Optimización de performance en pipelines largos
+
+La clase fue exitosa si los estudiantes salen pensando: *"Puedo resolver problemas complejos combinando transformaciones simples sin romper mis datos originales"*
+
+## Notas técnicas y troubleshooting
+
+### Configuración crítica
+- Verificar que Chrome DevTools esté abierto en Console para testing inmediato
+- Confirmar que tienen el array de movimientos cargado en memoria para ejemplos
+
+### Errores comunes del entorno
+- **Error**: `undefined` al encadenar métodos
+- **Solución**: Validar que cada método retorna el tipo esperado antes de encadenar
+- **Prevención**: Usar `console.log()` intermedio para verificar cada paso del pipeline
+
+### Recursos de emergencia
+- MDN Array methods: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+- Código de ejemplo listo: Array de movimientos financieros con 5 elementos variados
+- Demo backup: Comparación lado-a-lado imperativo vs funcional en pantalla dividida

@@ -1,116 +1,194 @@
 # Laboratorio 06: Programación Funcional
 
-En el sexto laboratorio seguimos avanzando el proyecto **Personal Budget**. En este laboratorio aplicarás **Programación Funcional** para resolver un conjunto de ejercicios prácticos enfocados en la transformación y manipulación de datos financieros. Aprenderás a utilizar funciones puras y funciones de orden superior como `map()`, `filter()` y `find()` para mejorar el manejo del presupuesto.
+En este laboratorio implementamos **programación funcional** para refactorizar el proyecto **Personal Budget**. Aplicaremos funciones puras, métodos como `map()`, `filter()` y `find()` para hacer el código más limpio y mantenible.
 
-> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye **dos momentos de validación grupal** (a los **30 y 60 minutos**). Mantente al día con estos checkpoints para recibir retroalimentación valiosa y aclarar dudas con tus compañeros e instructor.
+### 🎯 Objetivos de Aprendizaje
 
-## 🎯 Objetivos de Aprendizaje
+Al completar este laboratorio, serás capaz de:
 
-1. **Comprender el paradigma funcional y su diferencia con el paradigma imperativo.**  
-   Identificar cómo cambia la forma de resolver problemas cuando el enfoque es funcional en lugar de procedural.
+1. **Implementar** funciones puras para manipular datos financieros
+2. **Utilizar** métodos funcionales (`map()`, `filter()`, `find()`) básicos
+3. **Refactorizar** código imperativo hacia enfoque funcional
+4. **Aplicar** principio DRY con funciones reutilizables
 
-2. **Aplicar funciones puras para resolver tareas específicas.**  
-   Asegurar que las funciones dependan exclusivamente de sus parámetros de entrada y no generen efectos secundarios.
+### 🔑 Conceptos Clave
 
-3. **Utilizar funciones de orden superior para transformar arrays y objetos.**  
-   Practicar con `map()`, `filter()` y `find()` para manipular colecciones de datos financieros de manera declarativa.
+- **Funciones Puras**: Funciones que dependen solo de sus argumentos
+- **Métodos Funcionales**: `map`, `filter`, `find` para transformar arrays
+- **Principio DRY**: Evitar repetir código
 
-## 🔑 Conceptos Clave
+### 🛠️ Tecnologías y Herramientas
 
-| Concepto | Definición |
-|---|---|
-| **Programación Funcional** | Paradigma basado en funciones puras, evitando efectos secundarios y promoviendo inmutabilidad. |
-| **Funciones Puras** | Funciones cuyo resultado depende únicamente de sus argumentos y no modifican el estado global. |
-| **Funciones de Orden Superior** | Funciones que reciben o retornan otras funciones (por ejemplo: `map`, `filter`, `find`). |
-| **Declaración vs. Invocación** | Diferencia entre declarar (definir) una función y ejecutarla (invocarla). |
-| **Principio DRY** | (Don’t Repeat Yourself) Principio que promueve reutilizar código mediante funciones generales, evitando duplicidad. |
+**Principales**: JavaScript ES6+, Métodos de Array  
+**IA Copiloto**: GitHub Copilot para sugerir implementaciones
 
-## ⚙️ Setup Inicial
+### ⚙️ Setup Inicial
 
-1. **Repositorio:**  
-   Continúa trabajando en tu repositorio existente del proyecto `personal-budget`.  
-   
-2. **Estructura de Archivos:**  
-   Verifica que mantengas la siguiente estructura:
-   ```
-   personal-budget/
-   ├── index.html
-   ├── app.js
-   ├── README.md
-   ```
+**Estructura del repositorio:**
+```
+personal-budget/
+├── index.html
+├── app.js
+├── functional-utils.js    (nuevo archivo)
+└── README.md
+```
 
-3. **Configuración Base:**  
-   - Enlaza `app.js` desde `index.html`.
-   - Actualiza el `README.md` agregando:
-     - ¿Qué es una función pura?
-     - Diferencias entre imperativo y funcional.
+**Array de movimientos que manejaremos:**
+```javascript
+const movimientos = [
+  { nombre: "Salario", tipo: "ingreso", valor: 3000 },
+  { nombre: "Comida", tipo: "gasto", valor: 200 },
+  { nombre: "Freelance", tipo: "ingreso", valor: 500 },
+  { nombre: "Transporte", tipo: "gasto", valor: 150 }
+];
+```
 
-## 📋 Historias de Usuario (HU)
+---
 
-### HU1 - Listar nombres de movimientos
-> _"Como usuario, quiero obtener una lista simple con los nombres de mis movimientos financieros registrados para revisarlos fácilmente."_
+## 🔧 Parte 1: Funciones Puras Básicas (~30 min)
 
-- **Criterios de Aceptación:**
-    - Usar `map()` para obtener solo los nombres de los movimientos registrados.
-    - Mostrar la lista en consola.
+> **Objetivo**: Crear funciones puras para extraer información
 
-- **⏱️ Checkpoint 1 ~ 30 min:**  
-  Validar la creación y uso correcto de una función pura con `map()`.
+#### 1.1. Funciones de Extracción Simple
 
-### HU2 - Filtrar egresos mayores a $100
-> _"Como usuario, quiero identificar rápidamente mis gastos mayores a $100 para analizar mejor mi presupuesto."_
+```javascript
+// functional-utils.js
+function obtenerNombres(movimientos) {
+  return movimientos.map(mov => mov.nombre);
+}
 
-- **Criterios de Aceptación:**
-    - Usar `filter()` para obtener solo los egresos con montos mayores a $100.
-    - Mostrar el resultado filtrado en consola.
+function obtenerValores(movimientos) {
+  return movimientos.map(mov => mov.valor);
+}
 
-### HU3 - Buscar movimiento por nombre
-> _"Como usuario, necesito buscar un movimiento específico por su nombre para revisar rápidamente sus detalles."_
+function calcularTotal(valores) {
+  return valores.reduce((total, valor) => total + valor, 0);
+}
+```
 
-- **Criterios de Aceptación:**
-    - Usar `find()` para localizar un movimiento según el nombre indicado.
-    - Mostrar el movimiento encontrado o un mensaje claro si no existe.
+#### 1.2. Pruebas Básicas
 
-- **⏱️ Checkpoint 2 ~ 60 min:**  
-  Validar uso correcto y resultado esperado en funciones `filter()` y `find()`.
+```javascript
+console.log("Nombres:", obtenerNombres(movimientos));
+console.log("Valores:", obtenerValores(movimientos));
+console.log("Total:", calcularTotal(obtenerValores(movimientos)));
+```
 
+#### 1.3. 🏆 Reto Autónomo (5 min)
 
-## 🛠️ Requerimientos Técnicos
+**Desafío**: Crea `contarPorTipo(movimientos)` que retorne `{ ingresos: 2, gastos: 2 }`
 
-| Requerimiento | Descripción |
-|---|---|
-| **Funciones Puras** | Implementa cada historia usando funciones puras sin modificar directamente el array original. |
-| **Composición Funcional** | Prefiere combinar funciones pequeñas y específicas para resolver problemas complejos. |
-| **Inmutabilidad** | No modificar directamente los arrays o los objetos originales. Crear nuevas copias cuando sea necesario. |
+---
 
-## 🌟 Logros Adicionales
+## ⚡ Parte 2: Filtrado y Búsqueda (~40 min)
 
-- **Logro 1:** Crear una función pura que ordene los movimientos por monto, de mayor a menor, sin modificar el array original.
-- **Logro 2:** Componer una función que combine `filter()` y `map()` para obtener solo los nombres de los movimientos de tipo ingreso.
+> **Objetivo**: Usar `filter()` y `find()` para buscar datos
+
+#### 2.1. Filtros Básicos
+
+```javascript
+function obtenerIngresos(movimientos) {
+  return movimientos.filter(mov => mov.tipo === 'ingreso');
+}
+
+function obtenerGastos(movimientos) {
+  return movimientos.filter(mov => mov.tipo === 'gasto');
+}
+
+function filtrarPorMonto(movimientos, minimo) {
+  return movimientos.filter(mov => mov.valor >= minimo);
+}
+```
+
+#### 2.2. Búsquedas Simples
+
+```javascript
+function buscarPorNombre(movimientos, nombre) {
+  return movimientos.find(mov => 
+    mov.nombre.toLowerCase().includes(nombre.toLowerCase())
+  );
+}
+
+function obtenerPrimero(movimientos, tipo) {
+  return movimientos.find(mov => mov.tipo === tipo);
+}
+```
+
+#### 2.3. 🏆 Reto Autónomo (5-10 min)
+
+**Desafío**: Implementa `obtenerTotalPorTipo(movimientos, tipo)` que calcule el total de un tipo específico.
+
+---
+
+## 🚀 Parte 3: Reportes Simples (~50 min)
+
+> **Objetivo**: Combinar funciones para crear reportes básicos
+
+#### 3.1. Reporte Financiero Básico
+
+```javascript
+function generarReporte(movimientos) {
+  const ingresos = obtenerIngresos(movimientos);
+  const gastos = obtenerGastos(movimientos);
+  
+  return {
+    totalIngresos: calcularTotal(obtenerValores(ingresos)),
+    totalGastos: calcularTotal(obtenerValores(gastos)),
+    cantidad: movimientos.length
+  };
+}
+```
+
+#### 3.2. Funciones de Resumen
+
+```javascript
+function calcularBalance(movimientos) {
+  const reporte = generarReporte(movimientos);
+  return reporte.totalIngresos - reporte.totalGastos;
+}
+
+function obtenerPromedio(movimientos, tipo) {
+  const filtrados = movimientos.filter(mov => mov.tipo === tipo);
+  if (filtrados.length === 0) return 0;
+  return calcularTotal(obtenerValores(filtrados)) / filtrados.length;
+}
+```
+
+#### 3.3. 🏆 Reto Autónomo (5-10 min)
+
+**Desafío**: Crea `validarPresupuesto(movimientos, limite)` que indique si los gastos superan el límite.
+
+#### 3.4. Retos Autónomos Progresivos
+
+**🏆 Básico** (5 min): `categorizarPorMonto(movimientos)` - agrupar en rangos bajo/medio/alto  
+**🏆 Intermedio** (7 min): `analizarPatrones(movimientos)` - usar `sort()` para ordenar gastos  
+**🏆 Avanzado** (10 min): `busquedaAvanzada(movimientos, criterios)` - filtros múltiples simultáneos
+
+---
+
+## ⭐ Logros Adicionales
+
+#### 🏆 Logro 1: Funciones de Ordenamiento
+Implementa funciones que usen `sort()` para ordenar movimientos por valor o nombre
+
+#### 🏆 Logro 2: Análisis Estadístico  
+Crea funciones para calcular mediana, moda y desviación en los montos
+
+---
 
 ## 📝 Instrucciones de Entrega
 
-1. **README.md Documentado**  
-   Debe incluir:
-   - Comparación personal entre paradigmas imperativo y funcional.
-   - Reflexión sobre cómo aplicaste el principio DRY.
+### 1. Verificar Funcionalidad Completa
+- ✅ Funciones puras básicas funcionando
+- ✅ Filtros con `filter()` y `find()` operativos
+- ✅ Reportes simples generando datos correctos
+- ✅ Al menos 1 reto autónomo completado
 
-2. **Entrega Final**  
-   - URL del repositorio en GitHub.
+### 2. Comparte por Canvas
 
-## 🧑‍💻 Ejemplo de Salida Esperada (en consola)
+**Repositorio**: Link de GitHub actualizado  
+**Funcionalidad**: Link de GitHub Pages con demo  
 
-```
-Nombres de movimientos registrados:
-['Cena', 'Consultoría', 'Supermercado', 'Libro JavaScript']
-
-Egresos mayores a $100:
-[
-  { nombre: 'Supermercado', tipo: 'Egreso', monto: 150.00 },
-  { nombre: 'Compra online', tipo: 'Egreso', monto: 120.00 }
-]
-
-Buscar movimiento por nombre: 'Cena'
-Resultado encontrado:
-{ nombre: 'Cena', tipo: 'Egreso', monto: 45.50 }
-```
+**Responde brevemente**:
+- ¿Qué método funcional te resultó más útil?
+- ¿Cómo mejoraron las funciones puras tu código?

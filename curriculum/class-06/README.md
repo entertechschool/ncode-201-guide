@@ -1,75 +1,76 @@
-﻿> 📦 **Módulo 2:** Clase 2 de 4
+﻿> 📦 **Módulo 2:** Clase 6 de 8
 
-# Clase 06: Programación Funcional en JavaScript
+# Clase 06: Programación Funcional
 
 ## Resumen
 
-En la Clase 06 continuamos profundizando en el proyecto práctico **Personal Budget**, enfocándonos ahora en el paradigma funcional en JavaScript. Para ello, trabajamos con 2 recursos clave:
+En esta clase aplicamos el paradigma de **programación funcional** para refactorizar y optimizar el proyecto **Personal Budget**. Después de haber trabajado con programación imperativa en la clase anterior, ahora exploraremos un enfoque declarativo que nos permitirá escribir código más limpio, predecible y mantenible. Implementaremos funciones puras y utilizaremos métodos funcionales como `map()`, `filter()` y `find()` para transformar datos financieros de manera eficiente. Esta transición hacia la programación funcional es fundamental para prepararnos hacia conceptos más avanzados como la programación orientada a objetos y sentar las bases para el trabajo colaborativo que caracteriza el desarrollo profesional.
 
-1. **Guía de Lectura y Debate:**  
-   Los estudiantes llegan preparados habiendo leído sobre funciones puras, programación funcional y métodos como `map()`, `filter()` y `find()`, listos para discutir críticamente cómo aplicar estos conceptos.
+## Estructura sugerida
 
-2. **Guía de Laboratorio:**  
-   Aplicación práctica inmediata de los conceptos discutidos, usando funciones puras y métodos funcionales en JavaScript para manipular datos financieros.
-
-## Estructura Sugerida de la Clase
-
-| **Fase** | **Duración**  | **Descripción** |
+| **Fase** | **Duración** | **Descripción**   |
 | ---- | ---- | ---- |
-| **1. Introducción**                 | 15 min       | Contextualización, conexión con la clase previa sobre programación imperativa y activación de conocimientos previos |
-| **2. Debate Conceptual y Demo Técnica** | 45 min  | Discusión sobre reflexiones clave al mismo tiempo que se muestran ejemplos en pantalla usando funciones puras y métodos funcionales |
-| **3. Laboratorio**                  | 100 min      | Desarrollo del laboratorio con dos checkpoints: a los 30 y 60 minutos (validación grupal y feedback técnico) |
-| **5. Cierre**                         | 15 min      | Síntesis de aprendizajes clave y preparación para la próxima clase |
+| **1. Introducción y Contexto**   | 15 min | Conexión con programación imperativa y objetivos del paradigma funcional   |
+| **2. Demo Inicial y Debate Técnico** | 30 min | Funciones puras vs impuras + demostración de métodos funcionales + discusión sobre ventajas y casos de uso |
+| **3. Laboratorio Principal - Parte 1**  | 30 min | Funciones Puras Básicas. Checkpoint: funciones de extracción y validación operativas  |
+| **4. Laboratorio Principal - Parte 2**  | 40 min | Filtrado y Búsqueda Funcional. Reto en vivo + Checkpoint: sistema de filtros con `filter()` y `find()` funcionando |
+| **5. Laboratorio Principal - Parte 3**  | 50 min | Sistema de Reportes. Reto en vivo + Retos autónomos + Checkpoint: reportes financieros generados mediante composición de funciones   |
+| **6. Síntesis y Cierre**  | 15 min | Consolidación paradigma funcional vs imperativo + preparación para programación orientada a objetos   |
 
-## Resultados esperados
+## 🎯 Objetivos de aprendizaje
 
-Al culminar esta clase, los estudiantes habrán consolidado una comprensión crítica del paradigma funcional en JavaScript, comprendiendo sus ventajas y limitaciones respecto a la programación imperativa. Además, sabrán cuándo es conveniente aplicar funciones puras y métodos funcionales en proyectos reales.
+Al finalizar esta clase, serás capaz de:
 
-En detalle, los estudiantes...
+1. **Implementar** funciones puras que manipulen datos financieros sin efectos secundarios
+2. **Utilizar** métodos funcionales (`map()`, `filter()`, `find()`) para transformar y filtrar arrays de movimientos
+3. **Refactorizar** código imperativo hacia un enfoque funcional más declarativo y mantenible
 
-### Podrán hacer
-1. **Comparar paradigmas imperativo y funcional:**  
-   Ser capaces de identificar claramente cuándo elegir uno u otro paradigma según la problemática específica.
+---
 
-2. **Crear funciones puras para tareas concretas:**  
-   Resolver problemas mediante funciones que eviten modificar estados globales, mejorando la predictibilidad del código.
+## 📌 Preparación para la clase
 
-3. **Utilizar métodos funcionales (map, filter, find):**  
-   Manipular y transformar datos financieros mediante funciones de orden superior de forma clara, eficiente y declarativa.
+> Antes de llegar a clase, investiga y prepárate:
 
-### Podrán explicar
+#### 🔍 Misión de Investigación
 
-1. **Ventajas del paradigma funcional:**  
-   Argumentarán por qué la programación funcional puede mejorar la mantenibilidad, legibilidad y calidad general del código.
+**1. Funciones Puras:**
+- Investiga: ¿Qué características debe cumplir una función para ser considerada "pura"?
+- Encuentra: Un ejemplo real de una función pura vs una función impura en JavaScript
+- Prepárate para explicar: ¿Por qué las funciones puras facilitan el testing y debugging?
 
-2. **Impacto de la inmutabilidad:**  
-   Identificarán claramente cómo mantener estructuras de datos inmutables previene errores comunes y facilita tareas de debugging y testing.
+**2. Método map():**
+- Investiga: ¿Cómo funciona `map()` y qué retorna siempre?
+- Encuentra: Tres casos de uso diferentes donde `map()` es más eficiente que un loop tradicional
+- Prepárate para explicar: ¿Cuándo usar `map()` vs `forEach()` vs `for` loop?
 
-3. **Integración efectiva con código imperativo:**  
-   Justificarán cómo combinar enfoques funcionales e imperativos para mejorar proyectos existentes sin necesidad de reestructurarlos completamente.
+**3. Métodos filter() y find():**
+- Investiga: ¿Cuál es la diferencia principal entre `filter()` y `find()` en términos de lo que retornan?
+- Encuentra: Ejemplos prácticos de cuándo usar cada uno para buscar datos en un array
+- Prepárate para explicar: ¿Cómo estos métodos mantienen la inmutabilidad del array original?
 
-### Podrán implementar
+**4. Principio DRY en programación funcional:**
+- Investiga: ¿Cómo la programación funcional ayuda a evitar la repetición de código?
+- Encuentra: Un ejemplo de refactoring de código repetitivo usando funciones reutilizables
+- Prepárate para explicar: ¿Qué ventajas tiene crear funciones pequeñas y composables?
 
-- Crear funciones puras para operaciones financieras básicas (suma de gastos, búsqueda de movimientos específicos).
-- Aplicar métodos funcionales como `map()`, `filter()` y `find()` para manipular datos del presupuesto.
-- Implementar el principio DRY creando funciones reutilizables, evitando la repetición de código.
+#### 📚 Recursos previos sugeridos
+
+* **Introducción a la Programación Funcional - MDN**
+  https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+* **Functional Programming in JavaScript - FreeCodeCamp**
+  https://www.freecodecamp.org/news/functional-programming-in-javascript/
+
+* **Array Methods Explained - JavaScript.info**
+  https://javascript.info/array-methods
+
+---
 
 ## Glosario de Nuevos Términos
 
-- **Programación Funcional:**  
-  Paradigma basado en funciones puras, evitando efectos secundarios y promoviendo inmutabilidad.
-
-- **Funciones Puras:**  
-  Funciones cuyo resultado depende únicamente de sus argumentos y no modifican el estado global.
-
-- **Funciones de Orden Superior:**  
-  Funciones que reciben otras funciones como parámetros o retornan funciones como resultado (`map`, `filter`, `find`).
-
-- **Inmutabilidad:**  
-  Principio que evita modificar directamente estructuras de datos, generando nuevas copias ante cambios.
-
-- **Declarativo vs Imperativo:**  
-  Diferencia entre especificar qué hacer (declarativo) frente a cómo hacerlo paso a paso (imperativo).
-
-- **Principio DRY (Don’t Repeat Yourself):**  
-  Principio que promueve reutilizar código mediante funciones generales, evitando la duplicidad.
+* **Función Pura**: Función que siempre retorna el mismo resultado para los mismos argumentos y no produce efectos secundarios
+* **Inmutabilidad**: Principio de no modificar datos existentes, sino crear nuevas versiones transformadas
+* **Función de Orden Superior**: Función que recibe otras funciones como parámetros o retorna funciones como resultado
+* **Programación Declarativa**: Paradigma que se enfoca en describir qué queremos lograr, no cómo lograrlo paso a paso
+* **Efectos Secundarios**: Modificaciones del estado global o acciones fuera del scope de la función (console.log, modificar variables externas, etc.)
+* **Composición de Funciones**: Técnica de combinar funciones simples para crear funcionalidades más complejas
