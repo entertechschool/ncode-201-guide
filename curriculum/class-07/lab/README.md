@@ -1,111 +1,271 @@
 # Laboratorio 07: Programación Orientada a Objetos
 
-¡Continuamos con el proyecto **Personal Budget**, esta vez llevando el código hacia un enfoque orientado a objetos! En este laboratorio, aprenderás a **crear objetos** en JavaScript, encapsulando datos y lógica en entidades más organizadas.
+En este laboratorio refactorizamos el proyecto **Gestor de Presupuesto Personal** aplicando programación orientada a objetos con funciones constructoras. Transformaremos las funciones puras del laboratorio anterior en objetos que encapsulen tanto datos como comportamientos, creando un código más organizado y escalable.
 
-> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye **dos momentos de validación** (aprox. a los 30 y 60 minutos). Participar activamente te permitirá intercambiar criterios con tus compañeros, reforzando la conexión entre la **discusión teórica** y la **implementación práctica**.
+Como parte de nuestro proyecto **Gestor de Presupuesto Personal**, esta transición hacia OOP nos permitirá agrupar la lógica relacionada, crear múltiples instancias de movimientos y presupuestos, y preparar el código para extensiones futuras con prototipos.
+
+### 🎯 Objetivos de Aprendizaje
+
+Al completar este laboratorio, serás capaz de:
+
+1. **Implementar** funciones constructoras usando `function Constructor() {}` y `new`
+2. **Encapsular** datos y comportamientos en objetos usando `this.propiedad` y `this.metodo`
+3. **Refactorizar** código funcional hacia un enfoque orientado a objetos mantenible
+4. **Crear** múltiples instancias de objetos para representar entidades del dominio
+
+### 🔑 Conceptos Clave
+
+- **Función Constructora**: Función especial que crea y configura objetos nuevos usando `new`
+- **`this` keyword**: Referencia al objeto que está siendo creado o manipulado
+- **Instanciación**: Proceso de crear objetos específicos desde una función constructora
+- **Encapsulación**: Agrupar datos (propiedades) y comportamientos (métodos) relacionados
+
+### ⚙️ Setup Inicial
+
+**Estructura del repositorio:**
+```
+personal-budget/
+├── index.html
+├── app.js
+├── functional-utils.js    (del laboratorio anterior)
+├── oop-objects.js         (nuevo archivo)
+└── README.md
+```
+
+**Datos base que manejaremos:**
+```javascript
+// En lugar de arrays simples, crearemos objetos con comportamientos
+const presupuesto = new Presupuesto();
+presupuesto.agregarMovimiento(new Movimiento('Salario', 'ingreso', 3000));
+presupuesto.agregarMovimiento(new Movimiento('Comida', 'gasto', 200));
+```
 
 ---
 
-## 🎯 Objetivos de Aprendizaje
+## Parte 1: Funciones Constructoras Básicas (~30 min)
 
-1. **Implementar Funciones Constructoras en JavaScript**  
-   Crear entidades de tu presupuesto (por ejemplo, “Movimiento”, “Usuario” u otros) usando la sintaxis tradicional con `function Nombre(...) { … }` y la palabra clave `new`.  
-   
-2. **Encapsular Datos y Lógica**  
-   Refactorizar tu código “plano” (arrays o variables sueltas) para que la validación y manejo de datos estén dentro de los objetos, promoviendo un diseño más organizado y escalable.  
+> **Objetivo**: Crear las primeras funciones constructoras para representar entidades del presupuesto
 
-3. **Integrar la Orientación a Objetos en el Flujo de la Aplicación**  
-   Sustituir partes clave del código existente, asegurando que las instancias creadas con funciones constructoras realicen las operaciones de registro, cálculo y visualización de forma coherente.  
+#### 1.1. Constructor de Movimiento
 
-4. **Primer Vistazo a los Prototipos y DOM**  
-   (Opcional) Crear un método (por ejemplo, `render()`) asignado al prototipo para mostrar la información de cada objeto en la interfaz web, sentando la base para profundizar en prototipos en una clase futura.
+Crea el archivo `oop-objects.js` y define la función constructora para movimientos:
 
-## 🔑 Conceptos Clave
+```javascript
+// Función constructora para Movimiento
+function Movimiento(nombre, tipo, valor) {
+  // ✅ Usar this.propiedad para el estado
+  this.nombre = nombre;
+  this.tipo = tipo;
+  this.valor = valor;
+  this.fecha = new Date().toLocaleDateString();
+  
+  // ✅ Usar this.metodo = function() {} para comportamientos
+  this.esIngreso = function() {
+    return this.tipo === 'ingreso';
+  };
+  
+  this.esGasto = function() {
+    return this.tipo === 'gasto';
+  };
+}
+```
 
-- **Objetos**: Estructuras que contienen propiedades y métodos relacionados, unificando datos y comportamientos.
-- **Abstracción**: Principio para simplificar la realidad, enfocándose en los atributos y métodos esenciales (por ejemplo, qué datos representa un “Movimiento” y qué hace).
-- **Programación Orientada a Objetos**: Paradigma que organiza el código en entidades llamadas objetos, facilitando escalabilidad y mantenibilidad.
-- **Funciones Constructoras**: Mecanismo “clásico” de JavaScript para crear objetos y reutilizar propiedades y métodos, previo a la introducción formal de clases en ES6.
+#### 1.2. Instanciación de Objetos
 
-## ⚙️ Setup Inicial
+Prueba la creación de objetos:
 
-1. **Repositorio**  
-   - Continúa usando el repositorio existente: `personal-budget`.  
+```javascript
+// ✅ Usar new Constructor() para crear instancias
+const salario = new Movimiento('Salario', 'ingreso', 3000);
+const comida = new Movimiento('Comida', 'gasto', 200);
 
-2. **Configuraciones Previas**  
-   - Verifica que tu proyecto ya soporta la lógica de gastos/ingresos (de laboratorios anteriores).
-   - Decide qué parte del flujo refactorizarás primero con objetos (por ejemplo, el registro de movimientos).
+console.log('Salario es ingreso:', salario.esIngreso()); // true
+console.log('Comida es gasto:', comida.esGasto()); // true
+```
+
+#### 1.3. Validación de Instancias
+
+Verifica que los objetos se crean correctamente:
+
+```javascript
+console.log('Salario:', salario);
+console.log('Tipo de salario:', typeof salario); // object
+console.log('Propiedades:', salario.nombre, salario.tipo, salario.valor);
+```
+
+#### 1.4. 🏆 Reto Autónomo (5 min)
+
+**Desafío**: Crea una función constructora `Categoria(nombre, tipo, limite)` que represente categorías de gastos con un método `puedeGastar(monto)`.
 
 ---
 
-## 📋 Historias de Usuario (HU)
+## Parte 2: Constructor de Presupuesto (~40 min)
 
-### HU1 - Crear Objeto “Movimiento”
-> _“Como desarrollador, quiero representar cada movimiento (ingreso o egreso) con un objeto, para encapsular la validación y el almacenamiento de datos.”_
+> **Objetivo**: Crear el objeto principal que administre múltiples movimientos
 
-- **Criterios de Aceptación**:
-  1. Definir la función constructora `Movimiento(tipo, monto, descripcion)` que asigne valores a `this`.
-  2. Validar datos mínimos (tipo válido, monto mayor que 0, descripción no vacía).
-  3. Instanciar al menos un objeto usando `new Movimiento(...)`.
+#### 2.1. Constructor Principal
 
-> **Checkpoint 1 (~30 min)**: Validar que la función constructora cree objetos correctamente y maneje los datos esperados.
+Implementa la función constructora que administre el presupuesto completo:
 
+```javascript
+function Presupuesto() {
+  // Estado: array de movimientos
+  this.movimientos = [];
+  this.fechaCreacion = new Date().toLocaleDateString();
+  
+  // Comportamiento: agregar movimientos
+  this.agregarMovimiento = function(movimiento) {
+    if (movimiento instanceof Movimiento) {
+      this.movimientos.push(movimiento);
+      return true;
+    }
+    return false;
+  };
+  
+  // Comportamiento: obtener totales
+  this.obtenerTotalIngresos = function() {
+    return this.movimientos
+      .filter(mov => mov.esIngreso())
+      .reduce((total, mov) => total + mov.valor, 0);
+  };
+  
+  this.obtenerTotalGastos = function() {
+    return this.movimientos
+      .filter(mov => mov.esGasto())
+      .reduce((total, mov) => total + mov.valor, 0);
+  };
+}
+```
 
-### HU2 - Refactorizar el Registro de Movimientos
-> _“Como usuario, quiero seguir registrando mis ingresos y egresos, pero ahora manteniendo cada uno como un objeto independiente, con su propia lógica de validación básica.”_
+#### 2.2. Métodos de Análisis
 
-- **Criterios de Aceptación**:
-  1. Reemplazar el antiguo proceso de registro (posiblemente basado en arrays u objetos literales) por instancias de `Movimiento`.
-  2. Mantener la funcionalidad previa (ej. prompts, input en el DOM) y al final almacenar los objetos resultantes en un array global `movimientos` (o similar).
-  3. Verificar que los cálculos de totales, filtros o resúmenes sigan funcionando (aunque ahora cada entrada es un objeto).
+Agrega métodos más sofisticados:
 
-> **Checkpoint 2 (~60 min)**: Revisar el flujo de registro; cada nuevo movimiento debe ser un **objeto** creado con la función constructora.
+```javascript
+// Continúa en el constructor Presupuesto
+this.calcularBalance = function() {
+  return this.obtenerTotalIngresos() - this.obtenerTotalGastos();
+};
 
+this.obtenerResumen = function() {
+  return {
+    totalIngresos: this.obtenerTotalIngresos(),
+    totalGastos: this.obtenerTotalGastos(),
+    balance: this.calcularBalance(),
+    cantidadMovimientos: this.movimientos.length
+  };
+};
+```
 
-### HU3 - Renderizar Objetos en el DOM
-> _“Como usuario, quiero ver una representación de cada movimiento en la interfaz web, facilitando la visualización de mi presupuesto.”_
+#### 2.3. 🏆 Reto Autónomo (5-10 min)
 
-- **Criterios de Aceptación**:
-  1. Crear un método (por ejemplo, `Movimiento.prototype.render = function() { … }`) que devuelva o inserte un bloque HTML representando el movimiento.
-  2. Tras registrar un movimiento, llamar a `movimiento.render()` para mostrarlo en la interfaz.
+**Desafío**: Implementa `obtenerMovimientosPorTipo(tipo)` que retorne todos los movimientos de un tipo específico usando las funciones que ya creaste.
 
-*(Esta historia te prepara para la siguiente clase, donde profundizarás en prototipos y herencia prototipal.)*
+---
 
+## Parte 3: Sistema Completo y Funcionalidades Avanzadas (~50 min)
 
-## 🛠️ Requerimientos Técnicos
+> **Objetivo**: Integrar todo en un sistema funcional con características avanzadas
 
-1. **Uso de Funciones Constructoras**  
-- Definir funciones como `function Movimiento(tipo, monto, descripcion) { … }`.
-- Usar `new Movimiento()` para crear instancias.  
+#### 3.1. Instanciación y Uso Completo
 
-2. **Encapsular la Lógica de Validación**  
-- Validar datos en el constructor o en funciones auxiliares, lanzando mensajes de error o retornando algo manejable si el input es incorrecto.  
+Crea una instancia completa del sistema:
 
-3. **Integrar Objetos en el Flujo del Proyecto**  
-- Reemplazar estructuras planas por objetos en las partes clave (por ejemplo, cada registro de gasto/ingreso se maneja ahora con una instancia de `Movimiento`).  
+```javascript
+// Crear presupuesto principal
+const miPresupuesto = new Presupuesto();
 
-4. **Renderización en el DOM**  
-- Implementa un método `render` para conectar la lógica con la capa de presentación (DOM).
+// Agregar varios movimientos
+miPresupuesto.agregarMovimiento(new Movimiento('Salario', 'ingreso', 3000));
+miPresupuesto.agregarMovimiento(new Movimiento('Freelance', 'ingreso', 500));
+miPresupuesto.agregarMovimiento(new Movimiento('Comida', 'gasto', 200));
+miPresupuesto.agregarMovimiento(new Movimiento('Transporte', 'gasto', 150));
 
-## 🌟 Logros Adicionales
+// Verificar funcionalidad
+console.log('Resumen:', miPresupuesto.obtenerResumen());
+```
 
-1. **Logro 1: Métodos Auxiliares**  
-- Crear métodos específicos dentro del constructor (o asociados a cada instancia) para formatear montos, calcular impuestos, etc.  
-- Evitar la dispersión de lógica por todo el código, centralizando las acciones en su objeto correspondiente.
+#### 3.2. Validación y Métodos Auxiliares
 
-2. **Logro 2: Reporte de Validaciones**  
-- Configurar un sistema que acumule los errores de validación (por ejemplo, en un array) y los muestre en la interfaz, en lugar de solo usar `alert()` o `console.log()`.
+Agrega métodos de validación y utilidad:
 
-3. **Logro 3: Vista en Tabla o Tarjetas (DOM)**  
-- Dar estilo a la representación de cada movimiento (ya sea en una tabla o tarjetas), aprovechando Bootstrap, Tailwind o CSS propio.
+```javascript
+// En constructor Presupuesto, agregar:
+this.eliminarMovimiento = function(indice) {
+  if (indice >= 0 && indice < this.movimientos.length) {
+    return this.movimientos.splice(indice, 1)[0];
+  }
+  return null;
+};
 
+this.buscarMovimiento = function(nombre) {
+  return this.movimientos.find(mov => 
+    mov.nombre.toLowerCase().includes(nombre.toLowerCase())
+  );
+};
+
+this.validarPresupuesto = function() {
+  return this.movimientos.every(mov => mov instanceof Movimiento);
+};
+```
+
+#### 3.3. 🏆 Reto Autónomo (5-10 min)
+
+**Desafío**: Implementa `obtenerEstadisticas()` que calcule promedio de ingresos, promedio de gastos y el movimiento de mayor valor.
+
+#### 3.4. 🏆 Retos Autónomo (7-10 min)
+
+**Desafío**: Implementa `verificarLimites()` que alerte cuando gastos superen el 80% de ingresos.
+
+#### 3.5. 🏆 Retos Autónomo (10-15 min)
+**Desafío**: Crea `function PresupuestoMensual(mes, año)` que herede de Presupuesto y filtre por fecha
+
+---
+
+## ⭐ Logros Adicionales
+
+Para estudiantes que completan el laboratorio antes del tiempo asignado:
+
+#### 🏆 Logro 1: Validación Robusta
+
+**Desafío**: Implementa validación completa en todos los constructores con manejo de errores
+
+**Tareas específicas**:
+- Validar tipos de datos en constructores
+- Implementar método `esValido()` en cada objeto
+- Crear mensajes de error descriptivos
+
+#### 🏆 Logro 2: Interfaz de Usuario Básica
+
+**Desafío**: Conecta los objetos con el DOM para crear una interfaz funcional
+
+**Tareas específicas**:
+- Crear formulario HTML para agregar movimientos
+- Mostrar resumen del presupuesto en tiempo real
+- Implementar lista dinámica de movimientos
+
+---
 
 ## 📝 Instrucciones de Entrega
 
-1. **Despliegue**  
-- Publica la nueva versión del proyecto en GitHub Pages o el método que uses.  
-- Verifica que el registro y visualización de los objetos funcionen correctamente.
+### 1. Verificar Funcionalidad Completa
+- ✅ Funciones constructoras implementadas con `function Constructor() {}`
+- ✅ Uso correcto de `new` para instanciación
+- ✅ Métodos implementados con `this.metodo = function() {}`
+- ✅ Sistema de presupuesto funcionando con múltiples objetos
 
-2. **Entrega Final**  
-- URL del repositorio.  
-- URL del proyecto desplegado.
+### 2. Comparte por Canvas
+
+**Repositorio**:
+- Comparte el link de tu repositorio con el código OOP funcional
+- Incluye un README.md explicando la transición funcional → OOP
+
+**Funcionalidad**:
+- Comparte el link de GitHub Pages con demo operativa
+- Incluye capturas de consola mostrando objetos creados
+
+**Responde brevemente**:
+- ¿Qué ventajas observaste al usar objetos vs funciones puras?
+- ¿Cómo cambió la organización de tu código con constructores?
+- ¿Qué diferencias notaste entre funciones y métodos?
+- ¿Cómo se conecta este laboratorio con el Gestor de Presupuesto Personal?

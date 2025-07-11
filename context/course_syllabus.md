@@ -38,14 +38,37 @@
 > Un Landing Page que mostrará las caraterísticas clave de un producto, y que permite la navegación usando estándares actuales de semántica y accesibilidad. Adicionalmente, está consutrído con un Layout Responsive, utilizando tecnologías como Flexbox, Grid y frameworks modernos.
 
 ### Módulo 2: Fundamentos de Programación
+
 5. **Programación Imperativa** (180 min, blend)
+   - Usar variables globales y mutación directa para demostrar el paradigma base
+   - Enfatizar loops (`for`, `while`) y condicionales (`if/else`) como herramientas principales
+   - Construir funcionalidad básica del presupuesto con enfoque paso-a-paso
 6. **Programación Funcional** (180 min, blend)
+   - **USAR**: Funciones puras, `map()`, `filter()`, `reduce()` como métodos principales
+   - **USAR**: Principio DRY y composición de funciones pequeñas
+   - **NO USAR**: Funciones complejas como `sort()` como obligatorias (solo en retos opcionales)
+   - Refactorizar código imperativo hacia transformaciones declarativas
 7. **Programación Orientada a Objetos** (180 min, blend)
+   - **USAR**: `function Constructor() {}` + `new Constructor()` exclusivamente
+   - **USAR**: `this.propiedad` para estado, `this.metodo = function() {}` para comportamiento
+   - **NO USAR**: Sintaxis `class` (reservada para Code 301)
+   - **NO USAR**: Arrow functions como métodos (problemas con `this` binding)
 8. **Prototipos en JavaScript** (180 min, blend)
-- **Presentación del Proyecto Integrador** (180 min, demo)
+   - **USAR**: `Constructor.prototype.metodo = function() {}` para métodos compartidos
+   - **USAR**: Demostrar `__proto__` chain con Chrome DevTools
+   - **USAR**: `instanceof` y `hasOwnProperty()` para validaciones de tipo
+   - **NO USAR**: `Object.create()` como concepto principal (demasiado abstracto para Code 201)
+
+#### Enfoque Pedagógico
+
+- **Progresión**: Imperativo → Funcional → OOP → Prototipos (sin saltos conceptuales)
+- **Proyecto continuado**: Mismo codebase evoluciona a través de 4 paradigmas
+- **Refactoring guiado**: Cada clase mejora la estructura del código anterior
+- **Debugging intensivo**: Usar `console.log()`, breakpoints, y prototype inspection
 
 > #### Proyecto Integrador: **Gestor de Presupuesto Personal**
 > Una aplicación web sencilla que permite gestionar un presupuesto mensual, registrando ingresos y gastos, categorizándolos y visualizando un balance actualizado. El proyecto evoluciona clase a clase, pasando de una solución imperativa a un sistema basado en objetos, con cálculos funcionales y extensión por medio de prototipos.
+
 
 ### Módulo 3: Aplicaciones Web con Objetos
 9. **DOM como API de Objetos** (180 min, blend)
