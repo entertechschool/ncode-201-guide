@@ -1,60 +1,88 @@
-﻿> 📦 **Módulo 2:** Clase 3 de 4
+﻿> 📦 **Módulo 2:** Clase 7 de 8
 
-# Clase 07: Programación Orientada a Objetos con Funciones Constructoras
+# Clase 07: Programación Orientada a Objetos
 
 ## Resumen
 
-En la Clase 07 continuamos avanzando en el proyecto **Personal Budget**, enfocándonos ahora en la **Programación Orientada a Objetos (POO)** utilizando **funciones constructoras** en JavaScript. Para ello, trabajamos con 2 recursos principales:
+En esta clase transformamos nuestro enfoque hacia la programación orientada a objetos usando funciones constructoras en JavaScript. Refactorizaremos el **Gestor de Presupuesto Personal** reemplazando las funciones puras del laboratorio anterior con objetos que encapsulen tanto datos como comportamientos. Esta transición nos permitirá crear código más organizado, escalable y mantenible, preparando el camino hacia conceptos avanzados como prototipos y herencia. Es un momento crucial donde los estudiantes comprenden cómo la programación puede organizarse de manera más estructurada y profesional.
 
-1. **Guía de Lectura y Debate**  
-   En esta guía, los estudiantes llegaron preparados con el contexto de objetos, abstracción y el uso de `function Nombre(...) { ... }` para crear instancias, listos para debatir sobre las ventajas de la POO frente a estructuras planas o abordajes puramente imperativos.
+## Estructura sugerida
 
-2. **Guía de Laboratorio**  
-   A través de la práctica inmediata, se aplicaron estos conceptos creando y manipulando objetos en el proyecto, refactorizando parte del código para encapsular datos y comportamientos dentro de funciones constructoras.
+| **Fase** | **Duración** | **Descripción**   |
+| ---- | ---- | ---- |
+| **1. Introducción y Contexto**   | 15 min | Conexión con programación funcional y motivación para usar objetos en el presupuesto   |
+| **2. Demo Inicial y Debate Técnico** | 30 min | Funciones constructoras vs funciones regulares + demostración de `this` keyword | 
+| **3. Laboratorio Principal - Parte 1**  | 30 min | Creación de funciones constructoras básicas. Checkpoint: instancias de Movimiento y Presupuesto creadas  |
+| **4. Laboratorio Principal - Parte 2**  | 40 min | Encapsulación de comportamientos en métodos. Reto en vivo + Checkpoint: métodos funcionando correctamente |
+| **5. Laboratorio Principal - Parte 3**  | 50 min | Refactorización completa e integración con DOM. Reto en vivo + Retos autónomos + Checkpoint: aplicación completamente funcional con objetos   |
+| **6. Síntesis y Cierre**  | 15 min | Consolidación de conceptos OOP + conexión con prototipos en la próxima clase   |
+
+## 🎯 Objetivos de aprendizaje
+
+Al finalizar esta clase, serás capaz de:
+
+1. **Implementar** funciones constructoras usando la sintaxis `function Constructor() {}` y la palabra clave `new`
+2. **Encapsular** datos y comportamientos relacionados en objetos usando `this.propiedad` y `this.metodo`
+3. **Refactorizar** código existente desde un paradigma funcional hacia orientación a objetos mantenible
 
 ---
 
-## Estructura Sugerida de la Clase
+## 📌 Preparación para la clase
 
-| **Fase**                         | **Duración** | **Descripción**                                                                                                                                                                                                                     |
-|---------------------------------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **1. Introducción**             | 15 min       | Contextualización y activación de conocimientos previos (programación imperativa y funcional). Se prepara el camino para comprender la orientación a objetos y por qué JavaScript soporta este paradigma a través de funciones constructoras. |
-| **2. Debate Conceptual y Demo Técnica** | 45 min       | Discusión sobre aspectos fundamentales de la POO (abstracción, encapsulación, ventajas frente a estructuras planas). Se muestra cómo crear objetos con `function Constructor(...) {}` y se ejemplifican validaciones o métodos básicos.       |
-| **3. Laboratorio**              | 100 min      | Trabajo práctico en el proyecto “Personal Budget”, refactorizando el manejo de ingresos/egresos con objetos (funciones constructoras). Se establecen dos checkpoints: a los 30 y 60 minutos, con revisiones grupales y feedback técnico.        |
-| **4. Cierre**                   | 15 min       | Síntesis de aprendizajes clave y preparación para la siguiente clase, adelantando el tema de prototipos y la integración de métodos para mostrar objetos en el DOM.                                                                |
+> Antes de llegar a clase, investiga y prepárate:
+
+#### 🔍 Misión de Investigación
+
+**1. ¿Qué es la palabra clave `this` en JavaScript?**
+Investiga cómo `this` cambia de contexto dependiendo de dónde se use. Busca ejemplos de `this` en objetos vs `this` en funciones normales.
+
+**2. ¿Qué diferencia hay entre una función normal y una función constructora?**
+Explora la diferencia entre `function miFuncion()` y `function MiConstructor()`. ¿Por qué una comienza con mayúscula?
+
+**3. ¿Para qué se usa la palabra clave `new` en JavaScript?**
+Busca ejemplos de cómo `new` crea objetos. ¿Qué pasa si llamas una función constructora sin `new`?
+
+**4. ¿Qué ventajas tiene organizar código en objetos?**
+Investiga conceptos como encapsulación y reutilización. ¿Por qué es mejor agrupar datos y funciones relacionadas?
+
+#### 🧠 Preguntas de reflexión
+
+Después de tu investigación, reflexiona:
+
+- ¿Cómo organizarías la información de un presupuesto usando objetos?
+- ¿Qué datos y comportamientos van juntos en un "movimiento" de presupuesto?
+- ¿Por qué crees que es útil poder crear múltiples objetos del mismo tipo?
+- ¿Cómo se conecta esto con lo que aprendiste sobre programación funcional?
+
+#### 📚 Recursos sugeridos
+
+1. **Artículo:** [MDN - Trabajando con objetos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics)  
+   _Explica los fundamentos de crear y manipular objetos en JavaScript, incluyendo funciones constructoras._
+
+2. **Artículo:** [Funciones Constructoras en JavaScript](https://www.javascripttutorial.net/javascript-constructor-function/)  
+   _Conceptos principales sobre cómo escribir una función constructora, el uso de `this`, y la relación con prototipos._
+
+3. **Video (opcional):** [JavaScript CONSTRUCTORS in 5 minutes! 🛠)](https://www.youtube.com/watch?v=WPmAu26LZKo)  
+   _Ejemplo práctico para ilustrar la creación de objetos usando funciones constructoras y `new`._
 
 ---
 
-## Resultados Esperados
-
-Al concluir esta clase, los estudiantes habrán **incorporado el paradigma orientado a objetos** en el flujo de su aplicación, comprendiendo cómo la encapsulación puede mejorar la mantenibilidad y la escalabilidad del código.
-
-En concreto, los estudiantes…
+## Resultados esperados
 
 ### Podrán hacer
-1. **Crear Objetos con Funciones Constructoras**  
-   - Definir y utilizar `function Movimiento(tipo, monto, descripcion) { ... }` para instanciar objetos de manera repetible.
-
-2. **Refactorizar Código Procedural a un Modelo OOP**  
-   - Sustituir estructuras planas (arrays sueltos) por objetos que agrupen datos y comportamientos (valores y validaciones).
-
-3. **Realizar Validaciones Dentro de un Objeto**  
-   - Encapsular la lógica de verificación (por ejemplo, `monto > 0`, `tipo` válido) directamente en la función constructora, mejorando la coherencia del sistema.
+1. **Crear funciones constructoras** que encapsulen la lógica del presupuesto personal
+2. **Usar `this` correctamente** para acceder a propiedades y métodos dentro de objetos
+3. **Refactorizar aplicaciones existentes** hacia un modelo orientado a objetos más mantenible
 
 ### Podrán explicar
-1. **Principio de Abstracción y Encapsulación**  
-   - Argumentar cómo la orientación a objetos facilita la simplificación de la realidad (abstracción) y el aislamiento de detalles internos (encapsulación).
-
-2. **Ventajas de la POO Frente a Otros Paradigmas**  
-   - Exponer por qué agrupar datos y métodos bajo un mismo “contrato” puede otorgar escalabilidad y mantenibilidad, en comparación con enfoques puramente imperativos o funcionales.
-
-3. **Uso de la Palabra Clave `this` y `new`**  
-   - Justificar cómo `this` se relaciona con el objeto recién creado, distinguiendo así entre variables locales y propiedades de instancia.
+1. **La diferencia conceptual** entre programación funcional y orientada a objetos
+2. **Cuándo usar objetos vs funciones** según el tipo de problema que estén resolviendo
+3. **Por qué la encapsulación** mejora la organización y mantenibilidad del código
 
 ### Podrán implementar
-- **Instancias de Objetos** para manejar movimientos (ingresos/egresos) en “Personal Budget”.  
-- **Lógica de Validación Interna**, evitando datos inválidos y manteniendo la coherencia del sistema.  
-- **Refactor Práctico** de partes del código legacy, sustituyendo arreglos y funciones dispersas por un esquema orientado a objetos.
+1. **Un sistema de objetos integrado** para manejar movimientos y presupuestos
+2. **Métodos de validación y cálculo** encapsulados dentro de los objetos apropiados
+3. **Una interfaz HTML funcional** que interactúe con el modelo de objetos creado
 
 ---
 
@@ -63,7 +91,6 @@ En concreto, los estudiantes…
 - **Objetos**: Estructuras que combinan datos (propiedades) y comportamientos (métodos).
 - **Abstracción**: Enfoque para simplificar la realidad, resaltando solo los rasgos esenciales.
 - **POO (Programación Orientada a Objetos)**: Paradigma que modela el software en términos de objetos que se comunican entre sí.
-- **Funciones Constructoras**: Forma tradicional en JavaScript de crear objetos antes de ES6, utilizando la palabra clave `new`.
+- **Funciones Constructoras**: Forma tradicional en JavaScript de crear objetos utilizando la palabra clave `new`.
 - **Encapsulación**: Técnica para ocultar los detalles de implementación y exponer solo los métodos o propiedades necesarias.
 - **Prototipo** (mención breve): Mecanismo que define métodos compartidos por las instancias creadas a partir de una función constructora (tema a profundizar en la siguiente clase).
-
