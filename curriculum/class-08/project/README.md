@@ -1,8 +1,8 @@
 # Proyecto del Módulo 2  
 
-**Personal Budget**
+**Gestor de Presupuesto Personal**
 
-Este proyecto consolida todo lo aprendido durante el **Módulo 2: Fundamentos de Programación**. El objetivo es que cada estudiante desarrolle un gestor de presupuesto personal robusto integrando los paradigmas imperativo, funcional y orientado a objetos, además del entendimiento profundo sobre tipos de objetos en JavaScript.
+Este proyecto consolida todo lo aprendido durante el **Módulo 2: Fundamentos de Programación**. El objetivo es que cada estudiante desarrolle un gestor de presupuesto personal robusto integrando los paradigmas imperativo, funcional y orientado a objetos, además del entendimiento profundo sobre prototipos y herencia en JavaScript.
 
 > ⏳ Cada estudiante presentará su proyecto en una **demostración en vivo de máximo 6 minutos** ante el instructor y sus compañeros, explicando sus **decisiones técnicas clave**.
 
@@ -11,9 +11,9 @@ Este proyecto consolida todo lo aprendido durante el **Módulo 2: Fundamentos de
 | **Laboratorio** | **Contribución al Proyecto** |
 |---|---|
 | **Lab 5: Programación Imperativa** | Sentar las bases del programa con estructuras de control, lógica condicional y funciones imperativas, creando el registro básico de movimientos financieros. |
-| **Lab 6: Programación Funcional** | Refactorizar las funcionalidades del gestor con funciones puras y de orden superior, optimizando la gestión de datos sin efectos secundarios, promoviendo la inmutabilidad y reutilización del código. |
-| **Lab 7: Programación Orientada a Objetos** | Organizar y encapsular lógica y datos financieros en objetos creados con funciones constructoras, consolidando validaciones, métodos de cálculos y presentaciones en DOM. |
-| **Lab 8: Prototipos en JavaScript** | Ampliar las capacidades del gestor utilizando prototipos, estableciendo métodos compartidos, mejorando eficiencia y preparación para futuras extensiones mediante herencia prototipal.|
+| **Lab 6: Programación Funcional** | Refactorizar las funcionalidades del gestor con funciones puras y de orden superior (`map()`, `filter()`, `reduce()`), optimizando la gestión de datos sin efectos secundarios, promoviendo la inmutabilidad y reutilización del código. |
+| **Lab 7: Programación Orientada a Objetos** | Organizar y encapsular lógica y datos financieros en objetos creados con funciones constructoras (`function Constructor() {}` + `new`), consolidando validaciones, métodos de cálculos y presentaciones en DOM usando `this.propiedad` y `this.metodo`. |
+| **Lab 8: Prototipos en JavaScript** | Optimizar el gestor implementando la cadena de prototipos (`Constructor.prototype.metodo`), estableciendo métodos compartidos para mejor eficiencia de memoria y creando herencia prototipal con subtipos especializados (`Ingreso`, `Egreso`) usando `Object.create()` e `instanceof`.|
 
 ## 🎯 Retos
 
@@ -37,9 +37,9 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 | **Criterio** | **Descripción** | **Puntaje Máximo** |
 |---|---|---|
 | **Historias de Usuario implementadas** | Se evalúa la claridad, funcionalidad y cumplimiento exacto de cada historia planteada, cubriendo los criterios de aceptación propuestos. | **20 pts** |
-| **Calidad Técnica Implementada** | Se valora la integración adecuada de los paradigmas vistos (imperativo, funcional, orientado a objetos y prototipal), demostrando comprensión profunda y aplicando buenas prácticas (funciones puras, encapsulamiento, reutilización de métodos, etc.). | **20 pts** |
-| **Presentación de funcionalidades en vivo** | Presentación breve (3 minutos máx.) mostrando funcionalidad práctica del gestor de presupuesto, resaltando filtrado, gráficos y categorización dinámica, navegando con claridad por la interfaz desarrollada. | **25 pts** |
-| **Argumentación Técnica** | El estudiante debe justificar de forma técnica y crítica:<br> - Selección y aplicación del paradigma de programación según la funcionalidad<br> - Razones para elegir funciones específicas del lenguaje (`map`, `filter`, funciones constructoras, etc.)<br> - Ventajas prácticas obtenidas al usar orientación a objetos y prototipos frente al enfoque imperativo inicial | **35 pts** |
+| **Calidad Técnica Implementada** | Se valora la integración adecuada de los paradigmas vistos (imperativo, funcional, orientado a objetos y prototipal), demostrando comprensión profunda y aplicando buenas prácticas: funciones puras, encapsulamiento con constructores, optimización con prototipos, herencia con `Object.create()`, validaciones con `instanceof`. | **20 pts** |
+| **Presentación de funcionalidades en vivo** | Presentación breve (3 minutos máx.) mostrando funcionalidad práctica del gestor de presupuesto, resaltando filtrado, análisis por tipos y categorización dinámica, navegando con claridad por la interfaz desarrollada con Bootstrap. | **25 pts** |
+| **Argumentación Técnica** | El estudiante debe justificar de forma técnica y crítica:<br> - Selección y aplicación del paradigma de programación según la funcionalidad<br> - Razones para elegir funciones específicas del lenguaje (`map`, `filter`, funciones constructoras, prototipos)<br> - Ventajas prácticas obtenidas al usar orientación a objetos y prototipos frente al enfoque imperativo inicial<br> - Comprensión de herencia prototipal y validación de tipos | **35 pts** |
 
 > **Puntaje Total:** 100 puntos
 
@@ -48,10 +48,12 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 - Cada estudiante tendrá **máximo 3 minutos** para:
     1. Mostrar su sitio completo (navegación, responsividad, interacción).
     2. Explicar qué retos adicionales eligió y cómo los implementó.
+    3. Demostrar funcionalidades específicas de prototipos (herencia, validaciones con `instanceof`).
 
 - Adicionalmente, tendrá **máximo 3 minutos** para:
-    3. Justificar al menos **2 decisiones técnicas relevantes**
-    4. Justificar al menos **1 implementación de código** preguntado por el **Instructor**
+    4. Justificar al menos **2 decisiones técnicas relevantes** sobre paradigmas de programación
+    5. Justificar al menos **1 implementación de código prototipal** preguntado por el **Instructor**
+    6. Explicar la cadena de prototipos de sus objetos usando DevTools
 
 ## 📝 Instrucciones de envío
 
@@ -59,13 +61,16 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 - **URL de GitHub Pages** desplegado.
 - **README actualizado** documentando:
     - Retos adicionales implementados.
-    - Decisiones técnicas clave.
-    - Enlace al sitio.
+    - Decisiones técnicas clave sobre paradigmas de programación.
+    - Explicación de la arquitectura de prototipos implementada.
+    - Enlace al sitio desplegado.
 
 ---
 
 > ### 💡 Tips para la Presentación
 > 
-> - **Sé conciso y técnico:** Explica breve pero claramente tus decisiones técnicas más importantes.
-> - **Usa ejemplos concretos:** Muestra casos de uso reales que justifiquen tus decisiones (filtros, categorías, gráficas).
-> - **Céntrate en el pensamiento crítico:** Explica tus decisiones técnicas con base en los principios aprendidos.
+> - **Sé conciso y técnico:** Explica breve pero claramente tus decisiones sobre paradigmas de programación.
+> - **Muestra la cadena de prototipos:** Usa DevTools para demostrar herencia prototipal.
+> - **Usa ejemplos concretos:** Muestra casos donde `instanceof` y métodos especializados agregan valor.
+> - **Céntrate en el pensamiento crítico:** Explica por qué elegiste prototipos vs métodos en constructor.
+> - **Demuestra eficiencia:** Compara memoria usada entre enfoques diferentes.
