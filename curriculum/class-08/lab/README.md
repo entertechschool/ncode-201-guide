@@ -1,105 +1,412 @@
 # Laboratorio 08: Prototipos en JavaScript
 
-¡Bienvenido al Laboratorio 08 del proyecto **Personal Budget**! En este laboratorio, profundizaremos en el uso de prototipos en JavaScript para implementar herencia prototipal en nuestro proyecto. Además, trasladaremos los inputs y outputs gestionados previamente en consola a una interfaz de usuario web sencilla, utilizando HTML, CSS y frameworks modernos (Bootstrap o Tailwind). Esto permitirá que la aplicación sea visual, interactiva y funcional para el usuario final.
+En este laboratorio optimizamos el **Gestor de Presupuesto Personal** implementando la cadena de prototipos en JavaScript. Moveremos los métodos de las funciones constructoras al prototipo para optimizar memoria y crearemos herencia prototipal con subtipos especializados como `Ingreso` y `Egreso`.
 
-> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye varios momentos de validación grupal. Se realizarán checkpoints específicos para cada Historia de Usuario seleccionada, permitiendo recibir feedback y ajustar la implementación en tiempo real.
+Como parte de nuestro proyecto **Gestor de Presupuesto Personal**, esta implementación de prototipos nos permitirá compartir métodos entre instancias, crear jerarquías de herencia y establecer las bases para un sistema extensible y escalable.
 
-## 🎯 Objetivos de Aprendizaje
+### 🎯 Objetivos de Aprendizaje
 
-1. **Comprender la cadena de prototipos (prototype chain) en JavaScript:**  
-   Identificar cómo los objetos se conectan y comparten métodos a través de la cadena de prototipos.
+Al completar este laboratorio, serás capaz de:
 
-2. **Diferenciar `prototype` y `__proto__`:**  
-   Reconocer la diferencia entre la propiedad `prototype` de las funciones constructoras y la propiedad interna `__proto__` de las instancias, y aplicar estos conceptos en la implementación de herencia.
+1. **Implementar** métodos compartidos usando `Constructor.prototype.metodo = function() {}`
+2. **Crear** herencia prototipal con `Object.create()` y especialización de comportamientos  
+3. **Optimizar** memoria moviendo métodos del constructor al prototipo
+4. **Validar** tipos de objetos usando `instanceof` y `hasOwnProperty()`
 
-## 🔑 Conceptos Clave
+### 🔑 Conceptos Clave
 
-1. **Prototype Chain:**  
-   Mecanismo que permite a los objetos acceder a propiedades y métodos definidos en sus prototipos y en la cadena de prototipos superior.
+- **Prototype Chain**: Cadena de prototipos que permite herencia en JavaScript
+- **Constructor.prototype**: Objeto compartido donde se definen métodos para todas las instancias
+- **`__proto__`**: Referencia interna que conecta objetos con sus prototipos
+- **Herencia Prototipal**: Mecanismo para crear objetos especializados que heredan de otros
 
-2. **`__proto__` vs. `prototype`:**  
-   Diferencia entre la referencia interna que tiene cada objeto (`__proto__`) y la propiedad `prototype` de las funciones constructoras que se utiliza para establecer la herencia.
+### ⚙️ Setup Inicial
 
-3. **Funciones Constructoras:**  
-   Patrón tradicional para crear objetos en JavaScript, permitiendo compartir métodos y propiedades a través del prototipo.
+**Estructura del repositorio:**
+```
+personal-budget/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── oop-objects.js      (del laboratorio anterior)
+│   └── prototype-system.js (nuevo archivo)
+└── README.md
+```
 
-## ⚙️ Setup Inicial
+**Punto de partida - optimización a prototipos:**
+```javascript
+// Función constructora base - solo propiedades
+function Movimiento(nombre, tipo, valor) {
+  this.nombre = nombre;
+  this.tipo = tipo;
+  this.valor = valor;
+  this.fecha = new Date().toLocaleDateString();
+  this.id = Date.now() + Math.random();
+}
 
-1. **Repositorio**  
-   - Continúa usando el repositorio existente: `personal-budget`.  
+// Métodos compartidos en el prototipo
+Movimiento.prototype.formatear = function() {
+  const signo = this.tipo === 'ingreso' ? '+' : '-';
+  return `${this.nombre}: ${signo}$${this.valor}`;
+};
+```
 
-2. **Estructura de Archivos:**  
-   Organiza tu proyecto con la siguiente estructura mínima:
+---
 
-   ```
-   personal-budget/ 
-   ├── index.html 
-   ├── css/ 
-   │ └── styles.css 
-   ├── js/ 
-   │ └── app.js 
-   └── README.md
-   ```
+## Parte 1: Migración a Prototipos (~30 min)
 
-3. **Contenido Base:**  
-- En `index.html`, incluye la estructura semántica básica (`<header>`, `<main>`, `<footer>`) y el formulario para registrar movimientos.
-- En `styles.css`, define estilos iniciales y, si lo prefieres, integra un framework como Bootstrap o Tailwind para facilitar un diseño responsivo y atractivo.
-- En `app.js`, implementa la lógica de prototipos y la integración con la UI.
+> **Objetivo**: Optimizar las funciones constructoras moviendo métodos al prototipo
 
-## 🏆 Historias de Usuario
+#### 1.1. Refactorización de Movimiento
 
-### HU1: Crear UI para la aplicación
-> _"Como usuario, quiero disponer de una interfaz web sencilla y clara, construida con HTML y CSS, para trasladar los inputs y outputs en un entorno visual interactivo. La UI incluirá un formulario para capturar datos de cada movimiento (tipo, monto y descripción) y un área para visualizar los movimientos registrados, facilitando la interacción y el seguimiento del presupuesto de manera accesible y responsiva"_.
+Crea el archivo `prototype-system.js` y migra los métodos:
 
-**Criterios de Aceptación:**  
-  1. Crear una estructura semántica en HTML que incluya secciones como `<header>`, `<main>` y `<footer>`.
-  2. Diseñar un formulario con campos para "Tipo", "Monto" y "Descripción", utilizando elementos apropiados (`<input>`, `<select>`, `<textarea>`).
-  3. Aplicar estilos sencillos y responsivos con CSS o mediante Bootstrap/Tailwind.
-  4. Incluir una sección en el DOM para mostrar los movimientos registrados de forma clara.
+```javascript
+// Constructor base optimizado
+function Movimiento(nombre, tipo, valor) {
+  if (!nombre || !tipo || valor <= 0) {
+    throw new Error('Datos inválidos para el movimiento');
+  }
+  
+  this.nombre = nombre;
+  this.tipo = tipo;
+  this.valor = valor;
+  this.fecha = new Date().toLocaleDateString();
+  this.id = Date.now() + Math.random();
+}
 
-> **Checkpoint 1 (~20 min)**: Se revisará la correcta estructura del HTML, la aplicación de estilos y la integración inicial del formulario con el área de visualización.
+// Métodos compartidos en el prototipo
+Movimiento.prototype.esIngreso = function() {
+  return this.tipo === 'ingreso';
+};
 
+Movimiento.prototype.esGasto = function() {
+  return this.tipo === 'gasto';
+};
 
-### HU2: Herencia Prototipal para Movimientos Diferenciados
-> _"Como usuario, quiero que los movimientos se clasifiquen en 'Ingreso' y 'Egreso' mediante herencia prototipal, de modo que ambos tipos compartan métodos comunes y tengan validaciones específicas adaptadas a cada caso. Al registrar un movimiento, se instanciará automáticamente el objeto adecuado (ya sea Ingreso o Egreso), garantizando la aplicación correcta de las validaciones generales y específicas."_
+Movimiento.prototype.formatear = function() {
+  const signo = this.esIngreso() ? '+' : '-';
+  return `${this.nombre}: ${signo}$${this.valor} (${this.fecha})`;
+};
 
-**Criterios de Aceptación:**  
-  1. Definir una función constructora base `Movimiento` que actúe como prototipo para derivar subtipos.  
-  2. Crear funciones constructoras específicas para `Ingreso` y `Egreso`, utilizando técnicas de herencia (por ejemplo, `Object.create()` o asignación del `prototype`) para heredar de `Movimiento`.  
-  3. Implementar métodos comunes en el prototipo de `Movimiento` (por ejemplo, validaciones básicas y métodos de renderización) que sean reutilizables por ambas subclases.  
-  4. Establecer validaciones específicas en cada subclase, como asegurar que el monto sea mayor a cero y que la descripción no esté vacía.  
-  5. Verificar que al registrar un movimiento se instancie el objeto correcto y se ejecuten tanto las validaciones generales como las particulares.
+Movimiento.prototype.validar = function() {
+  return this.valor > 0 && ['ingreso', 'gasto'].includes(this.tipo);
+};
+```
 
-> **Checkpoint 2 (~50 min):** Se evaluará la correcta creación de los subtipos, la adecuada configuración de la cadena de prototipos y la ejecución precisa de las validaciones.
+#### 1.2. Presupuesto con Prototipos
 
-### HU3: Actualización Automática de Totales mediante Herencia
-> _"Como usuario, quiero que la suma total de ingresos y egresos se actualice automáticamente al registrar un movimiento, aprovechando métodos heredados a través de la cadena de prototipos. Esto permitirá mantener un resumen financiero actualizado en tiempo real sin requerir acciones adicionales, mejorando la experiencia de monitoreo y control del presupuesto."_
+```javascript
+function Presupuesto() {
+  this.movimientos = [];
+  this.meta = 0;
+}
 
-**Criterios de Aceptación:**  
-  1. Implementar un método en el prototipo (por ejemplo, `recalcularTotales`) que recorra el array global de movimientos y calcule los totales de ingresos y egresos.  
-  2. Asegurarse de que este método se invoque automáticamente cada vez que se registre un nuevo movimiento.  
-  3. Integrar la actualización de totales con la interfaz de usuario para que los nuevos valores se muestren de forma inmediata en pantalla.  
-  4. Validar que el cálculo de totales sea preciso y que la actualización se realice de forma eficiente.
+Presupuesto.prototype.agregarMovimiento = function(movimiento) {
+  if (movimiento instanceof Movimiento && movimiento.validar()) {
+    this.movimientos.push(movimiento);
+    console.log('Movimiento agregado:', movimiento.formatear());
+  } else {
+    throw new Error('Movimiento inválido');
+  }
+};
 
-> **Checkpoint 3 (~80 min):** Se revisará la integración del método `recalcularTotales`, verificando la exactitud de los cálculos, la actualización en tiempo real de la interfaz y la invocación automática del método tras el registro de nuevos movimientos.
+Presupuesto.prototype.calcularIngresos = function() {
+  return this.movimientos
+    .filter(m => m.esIngreso())
+    .reduce((total, m) => total + m.valor, 0);
+};
 
-## ⭐️ Logros Adicionales
+Presupuesto.prototype.calcularGastos = function() {
+  return this.movimientos
+    .filter(m => m.esGasto())
+    .reduce((total, m) => total + m.valor, 0);
+};
 
-- **Logro 1: Mostrar Mensaje de Confirmación**  
-Como usuario, quiero ver un mensaje de confirmación en la interfaz cada vez que un movimiento se registre exitosamente, para recibir retroalimentación inmediata.
+Presupuesto.prototype.obtenerBalance = function() {
+  return this.calcularIngresos() - this.calcularGastos();
+};
+```
 
-- **Logro 2: Resetear Formulario Automáticamente**  
-Como usuario, deseo que el formulario se restablezca automáticamente después de registrar un movimiento, facilitando el ingreso de nuevos datos sin intervención manual.
+**🏆 Reto Autónomo (5 min):** Agregar método `obtenerInfo()` al prototipo que retorne string con toda la información del movimiento
+
+---
+
+## Parte 2: Herencia Prototipal (~40 min)
+
+> **Objetivo**: Crear subtipos `Ingreso` y `Egreso` que heredan de `Movimiento`
+
+#### 2.1. Constructor Ingreso con Herencia
+
+```javascript
+// Constructor especializado para Ingresos
+function Ingreso(nombre, valor, fuente) {
+  Movimiento.call(this, nombre, 'ingreso', valor); // Llamar constructor padre
+  this.fuente = fuente || 'trabajo';
+}
+
+// Establecer herencia prototipal
+Ingreso.prototype = Object.create(Movimiento.prototype);
+Ingreso.prototype.constructor = Ingreso;
+
+// Métodos especializados
+Ingreso.prototype.esFijo = function() {
+  const fuentesFijas = ['salario', 'pension', 'renta'];
+  return fuentesFijas.includes(this.fuente);
+};
+
+Ingreso.prototype.formatear = function() {
+  const tipoTexto = this.esFijo() ? 'Fijo' : 'Variable';
+  return `💰 ${this.nombre}: +$${this.valor} (${this.fuente} - ${tipoTexto})`;
+};
+```
+
+#### 2.2. Constructor Egreso con Herencia
+
+```javascript
+function Egreso(nombre, valor, categoria) {
+  Movimiento.call(this, nombre, 'gasto', valor);
+  this.categoria = categoria || 'otros';
+}
+
+Egreso.prototype = Object.create(Movimiento.prototype);
+Egreso.prototype.constructor = Egreso;
+
+Egreso.prototype.esEsencial = function() {
+  const esenciales = ['vivienda', 'comida', 'transporte', 'salud'];
+  return esenciales.includes(this.categoria);
+};
+
+Egreso.prototype.formatear = function() {
+  const icono = this.esEsencial() ? '🏠' : '🛍️';
+  return `${icono} ${this.nombre}: -$${this.valor} (${this.categoria})`;
+};
+```
+
+#### 2.3. Validaciones de Herencia
+
+```javascript
+Presupuesto.prototype.analizarComposicion = function() {
+  const ingresos = this.movimientos.filter(m => m instanceof Ingreso);
+  const egresos = this.movimientos.filter(m => m instanceof Egreso);
+  
+  return {
+    totalIngresos: ingresos.length,
+    totalEgresos: egresos.length,
+    ingresosRecurrentes: ingresos.filter(i => i.esFijo()).length,
+    egresosEsenciales: egresos.filter(e => e.esEsencial()).length
+  };
+};
+
+Presupuesto.prototype.validarTipos = function() {
+  return this.movimientos.every(m => 
+    (m instanceof Ingreso || m instanceof Egreso) &&
+    m.hasOwnProperty('valor')
+  );
+};
+```
+
+**🏆 Reto Autónomo 1 (5 min):** Implementar método `filtrarPorTipo(TipoConstructor)` que use `instanceof`
+
+**🏆 Reto Autónomo 2 (7 min):** Agregar método `contarPorCategoria()` que cuente movimientos por fuente/categoría
+
+---
+
+## Parte 3: Integración UI y Funcionalidades Avanzadas (~50 min)
+
+> **Objetivo**: Integrar prototipos con interface HTML y agregar funcionalidades completas
+
+#### 3.1. Interface HTML Básica
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Presupuesto Personal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">💰 Gestor de Presupuesto</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Agregar Movimiento</h3>
+                        <form id="form-movimiento">
+                            <select id="tipo-movimiento" class="form-select mb-3" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="ingreso">Ingreso</option>
+                                <option value="egreso">Egreso</option>
+                            </select>
+                            
+                            <input type="text" id="nombre" class="form-control mb-3" placeholder="Nombre" required>
+                            <input type="number" id="valor" class="form-control mb-3" placeholder="Valor" min="1" required>
+                            
+                            <div id="campos-ingreso" style="display: none;" class="mb-3">
+                                <select id="fuente" class="form-select">
+                                    <option value="salario">Salario</option>
+                                    <option value="freelance">Freelance</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                            </div>
+                            
+                            <div id="campos-egreso" style="display: none;" class="mb-3">
+                                <select id="categoria" class="form-select">
+                                    <option value="comida">Comida</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="otros">Otros</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Resumen</h3>
+                        <div id="resumen-financiero"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Movimientos</h3>
+                        <div id="lista-movimientos"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/prototype-system.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+#### 3.2. Lógica de Integración Simplificada
+
+```javascript
+// Instancia global del presupuesto
+const miPresupuesto = new Presupuesto();
+
+// Event listeners básicos
+document.getElementById('tipo-movimiento').addEventListener('change', function() {
+    const tipo = this.value;
+    document.getElementById('campos-ingreso').style.display = 
+        tipo === 'ingreso' ? 'block' : 'none';
+    document.getElementById('campos-egreso').style.display = 
+        tipo === 'egreso' ? 'block' : 'none';
+});
+
+document.getElementById('form-movimiento').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const tipo = document.getElementById('tipo-movimiento').value;
+    const nombre = document.getElementById('nombre').value;
+    const valor = parseFloat(document.getElementById('valor').value);
+    
+    try {
+        let movimiento;
+        
+        if (tipo === 'ingreso') {
+            const fuente = document.getElementById('fuente').value;
+            movimiento = new Ingreso(nombre, valor, fuente);
+        } else if (tipo === 'egreso') {
+            const categoria = document.getElementById('categoria').value;
+            movimiento = new Egreso(nombre, valor, categoria);
+        }
+        
+        miPresupuesto.agregarMovimiento(movimiento);
+        renderizarPresupuesto();
+        this.reset();
+        
+        // Inspección de prototipos
+        console.log('Prototipo:', movimiento.__proto__);
+        console.log('Es Movimiento:', movimiento instanceof Movimiento);
+        
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+});
+
+function renderizarPresupuesto() {
+    // Resumen financiero
+    const resumen = document.getElementById('resumen-financiero');
+    const balance = miPresupuesto.obtenerBalance();
+    
+    resumen.innerHTML = `
+        <p><strong>Ingresos:</strong> ${miPresupuesto.calcularIngresos()}</p>
+        <p><strong>Gastos:</strong> ${miPresupuesto.calcularGastos()}</p>
+        <p><strong>Balance:</strong> ${balance}</p>
+    `;
+    
+    // Lista de movimientos
+    const lista = document.getElementById('lista-movimientos');
+    lista.innerHTML = miPresupuesto.movimientos
+        .map(m => `<div class="alert ${m instanceof Ingreso ? 'alert-success' : 'alert-danger'}">
+                     ${m.formatear()}
+                   </div>`)
+        .join('');
+}
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => renderizarPresupuesto());
+```
+
+**🏆 Reto Autónomo 1 (5 min):** Agregar botón "Limpiar Historial" que vacíe todos los movimientos
+
+**🏆 Reto Autónomo 2 (7 min):** Implementar contador de movimientos por tipo en el resumen
+
+**🏆 Reto Autónomo 3 (10 min):** Crear método `exportarDatos()` que genere JSON con todos los movimientos
+
+---
+
+## 🌟 Logros Adicionales
+
+### Logro 1: Inspector de Prototipos Avanzado
+* Implementar función `inspeccionarCadena(objeto)` que muestre la cadena completa usando `__proto__`
+* Agregar botón "Inspeccionar" en cada movimiento para ver su herencia en modal
+
+### Logro 2: Persistencia con Reconstrucción de Tipos
+* Método `exportarConTipos()` que serialice incluyendo información de constructores
+* Método `importarConTipos(json)` que reconstruya objetos con prototipos correctos usando `Object.setPrototypeOf()`
+
+---
 
 ## 📝 Instrucciones de Entrega
 
-1. **Documentación en README:**  
-- Agrega una sección con encabezado: **Backlog**
-- En esta sección enumera al menos 5 posibles HU nuevas que implementarías en la aplicación.
+### 1. Verificar Funcionalidad Completa
+- ✅ Herencia prototipal implementada correctamente con `Object.create()`
+- ✅ Métodos compartidos funcionando desde prototipos
+- ✅ Validaciones de tipo con `instanceof` y `hasOwnProperty()`
+- ✅ Interface HTML funcional con análisis de composición en tiempo real
 
-2. **Despliegue:**  
-- Publica la nueva versión del proyecto en GitHub Pages o en la plataforma que utilices para el despliegue.
+### 2. Comparte por Canvas
 
-3. **Entrega Final:**  
-- URL del repositorio.
-- URL del proyecto desplegado.
+**Repositorio**:
+- Comparte el link de tu repositorio actualizado
+- Incluye documentación de la jerarquía de prototipos en README
+
+**Funcionalidad**:
+- Comparte el link de tu sitio desplegado 
+- Incluye capturas de DevTools mostrando la cadena de prototipos
+
+**Responde brevemente**:
+- ¿Qué ventajas observaste al mover métodos al prototipo vs tenerlos en el constructor?
+- ¿Cómo te ayudaron `instanceof` y `hasOwnProperty()` en las validaciones?
+- ¿Qué diferencias notas entre `__proto__` y `prototype` al inspeccionar en DevTools?
+- ¿Cómo la herencia prototipal mejora la organización y escalabilidad del código?
