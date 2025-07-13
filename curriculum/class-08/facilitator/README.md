@@ -1,107 +1,267 @@
-﻿# Clase 08: Prototipos en JavaScript
+﻿# Guía del Facilitador: Prototipos en JavaScript
 
-## ❄️ Previo a la clase:
+## 1. El momento pedagógico clave
 
-### Estructura resumida
+Los estudiantes llegan a esta clase habiendo dominado funciones constructoras y el concepto de `this`, pero ahora deben experimentar la transformación mental más profunda del módulo: entender que JavaScript no solo permite crear objetos, sino que tiene un sistema de herencia nativo basado en prototipos que es fundamentalmente diferente a las clases tradicionales. El "click" conceptual aquí es reconocer que cada método que colocan en el constructor está creando una nueva función en memoria para cada instancia, y que existe una forma más elegante y eficiente de compartir comportamientos.
 
-| **Fase** | **Descripción** |
-| --- | --- |
-| **[Intro](#1-introducción-15-min)**<br>15 min | Activación de conocimientos previos y contextualización sobre prototipos y herencia prototipal en JavaScript. |
-| **[Debate y Demo Técnica](#2-debate-y-demo-técnica-45-min)**<br>45 min | Discusión estructurada sobre conceptos clave y demostración práctica de implementación de prototipos.<br>🎯 Facilitar el pensamiento crítico sobre la herencia en JavaScript y modelar buenas prácticas de uso de IA. |
-| **[Laboratorio Guiado](#3-laboratorio-guiado-100-min)**<br>100 min | Desarrollo práctico con validación continua a través de checkpoints específicos, enfocado en trasladar lógica prototipal a una UI moderna. |
-| **[Cierre](#4-cierre-20-min)**<br>20 min | Consolidación de aprendizajes clave y preparación para los proyectos del siguiente módulo. |
+```javascript
+// El "antes" - ineficiencia de memoria
+function Movimiento(nombre, tipo, valor) {
+  this.nombre = nombre;
+  this.calcularImpacto = function() { // Nueva función para cada instancia
+    return this.tipo === 'ingreso' ? this.valor : -this.valor;
+  };
+}
 
-## 🔥 Durante la clase
+// El "después" - optimización con prototipos
+function Movimiento(nombre, tipo, valor) {
+  this.nombre = nombre;
+}
+Movimiento.prototype.calcularImpacto = function() { // Una función compartida
+  return this.tipo === 'ingreso' ? this.valor : -this.valor;
+};
+```
 
-### Estructura Detallada (180 min)
+Este cambio representa la maduración hacia un pensamiento arquitectónico más sofisticado, donde la eficiencia de recursos y la escalabilidad se vuelven consideraciones primarias, preparándolos para el pensamiento que necesitarán en frameworks como React donde la optimización de componentes es crucial.
 
-#### 1. Introducción (15 min)
+## 2. Constructor.prototype: Más que optimización de memoria
 
-🎯 **Objetivos de Aprendizaje:**
-- Entender cómo funciona la herencia prototipal en JavaScript.
-- Reconocer la diferencia entre `prototype` y `__proto__`.
-- Comprender el beneficio práctico del uso de prototipos en proyectos reales.
+La decisión de enseñar `Constructor.prototype` como patrón fundamental no es una reliquia del pasado, es preparación estratégica para comprender cómo funciona JavaScript internamente. Los estudiantes necesitan entender que incluso cuando usen la sintaxis `class` en Code 301, bajo el capó JavaScript sigue usando el sistema de prototipos que están aprendiendo ahora.
 
-🔑 **Conceptos Clave:**
-- Prototype Chain
-- Diferencia entre `prototype` y `__proto__`
-- Funciones Constructoras
+```javascript
+// Patrón prototipal: el mecanismo real de JavaScript
+function Presupuesto() {
+  this.movimientos = [];
+}
 
-#### Tips para el instructor:
-- Usa ejemplos concretos (ej. objetos “Movimiento”, “Ingreso”, “Egreso”) para conectar estos conceptos con lo trabajado previamente.
-- Destaca la importancia de la reutilización de código a través de prototipos.
+// Métodos compartidos en el prototipo
+Presupuesto.prototype.agregarMovimiento = function(movimiento) {
+  this.movimientos.push(movimiento);
+  this.actualizarBalance(); // Método interno que también usa prototipos
+};
 
----
+Presupuesto.prototype.actualizarBalance = function() {
+  // Lógica compartida entre todas las instancias
+  console.log(`Balance actual: ${this.calcularTotal()}`);
+};
 
-#### 2. Debate y Demo Técnica (45 min)
+// Cada instancia accede a los mismos métodos en memoria
+const presupuesto1 = new Presupuesto();
+const presupuesto2 = new Presupuesto();
+console.log(presupuesto1.agregarMovimiento === presupuesto2.agregarMovimiento); // true
+```
 
-- Modera un debate crítico guiado por los mitos y verdades revisados previamente:
-  - Ejemplo: "Las funciones constructoras son obsoletas y no se usan en el desarrollo moderno de JavaScript."
-  - Explora por qué todavía es importante entender funciones constructoras, aunque existan alternativas modernas (ES6 Classes).
+Esta comprensión profunda les permitirá entender por qué React puede re-renderizar componentes eficientemente, por qué los hooks funcionan como funcionan, y por qué las optimizaciones de performance en aplicaciones modernas son posibles.
 
-- Realiza una demo técnica que muestre claramente:
-  - Implementación práctica de una función constructora (`function Movimiento`).
-  - Herencia prototipal: método compartido (`Movimiento.prototype.calcularTotal`).
-  - Creación y diferenciación de subtipos (`Ingreso`, `Egreso`).
-  - Integración con una UI básica usando HTML/CSS.
+## 3. Object.create() vs. la sobrecarga de herencia tradicional
 
-- Integra el uso responsable de IA:
-  - Demuestra cómo pedir sugerencias de código prototipal y validarlas críticamente.
-  - Refuerza la idea de la IA como herramienta, no sustituto del criterio técnico.
+En lugar de introducir conceptos complejos de herencia múltiple o patrones académicos, usamos `Object.create()` como la herramienta precisa para establecer relaciones prototipos de manera explícita y controlada. Esta elección pedagógica evita la confusión de sintaxis mientras enfoca en el concepto fundamental.
 
----
+```javascript
+// Herencia prototipal explícita y limpia
+function Ingreso(nombre, valor, fuente) {
+  Movimiento.call(this, nombre, 'ingreso', valor); // Llamada explícita al constructor padre
+  this.fuente = fuente;
+}
 
-#### 3. Laboratorio Guiado (100 min)
+// Establecimiento claro de la cadena prototipal
+Ingreso.prototype = Object.create(Movimiento.prototype);
+Ingreso.prototype.constructor = Ingreso; // Importante para instanceof
 
-💻 **Objetivo:**
-Trasladar la lógica desarrollada con prototipos en consola hacia una interfaz de usuario interactiva y visual, utilizando frameworks CSS modernos (Bootstrap o Tailwind).
+// Especialización sin romper la cadena
+Ingreso.prototype.esFijo = function() {
+  return ['salario', 'pension', 'renta'].includes(this.fuente);
+};
+```
 
-**Checkpoint 1 (~30 min):**
-- Validar estructura básica HTML/CSS y función constructora inicial.
+La belleza de este enfoque es que cada paso es explícito y debuggeable. Los estudiantes pueden inspeccionar cada parte de la cadena en DevTools y entender exactamente qué está sucediendo, preparándolos para diagnosticar problemas en aplicaciones más complejas.
 
-**Checkpoint 2 (~60 min):**
-- Verificar creación efectiva de objetos y herencia prototipal (Ingreso y Egreso).
-- Asegurar la implementación de métodos compartidos en `prototype`.
+## 4. instanceof y hasOwnProperty: Validación en tiempo real
 
-**Checkpoint 2.5 (~45 min revisión entre pares):**
-- Facilita una revisión cruzada donde estudiantes expliquen sus decisiones técnicas.
+Estos métodos no son curiosidades técnicas, son herramientas de supervivencia en aplicaciones complejas donde la validación de tipos se vuelve crítica. Los estudiantes deben experimentar la potencia de tener validaciones robustas que funcionen a través de jerarquías de herencia.
 
-**Checkpoint 3 (~80 min):**
-- Validar integración funcional con la UI: renderizado de movimientos, actualización automática de totales mediante métodos prototipales.
-
-**Logros adicionales (Opcional):**
-- Mensaje de confirmación tras registrar movimientos.
-- Reset automático del formulario.
-
----
-
-#### 4. Cierre (20 min)
-
-💡 **Objetivo:**
-Consolidar aprendizajes y preparar el camino hacia el siguiente módulo.
-
-**Conclusiones a enfatizar:**
-- **"Herencia Prototipal y Código Escalable"**
-  - Ventajas prácticas de encapsular validaciones y métodos compartidos en prototipos.
-  - Cómo facilita mantenimiento y expansión del proyecto.
-
-- **"Dominar la Cadena de Prototipos"**
-  - La importancia técnica y el impacto en la reutilización efectiva del código.
+```javascript
+// Validación sofisticada en sistemas complejos
+function validarMovimiento(obj) {
+  // Verificar que es instancia de la jerarquía correcta
+  if (!(obj instanceof Movimiento)) {
+    throw new Error('Objeto debe ser instancia de Movimiento');
+  }
   
-- **"IA y Validación Técnica"**
-  - La IA es un co-piloto, no reemplaza la decisión crítica del desarrollador.
-  - Validar siempre los outputs de la IA.
+  // Verificar propiedades propias vs heredadas
+  if (!obj.hasOwnProperty('valor') || !obj.hasOwnProperty('fecha')) {
+    throw new Error('Faltan propiedades requeridas');
+  }
+  
+  // Validación específica por tipo
+  if (obj instanceof Ingreso && !obj.hasOwnProperty('fuente')) {
+    throw new Error('Ingreso debe tener fuente definida');
+  }
+  
+  return true;
+}
 
-- **"Conectar teoría con práctica"**
-  - La importancia del enfoque "Learning by Critical Thinking" para solucionar problemas técnicos reales.
+// Filtrado inteligente por tipo
+function separarPorTipo(movimientos) {
+  return {
+    ingresos: movimientos.filter(m => m instanceof Ingreso),
+    egresos: movimientos.filter(m => m instanceof Egreso),
+    ingresosFijos: movimientos.filter(m => m instanceof Ingreso && m.esFijo())
+  };
+}
+```
 
-- **"Próximos pasos"**
-  - Comentar brevemente cómo lo aprendido aquí prepara al estudiante para los desafíos de interacciones con el DOM y manejo de eventos en el módulo siguiente.
+Esta capacidad de validación y filtrado dinámico es exactamente lo que necesitarán en React cuando trabajen con props, estado y componentes condicionales.
 
----
+## 5. Cadena de prototipos: La unidad fundamental de escalabilidad
 
-## 📝 Post-Clase (Instructor):
-- Documenta avances y dificultades comunes detectadas.
-- Actualiza materiales si detectas áreas de confusión generalizadas.
-- Revisa entregas en GitHub para proporcionar retroalimentación continua.
-- Prepárate para resolver dudas puntuales en futuras clases.
+La cadena de prototipos no es un concepto abstracto, es el mecanismo que permite que las aplicaciones JavaScript escalen sin colapsar bajo su propio peso. Los estudiantes deben experimentar cómo una decisión arquitectónica al nivel de prototipos impacta la performance y mantenibilidad de toda la aplicación.
+
+Los principios universales que internalizan aquí son:
+- **Delegación eficiente**: Un método definido una vez, usado por miles de instancias
+- **Extensibilidad controlada**: Nuevos comportamientos sin modificar código existente
+- **Debugging predecible**: Cadena de búsqueda clara y rastreable
+
+```javascript
+// Extensibilidad sin modificación
+// Después de que la aplicación está en producción, podemos agregar:
+Movimiento.prototype.convertirMoneda = function(tasaCambio) {
+  return this.valor * tasaCambio;
+};
+
+// Inmediatamente disponible para todas las instancias existentes
+// Sin necesidad de modificar código o recrear objetos
+```
+
+## 6. Bootstrap integration: Pragmatismo sobre purismo UI
+
+La decisión de usar Bootstrap en lugar de CSS puro es estratégicamente pragmática. Los estudiantes necesitan experimentar cómo los sistemas de prototipos interactúan con frameworks UI reales, no con ejemplos académicos. Bootstrap les permite crear interfaces profesionales rápidamente mientras se enfocan en la lógica prototipal.
+
+```javascript
+// Integración realista con frameworks UI
+function renderizarMovimiento(movimiento) {
+  const tipoClase = movimiento instanceof Ingreso ? 'alert-success' : 'alert-danger';
+  const icono = movimiento instanceof Ingreso ? '💰' : '💸';
+  
+  return `
+    <div class="alert ${tipoClase} d-flex justify-content-between">
+      <span>${icono} ${movimiento.formatear()}</span>
+      <small>${movimiento.constructor.name}</small>
+    </div>
+  `;
+}
+```
+
+Esta integración les enseña que los prototipos no existen en el vacío, sino que forman parte de un ecosistema más amplio de herramientas y frameworks.
+
+## 7. Gestión de la frustración inicial
+
+**Frustración típica:** "¿Por qué no puedo poner simplemente todos los métodos en el constructor? Es más fácil."
+
+**Estrategia de facilitación:** Reconoce que la simplicidad inicial es tentadora, pero usa la analogía de la biblioteca: "Si cada persona llevara todos los libros que necesita en su mochila, sería más 'simple' no tener que ir a la biblioteca, pero imagina el peso. Los prototipos son la biblioteca compartida."
+
+**Pregunta clave para la clase:** "Si tu aplicación tuviera 10,000 movimientos, ¿preferirías 10,000 copias de la función `calcularImpacto()` o una sola función compartida?"
+
+**Frustración típica:** "No entiendo cuándo usar `prototype` vs cuándo usar `__proto__`."
+
+**Estrategia de facilitación:** Mantén `__proto__` como herramienta de inspección únicamente. Enfoca en que `prototype` es para desarrolladores (cuando escribes código) y `__proto__` es para JavaScript interno (cuando debuggeas).
+
+**Pregunta clave para la clase:** "¿Alguna vez escribirías código que modifique `__proto__` directamente, o es solo para entender qué está pasando cuando debuggeas?"
+
+## 8. El error más común: Romper la cadena prototipal
+
+```javascript
+// ❌ Error típico que cometerán
+function Ingreso(nombre, valor, fuente) {
+  Movimiento.call(this, nombre, 'ingreso', valor);
+  this.fuente = fuente;
+}
+
+// Asignación directa que rompe instanceof
+Ingreso.prototype = Movimiento.prototype; // ¡MALO!
+
+// ✅ Versión correcta con explicación
+Ingreso.prototype = Object.create(Movimiento.prototype);
+Ingreso.prototype.constructor = Ingreso;
+
+// Verificación que funciona correctamente
+const ingreso = new Ingreso('Salario', 3000, 'trabajo');
+console.log(ingreso instanceof Ingreso); // true
+console.log(ingreso instanceof Movimiento); // true - ¡esto es lo importante!
+```
+
+Este error es pedagógicamente perfecto porque enseña la diferencia entre referencia y herencia. Úsalo para explicar que `Object.create()` establece una nueva cadena, mientras que la asignación directa crea una referencia compartida que rompe la especialización.
+
+## 9. Señales de comprensión exitosa
+
+Al final de la clase, busca estas evidencias de comprensión genuina:
+
+- **Vocabulario preciso**: Distinguen claramente entre "prototipo", "cadena prototipal" y "herencia prototipal"
+- **Pensamiento en optimización**: Automáticamente consideran la eficiencia de memoria al diseñar objetos
+- **Debugging instintivo**: Usan DevTools para inspeccionar la cadena prototipal cuando algo no funciona
+
+**Pregunta de validación final:** "Si quisieras agregar un método `exportarCSV()` a todos los movimientos existentes y futuros en tu aplicación, sin modificar el código de los constructores, ¿cómo lo harías?"
+
+Solo responden correctamente si proponen agregar el método al prototipo después de que los constructores ya están definidos, demostrando que entienden la naturaleza dinámica y extensible de los prototipos.
+
+## 10. Preparación para la siguiente clase
+
+Los conceptos de esta clase son prerrequisito directo para DOM como API de objetos. La próxima clase usará la mentalidad prototipal para entender cómo `document.querySelector()` retorna objetos con métodos heredados, y cómo los eventos son objetos con su propia cadena prototipal.
+
+**Conceptos que DEBEN estar sólidos:**
+- **Cadena de prototipos**: Deben poder rastrear mentalmente la búsqueda de un método
+- **Object.create() vs asignación directa**: Sin confusión sobre cuándo usar cada uno
+
+**Conceptos que pueden seguir madurando:**
+- **Cuándo usar herencia vs composición**: La intuición arquitectónica se desarrolla con práctica
+- **Performance de prototipos**: Los matices de optimización vienen con experiencia
+
+La clase fue exitosa si los estudiantes salen pensando: *"Ahora entiendo que JavaScript tiene un sistema de herencia nativo que es diferente pero más flexible que las clases tradicionales, y puedo usar este conocimiento para escribir código más eficiente y escalable."*
+
+## Notas técnicas y troubleshooting
+
+### Configuración crítica
+- Verificar que Bootstrap CDN funciona antes de empezar
+- Confirmar que DevTools está disponible para inspección de prototipos
+
+### Errores comunes del entorno
+- **Error**: `Cannot read property 'prototype' of undefined`
+- **Solución**: Verificar que las funciones constructoras están declaradas antes de intentar extender sus prototipos
+- **Prevención**: Usar el patrón de declarar todos los constructores primero, luego todos los prototipos
+
+### Errores comunes de concepto
+- **Error**: `instanceof` retorna `false` después de herencia
+- **Solución**: Verificar que se usó `Object.create()` y no asignación directa
+- **Prevención**: Crear un checklist: "¿Usé Object.create()? ¿Restablecí el constructor?"
+
+### Recursos de emergencia
+- [MDN: Inheritance and the prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+- Código de ejemplo para compartir pantalla si hay problemas técnicos:
+
+```javascript
+// Ejemplo de rescate completo
+function Animal(nombre) {
+  this.nombre = nombre;
+}
+
+Animal.prototype.hablar = function() {
+  return `${this.nombre} hace un sonido`;
+};
+
+function Perro(nombre, raza) {
+  Animal.call(this, nombre);
+  this.raza = raza;
+}
+
+Perro.prototype = Object.create(Animal.prototype);
+Perro.prototype.constructor = Perro;
+
+Perro.prototype.hablar = function() {
+  return `${this.nombre} ladra`;
+};
+
+const miPerro = new Perro('Max', 'Labrador');
+console.log(miPerro.hablar()); // "Max ladra"
+console.log(miPerro instanceof Perro); // true
+console.log(miPerro instanceof Animal); // true
+```
