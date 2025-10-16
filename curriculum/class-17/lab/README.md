@@ -27,39 +27,29 @@ En este laboratorio, trabajarás con tu equipo para analizar un problema real de
 ```bash
 # Crear nuevo repositorio en GitHub
 nombre-proyecto/
-├── docs/
-│   ├── team.md
-│   ├── requirements.md
-│   ├── user-stories.md
-│   └── wireframes/ <-- imagenes
-├── README.md
+├── README.md  <-- equipo, requerimientos, historias de usuario
+├── prompt.md  <-- System Prompt
+├── wireframes/ <-- imagenes
+├── ... <-- archivos / directorios del código
 └── .gitignore
 ```
 
 ### 2. Configuración de Github
 - Agregar integrantes
 - Crear ramas necesarias
+   - main
+   - dev (o nombre_alumno, a elección del instructor)
 
-### 3. Configurar Trello
-- Crear nuevo board: `nombre-proyecto`
-- Columnas iniciales:
-  - Backlog
-  - To Do
-  - In Progress
-  - Done
-- Labels de sprints
-
-### 4. Roles del Equipo
-> `team.md`
-- Definir líder técnico
-- Asignar roles complementarios:
-  - Documentación
-  - Frontend
-  - Gestión de datos
+### 3. System Prompt
+> `prompt.md`
+- Conocimientos del estudiante (101 + 201)
+- Stack del proyecto
+- Alcance del proyecto (lo que NO se tocará)
+- Rol de la IA en el proyecto
 
 ## 📋 Retos a Cumplir
 
-### 1. Documento de Requerimientos (requirements.md)
+### 1. Documentación de Requerimientos (README.md)
 Usando IA como asistente de documentación:
 
 a) Analizar el problema:
@@ -82,7 +72,7 @@ d) Estructurar el documento:
 - Filtrar los resultados clave
 - Mantener el formato markdown
 
-### 2. Historias de Usuario (user-stories.md)
+### 2. Historias de Usuario (README.md)
 Para cada funcionalidad core:
 
 ```markdown
@@ -106,7 +96,7 @@ Para [beneficio]
 Documentar:
 - Descripción general
 - Tecnologías a utilizar
-- Enlaces a los documentos (`docs/`)
+- Imágenes a los wireframes (opcional)
 
 ## 🛠️ Herramientas de IA Recomendadas
 
@@ -139,16 +129,15 @@ Por favor genera:
 ### Entregables Grupales
 1. Link al repositorio con:
    - README.md completo
-   - Documentos en /docs
    - Todos los integrantes como colaboradores
 
-2. Link al board de Trello con:
-   - Historias de usuario como cards
-   - Miembros asignados
-   - Labels organizados
+2. Link a la primera versión de la web desplegada
+   - Github Pages
+   - Home page
+   - header y footer
 
 ## ⚠️ Consideraciones Importantes
-- Mantén el alcance realista para 3 sprints
+- Mantén el alcance realista para 2 semanas
 - Mantén el concepto de MVP
 - Enfócate en funcionalidades core
 - Documenta asunciones importantes
