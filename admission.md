@@ -199,13 +199,273 @@ Un equipo de desarrollo creó el siguiente botón personalizado:
 
 ## BLOQUE 2: Fundamentos de JavaScript (25 puntos)
 
-*Próximamente...*
+### Pregunta 6 (5 pts) - Control de Flujo
+
+Analiza el siguiente código:
+
+```javascript
+let contador = 0;
+
+for (let i = 1; i <= 4; i++) {
+  contador += i;
+}
+
+console.log(contador);
+```
+
+**¿Qué valor se imprimirá en la consola?**
+
+- A) 4
+- B) 10
+- C) 0
+- D) 5
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 7 (5 pts) - Métodos de Array
+
+Dado el siguiente código:
+
+```javascript
+const numeros = [1, 2, 3, 4, 5];
+
+const resultado = numeros.filter(n => n > 2);
+
+console.log(resultado);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `[1, 2]`
+- B) `[3, 4, 5]`
+- C) `3`
+- D) `true`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 8 (5 pts) - Funciones Puras
+
+Observa la siguiente función:
+
+```javascript
+let total = 0;
+
+function sumar(valor) {
+  total += valor;
+  return total;
+}
+
+console.log(sumar(5));
+console.log(sumar(5));
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `5` y luego `5`
+- B) `5` y luego `10`
+- C) `10` y luego `10`
+- D) `0` y luego `5`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 9 (5 pts) - Funciones Constructoras
+
+Analiza el siguiente código:
+
+```javascript
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+}
+
+const item = new Producto('Laptop', 1200);
+
+console.log(item.nombre);
+console.log(item.precio);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `undefined` y `undefined`
+- B) `Producto` y `1200`
+- C) `Laptop` y `1200`
+- D) Un error porque falta `return`
+
+**Respuesta correcta:** C
+
+---
+
+### Pregunta 10 (5 pts) - Prototipos
+
+Dado el siguiente código:
+
+```javascript
+function Auto(marca) {
+  this.marca = marca;
+}
+
+Auto.prototype.arrancar = function() {
+  return `${this.marca} arrancando...`;
+};
+
+const miAuto = new Auto('Toyota');
+
+console.log(miAuto.arrancar());
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `undefined arrancando...`
+- B) `Toyota arrancando...`
+- C) `Auto arrancando...`
+- D) Un error porque `arrancar` no existe en el objeto
+
+**Respuesta correcta:** B
 
 ---
 
 ## BLOQUE 3: DOM y Event Handling (25 puntos)
 
-*Próximamente...*
+### Pregunta 11 (5 pts) - Selección de Elementos
+
+Dado el siguiente HTML:
+
+```html
+<div class="card">
+  <h2 class="title">Producto 1</h2>
+  <p class="price">$100</p>
+</div>
+<div class="card">
+  <h2 class="title">Producto 2</h2>
+  <p class="price">$200</p>
+</div>
+```
+
+Y el siguiente JavaScript:
+
+```javascript
+const precio = document.querySelector('.price');
+console.log(precio.textContent);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `["$100", "$200"]`
+- B) `$100`
+- C) `$200`
+- D) `undefined`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 12 (5 pts) - Manipulación del DOM
+
+Observa el siguiente código:
+
+```javascript
+const lista = document.querySelector('#mi-lista');
+const nuevoItem = document.createElement('li');
+nuevoItem.textContent = 'Nuevo elemento';
+lista.appendChild(nuevoItem);
+```
+
+**¿Qué hace este código?**
+
+- A) Reemplaza todos los elementos de la lista con "Nuevo elemento"
+- B) Crea un elemento `<li>` con el texto "Nuevo elemento" y lo agrega al final de la lista
+- C) Crea un elemento `<li>` vacío y lo agrega al inicio de la lista
+- D) Muestra una alerta con el texto "Nuevo elemento"
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 13 (5 pts) - Event Listeners
+
+Analiza el siguiente código:
+
+```javascript
+const boton = document.querySelector('#btn');
+
+boton.addEventListener('click', function(event) {
+  console.log(event.target.id);
+});
+```
+
+**Cuando el usuario hace clic en el botón, ¿qué se imprime en la consola?**
+
+- A) `click`
+- B) `#btn`
+- C) `btn`
+- D) `undefined`
+
+**Respuesta correcta:** C
+
+---
+
+### Pregunta 14 (5 pts) - Callbacks
+
+Dado el siguiente código:
+
+```javascript
+function procesarDatos(datos, callback) {
+  const resultado = datos.toUpperCase();
+  callback(resultado);
+}
+
+procesarDatos('hola mundo', function(texto) {
+  console.log(texto);
+});
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `hola mundo`
+- B) `HOLA MUNDO`
+- C) `undefined`
+- D) Un error porque `callback` no está definido
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 15 (5 pts) - Manejo de Excepciones
+
+Analiza el siguiente código:
+
+```javascript
+function dividir(a, b) {
+  if (b === 0) {
+    throw new Error('No se puede dividir por cero');
+  }
+  return a / b;
+}
+
+try {
+  const resultado = dividir(10, 0);
+  console.log(resultado);
+} catch (error) {
+  console.log('Error capturado');
+} finally {
+  console.log('Operación finalizada');
+}
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `Infinity` y luego `Operación finalizada`
+- B) Solo `Error capturado`
+- C) `Error capturado` y luego `Operación finalizada`
+- D) `No se puede dividir por cero` y luego `Operación finalizada`
+
+**Respuesta correcta:** C
 
 ---
 
