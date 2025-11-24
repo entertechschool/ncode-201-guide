@@ -199,7 +199,158 @@ Un equipo de desarrollo creó el siguiente botón personalizado:
 
 ## BLOQUE 2: Fundamentos de JavaScript (25 puntos)
 
-*Próximamente...*
+### Pregunta 6 (5 pts) - Control de Flujo y Bucles
+
+Analiza el siguiente código:
+
+```javascript
+let resultado = 0;
+for (let i = 1; i <= 5; i++) {
+  if (i % 2 === 0) {
+    continue;
+  }
+  resultado += i;
+}
+console.log(resultado);
+```
+
+**¿Qué valor se imprimirá en la consola?**
+
+- A) 15
+- B) 9
+- C) 6
+- D) 0
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 7 (5 pts) - Métodos de Array Funcionales
+
+Dado el siguiente código:
+
+```javascript
+const productos = [
+  { nombre: 'Laptop', precio: 1200, stock: 5 },
+  { nombre: 'Mouse', precio: 25, stock: 0 },
+  { nombre: 'Teclado', precio: 75, stock: 12 },
+  { nombre: 'Monitor', precio: 300, stock: 0 }
+];
+
+const resultado = productos
+  .filter(p => p.stock > 0)
+  .map(p => p.precio)
+  .filter(precio => precio > 50);
+
+console.log(resultado);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `[1200, 75, 300]`
+- B) `[1200, 75]`
+- C) `[{ nombre: 'Laptop', precio: 1200, stock: 5 }, { nombre: 'Teclado', precio: 75, stock: 12 }]`
+- D) `[1275]`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 8 (5 pts) - Funciones Puras e Inmutabilidad
+
+Observa estas dos funciones:
+
+```javascript
+// Función A
+function agregarItemA(carrito, item) {
+  carrito.push(item);
+  return carrito;
+}
+
+// Función B
+function agregarItemB(carrito, item) {
+  return [...carrito, item];
+}
+```
+
+**¿Cuál es la diferencia fundamental entre estas funciones?**
+
+- A) Ambas son funciones puras porque retornan el carrito con el nuevo item
+- B) La Función A es pura y la Función B es impura porque usa spread operator
+- C) La Función A es impura porque muta el array original; la Función B es pura porque crea un nuevo array sin modificar el original
+- D) No hay diferencia práctica, ambas producen el mismo resultado siempre
+
+**Respuesta correcta:** C
+
+---
+
+### Pregunta 9 (5 pts) - Funciones Constructoras y `this`
+
+Analiza el siguiente código:
+
+```javascript
+function Usuario(nombre, edad) {
+  this.nombre = nombre;
+  this.edad = edad;
+  this.presentarse = function() {
+    return `Hola, soy ${this.nombre}`;
+  };
+}
+
+const usuario1 = Usuario('Ana', 25);
+const usuario2 = new Usuario('Luis', 30);
+
+console.log(usuario1);
+console.log(usuario2.presentarse());
+```
+
+**¿Qué sucederá al ejecutar este código?**
+
+- A) Imprimirá `{ nombre: 'Ana', edad: 25 }` y luego `"Hola, soy Luis"`
+- B) Imprimirá `undefined` y luego `"Hola, soy Luis"`
+- C) Lanzará un error en la línea de `usuario1` porque falta `new`
+- D) Imprimirá `null` y luego `"Hola, soy undefined"`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 10 (5 pts) - Prototipos y Herencia
+
+Dado el siguiente código:
+
+```javascript
+function Animal(nombre) {
+  this.nombre = nombre;
+}
+
+Animal.prototype.saludar = function() {
+  return `Hola, soy ${this.nombre}`;
+};
+
+function Perro(nombre, raza) {
+  Animal.call(this, nombre);
+  this.raza = raza;
+}
+
+Perro.prototype = Object.create(Animal.prototype);
+Perro.prototype.constructor = Perro;
+
+Perro.prototype.ladrar = function() {
+  return `${this.nombre} dice: Guau!`;
+};
+
+const miPerro = new Perro('Max', 'Labrador');
+```
+
+**¿Cuáles de las siguientes expresiones retornarán `true`?**
+
+- A) `miPerro instanceof Perro` → true, `miPerro instanceof Animal` → false
+- B) `miPerro instanceof Perro` → true, `miPerro instanceof Animal` → true
+- C) `miPerro.hasOwnProperty('saludar')` → true
+- D) `miPerro.hasOwnProperty('ladrar')` → true
+
+**Respuesta correcta:** B
 
 ---
 
