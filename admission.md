@@ -199,156 +199,132 @@ Un equipo de desarrollo creó el siguiente botón personalizado:
 
 ## BLOQUE 2: Fundamentos de JavaScript (25 puntos)
 
-### Pregunta 6 (5 pts) - Control de Flujo y Bucles
+### Pregunta 6 (5 pts) - Control de Flujo
 
 Analiza el siguiente código:
 
 ```javascript
-let resultado = 0;
-for (let i = 1; i <= 5; i++) {
-  if (i % 2 === 0) {
-    continue;
-  }
-  resultado += i;
+let contador = 0;
+
+for (let i = 1; i <= 4; i++) {
+  contador += i;
 }
-console.log(resultado);
+
+console.log(contador);
 ```
 
 **¿Qué valor se imprimirá en la consola?**
 
-- A) 15
-- B) 9
-- C) 6
-- D) 0
+- A) 4
+- B) 10
+- C) 0
+- D) 5
 
 **Respuesta correcta:** B
 
 ---
 
-### Pregunta 7 (5 pts) - Métodos de Array Funcionales
+### Pregunta 7 (5 pts) - Métodos de Array
 
 Dado el siguiente código:
 
 ```javascript
-const productos = [
-  { nombre: 'Laptop', precio: 1200, stock: 5 },
-  { nombre: 'Mouse', precio: 25, stock: 0 },
-  { nombre: 'Teclado', precio: 75, stock: 12 },
-  { nombre: 'Monitor', precio: 300, stock: 0 }
-];
+const numeros = [1, 2, 3, 4, 5];
 
-const resultado = productos
-  .filter(p => p.stock > 0)
-  .map(p => p.precio)
-  .filter(precio => precio > 50);
+const resultado = numeros.filter(n => n > 2);
 
 console.log(resultado);
 ```
 
 **¿Qué se imprimirá en la consola?**
 
-- A) `[1200, 75, 300]`
-- B) `[1200, 75]`
-- C) `[{ nombre: 'Laptop', precio: 1200, stock: 5 }, { nombre: 'Teclado', precio: 75, stock: 12 }]`
-- D) `[1275]`
+- A) `[1, 2]`
+- B) `[3, 4, 5]`
+- C) `3`
+- D) `true`
 
 **Respuesta correcta:** B
 
 ---
 
-### Pregunta 8 (5 pts) - Funciones Puras e Inmutabilidad
+### Pregunta 8 (5 pts) - Funciones Puras
 
-Observa estas dos funciones:
+Observa la siguiente función:
 
 ```javascript
-// Función A
-function agregarItemA(carrito, item) {
-  carrito.push(item);
-  return carrito;
+let total = 0;
+
+function sumar(valor) {
+  total += valor;
+  return total;
 }
 
-// Función B
-function agregarItemB(carrito, item) {
-  return [...carrito, item];
-}
+console.log(sumar(5));
+console.log(sumar(5));
 ```
 
-**¿Cuál es la diferencia fundamental entre estas funciones?**
+**¿Qué se imprimirá en la consola?**
 
-- A) Ambas son funciones puras porque retornan el carrito con el nuevo item
-- B) La Función A es pura y la Función B es impura porque usa spread operator
-- C) La Función A es impura porque muta el array original; la Función B es pura porque crea un nuevo array sin modificar el original
-- D) No hay diferencia práctica, ambas producen el mismo resultado siempre
+- A) `5` y luego `5`
+- B) `5` y luego `10`
+- C) `10` y luego `10`
+- D) `0` y luego `5`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 9 (5 pts) - Funciones Constructoras
+
+Analiza el siguiente código:
+
+```javascript
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+}
+
+const item = new Producto('Laptop', 1200);
+
+console.log(item.nombre);
+console.log(item.precio);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `undefined` y `undefined`
+- B) `Producto` y `1200`
+- C) `Laptop` y `1200`
+- D) Un error porque falta `return`
 
 **Respuesta correcta:** C
 
 ---
 
-### Pregunta 9 (5 pts) - Funciones Constructoras y `this`
-
-Analiza el siguiente código:
-
-```javascript
-function Usuario(nombre, edad) {
-  this.nombre = nombre;
-  this.edad = edad;
-  this.presentarse = function() {
-    return `Hola, soy ${this.nombre}`;
-  };
-}
-
-const usuario1 = Usuario('Ana', 25);
-const usuario2 = new Usuario('Luis', 30);
-
-console.log(usuario1);
-console.log(usuario2.presentarse());
-```
-
-**¿Qué sucederá al ejecutar este código?**
-
-- A) Imprimirá `{ nombre: 'Ana', edad: 25 }` y luego `"Hola, soy Luis"`
-- B) Imprimirá `undefined` y luego `"Hola, soy Luis"`
-- C) Lanzará un error en la línea de `usuario1` porque falta `new`
-- D) Imprimirá `null` y luego `"Hola, soy undefined"`
-
-**Respuesta correcta:** B
-
----
-
-### Pregunta 10 (5 pts) - Prototipos y Herencia
+### Pregunta 10 (5 pts) - Prototipos
 
 Dado el siguiente código:
 
 ```javascript
-function Animal(nombre) {
-  this.nombre = nombre;
+function Auto(marca) {
+  this.marca = marca;
 }
 
-Animal.prototype.saludar = function() {
-  return `Hola, soy ${this.nombre}`;
+Auto.prototype.arrancar = function() {
+  return `${this.marca} arrancando...`;
 };
 
-function Perro(nombre, raza) {
-  Animal.call(this, nombre);
-  this.raza = raza;
-}
+const miAuto = new Auto('Toyota');
 
-Perro.prototype = Object.create(Animal.prototype);
-Perro.prototype.constructor = Perro;
-
-Perro.prototype.ladrar = function() {
-  return `${this.nombre} dice: Guau!`;
-};
-
-const miPerro = new Perro('Max', 'Labrador');
+console.log(miAuto.arrancar());
 ```
 
-**¿Cuáles de las siguientes expresiones retornarán `true`?**
+**¿Qué se imprimirá en la consola?**
 
-- A) `miPerro instanceof Perro` → true, `miPerro instanceof Animal` → false
-- B) `miPerro instanceof Perro` → true, `miPerro instanceof Animal` → true
-- C) `miPerro.hasOwnProperty('saludar')` → true
-- D) `miPerro.hasOwnProperty('ladrar')` → true
+- A) `undefined arrancando...`
+- B) `Toyota arrancando...`
+- C) `Auto arrancando...`
+- D) Un error porque `arrancar` no existe en el objeto
 
 **Respuesta correcta:** B
 
@@ -356,7 +332,140 @@ const miPerro = new Perro('Max', 'Labrador');
 
 ## BLOQUE 3: DOM y Event Handling (25 puntos)
 
-*Próximamente...*
+### Pregunta 11 (5 pts) - Selección de Elementos
+
+Dado el siguiente HTML:
+
+```html
+<div class="card">
+  <h2 class="title">Producto 1</h2>
+  <p class="price">$100</p>
+</div>
+<div class="card">
+  <h2 class="title">Producto 2</h2>
+  <p class="price">$200</p>
+</div>
+```
+
+Y el siguiente JavaScript:
+
+```javascript
+const precio = document.querySelector('.price');
+console.log(precio.textContent);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `["$100", "$200"]`
+- B) `$100`
+- C) `$200`
+- D) `undefined`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 12 (5 pts) - Manipulación del DOM
+
+Observa el siguiente código:
+
+```javascript
+const lista = document.querySelector('#mi-lista');
+const nuevoItem = document.createElement('li');
+nuevoItem.textContent = 'Nuevo elemento';
+lista.appendChild(nuevoItem);
+```
+
+**¿Qué hace este código?**
+
+- A) Reemplaza todos los elementos de la lista con "Nuevo elemento"
+- B) Crea un elemento `<li>` con el texto "Nuevo elemento" y lo agrega al final de la lista
+- C) Crea un elemento `<li>` vacío y lo agrega al inicio de la lista
+- D) Muestra una alerta con el texto "Nuevo elemento"
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 13 (5 pts) - Event Listeners
+
+Analiza el siguiente código:
+
+```javascript
+const boton = document.querySelector('#btn');
+
+boton.addEventListener('click', function(event) {
+  console.log(event.target.id);
+});
+```
+
+**Cuando el usuario hace clic en el botón, ¿qué se imprime en la consola?**
+
+- A) `click`
+- B) `#btn`
+- C) `btn`
+- D) `undefined`
+
+**Respuesta correcta:** C
+
+---
+
+### Pregunta 14 (5 pts) - Callbacks
+
+Dado el siguiente código:
+
+```javascript
+function procesarDatos(datos, callback) {
+  const resultado = datos.toUpperCase();
+  callback(resultado);
+}
+
+procesarDatos('hola mundo', function(texto) {
+  console.log(texto);
+});
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `hola mundo`
+- B) `HOLA MUNDO`
+- C) `undefined`
+- D) Un error porque `callback` no está definido
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 15 (5 pts) - Manejo de Excepciones
+
+Analiza el siguiente código:
+
+```javascript
+function dividir(a, b) {
+  if (b === 0) {
+    throw new Error('No se puede dividir por cero');
+  }
+  return a / b;
+}
+
+try {
+  const resultado = dividir(10, 0);
+  console.log(resultado);
+} catch (error) {
+  console.log('Error capturado');
+} finally {
+  console.log('Operación finalizada');
+}
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `Infinity` y luego `Operación finalizada`
+- B) Solo `Error capturado`
+- C) `Error capturado` y luego `Operación finalizada`
+- D) `No se puede dividir por cero` y luego `Operación finalizada`
+
+**Respuesta correcta:** C
 
 ---
 
