@@ -471,4 +471,130 @@ try {
 
 ## BLOQUE 4: Estado y Persistencia (25 puntos)
 
-*Próximamente...*
+### Pregunta 16 (5 pts) - Clases ES6
+
+Analiza el siguiente código:
+
+```javascript
+class Persona {
+  constructor(nombre, edad) {
+    this.nombre = nombre;
+    this.edad = edad;
+  }
+
+  saludar() {
+    return `Hola, soy ${this.nombre}`;
+  }
+}
+
+const juan = new Persona('Juan', 25);
+console.log(juan.saludar());
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `Hola, soy undefined`
+- B) `Hola, soy Juan`
+- C) `undefined`
+- D) Un error porque falta `return` en el constructor
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 17 (5 pts) - JSON.stringify
+
+Dado el siguiente código:
+
+```javascript
+const usuario = {
+  nombre: 'Ana',
+  edad: 30,
+  activo: true
+};
+
+const texto = JSON.stringify(usuario);
+console.log(texto);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `[object Object]`
+- B) `{"nombre":"Ana","edad":30,"activo":true}`
+- C) `{nombre: 'Ana', edad: 30, activo: true}`
+- D) `undefined`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 18 (5 pts) - JSON.parse
+
+Analiza el siguiente código:
+
+```javascript
+const datos = '{"producto":"Laptop","precio":1500}';
+
+const objeto = JSON.parse(datos);
+console.log(objeto.precio);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `"1500"`
+- B) `1500`
+- C) `undefined`
+- D) Un error porque el string no es válido
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 19 (5 pts) - LocalStorage setItem
+
+Observa el siguiente código:
+
+```javascript
+const config = { tema: 'oscuro', idioma: 'es' };
+
+localStorage.setItem('config', config);
+const guardado = localStorage.getItem('config');
+
+console.log(guardado);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `{"tema":"oscuro","idioma":"es"}`
+- B) `[object Object]`
+- C) `{ tema: 'oscuro', idioma: 'es' }`
+- D) `null`
+
+**Respuesta correcta:** B
+
+---
+
+### Pregunta 20 (5 pts) - LocalStorage con JSON
+
+Dado el siguiente código:
+
+```javascript
+const carrito = [
+  { nombre: 'Camisa', precio: 50 },
+  { nombre: 'Pantalón', precio: 80 }
+];
+
+localStorage.setItem('carrito', JSON.stringify(carrito));
+const recuperado = JSON.parse(localStorage.getItem('carrito'));
+
+console.log(recuperado[1].nombre);
+```
+
+**¿Qué se imprimirá en la consola?**
+
+- A) `Camisa`
+- B) `Pantalón`
+- C) `undefined`
+- D) Un error porque localStorage no puede guardar arrays
+
+**Respuesta correcta:** B
