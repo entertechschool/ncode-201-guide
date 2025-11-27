@@ -2,7 +2,7 @@
 
 En este laboratorio refactorizamos el proyecto **Gestor de Presupuesto Personal** aplicando programación orientada a objetos con funciones constructoras. Transformaremos las funciones puras del laboratorio anterior en objetos que encapsulen tanto datos como comportamientos, creando un código más organizado y escalable.
 
-Como parte de nuestro proyecto **Gestor de Presupuesto Personal**, esta transición hacia OOP nos permitirá agrupar la lógica relacionada, crear múltiples instancias de movimientos y presupuestos, y preparar el código para extensiones futuras con prototipos.
+Como parte de nuestro proyecto **Gestor de Presupuesto Personal**, esta transición hacia OOP nos permitirá agrupar la lógica relacionada y crear múltiples instancias de movimientos y presupuestos.
 
 ### 🎯 Objetivos de Aprendizaje
 
@@ -213,12 +213,9 @@ this.validarPresupuesto = function() {
 
 **Desafío**: Implementa `obtenerEstadisticas()` que calcule promedio de ingresos, promedio de gastos y el movimiento de mayor valor.
 
-#### 3.4. 🏆 Retos Autónomo (7-10 min)
+#### 3.4. 🏆 Reto Autónomo (7-10 min)
 
 **Desafío**: Implementa `verificarLimites()` que alerte cuando gastos superen el 80% de ingresos.
-
-#### 3.5. 🏆 Retos Autónomo (10-15 min)
-**Desafío**: Crea `function PresupuestoMensual(mes, año)` que herede de Presupuesto y filtre por fecha
 
 ---
 

@@ -1,10 +1,10 @@
-﻿> 📦 **Módulo 2:** Clase 7 de 8
+﻿> 📦 **Módulo 2:** Clase 4 de 4
 
 # Clase 07: Programación Orientada a Objetos
 
 ## Resumen
 
-En esta clase transformamos nuestro enfoque hacia la programación orientada a objetos usando funciones constructoras en JavaScript. Refactorizaremos el **Gestor de Presupuesto Personal** reemplazando las funciones puras del laboratorio anterior con objetos que encapsulen tanto datos como comportamientos. Esta transición nos permitirá crear código más organizado, escalable y mantenible, preparando el camino hacia conceptos avanzados como prototipos y herencia. Es un momento crucial donde los estudiantes comprenden cómo la programación puede organizarse de manera más estructurada y profesional.
+En esta clase transformamos nuestro enfoque hacia la programación orientada a objetos usando funciones constructoras en JavaScript. Refactorizaremos el **Gestor de Presupuesto Personal** reemplazando las funciones puras del laboratorio anterior con objetos que encapsulen tanto datos como comportamientos. Esta transición nos permitirá crear código más organizado, escalable y mantenible. Es un momento crucial donde los estudiantes comprenden cómo la programación puede organizarse de manera más estructurada y profesional, consolidando los tres paradigmas aprendidos en el módulo.
 
 ## Estructura sugerida
 
@@ -15,7 +15,7 @@ En esta clase transformamos nuestro enfoque hacia la programación orientada a o
 | **3. Laboratorio Principal - Parte 1**  | 30 min | Creación de funciones constructoras básicas. Checkpoint: instancias de Movimiento y Presupuesto creadas  |
 | **4. Laboratorio Principal - Parte 2**  | 40 min | Encapsulación de comportamientos en métodos. Reto en vivo + Checkpoint: métodos funcionando correctamente |
 | **5. Laboratorio Principal - Parte 3**  | 50 min | Refactorización completa e integración con DOM. Reto en vivo + Retos autónomos + Checkpoint: aplicación completamente funcional con objetos   |
-| **6. Síntesis y Cierre**  | 15 min | Consolidación de conceptos OOP + conexión con prototipos en la próxima clase   |
+| **6. Síntesis y Cierre**  | 15 min | Consolidación de conceptos OOP + conexión con taller integrador en la próxima clase   |
 
 ## 🎯 Objetivos de aprendizaje
 
@@ -93,4 +93,3 @@ Después de tu investigación, reflexiona:
 - **POO (Programación Orientada a Objetos)**: Paradigma que modela el software en términos de objetos que se comunican entre sí.
 - **Funciones Constructoras**: Forma tradicional en JavaScript de crear objetos utilizando la palabra clave `new`.
 - **Encapsulación**: Técnica para ocultar los detalles de implementación y exponer solo los métodos o propiedades necesarias.
-- **Prototipo** (mención breve): Mecanismo que define métodos compartidos por las instancias creadas a partir de una función constructora (tema a profundizar en la siguiente clase).
