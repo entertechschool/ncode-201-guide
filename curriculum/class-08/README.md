@@ -1,98 +1,87 @@
-﻿> 📦 **Módulo 2:** Clase 8 de 8
+> 📦 **Módulo 2:** Cierre del Módulo
 
-# Clase 08: Prototipos en JavaScript
+# Clase 08: Integrando los 3 Paradigmas
 
 ## Resumen
 
-En esta clase cerramos el **Módulo 2: Fundamentos de Programación** implementando la cadena de prototipos en JavaScript para optimizar nuestro **Gestor de Presupuesto Personal**. Aprenderemos a mover métodos del constructor al prototipo para mejorar el rendimiento de memoria y crearemos herencia prototipal con subtipos especializados como `Ingreso` y `Egreso`. Esta es la culminación del paradigma orientado a objetos tradicional de JavaScript, preparándonos para el siguiente módulo donde manipularemos el DOM como una API de objetos. Es fundamental entender los prototipos porque son la base de cómo funciona la herencia en JavaScript, incluso cuando usemos sintaxis moderna de clases en niveles avanzados.
+En esta clase cerramos el **Módulo 2: Fundamentos de Programación** consolidando los tres paradigmas aprendidos: Imperativo, Funcional y Orientado a Objetos. Los estudiantes resolverán un mismo problema utilizando cada enfoque, permitiéndoles comparar las ventajas y desventajas de cada paradigma en situaciones reales. Esta sesión práctica refuerza la comprensión de cuándo y por qué elegir un paradigma sobre otro, preparándolos para el siguiente módulo donde manipularán el DOM como una API de objetos.
 
 ## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción**   |
 | ---- | ---- | ---- |
-| **1. Introducción y Contexto**   | 15 min | Conexión con funciones constructoras y motivación para optimizar con prototipos   |
-| **2. Demo Inicial y Debate Técnico** | 30 min | Demostración de cadena de prototipos + diferencia entre `prototype` y `__proto__` | 
-| **3. Laboratorio Principal - Parte 1**  | 30 min | Migración de métodos al prototipo. Checkpoint: métodos compartidos funcionando  |
-| **4. Laboratorio Principal - Parte 2**  | 40 min | Herencia prototipal con `Object.create()`. Checkpoint: subtipos especializados operativos |
-| **5. Laboratorio Principal - Parte 3**  | 50 min | Integración con UI Bootstrap + validaciones. Checkpoint: aplicación completa con herencia   |
-| **6. Síntesis y Cierre**  | 15 min | Consolidación de prototipos + preparación para DOM como API de objetos   |
+| **1. Introducción y Contexto**   | 15 min | Repaso rápido de los 3 paradigmas y presentación del problema a resolver   |
+| **2. Demo Comparativa** | 20 min | Demostración del mismo problema resuelto con cada paradigma |
+| **3. Laboratorio - Parte 1**  | 25 min | Solución Imperativa. Checkpoint: código imperativo funcionando  |
+| **4. Laboratorio - Parte 2**  | 25 min | Solución Funcional. Checkpoint: código funcional funcionando |
+| **5. Laboratorio - Parte 3**  | 25 min | Solución POO con funciones constructoras. Checkpoint: código OOP funcionando   |
+| **6. Laboratorio - Parte 4**  | 15 min | Reflexión comparativa y documentación   |
+| **7. Síntesis y Cierre**  | 15 min | Tabla comparativa final + preparación para Módulo 3: DOM   |
 
 ## 🎯 Objetivos de aprendizaje
 
 Al finalizar esta clase, serás capaz de:
 
-1. **Implementar** métodos compartidos usando `Constructor.prototype.metodo = function() {}` para optimizar memoria
-2. **Crear** herencia prototipal con `Object.create()` y especializar comportamientos en subtipos
-3. **Validar** tipos de objetos usando `instanceof` y `hasOwnProperty()` en jerarquías de herencia
+1. **Resolver** un mismo problema aplicando los paradigmas Imperativo, Funcional y POO
+2. **Comparar** las ventajas y desventajas de cada paradigma en términos de legibilidad, mantenibilidad y escalabilidad
+3. **Decidir** qué paradigma usar según el contexto y tipo de problema a resolver
 
 ---
 
 ## 📌 Preparación para la clase
 
-> Antes de llegar a clase, investiga y prepárate:
+> Antes de llegar a clase, repasa los conceptos clave:
 
-#### 🔍 Misión de Investigación
+#### 🔍 Repaso de Paradigmas
 
-**1. ¿Qué es la cadena de prototipos (prototype chain) en JavaScript?**
-- Investiga: ¿Cómo busca JavaScript un método cuando lo llamas en un objeto?
-- Encuentra: Un ejemplo práctico de cómo JavaScript recorre la cadena hasta encontrar el método
-- Prepárate para explicar: Por qué esto es más eficiente que tener métodos duplicados en cada instancia
+**1. Paradigma Imperativo (Clase 05)**
+- Variables globales y control de flujo (`if`, `for`, `while`)
+- Paso a paso: describir *cómo* resolver el problema
+- Mutación directa de datos
 
-**2. ¿Qué diferencia hay entre `prototype` y `__proto__`?**
-- Investiga: ¿Cuál es la diferencia entre la propiedad `prototype` de una función y `__proto__` de un objeto?
-- Encuentra: Ejemplos de cada uno en el navegador usando DevTools
-- Prepárate para explicar: Cuándo se usa cada uno y por qué son diferentes
+**2. Paradigma Funcional (Clase 06)**
+- Funciones puras e inmutabilidad
+- Métodos de array: `map()`, `filter()`, `find()`, `reduce()`
+- Describir *qué* queremos lograr
 
-**3. ¿Qué hace `Object.create()` y para qué se usa?**
-- Investiga: ¿Cómo `Object.create()` establece herencia entre objetos?
-- Encuentra: La diferencia entre `Object.create()` y usar `new` con un constructor
-- Prepárate para explicar: Por qué es necesario para crear herencia prototipal
+**3. Paradigma POO (Clase 07)**
+- Funciones constructoras con `new` y `this`
+- Encapsulación de datos y comportamientos
+- Instancias y métodos
 
-**4. ¿Para qué sirve el operador `instanceof` en JavaScript?**
-- Investiga: ¿Cómo `instanceof` verifica la herencia en una cadena de prototipos?
-- Encuentra: Ejemplos de validación de tipos con `instanceof` en aplicaciones reales
-- Prepárate para explicar: Cuándo usar `instanceof` vs `typeof` vs `hasOwnProperty()`
+#### 🧠 Preguntas de reflexión
 
-#### 📚 Recursos previos sugeridos
-
-* **MDN - Inheritance and the prototype chain**
-  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
-
-* **JavaScript.info - Prototypes**
-  https://javascript.info/prototypes
-
-* **MDN - Object.create()**
-  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-
-* **Youtube: ¿Que son los PROTOTIPOS y como funcionan en JavaScript?**
-  https://www.youtube.com/watch?v=TWSI9SybwmI
+- ¿En qué situaciones usarías cada paradigma?
+- ¿Cuál te resulta más intuitivo? ¿Por qué?
+- ¿Se pueden combinar paradigmas en un mismo proyecto?
 
 ---
 
 ## Resultados esperados
 
 ### Podrán hacer
-1. **Optimizar funciones constructoras** moviendo métodos al prototipo para mejor rendimiento de memoria
-2. **Crear jerarquías de herencia** usando `Object.create()` para establecer relaciones entre constructores
-3. **Validar tipos dinámicamente** usando `instanceof` y `hasOwnProperty()` en aplicaciones complejas
+1. **Implementar soluciones** con cada uno de los 3 paradigmas
+2. **Identificar patrones** característicos de cada enfoque
+3. **Refactorizar código** de un paradigma a otro
 
 ### Podrán explicar
-1. **Cómo funciona la cadena de prototipos** y por qué es fundamental en JavaScript
-2. **La diferencia entre `prototype` y `__proto__`** y cuándo usar cada concepto
-3. **Por qué los prototipos son más eficientes** que métodos duplicados en constructores
+1. **Las diferencias clave** entre Imperativo, Funcional y POO
+2. **Cuándo elegir cada paradigma** según el problema
+3. **Las ventajas y limitaciones** de cada enfoque
 
 ### Podrán implementar
-1. **Un sistema de herencia prototipal** con constructores padre e hijo especializados
-2. **Validaciones robustas de tipos** usando herramientas nativas de JavaScript
-3. **Una aplicación web optimizada** que aproveche la eficiencia de métodos compartidos
+1. **Código imperativo** con variables y bucles
+2. **Código funcional** con funciones puras y métodos de array
+3. **Código OOP** con funciones constructoras y métodos
 
 ---
 
-## Glosario de Nuevos Términos
+## Glosario de Términos del Módulo
 
-* **Prototype Chain**: Cadena de búsqueda que JavaScript sigue automáticamente para encontrar métodos y propiedades en objetos
-* **Prototipo**: Objeto que sirve como plantilla y del cual otros objetos pueden heredar propiedades y métodos
-* **Herencia Prototipal**: Mecanismo de JavaScript para que objetos compartan comportamientos a través de la cadena de prototipos
-* **Instanciación**: Proceso de crear objetos específicos a partir de funciones constructoras
-* **Optimización de Memoria**: Técnica de compartir métodos entre instancias para reducir el uso de memoria
-* **Validación de Tipos**: Verificación del tipo de objeto para asegurar comportamiento correcto en tiempo de ejecución
+* **Paradigma Imperativo**: Enfoque que describe paso a paso *cómo* resolver un problema, usando variables mutables y estructuras de control
+* **Paradigma Funcional**: Enfoque que describe *qué* queremos lograr usando funciones puras, inmutabilidad y transformaciones de datos
+* **Paradigma POO**: Enfoque que modela el problema como objetos que encapsulan datos (propiedades) y comportamientos (métodos)
+* **Función Pura**: Función que siempre retorna el mismo resultado para los mismos argumentos y no tiene efectos secundarios
+* **Inmutabilidad**: Principio de no modificar datos existentes, sino crear nuevas copias con los cambios
+* **Encapsulación**: Agrupar datos y funciones relacionadas en una misma estructura (objeto)
+* **Función Constructora**: Función que crea objetos usando `new` y `this`
