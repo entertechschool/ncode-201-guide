@@ -95,7 +95,7 @@ console.log('Propiedades:', salario.nombre, salario.tipo, salario.valor);
 
 #### 1.4. 🏆 Reto Autónomo (5 min)
 
-**Desafío**: Crea una función constructora `Categoria(nombre, tipo, limite)` que represente categorías de gastos con un método `puedeGastar(monto)`.
+**Desafío**: Agrega un método `formatear()` al constructor `Movimiento` que retorne un string como `"Salario: +$3000"` para ingresos o `"Comida: -$200"` para gastos.
 
 ---
 
@@ -159,7 +159,9 @@ this.obtenerResumen = function() {
 
 #### 2.3. 🏆 Reto Autónomo (5-10 min)
 
-**Desafío**: Implementa `obtenerMovimientosPorTipo(tipo)` que retorne todos los movimientos de un tipo específico usando las funciones que ya creaste.
+**Desafío**: Implementa `obtenerMovimientosPorTipo(tipo)` que retorne todos los movimientos de un tipo específico.
+
+**Pista**: Usa `filter()` comparando `mov.tipo` con el parámetro recibido.
 
 ---
 
@@ -211,11 +213,9 @@ this.validarPresupuesto = function() {
 
 #### 3.3. 🏆 Reto Autónomo (5-10 min)
 
-**Desafío**: Implementa `obtenerEstadisticas()` que calcule promedio de ingresos, promedio de gastos y el movimiento de mayor valor.
+**Desafío**: Implementa `obtenerPromedioGastos()` que calcule el promedio de todos los gastos registrados.
 
-#### 3.4. 🏆 Reto Autónomo (7-10 min)
-
-**Desafío**: Implementa `verificarLimites()` que alerte cuando gastos superen el 80% de ingresos.
+**Pista**: Usa `obtenerTotalGastos()` y divide entre la cantidad de gastos.
 
 ---
 
@@ -223,7 +223,11 @@ this.validarPresupuesto = function() {
 
 Para estudiantes que completan el laboratorio antes del tiempo asignado:
 
-#### 🏆 Logro 1: Validación Robusta
+#### 🏆 Logro 1: Verificar Límites
+
+**Desafío**: Implementa `verificarLimites()` que alerte cuando gastos superen el 80% de ingresos.
+
+#### 🏆 Logro 2: Validación Robusta
 
 **Desafío**: Implementa validación completa en todos los constructores con manejo de errores
 
@@ -232,7 +236,7 @@ Para estudiantes que completan el laboratorio antes del tiempo asignado:
 - Implementar método `esValido()` en cada objeto
 - Crear mensajes de error descriptivos
 
-#### 🏆 Logro 2: Interfaz de Usuario Básica
+#### 🏆 Logro 3: Interfaz de Usuario Básica
 
 **Desafío**: Conecta los objetos con el DOM para crear una interfaz funcional
 
