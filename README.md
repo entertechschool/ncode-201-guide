@@ -56,9 +56,18 @@
 16. Metodo Map en JavaScript
     - Sintaxis básica y parametros `callback`.
     - Transformación de objetos usando `map()`.
-17. Seleccion de proyecto Final.
-    - Eleccion y preparación del proyeco.
-    - Planificación del proyecto.
-18. Examen Final
-    - Examen final code-301.
-    - Presentacion Final del Proyecto.
+17. Ideation + Research + Stories
+    - Presentación y análisis del Proyecto Integrador del módulo.
+    - Descomposición en historias de usuario y planificación por sprints.
+18. Sprint 1
+    - Construcción de la primera versión funcional del proyecto.
+    - Estructura HTML, diseño CSS y lógica base en JavaScript.
+19. User Validation + Sprint 2
+    - Validación cruzada con compañeros y feedback estructurado.
+    - Implementación de funcionalidades restantes y persistencia.
+20. Demo Day
+    - Presentación formal de proyectos y evaluación final con rúbrica.
+    - Cierre del curso y conexión con Code 301.
+
+> #### Proyecto Integrador: **Agenda de Gastos Compartidos**
+> Una aplicación web para registrar gastos entre amigos, roommates o equipos pequeños y calcular automáticamente quién le debe a quién. El estudiante crea grupos, agrega personas, registra gastos con descripción y divisiones, y la app muestra el balance neto de cada integrante y sugiere las transferencias mínimas para saldar todo. El proyecto integra los aprendizajes de los Módulos 1 al 4: layout responsivo con HTML + CSS, lógica algorítmica para calcular balances, manipulación del DOM con eventos y manejo de excepciones, y estado complejo persistido con JSON + LocalStorage.

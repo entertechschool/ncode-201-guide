@@ -120,8 +120,27 @@
 > - Interfaz clara, simple y altamente responsiva.
 > - Copia rápida de contenido al portapapeles para facilitar el uso inmediato en WhatsApp Web.
 
-### Módulo 5: Proyecto Real
+### Módulo 5: Proyecto Integrador Final
 17. **Ideation + Research + Stories** (180 min, project)
 18. **Sprint 1** (180 min, project)
 19. **User Validation + Sprint 2** (180 min, project)
 20. **Demo Day** (180 min, project)
+
+#### Enfoque Pedagógico
+
+- **Proyecto predefinido** común a toda la cohorte (no cada alumno inventa uno distinto).
+- **Integrador**: consolida los aprendizajes de los Módulos 1 al 4 en una sola aplicación.
+- **Metodología ágil** por sprints con validación cruzada entre compañeros.
+- **El instructor asume el rol del "cliente académico"** del proyecto: presenta el enunciado, guía la descomposición, valida avances y evalúa el entregable final con rúbrica.
+
+> #### Proyecto Integrador: **Agenda de Gastos Compartidos**
+> Una aplicación web para registrar gastos entre amigos, roommates o equipos pequeños y calcular automáticamente quién le debe a quién (estilo Splitwise simplificado). El estudiante crea grupos, agrega personas, registra gastos con descripción y divisiones, y la app muestra el balance neto de cada integrante y sugiere las transferencias mínimas para saldar todo. El proyecto integra los aprendizajes de los Módulos 1 al 4 en una sola aplicación funcional y portafoliable.
+>
+> **Características clave**:
+> - Creación de grupos con múltiples integrantes.
+> - Registro de gastos: quién pagó, monto, descripción y entre quiénes se divide.
+> - Cálculo automático del balance neto de cada persona.
+> - Sugerencia de transferencias mínimas para saldar el grupo.
+> - Eliminación de gastos con recálculo automático.
+> - Interfaz responsiva y validación de entradas.
+> - Persistencia completa en LocalStorage (grupo + gastos + integrantes).

@@ -1,28 +1,58 @@
-# Proyecto final: Envío
+# Proyecto Final — Envío (Demo Day)
 
-## Responde sinceramente:
+> **Referencia oficial del proyecto:** [Proyecto Integrador del Módulo 5](../../class-17/project/) — ahí están el enunciado, las 8 historias de usuario, los criterios de aceptación y la rúbrica completa.
 
-### Contribuciones generales
+Este documento solo contiene el **checklist de envío individual** para Demo Day.
 
-_40%_
+---
 
-¿Qué contribuciones hiciste personalmente? Por favor describe tus contribuciones (p.ej. ilustraciones, videografía, animaciones, layout, tipografía y otros estilos, estructura en HTML, JS para la manipulación del DOM, lógica de JS, almecenamiento local, investigación de herramientas y técnicas, pruebas, etc).
+## ✅ Checklist de Entrega
 
-### Contribuciones al código
+Al cierre de Demo Day, cada estudiante debe haber entregado:
 
-_30%_
+- [ ] **Link al repositorio público en GitHub** — con historial de commits del Sprint 1 y Sprint 2.
+- [ ] **Link al deploy funcional** — GitHub Pages u otro, probado desde otro navegador.
+- [ ] **README del repo pulido** — descripción, stack, HU implementadas, decisiones técnicas, instrucciones para correr localmente.
+- [ ] **Auto-evaluación con la rúbrica oficial** (opcional pero recomendada, solo para ti).
 
-Proporciona un enlace al gráfico de tu proyecto (o equivalente) para cualquier cosa que quieras resaltar (p.ej. implementaciones de funcionalidades, README.md, pruebas automatizadas, documentos de prueba, tareas descritas en GitHub issues, etc).
+---
 
-### Contribuciones de colaboración
+## 📣 Formato de presentación
 
-_30%_
+10 minutos en total, divididos así:
 
-Describe cómo colaboraste con tu equipo a lo largo del proceso de desarrollo (p.ej. issues asignados en GitHub, reuniones coordinadas con el equipo, etc).
+| Bloque | Tiempo | Contenido |
+|--------|--------|-----------|
+| **Demo en vivo** | 5 min | Crear grupo, agregar personas, registrar gastos, mostrar balances y transferencias, eliminar un gasto |
+| **Argumentación técnica** | 3 min | Explicar 2 decisiones clave del proyecto |
+| **Q&A** | 2 min | Responder 1-2 preguntas del instructor |
 
-## ✅ Instrucciones de Envío
-- Responde a esta actividad compartiendo:
-    - Las respuestas a las preguntas de arriba
-    - Link al repo del proyecto
-    - Link del sitio desplegado
-    - Link de la presentación final
+---
+
+## 📊 Evaluación
+
+Tu proyecto se evalúa con la [rúbrica oficial](../../class-17/project/):
+
+| Criterio | Puntos |
+|----------|--------|
+| Funcionalidades MVP (HU1-HU8) | 30 |
+| Calidad técnica | 25 |
+| Historias adicionales | 15 |
+| Presentación en vivo | 15 |
+| Argumentación técnica | 15 |
+
+**Puntaje total:** 100. **Mínimo de aprobación:** 70/100.
+
+---
+
+## 📝 Canales de envío
+
+- Canvas (formulario oficial del curso).
+- Los links se conservan como parte de tu historial y pueden referenciarse en tu ficha de ingreso a Code 301.
+
+---
+
+> 💡 Si llegas temprano a Demo Day, usa los minutos previos para:
+> 1. Confirmar que tu deploy responde.
+> 2. Crear datos de ejemplo frescos (grupo de prueba con 3-4 personas).
+> 3. Revisar el orden de tu narrativa mental.
