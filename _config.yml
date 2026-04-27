@@ -7,3 +7,8 @@ kramdown:
   hard_wrap: false
   syntax_highlighter: rouge
   parse_block_html: true
+
+exclude:
+  - dev/
+  - README.md_old
+  - "**/*.docx"
