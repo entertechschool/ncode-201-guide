@@ -19,14 +19,10 @@ body {
 section {
   background: #fbfbfb;
   box-shadow: 0px 1px 2px rgba(0,0,0,0.09);
-  margin-top: 1em;
+  margin: 1em auto 0;
+  float: none;
 }
-nav {
-  top: 1em;
-}
-nav ul a:hover {
-  color: #2882d1;
-}
+nav { display: none; }
 ul {
   list-style: disc;
 }
