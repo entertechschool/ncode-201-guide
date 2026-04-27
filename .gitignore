@@ -1,0 +1,11 @@
+# Notas internas y trabajo en curso
+dev/
+
+# Build de Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Sistema
+.DS_Store
+Thumbs.db
