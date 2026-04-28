@@ -32,18 +32,18 @@
 8. Formularios en JavaScript
     - Estructura de un formulario, elementos de entrada(inputs) y etiquetas `<label>`.
     - Botones y envío de formularios.
-9. Eventos en JavaScript
-    - Implementación de eventos, funcion manejadora de eventos.
-    - Obejto `event`, uso del `preventDefault()` y remover eventos.
-10. Depuración de código y manejo de errores
-    - Uso de herramientas de depuración en el navegador
-    - Manejo de errores con `try`, `catch` en JavaScript.
-11. Canvas y gráficos con chart.js
-    - Uso de etiquetas `<canvas>`.
-    - Graficos interactivos con `Chart.js`.
-12. Persistencia de datos en LocalStorage
-    - Funcionamiento de `localStorage`,limitaciones y beneficios.
-    - Almacenamiento y recuperación de datos en `localStorage`.
+9. DOM como API de Objetos
+    - Selección de nodos con `querySelector()` y `querySelectorAll()`.
+    - Jerarquía DOM (padres, hijos, hermanos) y transformación de contenido con Regex.
+10. Funciones y Callbacks en JavaScript
+    - Funciones de primera clase y funciones de orden superior.
+    - Uso de callbacks para modularizar la lógica y manejar eventos.
+11. Event Handling Básico en JavaScript
+    - Registro de eventos con `addEventListener()` y el objeto `event`.
+    - Implementación de funciones callback para reaccionar a interacciones del usuario.
+12. Manejo de Excepciones en JavaScript
+    - Estructura `try`, `catch`, `finally` y palabra clave `throw`.
+    - Definición de errores personalizados y validación de entradas del usuario.
 13. Documentación y animaciones en CSS
     - Importancia de la documentación en proyectos web.
     - Introducción a animaciones y transiciones en CSS.

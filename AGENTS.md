@@ -159,7 +159,7 @@ Leer de `README.md`. Reglas derivadas:
 |--------|--------|-----------------|------|-------------|
 | M1 — HTML + CSS Fundamentos | 1-4 | 85% | 15% | Layout guiado: el estudiante completa HTML/CSS con flex/grid |
 | M2 — JavaScript Básico + DOM | 5-8 | 80% | 20% | JS guiado: el estudiante completa funciones, constructores y event handlers |
-| M3 — Interactividad + Persistencia | 9-12 | 75% | 25% | El estudiante integra eventos, canvas, try/catch y localStorage |
+| M3 — Aplicaciones Web con Objetos | 9-12 | 75% | 25% | El estudiante manipula el DOM, modulariza con callbacks, gestiona eventos y maneja excepciones |
 | M4 — POO + Funcional | 13-16 | 70% | 30% | Clases ES6, herencia, arrow functions, map/forEach |
 | M5 — Proyecto Integrador Final | 17-20 | 70% | 30% | Guided: proyecto predefinido (Agenda de Gastos Compartidos) que integra M1-M4 por sprints ágiles |
 
@@ -185,7 +185,7 @@ function filtrarPares(numeros) {
 Code 201 es un curso **introductorio para futuros desarrolladores sin experiencia previa**.
 
 - M1-M2: Los labs guían al estudiante con editor local (VS Code) + navegador
-- M3-M4: Los labs integran múltiples APIs del navegador (DOM, Canvas, LocalStorage, Chart.js)
+- M3-M4: Los labs integran manipulación avanzada del DOM, callbacks, event handling, try/catch y persistencia con LocalStorage
 - M5: El estudiante construye un proyecto predefinido (Agenda de Gastos Compartidos) por sprints ágiles, integrando los aprendizajes de M1 a M4
 - Los "gaps" son porciones de HTML, CSS o JavaScript que el estudiante completa
 - Herramientas máximas por clase: 2 nuevas (regla MAX_TWO_NEW_TOOLS)
