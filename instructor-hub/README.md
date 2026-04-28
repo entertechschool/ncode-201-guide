@@ -80,7 +80,6 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 04](https://entertechschool.github.io/public/slides/?class=code-201_04){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 04](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M1 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/project/){:target="_blank"} |
-| 📝 Test Diagnóstico M1 | [Ver Test](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/test/){:target="_blank"} |
 
 ---
 
@@ -124,7 +123,6 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 08](https://entertechschool.github.io/public/slides/?class=code-201_08){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 08](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M2 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/project/){:target="_blank"} |
-| 📝 Test Diagnóstico M2 | [Ver Test](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/test/){:target="_blank"} |
 
 ---
 
@@ -212,7 +210,6 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 16](https://entertechschool.github.io/public/slides/?class=code-201_16){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 16](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M4 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/project/){:target="_blank"} |
-| 📝 Test Diagnóstico M4 | [Ver Test](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/test/){:target="_blank"} |
 
 ---
 

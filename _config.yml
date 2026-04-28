@@ -12,3 +12,8 @@ exclude:
   - dev/
   - README.md_old
   - "**/*.docx"
+  # Tests ocultos (M3 es el unico test activo del curso)
+  - tests/
+  - curriculum/class-04/test/
+  - curriculum/class-08/test/
+  - curriculum/class-16/test/

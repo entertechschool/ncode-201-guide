@@ -6,8 +6,8 @@
 |---------|---------|
 | **Módulo** | 3 |
 | **Clases cubiertas** | Clase 09 - Clase 12 |
-| **Duración** | 15 minutos |
-| **Preguntas** | 8 (opción múltiple) |
+| **Duración** | 10 minutos |
+| **Preguntas** | 5 (opción múltiple) |
 | **Tipo** | Diagnóstico (formativo) |
 
 ---
