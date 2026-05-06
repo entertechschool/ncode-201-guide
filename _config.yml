@@ -11,6 +11,8 @@ kramdown:
 exclude:
   - dev/
   - README.md_old
+  - CLAUDE.md
+  - AGENTS.md
   - "**/*.docx"
   # Tests ocultos (M3 es el unico test activo del curso)
   - tests/
