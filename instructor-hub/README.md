@@ -22,22 +22,20 @@ Cada clase cuenta con los siguientes documentos:
 ---
 
 > [!IMPORTANT]
-> ### 🖥️ Acceso a Presentaciones — URL Patrón
+> **🖥️ Acceso a Presentaciones — URL Patrón**
 >
-> Para abrir la presentación de **cualquier clase**, usa la siguiente URL reemplazando `XX` con el número de clase (con ceros: `01`, `02` ... `20`):
+> Para abrir la presentación de **cualquier clase**, reemplaza `XX` con el número de clase (con ceros: `01`, `02` ... `20`) en esta URL:
 >
-> ```
-> https://entertechschool.github.io/public/slides/?class=code-201_XX
-> ```
->
-> **Ejemplos:**
-> | Clase | URL directa |
-> |-------|-------------|
-> | Clase 01 | `https://entertechschool.github.io/public/slides/?class=code-201_01` |
-> | Clase 08 | `https://entertechschool.github.io/public/slides/?class=code-201_08` |
-> | Clase 17 | `https://entertechschool.github.io/public/slides/?class=code-201_17` |
-> | Clase 20 | `https://entertechschool.github.io/public/slides/?class=code-201_20` |
+> `https://entertechschool.github.io/public/slides/?class=code-201_XX`
 
+### Ejemplos directos
+
+| Clase | URL directa |
+|-------|-------------|
+| Clase 01 | <https://entertechschool.github.io/public/slides/?class=code-201_01> |
+| Clase 08 | <https://entertechschool.github.io/public/slides/?class=code-201_08> |
+| Clase 17 | <https://entertechschool.github.io/public/slides/?class=code-201_17> |
+| Clase 20 | <https://entertechschool.github.io/public/slides/?class=code-201_20> |
 ---
 
 ## 🌐 Módulo 1: Fundamentos de la Web Moderna
