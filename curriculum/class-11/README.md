@@ -70,4 +70,6 @@ Al finalizar la clase, los estudiantes habrán consolidado su comprensión sobre
 - **Event Object:** Objeto generado automáticamente que contiene información relevante del evento capturado.
 - **Callback:** Función que se ejecuta como respuesta a un evento registrado.
 - **addEventListener:** Método específico de JavaScript para gestionar eventos.
+- **`event.preventDefault()`:** Método del objeto evento que **detiene el comportamiento default del navegador** para esa acción (ej. evita que `Tab` cambie el foco dentro de un textarea, o que un `<form>` recargue la página al submit). Lo vas a necesitar en M5 cuando manejes submits de formularios reales.
+- **`event.key`:** Propiedad del evento de teclado que indica qué tecla fue presionada (ej. `'Tab'`, `'Enter'`, `'a'`).
 

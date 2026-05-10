@@ -92,6 +92,48 @@ try {
 
 ---
 
+## ✨ `finally` aplicado: el spinner que siempre se oculta
+
+```js
+function procesarMarkdown(texto) {
+  spinner.classList.remove('hidden');     // muestra spinner
+
+  try {
+    if (!texto) throw new Error('Editor vacío');
+    preview.innerHTML = marked.parse(texto);
+  } catch (error) {
+    mostrarError(error.message);
+  } finally {
+    spinner.classList.add('hidden');      // SIEMPRE oculta
+  }
+}
+```
+
+* Sin `finally`, el spinner queda visible si hay error.
+* Con `finally`, la UI siempre vuelve a estado consistente.
+* En M5 lo usarás para `JSON.parse(localStorage.getItem(...))` con cleanup.
+
+---
+
+## 🎁 Bonus al cierre: Renderizado dinámico de listas
+
+`createElement` + `appendChild` — crear nodos desde JS, no escribirlos en HTML.
+
+```js
+const items = ['Manzana', 'Pera', 'Plátano'];
+const lista = document.querySelector('#mi-lista');
+
+items.forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = item;
+  lista.appendChild(li);
+});
+```
+
+> Patrón crítico para M5: cada gasto, persona o transferencia será un `<li>` creado dinámicamente.
+
+---
+
 ## 📌 Recordatorio
 
 * Este conocimiento es clave para la siguiente fase (Promesas y asincronía).

@@ -194,6 +194,10 @@ Code 201 es un curso **introductorio para futuros desarrolladores sin experienci
 
 **DOM completo** (manipulación dinámica, render, múltiples eventos, jerarquía de nodos) se introduce en **M3 (C09)**. M2 solo toca **captura de input desde formulario** (`querySelector('#id').value` + `addEventListener('submit', ...)` + `event.preventDefault()`) como puente entre el HTML aprendido en M1 (forms accesibles) y el JS del módulo (OOP). El alumno no manipula nodos ni renderiza listas dinámicas hasta M3.
 
+### Excepción documentada — C09 (M3) a MAX_TWO_NEW_TOOLS
+
+La primera clase de DOM (C09) introduce 4-5 APIs relacionadas (`querySelector`, `querySelectorAll`, `.classList`, `.style`, Regex con `.replace()`) que son inseparables del primer contacto del alumno con el modelo DOM y la transformación Markdown→HTML. Esta excepción a MAX_TWO_NEW_TOOLS está justificada porque las APIs son una **familia coherente** (todas son maneras de leer/modificar nodos del DOM), no herramientas independientes. **Es la única clase del curso con esta excepción documentada.**
+
 ---
 
 ## Pipeline de Generación de Contenido

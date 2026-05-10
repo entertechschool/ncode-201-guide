@@ -39,10 +39,11 @@ En esta clase profundizaremos en el manejo de **excepciones en JavaScript**, des
 Al finalizar esta clase, los estudiantes deben ser capaces de:
 
 - Comprender el propósito del sistema de excepciones en JavaScript.
-- Implementar `try/catch/finally` en funciones que manipulen datos del usuario o realicen validaciones complejas.
+- Implementar `try/catch/finally` en funciones que manipulen datos del usuario o realicen validaciones complejas. **`finally` es obligatorio** en al menos un caso (ej. ocultar un spinner sin importar si la operación tuvo éxito o falló).
 - Definir errores personalizados y lanzar excepciones de forma justificada.
 - Evaluar cuándo conviene capturar un error y cuándo dejar que se propague.
 - Reflexionar sobre cómo comunicar fallas de manera clara y útil en sus aplicaciones.
+- **Bonus opcional al cierre:** crear nodos DOM dinámicamente con `document.createElement()` + `appendChild()`. Patrón crítico que vas a usar masivamente en M5 (listas dinámicas de personas, gastos, transferencias).
 
 
 ## Glosario de Nuevos Términos

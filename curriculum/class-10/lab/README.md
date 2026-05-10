@@ -39,13 +39,27 @@
 
 3. **Configuración Base:**  
    - Verifica que `index.html` contenga una estructura semántica clara (`header`, `main`, `footer`).  
-   - Asegúrate de enlazar los nuevos archivos `.js` en el `index.html`.  
-   - Define las funciones de transformación en los archivos correspondientes (`format.js`, `lists.js`, `blocks.js`).  
+   - Asegúrate de enlazar los **4 archivos JS** en el `index.html` en este orden:
+
+   ```html
+   <script src="js/format.js"></script>
+   <script src="js/lists.js"></script>
+   <script src="js/blocks.js"></script>
+   <script src="js/app.js"></script>
+   ```
+
+   - **Asignación por HU** (verás esta nota al inicio de cada HU):
+     - HU1 (negrita/cursiva) → `js/format.js`
+     - HU2 (listas `<ol>`) → `js/lists.js`
+     - HU3 (resaltado de código) → `js/blocks.js`
+     - `app.js` coordina invocando las funciones de los anteriores.
 
 
 ## 📋 Historias de Usuario
 
 ### HU1: Botón para Alternar el Formato de Texto
+
+> **Archivo destino:** `js/format.js`
 
 📌 *"Como usuario, quiero un botón que aplique o quite automáticamente un formato (negrita o cursiva) al texto seleccionado en el editor, utilizando una función de orden superior."*  
 
@@ -65,6 +79,8 @@
 
 ### HU2: Generación de Listas Numéricas Dinámicamente
 
+> **Archivo destino:** `js/lists.js`
+
 📌 *"Como usuario, quiero que al escribir listas numeradas (`1. Item 1`, `2. Item 2`), el editor las transforme en listas HTML `<ol>` sin necesidad de presionar un botón manualmente, utilizando una función de orden superior."*  
 
 **Criterios de Aceptación:**  
@@ -81,6 +97,8 @@
 
 
 ### HU3: Resaltado Dinámico de Código en el Preview
+
+> **Archivo destino:** `js/blocks.js`
 
 📌 *"Como usuario, quiero que al escribir código en el editor dentro de triple backticks (```) se aplique resaltado automático en la vista previa, utilizando funciones de primera clase para transformar el contenido."*  
 

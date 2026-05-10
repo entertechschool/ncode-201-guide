@@ -60,6 +60,32 @@ markdown-editor/
 - **Criterios de Aceptación:**
   - El contador se actualiza en tiempo real mostrando palabras y caracteres mientras el usuario escribe.
 
+### HU4: Prevenir el Tab default en el textarea con `event.preventDefault()`
+
+> *"Como usuario, quiero presionar Tab dentro del editor para insertar 2 espacios (indentar mi Markdown) en vez de saltar el foco al siguiente elemento de la página."*
+
+El default del navegador es que la tecla `Tab` mueva el foco al siguiente elemento focuseable. En un editor de Markdown queremos sobreescribir ese default.
+
+#### Sub-paso
+
+```javascript
+const textarea = document.querySelector('#editor');
+
+textarea.addEventListener('keydown', function(event) {
+  if (event.key === 'Tab') {
+    event.preventDefault();   // detiene el comportamiento default del navegador
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    textarea.value = textarea.value.substring(0, start) + '  ' + textarea.value.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + 2;
+  }
+});
+```
+
+✅ **Checkpoint visual:** Presiona `Tab` dentro del textarea. Se insertan **2 espacios** sin perder el foco. Si quitas `event.preventDefault()` y pruebas de nuevo, el foco salta a otro elemento — esa es la diferencia.
+
+> 💡 Este patrón (`preventDefault` para reescribir comportamiento default del navegador) lo vas a usar en M5 cuando manejes `submit` de formularios reales — sin `preventDefault`, la página recarga y pierdes el estado.
+
 ## 🌟 Logros Adicionales (Opcionales)
 
 ### Logro 1: Menú desplegable para elegir temas (light/dark)

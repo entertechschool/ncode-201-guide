@@ -99,6 +99,29 @@ boton.addEventListener("click", cambiarColor);
 
 ---
 
+### 🚫 `event.preventDefault()` — cuando el default rompe lo que quieres
+
+Algunos eventos del navegador tienen un **comportamiento default**:
+
+* `Tab` en un textarea → mueve el foco al siguiente elemento.
+* `<form>` submit → recarga la página.
+* Click en un `<a>` → navega al `href`.
+
+Cuando ese default estorba, lo detenemos:
+
+```js
+textarea.addEventListener("keydown", function(event) {
+  if (event.key === "Tab") {
+    event.preventDefault();  // Tab ya no cambia el foco
+    // ahora podemos hacer otra cosa con Tab
+  }
+});
+```
+
+> "Sin `preventDefault`, el navegador hace lo suyo. Con `preventDefault`, mandas tú."
+
+---
+
 ## 🧠 Reflexiones Clave para Analizar
 
 1. ¿Qué ventajas ofrecen los event listeners frente a otros métodos tradicionales de gestión de eventos (por ejemplo, atributos HTML)?

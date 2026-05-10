@@ -69,6 +69,123 @@
    
    - **[90'] Checkpoint 3:** Comunicación clara al usuario de errores capturados.
 
+### HU4: Indicador de procesamiento con `finally`
+
+> "Como usuario, cuando la conversión toma tiempo, quiero ver un spinner que aparezca antes y se oculte cuando termine — **incluso si la conversión falla**. La UI debe quedar consistente sin importar qué pase."
+
+Para garantizar que el spinner se oculte sin importar si hay error, se usa `finally`.
+
+#### Sub-pasos
+
+4.1. Agrega al `index.html` un spinner oculto:
+
+```html
+<div id="spinner" class="hidden">Procesando...</div>
+```
+
+Y en `styles.css`:
+
+```css
+.hidden { display: none; }
+```
+
+4.2. En `app.js`, modifica la función que procesa el Markdown para usar `try/catch/finally`:
+
+```javascript
+function procesarMarkdown(texto) {
+  document.getElementById('spinner').classList.remove('hidden');
+
+  try {
+    if (!texto || texto.trim() === '') {
+      throw new Error('El editor está vacío');
+    }
+    const html = marked.parse(texto);
+    document.getElementById('preview').innerHTML = html;
+  } catch (error) {
+    mostrarError(error.message);
+  } finally {
+    document.getElementById('spinner').classList.add('hidden');
+  }
+}
+```
+
+4.3. Verifica los **3 escenarios** y observa el spinner en cada uno:
+
+- Editor con texto válido → spinner aparece y desaparece, preview se actualiza.
+- Editor vacío → spinner aparece, error se muestra, **spinner desaparece** igual.
+- Markdown malformado (provoca excepción de `marked.parse`) → spinner aparece, error se muestra, **spinner desaparece** igual.
+
+✅ **Checkpoint:** en los 3 casos, el spinner termina oculto. **Esa es la garantía de `finally`** — el código corre sin importar si hubo éxito o error.
+
+🏆 **Reto autónomo (5 min):** ¿Qué pasaría si pones el `classList.add('hidden')` dentro del `try` en lugar del `finally`? Pruébalo eliminando el bloque `finally` y poniendo la línea al final del `try`. Observa qué ocurre cuando hay un error.
+
+> 💡 **Lo que viene en M5:** este patrón es exactamente lo que usarás en HU8 (cargar de LocalStorage) — `try { JSON.parse(localStorage.getItem(...)) } catch { ... } finally { ... }`. Te garantiza que la UI nunca queda en estado inconsistente.
+
+---
+
+## Cierre — Bonus: Renderizado dinámico de listas (~15 min)
+
+> Este bloque NO es una HU obligatoria. Es una **herramienta crítica** que vas a necesitar en M5 (Proyecto Final). Si la clase se está pasando, queda como **tarea autónoma post-clase**.
+
+Hasta ahora actualizaste el DOM con `.innerHTML` o `.textContent` sobre un nodo existente. Para **crear nodos nuevos desde JS**:
+
+### Patrón base
+
+```javascript
+const items = ['Manzana', 'Pera', 'Plátano'];
+const lista = document.querySelector('#mi-lista');
+
+items.forEach(function(item) {
+  const li = document.createElement('li');     // crea el nodo
+  li.textContent = item;                        // le da contenido
+  lista.appendChild(li);                        // lo inserta en el DOM
+});
+```
+
+### Aplicación al editor: lista de errores
+
+Si la validación detecta varios errores en el Markdown, podemos mostrar la **lista** de errores en vez de uno solo.
+
+#### Sub-pasos del bonus
+
+C.1. Agrega al `index.html`:
+
+```html
+<ul id="lista-errores"></ul>
+```
+
+C.2. En `app.js`, escribe una función que reciba un array de errores y los renderice como `<li>`:
+
+```javascript
+function renderizarErrores(errores) {
+  const lista = document.querySelector('#lista-errores');
+  lista.innerHTML = '';  // limpia errores previos
+
+  errores.forEach(function(error) {
+    const li = document.createElement('li');
+    li.textContent = error;
+    li.classList.add('error-item');
+    lista.appendChild(li);
+  });
+}
+
+// Prueba
+renderizarErrores([
+  'Línea 3: encabezado mal cerrado',
+  'Línea 7: lista sin guion inicial',
+  'Línea 12: bloque de código sin triple backtick de cierre'
+]);
+```
+
+C.3. Verifica que aparezcan los 3 `<li>` en el DOM.
+
+✅ **Checkpoint:** abre DevTools (F12 → Elements) y observa cómo `<ul id="lista-errores">` ahora tiene 3 `<li>` que **NO están en el HTML estático** — son creados por JS.
+
+### Por qué importa para M5
+
+En M5 construyes una **Agenda de Gastos**. Cada vez que se agregue una persona, un gasto o una transferencia sugerida, debe aparecer un nuevo `<li>` (o `<tr>`, o `<div>`) en el DOM **sin recargar la página**. El patrón `createElement` + `appendChild` es exactamente eso. Hoy lo viste con errores; en M5 lo aplicarás a personas, gastos y balances.
+
+---
 
 ## 🌟 Logros Adicionales
 
