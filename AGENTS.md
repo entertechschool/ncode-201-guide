@@ -160,7 +160,7 @@ Leer de `README.md`. Reglas derivadas:
 | M1 — HTML + CSS Fundamentos | 1-4 | 85% | 15% | Layout guiado: el estudiante completa HTML/CSS con flex/grid |
 | M2 — Fundamentos de Programación (imperativa, funcional, OOP, prototipos) | 5-8 | 80% | 20% | JS guiado: el estudiante completa funciones imperativas, funciones puras, constructores, prototipos y captura de input desde formulario HTML pre-armado |
 | M3 — Aplicaciones Web con Objetos | 9-12 | 75% | 25% | El estudiante manipula el DOM, modulariza con callbacks, gestiona eventos y maneja excepciones |
-| M4 — POO + Funcional | 13-16 | 70% | 30% | Clases ES6, herencia, arrow functions, map/forEach |
+| M4 — Modelado, Estado y Persistencia | 13-16 | 70% | 30% | El estudiante usa `class` ES6 (sin herencia, eso es Code 301), implementa Patrón Store completo (`subscribe`, `getState`, `setState`, `notify`), persiste en LocalStorage con `try/catch+finally`, sincroniza estado con UI, agrega delegación de eventos y cálculo sobre estado |
 | M5 — Proyecto Integrador Final | 17-20 | 70% | 30% | Guided: proyecto predefinido (Agenda de Gastos Compartidos) que integra M1-M4 por sprints ágiles |
 
 ### Formato de Gaps por Nivel

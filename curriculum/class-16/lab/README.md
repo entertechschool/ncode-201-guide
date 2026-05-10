@@ -60,13 +60,118 @@
   - No requiere refresco manual de la página.
   - Consistencia visual inmediata con el Store.
 
-### HU3: Confirmación previa al eliminar plantilla
-> _"Como usuario, quiero recibir una advertencia o confirmación antes de eliminar definitivamente una plantilla, para evitar borrar plantillas por error."_
+### HU3: Eliminar con delegación de eventos + confirmación
+> _"Como usuario, quiero hacer clic en el botón de eliminar de cualquier plantilla y recibir una confirmación antes de borrar. Como desarrollador, quiero usar UN solo listener para todos los botones de eliminar — no uno por cada uno."_
+
+**Concepto clave — Delegación de eventos:** en vez de poner un listener por cada botón, ponemos UN solo listener en el contenedor de la lista. Cuando el click sucede, `event.target` nos dice cuál botón fue presionado.
+
+#### Sub-pasos
+
+3.1. En `app.js`, agrega UN listener al contenedor:
+
+```javascript
+document.querySelector('#listaPlantillas').addEventListener('click', function(event) {
+  if (event.target.classList.contains('btn-eliminar')) {
+    const id = event.target.dataset.id;
+    const confirmar = confirm('¿Eliminar esta plantilla?');
+    if (confirmar) {
+      const nuevasPlantillas = store.getState().plantillas.filter(p => p.id !== id);
+      store.setState({ plantillas: nuevasPlantillas });
+    }
+  }
+});
+```
+
+3.2. Asegúrate que cada botón renderizado tenga clase `btn-eliminar` y `data-id` con el ID:
+
+```javascript
+// dentro de renderizarPlantillas:
+li.innerHTML = `
+  ${p.titulo}
+  <button class="btn-eliminar" data-id="${p.id}">Eliminar</button>
+`;
+```
+
+3.3. Verifica:
+- Agrega 5 plantillas. Elimina 2. Solo se eliminan las correctas.
+- En DevTools (F12 → Elements → Event Listeners en el `<ul>`), confirma que **NO hay 5 listeners de click — hay 1 solo en el `<ul>`**.
 
 **Checkpoint 3 [90'] - Criterios de Aceptación:**
-  - Ventana o mensaje de confirmación previo.
-  - Elimina plantilla solo tras confirmación.
-  - Eliminación efectiva en LocalStorage y Store.
+  - Un solo listener controla N botones (verificable en DevTools).
+  - Confirmación previa (`confirm()`) antes de eliminar.
+  - Eliminación efectiva en Store (y LocalStorage gracias al subscribe del HU1).
+
+✅ **Checkpoint visual:** si agregas 100 plantillas, sigues teniendo **1 solo listener**.
+
+> 💡 **Para M5:** en la Agenda de Gastos vas a tener listas dinámicas de personas, gastos y transferencias. Con delegación, no necesitas agregar listeners cada vez que renderizas — el contenedor los maneja todos.
+
+---
+
+## Cierre — Bonus: Cálculo sobre estado (~15 min)
+
+> Este bloque NO es una HU obligatoria. Es **preparación crítica para M5** (cálculo de balances, transferencias, totales). Si la clase se pasa de tiempo, queda como tarea autónoma post-clase.
+
+Hasta ahora aprendiste a **GUARDAR** y **SINCRONIZAR** estado. Ahora vas a **CALCULAR** sobre el estado — patrón que vas a necesitar masivamente en M5.
+
+### Patrón base
+
+Recibes un estado y produces un resultado derivado:
+
+```javascript
+function calcularEstadisticas(state) {
+  const plantillas = state.plantillas;
+
+  return {
+    total: plantillas.length,
+    masLarga: plantillas.reduce((max, p) =>
+      p.cuerpo.length > max.cuerpo.length ? p : max,
+      plantillas[0]
+    ),
+    porCategoria: plantillas.reduce((acc, p) => {
+      acc[p.categoria] = (acc[p.categoria] || 0) + 1;
+      return acc;
+    }, {})
+  };
+}
+```
+
+### Aplicación al proyecto
+
+#### Sub-pasos del bonus
+
+C.1. Implementa `calcularEstadisticas(state)` con al menos 3 cálculos:
+- Total de plantillas
+- Plantilla con cuerpo más largo
+- Cantidad de plantillas por categoría (objeto `{ saludos: 3, despedidas: 2, ... }`)
+
+C.2. Crea `renderizarEstadisticas(state)` y suscríbela al store:
+
+```javascript
+function renderizarEstadisticas(state) {
+  const stats = calcularEstadisticas(state);
+  const panel = document.querySelector('#panel-stats');
+  panel.innerHTML = `
+    <p>Total: ${stats.total}</p>
+    <p>Más larga: ${stats.masLarga?.titulo || '—'}</p>
+    <p>Por categoría: ${JSON.stringify(stats.porCategoria)}</p>
+  `;
+}
+
+store.subscribe(renderizarEstadisticas);
+```
+
+C.3. Cada vez que agregues/elimines una plantilla, las estadísticas se **recalculan automáticamente** gracias al `subscribe`.
+
+✅ **Checkpoint:** agrega 5 plantillas con distintas categorías. El panel muestra el conteo actualizado en tiempo real **sin que llames a `renderizarEstadisticas` manualmente**.
+
+### Por qué importa para M5
+
+En M5 vas a calcular:
+- **Balance** de cada persona (cuánto pagó vs cuánto le toca pagar).
+- **Algoritmo greedy de transferencias mínimas** que saldan el grupo.
+- Total gastado, gasto promedio, etc.
+
+Todos esos cálculos siguen el mismo patrón: `función pura(state) → resultado derivado`. Hoy lo viste con plantillas; en M5 lo aplicarás a gastos.
 
 ## 🌟 Logros Adicionales
 

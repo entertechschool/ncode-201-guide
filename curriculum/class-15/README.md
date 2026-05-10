@@ -63,6 +63,9 @@ Al finalizar esta clase, los estudiantes podrán:
 5. **Comprender las ventajas y limitaciones del LocalStorage:**  
    Justificar el uso apropiado de LocalStorage, reconociendo escenarios ideales y limitaciones técnicas concretas.
 
+6. **Manejar datos corruptos con `try/catch/finally`:**
+   Envolver `JSON.parse(localStorage.getItem(...))` en `try/catch/finally` (refuerzo de C12) para que la app **nunca se rompa** ante datos malformados y la UI siempre quede en estado consistente. **Obligatorio en al menos una HU** del lab.
+
 ---
 
 ## Glosario de nuevos términos

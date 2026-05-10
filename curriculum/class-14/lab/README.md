@@ -35,6 +35,62 @@ Bienvenido al Laboratorio 14 del proyecto **Gestor de Plantillas para WhatsApp**
 
 ## 🏆 Historias de Usuario
 
+### HU0 – Implementar el Store completo
+
+> **Objetivo:** crear un objeto `store` que centralice el estado de las plantillas y **notifique a los suscriptores** cuando cambie. Es el patrón base que vas a reutilizar en M5.
+
+#### Sub-pasos
+
+0.1. Crea `js/store.js`:
+
+```javascript
+const store = {
+  state: { plantillas: [] },
+  listeners: [],
+
+  getState() {
+    return this.state;
+  },
+
+  setState(newState) {
+    this.state = newState;
+    this.notify();
+  },
+
+  subscribe(listener) {
+    this.listeners.push(listener);
+  },
+
+  notify() {
+    this.listeners.forEach(listener => listener(this.state));
+  }
+};
+```
+
+0.2. En `app.js`, suscribe la función de renderizado al store:
+
+```javascript
+function renderizarPlantillas(state) {
+  const lista = document.querySelector('#listaPlantillas');
+  lista.innerHTML = '';
+  state.plantillas.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p.titulo;
+    lista.appendChild(li);
+  });
+}
+
+store.subscribe(renderizarPlantillas);
+```
+
+0.3. Para agregar o eliminar plantillas, **siempre** usa `store.setState({ ...store.state, plantillas: nuevasPlantillas })`. La función `setState` automáticamente notifica a los suscriptores y re-renderiza.
+
+✅ **Checkpoint HU0:** abre DevTools (F12). Agrega 3 plantillas vía `store.setState(...)` desde la consola. La lista en pantalla se actualiza **sin que llames a `renderizarPlantillas` manualmente** — el `subscribe` lo hace.
+
+> 💡 **Nota para M5:** En el proyecto final puedes elegir entre el Store COMPLETO (subscribe/notify, más limpio) o una versión simplificada (cambio → guardar → render manual). Ambas son válidas. La simplificada es más fácil de seguir; la completa escala mejor. **Decisión profesional consciente.**
+
+---
+
 ### HU1 – Ver plantillas activas desde un único estado centralizado
 > *"Como usuario, quiero ver en pantalla todas las plantillas disponibles, gestionadas desde un objeto central (store), para poder usarlas fácilmente."*
 
@@ -50,9 +106,9 @@ Bienvenido al Laboratorio 14 del proyecto **Gestor de Plantillas para WhatsApp**
 > *"Como usuario, quiero que al completar un formulario y presionar 'Guardar', se añada una nueva plantilla al estado y se muestre inmediatamente."*
 
 - **Criterios de Aceptación:**
-  - El formulario dispara una función que actualiza el array de `plantillas`.
-  - No se muta directamente el array original: se genera uno nuevo con `.concat()` o spread operator.
-  - La nueva plantilla aparece en pantalla sin recargar.
+  - El formulario dispara una función que invoca `store.setState({ ...store.getState(), plantillas: [...store.getState().plantillas, nueva] })`.
+  - No se muta directamente el array original: se genera uno nuevo con spread operator.
+  - La nueva plantilla aparece en pantalla sin recargar **gracias al `subscribe` de HU0**.
 
 - **⏱️ Checkpoint 2 (70 min):**
   🔍 **Validación:** El formulario de nueva plantilla agrega correctamente al estado, se actualiza el DOM tras la inserción sin recargar la página y se respeta la inmutabilidad del array de plantillas.
@@ -62,8 +118,8 @@ Bienvenido al Laboratorio 14 del proyecto **Gestor de Plantillas para WhatsApp**
 
 - **Criterios de Aceptación:**
   - Cada plantilla tiene un botón para eliminar.
-  - Al hacer clic, se filtra el array de `plantillas` sin mutarlo.
-  - La interfaz se actualiza al instante para reflejar el cambio.
+  - Al hacer clic, se filtra el array y se pasa el nuevo array a `store.setState(...)`. Sin mutaciones directas.
+  - La interfaz se actualiza al instante **gracias al `subscribe` de HU0** — no llamas a renderizar manualmente.
 
 - **⏱️ Checkpoint 3 (90 min):**
   🔍 **Validación:** El botón de eliminar funciona correctamente, se actualiza la vista tras eliminar una plantilla y se crea un nuevo array sin mutar el existente.

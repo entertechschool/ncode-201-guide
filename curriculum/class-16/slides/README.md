@@ -70,6 +70,48 @@
 
 ---
 
+## 🎯 Delegación de eventos: 1 listener para N botones
+
+```js
+document.querySelector('#listaPlantillas').addEventListener('click', (event) => {
+  if (event.target.classList.contains('btn-eliminar')) {
+    const id = event.target.dataset.id;
+    // ... eliminar
+  }
+});
+```
+
+* En lugar de **N listeners** (uno por botón), un **único listener en el contenedor**.
+* `event.target` te dice exactamente qué botón fue clickeado.
+* Funciona para botones agregados **después** del render inicial.
+
+> Patrón crítico para M5: cuando agregas/eliminas elementos dinámicamente, no quieres re-vincular listeners cada vez.
+
+---
+
+## ✨ Bonus: Cálculo sobre estado
+
+```js
+function calcularEstadisticas(state) {
+  return {
+    total: state.plantillas.length,
+    porCategoria: state.plantillas.reduce((acc, p) => {
+      acc[p.categoria] = (acc[p.categoria] || 0) + 1;
+      return acc;
+    }, {})
+  };
+}
+
+store.subscribe(state => {
+  renderEstadisticas(calcularEstadisticas(state));
+});
+```
+
+* **Función pura(state) → resultado derivado**, sin mutar estado.
+* En M5: balances de cada persona, transferencias mínimas, total gastado.
+
+---
+
 ## 📆 4. Cierre y Reflexión (20 min)
 
 - Revisión de dificultades técnicas encontradas durante la implementación

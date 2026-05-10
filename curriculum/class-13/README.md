@@ -11,7 +11,7 @@ En la Clase 13 iniciamos el módulo sobre **Estado y Persistencia**, centrándon
 | **Fase** | **Duración** | **Descripción** |
 |---------|--------------|-----------------|
 | **1. Refuerzo Práctico Inicial** | 30 min | Ejercicios rápidos para activar conocimientos previos sobre objetos y funciones constructoras. |
-| **2. Debate Técnico y Demo** | 20 min | Discusión crítica sobre ventajas y diferencias entre clases modernas (`class`) y funciones constructoras tradicionales. Análisis del estado local y global en aplicaciones web con demostración práctica. |
+| **2. Debate Técnico y Demo** | 20 min | Análisis del estado local vs global en aplicaciones web con demostración práctica. La equivalencia `class` ↔ función constructora ya quedó cerrada en C08 (M2), así que aquí arrancas usando `class` directamente y profundizas en cómo modelarlo con propósito. |
 | **Break** | 10 min | Descanso previo al laboratorio |
 | **3. Laboratorio Práctico** | 100 min | Implementación guiada de objetos utilizando clases (`class`), gestionando claramente estados locales y globales. Checkpoints estructurados a los 30, 60 y 90 minutos. |
 | **4. Síntesis** | 20 min | Consolidación de aprendizajes, retroalimentación grupal y anticipación al próximo tema sobre gestión avanzada del estado. |
@@ -92,7 +92,25 @@ Al finalizar esta clase, los estudiantes habrán consolidado significativamente 
 
 ## Glosario de Nuevos Términos
 
-- **Clase (`class`) en JavaScript:** Sintaxis moderna para definir y crear objetos, encapsulando propiedades y métodos.
+- **Clase (`class`) en JavaScript:** Sintaxis moderna para definir y crear objetos, encapsulando propiedades y métodos. **Recordatorio:** como cerramos en C08 (M2), `class` es **azúcar sintáctica** sobre prototipos — el mecanismo interno es el mismo.
 - **Estado Local:** Información específica para cada instancia de objeto, accesible únicamente desde ese mismo objeto.
 - **Estado Global:** Información disponible y compartida por múltiples componentes u objetos dentro de una aplicación.
+
+---
+
+## 📝 Sobre herencia (`extends`, `super`)
+
+Vas a ver herencia mencionada en algunos ejemplos como concepto, pero **NO la vas a usar en el proyecto final**. La herencia con `extends` es tema central de **Code 301**. Para M5 (Agenda de Gastos Compartidos) basta con clases simples como:
+
+```javascript
+class Gasto {
+  constructor(descripcion, monto, pagadoPor) {
+    this.descripcion = descripcion;
+    this.monto = monto;
+    this.pagadoPor = pagadoPor;
+  }
+}
+```
+
+Sin `extends` de ninguna otra clase. Si quieres explorar herencia por curiosidad, hay un logro adicional al final del lab — pero no es obligatorio.
 

@@ -16,6 +16,9 @@
 
 ## 🤝 2. Debate Técnico Guiado (20 min)
 
+> 🌉 **Recordatorio rápido (C08, M2):** `class` es azúcar sintáctica sobre prototipos.
+> Aquí ya no debatimos esa equivalencia — la usamos directamente.
+
 **Preguntas clave a trabajar en grupo:**
 
 * ¿Un objeto puede existir sin tener estado?
@@ -31,6 +34,14 @@
 | Estado          | Representa el "momento actual" de un objeto             |
 | Encapsulamiento | Protege el estado de ser manipulado de forma incorrecta |
 | Método          | Comportamiento que puede modificar el estado            |
+
+---
+
+## 🚫 Sobre `extends` (herencia)
+
+* `extends` y `super` son **tema de Code 301**.
+* Para M5 (proyecto final) usas **`class` simple sin extender** de otras.
+* Si te encuentras pensando "necesito heredar de Gasto", paso: **una clase plana basta**.
 
 ---
 

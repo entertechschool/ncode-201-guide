@@ -1,66 +1,275 @@
-﻿# Temas avanzados de JS y Animaciones en CSS
+# Guía del Facilitador - Clase 14: Patrón Store
 
-## Objetivos de aprendizaje
+> Tiempo de lectura: 8 minutos | Segunda clase del M4 | Prepárate antes de clase
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md).
+---
 
-## Resumen
+## 🔑 Conceptos Clave
 
-En esta clase enseñaremos sobre la reinstanciación. Es difícil que los estudiantes comprendan la arquitectura de la demostración, mucho menos que lo puedan implementar por su cuenta. Asegúrate de señalar que esto es algo que se espera que implementen en sus proyectos finales también.
+- **Patrón Store**: objeto único que centraliza el estado de la app y controla quién lo lee y lo modifica. Una sola fuente de verdad.
+- **`getState`**: método para leer el estado actual. Nunca acceso directo a `state`.
+- **`setState`**: método para reemplazar el estado por uno nuevo (inmutable). Internamente dispara `notify`.
+- **`subscribe`**: registrar una función que se ejecutará cada vez que el estado cambie. La UI se suscribe y deja de necesitar llamadas manuales a `renderizar`.
+- **`notify`**: avisa a TODOS los suscriptores que el estado cambió. Lo dispara `setState` automáticamente.
 
-Dependiendo del nivel de habilidad del grupo puedes escoger pasar el tiempo que queda hablando sobre temas avanzados de JS y/o las animaciones en CSS. Consulta el README principal de esta clase para ver los temas avanzados de JS.
+---
 
-## Preparativos
+## 🔗 Analogías Útiles
 
-1. Abre el [repositorio plantilla](https://github.com/codefellows/201-lab-14) para la parte de taller de la clase.
-1. Hojea las lecturas diarias y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Trabaja directamente con tu instructor principal para realizar la [charla de Seguridad Psicológica](./PSYCH_SAFETY). Esta plática deberá tardar como una hora al comienzo de la clase.
-1. Crea grupos para la semana del proyecto y comparte la lista con los estudiantes. Consulta el [documento de Proyectos](PROJECTS).
-1. Sube el archivo `css-animations.md` al repositorio diario de la clase.
-1. Crea y publica la lista parejas de pair-programming para el laboratorio.
+**Store <> Pizarra del equipo con un facilitador:**
+Nadie puede borrar la pizarra directamente. Para cambiar lo que está escrito, le pides al facilitador. Él aplica el cambio Y avisa al equipo. Eso es exactamente `setState` + `notify`.
 
-## Clase
+**`subscribe` <> Suscripción a un canal:**
+Cuando te suscribes a un canal de noticias, recibes cada nueva publicación sin tener que entrar a buscar. Tu función "se suscribe" y el store le manda el nuevo estado automáticamente.
 
-1. Seguridad Psicológica (1 hora)
-1. Revisión del código (30 min)
-   - Revisión final de Odd Duck Products
-1. Debatiendo ideas para el proyecto final (30 min)
-   - Publica los grupos y habla de los requisitos
-1. Animaciones en CSS
-1. Reinstanciación de objetos JS desde el local storage (30-45 min)
-1. El examen de ingreso a Code 301 se abrirá y cerrará al final de la clase 15.
+**Inmutabilidad <> Tener fotocopias del documento:**
+En vez de tachar y reescribir el original, sacas una fotocopia, modificas la copia y la pones encima. Si algo sale mal, el original sigue ahí. `[...state.plantillas, nueva]` es la fotocopia.
 
-## Notas de Laboratorio
+**Sin Store <> Sin Store con 50 funciones:**
+Imagina 50 personas con marcadores escribiendo en la misma pizarra al mismo tiempo. Nadie sabe quién cambió qué. Eso es estado global sin Store.
 
-El laboratorio de esta clase está dividido en 2 partes, y desafiará a los estudiantes de varias formas.
+---
 
-1. Va a necesitar que trabajen con un código base existente, así que tendrán que familiarizarse con el código, dónde están las cosas y cómo se conectan las funciones. 
-1. El laboratorio necesitará que utilicen múltiples archivos .js y .html... una arquitectura que no han visto aún.
-1. Se necesita que el LocalStorage comparta los datos entre páginas. ¡Esta es una GRAN enseñanza para ellos!
+## 📚 Contexto Actual
 
-Pasa como 30 - 45 minutos viendo esto con los alumnos antes de mandarlos a trabajar con sus respectivos compañeros.
+### El Patrón Store: de Facebook a tu app vanilla
 
-1. Muéstrales cómo crear un nuevo repositorio desde un [repositorio plantilla](https://github.com/codefellows/201-lab-14).
-1. Recuérdales cómo añadir un colaborador, ya que estarán emparejados con otro estudiante.
-1. Revisa la arquitectura con ellos.
-   - ¿Cómo se comenzaría con la página web?
-   - ¿Qué hace el código?
-    Trabaja con la clase sobre cómo entender en dónde "comienza" una aplicación y cómo se conecta todo.
-   - Quizás puedas escribir el guardado de datos al local storage con ellos, y así los ayudas a comenzar.
+En 2014 Facebook publicó **Flux** — un patrón arquitectónico donde el estado fluye en una sola dirección: acción → store → vista. Redux (2015), Vuex, Pinia y `useReducer` de React son descendientes directos. Lo que tus alumnos hacen hoy con `store.getState/setState/subscribe` es Redux en versión mínima viable, sin librerías.
 
-El laboratorio de esta clase es uno de pair programming. Este es un laboratorio cronometrado con un código de inicio proporcionado; no se permite que los grupos cambien el HTML. Los estudiantes tendrán 4 horas para trabajar en el laboratorio. Puede ser de ayuda crear las parejas a partir de los grupos del proyecto para detectar posibles conflictos, luego publicar los grupos para el proyecto en la tarde para que se hagan cambios de ser necesario.
+> **Para contar en clase:** "El día que aprendan Redux van a decir 'esto ya lo hice en clase'. La sintaxis cambia, el patrón es idéntico."
 
-La tarea es crear una segunda página para la Odd Duck voting app y que el gráfico se muestre solo en una página por separado. El logro adicional es añadir estilos CSS a la aplicación.
+### Inmutabilidad: el bug invisible que mata apps
 
-## ¿Qué cambió desde la clase anterior?
+Cuando dos partes del código tienen referencia al mismo array y una lo muta, la otra ve cambios que no pidió. Es el bug más frustrante de debuggear porque no hay error explícito — solo comportamiento raro. El patrón `[...arr, nuevo]` evita esto porque cada `setState` produce un array nuevo, no muta el anterior.
 
-N/A
+**Fuentes:** [Flux architecture](https://facebookarchive.github.io/flux/){:target="_blank"}, [Redux docs](https://redux.js.org){:target="_blank"}
 
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+---
 
-N/A
+## 🎯 Momentos Clave de la Clase
 
-## Comentarios Geneales
+### Demo Principal — El store completo en 30 líneas
 
-Durante la clase necesitarás hablar con los estudiantes acerca de cómo abordar el examen de ingreso a Code 301. Los estudiantes podrán dar el examen en el momento que escojan entre la clase 14 y el final de la clase 15. Los estudiantes pueden utilizar el tiempo que necesiten durante ese periodo de tiempo, por lo general los estudiantes lo completan en menos de 3 horas. Los estudiantes pueden consultar el material y se les anima a que escriban y ejecuten código para encontrar las respuestas. Dile a los estudiantes directamente que no pueden colaborar con quienes están dando el examen o lo han dado antes (p.ej. respuestas de exámenes en línea).
+**Qué mostrar:** 4 minutos en vivo. Construye el objeto `store` con `state`, `listeners`, `getState`, `setState`, `subscribe`, `notify`. Crea una función `renderizar` y `store.subscribe(renderizar)`. Llama `store.setState({ plantillas: [...] })` desde la consola — la pantalla se actualiza sola. Llama dos veces más — se actualiza dos veces más, sin que invoques `renderizar` manualmente.
+
+**Script sugerido:**
+```
+Facilitador: "Miren mi consola. Voy a cambiar el estado tres veces seguidas:
+[store.setState({...}) x3]
+Facilitador: "¿Vieron? Yo no llamé a renderizar ni una sola vez.
+El store lo hizo por mí porque renderizar está suscrito. Esa es la magia."
+```
+
+**Plan B (si la demo falla):** Tener un CodePen pre-armado con la demo funcionando. Mostrar y narrar.
+
+### Transición al Lab
+
+**Momento crítico:** La HU0 (Store completo) es el corazón de la clase. Si la pasan rápido, HU1-HU3 son consecuencia natural. Si la pasan sin entender, no hay forma de salvar HU1-HU3.
+
+**Script sugerido:**
+```
+Facilitador: "HU0 es donde van a pelear. NO sigan a HU1 hasta que su demo funcione:
+agregar al store debe disparar render sin que ustedes lo llamen.
+Si llaman render manualmente, retrocedan."
+```
+
+---
+
+## 🎭 Dinámicas de Clase
+
+### Dinámica 1: "Buscar la llamada manual"
+
+Después del Checkpoint 1, pide a los alumnos que revisen su código:
+
+> "Si ven una sola línea que diga `renderizar()` fuera del `subscribe`, levanten la mano."
+
+**Dinámica sugerida:**
+```
+Facilitador: "Cada `renderizar()` manual es una oportunidad de bug.
+Si su store funciona bien, NUNCA tienen que llamarlo a mano.
+Solo `store.setState(...)`. El render se dispara solo."
+```
+
+### Dinámica 2: "Romper la inmutabilidad a propósito"
+
+Después de HU2:
+
+> "Cambien `[...state.plantillas, nueva]` por `state.plantillas.push(nueva)`. Recarguen y prueben."
+
+**Dinámica sugerida:**
+```
+Facilitador: "¿Qué pasó? Aparentemente nada. La app sigue funcionando.
+Pero ahora pierden la capacidad de comparar 'antes vs después'.
+Si después agregan undo/redo, este pequeño cambio rompe TODO.
+Por eso inmutabilidad."
+```
+
+### Dinámica 3: "Suscribir dos funciones"
+
+Reto rápido al final del lab:
+
+> "Suscriban una segunda función `console.log` al store. ¿Qué pasa al hacer `setState`?"
+
+**Dinámica sugerida:**
+```
+Facilitador: "Ahora son DOS suscriptores. Cada cambio dispara las dos.
+Imaginen 5 componentes UI suscritos al mismo store. Ese es el poder."
+```
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### Ejemplo 1: Store completo (mínimo viable)
+
+**Cuándo usarlo:** Si alguien se atasca en HU0.
+
+```javascript
+const store = {
+  state: { plantillas: [] },
+  listeners: [],
+  getState() { return this.state; },
+  setState(newState) {
+    this.state = newState;
+    this.notify();
+  },
+  subscribe(listener) { this.listeners.push(listener); },
+  notify() { this.listeners.forEach(fn => fn(this.state)); }
+};
+```
+
+**Tip:** En pizarra, dibuja flechas: `setState → state se reemplaza → notify → cada listener corre`.
+
+### Ejemplo 2: Agregar inmutablemente
+
+**Cuándo usarlo:** Si alguien hace `state.plantillas.push(...)`.
+
+```javascript
+const actual = store.getState();
+store.setState({
+  ...actual,
+  plantillas: [...actual.plantillas, nueva]
+});
+```
+
+**Tip:** "El spread es tu mejor amigo. Si no lo usas, mutas. Si mutas, el subscribe puede no detectar el cambio en frameworks reales."
+
+### Ejemplo 3: Render reactivo
+
+**Cuándo usarlo:** Si confunden HU0 con HU1.
+
+```javascript
+function renderizar(state) {
+  const lista = document.querySelector('#listaPlantillas');
+  lista.innerHTML = '';
+  state.plantillas.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p.titulo;
+    lista.appendChild(li);
+  });
+}
+
+store.subscribe(renderizar);
+renderizar(store.getState()); // primera vez
+```
+
+**Tip:** Esa primera llamada manual es porque `subscribe` no dispara inmediatamente. Es la única vez que `renderizar` se llama a mano.
+
+---
+
+## ⚠️ Errores Comunes
+
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| `renderizar` se llama dos veces por cada cambio | Suscribieron dos veces la misma función | Una sola llamada a `subscribe` por listener |
+| `setState` no dispara el render | Olvidaron llamar `this.notify()` dentro de `setState` | Revisar la implementación del Store |
+| La lista no se actualiza visualmente | Mutaron con `push` en vez de `setState` | Reemplazar `push` por spread + setState |
+| `this` es undefined en `notify` | Llamaron `setState` como callback sin `bind` | Usar arrow functions o estructura como en el ejemplo |
+| Después de `setState`, `getState` devuelve lo viejo | Asignaron a `state` con `=` en vez de pasar por `setState` | Solo `setState` puede modificar; nunca `store.state = ...` directo |
+| Render dispara render dispara render… | Dentro de `renderizar` están haciendo `setState` | Render solo lee del estado, nunca lo modifica |
+
+---
+
+## ✅ Señales de Comprensión
+
+### El estudiante ENTIENDE cuando:
+- Explica sin titubeos por qué `subscribe` se llama UNA vez pero se ejecuta MUCHAS.
+- Distingue `getState` (leer) de `setState` (cambiar) sin confundir.
+- Reemplaza `.push()` por spread sin que se lo recuerden.
+
+### El estudiante NECESITA AYUDA cuando:
+- Llama a `renderizar()` manualmente después de cada `setState`.
+- Hace `store.state = nuevoEstado` directo, sin pasar por `setState`.
+- No entiende por qué `state.plantillas.push(x)` "también funciona visualmente".
+
+---
+
+## 🎯 Checkpoints de Validación
+
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~30' | HU0 lista | Desde consola: `store.setState({plantillas:[{titulo:'X'}]})` actualiza la UI sin llamadas manuales. |
+| ~60' | HU1+HU2 listas | Submit del form agrega plantilla. Aparece en pantalla. El array NO es mutado (verificable con `Object.isFrozen` o comparando referencias antes/después). |
+| ~90' | HU3 lista | Click en botón eliminar → plantilla desaparece. Sin recarga. Estado consistente. |
+
+---
+
+## 🧑‍🏫 Tips de Facilitación
+
+### Si alguien dice "esto es muy parecido a React":
+> "Exacto. Lo que aprenden hoy en vanilla es el patrón que React encapsula en `useState`. Cuando lleguen a React no van a aprender un patrón nuevo — solo otra sintaxis."
+
+### Si alguien quiere usar Redux directo:
+> "Mejor entiendan el patrón sin librería primero. Cuando agreguen Redux, sabrán qué problema resuelve y por qué."
+
+### Si la mayoría termina antes:
+- Pídeles agregar un **segundo subscriber** que loguee cambios al store. Esto refuerza el patrón sin agregar complejidad.
+
+### Si están atorados en HU0:
+- Pasa a una pizarra y dibuja la secuencia: `setState → state cambia → notify → listeners corren`. Sin código.
+
+---
+
+## ❓ Preguntas Frecuentes
+
+### P: ¿Por qué no usar simplemente `addEventListener` para sincronizar UI?
+**R:** Funciona, pero acopla cada cambio del estado con un evento DOM. El Store desacopla: el estado puede cambiar por mil razones, todas pasan por `setState`.
+
+### P: ¿Puedo tener varios stores?
+**R:** Técnicamente sí, en producción a veces sí (auth store + ui store). Para esta clase, **uno solo**. Más stores = más complejidad sin beneficio aquí.
+
+### P: ¿`setState` es síncrono?
+**R:** En esta implementación vanilla sí — los listeners corren inmediatamente. En React es asíncrono (batched). Diferencia que verán en Code 301.
+
+### P: ¿Y la inmutabilidad con objetos anidados?
+**R:** Para esta clase basta con spread superficial. Inmutabilidad profunda (Immer, Immutable.js) es Code 301.
+
+---
+
+## 🔗 Conexiones del Curriculum
+
+### Esta clase construye sobre:
+
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C13 | Estado local vs global | Hoy le pones una API formal al estado global. |
+| C10 (M3) | Callbacks como ciudadanos de primera clase | `subscribe` es callback puro. |
+| C11 (M3) | `addEventListener` | El submit del form dispara `setState`. |
+
+### Conexión con la Próxima Clase (C15)
+
+Al cerrar, planta la semilla:
+
+> "Hoy tienen un Store funcionando. Pero si cierran el navegador y vuelven a abrir, todo desaparece. La próxima clase aprenden **JSON + LocalStorage** para que ese estado persista. Y agregamos `try/catch/finally` (refuerzo de C12) para que la app no se rompa si LocalStorage tiene datos corruptos. Es la combinación obligatoria para M5."
+
+**Pre-work implícito:** Que prueben recargar su app hoy y vean cómo todo se pierde. Esa fricción motiva C15.
+
+---
+
+## 🪞 Reflexión Post-Clase
+
+### Preguntas para el facilitador:
+- ¿Cuántos siguieron llamando `renderizar()` manualmente después de HU0? Si más del 30%, refuerza en C15 antes de empezar.
+- ¿Alguien intentó mutar con `push`? Marca como "necesita refuerzo de inmutabilidad" antes de Code 301.
+- ¿Cuántos preguntaron por React/Redux? Buena señal — están conectando con el ecosistema mayor.
+- ¿La HU0 tomó más de 40 min para el promedio? Considera dar más tiempo de demo en la próxima cohorte.

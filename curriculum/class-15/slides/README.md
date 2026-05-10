@@ -53,6 +53,41 @@
 
 ---
 
+## 🛡️ Patrón seguro: `JSON.parse` con `try/catch/finally`
+
+Refuerzo de C12 (M3) aplicado a persistencia:
+
+```javascript
+function cargarPlantillas() {
+  document.getElementById('estado').textContent = 'Cargando...';
+
+  try {
+    const raw = localStorage.getItem('plantillas');
+    if (!raw) return [];                       // primera vez: sin datos
+    const datos = JSON.parse(raw);
+    if (!Array.isArray(datos)) {
+      throw new Error('Formato de datos corrupto');
+    }
+    return datos;
+  } catch (error) {
+    console.error('Error al cargar:', error);
+    alert('Datos corruptos. Empezando de cero.');
+    localStorage.removeItem('plantillas');     // limpieza
+    return [];                                 // fallback seguro
+  } finally {
+    document.getElementById('estado').textContent = 'Listo';
+  }
+}
+```
+
+* **`try`** → intenta deserializar y validar.
+* **`catch`** → si falla, no rompe la app: avisa y resetea.
+* **`finally`** → siempre deja la UI en estado "Listo".
+
+> Sin este patrón, un `localStorage` manipulado a mano rompe toda tu app.
+
+---
+
 ## 📊 Checklist de Persistencia Inicial
 
 - [ ] Estado de la aplicación persiste correctamente tras recargar la página

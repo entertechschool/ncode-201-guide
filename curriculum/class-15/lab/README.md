@@ -73,6 +73,57 @@
 
 - **Checkpoint 3 (90 min):** Validar la eliminación correcta en ambos lugares. Tener una confirmación visual inmediata tras realizar la acción.
 
+### HU4: Carga segura desde LocalStorage con `try/catch/finally`
+
+> _"Como usuario, quiero que la app no se rompa si LocalStorage tiene datos corruptos, no existe la clave aún, o el JSON es malformado por manipulación manual."_
+
+Refuerzo de `finally` aplicado en C12 (M3), ahora en el contexto de persistencia.
+
+#### Sub-pasos
+
+4.1. Asegúrate que `index.html` tenga un indicador de estado:
+
+```html
+<p id="estado">Listo</p>
+```
+
+4.2. Modifica `cargarPlantillas()` para envolver la deserialización en `try/catch/finally`:
+
+```javascript
+function cargarPlantillas() {
+  document.getElementById('estado').textContent = 'Cargando...';
+
+  try {
+    const raw = localStorage.getItem('plantillas');
+    if (!raw) {
+      return [];  // primera vez: no hay datos, no es un error
+    }
+    const plantillas = JSON.parse(raw);
+    if (!Array.isArray(plantillas)) {
+      throw new Error('Formato de datos corrupto');
+    }
+    return plantillas;
+  } catch (error) {
+    console.error('Error al cargar plantillas:', error);
+    alert('Datos corruptos. Empezando de cero.');
+    localStorage.removeItem('plantillas');
+    return [];
+  } finally {
+    document.getElementById('estado').textContent = 'Listo';
+  }
+}
+```
+
+4.3. **Verifica los 3 escenarios** desde la consola del navegador:
+
+- **Primera vez** (LocalStorage vacío): `localStorage.clear()`, recarga → retorna array vacío, sin error, indicador termina en "Listo".
+- **Datos válidos:** agrega plantillas, recarga → carga normalmente, indicador "Listo".
+- **Datos corruptos:** ejecuta `localStorage.setItem('plantillas', 'no-es-json')` en la consola, recarga → catch atrapa, alert se muestra, app sigue viva, indicador "Listo".
+
+✅ **Checkpoint HU4:** simula los 3 escenarios. La app **no se rompe en ninguno**. La UI siempre termina en estado consistente.
+
+> 💡 **Para M5 HU8:** este patrón es exactamente lo que el proyecto final exige textualmente — *"El acceso a LocalStorage está envuelto en try/catch"*. Aquí lo aprendiste; en M5 lo aplicas.
+
 ## 🌟 Logros Adicionales (Opcionales)
 
 - **Logro 1: Mensajes de Retroalimentación Visual**

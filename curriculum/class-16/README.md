@@ -50,3 +50,11 @@ Al finalizar esta clase, los estudiantes podrán:
 
 3. **Mensajes de Confirmación de Acciones:**  
    Incorporar confirmaciones visuales previas a la ejecución de acciones críticas (como eliminación definitiva) para evitar errores del usuario.
+
+4. **Delegación de eventos:**
+   Aplicar el patrón "un listener en el contenedor que atiende clicks de N botones hijos" usando `event.target.classList.contains(...)`. Es lo que vas a usar masivamente en M5 (listas dinámicas de personas, gastos, transferencias).
+
+### Bonus opcional al cierre
+
+5. **Cálculo sobre estado (función pura(state) → resultado):**
+   Patrón base para M5 — recibir el estado y producir resultados derivados (totales, promedios, agrupaciones). Hoy lo ves con plantillas; en M5 lo aplicas a balances y transferencias.
