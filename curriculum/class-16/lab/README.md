@@ -65,6 +65,20 @@
 
 **Concepto clave — Delegación de eventos:** en vez de poner un listener por cada botón, ponemos UN solo listener en el contenedor de la lista. Cuando el click sucede, `event.target` nos dice cuál botón fue presionado.
 
+> ⚠️ **Prerequisito:** esta HU asume que tu clase `Template` (C13) tiene una propiedad `id` única para identificar cada plantilla. Si NO la tenías como una de las 2 propiedades adicionales, agrégala ahora en el constructor:
+>
+> ```javascript
+> class Template {
+>   constructor(titulo, mensaje, hashtag, /* ...tus 2 propiedades */) {
+>     this.id = Date.now() + Math.random();  // genera id único
+>     this.titulo = titulo;
+>     this.mensaje = mensaje;
+>     this.hashtag = hashtag;
+>     // ...
+>   }
+> }
+> ```
+
 #### Sub-pasos
 
 3.1. En `app.js`, agrega UN listener al contenedor:
@@ -115,20 +129,24 @@ Hasta ahora aprendiste a **GUARDAR** y **SINCRONIZAR** estado. Ahora vas a **CAL
 
 ### Patrón base
 
-Recibes un estado y produces un resultado derivado:
+Recibes un estado y produces un resultado derivado. **Usamos solo propiedades obligatorias de `Template`** (titulo, mensaje, hashtag) para que el cálculo funcione independientemente de las 2 propiedades adicionales que cada alumno eligió en C13:
 
 ```javascript
 function calcularEstadisticas(state) {
   const plantillas = state.plantillas;
 
+  if (plantillas.length === 0) {
+    return { total: 0, masLarga: null, porHashtag: {} };
+  }
+
   return {
     total: plantillas.length,
     masLarga: plantillas.reduce((max, p) =>
-      p.cuerpo.length > max.cuerpo.length ? p : max,
+      p.mensaje.length > max.mensaje.length ? p : max,
       plantillas[0]
     ),
-    porCategoria: plantillas.reduce((acc, p) => {
-      acc[p.categoria] = (acc[p.categoria] || 0) + 1;
+    porHashtag: plantillas.reduce((acc, p) => {
+      acc[p.hashtag] = (acc[p.hashtag] || 0) + 1;
       return acc;
     }, {})
   };
@@ -139,12 +157,18 @@ function calcularEstadisticas(state) {
 
 #### Sub-pasos del bonus
 
-C.1. Implementa `calcularEstadisticas(state)` con al menos 3 cálculos:
-- Total de plantillas
-- Plantilla con cuerpo más largo
-- Cantidad de plantillas por categoría (objeto `{ saludos: 3, despedidas: 2, ... }`)
+C.1. Agrega al `index.html` un contenedor para las estadísticas:
 
-C.2. Crea `renderizarEstadisticas(state)` y suscríbela al store:
+```html
+<aside id="panel-stats"></aside>
+```
+
+C.2. Implementa `calcularEstadisticas(state)` con al menos 3 cálculos:
+- Total de plantillas
+- Plantilla con **mensaje** más largo (usa la propiedad obligatoria `mensaje`)
+- Cantidad de plantillas **agrupadas por hashtag** (usa la propiedad obligatoria `hashtag`)
+
+C.3. Crea `renderizarEstadisticas(state)` y suscríbela al store:
 
 ```javascript
 function renderizarEstadisticas(state) {
@@ -153,14 +177,14 @@ function renderizarEstadisticas(state) {
   panel.innerHTML = `
     <p>Total: ${stats.total}</p>
     <p>Más larga: ${stats.masLarga?.titulo || '—'}</p>
-    <p>Por categoría: ${JSON.stringify(stats.porCategoria)}</p>
+    <p>Por hashtag: ${JSON.stringify(stats.porHashtag)}</p>
   `;
 }
 
 store.subscribe(renderizarEstadisticas);
 ```
 
-C.3. Cada vez que agregues/elimines una plantilla, las estadísticas se **recalculan automáticamente** gracias al `subscribe`.
+C.4. Cada vez que agregues/elimines una plantilla, las estadísticas se **recalculan automáticamente** gracias al `subscribe`.
 
 ✅ **Checkpoint:** agrega 5 plantillas con distintas categorías. El panel muestra el conteo actualizado en tiempo real **sin que llames a `renderizarEstadisticas` manualmente**.
 

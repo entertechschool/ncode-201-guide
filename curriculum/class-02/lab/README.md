@@ -53,7 +53,18 @@ header nav {
 
 2. Asegúrate que los enlaces estén separados y alineados de forma coherente.
 3. Aplica Flexbox también en las secciones principales dentro de `main` para organizar el contenido.
-4. Haz que el logo del nav empuje el resto del menú a la derecha usando `flex-grow`:
+4. Vas a aplicar `flex-grow` al primer enlace del nav (que actúa como "logo") para que empuje al resto del menú a la derecha. Primero, marca el primer `<a>` con una clase `logo` en `index.html`:
+
+```html
+<nav>
+  <a href="#" class="logo">Mi Producto</a>
+  <a href="#">Inicio</a>
+  <a href="#">Producto</a>
+  <a href="#">Contacto</a>
+</nav>
+```
+
+Luego, agrega esta regla CSS:
 
 ```css
 header nav .logo {

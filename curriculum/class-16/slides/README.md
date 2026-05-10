@@ -95,8 +95,8 @@ document.querySelector('#listaPlantillas').addEventListener('click', (event) => 
 function calcularEstadisticas(state) {
   return {
     total: state.plantillas.length,
-    porCategoria: state.plantillas.reduce((acc, p) => {
-      acc[p.categoria] = (acc[p.categoria] || 0) + 1;
+    porHashtag: state.plantillas.reduce((acc, p) => {
+      acc[p.hashtag] = (acc[p.hashtag] || 0) + 1;
       return acc;
     }, {})
   };
@@ -108,6 +108,7 @@ store.subscribe(state => {
 ```
 
 * **Función pura(state) → resultado derivado**, sin mutar estado.
+* Usa propiedades obligatorias de `Template` (`hashtag`, `mensaje`) — independiente de las 2 adicionales del alumno.
 * En M5: balances de cada persona, transferencias mínimas, total gastado.
 
 ---

@@ -89,11 +89,24 @@ Y en `styles.css`:
 .hidden { display: none; }
 ```
 
-4.2. En `app.js`, modifica la función que procesa el Markdown para usar `try/catch/finally`:
+4.2. Asegúrate de tener una zona donde mostrar errores en `index.html` (probablemente la creaste en HU1):
+
+```html
+<div id="error" class="hidden"></div>
+```
+
+Define la función `mostrarError` y modifica la función que procesa el Markdown para usar `try/catch/finally`:
 
 ```javascript
+function mostrarError(mensaje) {
+  const errorBox = document.getElementById('error');
+  errorBox.textContent = mensaje;
+  errorBox.classList.remove('hidden');
+}
+
 function procesarMarkdown(texto) {
   document.getElementById('spinner').classList.remove('hidden');
+  document.getElementById('error').classList.add('hidden'); // limpia errores previos
 
   try {
     if (!texto || texto.trim() === '') {
@@ -108,6 +121,8 @@ function procesarMarkdown(texto) {
   }
 }
 ```
+
+> 💡 **Nota:** `#preview` ya lo tienes desde C09 (es donde se renderiza la vista previa). `#spinner` lo agregaste en 4.1. `#error` lo agregas ahora si no existía.
 
 4.3. Verifica los **3 escenarios** y observa el spinner en cada uno:
 
