@@ -425,4 +425,3 @@ Los checkpoints deben incluir explícitamente las actividades de cierre con sus 
 ## Ejemplo de Referencia
 
 Ver implementaciones existentes en: `curriculum/class-*/facilitator/README.md`
-
