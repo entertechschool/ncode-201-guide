@@ -6,6 +6,10 @@
 
 En esta clase cerramos el **Módulo 2: Fundamentos de Programación** implementando la cadena de prototipos en JavaScript para optimizar nuestro **Gestor de Presupuesto Personal**. Aprenderemos a mover métodos del constructor al prototipo para mejorar el rendimiento de memoria y crearemos herencia prototipal con subtipos especializados como `Ingreso` y `Egreso`. Esta es la culminación del paradigma orientado a objetos tradicional de JavaScript, preparándonos para el siguiente módulo donde manipularemos el DOM como una API de objetos. Es fundamental entender los prototipos porque son la base de cómo funciona la herencia en JavaScript, incluso cuando usemos sintaxis moderna de clases en niveles avanzados.
 
+> 💡 **Sobre el template de la P3:** El HTML del laboratorio viene pre-armado con **Tailwind CSS** para los estilos. No necesitas modificar el HTML — concéntrate en el JavaScript (prototipos, herencia, integración con el form). En la próxima clase (C09) aprenderás Tailwind formalmente.
+
+> 🌉 **Cierre del módulo — puente sintáctico:** Al final del lab (~10 min) verás cómo lo que escribiste con funciones constructoras + prototipos es **azúcar sintáctica** para la sintaxis `class` ES6 que usarás en el Módulo 4. No es un mecanismo nuevo: por debajo JavaScript sigue usando la cadena de prototipos.
+
 ## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción**   |

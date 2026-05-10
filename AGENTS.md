@@ -158,7 +158,7 @@ Leer de `README.md`. Reglas derivadas:
 | Módulo | Clases | Código Completo | Gaps | Descripción |
 |--------|--------|-----------------|------|-------------|
 | M1 — HTML + CSS Fundamentos | 1-4 | 85% | 15% | Layout guiado: el estudiante completa HTML/CSS con flex/grid |
-| M2 — JavaScript Básico + DOM | 5-8 | 80% | 20% | JS guiado: el estudiante completa funciones, constructores y event handlers |
+| M2 — Fundamentos de Programación (imperativa, funcional, OOP, prototipos) | 5-8 | 80% | 20% | JS guiado: el estudiante completa funciones imperativas, funciones puras, constructores, prototipos y captura de input desde formulario HTML pre-armado |
 | M3 — Aplicaciones Web con Objetos | 9-12 | 75% | 25% | El estudiante manipula el DOM, modulariza con callbacks, gestiona eventos y maneja excepciones |
 | M4 — POO + Funcional | 13-16 | 70% | 30% | Clases ES6, herencia, arrow functions, map/forEach |
 | M5 — Proyecto Integrador Final | 17-20 | 70% | 30% | Guided: proyecto predefinido (Agenda de Gastos Compartidos) que integra M1-M4 por sprints ágiles |
@@ -189,6 +189,10 @@ Code 201 es un curso **introductorio para futuros desarrolladores sin experienci
 - M5: El estudiante construye un proyecto predefinido (Agenda de Gastos Compartidos) por sprints ágiles, integrando los aprendizajes de M1 a M4
 - Los "gaps" son porciones de HTML, CSS o JavaScript que el estudiante completa
 - Herramientas máximas por clase: 2 nuevas (regla MAX_TWO_NEW_TOOLS)
+
+### Aclaración sobre DOM en M2 vs M3
+
+**DOM completo** (manipulación dinámica, render, múltiples eventos, jerarquía de nodos) se introduce en **M3 (C09)**. M2 solo toca **captura de input desde formulario** (`querySelector('#id').value` + `addEventListener('submit', ...)` + `event.preventDefault()`) como puente entre el HTML aprendido en M1 (forms accesibles) y el JS del módulo (OOP). El alumno no manipula nodos ni renderiza listas dinámicas hasta M3.
 
 ---
 

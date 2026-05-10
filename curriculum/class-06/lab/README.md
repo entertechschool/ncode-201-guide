@@ -158,7 +158,23 @@ function obtenerPromedio(movimientos, tipo) {
 
 **Desafío**: Crea `validarPresupuesto(movimientos, limite)` que indique si los gastos superan el límite.
 
-#### 3.4. Retos Autónomos Progresivos
+#### 3.4. Imprimir cada movimiento con `forEach`
+
+Implementa una función `imprimirMovimientos(movimientos)` que use `forEach()` para mostrar cada movimiento por consola con formato:
+
+```javascript
+function imprimirMovimientos(movimientos) {
+  movimientos.forEach((m, i) => {
+    console.log(`${i + 1}. ${m.nombre} - ${m.tipo}: $${m.valor}`);
+  });
+}
+
+imprimirMovimientos(movimientos);
+```
+
+Verifica que la consola muestre los movimientos numerados y formateados. `forEach` itera sin retornar nada — es para efectos secundarios como imprimir, no para transformar datos (para eso usas `map`).
+
+#### 3.5. Retos Autónomos Progresivos
 
 **🏆 Básico** (5 min): `categorizarPorMonto(movimientos)` - agrupar en rangos bajo/medio/alto  
 **🏆 Intermedio** (7 min): `analizarPatrones(movimientos)` - usar `sort()` para ordenar gastos  

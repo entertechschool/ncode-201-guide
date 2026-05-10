@@ -98,24 +98,32 @@ Implementar `filtrarPorTipo(tipo)` que retorne solo ingresos o gastos
 
 ---
 
-## 📊 Parte 3: Refactorización Completa (~50 min)
+## 📊 Parte 3: Captura desde Formulario (~35 min)
 
 ### 🎯 Objetivo:
-Reemplazar toda la lógica funcional con objetos y conectar con el DOM
+Conectar tu modelo OOP con un formulario HTML pre-armado. El alumno escribe SOLO el JS de captura.
+
+### El puente JS ↔ Form (4 líneas clave)
+
+```javascript
+const form = document.querySelector('#form-movimiento');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const nombre = document.querySelector('#nombre').value;
+  const tipo = document.querySelector('#tipo').value;
+  const valor = parseFloat(document.querySelector('#valor').value);
+  miPresupuesto.agregarMovimiento(new Movimiento(nombre, tipo, valor));
+  form.reset();
+});
+```
 
 ### ✅ Criterios de Validación:
-- ✅ Interfaz HTML conectada con objetos
-- ✅ Formularios creando instancias de Movimiento
-- ✅ Reto en vivo: Validaciones de datos completadas
+- ✅ El form HTML viene pre-armado (no se modifica)
+- ✅ `event.preventDefault()` evita la recarga
+- ✅ Cada submit agrega una instancia al `Presupuesto`
+- ✅ La consola muestra el array de movimientos creciendo
 
-### 🚀 Reto en Vivo (10 min):
-Agregar validación que impida valores negativos en ingresos
-
-### 🏆 Retos Autónomos (25 min):
-
-**Reto Básico**: Método `obtenerResumen()` que retorne objeto con totales
-**Reto Intermedio**: Método `eliminarMovimiento(id)` por posición
-**Reto Avanzado**: Implementar `editarMovimiento(id, nuevosDatos)`
+> ⚠️ Esta clase NO es "DOM completo" — solo captura de input. Render dinámico y manipulación de nodos llega en M3.
 
 ---
 

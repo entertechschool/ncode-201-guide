@@ -133,18 +133,20 @@ Movimiento.prototype.convertirMoneda = function(tasaCambio) {
 // Sin necesidad de modificar código o recrear objetos
 ```
 
-## 6. Bootstrap integration: Pragmatismo sobre purismo UI
+## 6. Tailwind como exposición pasiva: foco en JS, no en CSS
 
-La decisión de usar Bootstrap en lugar de CSS puro es estratégicamente pragmática. Los estudiantes necesitan experimentar cómo los sistemas de prototipos interactúan con frameworks UI reales, no con ejemplos académicos. Bootstrap les permite crear interfaces profesionales rápidamente mientras se enfocan en la lógica prototipal.
+La decisión de usar Tailwind en el template de la P3 (sin enseñarlo formalmente) es estratégica: el alumno **lee** clases utility (`bg-white rounded-lg shadow p-6`) sin que el módulo le pida aprenderlas. El foco de la clase es JS (prototipos, herencia, `instanceof`), no CSS. Tailwind se formaliza recién en C09.
 
 ```javascript
-// Integración realista con frameworks UI
+// Integración realista con utility classes — el alumno solo escribe JS
 function renderizarMovimiento(movimiento) {
-  const tipoClase = movimiento instanceof Ingreso ? 'alert-success' : 'alert-danger';
+  const tipoClase = movimiento instanceof Ingreso
+    ? 'bg-green-100 text-green-800'
+    : 'bg-red-100 text-red-800';
   const icono = movimiento instanceof Ingreso ? '💰' : '💸';
-  
+
   return `
-    <div class="alert ${tipoClase} d-flex justify-content-between">
+    <div class="${tipoClase} p-3 rounded mb-2 flex justify-between">
       <span>${icono} ${movimiento.formatear()}</span>
       <small>${movimiento.constructor.name}</small>
     </div>
@@ -152,7 +154,7 @@ function renderizarMovimiento(movimiento) {
 }
 ```
 
-Esta integración les enseña que los prototipos no existen en el vacío, sino que forman parte de un ecosistema más amplio de herramientas y frameworks.
+**Mensaje al alumno:** "El HTML del template usa Tailwind. No lo modifiquen — concéntrense en escribir el JS. En C09 aprenden Tailwind formalmente."
 
 ## 7. Gestión de la frustración inicial
 
@@ -207,6 +209,12 @@ Solo responden correctamente si proponen agregar el método al prototipo despué
 ## 10. Preparación para la siguiente clase
 
 Los conceptos de esta clase son prerrequisito directo para DOM como API de objetos. La próxima clase usará la mentalidad prototipal para entender cómo `document.querySelector()` retorna objetos con métodos heredados, y cómo los eventos son objetos con su propia cadena prototipal.
+
+### Bloque de cierre obligatorio: puente constructora → `class`
+
+Al final del lab, dedica **~10 min** al bloque puente del lab/README.md (sección "Cierre — De funciones constructoras a `class`"). El alumno reescribe `Movimiento` y `Presupuesto` con sintaxis `class` ES6 y verifica que sigue funcionando idéntico. Mensaje clave: **"`class` es azúcar sintáctica sobre prototipos. No es un mecanismo nuevo — es la misma cadena prototipal con sintaxis más legible."**
+
+Esto **prepara directamente M4 C13**, que arranca usando `class` sin necesidad de "discusión teórica" sobre la equivalencia (ya fue cerrada aquí). Si te pasas de tiempo, el bloque puede quedar como tarea autónoma con material claro — pero NO lo elimines: M4 lo asume cerrado.
 
 **Conceptos que DEBEN estar sólidos:**
 - **Cadena de prototipos**: Deben poder rastrear mentalmente la búsqueda de un método

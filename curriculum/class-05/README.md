@@ -11,11 +11,11 @@ También reflexionamos sobre las **limitaciones del enfoque imperativo** en apli
 
 | **Fase**                  | **Duración** | **Descripción**                                                                                     |
 |---------------------------|--------------|-----------------------------------------------------------------------------------------------------|
-| **1. Introducción**       | 15 min       | Activación de conocimientos previos sobre funciones, variables y control de flujo.                  |
-| **2. Debate Conceptual**  | 30 min       | Discusión sobre las ventajas y desventajas del enfoque imperativo.                                  |
-| **3. Demo Técnica**       | 20 min       | Ejemplificación en vivo de funciones imperativas para registrar actividades y calcular el total.    |
-| **4. Laboratorio**        | 100 min      | Implementación práctica del Gestor de Presupuesto Personal con `prompt()`, `console.log()` y arrays.|
-| **5. Cierre**             | 15 min       | Conclusiones, retroalimentación y preparación para la introducción a la programación funcional.     |
+| **1. Introducción**       | 15 min       | Activación de conocimientos previos sobre variables, condicionales y bucles.                        |
+| **2. Debate Conceptual**  | 25 min       | Discusión sobre las ventajas y desventajas del enfoque imperativo.                                  |
+| **3. Demo Técnica**       | 20 min       | Demo en vivo: capturar input con `prompt`, validar con `if`, iterar con `while`, organizar en funciones. |
+| **4. Laboratorio (3 partes)** | 115 min  | P1 Variables + `prompt` (~30 min) · P2 Bucle `while` (~40 min) · P3 Funciones imperativas + reporte (~45 min). |
+| **5. Cierre**             | 15 min       | Reflexión sobre los límites del paradigma imperativo y preparación para programación funcional.     |
 
 
 ## Resultados esperados
@@ -40,11 +40,11 @@ Al concluir la Clase 05, los estudiantes estarán preparados para construir fluj
 
 ### Podrán implementar
 
-1. **Funciones Básicas para Registro y Cálculo**  
-   Crear funciones `registrarActividad()`, `calcularTiempoTotal()` y `mostrarResumen()` que resuelven un flujo inicial de registro y resumen.
-   
-2. **Control de Flujo y Validaciones**  
-   Aplicar condicionales y bucles para gestionar la interacción con el usuario a través de `prompt()` y mostrar resultados con `console.log()`.
+1. **Funciones Básicas para Registro y Cálculo**
+   Crear funciones `registrarMovimiento()`, `calcularTotalSaldo()` y `mostrarResumen()` que resuelven un flujo inicial de registro y resumen.
+
+2. **Control de Flujo y Validaciones**
+   Aplicar condicionales (`if`) y bucles (`while`) para gestionar la interacción con el usuario a través de `prompt()` y mostrar resultados con `console.log()`.
 
 ---
 

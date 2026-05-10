@@ -165,57 +165,83 @@ this.obtenerResumen = function() {
 
 ---
 
-## Parte 3: Sistema Completo y Funcionalidades Avanzadas (~50 min)
+## Parte 3: Captura desde Formulario (~35 min)
 
-> **Objetivo**: Integrar todo en un sistema funcional con características avanzadas
+> **Objetivo:** conectar tu modelo OOP con un formulario HTML real. Primer puente JS↔HTML del curso.
+>
+> ⚠️ El HTML del form viene **pre-armado** en el template del lab. **No modifiques el HTML** — concéntrate en escribir ~5-8 líneas de JS.
 
-#### 3.1. Instanciación y Uso Completo
+### Template HTML pre-armado
 
-Crea una instancia completa del sistema:
+En `index.html` (ya incluido en el repo template del lab), tienes este formulario:
+
+```html
+<form id="form-movimiento">
+  <label for="nombre">Nombre</label>
+  <input type="text" id="nombre" required>
+
+  <label for="tipo">Tipo</label>
+  <select id="tipo" required>
+    <option value="">Selecciona</option>
+    <option value="ingreso">Ingreso</option>
+    <option value="gasto">Gasto</option>
+  </select>
+
+  <label for="valor">Monto</label>
+  <input type="number" id="valor" min="0.01" required>
+
+  <button type="submit">Agregar</button>
+</form>
+
+<ul id="lista-movimientos"></ul>
+<p>Saldo total: <span id="saldo-total">0</span></p>
+```
+
+> 💡 Si reconoces este patrón es porque ya lo viste: forma accesible de C01 + validación nativa de C04.
+
+### Sub-pasos
+
+3.1. En `app.js` (después del constructor `Presupuesto`), selecciona el formulario:
 
 ```javascript
-// Crear presupuesto principal
+const form = document.querySelector('#form-movimiento');
 const miPresupuesto = new Presupuesto();
-
-// Agregar varios movimientos
-miPresupuesto.agregarMovimiento(new Movimiento('Salario', 'ingreso', 3000));
-miPresupuesto.agregarMovimiento(new Movimiento('Freelance', 'ingreso', 500));
-miPresupuesto.agregarMovimiento(new Movimiento('Comida', 'gasto', 200));
-miPresupuesto.agregarMovimiento(new Movimiento('Transporte', 'gasto', 150));
-
-// Verificar funcionalidad
-console.log('Resumen:', miPresupuesto.obtenerResumen());
 ```
 
-#### 3.2. Validación y Métodos Auxiliares
-
-Agrega métodos de validación y utilidad:
+3.2. Escucha el evento `submit` y previene el default del navegador:
 
 ```javascript
-// En constructor Presupuesto, agregar:
-this.eliminarMovimiento = function(indice) {
-  if (indice >= 0 && indice < this.movimientos.length) {
-    return this.movimientos.splice(indice, 1)[0];
-  }
-  return null;
-};
-
-this.buscarMovimiento = function(nombre) {
-  return this.movimientos.find(mov => 
-    mov.nombre.toLowerCase().includes(nombre.toLowerCase())
-  );
-};
-
-this.validarPresupuesto = function() {
-  return this.movimientos.every(mov => mov instanceof Movimiento);
-};
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  // captura aquí (sub-paso 3.3)
+});
 ```
 
-#### 3.3. 🏆 Reto Autónomo (5-10 min)
+> ⚠️ Si olvidas `event.preventDefault()`, el navegador recarga la página y pierdes el estado.
 
-**Desafío**: Implementa `obtenerPromedioGastos()` que calcule el promedio de todos los gastos registrados.
+3.3. Dentro del listener, captura los valores y construye una instancia:
 
-**Pista**: Usa `obtenerTotalGastos()` y divide entre la cantidad de gastos.
+```javascript
+const nombre = document.querySelector('#nombre').value;
+const tipo = document.querySelector('#tipo').value;
+const valor = parseFloat(document.querySelector('#valor').value);
+
+const movimiento = new Movimiento(nombre, tipo, valor);
+miPresupuesto.agregarMovimiento(movimiento);
+
+console.log('Agregado:', movimiento);
+console.log('Estado actual:', miPresupuesto.movimientos);
+
+form.reset(); // limpia el form para el próximo registro
+```
+
+3.4. Abre DevTools (F12 → Console). Llena el form 3 veces (1 ingreso, 2 gastos) y haz submit cada vez. La consola debe mostrar 3 movimientos en el array de `miPresupuesto`.
+
+✅ **Checkpoint visual:** Cada submit del form agrega una instancia al `Presupuesto`. La consola muestra el array `miPresupuesto.movimientos` con todas las instancias creadas. El form se limpia tras cada envío.
+
+🏆 **Reto autónomo:** después de cada submit, actualiza el texto del `<span id="saldo-total">` con `miPresupuesto.obtenerResumen().balance`. Pista: `document.querySelector('#saldo-total').textContent = ...`.
+
+> 📝 **Lo que NO haces aquí:** crear nodos `<li>` dinámicos con `createElement`, manipular jerarquía DOM, render automático tras cada cambio. Eso es M3. Aquí solo capturas input.
 
 ---
 

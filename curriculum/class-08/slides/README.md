@@ -171,6 +171,37 @@ function filtrarIngresos(movimientos) {
 
 ---
 
+## 🌉 Puente sintáctico: de constructora a `class`
+
+Lo que escribiste en P1-P2:
+
+```javascript
+function Movimiento(nombre, tipo, valor) {
+  this.nombre = nombre;
+}
+Movimiento.prototype.formatear = function() {
+  return `${this.nombre}`;
+};
+```
+
+Es **azúcar sintáctica** para:
+
+```javascript
+class Movimiento {
+  constructor(nombre, tipo, valor) {
+    this.nombre = nombre;
+  }
+  formatear() {
+    return `${this.nombre}`;
+  }
+}
+```
+
+- `class` NO es un mecanismo nuevo — JS sigue usando prototipos por debajo.
+- En **M4** vas a usar `class` como sintaxis principal. Ya entiendes qué pasa abajo.
+
+---
+
 ## 💭 Síntesis y Reflexión
 
 * ¿Cuándo usar prototipos vs métodos en constructor?

@@ -14,7 +14,7 @@ En esta clase transformamos nuestro enfoque hacia la programación orientada a o
 | **2. Demo Inicial y Debate Técnico** | 30 min | Funciones constructoras vs funciones regulares + demostración de `this` keyword | 
 | **3. Laboratorio Principal - Parte 1**  | 30 min | Creación de funciones constructoras básicas. Checkpoint: instancias de Movimiento y Presupuesto creadas  |
 | **4. Laboratorio Principal - Parte 2**  | 40 min | Encapsulación de comportamientos en métodos. Reto en vivo + Checkpoint: métodos funcionando correctamente |
-| **5. Laboratorio Principal - Parte 3**  | 50 min | Refactorización completa e integración con DOM. Reto en vivo + Retos autónomos + Checkpoint: aplicación completamente funcional con objetos   |
+| **5. Laboratorio Principal - Parte 3**  | 35 min | **Captura de input desde formulario HTML pre-armado.** El alumno escribe ~5-8 líneas de JS para conectar el form al constructor `Movimiento`. Checkpoint: cada submit del form agrega una instancia al `Presupuesto`. |
 | **6. Síntesis y Cierre**  | 15 min | Consolidación de conceptos OOP + conexión con taller integrador en la próxima clase   |
 
 ## 🎯 Objetivos de aprendizaje
@@ -80,9 +80,11 @@ Después de tu investigación, reflexiona:
 3. **Por qué la encapsulación** mejora la organización y mantenibilidad del código
 
 ### Podrán implementar
-1. **Un sistema de objetos integrado** para manejar movimientos y presupuestos
-2. **Métodos de validación y cálculo** encapsulados dentro de los objetos apropiados
-3. **Una interfaz HTML funcional** que interactúe con el modelo de objetos creado
+1. **Un sistema de objetos integrado** para manejar movimientos y presupuestos.
+2. **Métodos de validación y cálculo** encapsulados dentro de los objetos apropiados.
+3. **Captura de input desde un formulario HTML pre-armado** usando `querySelector('#id').value` + `addEventListener('submit', ...)` + `event.preventDefault()` — primer puente JS↔HTML del curso.
+
+> 📝 **Nota:** En esta clase NO escribes HTML/CSS — el template del form ya viene listo. Solo escribes el JS de captura (~5-8 líneas). DOM completo (createElement, render dinámico, múltiples eventos) se introduce en M3.
 
 ---
 

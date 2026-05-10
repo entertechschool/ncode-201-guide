@@ -200,6 +200,18 @@ Solo responden correctamente si pueden diseñar un constructor `Estudiante` con 
 
 Los conceptos de esta clase son prerrequisito directo para prototipos y herencia. La próxima clase introducirá `Constructor.prototype` para compartir métodos entre instancias, optimizando memoria y creando jerarquías.
 
+### La Parte 3 — Captura desde formulario
+
+Esta P3 reemplaza la "Refactorización avanzada" del lab anterior. Es el **primer puente JS↔HTML del curso**: el alumno aprende `querySelector('#id').value`, `addEventListener('submit', ...)` y `event.preventDefault()` aplicados a un form HTML pre-armado.
+
+**Reglas claves para facilitar:**
+- El HTML del form está pre-armado. **Insiste**: "no modifiques el HTML, solo escribe JS". Si alguien intenta agregar inputs o reorganizar, redirígelo.
+- Solo escriben ~5-8 líneas de JS. Si están escribiendo más, probablemente están reescribiendo lógica que ya tienen en sus constructores.
+- Esta NO es "DOM completo". No introduzcas `createElement`, ni `appendChild`, ni manipulación de `<ul>` dinámica. Eso es M3 C09 y M3 C12. Aquí solo capturan input.
+- Si alguien quiere actualizar la UI tras cada submit, ofrécele el reto autónomo (actualizar `<span id="saldo-total">` con `textContent`). NO el render dinámico de la lista — déjalo para M3.
+
+**Error más común en P3:** olvidar `event.preventDefault()` → el navegador recarga y "se pierde todo". Diagnóstico instantáneo: si el form recarga la página al submit, falta el preventDefault.
+
 **Conceptos que DEBEN estar sólidos:**
 - **Función constructora vs función regular**: Deben distinguir inmediatamente por nomenclatura y uso de `new`
 - **`this` en contexto de constructor**: Sin confusión sobre a qué referencia dentro del constructor

@@ -367,6 +367,50 @@ document.addEventListener('DOMContentLoaded', () => renderizarPresupuesto());
 
 ---
 
+## Cierre — De funciones constructoras a `class` (~10 min)
+
+> Este bloque NO es una nueva parte del lab. Es un **puente sintáctico** hacia la próxima evolución (M4).
+
+Lo que escribiste en P1-P2 con función constructora + prototipos:
+
+```javascript
+function Movimiento(nombre, tipo, valor) {
+  this.nombre = nombre;
+  this.tipo = tipo;
+  this.valor = valor;
+}
+
+Movimiento.prototype.formatear = function() {
+  return `${this.nombre}: $${this.valor}`;
+};
+```
+
+Es **exactamente equivalente** a esta sintaxis moderna con `class`:
+
+```javascript
+class Movimiento {
+  constructor(nombre, tipo, valor) {
+    this.nombre = nombre;
+    this.tipo = tipo;
+    this.valor = valor;
+  }
+
+  formatear() {
+    return `${this.nombre}: $${this.valor}`;
+  }
+}
+```
+
+### Lo que es importante entender:
+
+- `class` NO es un mecanismo nuevo en JavaScript — es **azúcar sintáctica** sobre prototipos. Por debajo, JS sigue usando la cadena de prototipos.
+- Lo que escribes con `class Movimiento { ... }` se traduce internamente a una función constructora + métodos en el prototipo.
+- En M4 vas a usar `class` como sintaxis principal porque es más legible. Pero ya entiendes qué pasa por debajo.
+
+🏆 **Reto opcional (5 min):** Reescribe el constructor `Presupuesto` con sintaxis `class`. Verifica que sigue funcionando con tu UI de Tailwind sin tocar el HTML.
+
+---
+
 ## 🌟 Logros Adicionales
 
 ### Logro 1: Inspector de Prototipos Avanzado
