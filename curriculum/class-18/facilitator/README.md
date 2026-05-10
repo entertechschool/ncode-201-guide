@@ -68,8 +68,9 @@ Facilitador: "Eso es exactamente lo que van a evitar hoy. La app guarda cada cam
 **Script sugerido:**
 ```
 Facilitador: "Voy a mostrar el flujo completo: HTML → CSS → JS → LocalStorage.
-  - HTML: nota cómo uso <section> y <form>, no puros <div>.
-  - CSS: mobile-first, Grid para el layout.
+  - HTML: recuerden el patrón de form accesible de C01 (<label for>, <input required>)
+    y la validación nativa de C04 (type/pattern/minlength). Aquí lo orquestan en producción.
+  - CSS: mobile-first, Grid para el layout. Las :root variables salen del refactor de C04.
   - JS: state único, funciones render, orden Estado→Storage→Render.
 Fíjense cómo cambia el state en la consola cuando agrego una persona."
 ```

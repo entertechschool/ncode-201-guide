@@ -35,7 +35,13 @@
 
 3. **Contenido Base:**
 - Prepara en `index.html` una estructura semántica básica (`header`, `main`, `footer`) con áreas claramente definidas para la barra de herramientas, editor y preview.
-- Revisa la documentación de [TailwindCSS](https://tailwindcss.com/docs/installation/play-cdn){:target="_blank"} para agregar este framework.
+- **Tailwind por Play CDN** (igual que en C08 — recuerda que ya lo viste pasivamente ahí):
+
+```html
+<script src="https://cdn.tailwindcss.com"></script>
+```
+
+   Aquí lo usas **conscientemente**: cada utility class que escribas (`flex`, `p-4`, `bg-white`, `rounded-lg`, etc.) debes saber qué hace. Si tienes dudas, revisa la [documentación de Tailwind](https://tailwindcss.com/docs){:target="_blank"} o vuelve a la tabla del README de la clase.
 
 ## 📋 Historias de Usuario
 

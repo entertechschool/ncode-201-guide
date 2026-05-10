@@ -6,7 +6,7 @@
 
 Después de planificar el proyecto, hoy empiezas a construir. En esta clase levantas la **primera versión funcional** de tu Agenda de Gastos Compartidos: el HTML semántico que estructura la interfaz, el CSS responsivo que la hace usable en cualquier pantalla y el JavaScript que permite **crear un grupo, agregar personas, registrar gastos y verlos listados**. Al cierre de la sesión, tu app no calcula balances todavía, pero ya hace algo real: guarda información y la muestra.
 
-Este es el sprint donde conectas todo lo aprendido en los Módulos 1, 2 y 4: layout con Flexbox o Grid, clases ES6 para modelar un gasto, eventos del DOM para capturar formularios y LocalStorage para que nada se pierda al recargar. No vas a aprender nada conceptualmente nuevo hoy. Vas a **aplicar en conjunto** lo que hasta ahora viste por separado.
+Este es el sprint donde conectas todo lo aprendido en los Módulos 1, 2 y 4: layout con Flexbox o Grid (C02–C03), **formularios accesibles de C01 con validación nativa de C04**, **CSS Variables (`:root`) introducidas en C04**, clases ES6 para modelar un gasto, eventos del DOM para capturar formularios y LocalStorage para que nada se pierda al recargar. No vas a aprender nada conceptualmente nuevo hoy. Vas a **aplicar en conjunto** lo que hasta ahora viste por separado.
 
 El objetivo no es terminar el proyecto, es tener las **HU1 a HU4 funcionando** y un commit pusheado al cierre de la clase. El cálculo de balances y las transferencias llegan en la Clase 19.
 

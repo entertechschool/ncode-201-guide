@@ -226,67 +226,59 @@ Presupuesto.prototype.validarTipos = function() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Presupuesto Personal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">💰 Gestor de Presupuesto</h1>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Agregar Movimiento</h3>
-                        <form id="form-movimiento">
-                            <select id="tipo-movimiento" class="form-select mb-3" required>
-                                <option value="">Seleccionar tipo</option>
-                                <option value="ingreso">Ingreso</option>
-                                <option value="egreso">Egreso</option>
+    <div class="max-w-4xl mx-auto mt-8 px-4">
+        <h1 class="text-center text-2xl font-bold mb-4">💰 Gestor de Presupuesto</h1>
+
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex-1">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-3">Agregar Movimiento</h3>
+                    <form id="form-movimiento">
+                        <select id="tipo-movimiento" class="w-full border border-gray-300 rounded p-2 mb-3" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="ingreso">Ingreso</option>
+                            <option value="egreso">Egreso</option>
+                        </select>
+
+                        <input type="text" id="nombre" class="w-full border border-gray-300 rounded p-2 mb-3" placeholder="Nombre" required>
+                        <input type="number" id="valor" class="w-full border border-gray-300 rounded p-2 mb-3" placeholder="Valor" min="1" required>
+
+                        <div id="campos-ingreso" style="display: none;" class="mb-3">
+                            <select id="fuente" class="w-full border border-gray-300 rounded p-2">
+                                <option value="salario">Salario</option>
+                                <option value="freelance">Freelance</option>
+                                <option value="otros">Otros</option>
                             </select>
-                            
-                            <input type="text" id="nombre" class="form-control mb-3" placeholder="Nombre" required>
-                            <input type="number" id="valor" class="form-control mb-3" placeholder="Valor" min="1" required>
-                            
-                            <div id="campos-ingreso" style="display: none;" class="mb-3">
-                                <select id="fuente" class="form-select">
-                                    <option value="salario">Salario</option>
-                                    <option value="freelance">Freelance</option>
-                                    <option value="otros">Otros</option>
-                                </select>
-                            </div>
-                            
-                            <div id="campos-egreso" style="display: none;" class="mb-3">
-                                <select id="categoria" class="form-select">
-                                    <option value="comida">Comida</option>
-                                    <option value="transporte">Transporte</option>
-                                    <option value="otros">Otros</option>
-                                </select>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100">Agregar</button>
-                        </form>
-                    </div>
+                        </div>
+
+                        <div id="campos-egreso" style="display: none;" class="mb-3">
+                            <select id="categoria" class="w-full border border-gray-300 rounded p-2">
+                                <option value="comida">Comida</option>
+                                <option value="transporte">Transporte</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Agregar</button>
+                    </form>
                 </div>
             </div>
-            
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Resumen</h3>
-                        <div id="resumen-financiero"></div>
-                    </div>
+
+            <div class="flex-1">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-3">Resumen</h3>
+                    <div id="resumen-financiero"></div>
                 </div>
             </div>
         </div>
-        
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Movimientos</h3>
-                        <div id="lista-movimientos"></div>
-                    </div>
-                </div>
+
+        <div class="mt-4">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-3">Movimientos</h3>
+                <div id="lista-movimientos"></div>
             </div>
         </div>
     </div>
@@ -357,7 +349,7 @@ function renderizarPresupuesto() {
     // Lista de movimientos
     const lista = document.getElementById('lista-movimientos');
     lista.innerHTML = miPresupuesto.movimientos
-        .map(m => `<div class="alert ${m instanceof Ingreso ? 'alert-success' : 'alert-danger'}">
+        .map(m => `<div class="${m instanceof Ingreso ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} p-3 rounded mb-2">
                      ${m.formatear()}
                    </div>`)
         .join('');

@@ -1,98 +1,119 @@
-# Clase 04 – Frameworks CSS Modernos
+# Clase 04 – CSS Moderno y Git Workflow
 
 ## 🎯 Objetivo General
 
-Explorar y aplicar frameworks CSS modernos como **Bootstrap** y **Tailwind CSS** para agilizar la creación de interfaces visuales en el proyecto de la Landing Page.
+Consolidar tu base de frontend profesional: **CSS Variables (`:root`)**, **formularios validados con HTML nativo** y un **Git workflow completo** (branch + PR + merge + resolver conflicto).
 
 ---
 
-## 💡 ¿Por qué usar Frameworks CSS?
+## 💡 ¿Por qué estos 3 temas juntos?
 
-* Aceleran el desarrollo usando componentes preconstruidos.
-* Garantizan consistencia visual sin escribir todo desde cero.
-* Permiten enfocarse en estructura y accesibilidad.
+* Las **Variables CSS** te dan consistencia sin agregar librería.
+* La **validación nativa** te ahorra escribir JS para lo más común.
+* El **flujo Git profesional** es lo que cualquier equipo te va a pedir desde el primer día.
 
-> "Los frameworks CSS son como tener una caja de herramientas lista: solo necesitas ensamblar las piezas."
-
----
-
-## 🛠️ Bootstrap vs Tailwind
-
-| Característica       | Bootstrap                    | Tailwind CSS                    |
-| -------------------- | ---------------------------- | ------------------------------- |
-| Estilo               | Prediseñado                  | Altamente personalizable        |
-| Filosofía            | Componentes listos para usar | Utilidades que componen estilos |
-| Curva de aprendizaje | Más suave para principiantes | Requiere conocer muchas clases  |
-| Flexibilidad         | Limitada sin sobrescribir    | Alta, desde el HTML             |
+> "El M1 cierra con las habilidades que vas a usar en cada clase del resto del curso."
 
 ---
 
-## 🔢 Parte 1: Bootstrap y Rama `bootstrap`
+## 🛠️ Variables CSS — el patrón base
 
-### Componente: Tarjeta de Producto
+```css
+:root {
+  --color-primary: #0066cc;
+  --space-md: 1rem;
+  --radius: 8px;
+}
+
+button {
+  background: var(--color-primary);
+  padding: var(--space-md);
+  border-radius: var(--radius);
+}
+```
+
+* Defines los tokens una vez en `:root`.
+* Los aplicas con `var(--token)`.
+* Cambiar UN token actualiza TODO el sitio.
+
+> "Cuando el branding cambia, gracias a las variables, cambia un solo lugar."
+
+---
+
+## 📝 Validación nativa — sin JavaScript
 
 ```html
-<div class="card" style="width: 18rem;">
-  <img src="img/producto.jpg" class="card-img-top" alt="Imagen del producto">
-  <div class="card-body">
-    <h5 class="card-title">Producto Destacado</h5>
-    <p class="card-text">Descripción breve del producto.</p>
-    <a href="#" class="btn btn-primary">Comprar ahora</a>
-  </div>
-</div>
+<input type="email" required minlength="3">
+<input type="tel" pattern="[0-9]{9}" required>
+<select required>
+  <option value="">Selecciona</option>
+  <option value="a">A</option>
+</select>
+<input type="checkbox" required>
 ```
 
-> Tip: Copia componentes desde [getbootstrap.com](https://getbootstrap.com) y adáptalos a tu proyecto.
+* `required` → no puede estar vacío.
+* `type="email"` → debe ser un email válido.
+* `pattern="..."` → debe matchear la regex.
+* `minlength` / `maxlength` → rango de longitud.
+
+> "El navegador valida. Tú no escribes una línea de JS."
 
 ---
 
-## 🔢 Parte 2: Tailwind CSS en la Rama `tailwind`
-
-### Componente: Testimonio
-
-```html
-<div class="bg-white p-6 rounded-lg shadow-md max-w-sm">
-  <h2 class="text-xl font-bold mb-2">Testimonio</h2>
-  <p class="text-gray-700">“Este producto superó mis expectativas.”</p>
-  <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Leer más
-  </button>
-</div>
-```
-
-> Tip: Usa clases como bloques de Lego. La documentación en [tailwindcss.com/docs](https://tailwindcss.com/docs) te muestra todo lo que puedes construir.
-
----
-
-## 📂 Parte 3: Ramas y Pull Requests
-
-1. Sube ambas ramas:
+## 🌳 Git Workflow profesional
 
 ```bash
-git push origin bootstrap
-git push origin tailwind
-```
-
-2. Crea un Pull Request de `bootstrap` a `main`. Revisa, comenta y fusiona.
-
-3. Luego, cambia a `main` y crea un Pull Request desde `tailwind`. Revisa conflictos o solicita ayuda si es necesario.
-
-```bash
+git checkout -b feature/algo
+# ... cambios + commits ...
+git push -u origin feature/algo
+# abrir PR en GitHub → revisar → merge
 git checkout main
-git pull origin main
+git pull
 ```
 
-> Tip: Siempre sincroniza tu rama `main` antes de comenzar una nueva para evitar conflictos más adelante.
+* **Nunca pushees directo a `main`** en proyectos reales.
+* El PR es donde el equipo revisa antes de mergear.
+* Después de merge, sincronizas tu local con `git pull`.
+
+---
+
+## 💥 Merge Conflict — qué hacer
+
+```
+<<<<<<< HEAD
+  background: blue;
+=======
+  background: red;
+>>>>>>> main
+```
+
+1. Lee ambas versiones.
+2. Decide (o combina).
+3. **Elimina los marcadores** `<<<<<<<`, `=======`, `>>>>>>>`.
+4. `git add .` + `git commit -m "merge: resuelve conflicto en ..."`.
+
+> "No es magia. Es elegir entre versiones de líneas."
+
+---
+
+## 🧪 Laboratorio — 5 partes, CALIFICADO
+
+* **P1 — CSS Variables (~20m)**: refactorizar el landing con tokens.
+* **P2 — Formulario validado (~25m)**: `required`, `type`, `pattern`, `<select>`, checkbox.
+* **P3 — Git workflow (~20m)**: branch + commits + push + PR + merge.
+* **P4 — Desafío Merge Conflict (~15m)**: resolver conflicto prefabricado.
+* **P5 — Deploy (~10m)**: GitHub Pages funcional + README actualizado.
 
 ---
 
 ## 🤔 Discusión Final
 
-* ¿Qué diferencias notaste entre Bootstrap y Tailwind?
-* ¿Con cuál te sentiste más cómodo al estilizar?
-* ¿Qué parte del trabajo con ramas en Git te pareció más desafiante?
+* ¿Cuándo Variables CSS reemplazan a un framework completo? ¿Cuándo NO?
+* ¿Qué tipo de validación necesita JS? ¿Cuáles bastan con HTML nativo?
+* ¿Qué pasa si dos personas modifican la misma línea en ramas distintas? ¿Cómo lo resuelves sin perder trabajo?
 
 > **Reflexiones:**
 >
-> * ¿Cuál framework usarías en tu próximo proyecto y por qué?
-> * ¿Qué superpoder visual sentiste que ganaste hoy?
+> * ¿Qué de hoy aplicarás en TODO proyecto futuro?
+> * ¿Qué superpoder profesional sentiste que ganaste?

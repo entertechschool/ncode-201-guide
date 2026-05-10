@@ -1,32 +1,32 @@
-﻿> 📦 **Módulo 1:** Clase 3 de 4  
+> 📦 **Módulo 1:** Clase 3 de 4
 
-# Clase 03: CSS Grid Layout
+# Clase 03: CSS Grid esencial + Flexbox profundo
 
 ## Resumen
-En esta clase profundizamos en el sistema de **CSS Grid Layout**, proporcionando a los estudiantes las herramientas necesarias para diseñar interfaces web de manera más flexible y potente que con enfoques tradicionales. La orientación de la clase es la implementación de layouts complejos y responsivos utilizando Grid en una página del proyecto que iniciaron.
+En esta clase profundizamos en CSS para construir layouts responsivos reales: **Grid esencial** (lo mínimo para reconocerlo y saber cuándo usarlo), **Flexbox profundo** (`flex-wrap`, `flex-basis`, `align-self`) y un **breakpoint verificable en DevTools**. La orientación de la clase es práctica: cada concepto enseñado se aplica en el lab sobre el mismo proyecto de las clases anteriores.
 
 ## Estructura sugerida
 
 | **Fase** | **Duración** | **Descripción** |
 | --- | --- | --- |
-| **1. Introducción y contexto**  | 15 min  | Presentación del objetivo: maquetar páginas con Grid. Revisión rápida del rol de Grid frente a Flexbox. |
-| **2. Parte 1 – Crear nuevas páginas y layout base con Grid** | 40 min  | Creación de `testimonios.html` y `compra.html`, aplicación de `grid-template-areas`, y estructura semántica común. |
-| **3. Parte 2 – Página de Testimonios**   | 40 min  | Implementar tarjetas de testimonios y sidebar con filtros usando Grid. |
-| **4. Parte 3 – Página de Compra y Media Queries** | 60 min  | Maquetar layout de compra y aplicar media queries para responsividad.  |
-| **5. Cierre y Síntesis** | 15 min  | Reflexión final sobre Grid, revisión de retos, validación visual y entrega. |
+| **1. Introducción y contexto**  | 15 min  | Demo: el mismo layout resuelto con Grid y con Flex — cuándo elegir cada uno. |
+| **2. Parte 1 – Grid esencial** | 20 min  | `display: grid; grid-template-columns: repeat(3, 1fr); gap`. Aplicado a `testimonios.html`. |
+| **3. Parte 2 – Flexbox profundo**   | 20 min  | `flex-wrap`, `flex-basis`, `align-self` aplicados a `compra.html`. |
+| **4. Parte 3 – Media query verificable** | 20 min  | Breakpoint a 768px que **cambia el layout**. Verificación obligatoria en DevTools modo responsive con screenshot. |
+| **5. Cierre y Síntesis** | 15 min  | Reflexión sobre cuándo Grid vs Flex, revisión de retos, validación visual y entrega. |
 
 
 ---
 
 ## 📌 Preparación para la clase
 
-> Antes de llegar a clase, piensa en estas preguntas y conversa con tus compañeros o una IA si lo deseas:
+> Antes de llegar a clase, piensa en estas preguntas y conversa con tus compañeros si lo deseas:
 
 #### 🧠 Lista de Mitos y Verdades para Analizar
 1. "CSS Grid reemplaza totalmente la necesidad de Flexbox"
 2. "Grid no es todavía una tecnología estable y confiable para proyectos en producción"
 3. "Usar `display: grid;` garantiza automáticamente que tu sitio sea responsive"
-4. "El uso de Grid Template Areas no aporta un valor real; es solo un ‘alias’ de filas y columnas"
+4. "`flex-basis` y `width` hacen exactamente lo mismo"
 5. "Las propiedades de alineación (justify-content, align-content) no funcionan igual en Grid que en Flexbox"
 6. "Para layouts simples, Grid es demasiado complejo y no vale la pena"
 7. "Combinar Grid y Flexbox en un mismo proyecto genera confusión y no es recomendable"
@@ -35,51 +35,42 @@ En esta clase profundizamos en el sistema de **CSS Grid Layout**, proporcionando
 
 #### 📚 Recursos sugeridos
 
-1. **"Guía Completa de CSS Grid" en CSS-Tricks**  
-   [https://css-tricks.com/snippets/css/complete-guide-grid/](https://css-tricks.com/snippets/css/complete-guide-grid/){:target="_blank"}  
+1. **"Guía Completa de CSS Grid" en CSS-Tricks**
+   [https://css-tricks.com/snippets/css/complete-guide-grid/](https://css-tricks.com/snippets/css/complete-guide-grid/){:target="_blank"}
 
-2. **"Aprendiendo CSS Grid" (MDN Web Docs)**  
-   [https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout){:target="_blank"}  
+2. **"A Complete Guide to Flexbox" (CSS-Tricks)**
+   [https://css-tricks.com/snippets/css/a-guide-to-flexbox/](https://css-tricks.com/snippets/css/a-guide-to-flexbox/){:target="_blank"}
 
-3. **"Layout moderno con CSS Grid" (Blog de CanIUse)**  
-   [https://blog.caniuse.com/layout-modern-css-grid/](https://blog.caniuse.com/layout-modern-css-grid/){:target="_blank"}  
+3. **"Aprendiendo CSS Grid" (MDN Web Docs)**
+   [https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout){:target="_blank"}
 
 ---
 
 ## Resultados esperados
 
-Al concluir la Clase 03, los estudiantes habrán aprendido los fundamentos de **CSS Grid** y sus posibilidades para construir interfaces web modernas y escalables. Concretamente:
+Al concluir la Clase 03, los estudiantes habrán construido layouts responsivos reales combinando lo esencial de Grid con las propiedades profundas de Flexbox.
 
 ### Podrán hacer
-1. **Diseñar Estructuras Complejas con Grid**  
-   Definir contenedores y áreas de grid, controlando filas y columnas de manera precisa y responsive.
-2. **Alinear y Distribuir Contenidos**  
-   Utilizar propiedades de alineación (justify-content, align-content, etc.) para distribuir elementos con coherencia visual.
-3. **Combinar Grid y Flexbox**  
-   Detectar cuándo es mejor usar Grid frente a Flexbox y, si aplica, combinar ambas herramientas para distintos componentes de la misma página.
+1. **Aplicar Grid esencial**: `display: grid; grid-template-columns: repeat(N, 1fr); gap` sobre tarjetas.
+2. **Profundizar en Flexbox**: usar `flex-wrap`, `flex-basis` y `align-self` con propósito.
+3. **Verificar responsividad real**: configurar un breakpoint y probarlo en DevTools modo responsive.
 
 ### Podrán explicar
-1. **La Diferencia entre Grid y Otras Técnicas**  
-   Podrán comparar Grid con Flexbox, positioning o floats, argumentando la pertinencia de cada método.
-2. **La Sintaxis de Grid (Track Sizing, Gaps, Grid Template)**  
-   Comprenderán cada sección de la declaración de grid, explicando cómo las propiedades se relacionan entre sí.
-3. **Casos Prácticos Relevantes**  
-   Justificarán cómo resolver layouts comunes (como galerías de fotos, dashboards o secciones editorializadas) usando Grid.
+1. **Cuándo usar Grid vs Flexbox**: Grid para layouts 2D (filas y columnas controladas a la vez); Flex para layouts 1D (una sola dirección).
+2. **Qué hace cada propiedad de Flex**: `flex-wrap` permite saltos de línea; `flex-basis` define tamaño base; `align-self` sobreescribe alineación para un ítem.
+3. **Por qué los breakpoints siguen siendo necesarios**: ni Grid ni Flex resuelven solos todos los casos responsivos.
 
 ### Podrán implementar
-1. **Layouts Responsivos con CSS Grid**  
-   Aplicar `grid-template-columns`, `grid-template-rows`, `grid-gap` y media queries para lograr diseños adaptables.
-2. **Grid Template Areas**  
-   Asignar nombres a las áreas del grid y ubicar contenidos con mayor claridad, manteniendo un código más legible.
-3. **Uso Apropiado de Herramientas de IA**  
-   Generar prompts para obtener ejemplos de layouts, validando y ajustando manualmente el código que la IA sugiera.
+1. **Layout 2D con Grid esencial**: una grilla de tarjetas con `repeat(N, 1fr)` y `gap`.
+2. **Layout 1D con Flex profundo**: una sección con elementos de tamaños distintos que envuelven y se alinean individualmente.
+3. **Responsividad verificable**: breakpoint en 768px, screenshot del antes/después en DevTools.
 
 ## Glosario de Nuevos Términos
 
 - **Grid Container**: Elemento padre que establece el contexto de grid en sus elementos hijos.
 - **Grid Item**: Cada elemento hijo directo dentro de un contenedor de grid.
-- **Grid Track**: Las filas (rows) y columnas (columns) dentro de un contenedor de grid.
-- **Grid Template Areas**: Forma de nombrar áreas específicas del grid, facilitando la lectura y mantenibilidad.
 - **Fraction (fr) Unit**: Unidad de Grid que representa una fracción del espacio disponible en el contenedor.
-- **Implicit vs. Explicit Grid**: Diferenciación entre las celdas definidas en la declaración de grid y las filas/columnas que se crean automáticamente.
-- **Auto-Placement**: Mecanismo de CSS Grid para ubicar items automáticamente según la configuración declarada.
+- **`flex-wrap`**: Permite que los ítems flex envuelvan a múltiples líneas cuando no caben.
+- **`flex-basis`**: Tamaño base sugerido del ítem antes de aplicar `flex-grow`/`flex-shrink`.
+- **`align-self`**: Sobreescribe `align-items` del contenedor para un ítem específico.
+- **DevTools responsive mode**: Vista del navegador (F12 → icono móvil) que simula distintos tamaños de pantalla.

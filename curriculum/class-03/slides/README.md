@@ -1,121 +1,96 @@
-# Clase 03 – CSS Grid Layout
+# Clase 03 – CSS Grid esencial + Flexbox profundo
 
 ## 🎯 Objetivo General
 
-Diseñar y maquetar páginas web responsivas utilizando **CSS Grid**, organizando áreas como navbar, sidebar y contenido principal de forma semántica y accesible.
+Construir layouts responsivos reales combinando **Grid esencial** (lo mínimo para reconocerlo) y **Flexbox profundo** (`flex-wrap`, `flex-basis`, `align-self`), verificados con un breakpoint en DevTools.
 
 ---
 
-## 💡 ¿Por qué aprender Grid?
+## 💡 ¿Cuándo usar Grid vs Flex?
 
-* CSS Grid permite organizar contenido en **dos dimensiones**: filas y columnas.
-* Ideal para layouts complejos como "sidebar + contenido".
-* Facilita la estructura semántica sin depender de «divs flotantes» o hacks de CSS.
+* **Grid** → layouts **2D**: filas y columnas controladas simultáneamente. Grilla de tarjetas, dashboards.
+* **Flex** → layouts **1D**: una sola dirección. Navbars, listas horizontales, cards individuales.
 
-> "Grid es como una hoja cuadriculada invisible donde ubicas cada pieza del sitio."
-
----
-
-## 🧐 ¿Qué es CSS Grid?
-
-* Es un sistema de layout bidimensional que se aplica a un contenedor.
-* Define **áreas**, **columnas** y **filas** con nombres y proporciones.
-* Los elementos hijos se ubican con `grid-area` o posiciones explícitas.
-
-> "Le das al contenedor las reglas del juego, y a los hijos su lugar en el tablero."
+> "El mismo layout puede resolverse con ambas. Elige la que comunique mejor tu intención."
 
 ---
 
-## Ejemplo de un layour con Grid
+## 🧬 Parte 1: Grid esencial
 
-![wireframe_grid](./wireframe.png)
-
----
-
-## 🔧 Propiedades Clave del Contenedor Grid
+### Lo mínimo que necesitas saber:
 
 ```css
-body {
+.testimonios {
   display: grid;
-  grid-template-areas:
-    "header header"
-    "nav nav"
-    "sidebar main"
-    "footer footer";
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 ```
 
-* `display: grid`: activa el modelo de grilla.
-* `grid-template-areas`: define el mapa visual del layout.
-* `grid-template-columns`: proporción de columnas.
-* `gap`: espacio entre celdas.
+* `display: grid` activa el modelo.
+* `grid-template-columns: repeat(N, 1fr)` define N columnas iguales.
+* `gap` separa filas y columnas.
 
----
-
-## 🧬 Parte 1: Crear Nuevas Páginas y Layout Base
-
-### Archivos:
-
-* `testimonios.html`
-* `compra.html`
-
-> 🔹 **Tip**: Usa `grid-template-areas` para mantener el layout organizado y legible.
+> 🔹 **Tip**: con esto resuelves el 80% de los casos. Las áreas nombradas y `auto-fit` son útiles pero se pueden explorar después.
 
 ### Reto:
 
-Aplica este layout también a `index.html` para uniformizar el sitio completo.
+Aplica este patrón a una grilla de 6 tarjetas de testimonios.
 
 ---
 
-## 🤠 Parte 2: Layout de Testimonios
+## 🤠 Parte 2: Flexbox profundo
 
-### Objetivo:
-
-Organizar testimonios en tarjetas dentro del `main`, con sidebar de filtros y navbar superior.
+### Propiedades clave de los hijos:
 
 ```css
-main {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.compra {
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
+.producto { flex-basis: 400px; flex-grow: 1; }
+.resumen { flex-basis: 250px; align-self: flex-start; }
+.extras { flex-basis: 100%; }
 ```
 
-> 🔹 **Tip**: Usa `gap` en vez de `margin` para separar tarjetas.
+* **`flex-wrap: wrap`**: permite que los ítems bajen de línea si no caben.
+* **`flex-basis`**: tamaño base sugerido del ítem (antes de crecer/encogerse).
+* **`align-self`**: sobreescribe `align-items` del contenedor para ESTE ítem específico.
+
+> "`align-self` es tu salida de emergencia cuando un ítem necesita comportarse distinto al resto."
 
 ### Reto:
 
-Crea una sección "Filtrar por categoría" en el sidebar usando listas accesibles.
+En `compra.html`, hacer que `.resumen` se alinee arriba aunque los otros se estiren.
 
 ---
 
-## 🔮 Parte 3: Compra + Grid Responsivo
+## 🔮 Parte 3: Media query verificable
 
 ### Objetivo:
 
-Diseñar la página de compra y adaptarla para móviles con media queries.
+Configurar un breakpoint que **cambia el layout** y validarlo en **DevTools modo responsive**.
 
 ```css
 @media (max-width: 768px) {
-  body {
-    grid-template-areas:
-      "header"
-      "nav"
-      "main"
-      "sidebar"
-      "footer";
-    grid-template-columns: 1fr;
-  }
+  .testimonios { grid-template-columns: 1fr; }
+  .compra { flex-direction: column; }
 }
 ```
 
-> 🔹 **Tip**: Usa media queries para mantener accesibilidad y claridad en pantallas pequeñas.
+### Cómo verificar:
+
+1. F12 → DevTools → ícono de dispositivo móvil (o `Ctrl+Shift+M`).
+2. Arrastra el ancho del viewport por debajo de 768px.
+3. El layout debe cambiar visiblemente.
+4. **Toma screenshot del antes/después** y súbelo al README.
+
+> 🔹 **Tip**: si tu layout no cambia, abre DevTools → Elements y verifica que el `@media` aparezca en el panel de Styles del elemento.
 
 ### Reto:
 
-Agrega un botón de "Comprar por WhatsApp" con mensaje predeterminado.
+Agregar un segundo breakpoint a 1024px que pase a 4 columnas.
 
 ---
 
@@ -124,15 +99,18 @@ Agrega un botón de "Comprar por WhatsApp" con mensaje predeterminado.
 ### WhatsApp con mensaje dinámico
 
 * Enlace que abre WhatsApp con mensaje prellenado.
-* Se puede personalizar según opciones elegidas por el usuario.
+
+### Explorar Grid avanzado
+
+* `grid-template-areas`, `auto-fit` con `minmax()` — útil cuando lo necesites en M5.
 
 ---
 
 ## 🤔 Discusión Final
 
-* ¿Cuándo es mejor usar Grid vs. Flexbox?
-* ¿Cuál fue el mayor reto al construir un layout real con Grid?
-* ¿Tuviste que adaptar el HTML para que el Grid funcione bien?
+* ¿En qué caso te resultaría más natural Grid? ¿En cuál Flex?
+* ¿Tu media query realmente cambió el layout o solo movió cosas?
+* ¿Qué propiedad de Flex profundo te resultó más útil hoy?
 
 > **Reflexiones:**
 >

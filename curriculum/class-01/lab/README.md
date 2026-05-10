@@ -1,18 +1,19 @@
-# Laboratorio 01: HTML5 Semántico y Accesibilidad
+# Laboratorio 01: HTML5 Semántico, Accesibilidad y Formularios
 
-¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, vamos a construir la base de tu sitio web usando HTML5 semántico y buenas prácticas de accesibilidad. Además, aprenderás a usar la IA como apoyo para tomar mejores decisiones de estructura.
+¡Bienvenido al primer laboratorio de la Landing Page de tu **producto**! En este paso inicial, vamos a construir la base de tu sitio web usando HTML5 semántico, buenas prácticas de accesibilidad y un formulario de contacto correctamente etiquetado.
 
 ### 🎯 Objetivos de Aprendizaje
 
 * Construir una estructura semántica con etiquetas correctas.
 * Aplicar principios básicos de accesibilidad.
-* Usar la IA para proponer y evaluar estructuras HTML.
+* Construir un formulario de contacto accesible con `<form>`, `<label for>` e `<input>`.
+* Verificar la navegación por teclado de la landing.
 
 ### 🔑 Conceptos Clave
 
 * **Etiquetas semánticas**: `<header>`, `<main>`, `<nav>`, `<section>`, `<footer>` y su función en la estructura de la página.
 * **Accesibilidad (A11y)**: Texto alternativo, jerarquía de encabezados, roles ARIA.
-* **IA responsable**: Validar sugerencias de herramientas como ChatGPT.
+* **Formularios accesibles**: `<form>`, `<label for>`, `<input type>`, `<button type="submit">`, asociación `label↔input` vía `for/id`.
 
 ## Parte 1 – Crear estructura base del proyecto
 
@@ -114,19 +115,53 @@ product-landing-page/
 
 ---
 
-## Parte 4 – Prompt con IA
+## Parte 4 – Formulario de contacto accesible
 
-1. Escribe un prompt para pedir ayuda a la IA:
+Vas a agregar a tu landing un **formulario de contacto** real. Es la primera aplicación práctica de A11y: los lectores de pantalla anuncian cada campo solo si está correctamente etiquetado.
 
+1. Antes del `<footer>`, agrega una nueva sección con un formulario:
+
+```html
+<section id="contacto">
+  <h2>Contáctanos</h2>
+  <form>
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre">
+
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" name="email">
+
+    <label for="mensaje">Mensaje</label>
+    <input type="text" id="mensaje" name="mensaje">
+
+    <button type="submit">Enviar</button>
+  </form>
+</section>
 ```
-“Quiero hacer una landing page con HTML5 semántico y accesible. ¿Puedes sugerirme una estructura base?”
-```
 
-2. Evalúa la respuesta: ¿usa etiquetas semánticas?, ¿cumple con accesibilidad?
-3. Aplica solo lo que consideres correcto, justificando tus elecciones en el README.
+2. **Regla de oro:** cada `<input>` tiene un `id` único y cada `<label>` apunta a ese `id` con `for`. Sin esa asociación, el lector de pantalla no anuncia el campo.
+
+3. Verifica:
+   - Al hacer clic en el texto del `<label>`, el cursor salta al `<input>` correspondiente (eso confirma que `for/id` están bien).
+   - El `<button>` tiene `type="submit"` explícito.
+
+> 💡 **Tip:** El atributo `placeholder` NO reemplaza al `<label>`. El placeholder desaparece al escribir; el label sigue ahí para el lector de pantalla.
 
 🏆 **Reto autónomo:**
-- Crea un segundo prompt para que la IA te sugiera cómo organizar mejor las secciones de tu landing page. Compara con tu estructura.
+- Agrega un campo `<select>` para "Motivo del contacto" con opciones (Consulta, Reclamo, Sugerencia). No olvides su `<label for>`.
+
+---
+
+## ✅ Checkpoint A11y verificable — Navegación por teclado
+
+> **Tiempo estimado: 5 minutos**
+
+1. **Cierra el mouse** y trata de navegar tu landing solo con la tecla `Tab`.
+2. El orden de foco debe ser lógico: logo → menú → CTA → secciones de contenido → campos del formulario → botón enviar.
+3. En cada paso, debes **ver visualmente** qué elemento está enfocado (el navegador dibuja un contorno).
+4. Toma un **screenshot** mostrando el foco visible en al menos 3 elementos distintos (incluyendo al menos un campo del form).
+
+✅ **Listo cuando:** el screenshot muestra navegación por teclado funcional, el orden es lógico y los `<label>` están bien asociados.
 
 ---
 
@@ -146,17 +181,18 @@ product-landing-page/
 
 ## 📝 Instrucciones de Entrega
 
-* README con explicación de estructura semántica y uso de IA.
+* README con explicación de estructura semántica y formulario accesible.
 * Activar GitHub Pages.
 * Entregar:
   * URL del repositorio
   * URL de GitHub Pages
+  * Screenshot del checkpoint Tab nav
 
 ---
 
 ## 💡 Tips finales
 
-* Valida tu HTML en [W3C Validator](https://validator.w3.org/)
-* Revisa el contraste en [Contrast Checker](https://webaim.org/resources/contrastchecker/)
+* Valida tu HTML en [W3C Validator](https://validator.w3.org/){:target="_blank"}
+* Revisa el contraste en [Contrast Checker](https://webaim.org/resources/contrastchecker/){:target="_blank"}
 * Prueba tu página con lector de pantalla (VoiceOver, NVDA, ChromeVox)
-* Usa la IA como apoyo, no como reemplazo
+* Cada `<input>` necesita su `<label for>`. Sin excepciones.

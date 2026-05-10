@@ -37,6 +37,8 @@ Continuación del Lab 17. Verifica:
 
 Reemplaza el placeholder "En construcción…" por la estructura base. Nota los comentarios: esos son los **gaps** que debes completar.
 
+> 💡 **Recordatorio:** El patrón `<form>` + `<label for>` + `<input required>` lo viste en C01 (forms accesibles) y lo validaste con `type/pattern/minlength` en C04. Aquí lo orquestas en una app real.
+
 ```html
 <body>
   <header>
@@ -84,6 +86,8 @@ Reemplaza el placeholder "En construcción…" por la estructura base. Nota los 
 ### 1.2 Estilos base en `css/styles.css`
 
 Aplica un layout responsivo. Recomendación: mobile-first con Flexbox o Grid.
+
+> 💡 **Recordatorio:** Las **CSS Variables** (`:root { --primary }`) son el patrón que refactorizaste en C04. Aquí defines las del proyecto.
 
 ```css
 /* Variables de tema */

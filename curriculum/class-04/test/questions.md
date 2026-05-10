@@ -2,7 +2,7 @@
 
 > ⚠️ **Documento para facilitadores** - Contiene respuestas y retroalimentación
 
-**8 preguntas diagnósticas**
+**10 preguntas diagnósticas**
 
 ---
 
@@ -128,11 +128,63 @@ Un equipo trabaja en un proyecto web. Un desarrollador quiere implementar una nu
 
 ---
 
-## Pregunta 8 (Autoevaluación)
+## Pregunta 8 (Aplicación — CSS Variables y Forms validados)
 
 ### Pregunta 8
 
-Después de completar este módulo, ¿cómo describirías tu nivel de confianza para estructurar y estilizar una página web usando HTML semántico, Flexbox, Grid y un framework CSS?
+Un desarrollador escribe el siguiente CSS:
+
+```css
+:root {
+  --color-primary: #0066cc;
+}
+
+.btn {
+  background: var(--color-primary);
+}
+```
+
+¿Qué pasa si cambia el valor de `--color-primary` a `#ff0000`?
+
+- A) Nada — las variables CSS no se aplican retroactivamente
+- B) Todos los elementos que usan `var(--color-primary)` cambian a rojo automáticamente
+- C) Hay que hacer un refresh completo del navegador para que aplique
+- D) Hay que reescribir cada regla CSS individualmente
+
+> Respuesta: B
+
+> **Retroalimentación:** Las CSS Custom Properties son **dinámicas**: cambiar el valor en `:root` actualiza todos los lugares donde se usa `var(--token)`. Esa es exactamente la razón para definirlas. A es incorrecta — las variables CSS sí se aplican retroactivamente al recalcular estilos. C no aplica (es un cambio de código, no de runtime). D contradice el propósito de las variables.
+
+---
+
+## Pregunta 9 (Aplicación — Validación nativa)
+
+### Pregunta 9
+
+Un formulario contiene este input:
+
+```html
+<input type="email" id="correo" required minlength="5">
+```
+
+Si el usuario intenta enviar el form con el valor `abc` en este campo, ¿qué hace el navegador?
+
+- A) Acepta el envío porque tiene texto
+- B) Bloquea el envío y muestra un error nativo porque no es un email válido
+- C) Acepta el envío pero marca el campo en rojo
+- D) Solo bloquea si hay JavaScript validando
+
+> Respuesta: B
+
+> **Retroalimentación:** `type="email"` activa validación nativa del navegador, que verifica formato de email (debe contener `@` y un dominio). Como `abc` no cumple, el navegador bloquea el submit y muestra un mensaje nativo. `required` también haría falla si estuviera vacío. A es incorrecta: tener texto no basta si el tipo es email. C es incorrecta: el navegador BLOQUEA el envío, no solo lo marca. D es incorrecta: la validación nativa funciona sin JavaScript.
+
+---
+
+## Pregunta 10 (Autoevaluación)
+
+### Pregunta 10
+
+Después de completar este módulo, ¿cómo describirías tu nivel de confianza para estructurar y estilizar una página web usando HTML semántico, Flexbox profundo, Grid esencial, CSS Variables, formularios validados y Git workflow?
 
 - A) Muy seguro/a - podría hacerlo sin ayuda
 - B) Bastante seguro/a - con algo de referencia

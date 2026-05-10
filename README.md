@@ -22,14 +22,14 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
 ### Módulo 1 — Fundamentos de la Web Moderna
 > **Proyecto Integrador:** Product Landing Page
 
-1. HTML5 Semántico y Accesibilidad
-    - Estructura semántica con etiquetas HTML5 y buenas prácticas de accesibilidad.
+1. HTML5 Semántico, Accesibilidad y Formularios
+    - Estructura semántica con etiquetas HTML5, buenas prácticas de accesibilidad y formularios accesibles (`<form>`, `<label for>`, `<input>`).
 2. CSS Layout con Flexbox
-    - Fundamentos de `Flexbox` y construcción de layouts responsivos.
-3. CSS Grid Layout
-    - Diseño de grillas con `CSS Grid` y combinación con Flexbox.
-4. Frameworks CSS Modernos
-    - Uso de frameworks utilitarios (Tailwind CSS) aplicados al proyecto.
+    - Fundamentos de `Flexbox` (incluyendo `flex-grow`) y construcción de layouts responsivos verificables.
+3. CSS Grid Esencial y Flexbox Profundo
+    - Grid esencial con `grid-template-columns`, refuerzo de Flexbox (`flex-basis`, `align-self`) y responsividad con media queries.
+4. CSS Moderno y Git Workflow
+    - CSS Variables (`:root { --token }`), formularios validados con HTML nativo (`required`, `type`, `pattern`), branches, Pull Requests y resolución de conflictos.
 
 ### Módulo 2 — Fundamentos de Programación
 > **Proyecto Integrador:** Gestor de Presupuesto Personal

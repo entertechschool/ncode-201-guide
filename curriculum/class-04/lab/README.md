@@ -1,126 +1,257 @@
-# Laboratorio 04: Frameworks CSS Modernos
+# Laboratorio 04: CSS Moderno y Git Workflow
 
-En este laboratorio integrarás **Bootstrap** y **Tailwind CSS** en tu Product Landing Page, aprendiendo a usar componentes y utilidades predefinidas para agilizar tu desarrollo.
+> **Lab CALIFICADO** — última clase del Módulo 1. 5 partes, ~90 min en clase + post-clase si la P4 (Merge Conflict) no alcanza.
+
+En este laboratorio consolidas tres habilidades profesionales: refactorizar tu landing con **CSS Variables**, agregar **validación nativa** al formulario de C01 y aplicar un **flujo Git profesional** completo, incluyendo la resolución de un conflicto.
+
+---
 
 ### 🎯 Objetivos de Aprendizaje
 
-* Integrar frameworks CSS modernos para estilizar interfaces.
-* Aplicar componentes y clases de utilidad.
-* Utilizar ramas de Git para organizar el trabajo.
+* Refactorizar el CSS del landing usando Custom Properties (`:root { --token }`).
+* Validar el formulario con HTML nativo (`required`, `type`, `pattern`, `<select>`, `<input type="checkbox">`).
+* Aplicar el flujo Git completo: branch → commits → push → PR → merge → resolver conflicto.
 
 ### 🔑 Conceptos Clave
 
-* **Component Class:** Componentes preconstruidos como botones, tarjetas y menús, que aceleran la maquetación.
-* **Utility Class:** Clases específicas que permiten aplicar estilos directamente desde HTML.
-* **Rama (Branch):** Línea de desarrollo paralela en Git para trabajar sin afectar la versión principal.
+* **CSS Custom Properties:** `:root { --color-primary }` + `color: var(--color-primary)`. Tokens centralizados.
+* **Validación nativa HTML:** el navegador valida sin JS si el form tiene `required`/`type`/`pattern`.
+* **Git workflow:** `git checkout -b`, `git commit`, `git push -u origin <rama>`, Pull Request en GitHub, merge a `main`.
+* **Merge conflict:** identificar marcadores `<<<<<<<`, `=======`, `>>>>>>>` y elegir la versión correcta antes de commitear.
 
 ---
 
-## Parte 1 – Ramas y Setup de Bootstrap
+## Parte 1 – CSS Variables (~20 min)
 
-> Requisitos previos: Tener el repositorio base actualizado.
+> **Requisitos previos:** Tener tu landing de C01–C03 con su CSS. Hay reglas que repiten colores y espacios — vamos a centralizar.
 
-1. Crea y cámbiate a una rama nueva:
+1. En `styles.css`, antes de tus reglas, define los tokens:
 
-```bash
-git checkout -b bootstrap
+```css
+:root {
+  --color-primary: #0066cc;
+  --color-text: #1a1a1a;
+  --color-bg: #f5f5f5;
+  --color-danger: #cc0000;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --font-base: system-ui, sans-serif;
+  --radius: 8px;
+}
 ```
 
-2. Abre `compra.html` y enlaza Bootstrap desde CDN:
+2. Refactoriza al menos **5 reglas** del CSS existente para usar `var(--token)` en vez de valores hardcoded:
+
+```css
+body {
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+button, .btn {
+  background: var(--color-primary);
+  color: white;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+}
+
+.card {
+  padding: var(--space-md);
+  border-radius: var(--radius);
+}
+```
+
+3. Verifica visualmente: el sitio se ve **idéntico** que antes. Las variables son refactoring, no rediseño.
+
+✅ **Checkpoint:** abres el sitio, se ve igual que antes pero tu CSS tiene `:root` con al menos 6 tokens y los aplicas con `var()` en al menos 5 reglas.
+
+🏆 **Reto autónomo:** cambia `--color-primary` a otro color y observa cómo TODOS los botones cambian a la vez. Eso es el poder de las variables.
+
+---
+
+## Parte 2 – Formulario validado (~25 min)
+
+> Sobre el formulario de contacto que construiste en C01, agregas **validación nativa**.
+
+1. Modifica los inputs existentes y agrega 2 nuevos:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<form id="formContacto">
+  <label for="nombre">Nombre (mín. 3 caracteres)</label>
+  <input type="text" id="nombre" name="nombre" required minlength="3">
+
+  <label for="email">Correo electrónico</label>
+  <input type="email" id="email" name="email" required>
+
+  <label for="telefono">Teléfono (9 dígitos)</label>
+  <input type="tel" id="telefono" name="telefono" pattern="[0-9]{9}" required>
+
+  <label for="motivo">Motivo del contacto</label>
+  <select id="motivo" name="motivo" required>
+    <option value="">Selecciona un motivo</option>
+    <option value="consulta">Consulta</option>
+    <option value="reclamo">Reclamo</option>
+    <option value="sugerencia">Sugerencia</option>
+  </select>
+
+  <label>
+    <input type="checkbox" id="acepto" name="acepto" required>
+    Acepto los términos y condiciones
+  </label>
+
+  <button type="submit">Enviar</button>
+</form>
 ```
 
-3. Reestructura el layout usando clases de Bootstrap (`container`, `row`, `col`, `card`, `btn`, etc.).
+2. Verifica los **3 escenarios** de validación nativa:
+   - Submit con el form vacío → el navegador bloquea el envío y muestra el error en el primer campo `required`.
+   - Email mal formado (ej. `abc`) → el navegador rechaza con "Por favor, incluye '@'".
+   - Teléfono con letras o menos de 9 dígitos → el `pattern` rechaza.
 
-> Tip: Usa los componentes oficiales de Bootstrap desde [getbootstrap.com](https://getbootstrap.com).
+3. Solo cuando TODOS los campos son válidos, el navegador permite el submit.
 
-🏆 **Reto autónomo:**
+✅ **Checkpoint:** intenta enviar el form vacío → ves el error nativo. Llénalo con datos válidos → el submit pasa. NO escribiste una sola línea de JavaScript para esto.
 
-* Personaliza los colores del botón principal adaptándolo al branding del producto mediante variables de Bootstrap.
+🏆 **Reto autónomo:** agrega un `<input type="date">` y observa que el navegador renderiza un calendario nativo. Eso también es validación nativa.
 
 ---
 
-## Parte 2 – Tailwind CSS en Landing Page y Testimonios
+## Parte 3 – Git workflow (~20 min)
 
-1. Asegúrate de estar en la rama `main` antes de crear la nueva rama:
+> Hasta ahora trabajaste directo en `main`. Hoy aplicas el flujo profesional.
+
+1. Asegúrate que tu trabajo de P1 y P2 está commiteado en `main` (commits separados):
+
+```bash
+git status
+git add styles.css
+git commit -m "refactor: extrae tokens de color y espacio a :root"
+
+git add index.html
+git commit -m "feat: agrega validación nativa al formulario de contacto"
+```
+
+2. Ahora crea una rama nueva para una mejora adicional:
+
+```bash
+git checkout -b feature/contacto-validado
+```
+
+3. En esa rama, agrega un mensaje de éxito al form (texto debajo del botón submit, oculto por defecto) y un commit:
+
+```bash
+git add index.html
+git commit -m "feat: agrega mensaje de confirmación al envío del form"
+```
+
+4. Push de la rama:
+
+```bash
+git push -u origin feature/contacto-validado
+```
+
+5. En GitHub, abre un **Pull Request** desde `feature/contacto-validado` hacia `main`. Lee el diff. Mergea.
+
+6. Vuelve a tu local, sincroniza:
 
 ```bash
 git checkout main
 git pull
 ```
 
-2. Luego crea y cámbiate a la rama:
-
-```bash
-git checkout -b tailwind
-```
-
-3. Configura Tailwind CSS (usando CDN o instalación simple):
-
-```html
-<script src="https://cdn.tailwindcss.com"></script>
-```
-
-4. Aplica clases utilitarias en `index.html` y `testimonios.html` para organizar y estilizar la página.
-
-> Tip: Usa la documentación oficial [tailwindcss.com/docs](https://tailwindcss.com/docs) para copiar clases rápidas.
-
-🏆 **Reto autónomo:**
-
-* Aplica una animación sutil en los botones de la sección “Características” y en las tarjetas de testimonios.
+✅ **Checkpoint:** tu GitHub muestra el PR mergeado. Tu `main` local tiene el commit del PR.
 
 ---
 
-## Parte 3 – Fusión de ramas y Pull Request
+## Parte 4 – Desafío: Merge Conflict (~15 min)
 
-1. Sube ambas ramas al repositorio remoto:
+> ⚠️ Para esta parte tu facilitador te dará un **repo template con un conflicto prefabricado** entre dos ramas. Sigue las instrucciones.
 
-```bash
-git push origin bootstrap
-git push origin tailwind
+1. Clona el repo template y haz checkout a la rama `featA`. Lee el CSS actual.
+2. Cámbiate a `main` y haz `git merge featB`. Git aplicará los cambios sin conflicto.
+3. Cámbiate a `featA` y haz `git merge main`. Aquí aparece el **conflicto**.
+4. Abre el archivo conflictuado. Verás:
+
+```css
+.btn {
+<<<<<<< HEAD
+  background: blue;
+=======
+  background: red;
+>>>>>>> main
+  padding: 1rem;
+}
 ```
 
-2. En GitHub, crea un Pull Request desde `bootstrap` hacia `main`.
+5. **Resuelve el conflicto manualmente**: elimina los marcadores y elige (o combina) la versión correcta. Ejemplo de resolución:
 
-   * Revísalo, valida los cambios y haz el merge.
-
-3. Luego cambia a `main`, actualízala y crea otro Pull Request desde `tailwind`:
-
-```bash
-git checkout main
-git pull origin main
+```css
+.btn {
+  background: var(--color-primary);
+  padding: 1rem;
+}
 ```
 
-4. Resuelve cualquier conflicto si aparece, o pide apoyo a tu instructor para completar la fusión.
+6. Commit de la resolución:
 
-> Tip: Siempre actualiza tu rama `main` antes de fusionar nuevas ramas para evitar sobrescribir cambios.
+```bash
+git add .
+git commit -m "merge: resuelve conflicto en .btn (usa variable CSS)"
+```
 
-🏆 **Reto autónomo:**
+✅ **Checkpoint:** `git log --oneline` muestra el commit de merge. El archivo ya no tiene marcadores `<<<<<<<`.
 
-* Crea una nueva rama `landing-v2` desde `main` e implementa una mejora visual que hayas aprendido, como reorganizar secciones con clases utilitarias nuevas.
+> Si esta parte la haces post-clase, **pide al facilitador el link al repo template** antes de irte.
 
 ---
 
-## ⭐ Logros Adicionales
+## Parte 5 – Deploy (~10 min)
 
-### 🏆 Logro 1: Personalización de Bootstrap
+1. Verifica que `main` tenga todo tu trabajo: P1 (variables), P2 (form validado), P3 (commit del PR).
 
-* Cambia colores y tipografía mediante variables CSS.
+2. Push final:
 
-### 🏆 Logro 2: Microinteracciones con Tailwind
+```bash
+git push origin main
+```
 
-* Usa `transition`, `hover`, `ease-in-out`, etc., para enriquecer botones y tarjetas.
+3. Abre GitHub Pages (Settings → Pages → branch `main`) y verifica que tu sitio se publica.
+
+4. Agrega al `README.md` del repositorio:
+   - URL del repo
+   - URL del sitio en GitHub Pages
+   - Tabla con los tokens CSS que definiste
+   - Lista de validaciones nativas aplicadas
+
+✅ **Checkpoint:** tu URL pública muestra el sitio funcionando con form validado y variables aplicadas.
 
 ---
 
-## 📝 Instrucciones de Entrega
+## 📝 Entrega (Lab CALIFICADO)
 
-* Actualiza el README incluyendo:
-  * Qué framework te resultó más cómodo y por qué.
-  * Comandos usados para trabajar con ramas.
-* Publica el proyecto actualizado en GitHub Pages.
-* Entrega:
-  * URL del repositorio
-  * URL del despliegue en GitHub Pages
+| Entregable | Dónde |
+|---|---|
+| URL del repositorio | Canvas |
+| URL de GitHub Pages funcional | Canvas |
+| Screenshot del PR mergeado | Canvas |
+| Screenshot del commit de resolución de conflicto | Canvas (puede ser post-clase) |
+| README actualizado con tokens + validaciones | En el repo |
+
+### Rúbrica (referencial)
+
+- **P1 — CSS Variables (20%)**: al menos 6 tokens en `:root`, ≥5 reglas usando `var()`, sitio se ve igual que antes.
+- **P2 — Formulario validado (25%)**: `required` + `type=email` + `pattern` + `<select>` + `checkbox` — los 3 escenarios de fallo bloquean el submit.
+- **P3 — Git workflow (25%)**: rama feature creada, commits atómicos, PR abierto y mergeado.
+- **P4 — Merge conflict (15%)**: conflicto resuelto manualmente, commit de merge presente.
+- **P5 — Deploy (15%)**: sitio público funcional, README documentado.
+
+---
+
+## 💡 Tips finales
+
+* Las **CSS Variables** brillan cuando tu landing tiene "branding": colores y tipografía repetidos. Sin repetición, no aportan tanto.
+* La validación nativa es la **primera línea de defensa**. JS es para validaciones de negocio (ej. "el email no existe en nuestra DB" — eso necesita servidor).
+* Si pusheas directo a `main` por costumbre, **rompiste el ejercicio**. La P3 evalúa el flujo, no solo el resultado.
+* Si un conflicto te asusta, recuerda: solo eliges entre versiones de líneas. No es magia. Lee, decide, borra los marcadores, commit.

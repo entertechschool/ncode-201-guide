@@ -53,6 +53,15 @@ header nav {
 
 2. Asegúrate que los enlaces estén separados y alineados de forma coherente.
 3. Aplica Flexbox también en las secciones principales dentro de `main` para organizar el contenido.
+4. Haz que el logo del nav empuje el resto del menú a la derecha usando `flex-grow`:
+
+```css
+header nav .logo {
+  flex-grow: 1;
+}
+```
+
+Verifica que el logo ocupe el espacio disponible y los enlaces queden alineados al borde derecho. Es el patrón estándar de navbars en producción.
 
 🏆 **Reto autónomo:**
 - Transforma la sección “Características” en una grilla de tarjetas con íconos, usando Flexbox. Cada tarjeta debe tener un título, una breve descripción y un ícono representativo.
@@ -90,7 +99,17 @@ header nav {
 }
 ```
 
-3. Aplica media queries para ajustar el número de columnas según el ancho de la pantalla.
+3. Agrega al final de `styles.css` un breakpoint para móviles:
+
+```css
+@media (max-width: 768px) {
+  .galeria img {
+    width: 100px;
+  }
+}
+```
+
+Verifica en DevTools modo responsive (F12 → ícono de dispositivo móvil) que las imágenes se reduzcan al pasar 768px de ancho. Sube screenshot del antes/después.
 
 🏆 **Reto autónomo:**
 - Agrega una pequeña descripción textual debajo de cada imagen de la galería usando Flexbox. Asegúrate de que la imagen y su texto se mantengan agrupados incluso en pantallas pequeñas.

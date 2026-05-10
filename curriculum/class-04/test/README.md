@@ -7,7 +7,7 @@
 | **Módulo** | 1 |
 | **Clases cubiertas** | 01 - 04 |
 | **Duración** | 15 minutos |
-| **Preguntas** | 8 (opción múltiple) |
+| **Preguntas** | 10 (opción múltiple) |
 | **Tipo** | Diagnóstico (formativo) |
 
 ---
@@ -21,7 +21,7 @@ Este test verifica tu comprensión de los conceptos de las Clases 01 a 04:
 | Clase 01 | HTML5 Semántico y Accesibilidad |
 | Clase 02 | CSS Layout con Flexbox |
 | Clase 03 | CSS Grid Layout |
-| Clase 04 | Frameworks CSS Modernos y Git Branches |
+| Clase 04 | CSS Variables, Formularios Validados y Git Workflow |
 
 ---
 
