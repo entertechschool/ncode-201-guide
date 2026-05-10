@@ -95,8 +95,17 @@ store.subscribe(renderizarPlantillas);
 > *"Como usuario, quiero ver en pantalla todas las plantillas disponibles, gestionadas desde un objeto central (store), para poder usarlas fácilmente."*
 
 - **Criterios de Aceptación:**
-  - `store.js` contiene un array `plantillas` precargado con 2 plantillas de ejemplo.
-  - Al cargar la página, se muestran automáticamente en la interfaz.
+  - **Reemplaza** el `state` inicial de HU0 por uno con 2 plantillas de ejemplo precargadas:
+
+    ```javascript
+    state: {
+      plantillas: [
+        new Template('Saludo', '¡Hola!', '#bienvenida'),
+        new Template('Despedida', '¡Hasta pronto!', '#chao')
+      ]
+    }
+    ```
+  - Al cargar la página, las 2 plantillas se muestran automáticamente en la interfaz **gracias al `subscribe` de HU0** (recuerda llamar `renderizarPlantillas(store.getState())` una vez en el arranque para el primer render).
   - La manipulación del DOM se hace desde una función que lee desde la Store.
 
 - **⏱️ Checkpoint 1 (30 min):**

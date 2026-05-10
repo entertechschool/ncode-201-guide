@@ -84,6 +84,22 @@ En un archivo `FEEDBACK.md` local, clasifica:
 
 ### 2.1 HU5: Calcular balance neto en `js/balance.js`
 
+Primero, asegúrate de tener los contenedores en `index.html` (agrégalos dentro del `<main>` si no estaban):
+
+```html
+<section id="seccionBalances" aria-label="Balances del grupo">
+  <h2>Balances</h2>
+  <!-- aquí pintará renderBalances() -->
+</section>
+
+<section id="seccionTransferencias" aria-label="Transferencias sugeridas">
+  <h2>Transferencias sugeridas</h2>
+  <!-- aquí pintará renderTransferencias() -->
+</section>
+```
+
+Implementa el cálculo de balances:
+
 ```javascript
 function calcularBalances() {
   const balances = {};
@@ -160,6 +176,31 @@ function calcularTransferencias() {
   return transferencias;
 }
 ```
+
+Conecta con el render (define `renderTransferencias` en `js/ui.js`):
+
+```javascript
+function renderTransferencias() {
+  const transferencias = calcularTransferencias();
+  const contenedor = document.getElementById('seccionTransferencias');
+  contenedor.innerHTML = '<h2>Transferencias sugeridas</h2>';
+
+  if (transferencias.length === 0) {
+    contenedor.innerHTML += '<p>¡Grupo saldado! 🎉</p>';
+    return;
+  }
+
+  const ul = document.createElement('ul');
+  transferencias.forEach((t) => {
+    const li = document.createElement('li');
+    li.textContent = `${t.de} paga S/ ${t.monto} a ${t.a}`;
+    ul.appendChild(li);
+  });
+  contenedor.appendChild(ul);
+}
+```
+
+Llama `renderBalances()` y `renderTransferencias()` desde `iniciar()` en `app.js` para que se rendericen al cargar.
 
 ✅ **Checkpoint Parte 2:** Agregas 3 personas, registras 3 gastos variados, y ves:
 - Balances con signo correcto (suma total = 0).

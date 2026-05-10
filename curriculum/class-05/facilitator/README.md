@@ -90,7 +90,7 @@ Antes de empezar P1, pide a 3 estudiantes que pasen al frente. Tú narras: "Yo v
 
 **Dinámica sugerida:**
 ```
-Facilitador: "Ahora yo registro 'Cena, egreso, 45'. ¿Quién apunta al array global?"
+Facilitador: "Ahora yo registro 'Cena, gasto, 45'. ¿Quién apunta al array global?"
 [Estudiante levanta papel con array vacío]
 Facilitador: "Bien. Mi función push agrega un elemento. ¿Qué hace el estudiante con el array?"
 [Estudiante escribe: [{nombre:'Cena',...}] ]
@@ -136,7 +136,7 @@ ESTO es lo que vamos a resolver en C06 (funcional) y C07 (OOP)."
 **Cuándo usarlo:** Si alguien valida solo con `if (nombre)` y se olvida del tipo o monto.
 
 ```javascript
-if (!nombre || (tipo !== 'ingreso' && tipo !== 'egreso') || isNaN(valor) || valor <= 0) {
+if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(valor) || valor <= 0) {
   alert('Datos inválidos.');
   return;
 }

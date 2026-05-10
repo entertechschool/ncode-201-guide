@@ -32,8 +32,17 @@
    ```
 
 3. **Configuración Base:**
-   - En `index.html`, crea una estructura semántica básica (`header`, `main`, `footer`).
+   - En `index.html`, crea una estructura semántica básica (`header`, `main`, `footer`) que incluya los siguientes elementos:
+     - `<ul id="listaPlantillas"></ul>` — contenedor donde se renderizan las plantillas (lo usarás desde HU3).
+     - `<form id="form-plantilla">` con inputs para titulo, mensaje, hashtag — para agregar plantillas (lo usarás en HU2).
    - En `styles.css`, establece estilos iniciales básicos.
+
+> 📌 **Convención de IDs del proyecto M4** (úsalos consistentemente en C13-C16):
+> - `<ul id="listaPlantillas">` — contenedor de la lista renderizada.
+> - `<form id="form-plantilla">` — formulario para agregar plantilla nueva.
+> - Botón eliminar (dentro de cada `<li>` en C16): `class="btn-eliminar" data-id="${p.id}"`.
+> - Aside de stats (bonus C16): `<aside id="panel-stats">`.
+> - Indicador de estado (C15 HU4): `<p id="estado">Listo</p>`.
 
 ## 🏆 Historias de Usuario
 

@@ -56,14 +56,14 @@ let movimientos = [];
 
 ```javascript
 const nombre = prompt('Nombre del movimiento:');
-const tipo = prompt('Tipo (ingreso / egreso):');
+const tipo = prompt('Tipo (ingreso / gasto):');
 const valor = parseFloat(prompt('Monto:'));
 ```
 
 1.3. Valida con `if` antes de guardar:
 
 ```javascript
-if (!nombre || (tipo !== 'ingreso' && tipo !== 'egreso') || isNaN(valor) || valor <= 0) {
+if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(valor) || valor <= 0) {
   alert('Datos inválidos. Intenta de nuevo.');
 } else {
   movimientos.push({ nombre, tipo, valor });
@@ -71,7 +71,7 @@ if (!nombre || (tipo !== 'ingreso' && tipo !== 'egreso') || isNaN(valor) || valo
 }
 ```
 
-1.4. Abre el navegador, prueba con 1 movimiento válido (`Cena`, `egreso`, `45.50`). Revisa la consola.
+1.4. Abre el navegador, prueba con 1 movimiento válido (`Cena`, `gasto`, `45.50`). Revisa la consola.
 
 ✅ **Checkpoint 1 (~30 min):** Al recargar la página y completar el `prompt`, ves en consola `movimientos` con 1 elemento. Si pones tipo inválido o monto cero, ves la alerta y `movimientos` queda vacío.
 
@@ -119,7 +119,7 @@ function registrarMovimiento() {
 }
 
 function calcularTotalSaldo() {
-  // TODO: retornar ingresos - egresos recorriendo el array
+  // TODO: retornar ingresos - gastos recorriendo el array
 }
 
 function mostrarResumen() {
@@ -166,16 +166,16 @@ while (continuar === 'si') {
 mostrarResumen();
 ```
 
-✅ **Checkpoint 3 (~110 min):** Ejecutas el flujo, registras 2 movimientos (1 ingreso de 150, 1 egreso de 45.50) y al cerrar el bucle ves en consola: "Total de movimientos: 2" y "Saldo total: $104.50".
+✅ **Checkpoint 3 (~110 min):** Ejecutas el flujo, registras 2 movimientos (1 ingreso de 150, 1 gasto de 45.50) y al cerrar el bucle ves en consola: "Total de movimientos: 2" y "Saldo total: $104.50".
 
-🏆 **Reto autónomo:** agrega un desglose por tipo dentro de `mostrarResumen()`. Suma ingresos y egresos por separado e imprime ambos. Pista: dos variables acumuladoras en un solo `for`.
+🏆 **Reto autónomo:** agrega un desglose por tipo dentro de `mostrarResumen()`. Suma ingresos y gastos por separado e imprime ambos. Pista: dos variables acumuladoras en un solo `for`.
 
 ---
 
 ## 🌟 Logros Adicionales
 
 - **Logro 1:** Permitir al usuario eliminar un movimiento por nombre antes de cerrar el bucle.
-- **Logro 2:** Mostrar el ingreso más alto y el egreso más alto registrados.
+- **Logro 2:** Mostrar el ingreso más alto y el gasto más alto registrados.
 - **Logro 3:** Validar que los nombres no se repitan.
 
 ## 📝 Instrucciones de Entrega
@@ -197,7 +197,7 @@ mostrarResumen();
 Registro de Gastos
 -----------------------
 Nombre del movimiento: Cena
-Tipo: egreso
+Tipo: gasto
 Monto: 45.50
 
 ¿Registrar otro movimiento? (si/no): si

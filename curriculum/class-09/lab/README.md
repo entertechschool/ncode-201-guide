@@ -35,6 +35,14 @@
 
 3. **Contenido Base:**
 - Prepara en `index.html` una estructura semántica básica (`header`, `main`, `footer`) con áreas claramente definidas para la barra de herramientas, editor y preview.
+
+> 📌 **Convención de IDs del proyecto** (la vas a reusar en C10, C11 y C12):
+> - `<textarea id="editor">` — donde el usuario escribe Markdown.
+> - `<div id="preview">` — donde se renderiza el HTML generado.
+> - `<div id="toolbar">` — barra de herramientas con botones.
+>
+> Mantén estos IDs **idénticos en todos los labs del M3** para que el código de cada clase siga funcionando con el de las anteriores.
+
 - **Tailwind por Play CDN** (igual que en C08 — recuerda que ya lo viste pasivamente ahí):
 
 ```html

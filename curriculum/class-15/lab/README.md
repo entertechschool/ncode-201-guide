@@ -77,6 +77,8 @@
 
 > _"Como usuario, quiero que la app no se rompa si LocalStorage tiene datos corruptos, no existe la clave aún, o el JSON es malformado por manipulación manual."_
 
+> ⚠️ **Esta HU EVOLUCIONA la `cargarPlantillas()` de HU2** — no es una función paralela. Reemplaza el cuerpo de la función que creaste en HU2 por el bloque `try/catch/finally` de abajo. El operador ternario de HU2 queda absorbido por la validación `if (!raw) return [];` dentro del `try`.
+
 Refuerzo de `finally` aplicado en C12 (M3), ahora en el contexto de persistencia.
 
 #### Sub-pasos
