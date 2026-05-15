@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persistencia y Sincronización — Estado guardado que actualiza la UI sola</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* Flujo guardado automático */
+    .auto-flow {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .auto-step {
+      background: rgba(217,70,239,0.08);
+      border: 1px solid rgba(217,70,239,0.2);
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73em;
+      color: #d946ef;
+    }
+    .auto-arrow { color: #475569; font-size: 0.85em; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 4 · Clase 16</div>
+    <h1>Persistencia y Sincronización — Estado guardado que actualiza la UI sola</h1>
+    <p class="subtitle">Guardado automático, Store ↔ UI en tiempo real, confirmaciones UX y delegación de eventos</p>
+  </section>
+
+  <section>
+
+    <!-- 1: Guardado automático -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> Guardado Automático — Persistir en cada cambio de estado</h3>
+      <p class="desc">Integra el guardado en LocalStorage dentro de <code>setState</code>. Cada cambio en el estado persiste automáticamente.</p>
+      <pre><code><span class="tag-muted">const</span> store = {
+  state: { plantillas: [] },
+  listeners: [],
+
+  setState(newState) {
+    <span class="tag-muted">this</span>.state = newState;
+    localStorage.<span class="tag-purple">setItem</span>(<span class="tag-purple">'plantillas'</span>,          <span class="tag-muted">// ← guardado automático</span>
+      JSON.stringify(newState.plantillas)
+    );
+    <span class="tag-muted">this</span>.notify();
+  },
+  <span class="tag-muted">/* getState, subscribe, notify como en C14 */</span>
+};</code></pre>
+      <div class="auto-flow">
+        <div class="auto-step">usuario agrega</div>
+        <div class="auto-arrow">→</div>
+        <div class="auto-step">setState(nuevo)</div>
+        <div class="auto-arrow">→</div>
+        <div class="auto-step">setItem en localStorage</div>
+        <div class="auto-arrow">→</div>
+        <div class="auto-step">notify()</div>
+        <div class="auto-arrow">→</div>
+        <div class="auto-step">render()</div>
+      </div>
+    </div>
+
+    <!-- 2: Sincronización Store ↔ UI -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Sincronización — Siempre render desde el estado, nunca desde el DOM</h3>
+      <p class="desc">La UI es un reflejo del Store. Nunca leas el DOM para conocer el estado — pregunta al Store. Nunca actualices el DOM directo — actualiza el Store y que él re-renderice.</p>
+      <pre><code><span class="tag-muted">function</span> render(state) {
+  lista.innerHTML = state.plantillas
+    .map(p => <span class="tag-green">`&lt;li data-id="${p.id}"&gt;${p.titulo}&lt;/li&gt;`</span>)
+    .join(<span class="tag-green">''</span>);
+  contador.textContent = <span class="tag-green">`${state.plantillas.length} plantillas`</span>;
+}
+
+store.subscribe(render);     <span class="tag-muted">// ← registrar UNA vez</span>
+render(store.getState());    <span class="tag-muted">// ← render inicial al cargar</span>
+
+<span class="tag-muted">// ✅ Cada setState dispara render automáticamente.
+// ❌ Nunca: lista.innerHTML = lista.innerHTML + '...'</span></code></pre>
+    </div>
+
+    <!-- 3: Confirmaciones UX -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Confirmaciones UX — Proteger acciones críticas</h3>
+      <p class="desc">Antes de eliminar un dato permanentemente, muestra una confirmación visual. El usuario debe confirmar — no asumir.</p>
+      <pre><code><span class="tag-muted">function</span> eliminarPlantilla(id) {
+  <span class="tag-blue">if</span> (!confirm(<span class="tag-blue">"¿Eliminar esta plantilla? No se puede deshacer."</span>)) {
+    <span class="tag-blue">return</span>;  <span class="tag-muted">// el usuario canceló — no hacer nada</span>
+  }
+
+  store.setState({
+    ...store.getState(),
+    plantillas: store.getState().plantillas.filter(p => p.id !== id)
+  });
+  <span class="tag-muted">// El Store persiste y re-renderiza automáticamente</span>
+}</code></pre>
+    </div>
+
+    <!-- 4: Delegación de eventos -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Delegación de Eventos — Un listener para N botones hijos</h3>
+      <p class="desc">En lugar de añadir un listener a cada botón dinámico, coloca uno en el contenedor padre. Captura todos los clicks con <code>event.target</code>.</p>
+      <pre><code><span class="tag-muted">// ❌ Un listener por botón — rompe con listas dinámicas</span>
+document.querySelectorAll(<span class="tag-muted">'button.eliminar'</span>).forEach(btn =>
+  btn.addEventListener(<span class="tag-muted">'click'</span>, () => eliminar(btn.dataset.id))
+);
+
+<span class="tag-orange">// ✅ Un listener en el contenedor — funciona para todos</span>
+lista.addEventListener(<span class="tag-orange">'click'</span>, <span class="tag-muted">function</span>(event) {
+  <span class="tag-orange">if</span> (event.target.classList.contains(<span class="tag-orange">'eliminar'</span>)) {
+    eliminarPlantilla(event.target.dataset.id);
+  }
+  <span class="tag-orange">if</span> (event.target.classList.contains(<span class="tag-orange">'editar'</span>)) {
+    abrirEditor(event.target.dataset.id);
+  }
+});</code></pre>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Guardado automático</strong>
+        <span>Persistir en LocalStorage dentro de <code>setState</code>. Cada cambio se guarda sin acción extra.</span>
+      </div>
+      <div class="term">
+        <strong>UI como reflejo</strong>
+        <span>El DOM siempre se genera desde el Store, nunca al revés. El Store es la fuente de verdad.</span>
+      </div>
+      <div class="term">
+        <strong>confirm()</strong>
+        <span>Función nativa del navegador que muestra un diálogo de confirmación. Devuelve <code>true</code> o <code>false</code>.</span>
+      </div>
+      <div class="term">
+        <strong>Delegación de eventos</strong>
+        <span>Un listener en el padre que maneja eventos de N hijos usando <code>event.target</code>.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 16 <span>·</span> Módulo 4
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-16-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

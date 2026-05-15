@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Grid + Flexbox — Layouts responsivos reales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .hero .subtitle {
+      font-size: 1.05rem;
+      color: #94a3b8;
+    }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .card .desc {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* Demo visual de grid */
+    .grid-demo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .grid-cell {
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      border-radius: 6px;
+      padding: 0.6rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72em;
+      color: #4ade80;
+    }
+
+    /* Demo de media query visual */
+    .mq-demo {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.75rem;
+      align-items: flex-start;
+    }
+    .mq-col { flex: 1; }
+    .mq-col .mq-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72em;
+      color: #fb923c;
+      margin-bottom: 0.4rem;
+    }
+    .mq-layout-desktop {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+    .mq-layout-mobile {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .mq-box {
+      background: rgba(251, 146, 60, 0.1);
+      border: 1px solid rgba(251, 146, 60, 0.3);
+      border-radius: 4px;
+      height: 28px;
+    }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
+    .glossary .term span {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 3rem 3rem;
+      color: #64748b;
+      font-size: 0.82rem;
+    }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">Módulo 1 · Clase 03</div>
+    <h1>CSS Grid + Flexbox — Layouts responsivos reales</h1>
+    <p class="subtitle">Lo mínimo de Grid que necesitas + las propiedades profundas de Flex + media queries verificadas</p>
+  </section>
+
+  <!-- BLOQUES -->
+  <section>
+
+    <!-- 1: Grid vs Flex -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> Grid vs Flex — Cuándo usar cada uno</h3>
+      <p class="desc">La decisión es simple: <strong>Flex</strong> controla una sola dimensión. <strong>Grid</strong> controla filas y columnas al mismo tiempo.</p>
+      <img src="grid-vs-flex.png" alt="Comparativa visual de layout 2D (Grid) vs layout 1D (Flex)">
+    </div>
+
+    <!-- 2: Grid esencial -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Grid Esencial — El patrón del 80%</h3>
+      <p class="desc">Con solo 3 propiedades resuelves casi todas las grillas de tarjetas que necesitarás.</p>
+      <pre><code><span class="tag-green">.testimonios</span> {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  <span class="tag-muted">/* 3 columnas iguales */</span>
+  gap: 1rem;                              <span class="tag-muted">/* espacio entre filas y columnas */</span>
+}</code></pre>
+      <div class="grid-demo">
+        <div class="grid-cell">1fr</div>
+        <div class="grid-cell">1fr</div>
+        <div class="grid-cell">1fr</div>
+        <div class="grid-cell">1fr</div>
+        <div class="grid-cell">1fr</div>
+        <div class="grid-cell">1fr</div>
+      </div>
+    </div>
+
+    <!-- 3: Flexbox profundo -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Flexbox Profundo — flex-basis y align-self</h3>
+      <p class="desc">Las propiedades de los ítems permiten que cada elemento tenga su propio comportamiento dentro del mismo contenedor.</p>
+      <pre><code><span class="tag-blue">.compra</span>   { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+<span class="tag-blue">.producto</span> { flex-basis: 400px; flex-grow: 1;        }
+<span class="tag-blue">.resumen</span>  { flex-basis: 250px; align-self: flex-start; }
+<span class="tag-blue">.extras</span>   { flex-basis: 100%;                        }
+
+<span class="tag-muted">/* align-self sobreescribe align-items solo para ese ítem */</span></code></pre>
+    </div>
+
+    <!-- 4: Media Queries -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Media Queries — El cambio que el usuario debe notar</h3>
+      <p class="desc">Un breakpoint sin cambio visual observable no sirve. Siempre verifica con DevTools modo responsive.</p>
+      <pre><code><span class="tag-orange">@media</span> (max-width: 768px) {
+  <span class="tag-orange">.testimonios</span> { grid-template-columns: 1fr;     }
+  <span class="tag-orange">.compra</span>      { flex-direction: column;        }
+}</code></pre>
+      <div class="mq-demo">
+        <div class="mq-col">
+          <div class="mq-label">desktop &gt; 768px</div>
+          <div class="mq-layout-desktop">
+            <div class="mq-box"></div><div class="mq-box"></div><div class="mq-box"></div>
+            <div class="mq-box"></div><div class="mq-box"></div><div class="mq-box"></div>
+          </div>
+        </div>
+        <div class="mq-col">
+          <div class="mq-label">móvil ≤ 768px</div>
+          <div class="mq-layout-mobile">
+            <div class="mq-box"></div>
+            <div class="mq-box"></div>
+            <div class="mq-box"></div>
+          </div>
+        </div>
+        <div class="mq-col" style="display:flex;align-items:center;">
+          <p style="font-size:0.8rem;color:#94a3b8;line-height:1.5;font-family:'JetBrains Mono',monospace;">F12 → icono móvil<br>Arrastra bajo 768px<br>El layout debe cambiar</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>fr unit</strong>
+        <span>Fracción del espacio disponible en el contenedor grid. <code>1fr 1fr</code> = dos columnas iguales.</span>
+      </div>
+      <div class="term">
+        <strong>flex-basis</strong>
+        <span>Tamaño base del ítem antes de distribuir el espacio sobrante con <code>flex-grow</code>.</span>
+      </div>
+      <div class="term">
+        <strong>align-self</strong>
+        <span>Sobreescribe <code>align-items</code> del contenedor para un solo ítem específico.</span>
+      </div>
+      <div class="term">
+        <strong>breakpoint</strong>
+        <span>Punto de quiebre en <code>@media</code> donde el layout cambia para adaptarse al viewport.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 03 <span>·</span> Módulo 1
+  </section>
+
+  <!-- EXPORT PNG -->
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+
+  <script>
+  (function(){
+    var btn = document.getElementById('export-btn');
+    var originalText = btn.textContent;
+    btn.addEventListener('click', function(){
+      btn.disabled = true;
+      btn.textContent = 'Exportando...';
+      var script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      script.onload = function(){
+        btn.style.display = 'none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body, { scale: 3, useCORS: true, windowWidth: 1080 }).then(function(canvas){
+            var link = document.createElement('a');
+            var title = document.title
+              .toLowerCase()
+              .normalize('NFD').replace(/[̀-ͯ]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '');
+            link.download = 'clase-03-' + title + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            btn.style.display = '';
+            btn.disabled = false;
+            btn.textContent = originalText;
+          }).catch(function(){
+            btn.style.display = '';
+            btn.disabled = false;
+            btn.textContent = 'Error — Intenta de nuevo';
+            setTimeout(function(){ btn.textContent = originalText; }, 2000);
+          });
+        });
+      };
+      script.onerror = function(){
+        btn.disabled = false;
+        btn.textContent = 'Error — Intenta de nuevo';
+        setTimeout(function(){ btn.textContent = originalText; }, 2000);
+      };
+      document.head.appendChild(script);
+    });
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manejo de Excepciones — Código robusto que no se rompe en producción</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+    .tag-red    { color: #f87171; }
+
+    /* Bloques try/catch visual */
+    .try-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .try-block {
+      background: #161b22;
+      border-radius: 8px;
+      padding: 0.9rem;
+      text-align: center;
+      border-top: 2px solid;
+    }
+    .try-block.block-try    { border-top-color: #4ade80; }
+    .try-block.block-catch  { border-top-color: #f87171; }
+    .try-block.block-finally{ border-top-color: #93c5fd; }
+    .try-block .block-kw {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .try-block .block-desc { font-size: 0.78rem; color: #94a3b8; }
+
+    /* Criterios */
+    .criteria {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .criteria-col .col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .criteria-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .criteria-col li { font-size: 0.8rem; color: #94a3b8; padding-left: 1.2rem; position: relative; }
+    .criteria-col li::before { position: absolute; left: 0; font-size: 0.85em; }
+    .col-do   li::before { content: "✓"; color: #4ade80; }
+    .col-dont li::before { content: "✗"; color: #f87171; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 3 · Clase 12</div>
+    <h1>Manejo de Excepciones — Código robusto que no se rompe en producción</h1>
+    <p class="subtitle"><code>try/catch/finally</code> y <code>throw</code> para controlar qué pasa cuando algo falla</p>
+  </section>
+
+  <section>
+
+    <!-- 1: try/catch/finally -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> try / catch / finally — La estructura base</h3>
+      <p class="desc"><code>try</code> intenta ejecutar código. Si lanza un error, <code>catch</code> lo captura. <code>finally</code> se ejecuta siempre, sin importar el resultado.</p>
+      <pre><code><span class="tag-purple">try</span> {
+  <span class="tag-muted">const</span> html = procesarMarkdown(editor.value);
+  preview.innerHTML = html;
+} <span class="tag-purple">catch</span> (error) {
+  <span class="tag-muted">// Se ejecuta si procesarMarkdown() lanza un error</span>
+  mostrarMensaje(<span class="tag-purple">`Error: ${error.message}`</span>);
+} <span class="tag-purple">finally</span> {
+  <span class="tag-muted">// Se ejecuta SIEMPRE — éxito o fracaso</span>
+  spinner.style.display = <span class="tag-purple">"none"</span>;  <span class="tag-muted">// ocultar cargando</span>
+}</code></pre>
+      <div class="try-visual">
+        <div class="try-block block-try">
+          <div class="block-kw" style="color:#4ade80;">try</div>
+          <div class="block-desc">Código que puede fallar. Si falla, salta al catch.</div>
+        </div>
+        <div class="try-block block-catch">
+          <div class="block-kw" style="color:#f87171;">catch</div>
+          <div class="block-desc">Captura el error. Recibe el objeto con message y stack.</div>
+        </div>
+        <div class="try-block block-finally">
+          <div class="block-kw" style="color:#93c5fd;">finally</div>
+          <div class="block-desc">Siempre se ejecuta. Ideal para limpiar estado.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: throw -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> throw — Lanzar errores con intención</h3>
+      <p class="desc">No esperes a que JavaScript detecte el error. Si los datos son inválidos, lánzalo tú con un mensaje claro.</p>
+      <pre><code><span class="tag-muted">function</span> parsearNumero(valor) {
+  <span class="tag-green">if</span> (!valor || valor.trim() === <span class="tag-green">""</span>) {
+    <span class="tag-green">throw new</span> Error(<span class="tag-green">"El campo no puede estar vacío"</span>);
+  }
+  <span class="tag-muted">const</span> numero = parseFloat(valor);
+  <span class="tag-green">if</span> (isNaN(numero)) {
+    <span class="tag-green">throw new</span> Error(<span class="tag-green">`"${valor}" no es un número válido`</span>);
+  }
+  <span class="tag-muted">return</span> numero;
+}
+
+<span class="tag-muted">try</span> {
+  <span class="tag-muted">const</span> monto = parsearNumero(inputMonto.value);
+} <span class="tag-muted">catch</span> (e) {
+  errorLabel.textContent = e.message;  <span class="tag-muted">// muestra el mensaje al usuario</span>
+}</code></pre>
+    </div>
+
+    <!-- 3: El objeto Error -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> El Objeto Error — Qué información trae</h3>
+      <p class="desc"><code>new Error(mensaje)</code> crea un objeto con propiedades que ayudan a depurar. <code>console.error(e)</code> muestra la traza completa en DevTools.</p>
+      <pre><code><span class="tag-blue">try</span> {
+  procesarDatos(null);
+} <span class="tag-blue">catch</span> (e) {
+  console.log(e.name);     <span class="tag-muted">// "Error" (o "TypeError", "RangeError"…)</span>
+  console.log(e.message);  <span class="tag-muted">// "Cannot read properties of null"</span>
+  console.log(e.stack);    <span class="tag-muted">// traza con líneas del archivo donde ocurrió</span>
+
+  <span class="tag-muted">// Usar instanceof para distinguir tipos</span>
+  <span class="tag-blue">if</span> (e <span class="tag-blue">instanceof</span> TypeError) {
+    <span class="tag-muted">// error de tipo: null, undefined, método inexistente</span>
+  }
+}</code></pre>
+    </div>
+
+    <!-- 4: Cuándo capturar vs no -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Cuándo capturar — y cuándo no</h3>
+      <p class="desc">Capturar todos los errores sin criterio oculta bugs. Solo captura cuando puedes hacer algo útil con el error.</p>
+      <div class="criteria">
+        <div class="criteria-col col-do">
+          <div class="col-title" style="color:#4ade80;">Capturar cuando…</div>
+          <ul>
+            <li>El input viene del usuario y puede ser inválido</li>
+            <li>Llamas a una API externa o lees localStorage</li>
+            <li>Puedes mostrar un mensaje claro al usuario</li>
+            <li>Puedes recuperar el estado o reintentar</li>
+          </ul>
+        </div>
+        <div class="criteria-col col-dont">
+          <div class="col-title" style="color:#f87171;">No capturar cuando…</div>
+          <ul>
+            <li>El error indica un bug en tu propio código</li>
+            <li>El catch está vacío o solo tiene <code>console.log</code></li>
+            <li>Oculta el error sin dar feedback al usuario</li>
+            <li>No puedes hacer nada útil con él</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Excepción</strong>
+        <span>Evento que interrumpe el flujo normal. Puede ser del sistema o lanzada con <code>throw</code>.</span>
+      </div>
+      <div class="term">
+        <strong>throw</strong>
+        <span>Lanza manualmente una excepción. Detiene la ejecución y pasa al bloque <code>catch</code>.</span>
+      </div>
+      <div class="term">
+        <strong>finally</strong>
+        <span>Se ejecuta siempre al salir del try/catch, sin importar si hubo error o no.</span>
+      </div>
+      <div class="term">
+        <strong>stack trace</strong>
+        <span>Traza de ejecución que indica qué archivo y línea originaron el error.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 12 <span>·</span> Módulo 3
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-12-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

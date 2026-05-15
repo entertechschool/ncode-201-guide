@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programación Imperativa — Controla el flujo paso a paso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+    .tag-red    { color: #f87171; }
+
+    /* Flujo secuencial visual */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .flow-step {
+      background: rgba(217, 70, 239, 0.1);
+      border: 1px solid rgba(217, 70, 239, 0.25);
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75em;
+      color: #d946ef;
+    }
+    .flow-arrow { color: #475569; font-size: 0.85em; }
+
+    /* Tabla ventajas/limitaciones */
+    .tradeoffs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .tradeoff-col { }
+    .tradeoff-col .col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .tradeoff-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .tradeoff-col li {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .tradeoff-col li::before {
+      position: absolute;
+      left: 0;
+      font-size: 0.85em;
+    }
+    .col-pros li::before { content: "✓"; color: #4ade80; }
+    .col-cons li::before { content: "✗"; color: #f87171; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 2 · Clase 05</div>
+    <h1>Programación Imperativa — Controla el flujo paso a paso</h1>
+    <p class="subtitle">Variables, estructuras de control y funciones para describir exactamente cómo debe ejecutarse cada instrucción</p>
+  </section>
+
+  <section>
+
+    <!-- 1: Qué es -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> ¿Qué es la Programación Imperativa?</h3>
+      <p class="desc">Describes <strong>CÓMO</strong> se hace cada paso. El programa sigue instrucciones secuenciales exactas — como una receta de cocina.</p>
+      <div class="flow">
+        <div class="flow-step">1. capturar input</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">2. validar</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">3. almacenar</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">4. calcular</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">5. mostrar</div>
+      </div>
+    </div>
+
+    <!-- 2: Control de Flujo -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Estructuras de Control</h3>
+      <p class="desc"><code>if</code> toma decisiones, <code>while</code> repite mientras se cumpla una condición, <code>for</code> itera un número conocido de veces.</p>
+      <pre><code><span class="tag-muted">// if — valida antes de guardar</span>
+<span class="tag-green">if</span> (nombre && duracion > 0) {
+  actividades.push({ nombre, duracion });
+} <span class="tag-green">else</span> {
+  alert("Datos inválidos.");
+}
+
+<span class="tag-muted">// while — sigue capturando hasta que el usuario pare</span>
+<span class="tag-green">while</span> (continuar) {
+  registrarActividad();
+  continuar = confirm("¿Registrar otra?");
+}</code></pre>
+    </div>
+
+    <!-- 3: Funciones Imperativas -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Funciones Imperativas — Organizar las instrucciones</h3>
+      <p class="desc">Cada función hace una tarea específica y usa el estado global compartido del programa.</p>
+      <pre><code><span class="tag-blue">let</span> actividades = [];           <span class="tag-muted">// estado global</span>
+
+<span class="tag-blue">function</span> registrarActividad() {
+  <span class="tag-blue">let</span> nombre   = prompt("Nombre:");
+  <span class="tag-blue">let</span> duracion = parseInt(prompt("Minutos:"));
+  <span class="tag-green">if</span> (nombre && duracion > 0)
+    actividades.push({ nombre, duracion });
+}
+
+<span class="tag-blue">function</span> calcularTiempoTotal() {
+  <span class="tag-blue">let</span> total = 0;
+  <span class="tag-green">for</span> (<span class="tag-blue">let</span> i = 0; i < actividades.length; i++)
+    total += actividades[i].duracion;
+  <span class="tag-green">return</span> total;
+}</code></pre>
+    </div>
+
+    <!-- 4: Ventajas y Limitaciones -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Ventajas y Limitaciones</h3>
+      <p class="desc">El paradigma imperativo es el punto de partida ideal — pero tiene un techo natural a medida que el programa crece.</p>
+      <div class="tradeoffs">
+        <div class="tradeoff-col col-pros">
+          <div class="col-title" style="color:#4ade80;">Ventajas</div>
+          <ul>
+            <li>Fácil de leer y entender</li>
+            <li>Ideal para scripts pequeños</li>
+            <li>Sin abstracciones adicionales</li>
+            <li>Control total del flujo</li>
+          </ul>
+        </div>
+        <div class="tradeoff-col col-cons">
+          <div class="col-title" style="color:#f87171;">Limitaciones</div>
+          <ul>
+            <li>Funciones acopladas a variables globales</li>
+            <li>Difícil de escalar y mantener</li>
+            <li>Repetición de lógica (DRY)</li>
+            <li>Testar es complicado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Paradigma Imperativo</strong>
+        <span>Estilo de programación que describe CÓMO ejecutar cada paso de forma secuencial.</span>
+      </div>
+      <div class="term">
+        <strong>prompt()</strong>
+        <span>Función del navegador que muestra un cuadro de diálogo para capturar texto del usuario.</span>
+      </div>
+      <div class="term">
+        <strong>Variable global</strong>
+        <span>Variable accesible desde cualquier función del programa — compartida por todas.</span>
+      </div>
+      <div class="term">
+        <strong>Función acoplada</strong>
+        <span>Función que depende de variables globales o de otras funciones directamente.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 05 <span>·</span> Módulo 2
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-05-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

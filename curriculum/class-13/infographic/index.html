@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clases y Estado — Modela objetos con estructura y propósito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* Estado local vs global */
+    .state-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .state-col {
+      background: #161b22;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .state-col .state-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .state-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .state-col li { font-size: 0.8rem; color: #94a3b8; padding-left: 1rem; position: relative; }
+    .state-col li::before { content: "•"; position: absolute; left: 0; }
+
+    /* Instancias visuales */
+    .instances-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .inst-box {
+      flex: 1;
+      background: #161b22;
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 8px;
+      padding: 0.8rem;
+    }
+    .inst-box .inst-title { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; color: #4ade80; margin-bottom: 0.4rem; }
+    .inst-box .inst-prop { font-family: 'JetBrains Mono', monospace; font-size: 0.72em; color: #94a3b8; margin-bottom: 0.2rem; }
+    .inst-box .inst-prop span { color: #e2e8f0; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 4 · Clase 13</div>
+    <h1>Clases y Estado — Modela objetos con estructura y propósito</h1>
+    <p class="subtitle">La sintaxis <code>class</code> organiza datos y comportamientos. El estado es el "momento actual" del objeto</p>
+  </section>
+
+  <section>
+
+    <!-- 1: Sintaxis class -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> Sintaxis class — constructor + métodos</h3>
+      <p class="desc">La clase define la estructura. El constructor inicializa el estado. Los métodos definen el comportamiento que puede cambiarlo.</p>
+      <pre><code><span class="tag-purple">class</span> Tarea {
+  <span class="tag-purple">constructor</span>(titulo) {
+    <span class="tag-muted">this</span>.titulo     = titulo;  <span class="tag-muted">// estado local</span>
+    <span class="tag-muted">this</span>.completado = <span class="tag-purple">false</span>;  <span class="tag-muted">// estado inicial</span>
+  }
+
+  completar() {              <span class="tag-muted">// método que modifica el estado</span>
+    <span class="tag-muted">this</span>.completado = <span class="tag-purple">true</span>;
+  }
+
+  mostrarEstado() {
+    <span class="tag-muted">return</span> <span class="tag-purple">`${this.titulo}: ${this.completado ? "✓" : "pendiente"}`</span>;
+  }
+}
+
+<span class="tag-muted">// class es azúcar sintáctica — internamente sigue usando prototipos (C08)</span></code></pre>
+    </div>
+
+    <!-- 2: Estado local vs global -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Estado Local vs Estado Global</h3>
+      <p class="desc">El estado local pertenece a una instancia. El estado global es compartido por toda la aplicación.</p>
+      <div class="state-compare">
+        <div class="state-col">
+          <div class="state-title" style="color:#4ade80;">Estado Local (de la instancia)</div>
+          <ul>
+            <li>Propiedades <code>this.x</code> del constructor</li>
+            <li>Solo accesible desde ese objeto</li>
+            <li>Cada instancia tiene el suyo</li>
+            <li>Ejemplo: <code>tarea1.completado</code></li>
+          </ul>
+        </div>
+        <div class="state-col">
+          <div class="state-title" style="color:#d946ef;">Estado Global (de la app)</div>
+          <ul>
+            <li>Arrays o variables fuera de clases</li>
+            <li>Compartido por toda la aplicación</li>
+            <li>Cualquier función puede leerlo</li>
+            <li>Ejemplo: <code>const tareas = []</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Múltiples instancias -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Múltiples Instancias — Estado Independiente</h3>
+      <p class="desc">Cada <code>new</code> crea un objeto con su propio estado. Cambiar uno no afecta al otro.</p>
+      <pre><code><span class="tag-muted">const</span> t1 = <span class="tag-blue">new</span> Tarea(<span class="tag-blue">"Diseñar mockup"</span>);
+<span class="tag-muted">const</span> t2 = <span class="tag-blue">new</span> Tarea(<span class="tag-blue">"Implementar API"</span>);
+
+t1.completar();              <span class="tag-muted">// solo t1 cambia</span>
+
+console.log(t1.completado); <span class="tag-muted">// → true</span>
+console.log(t2.completado); <span class="tag-muted">// → false  ← intacto</span></code></pre>
+      <div class="instances-row">
+        <div class="inst-box">
+          <div class="inst-title">t1 (instancia 1)</div>
+          <div class="inst-prop">titulo: <span>"Diseñar mockup"</span></div>
+          <div class="inst-prop">completado: <span style="color:#4ade80;">true</span></div>
+        </div>
+        <div class="inst-box">
+          <div class="inst-title">t2 (instancia 2)</div>
+          <div class="inst-prop">titulo: <span>"Implementar API"</span></div>
+          <div class="inst-prop">completado: <span style="color:#94a3b8;">false</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: Encapsulamiento -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Encapsulamiento — Los métodos controlan el estado</h3>
+      <p class="desc">En lugar de modificar propiedades desde afuera, usa métodos. Esto protege el estado de cambios incorrectos.</p>
+      <pre><code><span class="tag-muted">class</span> Usuario {
+  <span class="tag-muted">constructor</span>(nombre) {
+    <span class="tag-muted">this</span>.nombre = nombre;
+    <span class="tag-muted">this</span>.tareas = [];              <span class="tag-muted">// estado encapsulado</span>
+  }
+
+  agregarTarea(titulo) {         <span class="tag-orange">// ← acceso controlado</span>
+    <span class="tag-muted">this</span>.tareas.push(<span class="tag-muted">new</span> Tarea(titulo));
+  }
+
+  tareasCompletadas() {
+    <span class="tag-muted">return this</span>.tareas.filter(t => t.completado).length;
+  }
+}
+
+<span class="tag-muted">const</span> user = <span class="tag-muted">new</span> Usuario(<span class="tag-orange">"Ana"</span>);
+user.agregarTarea(<span class="tag-orange">"Revisar código"</span>);
+<span class="tag-muted">// user.tareas.push(x) funciona pero rompe el encapsulamiento</span></code></pre>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>class</strong>
+        <span>Sintaxis ES6 para definir objetos. Es azúcar sintáctica sobre prototipos (mecanismo de C08).</span>
+      </div>
+      <div class="term">
+        <strong>constructor()</strong>
+        <span>Método especial que se ejecuta al crear una instancia con <code>new</code>. Inicializa el estado.</span>
+      </div>
+      <div class="term">
+        <strong>Estado local</strong>
+        <span>Propiedades <code>this.x</code> de una instancia — exclusivas de ese objeto.</span>
+      </div>
+      <div class="term">
+        <strong>Encapsulamiento</strong>
+        <span>Acceder al estado solo a través de métodos controlados, no directamente desde afuera.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 13 <span>·</span> Módulo 4
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-13-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

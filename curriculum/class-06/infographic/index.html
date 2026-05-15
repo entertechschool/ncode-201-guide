@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programación Funcional — Transforma datos sin efectos secundarios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+    .tag-red    { color: #f87171; }
+
+    /* Tabla de métodos */
+    .method-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+    }
+    .method-table th {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      color: #93c5fd;
+      border-bottom: 1px solid rgba(147,197,253,0.2);
+    }
+    .method-table td {
+      padding: 0.55rem 0.75rem;
+      color: #94a3b8;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8em;
+    }
+    .method-table td:first-child { color: #93c5fd; }
+    .method-table tr:last-child td { border-bottom: none; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 2 · Clase 06</div>
+    <h1>Programación Funcional — Transforma datos sin efectos secundarios</h1>
+    <p class="subtitle">Funciones puras, inmutabilidad y métodos <code>map</code> / <code>filter</code> / <code>find</code> para código predecible y testeable</p>
+  </section>
+
+  <section>
+
+    <!-- 1: Funciones puras vs impuras -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> Funciones Puras vs Impuras</h3>
+      <p class="desc">Una función <strong>pura</strong> siempre devuelve el mismo resultado para los mismos argumentos y no modifica nada fuera de ella.</p>
+      <pre><code><span class="tag-red">// ❌ IMPURA — modifica variable externa (efecto secundario)</span>
+<span class="tag-muted">let</span> total = 0;
+<span class="tag-muted">function</span> sumarImpuro(valor) {
+  total += valor;     <span class="tag-muted">// ← modifica estado externo</span>
+  <span class="tag-muted">return</span> total;
+}
+
+<span class="tag-green">// ✅ PURA — solo depende de sus parámetros</span>
+<span class="tag-muted">function</span> sumarPuro(totalActual, valorNuevo) {
+  <span class="tag-muted">return</span> totalActual + valorNuevo;  <span class="tag-muted">// ← sin efectos secundarios</span>
+}</code></pre>
+    </div>
+
+    <!-- 2: map() -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> map() — Transforma cada elemento</h3>
+      <p class="desc"><code>map()</code> recorre el array y retorna un <strong>nuevo array del mismo tamaño</strong> con los elementos transformados. El original no cambia.</p>
+      <pre><code><span class="tag-muted">const</span> movimientos = [
+  { nombre: "Salario",   valor: 3000 },
+  { nombre: "Freelance", valor: 500  },
+];
+
+<span class="tag-muted">const</span> nombres = movimientos.<span class="tag-green">map</span>(mov => mov.nombre);
+<span class="tag-muted">// → ["Salario", "Freelance"]</span>
+
+<span class="tag-muted">const</span> montos  = movimientos.<span class="tag-green">map</span>(mov => mov.valor * 1.18);
+<span class="tag-muted">// → [3540, 590]  ← array original intacto</span></code></pre>
+    </div>
+
+    <!-- 3: filter() y find() -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> filter() y find() — Filtrar y buscar</h3>
+      <p class="desc">Ambos buscan por condición, pero retornan cosas distintas: <code>filter</code> devuelve todos los que cumplen, <code>find</code> solo el primero.</p>
+      <pre><code><span class="tag-muted">const</span> movs = [
+  { nombre:"Salario",   tipo:"ingreso", valor:3000 },
+  { nombre:"Comida",    tipo:"gasto",   valor:200  },
+  { nombre:"Freelance", tipo:"ingreso", valor:500  },
+];
+
+<span class="tag-blue">// filter() → array con TODOS los que cumplen</span>
+<span class="tag-muted">const</span> ingresos = movs.<span class="tag-blue">filter</span>(m => m.tipo === "ingreso");
+<span class="tag-muted">// → [{ Salario… }, { Freelance… }]</span>
+
+<span class="tag-blue">// find() → el PRIMER elemento que cumple (o undefined)</span>
+<span class="tag-muted">const</span> salario  = movs.<span class="tag-blue">find</span>(m => m.nombre === "Salario");
+<span class="tag-muted">// → { nombre:"Salario", tipo:"ingreso", valor:3000 }</span></code></pre>
+      <table class="method-table">
+        <tr>
+          <th>Método</th><th>Retorna</th><th>Uso principal</th>
+        </tr>
+        <tr>
+          <td>map()</td><td>Array mismo tamaño</td><td>Transformar datos</td>
+        </tr>
+        <tr>
+          <td>filter()</td><td>Array (puede ser menor)</td><td>Filtrar por condición</td>
+        </tr>
+        <tr>
+          <td>find()</td><td>Un elemento o undefined</td><td>Buscar el primero</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 4: Declarativo vs Imperativo -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Declarativo vs Imperativo — QUÉ vs CÓMO</h3>
+      <p class="desc">La programación funcional describe <strong>QUÉ</strong> queremos lograr. La imperativa describe <strong>CÓMO</strong> hacerlo paso a paso.</p>
+      <pre><code><span class="tag-muted">// IMPERATIVO — describe cada paso</span>
+<span class="tag-muted">let</span> ingresos = [];
+<span class="tag-muted">for</span> (<span class="tag-muted">let</span> i = 0; i < movs.length; i++) {
+  <span class="tag-muted">if</span> (movs[i].tipo === "ingreso")
+    ingresos.push(movs[i]);
+}
+
+<span class="tag-orange">// FUNCIONAL — describe el resultado deseado</span>
+<span class="tag-muted">const</span> ingresos = movs.filter(m => m.tipo === "ingreso");</code></pre>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Función pura</strong>
+        <span>Mismos inputs → mismo output. No modifica estado externo ni produce efectos secundarios.</span>
+      </div>
+      <div class="term">
+        <strong>Inmutabilidad</strong>
+        <span>No modificar datos existentes. Crear copias transformadas en su lugar.</span>
+      </div>
+      <div class="term">
+        <strong>Efecto secundario</strong>
+        <span>Cualquier modificación fuera del scope de la función: <code>console.log</code>, mutar variables globales.</span>
+      </div>
+      <div class="term">
+        <strong>Composición</strong>
+        <span>Combinar funciones simples para construir funciones más complejas.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 06 <span>·</span> Módulo 2
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-06-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON y LocalStorage — Persiste el estado entre sesiones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* LocalStorage API visual */
+    .ls-api {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .ls-method {
+      background: #161b22;
+      border-radius: 8px;
+      padding: 0.9rem;
+      text-align: center;
+      border-top: 2px solid #d946ef;
+    }
+    .ls-method .ls-name { font-family: 'JetBrains Mono', monospace; font-size: 0.78em; color: #d946ef; margin-bottom: 0.3rem; }
+    .ls-method .ls-desc { font-size: 0.77rem; color: #94a3b8; }
+
+    /* JSON flujo visual */
+    .json-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .json-node {
+      background: #161b22;
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+    .json-node .node-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; color: #4ade80; margin-bottom: 0.2rem; }
+    .json-node .node-val { font-size: 0.75rem; color: #94a3b8; }
+    .json-arrow { font-size: 0.9em; color: #475569; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+    .json-arrow .arrow-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; color: #4ade80; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 4 · Clase 15</div>
+    <h1>JSON y LocalStorage — Persiste el estado entre sesiones</h1>
+    <p class="subtitle">Serializa objetos a texto con <code>JSON.stringify</code>, guárdalos con <code>localStorage.setItem</code>, y recuperarlos al recargar</p>
+  </section>
+
+  <section>
+
+    <!-- 1: LocalStorage API -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> LocalStorage — 3 métodos para guardar datos en el navegador</h3>
+      <p class="desc">Almacenamiento clave-valor en el navegador. Los datos persisten hasta que el usuario los borra — sobreviven recargas y cierres de pestaña.</p>
+      <pre><code><span class="tag-muted">// Guardar (siempre como string — usa JSON.stringify para objetos)</span>
+localStorage.<span class="tag-purple">setItem</span>(<span class="tag-purple">'plantillas'</span>, JSON.stringify(array));
+
+<span class="tag-muted">// Leer (siempre string — usa JSON.parse para recuperar objetos)</span>
+<span class="tag-muted">const</span> raw = localStorage.<span class="tag-purple">getItem</span>(<span class="tag-purple">'plantillas'</span>);
+
+<span class="tag-muted">// Eliminar una clave</span>
+localStorage.<span class="tag-purple">removeItem</span>(<span class="tag-purple">'plantillas'</span>);</code></pre>
+      <div class="ls-api">
+        <div class="ls-method">
+          <div class="ls-name">setItem(key, val)</div>
+          <div class="ls-desc">Guardar o sobreescribir valor</div>
+        </div>
+        <div class="ls-method">
+          <div class="ls-name">getItem(key)</div>
+          <div class="ls-desc">Leer valor (null si no existe)</div>
+        </div>
+        <div class="ls-method">
+          <div class="ls-name">removeItem(key)</div>
+          <div class="ls-desc">Eliminar una clave</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: JSON serialización -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> JSON — Serialización y Deserialización</h3>
+      <p class="desc">LocalStorage solo guarda strings. <code>JSON.stringify</code> convierte objetos a texto. <code>JSON.parse</code> los devuelve a objetos.</p>
+      <div class="json-flow">
+        <div class="json-node">
+          <div class="node-label">Objeto JS</div>
+          <div class="node-val">[{nombre: "Ana"}]</div>
+        </div>
+        <div class="json-arrow">
+          <div class="arrow-fn">JSON.stringify()</div>
+          <div>→</div>
+        </div>
+        <div class="json-node">
+          <div class="node-label">String JSON</div>
+          <div class="node-val">'[{"nombre":"Ana"}]'</div>
+        </div>
+        <div class="json-arrow">
+          <div class="arrow-fn">JSON.parse()</div>
+          <div>→</div>
+        </div>
+        <div class="json-node">
+          <div class="node-label">Objeto JS</div>
+          <div class="node-val">[{nombre: "Ana"}]</div>
+        </div>
+      </div>
+      <pre style="margin-top:0.75rem;"><code><span class="tag-green">JSON.stringify</span>([{nombre: <span class="tag-green">"Ana"</span>, activo: true}]);
+<span class="tag-muted">// → '[{"nombre":"Ana","activo":true}]'</span>
+
+<span class="tag-green">JSON.parse</span>(<span class="tag-green">'[{"nombre":"Ana","activo":true}]'</span>);
+<span class="tag-muted">// → [{nombre: "Ana", activo: true}]</span></code></pre>
+    </div>
+
+    <!-- 3: try/catch con JSON.parse -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Patrón Seguro — JSON.parse siempre dentro de try/catch</h3>
+      <p class="desc"><code>JSON.parse</code> lanza un error si el string está corrupto. Envuélvelo siempre en try/catch para que la app no se rompa.</p>
+      <pre><code><span class="tag-muted">function</span> cargarPlantillas() {
+  <span class="tag-blue">try</span> {
+    <span class="tag-muted">const</span> raw = localStorage.getItem(<span class="tag-blue">'plantillas'</span>);
+    <span class="tag-blue">if</span> (!raw) <span class="tag-blue">return</span> [];                          <span class="tag-muted">// primera vez</span>
+    <span class="tag-muted">const</span> datos = <span class="tag-blue">JSON.parse</span>(raw);
+    <span class="tag-blue">if</span> (!Array.isArray(datos)) <span class="tag-blue">throw new</span> Error(<span class="tag-blue">'Datos corruptos'</span>);
+    <span class="tag-blue">return</span> datos;
+  } <span class="tag-blue">catch</span> (e) {
+    console.error(e);
+    localStorage.removeItem(<span class="tag-blue">'plantillas'</span>);           <span class="tag-muted">// limpiar dato malo</span>
+    <span class="tag-blue">return</span> [];
+  } <span class="tag-blue">finally</span> {
+    spinner.style.display = <span class="tag-blue">'none'</span>;                   <span class="tag-muted">// siempre ocultar</span>
+  }
+}</code></pre>
+    </div>
+
+    <!-- 4: Operador ternario -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Operador Ternario — Condicional compacto para validaciones</h3>
+      <p class="desc"><code>condición ? valorSiTrue : valorSiFalse</code> — ideal para asignaciones simples. Reemplaza un <code>if/else</code> de 4 líneas con 1.</p>
+      <pre><code><span class="tag-muted">// if/else — 4 líneas</span>
+<span class="tag-muted">let</span> datos;
+<span class="tag-muted">if</span> (localStorage.getItem(<span class="tag-orange">'plantillas'</span>)) {
+  datos = JSON.parse(localStorage.getItem(<span class="tag-orange">'plantillas'</span>));
+} <span class="tag-muted">else</span> { datos = []; }
+
+<span class="tag-orange">// Ternario — 1 línea</span>
+<span class="tag-muted">const</span> raw   = localStorage.getItem(<span class="tag-orange">'plantillas'</span>);
+<span class="tag-muted">const</span> datos = raw <span class="tag-orange">?</span> JSON.parse(raw) <span class="tag-orange">:</span> [];
+
+<span class="tag-muted">// Ternario en template literal</span>
+elemento.textContent = activo <span class="tag-orange">?</span> <span class="tag-orange">"Activo"</span> <span class="tag-orange">:</span> <span class="tag-orange">"Inactivo"</span>;</code></pre>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>LocalStorage</strong>
+        <span>Almacenamiento clave-valor en el navegador. Persiste hasta que el usuario lo borra manualmente.</span>
+      </div>
+      <div class="term">
+        <strong>Serialización</strong>
+        <span>Convertir un objeto JavaScript a string JSON con <code>JSON.stringify()</code> para poder guardarlo.</span>
+      </div>
+      <div class="term">
+        <strong>Deserialización</strong>
+        <span>Convertir un string JSON de vuelta a objeto JavaScript con <code>JSON.parse()</code>.</span>
+      </div>
+      <div class="term">
+        <strong>Operador ternario</strong>
+        <span><code>condición ? a : b</code> — condicional compacto para asignaciones y expresiones simples.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 15 <span>·</span> Módulo 4
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-15-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

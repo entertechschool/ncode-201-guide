@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patrón Store — Estado centralizado con una API controlada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+    .tag-red    { color: #f87171; }
+
+    /* API del Store visual */
+    .store-api {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .api-item {
+      background: #161b22;
+      border-radius: 8px;
+      padding: 0.9rem;
+      text-align: center;
+      border-top: 2px solid;
+    }
+    .api-item.a-get     { border-top-color: #4ade80; }
+    .api-item.a-set     { border-top-color: #d946ef; }
+    .api-item.a-sub     { border-top-color: #93c5fd; }
+    .api-item.a-notify  { border-top-color: #fb923c; }
+    .api-item .api-name { font-family: 'JetBrains Mono', monospace; font-size: 0.78em; font-weight: 600; margin-bottom: 0.3rem; }
+    .api-item .api-desc { font-size: 0.75rem; color: #94a3b8; }
+
+    /* Flujo del Store visual */
+    .store-flow {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .flow-step {
+      background: rgba(147,197,253,0.08);
+      border: 1px solid rgba(147,197,253,0.2);
+      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75em;
+      color: #93c5fd;
+    }
+    .flow-arrow { color: #475569; font-size: 0.85em; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 4 · Clase 14</div>
+    <h1>Patrón Store — Estado centralizado con una API controlada</h1>
+    <p class="subtitle">getState / setState / subscribe / notify — nadie toca el estado directamente</p>
+  </section>
+
+  <section>
+
+    <!-- 1: El Store completo -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> El Store — La API del estado global</h3>
+      <p class="desc">Un objeto central que concentra todo el estado de la aplicación. Nadie lee ni escribe <code>state</code> directamente — todo pasa por los métodos.</p>
+      <pre><code><span class="tag-muted">const</span> store = {
+  state:     { items: [] },      <span class="tag-muted">// el estado — nunca tocar directo</span>
+  listeners: [],
+
+  getState()          { <span class="tag-muted">return this</span>.state; },
+  subscribe(fn)       { <span class="tag-muted">this</span>.listeners.push(fn); },
+  notify()            { <span class="tag-muted">this</span>.listeners.forEach(fn => fn(<span class="tag-muted">this</span>.state)); },
+
+  setState(newState)  {
+    <span class="tag-muted">this</span>.state = newState;  <span class="tag-muted">// reemplaza — no muta</span>
+    <span class="tag-muted">this</span>.notify();          <span class="tag-muted">// avisa a todos los oyentes</span>
+  }
+};</code></pre>
+      <div class="store-api">
+        <div class="api-item a-get">
+          <div class="api-name" style="color:#4ade80;">getState()</div>
+          <div class="api-desc">Leer. Nunca tocar state directo.</div>
+        </div>
+        <div class="api-item a-set">
+          <div class="api-name" style="color:#d946ef;">setState()</div>
+          <div class="api-desc">Cambiar. Dispara notify automático.</div>
+        </div>
+        <div class="api-item a-sub">
+          <div class="api-name" style="color:#93c5fd;">subscribe()</div>
+          <div class="api-desc">Registrar oyentes del estado.</div>
+        </div>
+        <div class="api-item a-notify">
+          <div class="api-name" style="color:#fb923c;">notify()</div>
+          <div class="api-desc">Ejecuta todos los oyentes.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Inmutabilidad con spread -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Inmutabilidad — Nunca mutar, siempre crear nuevo</h3>
+      <p class="desc">Modifica el estado creando un nuevo objeto/array, nunca alterando el existente. Cada <code>setState</code> produce un estado nuevo.</p>
+      <pre><code><span class="tag-red">// ❌ Mutación directa — rompe el patrón</span>
+state.items.push(nuevoItem);
+
+<span class="tag-green">// ✅ Agregar — crear nuevo array</span>
+store.setState({ ...store.getState(), items: [...store.getState().items, nuevoItem] });
+
+<span class="tag-green">// ✅ Eliminar — filtrar sin el item</span>
+store.setState({ ...store.getState(), items: store.getState().items.filter(i => i.id !== id) });
+
+<span class="tag-green">// ✅ Editar — mapear con cambio solo al target</span>
+store.setState({ ...store.getState(), items: store.getState().items.map(i => i.id === id ? {...i, ...cambios} : i) });</code></pre>
+    </div>
+
+    <!-- 3: El flujo completo -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> El Flujo — Subscribe → setState → UI actualizada sola</h3>
+      <p class="desc">Registras la función de render como oyente. Cuando el estado cambia, el Store llama a render automáticamente — sin invocarla a mano.</p>
+      <pre><code><span class="tag-muted">function</span> renderLista(state) {
+  lista.innerHTML = state.items.map(i => <span class="tag-blue">`&lt;li&gt;${i.nombre}&lt;/li&gt;`</span>).join(<span class="tag-blue">''</span>);
+}
+
+store.<span class="tag-blue">subscribe</span>(renderLista);   <span class="tag-muted">// ← registrar una vez</span>
+
+<span class="tag-muted">// Más tarde, al hacer clic en "Agregar":</span>
+store.setState({
+  ...store.getState(),
+  items: [...store.getState().items, nuevoItem]
+});
+<span class="tag-muted">// → store llama renderLista automáticamente</span></code></pre>
+      <div class="store-flow">
+        <div class="flow-step">usuario hace acción</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">setState(newState)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">notify()</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">render(state)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">UI actualizada</div>
+      </div>
+    </div>
+
+    <!-- 4: Ventajas -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Por qué usar un Store</h3>
+      <p class="desc">Sin Store: cualquier función puede mutar el estado y es difícil saber quién rompió la app. Con Store: hay un solo canal de entrada.</p>
+      <pre><code><span class="tag-muted">// Sin Store — estado disperso, difícil de rastrear</span>
+let items = [];
+<span class="tag-muted">function</span> agregar(item)  { items.push(item);         actualizarUI(); }
+<span class="tag-muted">function</span> eliminar(id)  { items = items.filter(...); actualizarUI(); }
+<span class="tag-muted">// ¿Quién más modifica items? No lo sabemos.</span>
+
+<span class="tag-orange">// Con Store — un solo canal, trazable</span>
+<span class="tag-muted">function</span> agregar(item)  { store.setState({ ...store.getState(), items: [...] }); }
+<span class="tag-muted">function</span> eliminar(id)   { store.setState({ ...store.getState(), items: [...] }); }
+<span class="tag-muted">// La UI la actualiza el Store — no yo.</span></code></pre>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Store</strong>
+        <span>Objeto central con el estado de la app. Solo se accede mediante <code>getState</code> y <code>setState</code>.</span>
+      </div>
+      <div class="term">
+        <strong>Inmutabilidad</strong>
+        <span>No modificar el estado existente. Crear siempre un nuevo objeto/array con los cambios.</span>
+      </div>
+      <div class="term">
+        <strong>subscribe(fn)</strong>
+        <span>Registra una función que se llamará automáticamente cada vez que el estado cambie.</span>
+      </div>
+      <div class="term">
+        <strong>Spread (...)</strong>
+        <span>Operador que copia propiedades de un objeto en uno nuevo. Clave para actualizar estado sin mutar.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 14 <span>·</span> Módulo 4
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-14-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>
