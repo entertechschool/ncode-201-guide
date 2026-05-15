@@ -1,3 +1,5 @@
+> 🚫 **DESACTIVADO** — Este test no se aplica en el curso actual. El único test diagnóstico vigente es el del Módulo 3 (clase 12).
+
 # Test Diagnóstico - Módulo 2: Fundamentos de Programación
 
 ## Información General
