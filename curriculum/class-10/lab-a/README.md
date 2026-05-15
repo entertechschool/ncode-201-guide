@@ -52,7 +52,7 @@ Consulta el repositorio diario de la clase para ver los assets necesarios para e
 ## Instrucciones de envío
 
 - Envía el enlace de tu PR más reciente de tu rama del repositorio de GitHub para este proyecto.
-- Añade un comentario a tu envío en Canvas con las respuestas a las siguientes preguntas
+- Añade un comentario a tu envío en Blackboard con las respuestas a las siguientes preguntas
   - ¿Cómo te fue, en general?
   - ¿Qué observaciones o preguntas tienes acerca de lo que hemos aprendido hasta ahora?
   - ¿Cuánto tiempo te tomó terminar esta tarea? Y, antes de que comenzaras, ¿cuánto tiempo creiste que te tomaría terminar esta tarea?

@@ -200,7 +200,7 @@ Crea funciones para calcular mediana, moda y desviación en los montos
 - ✅ Reportes simples generando datos correctos
 - ✅ Al menos 1 reto autónomo completado
 
-### 2. Comparte por Canvas
+### 2. Comparte por Blackboard
 
 **Repositorio**: Link de GitHub actualizado  
 **Funcionalidad**: Link de GitHub Pages con demo  
