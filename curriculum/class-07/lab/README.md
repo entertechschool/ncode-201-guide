@@ -281,7 +281,7 @@ Para estudiantes que completan el laboratorio antes del tiempo asignado:
 - ✅ Métodos implementados con `this.metodo = function() {}`
 - ✅ Sistema de presupuesto funcionando con múltiples objetos
 
-### 2. Comparte por Blackboard
+### 2. Comparte por Canvas
 
 **Repositorio**:
 - Comparte el link de tu repositorio con el código OOP funcional

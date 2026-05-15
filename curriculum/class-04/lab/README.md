@@ -233,10 +233,10 @@ git push origin main
 
 | Entregable | Dónde |
 |---|---|
-| URL del repositorio | Blackboard |
-| URL de GitHub Pages funcional | Blackboard |
-| Screenshot del PR mergeado | Blackboard |
-| Screenshot del commit de resolución de conflicto | Blackboard (puede ser post-clase) |
+| URL del repositorio | Canvas |
+| URL de GitHub Pages funcional | Canvas |
+| Screenshot del PR mergeado | Canvas |
+| Screenshot del commit de resolución de conflicto | Canvas (puede ser post-clase) |
 | README actualizado con tokens + validaciones | En el repo |
 
 ### Rúbrica (referencial)

@@ -431,7 +431,7 @@ class Movimiento {
 - ✅ Validaciones de tipo con `instanceof` y `hasOwnProperty()`
 - ✅ Interface HTML funcional con análisis de composición en tiempo real
 
-### 2. Comparte por Blackboard
+### 2. Comparte por Canvas
 
 **Repositorio**:
 - Comparte el link de tu repositorio actualizado
