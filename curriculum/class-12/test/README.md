@@ -27,7 +27,7 @@ Este test verifica tu comprensión de los conceptos de las Clases 09 a 12:
 
 ## Instrucciones
 
-1. Se realiza en Canvas durante la clase
+1. Se realiza en Blackboard durante la clase
 2. Tienes 15 minutos
 3. Individual y sin materiales de apoyo
 

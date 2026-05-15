@@ -9,11 +9,11 @@
 C12 cierra el M3. Tiene **tres responsabilidades simultáneas**:
 
 1. **Lab calificado** sobre manejo de excepciones (rúbrica referencial al final del lab).
-2. **Test diagnóstico del M3** (5 preguntas en Canvas — única clase del curso con test activo).
+2. **Test diagnóstico del M3** (5 preguntas en Blackboard — única clase del curso con test activo).
 3. **Bloque puente al M5** con el bonus de `createElement` (no obligatorio pero crítico).
 
 **Preparativos:**
-- Verifica que Canvas tenga publicado el test del M3 antes de la clase.
+- Verifica que Blackboard tenga publicado el test del M3 antes de la clase.
 - Ten listo el repo template del editor de Markdown con `marked` ya enlazado (los alumnos vienen de C11).
 - Prepara un timer visible para los 15 min del test.
 
@@ -223,8 +223,8 @@ function renderizarErrores(errores) {
 
 | Actividad | Tiempo | Qué hacer |
 |---|---|---|
-| Test en Canvas | 15 min | Proyectar countdown, ambiente silencioso |
-| Revisión en vivo | 15 min | Compartir pantalla Canvas, solo estadísticas (no nombres) |
+| Test en Blackboard | 15 min | Proyectar countdown, ambiente silencioso |
+| Revisión en vivo | 15 min | Compartir pantalla Blackboard, solo estadísticas (no nombres) |
 
 ### Durante el test
 
@@ -233,7 +233,7 @@ function renderizarErrores(errores) {
 **Tips:**
 - Proyectar un timer en pantalla.
 - Circular por el salón sin presionar (los alumnos sienten la presencia).
-- Tener Canvas listo en la pestaña de "Estadísticas de Quiz" para mostrar al final.
+- Tener Blackboard listo en la pestaña de "Estadísticas de Quiz" para mostrar al final.
 
 ### Revisión de resultados
 
@@ -248,7 +248,7 @@ function renderizarErrores(errores) {
 
 ### Si la clase se pasa de tiempo:
 - HU4 es obligatoria. El bonus (createElement) puede quedar como tarea con instrucciones claras del lab/README.md.
-- NO sacrifiques el test del M3 — está agendado en Canvas.
+- NO sacrifiques el test del M3 — está agendado en Blackboard.
 
 ### Si alguien quiere usar `Promise` o `async/await`:
 > "Excelente que ya conozcan ese tema. Hoy nos quedamos con `try/catch` sincrónico — las promesas son Code 301. Tu solución funciona, pero por consistencia con el grupo, mantente con el patrón de hoy."

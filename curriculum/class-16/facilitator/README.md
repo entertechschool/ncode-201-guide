@@ -9,11 +9,11 @@
 C16 cierra el M4. Tiene **tres responsabilidades**:
 
 1. **Lab calificado** (delegación de eventos + bonus cálculo sobre estado).
-2. **Test diagnóstico M4** en Canvas (8 preguntas).
+2. **Test diagnóstico M4** en Blackboard (8 preguntas).
 3. **Bloque puente al M5**: cálculo sobre estado como preparación para los balances de la Agenda de Gastos.
 
 **Preparativos:**
-- Verifica que Canvas tenga publicado el test del M4 antes de la clase.
+- Verifica que Blackboard tenga publicado el test del M4 antes de la clase.
 - Ten DevTools listos para mostrar "Event Listeners" en el panel de Elements.
 - Prepara una pizarra (física o digital) para dibujar "1 listener vs N listeners".
 
@@ -232,8 +232,8 @@ function calcularEstadisticas(state) {
 
 | Actividad | Tiempo | Qué hacer |
 |---|---|---|
-| Test en Canvas | 15 min | Proyectar countdown, ambiente silencioso |
-| Revisión en vivo | 15 min | Compartir pantalla Canvas, solo estadísticas (no nombres) |
+| Test en Blackboard | 15 min | Proyectar countdown, ambiente silencioso |
+| Revisión en vivo | 15 min | Compartir pantalla Blackboard, solo estadísticas (no nombres) |
 
 ### Durante el test
 
@@ -258,7 +258,7 @@ function calcularEstadisticas(state) {
 - Está OK — es opcional. Pero recomienda fuerte que lo hagan post-clase. M5 lo asume conocido.
 
 ### Si la mayoría está atrasada:
-- Sacrifica el bonus de cálculo, NO el test diagnóstico (está agendado en Canvas).
+- Sacrifica el bonus de cálculo, NO el test diagnóstico (está agendado en Blackboard).
 - HU3 (delegación) es no-negociable. Es el concepto pedagógico de la clase.
 
 ### Si alguien quiere usar `event.currentTarget`:

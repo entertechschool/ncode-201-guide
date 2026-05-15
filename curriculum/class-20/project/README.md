@@ -47,7 +47,7 @@ Tu proyecto se evalúa con la [rúbrica oficial](../../class-17/project/):
 
 ## 📝 Canales de envío
 
-- Canvas (formulario oficial del curso).
+- Blackboard (formulario oficial del curso).
 - Los links se conservan como parte de tu historial y pueden referenciarse en tu ficha de ingreso a Code 301.
 
 ---

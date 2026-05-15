@@ -251,7 +251,7 @@ gastos-compartidos/
 
 ### Qué entregar
 
-- **Link a tu repositorio de GitHub** por el canal habitual (Canvas / formulario).
+- **Link a tu repositorio de GitHub** por el canal habitual (Blackboard / formulario).
 - **Screenshot** de `index.html` abierto en el navegador mostrando "En construcción…".
 
 ---

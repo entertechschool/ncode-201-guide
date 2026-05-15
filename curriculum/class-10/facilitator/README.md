@@ -55,7 +55,7 @@ Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
 - **¿Por qué?**
   - Proporciona las herramientas que los estudiantes necesitan para completar su laboratorio.
 - **¿Qué?**
-  - Revisa las instrucciones del Laboratorio 10a en Canvas.
+  - Revisa las instrucciones del Laboratorio 10a en Blackboard.
 - **¿Cómo?**
   - Avísale a los estudiantes que este es un laboratorio con un límite de tiempo y que trabajarán en parejas.
   - Dirige a los estudiantes a los assets para este laboratorio en el repositorio de la clase.
