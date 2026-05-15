@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POO en JavaScript — Objetos que agrupan datos y comportamientos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* Instancias visuales */
+    .instances {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .instance-box {
+      flex: 1;
+      background: #161b22;
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+    }
+    .instance-box .instance-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #4ade80;
+      margin-bottom: 0.5rem;
+    }
+    .instance-box .prop {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72em;
+      color: #94a3b8;
+      margin-bottom: 0.2rem;
+    }
+    .instance-box .prop span { color: #e2e8f0; }
+
+    /* Tabla POO */
+    .oop-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+    }
+    .oop-table th {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      color: #93c5fd;
+      border-bottom: 1px solid rgba(147,197,253,0.2);
+    }
+    .oop-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78em;
+    }
+    .oop-table td:first-child { color: #93c5fd; }
+    .oop-table td:nth-child(2) { color: #94a3b8; }
+    .oop-table tr:last-child td { border-bottom: none; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 2 · Clase 07</div>
+    <h1>POO en JavaScript — Objetos que agrupan datos y comportamientos</h1>
+    <p class="subtitle">Funciones constructoras, <code>this</code>, instancias con <code>new</code> y el primer puente JavaScript ↔ HTML</p>
+  </section>
+
+  <section>
+
+    <!-- 1: Función Constructora -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> Función Constructora — El molde del objeto</h3>
+      <p class="desc">Una función constructora define la forma de un objeto. Cada vez que usas <code>new</code>, JavaScript crea una instancia nueva con sus propias propiedades.</p>
+      <pre><code><span class="tag-muted">// PascalCase por convención — es una señal visual de "constructor"</span>
+<span class="tag-purple">function</span> Movimiento(nombre, tipo, valor) {
+  <span class="tag-purple">this</span>.nombre = nombre;           <span class="tag-muted">// propiedad del objeto</span>
+  <span class="tag-purple">this</span>.tipo   = tipo;
+  <span class="tag-purple">this</span>.valor  = valor;
+  <span class="tag-purple">this</span>.fecha  = <span class="tag-purple">new</span> Date().toLocaleDateString();
+
+  <span class="tag-purple">this</span>.esIngreso = <span class="tag-purple">function</span>() {       <span class="tag-muted">// método del objeto</span>
+    <span class="tag-muted">return</span> <span class="tag-purple">this</span>.tipo === "ingreso";
+  };
+}</code></pre>
+    </div>
+
+    <!-- 2: Instanciación con new -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Instanciación — Crear objetos con <code>new</code></h3>
+      <p class="desc"><code>new</code> crea un objeto vacío, vincula <code>this</code> a ese objeto, ejecuta el constructor y retorna el objeto listo para usar.</p>
+      <pre><code><span class="tag-muted">const</span> salario = <span class="tag-green">new</span> Movimiento(<span class="tag-green">"Salario"</span>, <span class="tag-green">"ingreso"</span>, 3000);
+<span class="tag-muted">const</span> comida  = <span class="tag-green">new</span> Movimiento(<span class="tag-green">"Comida"</span>,  <span class="tag-green">"gasto"</span>,   200);
+
+salario.esIngreso();   <span class="tag-muted">// → true</span>
+comida.esIngreso();    <span class="tag-muted">// → false</span></code></pre>
+      <div class="instances">
+        <div class="instance-box">
+          <div class="instance-title">salario</div>
+          <div class="prop">nombre: <span>"Salario"</span></div>
+          <div class="prop">tipo:   <span>"ingreso"</span></div>
+          <div class="prop">valor:  <span>3000</span></div>
+        </div>
+        <div class="instance-box">
+          <div class="instance-title">comida</div>
+          <div class="prop">nombre: <span>"Comida"</span></div>
+          <div class="prop">tipo:   <span>"gasto"</span></div>
+          <div class="prop">valor:  <span>200</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Encapsulación -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Encapsulación — Datos y comportamientos juntos</h3>
+      <p class="desc">El objeto <code>Presupuesto</code> guarda sus movimientos <em>y</em> sabe cómo calcular su propio balance.</p>
+      <pre><code><span class="tag-blue">function</span> Presupuesto() {
+  <span class="tag-blue">this</span>.movimientos = [];
+
+  <span class="tag-blue">this</span>.agregarMovimiento = <span class="tag-blue">function</span>(mov) {
+    <span class="tag-blue">this</span>.movimientos.push(mov);
+  };
+
+  <span class="tag-blue">this</span>.calcularBalance = <span class="tag-blue">function</span>() {
+    <span class="tag-blue">return this</span>.movimientos.reduce((acc, m) =>
+      m.esIngreso() ? acc + m.valor : acc - m.valor, 0
+    );
+  };
+}</code></pre>
+      <table class="oop-table">
+        <tr><th>Concepto</th><th>Descripción</th><th>Ejemplo</th></tr>
+        <tr><td>new</td><td>Crea la instancia</td><td>new Movimiento()</td></tr>
+        <tr><td>this</td><td>Referencia al objeto actual</td><td>this.nombre</td></tr>
+        <tr><td>Encapsulación</td><td>Datos + métodos juntos</td><td>presupuesto.calcularBalance()</td></tr>
+      </table>
+    </div>
+
+    <!-- 4: Puente JS-HTML -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Primer Puente JS ↔ HTML — Capturar input del form</h3>
+      <p class="desc">Con 4 líneas de JS conectas un formulario HTML a tu modelo de objetos. El HTML ya viene listo — solo escribes el JS.</p>
+      <pre><code><span class="tag-muted">const</span> form = document.querySelector(<span class="tag-orange">"#form-movimiento"</span>);
+
+form.addEventListener(<span class="tag-orange">"submit"</span>, <span class="tag-muted">function</span>(event) {
+  event.preventDefault();                         <span class="tag-muted">// ← evita la recarga</span>
+  <span class="tag-muted">const</span> nombre = document.querySelector(<span class="tag-orange">"#nombre"</span>).value;
+  <span class="tag-muted">const</span> tipo   = document.querySelector(<span class="tag-orange">"#tipo"</span>).value;
+  <span class="tag-muted">const</span> valor  = parseFloat(document.querySelector(<span class="tag-orange">"#valor"</span>).value);
+  miPresupuesto.agregarMovimiento(<span class="tag-muted">new</span> Movimiento(nombre, tipo, valor));
+  form.reset();
+});</code></pre>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Función constructora</strong>
+        <span>Molde para crear objetos. Por convención lleva PascalCase y se llama con <code>new</code>.</span>
+      </div>
+      <div class="term">
+        <strong>this</strong>
+        <span>Dentro de un constructor, <code>this</code> referencia el objeto que está siendo creado.</span>
+      </div>
+      <div class="term">
+        <strong>Encapsulación</strong>
+        <span>Agrupar datos (propiedades) y comportamientos (métodos) en un mismo objeto.</span>
+      </div>
+      <div class="term">
+        <strong>event.preventDefault()</strong>
+        <span>Cancela el comportamiento por defecto del form (recargar la página al hacer submit).</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 07 <span>·</span> Módulo 2
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-07-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>

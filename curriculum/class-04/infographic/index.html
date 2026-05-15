@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Moderno y Git — La base de frontend profesional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero .badge-calificado {
+      display: inline-block;
+      background: rgba(251, 146, 60, 0.15);
+      color: #fb923c;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      margin-left: 0.5rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .hero .subtitle {
+      font-size: 1.05rem;
+      color: #94a3b8;
+    }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .card .desc {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* Git flow steps */
+    .git-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+    .git-step {
+      background: rgba(147, 197, 253, 0.1);
+      border: 1px solid rgba(147, 197, 253, 0.25);
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75em;
+      color: #93c5fd;
+      white-space: nowrap;
+    }
+    .git-arrow {
+      color: #475569;
+      font-size: 0.9em;
+      padding: 0 0.1rem;
+    }
+
+    /* Merge conflict display */
+    .conflict-box {
+      background: #161b22;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82em;
+      line-height: 1.7;
+      margin-top: 0.75rem;
+    }
+    .conflict-head { color: #d946ef; }
+    .conflict-sep  { color: #64748b; }
+    .conflict-theirs { color: #4ade80; }
+    .conflict-end  { color: #d946ef; }
+    .conflict-step {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin-top: 0.4rem;
+    }
+    .conflict-step strong { color: #fb923c; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
+    .glossary .term span {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 3rem 3rem;
+      color: #64748b;
+      font-size: 0.82rem;
+    }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="badge">Módulo 1 · Clase 04</div>
+      <div class="badge-calificado">Lab Calificado</div>
+    </div>
+    <h1>CSS Moderno y Git — La base de frontend profesional</h1>
+    <p class="subtitle">Variables CSS, validación nativa de formularios y el workflow Git que cualquier equipo te pedirá</p>
+  </section>
+
+  <!-- BLOQUES -->
+  <section>
+
+    <!-- 1: CSS Variables -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> CSS Variables — Un token para gobernarlos a todos</h3>
+      <p class="desc">Define colores, espacios y radios en <code>:root</code> una vez. Un cambio actualiza todo el sitio.</p>
+      <pre><code><span class="tag-purple">:root</span> {
+  --color-primary: #0066cc;  <span class="tag-muted">← definir una vez</span>
+  --space-md:     1rem;
+  --radius:       8px;
+}
+
+<span class="tag-purple">button</span> {
+  background:    <span class="tag-purple">var(</span>--color-primary<span class="tag-purple">)</span>;
+  padding:       <span class="tag-purple">var(</span>--space-md<span class="tag-purple">)</span>;
+  border-radius: <span class="tag-purple">var(</span>--radius<span class="tag-purple">)</span>;
+}</code></pre>
+    </div>
+
+    <!-- 2: Validación Nativa -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Validación Nativa — El navegador valida, tú no escribes JS</h3>
+      <p class="desc">Los atributos HTML dicen al navegador qué es válido. Sin una línea de JavaScript.</p>
+      <pre><code><span class="tag-muted">&lt;!-- required: no puede estar vacío --&gt;</span>
+<span class="tag-green">&lt;input</span> type="text"  required<span class="tag-green">&gt;</span>
+
+<span class="tag-muted">&lt;!-- type="email": debe ser email válido --&gt;</span>
+<span class="tag-green">&lt;input</span> type="email" required minlength="5"<span class="tag-green">&gt;</span>
+
+<span class="tag-muted">&lt;!-- pattern: debe matchear la regex --&gt;</span>
+<span class="tag-green">&lt;input</span> type="tel" pattern="[0-9]{9}" required<span class="tag-green">&gt;</span>
+
+<span class="tag-muted">&lt;!-- select y checkbox también son validables --&gt;</span>
+<span class="tag-green">&lt;select</span> required<span class="tag-green">&gt;&lt;option</span> value=""<span class="tag-green">&gt;</span>Elige<span class="tag-green">&lt;/option&gt;&lt;/select&gt;</span></code></pre>
+    </div>
+
+    <!-- 3: Git Workflow -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Git Workflow Profesional — Nunca pushees a main directamente</h3>
+      <p class="desc">El PR es donde el equipo revisa. Main solo recibe código aprobado.</p>
+      <pre><code><span class="tag-blue">git checkout -b</span> feature/contacto-validado
+<span class="tag-muted"># ... editar archivos ...</span>
+<span class="tag-blue">git add</span> index.html css/styles.css
+<span class="tag-blue">git commit -m</span> "feat: agrega validación al form de contacto"
+<span class="tag-blue">git push -u</span> origin feature/contacto-validado
+<span class="tag-muted"># → abrir Pull Request en GitHub → revisar → merge</span>
+<span class="tag-blue">git checkout</span> main
+<span class="tag-blue">git pull</span></code></pre>
+      <div class="git-flow">
+        <div class="git-step">branch</div>
+        <div class="git-arrow">→</div>
+        <div class="git-step">commits</div>
+        <div class="git-arrow">→</div>
+        <div class="git-step">push</div>
+        <div class="git-arrow">→</div>
+        <div class="git-step">Pull Request</div>
+        <div class="git-arrow">→</div>
+        <div class="git-step">merge</div>
+        <div class="git-arrow">→</div>
+        <div class="git-step">git pull</div>
+      </div>
+    </div>
+
+    <!-- 4: Merge Conflict -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Merge Conflict — No es magia, es elegir entre versiones</h3>
+      <p class="desc">Cuando dos ramas modifican la misma línea, Git lo marca. Tú decides qué queda.</p>
+      <div class="conflict-box">
+        <div class="conflict-head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
+        <div>&nbsp;&nbsp;background: blue;  <span style="color:#64748b;">← tu versión</span></div>
+        <div class="conflict-sep">=======</div>
+        <div class="conflict-theirs">&nbsp;&nbsp;background: red;   <span style="color:#64748b;">← versión de la otra rama</span></div>
+        <div class="conflict-end">&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</div>
+      </div>
+      <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.3rem;">
+        <div class="conflict-step"><strong>1.</strong> Lee ambas versiones y entiende la diferencia</div>
+        <div class="conflict-step"><strong>2.</strong> Elimina los marcadores <code style="color:#fb923c;">&lt;&lt;&lt;</code> <code style="color:#64748b;">===</code> <code style="color:#fb923c;">&gt;&gt;&gt;</code> y deja solo lo que debe quedar</div>
+        <div class="conflict-step"><strong>3.</strong> <code>git add .</code> + <code>git commit -m "merge: resuelve conflicto"</code></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>CSS Variable</strong>
+        <span>Token definido con <code>--nombre</code> en <code>:root</code>. Se usa con <code>var(--nombre)</code>.</span>
+      </div>
+      <div class="term">
+        <strong>pattern</strong>
+        <span>Atributo de <code>&lt;input&gt;</code> que recibe una regex. El navegador rechaza valores que no coincidan.</span>
+      </div>
+      <div class="term">
+        <strong>Pull Request</strong>
+        <span>Solicitud de merge en GitHub. Permite revisar código antes de integrarlo a <code>main</code>.</span>
+      </div>
+      <div class="term">
+        <strong>Merge conflict</strong>
+        <span>Dos ramas modificaron la misma línea. Git lo marca con <code>&lt;&lt;&lt;</code> <code>===</code> <code>&gt;&gt;&gt;</code> para resolución manual.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 04 <span>·</span> Módulo 1
+  </section>
+
+  <!-- EXPORT PNG -->
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+
+  <script>
+  (function(){
+    var btn = document.getElementById('export-btn');
+    var originalText = btn.textContent;
+    btn.addEventListener('click', function(){
+      btn.disabled = true;
+      btn.textContent = 'Exportando...';
+      var script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      script.onload = function(){
+        btn.style.display = 'none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body, { scale: 3, useCORS: true, windowWidth: 1080 }).then(function(canvas){
+            var link = document.createElement('a');
+            var title = document.title
+              .toLowerCase()
+              .normalize('NFD').replace(/[̀-ͯ]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '');
+            link.download = 'clase-04-' + title + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            btn.style.display = '';
+            btn.disabled = false;
+            btn.textContent = originalText;
+          }).catch(function(){
+            btn.style.display = '';
+            btn.disabled = false;
+            btn.textContent = 'Error — Intenta de nuevo';
+            setTimeout(function(){ btn.textContent = originalText; }, 2000);
+          });
+        });
+      };
+      script.onerror = function(){
+        btn.disabled = false;
+        btn.textContent = 'Error — Intenta de nuevo';
+        setTimeout(function(){ btn.textContent = originalText; }, 2000);
+      };
+      document.head.appendChild(script);
+    });
+  })();
+  </script>
+
+</body>
+</html>

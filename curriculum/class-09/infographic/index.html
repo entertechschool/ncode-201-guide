@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM como API de Objetos — Manipula el HTML con JavaScript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 19.2px; }
+    body {
+      width: 1080px;
+      margin: 0 auto;
+      background: #060913;
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+    pre {
+      background: #161b22;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    section { padding: 2rem 3rem; }
+
+    .hero {
+      text-align: center;
+      padding: 3.5rem 3rem 2.5rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: rgba(217, 70, 239, 0.15);
+      color: #d946ef;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.6rem; }
+    .hero .subtitle { font-size: 1.05rem; color: #94a3b8; }
+
+    .card {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+    .card img { max-width: 100%; border-radius: 8px; margin-top: 0.5rem; }
+
+    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-orange { border-left: 3px solid #fb923c; }
+
+    .tag-purple { color: #d946ef; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #93c5fd; }
+    .tag-orange { color: #fb923c; }
+    .tag-muted  { color: #64748b; }
+
+    /* Tabla de APIs DOM */
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+    }
+    .api-table th {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.45rem 0.7rem;
+      color: #4ade80;
+      border-bottom: 1px solid rgba(74,222,128,0.2);
+    }
+    .api-table td {
+      padding: 0.45rem 0.7rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: #94a3b8;
+    }
+    .api-table td:first-child { font-family: 'JetBrains Mono', monospace; color: #4ade80; font-size: 0.78em; }
+    .api-table tr:last-child td { border-bottom: none; }
+
+    /* Tailwind comparativa */
+    .tw-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .tw-col .tw-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .tw-col pre { margin: 0; }
+
+    /* Glosario */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .glossary .term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+
+    .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
+    .footer span { color: #475569; margin: 0 0.4rem; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="badge">Módulo 3 · Clase 09</div>
+    <h1>DOM como API de Objetos — Manipula el HTML con JavaScript</h1>
+    <p class="subtitle">Cada etiqueta es un nodo-objeto. Selecciónalo, modifícalo y transforma su contenido con Regex</p>
+  </section>
+
+  <section>
+
+    <!-- 1: DOM como árbol -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">1.</span> El DOM — Árbol de objetos vivos</h3>
+      <p class="desc">El navegador convierte el HTML en un árbol de objetos. Cada etiqueta es un nodo con propiedades (<code>.textContent</code>, <code>.classList</code>) y métodos (<code>.addEventListener</code>).</p>
+      <img src="dom-tree.png" alt="Árbol del DOM: document → html → head y body → elementos hijos">
+    </div>
+
+    <!-- 2: APIs del DOM -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> La Familia de APIs del DOM</h3>
+      <p class="desc">Una API por intención: selección, clases, estilos y transformación de texto. No las mezcles.</p>
+      <table class="api-table">
+        <tr><th>API</th><th>Para qué</th></tr>
+        <tr><td>querySelector('sel')</td><td>Trae el <strong style="color:#e2e8f0;">primer</strong> elemento que matchea — o null</td></tr>
+        <tr><td>querySelectorAll('sel')</td><td>Trae <strong style="color:#e2e8f0;">todos</strong> los elementos → NodeList iterable</td></tr>
+        <tr><td>classList.add/remove/toggle()</td><td>Modifica clases CSS del elemento</td></tr>
+        <tr><td>style.propiedad = 'valor'</td><td>Aplica estilo inline desde JavaScript</td></tr>
+        <tr><td>texto.replace(/regex/g, '...')</td><td>Transforma strings con expresiones regulares</td></tr>
+      </table>
+      <pre style="margin-top:0.75rem;"><code><span class="tag-muted">// ← 1 elemento | todos → ←</span>
+document.<span class="tag-green">querySelector</span>(<span class="tag-green">'#btn'</span>).textContent = <span class="tag-green">'Hecho'</span>;
+document.<span class="tag-green">querySelectorAll</span>(<span class="tag-green">'h2'</span>).<span class="tag-green">forEach</span>(h => h.classList.toggle(<span class="tag-green">'highlight'</span>));</code></pre>
+    </div>
+
+    <!-- 3: Regex en el DOM -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Regex — Transforma Markdown a HTML con replace()</h3>
+      <p class="desc">El método <code>replace()</code> con expresiones regulares convierte texto Markdown en etiquetas HTML reales.</p>
+      <pre><code><span class="tag-muted">function</span> markdownToHtml(texto) {
+  <span class="tag-muted">return</span> texto
+    .replace(<span class="tag-blue">/^## (.+)$/gm</span>, <span class="tag-blue">'&lt;h2&gt;$1&lt;/h2&gt;'</span>)  <span class="tag-muted">// primero ## (más específico)</span>
+    .replace(<span class="tag-blue">/^# (.+)$/gm</span>,  <span class="tag-blue">'&lt;h1&gt;$1&lt;/h1&gt;'</span>)  <span class="tag-muted">// luego #</span>
+    .replace(<span class="tag-blue">/^- (.+)$/gm</span>,  <span class="tag-blue">'&lt;li&gt;$1&lt;/li&gt;'</span>); <span class="tag-muted">// listas</span>
+}
+<span class="tag-muted">// Flag /g → reemplaza TODOS los matches, no solo el primero</span>
+<span class="tag-muted">// Flag /m → ^ y $ matchean inicio/fin de cada línea</span></code></pre>
+    </div>
+
+    <!-- 4: Tailwind utility-first -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Tailwind CSS — Utility-first en lugar de componentes</h3>
+      <p class="desc">En lugar de un componente predefinido como <code>.card</code>, combinas utilidades pequeñas directamente en el HTML. Total control, cero CSS propio.</p>
+      <div class="tw-compare">
+        <div class="tw-col">
+          <div class="tw-label" style="color:#94a3b8;">Bootstrap (componente cerrado)</div>
+          <pre><code><span class="tag-muted">&lt;div class="card"&gt;</span>
+  ...
+<span class="tag-muted">&lt;/div&gt;</span>
+
+<span class="tag-muted">&lt;button class="btn btn-primary"&gt;</span>
+  Enviar
+<span class="tag-muted">&lt;/button&gt;</span></code></pre>
+        </div>
+        <div class="tw-col">
+          <div class="tw-label" style="color:#fb923c;">Tailwind (bloques de Lego)</div>
+          <pre><code><span class="tag-orange">&lt;div class="bg-white rounded-lg shadow p-6"&gt;</span>
+  ...
+<span class="tag-orange">&lt;/div&gt;</span>
+
+<span class="tag-orange">&lt;button class="bg-blue-600 text-white py-2 px-4 rounded"&gt;</span>
+  Enviar
+<span class="tag-orange">&lt;/button&gt;</span></code></pre>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- GLOSARIO -->
+  <section>
+    <div class="glossary">
+      <div class="term">
+        <strong>Nodo DOM</strong>
+        <span>Cada etiqueta HTML representada como objeto JavaScript con propiedades y métodos.</span>
+      </div>
+      <div class="term">
+        <strong>NodeList</strong>
+        <span>Resultado de <code>querySelectorAll</code>. Colección iterable de nodos DOM.</span>
+      </div>
+      <div class="term">
+        <strong>Regex /g flag</strong>
+        <span>Flag global en la expresión regular. Sin él, <code>replace()</code> cambia solo el primer match.</span>
+      </div>
+      <div class="term">
+        <strong>classList.toggle()</strong>
+        <span>Agrega la clase si no existe, la quita si ya existe. Perfecto para botones de alternancia.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    Code 201 — EnterTechSchool <span>·</span> Clase 09 <span>·</span> Módulo 3
+  </section>
+
+  <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">
+    Exportar a PNG
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('export-btn'),orig=btn.textContent;
+    btn.addEventListener('click',function(){
+      btn.disabled=true;btn.textContent='Exportando...';
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){
+        btn.style.display='none';
+        document.fonts.ready.then(function(){
+          html2canvas(document.body,{scale:3,useCORS:true,windowWidth:1080}).then(function(c){
+            var a=document.createElement('a');
+            a.download='clase-09-'+document.title.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+            a.href=c.toDataURL('image/png');a.click();
+            btn.style.display='';btn.disabled=false;btn.textContent=orig;
+          }).catch(function(){btn.style.display='';btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);});
+        });
+      };
+      s.onerror=function(){btn.disabled=false;btn.textContent='Error';setTimeout(function(){btn.textContent=orig;},2000);};
+      document.head.appendChild(s);
+    });
+  })();
+  </script>
+</body>
+</html>
