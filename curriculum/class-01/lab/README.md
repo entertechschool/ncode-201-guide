@@ -6,13 +6,15 @@
 
 * Construir una estructura semántica con etiquetas correctas.
 * Aplicar principios básicos de accesibilidad.
+* **Integrar imágenes e iconos SVG** en una página web descargados de bancos abiertos.
 * Construir un formulario de contacto accesible con `<form>`, `<label for>` e `<input>`.
 * Verificar la navegación por teclado de la landing.
 
 ### 🔑 Conceptos Clave
 
 * **Etiquetas semánticas**: `<header>`, `<main>`, `<nav>`, `<section>`, `<footer>` y su función en la estructura de la página.
-* **Accesibilidad (A11y)**: Texto alternativo, jerarquía de encabezados, roles ARIA.
+* **Accesibilidad (A11y)**: Texto alternativo (`alt`), jerarquía de encabezados, roles ARIA, `aria-label`.
+* **Imágenes e iconos en web**: `<img>` con archivos `.jpg` (fotos) y `.svg` (iconos escalables). Bancos abiertos: [Unsplash](https://unsplash.com){:target="_blank"}, [Pexels](https://pexels.com){:target="_blank"}, [SVG Repo](https://www.svgrepo.com){:target="_blank"}.
 * **Formularios accesibles**: `<form>`, `<label for>`, `<input type>`, `<button type="submit">`, asociación `label↔input` vía `for/id`.
 
 ## Parte 1 – Crear estructura base del proyecto
@@ -106,12 +108,75 @@ product-landing-page/
 
 ## Parte 3 – Accesibilidad Básica
 
-1. Agrega `alt` a cada imagen.
-2. Usa `aria-label` si algún texto no es descriptivo.
-3. Asegúrate que el contenido sigue un orden lógico.
+Hasta ahora tu HTML tiene **texto y estructura**, pero los atributos de A11y (`alt`, `aria-label`) se notan más cuando hay **imágenes** e **iconos** que necesitan describirse para usuarios con lectores de pantalla. Vamos a agregar dos elementos al landing y aplicarles los atributos correspondientes.
+
+### 3.1 Imagen del producto en el hero (con `alt` descriptivo)
+
+Consigue una imagen representativa del producto (puedes descargarla de [Unsplash](https://unsplash.com){:target="_blank"} o [Pexels](https://pexels.com){:target="_blank"} — busca "product mockup" o algo relacionado a tu producto). Guárdala como `img/hero.jpg`.
+
+Agrégala dentro de la sección hero, **debajo** del párrafo:
+
+```html
+<section id="hero">
+  <h1>Nombre del producto</h1>
+  <p>Una frase que describa su valor</p>
+  <img src="img/hero.jpg" alt="Mockup del producto sobre un escritorio minimalista">
+</section>
+```
+
+> 💡 **Regla del `alt`:** describe **lo que la imagen comunica**, no su descripción técnica. *"Mockup del producto sobre escritorio"* es mejor que *"imagen JPG 800x600"*. Si la imagen fuera puramente decorativa (sin información), usarías `alt=""` (vacío).
+
+### 3.2 Iconos de redes sociales en el footer (con `aria-label`)
+
+> 🎓 **Aprendizaje doble:** en este sub-paso aprendes (1) cómo integrar **iconos SVG** descargados de un banco abierto a tu página web — habilidad que vas a usar en cada proyecto del curso — y (2) cómo hacerlos accesibles con `aria-label`.
+
+#### ¿Qué es un SVG y por qué se usa para iconos?
+
+**SVG** (Scalable Vector Graphics) es un formato de imagen basado en código (no en píxeles). Sus ventajas para iconos:
+
+- **Escalable sin perder calidad** — el mismo archivo se ve nítido a 16px o a 256px.
+- **Liviano** — un icono SVG pesa menos de 1 KB, vs ~10 KB de un PNG equivalente.
+- **Coloreable con CSS** — puedes cambiar su color con `fill` o `color`.
+
+**SVG Repo** ([svgrepo.com](https://www.svgrepo.com){:target="_blank"}) es un banco gratuito de >500,000 iconos SVG con licencias permisivas. Es la fuente de la industria para iconos sin costo.
+
+Los iconos SVG son visualmente claros, pero **no tienen texto** — por eso el lector de pantalla los anuncia como "enlace" sin contexto. Para resolverlo usamos `aria-label` en el `<a>` que los contiene.
+
+#### Sub-pasos
+
+1. Ve a [SVG Repo](https://www.svgrepo.com){:target="_blank"}, busca *"facebook"*, *"instagram"* y *"linkedin"*. Para cada uno: clic en el icono → botón **Download** → guarda como `facebook.svg`, `instagram.svg`, `linkedin.svg` dentro de `img/` de tu proyecto.
+
+2. Agrega al `<footer>` los enlaces con sus iconos:
+
+```html
+<footer>
+  <p>Contacto: contacto@miempresa.com</p>
+  <a href="#" aria-label="Síguenos en Facebook">
+    <img src="img/facebook.svg" alt="" width="32" height="32">
+  </a>
+  <a href="#" aria-label="Síguenos en Instagram">
+    <img src="img/instagram.svg" alt="" width="32" height="32">
+  </a>
+  <a href="#" aria-label="Síguenos en LinkedIn">
+    <img src="img/linkedin.svg" alt="" width="32" height="32">
+  </a>
+</footer>
+```
+
+> 💡 **Por qué `alt=""` en el SVG y `aria-label` en el `<a>`:** el icono es decorativo dentro del enlace, así que `alt=""` evita que el lector lo anuncie dos veces. El `aria-label` en el `<a>` es lo que el lector lee: *"Enlace: Síguenos en Facebook"*.
+
+### 3.3 Verifica el orden lógico de tabulación
+
+Cierra el mouse. Presiona `Tab` desde el inicio de la página. El foco debe recorrer en orden:
+
+1. Enlaces del `<nav>` (Inicio, Producto, Contacto)
+2. Enlaces sociales del `<footer>` (Facebook → Instagram → LinkedIn)
+
+Si el orden NO es lógico, revisa el orden de los elementos en el HTML — el `tab` sigue el orden del DOM.
 
 🏆 **Reto autónomo:**
-- Agrega un ícono de redes sociales y hazlo accesible para lector de pantalla.
+- Agrega un 4to icono de red social (TikTok, YouTube o WhatsApp) desde SVG Repo, con su `aria-label` correspondiente.
+- Prueba la landing con un lector de pantalla real ([NVDA](https://www.nvaccess.org/){:target="_blank"} en Windows, VoiceOver en Mac) y escucha cómo anuncia los enlaces sociales.
 
 ---
 
