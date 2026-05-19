@@ -2,6 +2,8 @@
 
 ¡Bienvenido al segundo laboratorio de la Landing Page de tu **producto**! En este paso, aplicarás las técnicas de **CSS Flexbox** para organizar visualmente la estructura de tu página, manteniendo la coherencia y accesibilidad.
 
+> 🎯 **Continuidad del M1:** sigues trabajando sobre el **mismo producto** que elegiste en C01 (sub-paso 0). Adapta todos los textos, secciones y ejemplos de este lab a tu producto — los snippets de código son referenciales.
+
 ---
 
 ### 🌟 Objetivos de Aprendizaje

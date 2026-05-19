@@ -21,7 +21,33 @@
 
 > **Requisitos previos:** Tener Git instalado y una cuenta en GitHub.
 
-1. **Crear el repositorio y clonar localmente**
+### 0. Elige tu producto
+
+Antes de codear, define **sobre qué producto o servicio** va a ser tu landing page. Vas a trabajar sobre el mismo proyecto durante todo el Módulo 1 (4 clases), así que elige algo que te motive — cuanto más concreto, mejor.
+
+Puede ser **real o ficticio**. Algunos ejemplos para destrabarte:
+
+- Una **app** de tu propia idea (organizador de plantas, recetario familiar, agenda de torneos amateurs…).
+- Un **negocio familiar** o de alguien cercano (panadería del barrio, taller mecánico, peluquería).
+- Un **hobby que quieras monetizar** (clases de guitarra, fotografía de eventos, comida casera por encargo).
+- Un **evento** real o ficticio (boda, hackathon, conferencia local, festival de cine).
+- Un **servicio profesional** que conozcas (asesoría de impuestos, fisioterapia, diseño de interiores).
+
+En un comentario o nota local, completa:
+
+```
+Producto/servicio: _____________
+A quién va dirigido (público objetivo): _____________
+Propuesta de valor en 1 línea: _____________
+```
+
+> 💡 **Por qué importa:** un landing genérico ("Mi producto") se siente plástico y dificulta saber qué describir en el `alt`, qué tono usar, qué imágenes elegir. Con un producto concreto, cada decisión se vuelve obvia. Y al final, lo subes a tu GitHub como portafolio real.
+
+**A partir de este punto**, todos los `<h1>`, `<p>`, imágenes, hashtags y textos del lab los adaptas a tu producto. Las plantillas de código de abajo son **referenciales** — los textos los reemplazas con los tuyos.
+
+---
+
+### 1. Crear el repositorio y clonar localmente
 
 ```bash
 git init # Si lo creas local
@@ -37,7 +63,7 @@ git clone # Si lo creaste en la nube y quieres clonarlo en tu local
 
 
 
-2. **Estructura de carpetas sugerida:**
+### 2. Estructura de carpetas sugerida
 
 ```
 product-landing-page/
@@ -48,7 +74,7 @@ product-landing-page/
 └── README.md
 ```
 
-3. **Contenido base en `index.html`:**
+### 3. Contenido base en `index.html`
 
 ```html
 <!DOCTYPE html>

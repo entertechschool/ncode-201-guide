@@ -4,6 +4,8 @@
 
 En este laboratorio consolidas tres habilidades profesionales: refactorizar tu landing con **CSS Variables**, agregar **validación nativa** al formulario de C01 y aplicar un **flujo Git profesional** completo, incluyendo la resolución de un conflicto.
 
+> 🎯 **Continuidad del M1:** este es el lab calificado del módulo sobre **tu producto** (el que elegiste en C01). Las CSS Variables que extraigas deben reflejar el branding de tu producto (colores, tipografía). El form validado de P2 captura datos relevantes a tu producto/servicio.
+
 ---
 
 ### 🎯 Objetivos de Aprendizaje

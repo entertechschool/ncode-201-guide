@@ -2,6 +2,8 @@
 
 En este laboratorio combinas **CSS Grid esencial** (lo mínimo para reconocerlo y saber cuándo usarlo) con **Flexbox profundo** (`flex-wrap`, `flex-basis`, `align-self`) y verificas responsividad real con un **breakpoint en DevTools**.
 
+> 🎯 **Continuidad del M1:** sigues sobre el **mismo producto** que elegiste en C01. Los testimonios y la página de compra que crearás hoy son los de TU producto (testimonios reales o ficticios sobre tu app/negocio/servicio, no genéricos).
+
 ---
 
 ### 🎯 Objetivos de Aprendizaje
