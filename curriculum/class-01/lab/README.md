@@ -250,9 +250,6 @@ Vas a agregar a tu landing un **formulario de contacto** real. Es la primera apl
 1. **Cierra el mouse** y trata de navegar tu landing solo con la tecla `Tab`.
 2. El orden de foco debe ser lógico: logo → menú → CTA → secciones de contenido → campos del formulario → botón enviar.
 3. En cada paso, debes **ver visualmente** qué elemento está enfocado (el navegador dibuja un contorno).
-4. Toma un **screenshot** mostrando el foco visible en al menos 3 elementos distintos (incluyendo al menos un campo del form).
-
-✅ **Listo cuando:** el screenshot muestra navegación por teclado funcional, el orden es lógico y los `<label>` están bien asociados.
 
 ---
 
@@ -277,7 +274,6 @@ Vas a agregar a tu landing un **formulario de contacto** real. Es la primera apl
 * Entregar:
   * URL del repositorio
   * URL de GitHub Pages
-  * Screenshot del checkpoint Tab nav
 
 ---
 
