@@ -47,7 +47,6 @@ body {
 
 > 💡 **¿Qué hace `box-sizing: border-box`?** Por defecto, el navegador suma `padding` y `border` al ancho que declaras. Si pones `width: 200px` con `padding: 20px`, el elemento mide 240px reales. Con `box-sizing: border-box`, el ancho declarado **incluye** padding y border — `width: 200px` siempre mide 200px. Es el "reset universal" del frontend moderno: simplifica TODO el cálculo de layouts.
 
-> ⚠️ **Si tu CSS de C01 tenía `main { overflow-x: auto; }`**, elimínalo — no aportaba nada y puede generar confusiones más adelante.
 
 ### 1.2 Flexbox básico en el `<nav>`
 
@@ -273,42 +272,35 @@ Y el CSS base (móvil) usando `flex-wrap`:
 
 ### 3.2 Mobile-first con 3 breakpoints
 
-Tus estilos base (los que escribiste en Parte 1 y Parte 2) ya son el comportamiento **móvil**: hero apilado, tarjetas a 280px+ (que naturalmente caen a 1 columna en pantallas pequeñas), galería con `width: 100%`.
+Tus estilos base (los que escribiste en Parte 1 y Parte 2) ya son el comportamiento **móvil**: hero apilado, tarjetas con `flex-basis: 280px` (que naturalmente caen a 1 columna en pantallas pequeñas), galería con `width: 100%`.
 
 Ahora agregas al **final** de tu `styles.css` los media queries que **modifican** ese comportamiento al crecer la pantalla:
 
 ```css
 /* ===== TABLET (640px en adelante) ===== */
 @media (min-width: 640px) {
-  .cards .card {
-    flex-basis: calc(50% - 0.5rem);   /* 2 columnas de tarjetas */
-  }
   .galeria img {
-    width: calc(50% - 0.25rem);        /* 2 imágenes por fila */
+    width: 48%;   /* 2 imágenes por fila (el ~4% restante absorbe el gap) */
   }
 }
 
 /* ===== ESCRITORIO (1024px en adelante) ===== */
 @media (min-width: 1024px) {
   #hero {
-    flex-direction: row;               /* hero lado a lado (sobrescribe column de P1.3) */
+    flex-direction: row;       /* hero lado a lado (sobrescribe column de P1.3) */
     text-align: left;
   }
   #hero img {
-    max-width: 50%;                    /* la imagen no ocupa todo el ancho en desktop */
-  }
-  .cards .card {
-    flex-basis: calc(33.33% - 0.66rem);   /* 3 columnas de tarjetas */
+    max-width: 50%;             /* la imagen no ocupa todo el ancho en desktop */
   }
   .galeria img {
-    width: calc(25% - 0.375rem);          /* 4 imágenes por fila */
+    width: 23%;                  /* 4 imágenes por fila */
   }
 }
 ```
 
 > 💡 **¿Por qué mobile-first?** El 60%+ del tráfico web es móvil. Si tus estilos base son móvil y la pantalla CRECE, **agregar** estilos es natural. Si fuera al revés (desktop-first), tendrías que "quitar" estilos en cada media query — más complicado de mantener.
 
-> 💡 **Sobre las tarjetas:** en Parte 2 definiste `flex-basis: 280px` como tamaño base. Esos breakpoints lo **sobrescriben** con porcentajes precisos para tener control exacto del número de columnas por dispositivo (1 → 2 → 3). El `flex-basis: 280px` sigue actuando como fallback si no se cumple ningún breakpoint.
 
 ### 3.3 Verificación en DevTools — los 3 niveles
 
@@ -321,7 +313,6 @@ Ahora agregas al **final** de tu `styles.css` los media queries que **modifican*
 | **640–1023px (tablet)** | Hero apilado todavía; tarjetas en 2 columnas; galería en 2 columnas |
 | **≥1024px (escritorio)** | Hero lado a lado; tarjetas en 3 columnas; galería en 4 columnas |
 
-3. Toma **screenshots de los 3 estados** y guárdalos en `img/` para subirlos al README del repo.
 
 ✅ **Checkpoint Parte 3:** los 3 screenshots muestran transiciones limpias en cada breakpoint. Sin scroll horizontal en ningún tamaño.
 
@@ -347,9 +338,6 @@ Ahora agregas al **final** de tu `styles.css` los media queries que **modifican*
 
 ## 📝 Instrucciones de Entrega
 
-* Actualiza el `README.md` del repo incluyendo:
-  * Los **3 breakpoints** que usaste y por qué los elegiste.
-  * Screenshots de los 3 niveles (móvil, tablet, escritorio).
 * Publica la página en GitHub Pages.
 * Entrega:
   * URL del repositorio
@@ -361,6 +349,6 @@ Ahora agregas al **final** de tu `styles.css` los media queries que **modifican*
 
 * **`gap` reemplaza al hack viejo de `margin`** — úsalo siempre en Flexbox moderno.
 * **Comenta tus media queries** — `/* ===== TABLET ===== */` te salva tiempo cuando revisas en 6 meses.
-* **`box-sizing: border-box` al inicio** — sin esto, los `calc()` de los breakpoints fallan al sumar padding.
+* **`box-sizing: border-box` al inicio** — sin esto, los porcentajes + padding desbordan inesperadamente.
 * Valida tu HTML en [W3C Validator](https://validator.w3.org/){:target="_blank"}.
 * Prueba siempre en DevTools modo responsive ANTES de pushear.
