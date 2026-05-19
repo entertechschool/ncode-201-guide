@@ -72,25 +72,27 @@ header nav {
 
 ### 1.3 Flexbox básico en el hero (con la imagen heredada de C01)
 
-El hero ya tiene `<h1>`, `<p>` y `<img>` (lo agregaste en C01 P3.1). Hoy lo organizas con Flexbox para que el texto quede al lado de la imagen:
+El hero ya tiene `<h1>`, `<p>` y `<img>` (lo agregaste en C01 P3.1). Hoy lo organizas con Flexbox.
+
+> 💡 **Mobile-first**: vamos a empezar definiendo el estado **móvil** del hero (texto y imagen apilados verticalmente) como base. En la Parte 3 agregaremos un media query que lo cambie a horizontal en pantallas grandes. Es la estrategia profesional moderna.
 
 ```css
 #hero {
   display: flex;
+  flex-direction: column;     /* base: apilado en móvil */
   align-items: center;
   gap: 2rem;
   padding: 2rem;
+  text-align: center;
 }
 
 #hero img {
-  max-width: 50%;
+  max-width: 100%;
   height: auto;
 }
 ```
 
-✅ **Checkpoint:** en pantalla ancha, el `<h1>` y `<p>` quedan a un lado, la imagen al otro. Si quedan apilados, revisa que `#hero` tenga `display: flex`.
-
-> 💡 En la Parte 3 vamos a hacer que esto se apile verticalmente en móvil — por ahora basta con que se vea bien en desktop.
+✅ **Checkpoint:** el hero muestra el título, párrafo e imagen apilados verticalmente, centrados. Aunque tu pantalla sea ancha, por ahora se ve apilado — eso es el comportamiento móvil por defecto. En P3 lo haremos lado a lado en desktop.
 
 ### 1.4 Flexbox básico en el `<footer>` (con los iconos sociales heredados de C01)
 
@@ -127,16 +129,20 @@ footer a {
 
 ### 2.1 `flex-grow` aplicado al logo del nav
 
-Marca el primer enlace del `<nav>` con `class="logo"` (en `index.html`):
+En C01 P2 creaste el nav con 3 enlaces: Inicio, Producto, Contacto. Ahora vas a **agregar un primer enlace al inicio** que actúe como logo (con el nombre de tu producto) y lo vas a marcar con `class="logo"`.
+
+Modifica el `<nav>` de `index.html` agregando el logo como **primer enlace**:
 
 ```html
 <nav>
-  <a href="#" class="logo">Mi Producto</a>
+  <a href="#" class="logo">Mi Producto</a>   <!-- NUEVO: nombre de tu producto -->
   <a href="#">Inicio</a>
   <a href="#">Producto</a>
   <a href="#">Contacto</a>
 </nav>
 ```
+
+> 💡 Reemplaza `"Mi Producto"` con el nombre real del producto que elegiste en C01 sub-paso 0.
 
 Luego agrega la regla CSS:
 
@@ -155,7 +161,12 @@ header nav .logo {
 
 En C01, la sección Características era un `<ul>` con `<li>` simples. Hoy la transformas en una grilla de tarjetas con iconos — patrón que vas a usar en CADA landing page profesional.
 
-**Paso A — HTML.** Reemplaza el `<ul>` de Características en `index.html` por tarjetas:
+**Paso A — HTML.** En `index.html`, ubica la sección Características de C01 (`<section><h2>Características</h2><ul>...</ul></section>`) y **modifícala así**:
+
+1. Agrega `id="caracteristicas"` al `<section>`.
+2. Reemplaza el `<ul>` con `<li>`s por un `<div class="cards">` con 3 `<article class="card">`.
+
+Resultado final:
 
 ```html
 <section id="caracteristicas">
@@ -262,45 +273,42 @@ Y el CSS base (móvil) usando `flex-wrap`:
 
 ### 3.2 Mobile-first con 3 breakpoints
 
-Al **final** de tu `styles.css`, agrega los breakpoints en orden ascendente (mobile-first):
+Tus estilos base (los que escribiste en Parte 1 y Parte 2) ya son el comportamiento **móvil**: hero apilado, tarjetas a 280px+ (que naturalmente caen a 1 columna en pantallas pequeñas), galería con `width: 100%`.
+
+Ahora agregas al **final** de tu `styles.css` los media queries que **modifican** ese comportamiento al crecer la pantalla:
 
 ```css
 /* ===== TABLET (640px en adelante) ===== */
 @media (min-width: 640px) {
   .cards .card {
-    flex-basis: calc(50% - 0.5rem);
+    flex-basis: calc(50% - 0.5rem);   /* 2 columnas de tarjetas */
   }
   .galeria img {
-    width: calc(50% - 0.25rem);
+    width: calc(50% - 0.25rem);        /* 2 imágenes por fila */
   }
 }
 
 /* ===== ESCRITORIO (1024px en adelante) ===== */
 @media (min-width: 1024px) {
   #hero {
-    flex-direction: row;
+    flex-direction: row;               /* hero lado a lado (sobrescribe column de P1.3) */
     text-align: left;
   }
+  #hero img {
+    max-width: 50%;                    /* la imagen no ocupa todo el ancho en desktop */
+  }
   .cards .card {
-    flex-basis: calc(33.33% - 0.66rem);
+    flex-basis: calc(33.33% - 0.66rem);   /* 3 columnas de tarjetas */
   }
   .galeria img {
-    width: calc(25% - 0.375rem);
+    width: calc(25% - 0.375rem);          /* 4 imágenes por fila */
   }
 }
 ```
 
-Y agrega los estilos base de móvil (`<640px`) **arriba** en tu CSS, para que la columna vertical sea el comportamiento por defecto:
+> 💡 **¿Por qué mobile-first?** El 60%+ del tráfico web es móvil. Si tus estilos base son móvil y la pantalla CRECE, **agregar** estilos es natural. Si fuera al revés (desktop-first), tendrías que "quitar" estilos en cada media query — más complicado de mantener.
 
-```css
-/* Móvil por defecto: hero apilado */
-#hero {
-  flex-direction: column;
-  text-align: center;
-}
-```
-
-> 💡 **¿Por qué mobile-first?** El 60%+ del tráfico web es móvil. Si tus estilos base son móvil y la pantalla CRECE, agregar estilos es natural. Si fuera al revés (desktop-first), tendrías que "quitar" estilos en cada media query — más complicado de mantener.
+> 💡 **Sobre las tarjetas:** en Parte 2 definiste `flex-basis: 280px` como tamaño base. Esos breakpoints lo **sobrescriben** con porcentajes precisos para tener control exacto del número de columnas por dispositivo (1 → 2 → 3). El `flex-basis: 280px` sigue actuando como fallback si no se cumple ningún breakpoint.
 
 ### 3.3 Verificación en DevTools — los 3 niveles
 
