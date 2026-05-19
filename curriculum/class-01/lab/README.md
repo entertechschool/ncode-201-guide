@@ -217,13 +217,13 @@ Vas a agregar a tu landing un **formulario de contacto** real. Es la primera apl
   <h2>Contáctanos</h2>
   <form>
     <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombre">
+    <input type="text" id="nombre">
 
     <label for="email">Correo electrónico</label>
-    <input type="email" id="email" name="email">
+    <input type="email" id="email">
 
     <label for="mensaje">Mensaje</label>
-    <input type="text" id="mensaje" name="mensaje">
+    <textarea id="mensaje" placeholder="Escribe aqui un mensaje..."></textarea>
 
     <button type="submit">Enviar</button>
   </form>
