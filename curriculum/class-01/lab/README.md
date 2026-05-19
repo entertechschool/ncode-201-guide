@@ -269,7 +269,6 @@ Vas a agregar a tu landing un **formulario de contacto** real. Es la primera apl
 
 ## 📝 Instrucciones de Entrega
 
-* README con explicación de estructura semántica y formulario accesible.
 * Activar GitHub Pages.
 * Entregar:
   * URL del repositorio
