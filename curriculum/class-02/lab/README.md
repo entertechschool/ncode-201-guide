@@ -152,7 +152,6 @@ En C01 P4 construiste un formulario accesible dentro de `<section id="contacto">
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  max-width: 400px;
 }
 
 #contacto label {
