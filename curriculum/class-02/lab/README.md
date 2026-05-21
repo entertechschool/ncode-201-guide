@@ -104,7 +104,7 @@ El hero ya tiene `<h1>`, `<p>` y `<img>` (lo agregaste en C01 P3.1). Hoy lo orga
 }
 
 #hero img {
-  max-width: 100%; //Puedes medir lo que tú quieras (tu tamaño nativo), PERO tu tope máximo permitido es el 100% de tu padre
+  max-width: 100%; /*Puedes medir lo que tú quieras (tu tamaño nativo), PERO tu tope máximo permitido es el 100% de tu padre*/
   height: auto;
 }
 ```
