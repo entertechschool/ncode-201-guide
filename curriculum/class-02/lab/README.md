@@ -69,7 +69,25 @@ header nav {
 
 ✅ **Checkpoint:** los enlaces del nav están alineados en una fila horizontal con espacio entre ellos.
 
-### 1.3 Flexbox básico en el hero (con la imagen heredada de C01)
+### 1.3 Estilos a los enlaces del nav
+
+Por defecto, el navegador subraya todos los `<a>` y los pinta de azul. En un nav profesional, queremos los enlaces **sin subrayado**, con color sólido del tema y un peso de letra que destaque:
+
+```css
+nav a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+```
+
+* **`text-decoration: none`** quita el subrayado default.
+* **`color: #1a1a1a`** usa el color de tu tema (mismo que el body).
+* **`font-weight: 700`** los hace bold para que destaquen.
+
+✅ **Checkpoint:** los enlaces del nav se ven como texto bold negro, sin subrayado, claramente clickeables.
+
+### 1.4 Flexbox básico en el hero (con la imagen heredada de C01)
 
 El hero ya tiene `<h1>`, `<p>` y `<img>` (lo agregaste en C01 P3.1). Hoy lo organizas con Flexbox.
 
@@ -93,7 +111,7 @@ El hero ya tiene `<h1>`, `<p>` y `<img>` (lo agregaste en C01 P3.1). Hoy lo orga
 
 ✅ **Checkpoint:** el hero muestra el título, párrafo e imagen apilados verticalmente, centrados. Aunque tu pantalla sea ancha, por ahora se ve apilado — eso es el comportamiento móvil por defecto. En P3 lo haremos lado a lado en desktop.
 
-### 1.4 Flexbox básico en el `<footer>` (con los iconos sociales heredados de C01)
+### 1.5 Flexbox básico en el `<footer>` (con los iconos sociales heredados de C01)
 
 El footer ahora tiene `<p>Contacto:...</p>` + 3 enlaces sociales con iconos SVG (Facebook, Instagram, LinkedIn — los agregaste en C01 P3.2). Hoy lo distribuyes con Flexbox: contacto a la izquierda, iconos a la derecha.
 
@@ -115,7 +133,59 @@ footer a {
 
 > 💡 **`display: inline-flex` en los enlaces del footer**: hace que cada `<a>` se comporte como inline (en la línea del texto) pero internamente alinee su contenido con Flexbox. Útil cuando un enlace contiene un icono + texto, o solo un icono.
 
-✅ **Checkpoint Parte 1:** El landing se ve "ordenado" — el nav distribuido, el hero con texto y imagen lado a lado, el footer con contacto a la izquierda e iconos a la derecha. Todo respira gracias a `gap` y `padding`.
+✅ **Checkpoint:** el footer muestra el contacto a la izquierda y los iconos a la derecha, con buen padding.
+
+### 1.6 Flexbox aplicado al formulario de contacto (heredado de C01 P4)
+
+En C01 P4 construiste un formulario accesible dentro de `<section id="contacto">` con campos `nombre`, `email`, `mensaje` y un botón Enviar. Hoy lo estilizas con Flexbox para que se vea profesional: labels e inputs apilados verticalmente, con espacio uniforme y centrado.
+
+```css
+#contacto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+#contacto form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+#contacto label {
+  font-weight: 600;
+}
+
+#contacto input {
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font: inherit;
+}
+
+#contacto button {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+```
+
+Explicación de las decisiones Flexbox:
+
+* **`#contacto` con `flex-direction: column; align-items: center`** centra el form horizontalmente en la página.
+* **`#contacto form` con `flex-direction: column; gap: 0.5rem`** apila labels e inputs verticalmente con un espacio uniforme. **Sin Flexbox**, tendrías que usar `margin-bottom` en cada elemento — más código, menos consistente.
+* **`max-width: 400px`** evita que el form se estire en pantallas anchas (legibilidad).
+* **`font: inherit`** en el input hereda la tipografía del body (sin esto, los inputs usan la fuente fea del navegador).
+
+✅ **Checkpoint Parte 1:** El landing se ve "ordenado" — el nav distribuido con enlaces sin subrayado, el hero apilado y centrado, el footer con contacto e iconos balanceados, y el formulario centrado con labels e inputs claramente apilados.
 
 🏆 **Reto autónomo:**
 - Agrega una segunda fila al footer con un mini-enlace "Términos y Condiciones" y "Política de Privacidad" usando Flexbox interno. Pista: convierte el footer en `flex-direction: column` o agrega una `<div>` debajo con su propio Flexbox.
@@ -288,7 +358,7 @@ Ahora agregas al **final** de tu `styles.css` los media queries que **modifican*
 /* ===== ESCRITORIO (1024px en adelante) ===== */
 @media (min-width: 1024px) {
   #hero {
-    flex-direction: row;       /* hero lado a lado (sobrescribe column de P1.3) */
+    flex-direction: row;       /* hero lado a lado (sobrescribe column de P1.4) */
     text-align: left;
   }
   #hero img {
