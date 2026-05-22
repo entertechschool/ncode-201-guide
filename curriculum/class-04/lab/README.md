@@ -35,9 +35,9 @@ En este laboratorio consolidas tres habilidades profesionales: refactorizar tu l
   --color-text: #1a1a1a;
   --color-bg: #f5f5f5;
   --color-danger: #cc0000;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 2rem;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
   --font-base: system-ui, sans-serif;
   --radius: 8px;
 }
@@ -183,7 +183,7 @@ git pull
 =======
   background: red;
 >>>>>>> main
-  padding: 1rem;
+  padding: 16px;
 }
 ```
 
@@ -192,7 +192,7 @@ git pull
 ```css
 .btn {
   background: var(--color-primary);
-  padding: 1rem;
+  padding: 16px;
 }
 ```
 

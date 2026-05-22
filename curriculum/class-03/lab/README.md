@@ -110,8 +110,8 @@ En `styles.css`, después de tus reglas existentes, agrega temporalmente:
 .planes {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 24px;
+  padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -119,14 +119,14 @@ En `styles.css`, después de tus reglas existentes, agrega temporalmente:
 .plan {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 24px;
   background: #fff;
 }
 
 .plan .precio {
-  font-size: 2rem;
+  font-size: 32px;
   font-weight: 700;
-  margin: 1rem 0;
+  margin: 16px 0;
 }
 ```
 
@@ -135,7 +135,7 @@ Explicación pieza por pieza:
 * **`display: grid`** activa el modelo Grid en `.planes` — convierte a `.planes` en un **grid container** y sus hijos directos (las `<article class="plan">`) en **grid items**.
 * **`grid-template-columns: 1fr 1fr 1fr`** declara las columnas de la grilla **explícitamente**: una columna por cada valor que escribes. Aquí pones **3 valores** (`1fr 1fr 1fr`), entonces tienes **3 columnas**.
 * **`1fr`** = "una unidad de **fracción** del espacio disponible". Si las 3 columnas son `1fr 1fr 1fr`, cada una ocupa **1/3** del ancho. Si pusieras `2fr 1fr 1fr`, la primera ocuparía la mitad y las otras dos un cuarto cada una.
-* **`gap: 1.5rem`** separa las cards (mismo concepto que ya usaste en Flex en C02).
+* **`gap: 24px`** separa las cards (mismo concepto que ya usaste en Flex en C02).
 
 #### Atajo: `repeat()` cuando todas las columnas son iguales
 
@@ -165,8 +165,8 @@ Reemplaza la regla `.planes` por:
 .planes {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 24px;
+  padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -279,9 +279,9 @@ Agrega al CSS:
     "main"
     "footer";
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 16px;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 16px;
 }
 
 .faq-layout header  { grid-area: header; }
@@ -303,7 +303,7 @@ Agrega al CSS:
 
 .faq-nav {
   background: #f5f5f5;
-  padding: 1rem;
+  padding: 16px;
   border-radius: 8px;
 }
 
@@ -313,12 +313,12 @@ Agrega al CSS:
 }
 
 .faq-main {
-  padding: 1rem;
+  padding: 16px;
 }
 
 .faq-main details {
   border-bottom: 1px solid #e0e0e0;
-  padding: 1rem 0;
+  padding: 16px 0;
 }
 
 .faq-main summary {

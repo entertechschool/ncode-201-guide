@@ -55,15 +55,15 @@ Aplica los 4 verbos esenciales de Flexbox al nav:
 ```css
 header nav {
   display: flex;
-  gap: 1rem;
+  gap: 16px;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 16px;
 }
 ```
 
 * **`display: flex`** activa Flexbox en el contenedor.
-* **`gap: 1rem`** separa cada enlace.
+* **`gap: 16px`** separa cada enlace.
 * **`justify-content: space-between`** distribuye los enlaces horizontalmente.
 * **`align-items: center`** los alinea verticalmente en el centro.
 
@@ -98,8 +98,8 @@ El hero ya tiene `<h1>`, `<p>` y `<img>` (lo agregaste en C01 P3.1). Hoy lo orga
   display: flex;
   flex-direction: column;     /* base: apilado en móvil */
   align-items: center;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 32px;
+  padding: 32px;
   text-align: center;
 }
 
@@ -120,8 +120,8 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  gap: 1rem;
+  padding: 16px 32px;
+  gap: 16px;
   background: #f5f5f5;
 }
 
@@ -144,13 +144,13 @@ En C01 P4 construiste un formulario accesible dentro de `<section id="contacto">
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 32px;
 }
 
 #contacto form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
   width: 100%;
 }
 
@@ -159,15 +159,15 @@ En C01 P4 construiste un formulario accesible dentro de `<section id="contacto">
 }
 
 #contacto input {
-  padding: 0.5rem;
+  padding: 8px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font: inherit;
 }
 
 #contacto button {
-  margin-top: 1rem;
-  padding: 0.75rem;
+  margin-top: 16px;
+  padding: 12px;
   background: #1a1a1a;
   color: #fff;
   border: none;
@@ -180,7 +180,7 @@ En C01 P4 construiste un formulario accesible dentro de `<section id="contacto">
 Explicación de las decisiones Flexbox:
 
 * **`#contacto` con `flex-direction: column; align-items: center`** centra el form horizontalmente en la página.
-* **`#contacto form` con `flex-direction: column; gap: 0.5rem`** apila labels e inputs verticalmente con un espacio uniforme. **Sin Flexbox**, tendrías que usar `margin-bottom` en cada elemento — más código, menos consistente.
+* **`#contacto form` con `flex-direction: column; gap: 8px`** apila labels e inputs verticalmente con un espacio uniforme. **Sin Flexbox**, tendrías que usar `margin-bottom` en cada elemento — más código, menos consistente.
 * **`max-width: 400px`** evita que el form se estire en pantallas anchas (legibilidad).
 * **`font: inherit`** en el input hereda la tipografía del body (sin esto, los inputs usan la fuente fea del navegador).
 
@@ -265,7 +265,7 @@ Resultado final:
 
 ```css
 #caracteristicas {
-  padding: 2rem;
+  padding: 32px;
 }
 
 .cards {
@@ -278,7 +278,7 @@ Resultado final:
 .card {
   flex-basis: 280px;
   flex-grow: 1;
-  padding: 1rem;
+  padding: 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background: #fff;
@@ -322,14 +322,14 @@ Y el CSS base (móvil) usando `flex-wrap`:
 
 ```css
 #galeria {
-  padding: 2rem;
+  padding: 32px;
 }
 
 .galeria {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .galeria img {
