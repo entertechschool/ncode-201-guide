@@ -2,7 +2,7 @@
 
 ## 🎯 Objetivo General
 
-Dominar CSS Grid en 3 niveles (esencial + intermedio + areas) sobre 2 páginas nuevas de tu landing — y construir el criterio claro de cuándo usar Grid vs Flex.
+Dominar CSS Grid en 3 niveles (esencial mobile-first + intermedio + areas) sobre 2 páginas nuevas de tu landing — y construir el criterio claro de cuándo usar Grid vs Flex.
 
 ---
 
@@ -16,68 +16,88 @@ Dominar CSS Grid en 3 niveles (esencial + intermedio + areas) sobre 2 páginas n
 
 ---
 
-## 🔗 Antes de Grid: enlazar múltiples páginas
+## 🔗 Antes de Grid: nav multi-página + icono FAQ
 
 Hoy tu landing pasa de ser **1 archivo** a ser **3 páginas** (`index.html`, `precios.html`, `faq.html`).
 
-### Rutas relativas — los 3 tipos de enlace:
+### Rutas relativas + icono para FAQ:
 
 ```html
-<a href="precios.html">Precios</a>             <!-- Otro archivo -->
-<a href="#contacto">Contacto</a>                <!-- Ancla en la misma página -->
-<a href="index.html#contacto">Contacto</a>      <!-- Otra página + ancla -->
+<nav>
+  <a href="index.html" class="logo">Mi Producto</a>
+  <a href="index.html">Inicio</a>
+  <a href="precios.html">Precios</a>
+  <a href="faq.html" id="icono-faq" aria-label="Preguntas frecuentes">
+    <img src="img/faq.svg" alt="" width="24" height="24">
+  </a>
+</nav>
 ```
 
-* Mismo nav, repetido en las 3 páginas (copy-paste consciente).
-* Frameworks como React/Vue resuelven esto con componentes — ahí llegarás.
+* **`href="precios.html"`** → archivo en la misma carpeta. Es la forma estándar.
+* **Icono SVG + `aria-label`** → patrón moderno para enlaces utilitarios (FAQ, ayuda, perfil).
+* Mismo nav, repetido en las 3 páginas (copy-paste consciente). Frameworks lo resuelven con componentes — ahí llegarás.
 
 ---
 
-## 🧬 Parte 1: Grid esencial — fundamento de columnas
+## 🧬 Parte 1: Grid básico mobile-first
 
-### Forma explícita primero:
+### Móvil — solo `display: grid` (1 columna por defecto)
 
 ```css
 .planes {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;   /* 3 columnas, 1 valor por cada una */
-  gap: 1.5rem;
+  gap: 24px;
 }
 ```
 
-* `display: grid` activa el modelo.
-* `grid-template-columns: 1fr 1fr 1fr` → declara **3 columnas explícitas**.
-* `1fr` = "1 fracción del espacio disponible".
-* `gap` separa (mismo concepto de C02).
+* Sin declarar `grid-template-columns`, **el grid usa 1 columna por defecto** — perfecto para móvil.
+* No necesitas escribir nada para el caso móvil más allá de activar Grid.
 
-### Atajo con `repeat()` cuando son iguales:
+### Desktop — media queries explícitas
 
 ```css
-grid-template-columns: repeat(3, 1fr);   /* equivale a 1fr 1fr 1fr */
+@media (min-width: 640px) {
+  .planes { grid-template-columns: 1fr 1fr; }   /* tablet: 2 cols */
+}
+
+@media (min-width: 1024px) {
+  .planes { grid-template-columns: 1fr 1fr 1fr 1fr; }  /* desktop: 4 cols */
+}
 ```
 
-`repeat()` es **azúcar sintáctica** — útil con 10+ columnas iguales.
+* `1fr` = "1 fracción del espacio disponible".
+* `1fr 1fr 1fr 1fr` → 4 columnas iguales (4 planes Free/Starter/Pro/Enterprise).
 
-**Aplicado a:** `precios.html` — 3 cards Free / Pro / Enterprise.
+### Atajo con `repeat()`:
+
+```css
+grid-template-columns: repeat(4, 1fr);   /* equivale a 1fr 1fr 1fr 1fr */
+```
+
+`repeat()` es **azúcar sintáctica** — brilla con 5, 10, 12 columnas iguales.
+
+**Aplicado a:** `precios.html` — 4 cards en grid responsive.
 
 ---
 
-## 🧠 Parte 1.B: Grid intermedio — `auto-fit` + `minmax`
+## 🧠 Parte 1.B: Grid intermedio — `auto-fit` + `minmax` (cantidad variable)
 
 ```css
-.planes {
+.logos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
 }
 ```
 
 * **`auto-fit`** → "ajusta cuántas columnas caben SOLO".
-* **`minmax(250px, 1fr)`** → mínimo 250px, máximo 1 fracción.
+* **`minmax(150px, 1fr)`** → mínimo 150px, máximo 1 fracción.
 
-**Resultado:** el layout se adapta al ancho **SIN media queries**.
+**Resultado:** el grid se adapta al ancho **SIN media queries**.
 
-> 💡 "Grid + auto-fit + minmax" reemplaza media queries para layouts de cards.
+> 💡 **¿Cuándo cada uno?** Media queries explícitas cuando la cantidad es fija (4 planes). `auto-fit + minmax` cuando la cantidad puede variar (logos, items de DB).
+
+**Aplicado a:** sección "Marcas que confían" de `precios.html` — 6+ logos donde la cantidad puede crecer.
 
 ---
 
@@ -93,10 +113,10 @@ grid-template-columns: repeat(3, 1fr);   /* equivale a 1fr 1fr 1fr */
   grid-template-columns: 200px 1fr;
 }
 
-header  { grid-area: header; }
-.faq-nav  { grid-area: nav; }
-.faq-main { grid-area: main; }
-footer  { grid-area: footer; }
+.faq-layout header  { grid-area: header; }
+.faq-nav            { grid-area: nav; }
+.faq-main           { grid-area: main; }
+.faq-layout footer  { grid-area: footer; }
 ```
 
 * Dibujas el layout con NOMBRES como ASCII art.
@@ -107,13 +127,12 @@ footer  { grid-area: footer; }
 
 ---
 
-## 🔮 Parte 3: Responsive con los 3 breakpoints de C02
-
-Reusas los breakpoints que ya aprendiste en C02 (640/1024 mobile-first).
+## 🔮 Parte 2.B: Mobile-first declarativo con areas
 
 ```css
 /* BASE: móvil — todo apilado */
 .faq-layout {
+  display: grid;
   grid-template-areas:
     "header"
     "nav"
@@ -144,8 +163,8 @@ Reusas los breakpoints que ya aprendiste en C02 (640/1024 mobile-first).
 |---|---|
 | Navbar (logo + enlaces) | Flex (1D) |
 | Galería que envuelve | Flex con wrap, o Grid auto-fit |
-| Grilla de cards iguales | Grid `repeat(N, 1fr)` |
-| Grilla responsive automático | Grid `auto-fit + minmax` |
+| Grilla de cards con cantidad fija | Grid `repeat(N, 1fr)` con media queries |
+| Grilla con cantidad variable | Grid `auto-fit + minmax` |
 | Layout 2D con regiones nombradas | **Grid areas** (Flex no puede) |
 | Un solo elemento distinto del resto | Flex `align-self` |
 
@@ -168,7 +187,7 @@ Reusas los breakpoints que ya aprendiste en C02 (640/1024 mobile-first).
 
 * ¿Cuál de los 3 niveles de Grid te resultó más útil?
 * ¿En qué parte del landing decidirías usar `grid-template-areas`?
-* ¿Cuándo `auto-fit + minmax` reemplaza media queries y cuándo NO?
+* ¿Cuándo prefieres media queries explícitas vs `auto-fit + minmax`?
 
 > **Reflexión:**
 >

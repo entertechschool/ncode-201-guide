@@ -6,9 +6,9 @@
 
 ## 🔑 Conceptos Clave
 
-- **Enlaces multi-página + rutas relativas**: `href="precios.html"`, `href="#contacto"`, `href="index.html#contacto"`. Primer encuentro real del alumno con navegación entre archivos HTML.
-- **Grid esencial**: `display: grid`, `grid-template-columns: repeat(N, 1fr)`, `gap`.
-- **Grid intermedio**: `repeat(auto-fit, minmax(250px, 1fr))` — responsive automático sin media queries.
+- **Enlaces multi-página + rutas relativas + icono SVG con `aria-label`**: `href="precios.html"`, `href="faq.html"`. El enlace FAQ se reemplaza por un icono SVG con `aria-label="Preguntas frecuentes"` — patrón moderno de UI.
+- **Grid básico mobile-first**: en móvil solo `display: grid` (1 columna por defecto); media queries añaden columnas (`1fr 1fr` tablet, `1fr 1fr 1fr 1fr` y `repeat(4, 1fr)` desktop).
+- **Grid intermedio**: `repeat(auto-fit, minmax(150px, 1fr))` aplicado a la sección "Marcas que confían" donde la cantidad de logos puede variar — sin media queries.
 - **`grid-template-areas`**: el feature distintivo de Grid. Layouts 2D con regiones nombradas. **Flex NO puede.**
 - **Heurística Grid vs Flex**: "Grid 2D, Flex 1D".
 
@@ -38,9 +38,9 @@ Antes de Grid, hacer un layout de "header + sidebar + main + footer" requería f
 
 > **Para contar en clase:** "Cuando ven dashboards de Slack, Notion, GitHub — todos esos layouts complejos hoy se hacen con `grid-template-areas`. En 2015 esto era imposible sin hacks. Hoy es 5 líneas de CSS."
 
-### `auto-fit + minmax`: el patrón que mata las media queries
+### `auto-fit + minmax`: el patrón que mata las media queries (cuando aplica)
 
-Equipos como Netflix, Spotify y Google usan `repeat(auto-fit, minmax(...))` para sus grids de catálogo. El número de columnas se ajusta al dispositivo automáticamente — desde un móvil de 320px hasta un monitor 4K — sin un solo `@media`. **Esto cambia la forma de pensar responsive.**
+Equipos como Netflix, Spotify y Google usan `repeat(auto-fit, minmax(...))` para sus grids de catálogo (cantidades variables que vienen de DB). El número de columnas se ajusta al dispositivo automáticamente — desde un móvil de 320px hasta un monitor 4K — sin un solo `@media`. **Pero solo aplica cuando la cantidad de items varía** — para 4 cards fijas con control fino por dispositivo, las media queries explícitas siguen ganando. Por eso en este lab se aplican en lugares distintos: media queries para `.planes` (fijo), `auto-fit + minmax` para `.logos` (variable).
 
 **Fuentes:** [MDN: CSS Grid Layout](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout){:target="_blank"}, [Grid by Example (Rachel Andrew)](https://gridbyexample.com){:target="_blank"}
 
@@ -105,15 +105,16 @@ En cambio con Grid son 5 líneas. ESA es la diferencia."
 
 ### Dinámica 2: "Achica el navegador SIN DevTools"
 
-En la Parte 1, después de `auto-fit + minmax`:
+En la Parte 1.5, después de aplicar `auto-fit + minmax` a la sección Marcas:
 
-> "Sin abrir DevTools, agarra el borde derecho del navegador y achica lentamente. ¿Qué pasa con las 3 cards?"
+> "Sin abrir DevTools, agarra el borde derecho del navegador y achica lentamente. ¿Qué pasa con los 6 logos?"
 
 **Dinámica sugerida:**
 ```
-Facilitador: "3 → 2 → 1 columna. Sin un solo @media.
-Cuántos vieron este efecto en una landing real?
-Es estándar de la industria. Hoy aprendieron a hacerlo."
+Facilitador: "6 → 4 → 3 → 2 columnas. Sin un solo @media.
+Y si mañana agregamos 10 logos más? Funciona igual.
+Por eso aquí SÍ usamos auto-fit + minmax — la cantidad es variable.
+Para los 4 planes (cantidad fija) usamos media queries explícitas."
 ```
 
 ### Dinámica 3: "Tabla Grid vs Flex en pizarra"
@@ -128,19 +129,29 @@ Llena la tabla colaborativamente con el grupo (navbar, galería, grilla de cards
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: Grid esencial verbatim
+### Ejemplo 1: Grid básico mobile-first verbatim
 
-**Cuándo usarlo:** P1.2.
+**Cuándo usarlo:** P1.3 (móvil base) + P1.4 (media queries).
 
 ```css
+/* Móvil base — 1 columna por defecto */
 .planes {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 24px;
+}
+
+/* Tablet+: 2 columnas */
+@media (min-width: 640px) {
+  .planes { grid-template-columns: 1fr 1fr; }
+}
+
+/* Desktop+: 4 columnas */
+@media (min-width: 1024px) {
+  .planes { grid-template-columns: repeat(4, 1fr); }
 }
 ```
 
-**Tip:** Pregúntales antes de pegar: "¿Qué creen que pasa si pongo `repeat(4, 1fr)` y solo tengo 3 cards?". Respuesta: queda una columna vacía. Demuestra que Grid **siempre crea la grilla declarada**, sin importar cuántos hijos haya.
+**Tip:** Pregúntales antes de pegar: "¿Qué creen que pasa si pongo `repeat(5, 1fr)` y solo tengo 4 cards?". Respuesta: queda una columna vacía. Demuestra que Grid **siempre crea la grilla declarada**, sin importar cuántos hijos haya.
 
 ### Ejemplo 2: `grid-template-areas` verbatim
 
@@ -173,9 +184,10 @@ Llena la tabla colaborativamente con el grupo (navbar, galería, grilla de cards
 | Las cards tienen alturas distintas | Es comportamiento default de Grid | Si quieren misma altura: `align-items: stretch` (default) o `grid-auto-rows: 1fr` |
 | Confunden `grid-area` con `grid-template-areas` | Uno es asignación (hijos), otro es definición (padre) | Recordar: `template-areas` en el padre, `area` en cada hijo |
 | Click en "Precios" da 404 | El alumno aún no creó `precios.html` o lo guardó en otra carpeta | Verificar que los 3 archivos (`index.html`, `precios.html`, `faq.html`) están en la misma carpeta raíz |
-| El nav del index funciona, pero el de `precios.html` no salta a Contacto | Usaron `href="#contacto"` desde precios.html (no existe esa sección ahí) | Usar `href="index.html#contacto"` — ruta absoluta a la página + ancla |
+| El icono FAQ no aparece en el nav | `img/faq.svg` no descargado o ruta incorrecta | Verificar que `img/faq.svg` exista junto a `index.html` y la ruta sea relativa |
+| Lector de pantalla anuncia el enlace FAQ como "imagen" | Falta `aria-label` en el `<a>` | Agregar `aria-label="Preguntas frecuentes"` al `<a>` y `alt=""` al `<img>` |
 | Actualizan el nav del index pero olvidan actualizar el de precios/faq | Cada página tiene su propio header con su propio nav | Recordar: copy-paste consciente. Si agregan un enlace, debe ir en las 3 páginas |
-| `gap: 0.5rem` desborda en mobile | Padding del card + gap suman más que el ancho | Reducir gap o padding en mobile breakpoint |
+| `gap: 8px` desborda en mobile | Padding del card + gap suman más que el ancho | Reducir gap o padding en mobile breakpoint |
 
 ---
 
@@ -197,12 +209,12 @@ Llena la tabla colaborativamente con el grupo (navbar, galería, grilla de cards
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~5'  | P1.1 lista | Nav del `index.html` con 6 enlaces (logo, Inicio, Características, Precios, FAQ, Contacto). Click a "Contacto" baja a la sección (ancla). Click a "Precios" da 404 — eso es esperado |
-| ~25' | P1.3 lista | 3 cards de precios en fila, alturas iguales, gap visible |
-| ~40' | P1.4 lista | Achicar viewport sin DevTools → cards pasan a 2 columnas y luego a 1 automáticamente |
-| ~75' | P2.2 lista | `faq.html` muestra "T invertida": header arriba, sidebar izq, main derecha, footer abajo. Click en nav navega entre las 3 páginas correctamente |
-| ~100' | P3.1 lista | Achicar a <640px → sidebar se apila arriba del main (declarative con areas distintas) |
-| ~110' | Tabla Grid vs Flex | Llena con el grupo. Cada alumno puede defender al menos 3 casos |
+| ~5'  | P1.1 lista | Nav del `index.html` con 4 elementos (logo "Mi Producto", Inicio, Precios, icono FAQ con `aria-label`). Click a "Precios" y al icono FAQ dan 404 — eso es esperado por ahora |
+| ~25' | P1.3 lista | `precios.html` en viewport ~400px: las 4 cards (Free, Starter, Pro, Enterprise) apiladas en 1 columna, alturas iguales, gap visible |
+| ~45' | P1.4 lista | Arrastrar viewport: a 640px ven 2×2 (2 filas de 2 cards); a 1024px ven 4 cards en una sola fila |
+| ~55' | P1.5 lista | Sección Marcas: arrastrar viewport sin DevTools → 6 logos se reorganizan en 2, 3, 4 cols automáticamente, **sin un solo @media** |
+| ~90' | P2.2/2.3 lista | `faq.html` <640px todo apilado; ≥640px muestra "T invertida": header arriba, sidebar izq, main derecha, footer abajo |
+| ~105' | Tabla Grid vs Flex | Llena con el grupo. Cada alumno puede defender al menos 3 casos |
 
 ---
 
@@ -251,7 +263,7 @@ Llena la tabla colaborativamente con el grupo (navbar, galería, grilla de cards
 
 Al cerrar, planta la semilla:
 
-> "Mañana en C04 (lab calificado) refactorizas TODO el CSS de tu landing — incluyendo el de hoy — con CSS Variables. Cada `1.5rem`, `#1a1a1a`, `200px` se vuelve `var(--gap)`, `var(--color-text)`, `var(--sidebar-width)`. Hoy escribieron mucho CSS; mañana lo hacen mantenible."
+> "Mañana en C04 (lab calificado) refactorizas TODO el CSS de tu landing — incluyendo el de hoy — con CSS Variables. Cada `24px`, `#1a1a1a`, `200px` se vuelve `var(--gap)`, `var(--color-text)`, `var(--sidebar-width)`. Hoy escribieron mucho CSS; mañana lo hacen mantenible."
 
 **Pre-work implícito:** Que terminen `precios.html` y `faq.html` aunque sea con datos placeholder — C04 calificado parte de ahí.
 
