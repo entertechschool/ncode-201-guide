@@ -289,7 +289,7 @@ Explicación pieza por pieza:
 
 ### 2.1 Crear `faq.html`
 
-Nuevo archivo `faq.html` al mismo nivel que `index.html` y `precios.html`. **Reusa el header del landing** (el que actualizaste en 1.1, con el icono FAQ) y dentro del header agrega `<h1>Preguntas Frecuentes</h1>`. Reusa también el footer.
+Nuevo archivo `faq.html` al mismo nivel que `index.html` y `precios.html`. **Reusa el header del landing** (el que actualizaste en 1.1, con el icono FAQ) y reusa también el footer. El `<h1>Preguntas Frecuentes</h1>` lo pones como **primer elemento dentro de `<main class="faq-main">`**.
 
 Estructura del body:
 
@@ -304,7 +304,6 @@ Estructura del body:
         <img src="img/faq.svg" alt="" width="24" height="24">
       </a>
     </nav>
-    <h1>Preguntas Frecuentes</h1>
   </header>
 
   <nav class="faq-nav">
@@ -317,6 +316,8 @@ Estructura del body:
   </nav>
 
   <main class="faq-main">
+    <h1>Preguntas Frecuentes</h1>
+
     <section id="general">
       <h2>General</h2>
       <details>
