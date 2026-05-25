@@ -1,86 +1,245 @@
-# Laboratorio 04: CSS Moderno y Git Workflow
+# Laboratorio 04: CSS Variables + Forms Validados + Git Workflow
 
-> **Lab CALIFICADO** — última clase del Módulo 1. 5 partes, ~90 min en clase + post-clase si la P4 (Merge Conflict) no alcanza.
+> **Lab CALIFICADO** — última clase del Módulo 1. 5 partes, ~95 min en clase.
 
-En este laboratorio consolidas tres habilidades profesionales: refactorizar tu landing con **CSS Variables**, agregar **validación nativa** al formulario de C01 y aplicar un **flujo Git profesional** completo, incluyendo la resolución de un conflicto.
+En este laboratorio consolidas tres habilidades profesionales: definir la **estética de tu producto con CSS Variables** (colores, tipografía, radius, shadow), agregar **validación nativa** al formulario de contacto, y aplicar un **flujo Git profesional** con ramas y Pull Requests.
 
-> 🎯 **Continuidad del M1:** este es el lab calificado del módulo sobre **tu producto** (el que elegiste en C01). Las CSS Variables que extraigas deben reflejar el branding de tu producto (colores, tipografía). El form validado de P2 captura datos relevantes a tu producto/servicio.
+> 🎯 **Continuidad del M1:** trabajas sobre el **mismo producto** que elegiste en C01. Hasta ahora pusiste layout y espaciado; hoy le das **identidad visual** y profesionalizas el flujo Git.
 
 ---
 
 ### 🎯 Objetivos de Aprendizaje
 
-* Refactorizar el CSS del landing usando Custom Properties (`:root { --token }`).
-* Validar el formulario con HTML nativo (`required`, `type`, `pattern`, `<select>`, `<input type="checkbox">`).
-* Aplicar el flujo Git completo: branch → commits → push → PR → merge → resolver conflicto.
+* Definir un sistema de **CSS Variables** (`:root { --token }`) con la paleta de tu producto y aplicarlas con `var(--token)`.
+* Validar el formulario con **HTML nativo** (`required`, `type`, `pattern`, `minlength`, `<select>`, `<input type="checkbox">`).
+* Aplicar el flujo **Git profesional**: ramas, Pull Request, merge, sincronización local.
 
 ### 🔑 Conceptos Clave
 
-* **CSS Custom Properties:** `:root { --color-primary }` + `color: var(--color-primary)`. Tokens centralizados.
-* **Validación nativa HTML:** el navegador valida sin JS si el form tiene `required`/`type`/`pattern`.
-* **Git workflow:** `git checkout -b`, `git commit`, `git push -u origin <rama>`, Pull Request en GitHub, merge a `main`.
-* **Merge conflict:** identificar marcadores `<<<<<<<`, `=======`, `>>>>>>>` y elegir la versión correcta antes de commitear.
+* **CSS Custom Properties:** tokens en `:root` reutilizados con `var(--token)`.
+* **Validación nativa HTML:** el navegador bloquea el submit si los campos no cumplen las reglas — sin JavaScript.
+* **GitFlow básico:** `main` es la rama estable; cada feature se desarrolla en una rama aparte y se mergea vía Pull Request.
 
 ---
 
-## Parte 1 – CSS Variables (~20 min)
+## Parte 1 – Estética con CSS Variables (~30 min)
 
-> **Requisitos previos:** Tener tu landing de C01–C03 con su CSS. Hay reglas que repiten colores y espacios — vamos a centralizar.
+> Hasta ahora tu CSS tiene valores hardcoded repetidos (`#1a1a1a` aquí, `#e0e0e0` allá, `8px` por todos lados). Hoy los centralizas en `:root` y aprovechas para **agregar la estética que faltaba**: shadows, color de acento, tamaño de títulos destacados.
 
-1. En `styles.css`, antes de tus reglas, define los tokens:
+### 1.1 Define la paleta del producto en `:root`
+
+Abre `styles.css` y al **inicio del archivo** (después del reset universal `*` y antes del `body`) agrega:
 
 ```css
 :root {
-  --color-primary: #0066cc;
-  --color-text: #1a1a1a;
-  --color-bg: #f5f5f5;
-  --color-danger: #cc0000;
+  /* Colores */
+  --color-primary: #1a1a1a;       /* botones, nav, borders sólidos */
+  --color-accent: #0066cc;        /* color de marca para destacar (links hover, badge) */
+  --color-text: #1a1a1a;          /* texto base */
+  --color-bg: #ffffff;            /* fondo del body */
+  --color-bg-soft: #f5f5f5;       /* footer, faq-nav, .logos */
+  --color-border: #e0e0e0;        /* cards, plans, details, inputs */
+
+  /* Tipografía */
+  --font-text: system-ui, -apple-system, sans-serif;
+  --font-size: 16px;
+  --font-size-title: 28px;
+
+  /* Espacios */
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 32px;
-  --font-base: system-ui, sans-serif;
+
+  /* Estética */
   --radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
 }
 ```
 
-2. Refactoriza al menos **5 reglas** del CSS existente para usar `var(--token)` en vez de valores hardcoded:
+> 💡 **¿Por qué `:root` y no `body`?** `:root` es el elemento raíz del documento — equivale al `<html>`. Las variables definidas ahí están disponibles en CADA regla del CSS. Es la convención estándar.
+
+> 💡 **Adapta los colores a TU producto.** Si tu marca es verde, cambia `--color-accent` a tu verde. La paleta es el ADN visual de tu producto.
+
+### 1.2 Refactor de `body`, `nav` y `footer` con `var()`
+
+Modifica las reglas existentes para usar los tokens en vez de valores hardcoded.
 
 ```css
 body {
-  font-family: var(--font-base);
+  font-family: var(--font-text);
+  font-size: var(--font-size);
+  line-height: 1.5;
   color: var(--color-text);
   background: var(--color-bg);
 }
 
-button, .btn {
-  background: var(--color-primary);
-  color: white;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius);
+nav a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 700;
 }
 
-.card {
-  padding: var(--space-md);
-  border-radius: var(--radius);
+nav a:hover {
+  color: var(--color-accent);
+}
+
+footer {
+  background: var(--color-bg-soft);
+  padding: var(--space-md) var(--space-lg);
 }
 ```
 
-3. Verifica visualmente: el sitio se ve **idéntico** que antes. Las variables son refactoring, no rediseño.
+* **`nav a:hover` con `--color-accent`** es estética NUEVA — los links cambian de color cuando pasas el mouse. Antes no había feedback visual.
 
-✅ **Checkpoint:** abres el sitio, se ve igual que antes pero tu CSS tiene `:root` con al menos 6 tokens y los aplicas con `var()` en al menos 5 reglas.
+### 1.3 Refactor de inputs, botones y cards
 
-🏆 **Reto autónomo:** cambia `--color-primary` a otro color y observa cómo TODOS los botones cambian a la vez. Eso es el poder de las variables.
+```css
+#contacto input,
+#contacto textarea {
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+}
+
+#contacto button {
+  margin-top: var(--space-md);
+  padding: 12px;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.card,
+.plan,
+.logo-cliente {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+}
+```
+
+> 💡 **`--radius: 8px` unifica los border-radius**: en C02 algunos eran 4px y otros 8px. El refactor los homogeneiza — esa es la otra ganancia de las variables: consistencia visual.
+
+### 1.4 Agregar estética NUEVA: shadows + tamaño de títulos
+
+Hasta ahora las cards y plans eran rectángulos planos. Con `box-shadow` les das profundidad:
+
+```css
+.card,
+.plan {
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover,
+.plan:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.plan .precio {
+  font-size: var(--font-size-title);
+}
+
+h1 {
+  font-size: var(--font-size-title);
+}
+```
+
+* **`box-shadow` + `transition` + `:hover`** → microinteracción: las cards "flotan" sutilmente al pasar el mouse.
+* **`--font-size-title` (28px)** unifica el tamaño de h1 y `.plan .precio` (antes 32px).
+
+✅ **Checkpoint P1:** abres el sitio (las 3 páginas) y ves:
+- Cards y plans con sombra suave + hover que las "levanta".
+- Links del nav cambian a azul (`--color-accent`) al pasar el mouse.
+- h1 y precios del mismo tamaño (28px).
+- Todo lo demás se ve **idéntico** que antes — porque solo refactorizaste valores.
+
+🏆 **Reto autónomo:** cambia `--color-accent` a otro color (verde, morado, naranja) y observa cómo TODOS los hovers cambian a la vez. Eso es el poder de las variables.
 
 ---
 
-## Parte 2 – Formulario validado (~25 min)
+## Parte 2 – Crear una rama feature (~10 min)
 
-> Sobre el formulario de contacto que construiste en C01, agregas **validación nativa**.
+> Hasta ahora todos tus commits van directo a `main`. Funciona cuando trabajas solo, pero **en equipo es un desastre**: si pusheas algo roto, lo rompes para todos. El flujo profesional separa cada feature en su propia rama.
 
-1. Modifica los inputs existentes y agrega 2 nuevos:
+### 2.1 ¿Qué es una rama? GitFlow básico
+
+Una **rama** (branch) es una línea independiente de desarrollo. Cuando creas una rama `feature/form-validado` a partir de `main`, ese código vive aparte hasta que esté listo. Mientras tanto, `main` sigue estable.
+
+```
+main:               A───B───C─────────────────M  (← merge del PR aquí)
+                              \              /
+feature/form-validado:         D───E───F────/
+```
+
+**GitFlow básico** (la versión simplificada del flujo profesional):
+1. `main` siempre tiene código estable y desplegado.
+2. Para cada feature creas una rama aparte (`feature/...`).
+3. Cuando el feature está listo, abres un **Pull Request** (PR) en GitHub.
+4. El PR se mergea a `main` después de revisión.
+
+### 2.2 Ver tus ramas actuales con `git branch`
+
+Antes de crear nada, mira qué ramas existen en tu repo local:
+
+```bash
+git branch
+```
+
+Verás algo como:
+```
+* main
+```
+
+El **asterisco** indica la rama en la que estás. Solo tienes `main`.
+
+### 2.3 Crear y cambiar a una rama nueva con `git checkout -b`
+
+Vas a crear una rama para desarrollar el formulario validado:
+
+```bash
+git checkout -b feature/form-validado
+```
+
+* **`-b`** crea la rama Y se cambia a ella en un solo comando.
+* La convención de nombre `feature/<descripción>` agrupa las ramas en GitHub (se ven anidadas).
+
+Verifica que estás en la nueva rama:
+
+```bash
+git branch
+```
+
+Ahora ves:
+```
+* feature/form-validado
+  main
+```
+
+El asterisco se movió. ✅
+
+✅ **Checkpoint P2:** `git branch` muestra 2 ramas locales y estás en `feature/form-validado`.
+
+> ⚠️ **No commitees todavía nada de P1 en esta rama.** Lo de P1 (estética con variables) debe estar en `main` antes de crear esta rama. Si lo olvidaste, vuelve a `main` (`git checkout main`), commitea P1, y luego repite los pasos de P2.
+
+---
+
+## Parte 3 – Formulario validado en la rama (~25 min)
+
+> Sobre el `<section id="contacto">` que tienes desde C01-C02 (con `nombre`, `email`, `mensaje` y botón Enviar), agregas **validación nativa** y 3 campos nuevos: teléfono con `pattern`, `<select>` de motivo y `<input type="checkbox">` de términos.
+
+### 3.1 Reemplaza el form completo dentro de `<section id="contacto">`
+
+Abre `index.html` y dentro de `<section id="contacto">`, reemplaza el `<form>` actual por este:
 
 ```html
-<form id="formContacto">
+<form>
   <label for="nombre">Nombre (mín. 3 caracteres)</label>
   <input type="text" id="nombre" name="nombre" required minlength="3">
 
@@ -98,6 +257,9 @@ button, .btn {
     <option value="sugerencia">Sugerencia</option>
   </select>
 
+  <label for="mensaje">Mensaje</label>
+  <textarea id="mensaje" name="mensaje" rows="4" required minlength="10"></textarea>
+
   <label>
     <input type="checkbox" id="acepto" name="acepto" required>
     Acepto los términos y condiciones
@@ -107,127 +269,120 @@ button, .btn {
 </form>
 ```
 
-2. Verifica los **3 escenarios** de validación nativa:
-   - Submit con el form vacío → el navegador bloquea el envío y muestra el error en el primer campo `required`.
-   - Email mal formado (ej. `abc`) → el navegador rechaza con "Por favor, incluye '@'".
-   - Teléfono con letras o menos de 9 dígitos → el `pattern` rechaza.
+Las reglas de validación:
 
-3. Solo cuando TODOS los campos son válidos, el navegador permite el submit.
+| Atributo | Qué hace |
+|---|---|
+| `required` | El campo no puede estar vacío al enviar. |
+| `minlength="3"` | El valor debe tener al menos 3 caracteres. |
+| `type="email"` | El navegador valida que tenga `@` y un dominio. |
+| `type="tel"` + `pattern="[0-9]{9}"` | Exactamente 9 dígitos numéricos. |
+| `<select>` con primera opción `value=""` + `required` | Obliga a elegir una opción real. |
+| `<input type="checkbox" required>` | Obliga a marcar el checkbox. |
 
-✅ **Checkpoint:** intenta enviar el form vacío → ves el error nativo. Llénalo con datos válidos → el submit pasa. NO escribiste una sola línea de JavaScript para esto.
+### 3.2 Verifica los 3 escenarios de validación nativa
 
-🏆 **Reto autónomo:** agrega un `<input type="date">` y observa que el navegador renderiza un calendario nativo. Eso también es validación nativa.
+1. **Submit con el form vacío** → el navegador bloquea y muestra el error en el primer campo `required`.
+2. **Email mal formado** (escribe `abc` en email) → el navegador rechaza con "Por favor, incluye '@'".
+3. **Teléfono con letras o menos de 9 dígitos** → el `pattern` lo rechaza.
 
----
+Solo cuando TODOS los campos son válidos, el navegador permite el submit.
 
-## Parte 3 – Git workflow (~20 min)
+> 💡 **Sin una sola línea de JavaScript.** La validación nativa de HTML es la **primera línea de defensa**. En el M5 verás cómo agregar validación JS para reglas de negocio (ej. "el email no existe en nuestra DB" — eso necesita servidor).
 
-> Hasta ahora trabajaste directo en `main`. Hoy aplicas el flujo profesional.
-
-1. Asegúrate que tu trabajo de P1 y P2 está commiteado en `main` (commits separados):
+### 3.3 Commit dentro de la rama
 
 ```bash
-git status
-git add styles.css
-git commit -m "refactor: extrae tokens de color y espacio a :root"
-
+git status                                # debe mostrar index.html modificado
 git add index.html
-git commit -m "feat: agrega validación nativa al formulario de contacto"
+git commit -m "feat: agrega validacion nativa al formulario de contacto"
 ```
 
-2. Ahora crea una rama nueva para una mejora adicional:
+✅ **Checkpoint P3:** abres `index.html` en navegador, intentas enviar con campos inválidos → ves errores nativos del navegador. Llenas todo válido → el submit pasa. `git log --oneline` muestra tu commit nuevo en la rama feature.
 
-```bash
-git checkout -b feature/contacto-validado
-```
-
-3. En esa rama, agrega un mensaje de éxito al form (texto debajo del botón submit, oculto por defecto) y un commit:
-
-```bash
-git add index.html
-git commit -m "feat: agrega mensaje de confirmación al envío del form"
-```
-
-4. Push de la rama:
-
-```bash
-git push -u origin feature/contacto-validado
-```
-
-5. En GitHub, abre un **Pull Request** desde `feature/contacto-validado` hacia `main`. Lee el diff. Mergea.
-
-6. Vuelve a tu local, sincroniza:
-
-```bash
-git checkout main
-git pull
-```
-
-✅ **Checkpoint:** tu GitHub muestra el PR mergeado. Tu `main` local tiene el commit del PR.
+🏆 **Reto autónomo:** agrega un `<input type="date">` para "Fecha preferida de contacto" y observa que el navegador renderiza un calendario nativo. Eso también es validación nativa.
 
 ---
 
-## Parte 4 – Desafío: Merge Conflict (~15 min)
+## Parte 4 – Cerrar el flujo Git (~20 min)
 
-> ⚠️ Para esta parte tu facilitador te dará un **repo template con un conflicto prefabricado** entre dos ramas. Sigue las instrucciones.
+> Tu rama tiene el feature listo. Ahora la subes a GitHub, abres un Pull Request, lo mergeas, y sincronizas tu `main` local.
 
-1. Clona el repo template y haz checkout a la rama `featA`. Lee el CSS actual.
-2. Cámbiate a `main` y haz `git merge featB`. Git aplicará los cambios sin conflicto.
-3. Cámbiate a `featA` y haz `git merge main`. Aquí aparece el **conflicto**.
-4. Abre el archivo conflictuado. Verás:
-
-```css
-.btn {
-<<<<<<< HEAD
-  background: blue;
-=======
-  background: red;
->>>>>>> main
-  padding: 16px;
-}
-```
-
-5. **Resuelve el conflicto manualmente**: elimina los marcadores y elige (o combina) la versión correcta. Ejemplo de resolución:
-
-```css
-.btn {
-  background: var(--color-primary);
-  padding: 16px;
-}
-```
-
-6. Commit de la resolución:
+### 4.1 Push de la rama feature
 
 ```bash
-git add .
-git commit -m "merge: resuelve conflicto en .btn (usa variable CSS)"
+git push -u origin feature/form-validado
 ```
 
-✅ **Checkpoint:** `git log --oneline` muestra el commit de merge. El archivo ya no tiene marcadores `<<<<<<<`.
+* **`-u origin feature/form-validado`** vincula tu rama local con la remota. Después de esto, basta con `git push` (sin `-u`).
+* GitHub te muestra un mensaje en la terminal con un link para abrir el PR directamente.
 
-> Si esta parte la haces post-clase, **pide al facilitador el link al repo template** antes de irte.
+### 4.2 Abrir el Pull Request en GitHub
+
+1. Entra a tu repo en GitHub.
+2. Verás un banner amarillo: *"feature/form-validado had recent pushes. Compare & pull request"* → click.
+3. Llena:
+   - **Título:** `Agrega validación nativa al formulario de contacto`
+   - **Descripción:** lista breve de qué cambió (campos validados, nuevos inputs, etc.).
+4. Click **Create pull request**.
+
+### 4.3 Leer el diff y mergear
+
+En la pestaña **Files changed** del PR:
+- Líneas en verde = agregadas.
+- Líneas en rojo = eliminadas.
+- Lee el diff completo antes de mergear (en un equipo real, otra persona lo revisaría).
+
+Cuando estés conforme:
+1. Click **Merge pull request** → **Confirm merge**.
+2. GitHub mergea `feature/form-validado` en `main` y crea un commit de merge.
+
+### 4.4 Sincronizar tu `main` local con `git pull`
+
+El merge sucedió en GitHub (remoto), pero tu `main` local sigue sin esos cambios. Sincronízalo:
+
+```bash
+git checkout main             # vuelves a la rama main local
+git pull                      # descarga los cambios del remoto (incluyendo el merge)
+git log --oneline             # ves el commit de merge en tu main local
+```
+
+* **`git pull`** = `git fetch` (descarga) + `git merge` (aplica). Es el comando para "actualizar mi rama local con lo que está en el remoto".
+
+### 4.5 (Opcional) Borrar la rama feature ya mergeada
+
+Como el feature ya está en `main`, la rama feature local ya no aporta:
+
+```bash
+git branch -d feature/form-validado
+git branch                    # confirma que solo queda main
+```
+
+✅ **Checkpoint P4:** GitHub muestra el PR mergeado. Tu `main` local tiene el commit de merge. `git branch` muestra solo `main` (si borraste la feature).
 
 ---
 
-## Parte 5 – Deploy (~10 min)
+## Parte 5 – Deploy y entrega calificada (~10 min)
 
-1. Verifica que `main` tenga todo tu trabajo: P1 (variables), P2 (form validado), P3 (commit del PR).
+### 5.1 Verifica GitHub Pages
 
-2. Push final:
+1. Push final a `main` si te quedó algo pendiente:
 
 ```bash
 git push origin main
 ```
 
-3. Abre GitHub Pages (Settings → Pages → branch `main`) y verifica que tu sitio se publica.
+2. Abre tu sitio en GitHub Pages (la URL que configuraste en C01 P5).
+3. Verifica que las **3 páginas** (`index.html`, `precios.html`, `faq.html`) funcionan y se ven con la nueva estética (shadows, hovers, paleta).
 
-4. Agrega al `README.md` del repositorio:
-   - URL del repo
-   - URL del sitio en GitHub Pages
-   - Tabla con los tokens CSS que definiste
-   - Lista de validaciones nativas aplicadas
+### 5.2 Actualiza el `README.md` del repositorio
 
-✅ **Checkpoint:** tu URL pública muestra el sitio funcionando con form validado y variables aplicadas.
+Agrega al README del repo:
+- URL del despliegue en GitHub Pages.
+- **Tabla de tokens CSS** que definiste (nombre + valor + dónde se usa).
+- **Lista de validaciones aplicadas** al formulario (campo + atributo + descripción del error nativo).
+
+✅ **Checkpoint P5:** tu URL pública muestra el sitio con estética nueva. El README del repo está documentado.
 
 ---
 
@@ -238,22 +393,21 @@ git push origin main
 | URL del repositorio | Blackboard |
 | URL de GitHub Pages funcional | Blackboard |
 | Screenshot del PR mergeado | Blackboard |
-| Screenshot del commit de resolución de conflicto | Blackboard (puede ser post-clase) |
-| README actualizado con tokens + validaciones | En el repo |
+| README del repo con tokens + validaciones | En el repo |
 
 ### Rúbrica (referencial)
 
-- **P1 — CSS Variables (20%)**: al menos 6 tokens en `:root`, ≥5 reglas usando `var()`, sitio se ve igual que antes.
-- **P2 — Formulario validado (25%)**: `required` + `type=email` + `pattern` + `<select>` + `checkbox` — los 3 escenarios de fallo bloquean el submit.
-- **P3 — Git workflow (25%)**: rama feature creada, commits atómicos, PR abierto y mergeado.
-- **P4 — Merge conflict (15%)**: conflicto resuelto manualmente, commit de merge presente.
-- **P5 — Deploy (15%)**: sitio público funcional, README documentado.
+- **P1 — CSS Variables (30%)**: ≥10 tokens en `:root`, ≥6 reglas refactorizadas con `var()`, estética nueva aplicada (shadow + hover + título), sitio se ve coherente.
+- **P2 + P4 — Git workflow (30%)**: rama `feature/form-validado` creada, commits atómicos, push, PR abierto y mergeado, `main` local sincronizado con `git pull`.
+- **P3 — Formulario validado (25%)**: los 3 escenarios de fallo bloquean el submit (vacío, email inválido, teléfono inválido); checkbox y select obligatorios.
+- **P5 — Deploy (15%)**: sitio público funcional con las 3 páginas, README del repo documentado.
 
 ---
 
 ## 💡 Tips finales
 
-* Las **CSS Variables** brillan cuando tu landing tiene "branding": colores y tipografía repetidos. Sin repetición, no aportan tanto.
-* La validación nativa es la **primera línea de defensa**. JS es para validaciones de negocio (ej. "el email no existe en nuestra DB" — eso necesita servidor).
-* Si pusheas directo a `main` por costumbre, **rompiste el ejercicio**. La P3 evalúa el flujo, no solo el resultado.
-* Si un conflicto te asusta, recuerda: solo eliges entre versiones de líneas. No es magia. Lee, decide, borra los marcadores, commit.
+* Las **CSS Variables** se evalúan en tiempo real — en DevTools edita el valor de `--color-accent` y verás el cambio instantáneo en TODA la página.
+* **Naming consistente** importa: `--color-primary`, `--color-accent`, `--color-text` es legible. `--c1`, `--c2`, `--c3` no.
+* Si pusheas directo a `main` por costumbre, **rompiste el ejercicio**. La P2-P4 evalúan el FLUJO, no solo el resultado.
+* `git status` antes de cada commit te salva de incluir archivos que no querías.
+* Si `git pull` te da conflicto, no entres en pánico: significa que `main` cambió mientras trabajabas. Hoy no veremos resolver conflictos — pero existe.
