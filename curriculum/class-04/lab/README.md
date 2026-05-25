@@ -63,63 +63,70 @@ Abre `styles.css` y al **inicio del archivo** (después del reset universal `*` 
 
 ### 1.2 Refactor de `body`, `nav` y `footer` con `var()`
 
-Modifica las reglas existentes para usar los tokens en vez de valores hardcoded.
+> 📝 **Formato aditivo:** en los bloques siguientes los `/* ...tus propiedades anteriores... */` representan las líneas que YA tienes en tu `styles.css` (de C01-C03). NO borres ni reescribas todo — solo **agrega o reemplaza** las líneas con `var(--token)` dentro de la regla que ya existe.
 
 ```css
 body {
+  /* ...tus propiedades anteriores... */
   font-family: var(--font-text);
-  font-size: var(--font-size);
-  line-height: 1.5;
   color: var(--color-text);
-  background: var(--color-bg);
 }
 
 nav a {
-  text-decoration: none;
+  /* ...tus propiedades anteriores... */
   color: var(--color-text);
-  font-weight: 700;
 }
 
+/* NUEVA regla — agrégala completa */
 nav a:hover {
   color: var(--color-accent);
 }
 
 footer {
+  /* ...tus propiedades anteriores... */
   background: var(--color-bg-soft);
-  padding: var(--space-md) var(--space-lg);
 }
 ```
 
-* **`nav a:hover` con `--color-accent`** es estética NUEVA — los links cambian de color cuando pasas el mouse. Antes no había feedback visual.
+* **`nav a:hover` es una regla NUEVA** (no existía en C02/C03). Los links cambian de color cuando pasas el mouse — antes no había feedback visual.
+* `footer` puedes probar también con `var(--color-primary)` (fondo oscuro) si quieres un look más premium — depende del estilo de tu producto.
 
 ### 1.3 Refactor de inputs, botones y cards
+
+> 📝 Mismo formato aditivo: solo cambias los valores hardcoded por `var(--token)` dentro de las reglas que ya tienes.
 
 ```css
 #contacto input,
 #contacto textarea {
-  padding: var(--space-sm);
+  /* ...tus propiedades anteriores... */
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  font: inherit;
 }
 
 #contacto button {
-  margin-top: var(--space-md);
-  padding: 12px;
+  /* ...tus propiedades anteriores... */
   background: var(--color-primary);
   color: var(--color-bg);
-  border: none;
   border-radius: var(--radius);
-  font-weight: 600;
-  cursor: pointer;
 }
 
-.card,
-.plan,
-.logo-cliente {
+.card {
+  /* ...tus propiedades anteriores... */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.plan {
+  /* ...tus propiedades anteriores... */
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-bg);
+}
+
+.logo-cliente {
+  /* ...tus propiedades anteriores... */
+  background: var(--color-bg-soft);
+  border-radius: var(--radius);
 }
 ```
 
@@ -130,12 +137,20 @@ footer {
 Hasta ahora las cards y plans eran rectángulos planos. Con `box-shadow` les das profundidad:
 
 ```css
-.card,
-.plan {
+/* NUEVO: agrega shadow a las cards y plans (en sus reglas existentes) */
+.card {
+  /* ...tus propiedades anteriores... */
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
+.plan {
+  /* ...tus propiedades anteriores... */
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+/* NUEVAS reglas — agrégalas completas */
 .card:hover,
 .plan:hover {
   box-shadow: var(--shadow-md);
@@ -143,9 +158,11 @@ Hasta ahora las cards y plans eran rectángulos planos. Con `box-shadow` les das
 }
 
 .plan .precio {
-  font-size: var(--font-size-title);
+  /* ...tus propiedades anteriores... */
+  font-size: var(--font-size-title);   /* reemplaza el 32px hardcoded */
 }
 
+/* NUEVA: tamaño consistente para títulos principales */
 h1 {
   font-size: var(--font-size-title);
 }
