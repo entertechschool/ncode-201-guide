@@ -216,19 +216,36 @@ Registra: `Salario` ingreso 3000 · `Cena` gasto 45.50 · `Freelance` ingreso 50
 
 > **Objetivo:** organizar lo de P1+P2 en 3 funciones imperativas que modifican el estado global.
 
-### 3.1 Declara las 3 funciones vacías al inicio de `app.js`
+> ⚠️ **Importante:** en esta parte vas a **refactorizar** lo que escribiste en P2. Eso significa **mover código** de adentro del `while` y del `for` hacia funciones nuevas. Al final, el `while` y el `for` viejos **dejan de existir** — los reemplaza el nuevo flujo de 3.5. No dupliques el código.
+
+### 3.1 Declara las 3 funciones vacías
+
+Tu `app.js` actualmente tiene:
+1. Los 2 arrays globales (de P1.2).
+2. Un `while` con captura inline (de P2.1).
+3. Un `for` + `console.log` del saldo (de P2.2).
+
+Vamos a transformarlo en esta estructura final:
+
+```
+1) Globales: let nombres, let valores
+2) Funciones: registrarMovimiento, calcularSaldo, mostrarResumen
+3) Flujo de ejecución: while + mostrarResumen()
+```
+
+**Justo después de los `let nombres = []` y `let valores = []`**, agrega las 3 funciones vacías:
 
 ```javascript
 function registrarMovimiento() {
-  // TODO: capturar y validar — mueve aquí la lógica de P1
+  // 3.2 — moverás aquí la lógica de captura+validación
 }
 
 function calcularSaldo() {
-  // TODO: recorrer valores con for y retornar la suma
+  // 3.3 — moverás aquí el for de P2.2
 }
 
 function mostrarResumen() {
-  // TODO: imprimir cantidad de movimientos + saldo total
+  // 3.4 — imprime cantidad + saldo
 }
 ```
 
@@ -236,7 +253,7 @@ function mostrarResumen() {
 
 ### 3.2 Implementa `registrarMovimiento()`
 
-Mueve la lógica de captura+validación del `while` adentro de la función:
+**Corta y pega** la lógica de captura+validación que tienes adentro del `while` de P2.1 y ponla dentro de la función. **Al terminar, el cuerpo del while de P2.1 debe quedar vacío** — lo arreglaremos en 3.5.
 
 ```javascript
 function registrarMovimiento() {
@@ -259,6 +276,8 @@ function registrarMovimiento() {
 
 ### 3.3 Implementa `calcularSaldo()`
 
+**Corta y pega** el `let saldo = 0;` y el `for` que tenías en P2.2 dentro de la función. Agrega `return saldo;` al final.
+
 ```javascript
 function calcularSaldo() {
   let saldo = 0;
@@ -268,6 +287,8 @@ function calcularSaldo() {
   return saldo;
 }
 ```
+
+> 💡 El `console.log('Saldo total: ...')` que tenías al final de P2.2 **ya no va aquí** — vivirá adentro de `mostrarResumen()` en el siguiente sub-paso.
 
 ### 3.4 Implementa `mostrarResumen()`
 
@@ -281,7 +302,9 @@ function mostrarResumen() {
 
 * `mostrarResumen` **llama a `calcularSaldo()`** — las funciones se pueden componer así, una llamando a otra.
 
-### 3.5 Conecta el flujo al final del archivo
+### 3.5 Conecta el flujo final
+
+**Reemplaza** el `while` viejo de P2.1 (cuyo cuerpo quedó vacío en 3.2) por este flujo nuevo. **No declares `let continuar` dos veces** — usa el que ya tenías de P2.1, solo cambia el contenido del bucle.
 
 ```javascript
 let continuar = 'si';
@@ -291,6 +314,29 @@ while (continuar === 'si') {
 }
 mostrarResumen();
 ```
+
+**Tu `app.js` final debe verse así, en este orden:**
+
+```javascript
+// 1) Globales (de P1.2)
+let nombres = [];
+let valores = [];
+
+// 2) Funciones (de P3.1-3.4)
+function registrarMovimiento() { /* ... */ }
+function calcularSaldo() { /* ... */ }
+function mostrarResumen() { /* ... */ }
+
+// 3) Flujo de ejecución (de P3.5)
+let continuar = 'si';
+while (continuar === 'si') {
+  registrarMovimiento();
+  continuar = prompt('¿Registrar otro movimiento? (si/no):');
+}
+mostrarResumen();
+```
+
+> ⚠️ **Verifica:** NO debe haber código de captura/validación **fuera** de las funciones. NO debe haber `for` ni `console.log('Saldo...')` **fuera** de `calcularSaldo` / `mostrarResumen`. Si los dejaste sueltos en P2, **bórralos ahora** — su lógica ya vive dentro de las funciones.
 
 ✅ **Checkpoint 3 (~105 min):** ejecutas el flujo, registras 2 movimientos (1 ingreso de 150, 1 gasto de 45.50) y al cerrar el bucle ves en consola:
 ```
