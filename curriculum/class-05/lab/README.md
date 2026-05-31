@@ -1,28 +1,31 @@
-# Laboratorio 05: Programación Imperativa
+# Laboratorio 05: Programación Imperativa + Arrays
 
-¡Bienvenido al primer laboratorio del proyecto **Gestor de Presupuesto Personal**! Vas a aplicar **programación imperativa** — variables, condicionales, bucles y funciones — para registrar movimientos y calcular un saldo. Este lab arma las piezas que vas a refactorizar en C06 (funcional) y C07 (OOP).
+¡Bienvenido al primer laboratorio del proyecto **Gestor de Presupuesto Personal**! Vas a aplicar **programación imperativa** — variables, condicionales, bucles y funciones — para registrar movimientos y calcular un saldo. Por primera vez vas a manejar **arrays** en JavaScript: la estructura más usada del lenguaje.
 
-> ⏱️ **Checkpoints**: 3 momentos de validación grupal (30 min, 70 min, 110 min). Mantenerse al día es clave.
+> ⏱️ **Checkpoints**: 3 momentos de validación grupal (~30 min, ~65 min, ~105 min).
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. **Declarar y usar variables** (`let`, `const`) y arrays para representar estado.
+1. **Declarar y manipular arrays** con `[]`, `.push()`, `.length` e indexación `arr[i]`.
 2. **Aplicar condicionales** (`if/else`) para validar entradas del usuario.
-3. **Aplicar bucles** (`while`) para iterar hasta una condición de salida.
-4. **Organizar el código en funciones imperativas** acopladas que modifican el estado global.
+3. **Aplicar bucles** — `while` para repetir captura y `for` para recorrer un array.
+4. **Organizar el código en funciones imperativas** que modifican estado global.
 
 ## 🔑 Conceptos Clave
 
 | Concepto | Definición |
 |---|---|
-| **Variable global** | `let movimientos = []` declarado fuera de funciones, accesible desde cualquier parte del script. |
-| **Validación con `if`** | Patrón `if (condicion_invalida) { alert(...); return; }` antes de modificar estado. |
-| **Bucle `while`** | Loop que repite mientras una condición sea verdadera. Útil cuando no sabes cuántas iteraciones harás. |
-| **Función imperativa** | Función que modifica estado externo (variables globales) y/o usa efectos como `prompt` o `console.log`. |
+| **Array** | Lista ordenada de valores. Se declara con `[]` y se accede por **índice** que arranca en `0`. |
+| **`.push()` / `.length`** | Método para **agregar** al final del array · propiedad que dice **cuántos elementos** tiene. |
+| **Indexación** `arr[i]` | Lee el valor en la posición `i`. `arr[0]` es el primero, `arr[arr.length - 1]` el último. |
+| **`for` para recorrer arrays** | Bucle clásico `for (let i = 0; i < arr.length; i++)` para procesar cada elemento. |
+| **`while`** | Bucle que repite mientras una condición sea verdadera. Útil cuando no sabes cuántas iteraciones harás. |
+| **Función imperativa** | Función que modifica estado externo (variables globales) o usa efectos como `prompt`/`console.log`. |
+| **Falsy** | Valores que en un `if` se tratan como `false`: `""`, `0`, `null`, `undefined`, `NaN`. Por eso `if (!nombre)` detecta string vacío. |
 
 ## ⚙️ Setup Inicial
 
-1. Repositorio nuevo: `personal-budget`. Clónalo en local.
+1. Crea un repositorio nuevo: `personal-budget`. Clónalo en local.
 2. Estructura mínima:
 
 ```
@@ -32,130 +35,253 @@ personal-budget/
 └── README.md
 ```
 
-3. En `index.html` enlaza `app.js` antes de `</body>`:
+3. En `index.html` enlaza `app.js` antes del cierre de `</body>`:
 
 ```html
-<script src="app.js"></script>
+<body>
+  <h1>Gestor de Presupuesto Personal</h1>
+  <p>Abre la consola del navegador (F12 → Console) para interactuar.</p>
+  <script src="app.js"></script>
+</body>
 ```
+
+> 💡 **`<script src="app.js">`** carga tu código JavaScript. Va al **final del `<body>`** para que el HTML ya exista cuando JS empiece a ejecutarse.
 
 ---
 
-## Parte 1 – Variables y entrada con `prompt()` (~30 min)
+## Parte 1 – Variables, arrays y captura con `prompt()` (~30 min)
 
-> **Objetivo:** declarar el estado global y capturar un movimiento desde `prompt()`, validándolo antes de guardar.
+> **Objetivo:** entender qué es un array, declarar el estado global con **2 arrays paralelos**, y capturar el primer movimiento desde `prompt()`.
 
-### Sub-pasos
+### 1.1 ¿Qué es un array?
 
-1.1. En `app.js`, declara el array global:
+Un **array** es una lista ordenada de valores. En JavaScript se declara con corchetes `[]`:
 
 ```javascript
-let movimientos = [];
+let frutas = ['manzana', 'pera', 'uva'];
+
+console.log(frutas.length);   // 3 — cuántos elementos hay
+console.log(frutas[0]);        // 'manzana' — el PRIMER elemento (índice 0)
+console.log(frutas[2]);        // 'uva' — el TERCER elemento
+
+frutas.push('mango');          // agrega al final
+console.log(frutas);           // ['manzana', 'pera', 'uva', 'mango']
+console.log(frutas.length);    // 4
 ```
 
-1.2. Implementa la captura inicial con `prompt`:
+**Lo esencial de los arrays en este lab:**
+
+| Acción | Sintaxis |
+|---|---|
+| Crear array vacío | `let arr = [];` |
+| Agregar al final | `arr.push(valor)` |
+| Tamaño del array | `arr.length` |
+| Leer por posición | `arr[i]` — `i` arranca en `0` |
+
+> ⚠️ **El índice arranca en 0.** El primer elemento es `arr[0]`, el último es `arr[arr.length - 1]`. Confundirse con esto es el bug #1 al empezar con arrays.
+
+### 1.2 Modelo de datos del proyecto: 2 arrays paralelos
+
+Para el **Gestor de Presupuesto** vamos a guardar cada movimiento en **dos arrays paralelos**:
+- `nombres[]` — qué fue el movimiento (`"Salario"`, `"Cena"`, etc.)
+- `valores[]` — cuánto fue, **con signo**: positivo = ingreso, negativo = gasto.
+
+Crea `app.js` y al inicio declara:
+
+```javascript
+let nombres = [];
+let valores = [];
+```
+
+**Convención de signos:**
+- `3000` → ingreso de 3000
+- `-45.50` → gasto de 45.50
+
+Así calcular el saldo final es solo sumar todo el array `valores`.
+
+> ⚠️ **"Paralelos" significa que `nombres[i]` y `valores[i]` describen el MISMO movimiento.** Si `nombres[0]` es `"Salario"`, entonces `valores[0]` debe ser su monto. Mantenerlos sincronizados es nuestra responsabilidad (en C07 veremos cómo los objetos resuelven esto elegantemente).
+
+### 1.3 Captura inicial con `prompt`
 
 ```javascript
 const nombre = prompt('Nombre del movimiento:');
 const tipo = prompt('Tipo (ingreso / gasto):');
-const valor = parseFloat(prompt('Monto:'));
+const monto = parseFloat(prompt('Monto:'));
 ```
 
-1.3. Valida con `if` antes de guardar:
+**Conceptos nuevos:**
+- **`prompt(mensaje)`**: API del navegador que abre una ventana pidiendo input. Devuelve **siempre un string** (o `null` si el usuario cancela).
+- **`parseFloat(texto)`**: convierte un string a número decimal. `parseFloat("45.50")` → `45.5`. Si el texto no es número, devuelve `NaN`.
+
+### 1.4 Validar con `if`
+
+`prompt` siempre devuelve string, así que `monto` puede no ser un número válido. Y `nombre` puede ser string vacío. Validamos antes de guardar:
 
 ```javascript
-if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(valor) || valor <= 0) {
+if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(monto) || monto <= 0) {
   alert('Datos inválidos. Intenta de nuevo.');
 } else {
-  movimientos.push({ nombre, tipo, valor });
-  console.log('Movimiento registrado:', movimientos);
+  // calcular el valor con signo
+  const valor = tipo === 'ingreso' ? monto : -monto;
+
+  // guardar en AMBOS arrays — siempre juntos
+  nombres.push(nombre);
+  valores.push(valor);
+
+  console.log('Movimiento registrado.');
+  console.log('Nombres:', nombres);
+  console.log('Valores:', valores);
 }
 ```
 
-1.4. Abre el navegador, prueba con 1 movimiento válido (`Cena`, `gasto`, `45.50`). Revisa la consola.
+**Conceptos nuevos:**
+- **`!nombre` (falsy)**: si `nombre` es string vacío `""`, JS lo trata como `false`. `!""` es `true`. Así detectamos campos vacíos.
+- **`isNaN(monto)`**: `true` si `monto` no es un número válido. Necesario porque `parseFloat("abc")` no falla — devuelve `NaN`.
+- **`alert(mensaje)`**: API del navegador que muestra un cuadro de aviso. Útil para feedback de errores.
 
-✅ **Checkpoint 1 (~30 min):** Al recargar la página y completar el `prompt`, ves en consola `movimientos` con 1 elemento. Si pones tipo inválido o monto cero, ves la alerta y `movimientos` queda vacío.
+### 1.5 Prueba el flujo
+
+Recarga la página. Acepta el `prompt` con valores válidos (`Cena`, `gasto`, `45.50`) y revisa la consola.
+
+✅ **Checkpoint 1 (~30 min):** al completar el `prompt` con datos válidos, ves en consola los dos arrays con 1 elemento cada uno. Si pones tipo inválido o monto cero, ves el `alert` y los arrays quedan vacíos.
 
 ---
 
-## Parte 2 – Bucle de registro con `while` (~40 min)
+## Parte 2 – Repetir con `while` + recorrer con `for` (~35 min)
 
-> **Objetivo:** permitir múltiples movimientos en una misma ejecución con un bucle `while`.
+> **Objetivo:** permitir múltiples movimientos en una ejecución (con `while`) y recorrer los arrays para calcular el saldo (con `for`).
 
-### Sub-pasos
+### 2.1 Repetir captura con `while`
 
-2.1. Envuelve la captura de la Parte 1 en un `while`:
+`while (condicion)` repite el bloque **mientras la condición sea verdadera**. Envuelve la captura de P1 en un `while`:
 
 ```javascript
 let continuar = 'si';
 
 while (continuar === 'si') {
-  // TODO: captura nombre, tipo, valor (sub-pasos 1.2 y 1.3)
+  const nombre = prompt('Nombre del movimiento:');
+  const tipo = prompt('Tipo (ingreso / gasto):');
+  const monto = parseFloat(prompt('Monto:'));
+
+  if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(monto) || monto <= 0) {
+    alert('Datos inválidos. Intenta de nuevo.');
+  } else {
+    const valor = tipo === 'ingreso' ? monto : -monto;
+    nombres.push(nombre);
+    valores.push(valor);
+  }
 
   continuar = prompt('¿Registrar otro movimiento? (si/no):');
 }
+
+console.log('Registro completado. Total movimientos:', nombres.length);
 ```
 
-2.2. Mueve la captura y validación de la Parte 1 dentro del `while`, antes del último `prompt`.
+> 💡 **`while` vs `for`**: usamos `while` cuando NO sabemos cuántas iteraciones haremos (depende del usuario). Usamos `for` cuando sí lo sabemos (ej. recorrer un array de N elementos).
 
-2.3. Verifica el flujo: el bucle debe terminar cuando el usuario responda algo distinto a `si`.
+### 2.2 Recorrer un array con `for`
 
-✅ **Checkpoint 2 (~70 min):** Registra 3 movimientos seguidos. Al responder `no`, el bucle termina. `console.log(movimientos)` muestra los 3 elementos.
+Después del `while`, calculamos el saldo total recorriendo `valores`:
 
-🏆 **Reto autónomo:** acepta también `sí` con tilde y respuesta en mayúsculas (`SI`, `Si`). Pista: `.toLowerCase()` y comparar con un array de valores válidos.
+```javascript
+let saldo = 0;
+for (let i = 0; i < valores.length; i++) {
+  saldo = saldo + valores[i];
+}
+
+console.log('Saldo total: $' + saldo.toFixed(2));
+```
+
+**Disección del `for`:**
+- `let i = 0` — empieza el contador en 0 (primer índice del array).
+- `i < valores.length` — sigue mientras el contador sea menor que el tamaño.
+- `i++` — incrementa el contador en cada vuelta.
+- `valores[i]` — accede al elemento de la posición `i`.
+
+Como ingresos son positivos y gastos negativos, **sumarlos da el saldo neto** automáticamente.
+
+> 💡 **`.toFixed(2)`** redondea a 2 decimales y devuelve un string. `saldo.toFixed(2)` formatea `104.5` como `"104.50"`.
+
+### 2.3 Prueba con 3 movimientos
+
+Registra: `Salario` ingreso 3000 · `Cena` gasto 45.50 · `Freelance` ingreso 500. Al responder `no`, deberías ver `Saldo total: $3454.50`.
+
+✅ **Checkpoint 2 (~65 min):** registras 3 movimientos seguidos, el bucle termina al responder distinto a `si`, y la consola muestra el saldo correcto.
+
+🏆 **Reto autónomo:** acepta también `sí` con tilde y respuestas en mayúscula (`SI`, `Si`). Pista: `.toLowerCase()` y comparar con varios valores válidos.
 
 ---
 
-## Parte 3 – Funciones imperativas + reporte (~45 min)
+## Parte 3 – Funciones imperativas + reporte (~40 min)
 
-> **Objetivo:** refactorizar la lógica del `while` en 3 funciones imperativas.
+> **Objetivo:** organizar lo de P1+P2 en 3 funciones imperativas que modifican el estado global.
 
-### Sub-pasos
-
-3.1. Declara las 3 funciones vacías al inicio de `app.js`:
+### 3.1 Declara las 3 funciones vacías al inicio de `app.js`
 
 ```javascript
 function registrarMovimiento() {
-  // TODO: capturar y validar (mueve aquí la lógica de Parte 1)
+  // TODO: capturar y validar — mueve aquí la lógica de P1
 }
 
-function calcularTotalSaldo() {
-  // TODO: retornar ingresos - gastos recorriendo el array
+function calcularSaldo() {
+  // TODO: recorrer valores con for y retornar la suma
 }
 
 function mostrarResumen() {
-  // TODO: imprimir cantidad de movimientos + saldo total + desglose por tipo
+  // TODO: imprimir cantidad de movimientos + saldo total
 }
 ```
 
-3.2. Mueve la lógica de captura+validación a `registrarMovimiento()`. La función no retorna nada — solo modifica `movimientos` (global).
+> 💡 **Función imperativa**: estas 3 funciones NO reciben parámetros y modifican (o leen) las variables globales `nombres` y `valores`. Eso las hace "acopladas" al estado global — es el sello del estilo imperativo.
 
-3.3. Implementa `calcularTotalSaldo()` con un `for`:
+### 3.2 Implementa `registrarMovimiento()`
+
+Mueve la lógica de captura+validación del `while` adentro de la función:
 
 ```javascript
-function calcularTotalSaldo() {
+function registrarMovimiento() {
+  const nombre = prompt('Nombre del movimiento:');
+  const tipo = prompt('Tipo (ingreso / gasto):');
+  const monto = parseFloat(prompt('Monto:'));
+
+  if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(monto) || monto <= 0) {
+    alert('Datos inválidos.');
+    return;   // sale de la función sin guardar
+  }
+
+  const valor = tipo === 'ingreso' ? monto : -monto;
+  nombres.push(nombre);
+  valores.push(valor);
+}
+```
+
+* **`return` sin valor** sale de la función antes de llegar al final. Útil para "validación temprana".
+
+### 3.3 Implementa `calcularSaldo()`
+
+```javascript
+function calcularSaldo() {
   let saldo = 0;
-  for (let i = 0; i < movimientos.length; i++) {
-    if (movimientos[i].tipo === 'ingreso') {
-      saldo = saldo + movimientos[i].valor;
-    } else {
-      saldo = saldo - movimientos[i].valor;
-    }
+  for (let i = 0; i < valores.length; i++) {
+    saldo = saldo + valores[i];
   }
   return saldo;
 }
 ```
 
-3.4. Implementa `mostrarResumen()`:
+### 3.4 Implementa `mostrarResumen()`
 
 ```javascript
 function mostrarResumen() {
   console.log('--- Resumen Final ---');
-  console.log('Total de movimientos:', movimientos.length);
-  console.log('Saldo total: $' + calcularTotalSaldo().toFixed(2));
+  console.log('Total de movimientos:', nombres.length);
+  console.log('Saldo total: $' + calcularSaldo().toFixed(2));
 }
 ```
 
-3.5. Conecta el flujo al final del archivo:
+* `mostrarResumen` **llama a `calcularSaldo()`** — las funciones se pueden componer así, una llamando a otra.
+
+### 3.5 Conecta el flujo al final del archivo
 
 ```javascript
 let continuar = 'si';
@@ -166,48 +292,64 @@ while (continuar === 'si') {
 mostrarResumen();
 ```
 
-✅ **Checkpoint 3 (~110 min):** Ejecutas el flujo, registras 2 movimientos (1 ingreso de 150, 1 gasto de 45.50) y al cerrar el bucle ves en consola: "Total de movimientos: 2" y "Saldo total: $104.50".
+✅ **Checkpoint 3 (~105 min):** ejecutas el flujo, registras 2 movimientos (1 ingreso de 150, 1 gasto de 45.50) y al cerrar el bucle ves en consola:
+```
+Total de movimientos: 2
+Saldo total: $104.50
+```
 
-🏆 **Reto autónomo:** agrega un desglose por tipo dentro de `mostrarResumen()`. Suma ingresos y gastos por separado e imprime ambos. Pista: dos variables acumuladoras en un solo `for`.
+🏆 **Reto autónomo:** agrega un desglose por tipo dentro de `mostrarResumen()`. Suma ingresos (`valores[i] > 0`) y gastos (`valores[i] < 0`) por separado e imprime ambos. Pista: dos variables acumuladoras dentro del mismo `for`.
 
 ---
 
 ## 🌟 Logros Adicionales
 
-- **Logro 1:** Permitir al usuario eliminar un movimiento por nombre antes de cerrar el bucle.
-- **Logro 2:** Mostrar el ingreso más alto y el gasto más alto registrados.
-- **Logro 3:** Validar que los nombres no se repitan.
+- **Logro 1:** Eliminar un movimiento por nombre antes de cerrar el bucle. Pista: usa `nombres.indexOf(nombre)` para encontrar el índice, luego `splice(i, 1)` en **ambos** arrays — porque son paralelos, ambos deben actualizarse juntos.
+- **Logro 2:** Mostrar el ingreso más alto y el gasto más bajo (más negativo) registrados.
+- **Logro 3:** Validar que los nombres no se repitan al registrar.
+
+---
 
 ## 📝 Instrucciones de Entrega
 
 1. **README.md** con:
    - Explicación breve de cómo se usa el programa.
    - Listado de las 3 funciones imperativas creadas y qué hace cada una.
-   - Reflexión: ¿qué pasaría si tu programa tuviera 50 funciones imperativas que comparten `movimientos`?
+   - **Reflexión obligatoria:** *¿Qué pasaría si registramos un movimiento en `nombres` pero olvidamos hacerlo en `valores`? ¿Es fácil de detectar este error?* (Vas a resolver esto en C07.)
 
 2. **Entrega Final:**
    - URL del repositorio en GitHub.
-   - Captura de pantalla de la ejecución en consola (con al menos 3 movimientos registrados y el resumen final).
+   - Captura de pantalla de la ejecución en consola con al menos 3 movimientos y el resumen final.
 
 ---
 
 ## 🧑‍💻 Ejemplo de Flujo Esperado (en consola)
 
 ```
-Registro de Gastos
------------------------
+Nombre del movimiento: Salario
+Tipo: ingreso
+Monto: 3000
+
+¿Registrar otro movimiento? (si/no): si
 Nombre del movimiento: Cena
 Tipo: gasto
 Monto: 45.50
 
 ¿Registrar otro movimiento? (si/no): si
-Nombre del movimiento: Consultoría
+Nombre del movimiento: Freelance
 Tipo: ingreso
-Monto: 150
+Monto: 500
 
 ¿Registrar otro movimiento? (si/no): no
 
 --- Resumen Final ---
-Total de movimientos: 2
-Saldo total: $104.50
+Total de movimientos: 3
+Saldo total: $3454.50
 ```
+
+---
+
+## 🔮 Lo que viene en C06 y C07
+
+* **C06 (Funcional)**: el `for` que escribiste hoy DESAPARECE. Vas a usar `.map()`, `.filter()`, `.reduce()` para hacer lo mismo en una línea. Conocerás **arrow functions**.
+* **C07 (OOP)**: los 2 arrays paralelos se VUELVEN UN solo array de objetos — `{ nombre, tipo, valor }`. Vas a sentir por qué objetos son mejor que arrays paralelos.

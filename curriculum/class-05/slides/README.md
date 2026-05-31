@@ -1,183 +1,231 @@
-<!-- Título Principal -->
-# Programación Imperativa
-### Code 201 - Clase 05
+# Clase 05 — Programación Imperativa + Arrays
+### Code 201 · Módulo 2
 
 ---
 
-<!-- Sección 1: Bienvenida y Contexto -->
-## Bienvenida y Contexto
-### 📚 Objetivo de la Clase
-- Comprender cómo funciona la **programación imperativa**.
-- Aplicar control de flujo y funciones para desarrollar un **Gestor de Presupuesto Personal**.
-- Reflexionar sobre las ventajas y limitaciones de este enfoque en el desarrollo de software.
+## 🎯 Objetivo de la Clase
+
+- Comprender el **paradigma imperativo** (cómo hacer las cosas paso a paso).
+- Manejar **arrays** por primera vez en JavaScript.
+- Construir un **Gestor de Presupuesto Personal** con funciones imperativas.
 
 ---
 
-## Recordemos 📖
-### Fundamentos previos
-- **Variables y tipos de datos.**
-- **Condicionales y bucles.**
-- **Funciones básicas.**
+## 📖 Repaso de Code 101
 
-### Limitación actual
-- Sabemos capturar y procesar datos de forma individual.
-- Pero... ¿cómo organizamos un flujo completo que registre, valide y resuma información en un solo programa?
+- **Variables** (`let`, `const`) y tipos primitivos.
+- **Condicionales** `if`/`else` y ternarios.
+- **Funciones** con `function`, parámetros y `return`.
+- **`console.log`** para depurar.
+
+> Hoy agregamos **arrays + bucles + APIs del navegador**.
 
 ---
 
-<!-- Sección 2: Concepto Clave -->
-## ¿Qué es la Programación Imperativa?
-### Definición
-- Estilo de programación donde definimos **cómo se deben hacer las cosas**.
-- El código sigue un flujo **secuencial**: paso 1, paso 2, paso 3.
+## 🧱 ¿Qué es un Array?
 
-🧩 **Estructura Típica:**
+Una **lista ordenada** de valores. Se declara con corchetes `[]`.
+
 ```javascript
-let actividades = [];
+let frutas = ['manzana', 'pera', 'uva'];
 
-function registrarActividad() {
-    let nombre = prompt("Nombre de la actividad:");
-    let duracion = parseInt(prompt("Duración (minutos):"));
-    if (nombre && duracion > 0) {
-        actividades.push({ nombre, duracion });
-    } else {
-        alert("Datos inválidos.");
-    }
+console.log(frutas.length);   // 3
+console.log(frutas[0]);        // 'manzana'
+frutas.push('mango');          // agrega al final
+console.log(frutas.length);    // 4
+```
+
+* `arr[i]` accede por **índice** (arranca en `0`).
+* `arr.length` devuelve cuántos elementos hay.
+* `arr.push(x)` agrega al final.
+
+---
+
+## 🧠 El índice arranca en 0
+
+```
+   ┌───────┬──────┬─────┬───────┐
+   │manzana│ pera │ uva │ mango │
+   └───────┴──────┴─────┴───────┘
+       0      1     2      3
+```
+
+* `frutas[0]` → `'manzana'`
+* `frutas[frutas.length - 1]` → `'mango'`
+* Confundirse con esto es el **bug #1** al empezar.
+
+---
+
+## 🧬 Modelo del Proyecto: Arrays Paralelos
+
+Para el Gestor de Presupuesto usamos **2 arrays paralelos**:
+
+```javascript
+let nombres = [];    // qué fue ("Salario", "Cena")
+let valores = [];    // cuánto fue, con signo
+```
+
+**Convención de signos:**
+- Positivo → ingreso (`3000`)
+- Negativo → gasto (`-45.50`)
+
+> Calcular el saldo = sumar todo `valores`.
+
+---
+
+## ⚠️ "Paralelos" significa SINCRONIZADOS
+
+`nombres[i]` y `valores[i]` describen el **mismo** movimiento.
+
+```javascript
+nombres.push('Salario');   nombres = ['Salario']
+valores.push(3000);         valores = [3000]
+
+nombres.push('Cena');      nombres = ['Salario', 'Cena']
+valores.push(-45.50);       valores = [3000, -45.50]
+```
+
+> Si olvidas un `push`, **todo se descalibra**. Lo veremos resuelto en C07.
+
+---
+
+## 🗣️ APIs del Navegador
+
+```javascript
+const nombre = prompt('Nombre:');           // pide input
+const monto = parseFloat(prompt('Monto:')); // string → número
+if (!nombre || isNaN(monto)) {
+  alert('Datos inválidos.');                // muestra aviso
 }
 ```
 
----
-
-<!-- Debate Técnico: Participación -->
-## Debate Técnico 🧠
-### ¿Cómo crece un programa imperativo?
-- ¿Qué pasa si añadimos categorías?
-- ¿Qué sucede si queremos guardar estos datos en un archivo?
-- ¿Cuándo empieza a volverse difícil de mantener?
-
-📌 Reflexiona y comparte tu experiencia.
+* **`prompt(mensaje)`** → siempre devuelve string.
+* **`parseFloat(texto)`** → convierte a número decimal. Devuelve `NaN` si no se puede.
+* **`isNaN(valor)`** → `true` si no es número válido.
+* **`alert(mensaje)`** → cuadro de aviso.
 
 ---
 
-<!-- Analogía Visual -->
-## 📑 Analogía
-### Receta de Cocina
-- La programación imperativa es como una **receta**.
-- Te dice paso a paso **cómo** hacer un plato.
-- Si cambias el orden, algo puede fallar.
-- El cocinero (programa) **sigue instrucciones exactas**.
+## 🔁 Bucle `while`
 
----
-
-<!-- Ejemplo práctico guiado -->
-## Ejemplo: Gestor de Presupuesto Personal 💰
-### Requisitos
-- Registrar actividades diarias con nombre y duración.
-- Validar que los datos sean correctos.
-- Mostrar un resumen final con el total de actividades y minutos.
-
----
-
-## Ejemplo: Flujo
-### Registro de Actividades
-- `prompt()` captura nombre y duración.
-- Validación con `if`.
-- Almacén en un array global.
-
-### Resumen Final
-- `for` recorre el array.
-- Calcula y muestra total de actividades y minutos.
-
----
-
-<!-- Checkpoint 1 -->
-## Checkpoint 1 ☑️
-### 30 Minutos
-- Implementar `registrarActividad()`.
-- Validar nombre y duración positiva.
-- Guardar en el array global.
-
----
-
-<!-- Errores Comunes -->
-## ⚠️ Errores Comunes
-- No validar duración o nombre.
-- Usar variables locales que desaparecen fuera de la función.
-- No separar la lógica de validación y almacenamiento.
+Repite **mientras** la condición sea verdadera.
 
 ```javascript
-// Ejemplo incorrecto
-let nombre = prompt("Nombre");
-let duracion = prompt("Duración");
-actividades.push({ nombre, duracion });  // ❌ Sin validación
+let continuar = 'si';
+while (continuar === 'si') {
+  registrarMovimiento();
+  continuar = prompt('¿Otro? (si/no):');
+}
 ```
 
----
-
-<!-- Checkpoint 2 -->
-## Checkpoint 2 ☑️
-### 60 Minutos
-- Implementar `calcularTiempoTotal()`.
-- Recorrer el array de actividades.
-- Sumar duraciones y mostrar resumen en consola.
+> Útil cuando NO sabes cuántas iteraciones harás (depende del usuario).
 
 ---
 
-<!-- Participación Grupal -->
-## Debate: Limitaciones 📊
-### Preguntas Clave
-- ¿Qué tan fácil es modificar el programa si queremos agregar categorías?
-- ¿Qué pasaría si quisiéramos registrar actividades en días diferentes?
-- ¿Cómo crece el **acoplamiento** entre funciones y datos?
+## 🔢 Bucle `for` sobre un Array
+
+Recorre cada elemento del array.
+
+```javascript
+let saldo = 0;
+for (let i = 0; i < valores.length; i++) {
+  saldo = saldo + valores[i];
+}
+console.log('Saldo: $' + saldo.toFixed(2));
+```
+
+* `let i = 0` → contador desde 0.
+* `i < valores.length` → mientras haya elementos.
+* `i++` → avanza a la siguiente posición.
+
+> Ingresos suman (+), gastos restan (-). El signo hace el trabajo.
 
 ---
 
-<!-- Trade-offs Técnicos -->
-## Trade-offs Técnicos ⚖️
-### Ventajas
-- Fácil de entender y explicar.
+## 🧪 Validación con Falsy
+
+```javascript
+if (!nombre || isNaN(monto) || monto <= 0) {
+  alert('Datos inválidos.');
+}
+```
+
+**Valores falsy** (se tratan como `false`):
+- `""` (string vacío)
+- `0`
+- `null`, `undefined`
+- `NaN`
+
+> Por eso `!nombre` detecta cuando el usuario dejó el campo vacío.
+
+---
+
+## ⚙️ Estructura del Lab
+
+| Parte | Tiempo | Contenido |
+|---|---|---|
+| **P1** | ~30 min | Arrays + `prompt` + validación → registrar 1 movimiento |
+| **P2** | ~35 min | `while` para repetir + `for` para calcular saldo |
+| **P3** | ~40 min | 3 funciones imperativas + reporte |
+
+---
+
+## 🛠️ Las 3 Funciones del Proyecto
+
+```javascript
+function registrarMovimiento() {
+  // prompt → if → push paralelo
+}
+
+function calcularSaldo() {
+  // for sobre valores → suma con signo
+  return saldo;
+}
+
+function mostrarResumen() {
+  // console.log de cantidad + saldo total
+}
+```
+
+> Las 3 **modifican o leen variables globales** (`nombres`, `valores`). Eso las hace **imperativas**.
+
+---
+
+## 📊 Trade-offs del Paradigma Imperativo
+
+### ✅ Ventajas
+- Fácil de entender y enseñar.
 - Ideal para scripts pequeños.
-- Compatible con cualquier navegador o entorno.
 
-### Desventajas
-- Acoplamiento fuerte entre funciones y datos.
-- Difícil de escalar.
-- Poca flexibilidad para cambios.
-
-📌 **Reflexión**: ¿Cuándo conviene evolucionar hacia un enfoque más estructurado (funcional u orientado a objetos)?
+### ⚠️ Limitaciones
+- Estado global compartido → bugs sutiles.
+- **Arrays paralelos = fragilidad** (olvidar un `push` rompe todo).
+- Difícil de testear (funciones acopladas al estado).
 
 ---
 
-<!-- IA y Programación Imperativa -->
-## IA como Asistente
-### Cómo usar IA de forma crítica
-- Pedir sugerencias de funciones para registrar y calcular.
-- Revisar validaciones y estructuras recomendadas.
-- Comparar soluciones generadas por IA con las propias.
+## 🔮 Lo que viene
 
-✍️ **Comparte un prompt que hayas usado para pedir ayuda hoy**.
+**C06 — Programación Funcional:**
+- El `for` que escribiste hoy → DESAPARECE.
+- `.map()`, `.filter()`, `.reduce()` lo hacen en una línea.
+- Conocerás **arrow functions**.
 
----
-
-<!-- Cierre -->
-## Conclusiones 🌟
-### Ideas Clave
-- **La programación imperativa nos enseña cómo pensar paso a paso.**
-- Es poderosa para scripts pequeños.
-- A medida que el programa crece, **necesitamos otras estrategias**.
-- Las siguientes clases nos ayudarán a explorar enfoques más flexibles.
+**C07 — POO:**
+- Los 2 arrays paralelos → **UN solo array de objetos**.
+- `{ nombre, tipo, valor }` resuelve el dolor de la sincronización.
 
 ---
 
-## Lo que viene
-### Próxima Clase: Programación Funcional
-- Uso de funciones puras.
-- Manipulación de arrays (`map`, `filter`, `reduce`).
-- Menos acoplamiento, más claridad.
+## 🤔 Discusión Final
 
-📌 Prepara el debate: ¿Qué es más importante, la claridad o la velocidad de desarrollo?
+- ¿Qué pasa si olvido un `push` en uno de los arrays paralelos?
+- ¿Es fácil detectar ese error?
+- ¿Qué te imaginas que haría una "función pura" en este proyecto?
+
+> **Reflexión:** la programación imperativa nos enseña a pensar paso a paso. Pero el código que escribes hoy **vas a refactorizarlo** en C06 y C07 — el dolor de hoy es la motivación de mañana.
 
 ---
 
 ## ¡Gracias! 🙌
-### Code 201 - Enter Tech School
+### Code 201 · Enter Tech School

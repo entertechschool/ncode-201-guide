@@ -1,153 +1,267 @@
-# Clase 07: Programación Orientada a Objetos
-
-## 🎯 Objetivo General
-
-Refactorizar el **Gestor de Presupuesto Personal** aplicando programación orientada a objetos con funciones constructoras, transformando funciones puras en objetos que encapsulen datos y comportamientos.
+# Clase 07 — Objetos Literales + POO
+### Code 201 · Módulo 2
 
 ---
 
-## 💡 ¿Por qué aprender Programación Orientada a Objetos?
+## 🎯 Objetivo de la Clase
 
-* **Organización de código**: Agrupa datos y comportamientos relacionados en un solo lugar
-* **Reutilización**: Crea múltiples instancias con las mismas características pero datos diferentes
-* **Preparación profesional**: Base fundamental para frameworks modernos y patrones de diseño
-
-> "La programación orientada a objetos es como organizar tu casa: cada objeto tiene su lugar y sabe exactamente qué debe hacer."
-
----
-
-## 🧠 ¿Qué es una Función Constructora exactamente?
-
-* **Función especial**: Crea y configura objetos nuevos usando la palabra clave `new`
-* **Convención de nomenclatura**: Comienza con mayúscula (PascalCase)
-* **Contexto de uso**: Cuando necesitas crear múltiples objetos con la misma estructura
-
-> "Una función constructora es como un molde: defines una vez y produces tantos objetos como necesites."
+- Conocer los **objetos literales** (`{ key: value }`).
+- Crear **funciones constructoras** con `function Movimiento() { this... }` + `new`.
+- **Refactorizar el modelo**: arrays paralelos → array de objetos.
+- **Primer puente JS↔HTML**: capturar input desde un formulario.
 
 ---
 
-## 🔧 Función Constructora Básica
+## 📖 Repaso del dolor de C05/C06
 
 ```javascript
-// Función constructora para Movimiento
+let nombres = ['Salario', 'Cena'];
+let valores = [3000, -45.50];   // signo = tipo
+```
+
+**Problemas:**
+- 2 push sincronizados por cada movimiento.
+- Si borras de uno y no del otro → desastre silencioso.
+- `tipo` codificado con el signo (poco explícito).
+
+> Hoy lo resolvemos. De verdad.
+
+---
+
+## 🧱 Objeto Literal
+
+Una colección de pares `key: value` dentro de `{}`:
+
+```javascript
+let persona = {
+  nombre: 'Ana',
+  edad: 30,
+  pais: 'Perú'
+};
+
+console.log(persona.nombre);   // 'Ana'
+persona.edad = 31;             // modificar
+persona.email = 'a@mail.com';  // agregar
+```
+
+* Se accede con `.` y el nombre de la propiedad.
+
+---
+
+## ⚡ Array vs Objeto
+
+| Estructura | Acceso | Cuándo |
+|---|---|---|
+| **Array** `[a, b, c]` | Por índice `arr[0]` | Orden + colección homogénea |
+| **Objeto** `{ k: v }` | Por nombre `obj.k` | Datos heterogéneos con nombres |
+
+> Y se combinan: **array de objetos** = lo mejor de ambos.
+
+---
+
+## 🪄 Shorthand Property
+
+Si la **key** se llama igual que la **variable**:
+
+```javascript
+const nombre = 'Ana';
+const edad = 30;
+
+// Forma larga
+const persona1 = { nombre: nombre, edad: edad };
+
+// Shorthand (equivalente)
+const persona2 = { nombre, edad };
+```
+
+> Vas a ver esto MUCHO en código real.
+
+---
+
+## 🔥 El Refactor del Modelo
+
+```javascript
+// ANTES — 2 arrays paralelos
+let nombres = ['Salario', 'Cena'];
+let valores = [3000, -45.50];
+
+// AHORA — array de objetos
+let movimientos = [
+  { nombre: 'Salario', tipo: 'ingreso', valor: 3000 },
+  { nombre: 'Cena',    tipo: 'gasto',   valor: 45.50 }
+];
+```
+
+* **1 push en vez de 2.**
+* **`tipo` explícito** (no más signos mentales).
+* **Borrar un movimiento borra todo junto.**
+
+---
+
+## 🛠️ Función Constructora
+
+```javascript
 function Movimiento(nombre, tipo, valor) {
-  // ✅ Usar this.propiedad para el estado
   this.nombre = nombre;
   this.tipo = tipo;
   this.valor = valor;
   this.fecha = new Date().toLocaleDateString();
-  
-  // ✅ Usar this.metodo = function() {} para comportamientos
+
   this.esIngreso = function() {
     return this.tipo === 'ingreso';
   };
 }
 ```
 
-* **`this` keyword**: Referencia al objeto que está siendo creado
-* **Propiedades**: Datos específicos del objeto (`this.nombre`)
-* **Métodos**: Comportamientos del objeto (`this.esIngreso`)
+* **Nombre en MAYÚSCULA** (convención).
+* **`this.x = ...`** guarda datos.
+* **`this.metodo = function() {}`** agrega comportamiento.
 
 ---
 
-## 🧩 Instanciación de Objetos
+## 🏗️ Crear Instancias con `new`
 
 ```javascript
-// Crear instancias usando 'new'
 const salario = new Movimiento('Salario', 'ingreso', 3000);
-const comida = new Movimiento('Comida', 'gasto', 200);
+const cena = new Movimiento('Cena', 'gasto', 45.50);
 
-// Usar las instancias
-console.log(salario.nombre); // "Salario"
-console.log(salario.esIngreso()); // true
-console.log(comida.esIngreso()); // false
+console.log(salario.esIngreso());   // true
+console.log(cena.esIngreso());      // false
+console.log(salario.fecha);         // '24/05/2026'
 ```
 
-| **Concepto** | **Descripción** | **Ejemplo** |
-|--------------|-----------------|-------------|
-| **new** | Palabra clave para crear instancias | `new Movimiento()` |
-| **Instancia** | Objeto específico creado | `salario`, `comida` |
-| **Encapsulación** | Datos y métodos juntos | `salario.esIngreso()` |
+**Qué hace `new`:**
+1. Crea `{}` vacío.
+2. Lo asigna a `this`.
+3. Ejecuta el cuerpo de la constructora.
+4. Retorna `this`.
 
 ---
 
-## 🔢 Parte 1: Funciones Constructoras Básicas (~30 min)
+## ⚠️ Cuidado con `new`
 
-### 🎯 Objetivo:
-Crear las primeras funciones constructoras para `Movimiento` y `Presupuesto`
+```javascript
+// Con new (correcto)
+const m = new Movimiento('Cena', 'gasto', 45);
+// m es objeto
 
-### ✅ Criterios de Validación:
-- ✅ Función constructora `Movimiento` con propiedades y métodos
-- ✅ Función constructora `Presupuesto` con array de movimientos
-- ✅ Instanciación correcta usando `new`
+// Sin new (INCORRECTO)
+const m = Movimiento('Cena', 'gasto', 45);
+// m es undefined — y contamina el this global
+```
 
----
-
-## 🧮 Parte 2: Encapsulación de Comportamientos (~40 min)
-
-### 🎯 Objetivo:
-Implementar métodos en las funciones constructoras para manejar la lógica del presupuesto
-
-### ✅ Criterios de Validación:
-- ✅ Método `agregarMovimiento()` en Presupuesto
-- ✅ Método `calcularBalance()` funcionando
-- ✅ Reto en vivo: Método `filtrarPorTipo()` completado
-
-### 🚀 Reto en Vivo (10 min):
-Implementar `filtrarPorTipo(tipo)` que retorne solo ingresos o gastos
+> Por eso la convención de mayúscula: te recuerda usar `new`.
 
 ---
 
-## 📊 Parte 3: Captura desde Formulario (~35 min)
+## 🏛️ Constructora `Presupuesto`
 
-### 🎯 Objetivo:
-Conectar tu modelo OOP con un formulario HTML pre-armado. El alumno escribe SOLO el JS de captura.
+```javascript
+function Presupuesto() {
+  this.movimientos = [];
 
-### El puente JS ↔ Form (4 líneas clave)
+  this.agregar = function(m) {
+    this.movimientos.push(m);
+  };
+
+  this.saldo = function() {
+    return this.movimientos
+      .filter(m => m.esIngreso())
+      .reduce((acc, m) => acc + m.valor, 0)
+      - this.movimientos
+        .filter(m => m.esGasto())
+        .reduce((acc, m) => acc + m.valor, 0);
+  };
+}
+```
+
+* **Encapsulación**: array + métodos JUNTOS en un objeto.
+
+---
+
+## 🌉 Primer Puente JS ↔ HTML
 
 ```javascript
 const form = document.querySelector('#form-movimiento');
+
 form.addEventListener('submit', function(event) {
-  event.preventDefault();
+  event.preventDefault();   // sin esto, recarga la página
+
   const nombre = document.querySelector('#nombre').value;
   const tipo = document.querySelector('#tipo').value;
   const valor = parseFloat(document.querySelector('#valor').value);
-  miPresupuesto.agregarMovimiento(new Movimiento(nombre, tipo, valor));
+
+  miPresupuesto.agregar(new Movimiento(nombre, tipo, valor));
   form.reset();
 });
 ```
 
-### ✅ Criterios de Validación:
-- ✅ El form HTML viene pre-armado (no se modifica)
-- ✅ `event.preventDefault()` evita la recarga
-- ✅ Cada submit agrega una instancia al `Presupuesto`
-- ✅ La consola muestra el array de movimientos creciendo
-
-> ⚠️ Esta clase NO es "DOM completo" — solo captura de input. Render dinámico y manipulación de nodos llega en M3.
+> **HTML pre-armado**. Tú solo escribes ~5-8 líneas de JS.
 
 ---
 
-## 🌟 Logros Adicionales
+## 🧩 Conceptos DOM mínimos
 
-### Logro 1: Persistencia Básica
-* Método `exportarJSON()` que convierta el presupuesto a JSON
-* Método `importarJSON()` que restaure desde JSON
+| Acción | Cómo |
+|---|---|
+| Buscar por id | `document.querySelector('#id')` |
+| Leer input | `.value` |
+| Escribir texto | `.textContent` |
+| Escuchar evento | `.addEventListener('submit', fn)` |
+| Evitar recarga | `event.preventDefault()` |
 
-### Logro 2: Métodos de Análisis
-* `obtenerPromedioGastos()` y `obtenerMayorGasto()`
-* Dashboard visual con estadísticas automáticas
+> El DOM completo (`createElement`, render dinámico) llega en M3.
 
 ---
 
-## 💭 Síntesis y Reflexión
+## ⚙️ Estructura del Lab
 
-### 🎯 Conceptos Clave Consolidados:
-* **Función Constructora**: Molde para crear objetos
-* **`this` keyword**: Contexto del objeto actual
-* **Encapsulación**: Datos y comportamientos unidos
-* **Instanciación**: Crear objetos específicos con `new`
+| Parte | Tiempo | Contenido |
+|---|---|---|
+| **P0** | ~15 min | Objetos literales + shorthand |
+| **P1** | ~25 min | Refactor: arrays paralelos → array de objetos |
+| **P2** | ~30 min | Constructoras Movimiento + Presupuesto |
+| **P3** | ~35 min | Form HTML conectado al modelo OOP |
 
-### ❓ Preguntas de Reflexión:
-* ¿Cómo cambió la organización de tu código?
-* ¿Qué ventajas notas al usar objetos vs funciones puras?
-* ¿Qué parte te resultó más desafiante?
+---
+
+## 📊 ¿Qué Ganamos con OOP?
+
+| Antes (C05/C06) | Ahora (C07) |
+|---|---|
+| 2 arrays paralelos | 1 array de objetos |
+| Tipo como signo | Tipo explícito |
+| Funciones sueltas | Métodos en el objeto |
+| Estado en globales | Estado encapsulado |
+| Fragilidad sincronizada | Integridad garantizada |
+
+---
+
+## 🔮 Lo que viene en C08
+
+Cada instancia tiene SUS PROPIOS métodos → **memoria duplicada**.
+
+C08: los métodos viven en el **prototipo** — compartidos entre TODAS las instancias.
+
+```javascript
+Movimiento.prototype.esIngreso = function() {
+  return this.tipo === 'ingreso';
+};
+```
+
+Y se construye **herencia**: `Ingreso` e `Egreso` que heredan de `Movimiento`.
+
+---
+
+## 🤔 Discusión Final
+
+- ¿Qué cambió al pasar de array paralelo a array de objetos?
+- ¿Por qué `tipo: 'ingreso'` es mejor que codificar con signo?
+- ¿Notas cómo los métodos del objeto VIAJAN con sus datos?
+
+> **Reflexión:** OOP NO es "lo siguiente" — es **otra forma de organizar lo mismo**. Imperativo, funcional y OOP coexisten en código real. Hoy entendiste por qué OOP existe.
+
+---
+
+## ¡Gracias! 🙌
+### Code 201 · Enter Tech School

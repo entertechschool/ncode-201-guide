@@ -1,29 +1,28 @@
-﻿> 📦 **Módulo 2:** Clase 6 de 8
+> 📦 **Módulo 2:** Clase 2 de 4
 
-# Clase 06: Programación Funcional
+# Clase 06: Programación Funcional + Arrow Functions
 
 ## Resumen
 
-En esta clase aplicamos el paradigma de **programación funcional** para refactorizar y optimizar el proyecto **Personal Budget**. Después de haber trabajado con programación imperativa en la clase anterior, ahora exploraremos un enfoque declarativo que nos permitirá escribir código más limpio, predecible y mantenible. Implementaremos funciones puras y utilizaremos métodos funcionales como `map()`, `filter()` y `find()` para transformar datos financieros de manera eficiente. Esta transición hacia la programación funcional es fundamental para prepararnos hacia conceptos más avanzados como la programación orientada a objetos y sentar las bases para el trabajo colaborativo que caracteriza el desarrollo profesional.
+En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `for` clásico que escribiste para calcular el saldo va a **desaparecer** — vas a sustituirlo por métodos funcionales sobre arrays: `.map()`, `.filter()`, `.find()`, `.reduce()` y `.forEach()`. Antes de tocar esos métodos, aprendes la sintaxis nueva que vas a ver en TODO código JS moderno: las **arrow functions** (`x => x * 2`). Comprendes qué es una **función pura** y por qué son fáciles de testear y razonar. El modelo de datos sigue siendo los **2 arrays paralelos** de C05 — los métodos funcionales operan sobre `valores[]` (array de números puros), ideal para demos limpias del paradigma.
 
 ## Estructura sugerida
 
-| **Fase** | **Duración** | **Descripción**   |
-| ---- | ---- | ---- |
-| **1. Introducción y Contexto**   | 15 min | Conexión con programación imperativa y objetivos del paradigma funcional   |
-| **2. Demo Inicial y Debate Técnico** | 30 min | Funciones puras vs impuras + demostración de métodos funcionales + discusión sobre ventajas y casos de uso |
-| **3. Laboratorio Principal - Parte 1**  | 30 min | Funciones Puras Básicas. Checkpoint: funciones de extracción y validación operativas  |
-| **4. Laboratorio Principal - Parte 2**  | 40 min | Filtrado y Búsqueda Funcional. Reto en vivo + Checkpoint: sistema de filtros con `filter()` y `find()` funcionando |
-| **5. Laboratorio Principal - Parte 3**  | 50 min | Sistema de Reportes. Reto en vivo + Retos autónomos + Checkpoint: reportes financieros generados mediante composición de funciones   |
-| **6. Síntesis y Cierre**  | 15 min | Consolidación paradigma funcional vs imperativo + preparación para programación orientada a objetos   |
+| **Fase** | **Duración** | **Descripción** |
+|---|---|---|
+| **1. Introducción y Contexto** | 15 min | Repaso C05 (imperativo + arrays + for) + motivación: ¿qué tal si el `for` fuera UNA línea? |
+| **2. Demo Técnica** | 20 min | Demo en vivo: `function` → arrow function, luego `.map`/`.filter`/`.reduce` sobre array de números. |
+| **3. Laboratorio (4 partes)** | 130 min | P0 Arrow + funciones puras (~15 min) · P1 map/filter/find (~35 min) · P2 reduce/forEach (~40 min) · P3 composición + DRY (~40 min). |
+| **4. Cierre y Síntesis** | 15 min | Discusión: ¿qué funciones puras te resultaron más útiles? + semilla C07. |
 
 ## 🎯 Objetivos de aprendizaje
 
 Al finalizar esta clase, serás capaz de:
 
-1. **Implementar** funciones puras que manipulen datos financieros sin efectos secundarios
-2. **Utilizar** métodos funcionales (`map()`, `filter()`, `find()`) para transformar y filtrar arrays de movimientos
-3. **Refactorizar** código imperativo hacia un enfoque funcional más declarativo y mantenible
+1. **Escribir arrow functions** y reconocer su equivalencia con `function`.
+2. **Aplicar métodos funcionales** de Array — `.map()`, `.filter()`, `.find()`, `.reduce()`, `.forEach()`.
+3. **Identificar funciones puras** y separarlas de funciones con efectos secundarios.
+4. **Refactorizar `for` clásico** a métodos funcionales que no mutan el array original.
 
 ---
 
@@ -33,44 +32,45 @@ Al finalizar esta clase, serás capaz de:
 
 #### 🔍 Misión de Investigación
 
-**1. Funciones Puras:**
+**1. Arrow functions:**
+- Investiga: ¿Cómo se escribe `function suma(a, b) { return a + b }` como arrow function?
+- Encuentra: 3 ejemplos donde arrow function es más legible que `function`.
+- Prepárate para explicar: ¿Cuándo arrow function NO es buena idea?
+
+**2. Funciones puras:**
 - Investiga: ¿Qué características debe cumplir una función para ser considerada "pura"?
-- Encuentra: Un ejemplo real de una función pura vs una función impura en JavaScript
-- Prepárate para explicar: ¿Por qué las funciones puras facilitan el testing y debugging?
+- Encuentra: Un ejemplo de función pura vs una función impura en JavaScript.
+- Prepárate para explicar: ¿Por qué las funciones puras facilitan el testing?
 
-**2. Método map():**
-- Investiga: ¿Cómo funciona `map()` y qué retorna siempre?
-- Encuentra: Tres casos de uso diferentes donde `map()` es más eficiente que un loop tradicional
-- Prepárate para explicar: ¿Cuándo usar `map()` vs `forEach()` vs `for` loop?
+**3. Método `.map()` vs `for`:**
+- Investiga: ¿Qué retorna `.map()`? ¿Muta el array original?
+- Encuentra: Un ejemplo donde `.map()` reemplaza un `for` clásico en 1 línea.
+- Prepárate para explicar: ¿Cuándo usar `.map()` vs `.forEach()`?
 
-**3. Métodos filter() y find():**
-- Investiga: ¿Cuál es la diferencia principal entre `filter()` y `find()` en términos de lo que retornan?
-- Encuentra: Ejemplos prácticos de cuándo usar cada uno para buscar datos en un array
-- Prepárate para explicar: ¿Cómo estos métodos mantienen la inmutabilidad del array original?
-
-**4. Principio DRY en programación funcional:**
-- Investiga: ¿Cómo la programación funcional ayuda a evitar la repetición de código?
-- Encuentra: Un ejemplo de refactoring de código repetitivo usando funciones reutilizables
-- Prepárate para explicar: ¿Qué ventajas tiene crear funciones pequeñas y composables?
+**4. Método `.reduce()`:**
+- Investiga: ¿Qué son el "acumulador" y el "valor inicial" en `.reduce`?
+- Encuentra: Un ejemplo de `.reduce` sumando los números de un array.
+- Prepárate para explicar: ¿Por qué `.reduce` se considera "el más poderoso" de los métodos funcionales?
 
 #### 📚 Recursos previos sugeridos
 
-* **Introducción a la Programación Funcional - MDN**
-  https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-
-* **Functional Programming in JavaScript - FreeCodeCamp**
-  https://www.freecodecamp.org/news/functional-programming-in-javascript/
-
-* **Array Methods Explained - JavaScript.info**
-  https://javascript.info/array-methods
+* [Arrow functions — MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/Arrow_functions){:target="_blank"}
+* [Array.prototype.map() — MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map){:target="_blank"}
+* [Array.prototype.reduce() — MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce){:target="_blank"}
+* [Functional Programming in JS — FreeCodeCamp](https://www.freecodecamp.org/news/functional-programming-in-javascript/){:target="_blank"}
 
 ---
 
 ## Glosario de Nuevos Términos
 
-* **Función Pura**: Función que siempre retorna el mismo resultado para los mismos argumentos y no produce efectos secundarios
-* **Inmutabilidad**: Principio de no modificar datos existentes, sino crear nuevas versiones transformadas
-* **Función de Orden Superior**: Función que recibe otras funciones como parámetros o retorna funciones como resultado
-* **Programación Declarativa**: Paradigma que se enfoca en describir qué queremos lograr, no cómo lograrlo paso a paso
-* **Efectos Secundarios**: Modificaciones del estado global o acciones fuera del scope de la función (console.log, modificar variables externas, etc.)
-* **Composición de Funciones**: Técnica de combinar funciones simples para crear funcionalidades más complejas
+* **Arrow function**: Sintaxis corta para funciones. `x => x * 2` equivale a `function(x) { return x * 2 }`.
+* **Función pura**: Función que (1) misma entrada → misma salida, y (2) no produce efectos secundarios.
+* **Efecto secundario**: Cualquier acción de una función fuera de su retorno — `console.log`, mutar variable externa, hacer fetch, etc.
+* **Inmutabilidad**: Principio de no modificar datos existentes; crear nuevas versiones transformadas.
+* **`.map(fn)`**: Transforma cada elemento del array. Devuelve nuevo array del mismo tamaño.
+* **`.filter(fn)`**: Conserva solo los elementos que cumplen la condición. Devuelve nuevo array.
+* **`.find(fn)`**: Retorna el primer elemento que cumple la condición (o `undefined`).
+* **`.reduce(fn, inicial)`**: Acumula todos los elementos en un solo valor (suma, máximo, agrupación, etc.).
+* **`.forEach(fn)`**: Ejecuta una acción por cada elemento. No retorna nada — solo efecto.
+* **Composición de funciones**: Combinar funciones pequeñas para resolver problemas grandes.
+* **Principio DRY** (Don't Repeat Yourself): Evitar repetir código; reusar funciones existentes.

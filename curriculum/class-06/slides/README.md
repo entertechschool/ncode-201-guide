@@ -1,153 +1,272 @@
-# Clase 06: Programación Funcional
-
-## 🎯 Objetivo General
-
-Refactorizar el proyecto **Personal Budget** aplicando paradigma funcional con funciones puras y métodos como `map()`, `filter()` y `find()` para crear código más limpio y mantenible.
+# Clase 06 — Programación Funcional + Arrow Functions
+### Code 201 · Módulo 2
 
 ---
 
-## 💡 ¿Por qué aprender Programación Funcional?
+## 🎯 Objetivo de la Clase
 
-* **Código más predecible**: Funciones puras eliminan efectos secundarios inesperados
-* **Facilita testing**: Mismos inputs = mismos outputs siempre
-* **Preparación profesional**: Paradigma usado en React, frameworks modernos y equipos ágiles
-
-> "La programación funcional es como cocinar con recetas exactas: mismo ingrediente, mismo resultado cada vez."
-
----
-
-## 🧠 ¿Qué es Programación Funcional exactamente?
-
-* **Paradigma declarativo**: Describes QUÉ quieres, no CÓMO lograrlo
-* **Funciones puras**: No modifican estado externo, solo transforman datos
-* **Inmutabilidad**: Crear nuevos datos en lugar de modificar existentes
-
-> "En lugar de 'modificar paso a paso', piensa 'transformar de una vez'."
+- Conocer las **arrow functions** (`=>`).
+- Aplicar métodos funcionales: `.map`, `.filter`, `.find`, `.reduce`, `.forEach`.
+- Refactorizar el `for` de C05 en **una sola línea**.
+- Entender qué es una **función pura**.
 
 ---
 
-## 🔧 Funciones Puras vs Impuras
+## 📖 Repaso de C05
 
 ```javascript
-// ❌ Función IMPURA (modifica variable externa)
-let total = 0;
-function sumarImpuro(valor) {
-  total += valor; // ¡Efecto secundario!
-  return total;
-}
-
-// ✅ Función PURA (solo depende de sus parámetros)
-function sumarPuro(valorActual, valorNuevo) {
-  return valorActual + valorNuevo; // Sin efectos secundarios
+// El for que escribimos para calcular saldo:
+let saldo = 0;
+for (let i = 0; i < valores.length; i++) {
+  saldo = saldo + valores[i];
 }
 ```
 
-* **Puras**: Predecibles, testeables, reutilizables
-* **Impuras**: Pueden tener comportamientos inesperados
+Hoy lo reemplazamos por:
+
+```javascript
+const saldo = valores.reduce((acc, v) => acc + v, 0);
+```
+
+> Una línea. Misma lógica. Pero hay 2 conceptos nuevos: arrow + reduce.
 
 ---
 
-## 🧩 Métodos Funcionales Básicos
+## ➡️ Arrow Function — la forma corta
 
 ```javascript
-const movimientos = [
-  { nombre: "Salario", tipo: "ingreso", valor: 3000 },
-  { nombre: "Comida", tipo: "gasto", valor: 200 },
-  { nombre: "Freelance", tipo: "ingreso", valor: 500 }
+// Forma "function" (la que conoces)
+function duplicar(x) {
+  return x * 2;
+}
+
+// Forma arrow function (equivalente)
+const duplicar = x => x * 2;
+```
+
+* Sin `function`, sin `{}`, sin `return`.
+* `x => x * 2` = "recibe x, devuelve x * 2".
+
+> Se usa MUCHO como argumento de otros métodos.
+
+---
+
+## 🪄 Reglas de la flecha
+
+| Caso | Sintaxis |
+|---|---|
+| 0 parámetros | `() => ...` |
+| 1 parámetro | `x => ...` (sin paréntesis) |
+| 2+ parámetros | `(a, b) => ...` |
+| Cuerpo 1 expresión | omite `{}` y `return` |
+| Cuerpo multilínea | `{ ...; return X; }` |
+
+```javascript
+const sumar = (a, b) => a + b;
+const saludar = () => console.log('Hola');
+const formatear = v => `$${v.toFixed(2)}`;
+```
+
+---
+
+## ✨ Función Pura
+
+Una función es **pura** si:
+1. **Mismo input → mismo output**, siempre.
+2. **No produce efectos** (no `console.log`, no muta variables externas).
+
+```javascript
+// PURA
+const cuadrado = x => x * x;
+
+// IMPURA — depende de variable externa
+let factor = 10;
+const escalar = x => x * factor;
+```
+
+> Las puras son fáciles de testear: no dependen de nada externo.
+
+---
+
+## 🔄 `.map()` — Transformar
+
+```javascript
+const valores = [3000, -45.50, 500, -30];
+
+const enSoles = valores.map(v => v * 4);
+// [12000, -182, 2000, -120]
+
+// El array original NO se mutó:
+console.log(valores); // [3000, -45.50, 500, -30]
+```
+
+* Devuelve un array del **mismo tamaño**.
+* Cada elemento se transforma con la función que pasas.
+
+---
+
+## 🔍 `.filter()` — Filtrar
+
+```javascript
+const ingresos = valores.filter(v => v > 0);
+// [3000, 500]
+
+const gastos = valores.filter(v => v < 0);
+// [-45.50, -30]
+```
+
+* Devuelve un array **menor o igual**.
+* Conserva solo donde la función retorna `true`.
+
+---
+
+## 🎯 `.find()` — Buscar el primero
+
+```javascript
+const primerGasto = valores.find(v => v < 0);
+// -45.50 (NO array — el valor directo)
+
+const enorme = valores.find(v => v > 100000);
+// undefined (no encontró)
+```
+
+* `.filter` → array
+* `.find` → un elemento (o `undefined`)
+
+---
+
+## 🔥 `.reduce()` — El más poderoso
+
+```javascript
+const saldo = valores.reduce((acc, v) => acc + v, 0);
+```
+
+| Vuelta | acc | v | nuevo acc |
+|---|---|---|---|
+| 1 | 0 | 3000 | 3000 |
+| 2 | 3000 | -45.50 | 2954.50 |
+| 3 | 2954.50 | 500 | 3454.50 |
+| 4 | 3454.50 | -30 | 3424.50 |
+
+> Suma, máximo, agrupar, contar... TODO se puede con reduce.
+
+---
+
+## 🔁 `.forEach()` — Efecto sin retorno
+
+```javascript
+valores.forEach((v, i) => {
+  console.log(`Movimiento ${i + 1}: ${v}`);
+});
+```
+
+| Método | Retorna | Para |
+|---|---|---|
+| `.map` | array | transformar |
+| `.forEach` | nada | efectos (imprimir, llamar otras funciones) |
+
+> `.forEach` es la alternativa "decente" al `for` cuando solo iteras.
+
+---
+
+## 🧬 Composición — funciones pequeñas combinadas
+
+```javascript
+const obtenerIngresos = v => v.filter(x => x > 0);
+
+const totalIngresos = v =>
+  obtenerIngresos(v).reduce((acc, x) => acc + x, 0);
+
+const promedioIngresos = v => {
+  const ing = obtenerIngresos(v);
+  return ing.length === 0 ? 0 : totalIngresos(v) / ing.length;
+};
+```
+
+> Funciones pequeñas → funciones grandes. **DRY** en acción.
+
+---
+
+## 🔗 Method Chaining
+
+```javascript
+const top3Gastos = valores
+  .filter(v => v < 0)
+  .map(v => Math.abs(v))
+  .sort((a, b) => b - a)
+  .slice(0, 3)
+  .reduce((acc, v) => acc + v, 0);
+```
+
+* El resultado de un método es la entrada del siguiente.
+* Sin chaining serían 5 variables intermedias.
+
+---
+
+## ⚙️ Estructura del Lab
+
+| Parte | Tiempo | Contenido |
+|---|---|---|
+| **P0** | ~15 min | Arrow functions + funciones puras |
+| **P1** | ~35 min | `.map` · `.filter` · `.find` |
+| **P2** | ~40 min | `.reduce` · `.forEach` + reporte |
+| **P3** | ~40 min | Composición + DRY + chaining |
+
+---
+
+## ⚠️ Nota intencional del modelo
+
+Los métodos funcionales se aplican sobre `valores` (array de números).
+
+Cuando necesitamos cruzar con `nombres`, lo hacemos manualmente con index:
+
+```javascript
+valores.forEach((v, i) => console.log(nombres[i], v));
+```
+
+> En C07 cuando volvamos a `[{ nombre, valor }]`, este awkwardness desaparece.
+
+---
+
+## 📊 Trade-offs Funcional vs Imperativo
+
+### ✅ Ventajas funcional
+- Menos código, más legible.
+- No muta — predecible.
+- Funciones puras → testeables.
+
+### ⚠️ Limitaciones
+- Curva de aprendizaje (sobre todo `reduce`).
+- Para operaciones que SÍ tienen efecto (DOM, fetch), sigues necesitando imperativo.
+
+---
+
+## 🔮 Lo que viene en C07 (OOP)
+
+Los 2 arrays paralelos se vuelven UN solo array de objetos:
+
+```javascript
+let movimientos = [
+  { nombre: 'Salario', tipo: 'ingreso', valor: 3000 },
+  { nombre: 'Cena', tipo: 'gasto', valor: 45.50 }
 ];
 
-// map() - Transforma cada elemento
-const nombres = movimientos.map(mov => mov.nombre);
-
-// filter() - Filtra elementos que cumplen condición
-const ingresos = movimientos.filter(mov => mov.tipo === 'ingreso');
-
-// find() - Encuentra el primer elemento que cumple condición
-const salario = movimientos.find(mov => mov.nombre === 'Salario');
+// Tus funciones funcionales siguen funcionando:
+movimientos.filter(m => m.tipo === 'ingreso');
+movimientos.find(m => m.nombre === 'Cena');
 ```
 
-| **Método** | **Retorna** | **Uso Principal** |
-|------------|-------------|-------------------|
-| `map()` | Nuevo array del mismo tamaño | Transformar datos |
-| `filter()` | Nuevo array (puede ser menor) | Filtrar datos |
-| `find()` | Un elemento o undefined | Buscar elemento específico |
+---
+
+## 🤔 Discusión Final
+
+- ¿Qué función pura nueva creaste que más te gustó?
+- ¿Te resultó más difícil `.reduce` o aceptar que `.map` no muta?
+- ¿En qué cambia tu código sabiendo que ahora puedes filtrar/transformar sin un solo `for`?
+
+> **Reflexión:** programación funcional NO reemplaza imperativa — la complementa. Hay momentos para cada una. La clave es saber cuándo.
 
 ---
 
-## 🔢 Parte 1: Funciones Puras Básicas (~30 min)
-
-### 🎯 Objetivo:
-Crear funciones puras para extraer información sin modificar datos originales
-
-### ✅ Criterios de Validación:
-- ✅ Funciones `obtenerNombres()` y `obtenerValores()` implementadas con `map()`
-- ✅ Función `calcularTotal()` usando `reduce()`
-- ✅ Todas las funciones son puras (no modifican arrays originales)
-
----
-
-## ⚡ Parte 2: Filtrado y Búsqueda (~40 min)
-
-### 🎯 Objetivo:
-Implementar sistema de filtrado usando `filter()` y `find()`
-
-### ✅ Criterios de Validación:
-- ✅ Funciones de filtrado (`obtenerIngresos()`, `obtenerGastos()`) operativas
-- ✅ Funciones de búsqueda (`buscarPorNombre()`) funcionando correctamente
-- ✅ Reto autónomo: `obtenerTotalPorTipo()` completado
-
-### 🏆 Reto en Vivo (5-10 min):
-**Implementa** `filtrarPorMonto(movimientos, minimo)` que retorne movimientos >= al monto mínimo
-
----
-
-## 🚀 Parte 3: Sistema de Reportes (~50 min)
-
-### 🎯 Objetivo:
-Crear reportes financieros combinando múltiples funciones puras
-
-### ✅ Criterios de Validación:
-- ✅ Función `generarReporte()` produce objeto con totales correctos
-- ✅ Función `calcularBalance()` retorna diferencia ingresos-gastos
-- ✅ Función `obtenerPromedio()` calcula promedios por tipo
-
-### 🏆 Reto en Vivo (5-10 min):
-**Desarrolla** `validarPresupuesto(movimientos, limite)` que indique si gastos exceden límite
-
-### 🎯 Retos Autónomos Progresivos:
-- **🏆 Básico**: Categorizar por rangos de monto
-- **🏆 Intermedio**: Análisis con ordenamiento (`sort()`)
-- **🏆 Avanzado**: Búsqueda con criterios múltiples
-
----
-
-## 💭 Demo y Debate Técnico
-
-### 🤔 Preguntas para Discutir:
-
-* **¿Cuándo prefieres usar `map()` en lugar de un `for` loop?**
-* **¿Qué ventajas reales observas al usar funciones puras?**
-* **¿En qué situaciones `filter()` es más claro que escribir condiciones manuales?**
-* **¿Cómo ayuda la inmutabilidad al debugging?**
-
-### 💻 Demo en Vivo:
-Comparación lado a lado: **Código imperativo vs Código funcional**
-
----
-
-## 🧠 Síntesis y Cierre
-
-### 🎉 ¿Qué lograste hoy?
-
-* **Implementaste** funciones puras para manipular datos financieros
-* **Aplicaste** métodos funcionales (`map`, `filter`, `find`) efectivamente  
-* **Refactorizaste** código imperativo hacia enfoque declarativo
-* **Creaste** sistema de reportes usando composición de funciones
-
-### 🔜 Próxima Clase: Programación Orientada a Objetos
-
-* **Encapsulación**: Agrupar datos y comportamientos
-* **Clases y objetos**: Estructurar código de manera escalable
-* **Métodos vs funciones**: Comportamientos asociados a entidades
-
-> "De funciones puras a objetos inteligentes: el siguiente nivel de organización del código."
+## ¡Gracias! 🙌
+### Code 201 · Enter Tech School

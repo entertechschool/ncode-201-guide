@@ -1,256 +1,349 @@
-﻿# Guía del Facilitador: Programación Orientada a Objetos
+# Guía del Facilitador — Clase 07: Objetos Literales + POO
 
-## 1. El momento pedagógico clave
+> Tiempo de lectura: 8 minutos | Tercera clase del M2 | Prepárate antes de clase
 
-Los estudiantes llegan a esta clase con una mentalidad completamente funcional después de haber experimentado las transformaciones elegantes de `map()`, `filter()` y `reduce()`. El "click" mental que deben experimentar aquí no es solo entender la sintaxis de funciones constructoras, sino reconocer que la arquitectura de software tiene múltiples paradigmas y que cada uno resuelve problemas específicos de manera diferente.
+---
+
+## 🔑 Conceptos Clave
+
+- **Objeto literal** (NUEVO): `{ key: value }`, acceso con `.prop`, **shorthand property** `{ nombre, tipo, valor }`. Esto es lo más importante de la clase — todo lo demás se construye sobre esto.
+- **Función constructora**: nombre en mayúscula + `this.x = ...` + se invoca con `new`. Crea objetos consistentes "de un mismo tipo".
+- **`this` y `new`**: dentro de la constructora `this` apunta al objeto que se crea. `new` orquesta el proceso (crea objeto vacío → asigna a this → ejecuta cuerpo → retorna this).
+- **Encapsulación**: datos (propiedades) y comportamientos (métodos) viven dentro del mismo objeto.
+- **Primer puente JS↔HTML**: `document.querySelector('#id').value` + `addEventListener('submit', fn)` + `event.preventDefault()` — los 3 mínimos para capturar input de un form.
+
+---
+
+## 🔗 Analogías Útiles
+
+**Objeto literal <> Ficha de inscripción:**
+Una ficha tiene campos con etiquetas (nombre, edad, email). Cada campo es una **propiedad**. La ficha agrupa datos heterogéneos relacionados entre sí. Un array sería una lista de fichas vacías numeradas; un objeto es UNA ficha llena.
+
+**Constructora <> Molde de galletas:**
+El molde dice qué forma tendrán las galletas. Cada galleta que sacas con el molde tiene la misma forma pero distinto sabor/color. La constructora es el molde; las instancias son las galletas.
+
+**`this` <> "Yo" en un curriculum:**
+Cuando rellenas un CV, "Yo" cambia cada vez que un nuevo postulante lo escribe. La plantilla es la misma, pero "yo" apunta a la persona actual. Dentro de la constructora, `this` apunta al objeto que se está creando AHORA.
+
+**Encapsulación <> Caja de herramientas:**
+Cada herramienta vive con las cosas que necesita: el destornillador con las puntas, el taladro con las brocas. En vez de tener todas las herramientas sueltas en el piso y todas las puntas en otra caja, cada herramienta + sus accesorios viven juntos. Un objeto encapsula datos + sus métodos.
+
+**Array paralelo → Objeto <> Hojas separadas vs ficha unificada:**
+Antes tenías una hoja con nombres y otra hoja con valores. Si las sacas del mismo orden, todo descalibra. Ahora tienes UNA ficha por movimiento con todos los datos juntos. Imposible perder la sincronización.
+
+---
+
+## 📚 Contexto Actual
+
+### Por qué objetos literales primero, constructoras después
+
+Pedagógicamente CRÍTICO. Si saltas directo a `function Movimiento() { this... }`, el alumno aprende `this` + `new` + sintaxis especial de constructora al mismo tiempo que aprende qué es un objeto. **Demasiado.**
+
+Primero (P0+P1): "esto es un objeto, así se accede a sus propiedades, así se ven en arrays". El alumno usa objetos literales **directamente** en su código. Cuando llegue P2 con constructoras, el `this.x = ...` se vuelve "ah, está construyendo el objeto que ya entendí".
+
+### Por qué constructoras y no `class` ES6 directamente
+
+`class` ES6 es azúcar sobre constructoras + prototipos. Si arrancas con `class`, el alumno NO entiende qué pasa por debajo. La filosofía del M2 (y de Code 201) es: **mostrar lo que está debajo primero**. En M4 verás `class` y el alumno reconocerá: "ah, esto es lo que ya aprendí". Lo opuesto sería magia.
+
+### Por qué un form HTML pre-armado (no creado por el alumno)
+
+El foco de C07 es OOP. Si dedicas 30 min a escribir HTML del form, el alumno pierde el hilo. El template viene listo desde C01-C04 (form accesible + validación nativa). Aquí solo conecta JS al form. **El DOM completo (createElement, render dinámico) llega en M3.**
+
+**Fuentes:** [MDN — Trabajando con objetos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics){:target="_blank"}, [MDN — Constructor functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects#using_a_constructor_function){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Intro + repaso | 15 min | El dolor de arrays paralelos + motivación: ¿y si fueran un objeto? |
+| Demo Técnica | 20 min | Objeto literal → array de objetos → constructora con `new`. |
+| Lab (P0-P3) | 105 min | P0 Objetos literales · P1 Refactor del modelo · P2 Constructoras · P3 Form HTML. |
+| Cierre | 15 min | Lo que ganamos con OOP + semilla C08 (prototipos). |
+
+---
+
+## 🎯 Momentos Clave de la Clase
+
+### Demo Principal — el refactor del modelo
+
+**Qué mostrar (5 min):** lado a lado, arrays paralelos vs array de objetos.
 
 ```javascript
-// El "antes" - pensamiento funcional puro
-const calcularBalance = (movimientos) => {
-  return movimientos
-    .filter(m => m.tipo === 'ingreso')
-    .reduce((total, m) => total + m.valor, 0) - 
-  movimientos
-    .filter(m => m.tipo === 'gasto')  
-    .reduce((total, m) => total + m.valor, 0);
-};
+// ANTES
+let nombres = ['Salario', 'Cena'];
+let valores = [3000, -45.50];
 
-// El "después" - pensamiento orientado a objetos
-function Presupuesto() {
-  this.movimientos = [];
-  this.calcularBalance = function() {
-    return this.obtenerIngresos() - this.obtenerGastos();
-  };
-}
+// AHORA
+let movimientos = [
+  { nombre: 'Salario', tipo: 'ingreso', valor: 3000 },
+  { nombre: 'Cena',    tipo: 'gasto',   valor: 45.50 }
+];
+
+// Eliminar el primer movimiento:
+// ANTES: nombres.shift(); valores.shift();  ← 2 operaciones, si olvidas una, desastre
+// AHORA: movimientos.shift();                ← 1 operación, integridad garantizada
 ```
 
-Este cambio marca la transición desde "¿cómo proceso estos datos?" hacia "¿cómo organizo este comportamiento?". Es fundamental porque prepara la mentalidad arquitectónica que necesitarán para frameworks modernos como React, donde todo es un componente con estado y comportamiento encapsulado.
+**Script sugerido:**
+```
+Facilitador: "Antes el nombre y el valor eran 2 entradas separadas — si las desincronizabas,
+nadie te avisaba. Era responsabilidad del programador mantenerlas alineadas.
+Ahora viajan JUNTAS. Si elimino movimientos[2], elimino TODO de ese movimiento.
+Es imposible desincronizar. Eso es lo que objetos nos dan."
+```
 
-## 2. Funciones Constructoras: Más que alternativa a `class`
+**Plan B (si la demo falla):** CodePen con el `shift()` desincronizado en pizarra digital.
 
-La decisión de enseñar funciones constructoras antes que la sintaxis `class` ES6 no es nostálgica, es estratégicamente pedagógica. Los estudiantes necesitan entender cómo JavaScript realmente construye objetos bajo el capó antes de usar abstracciones sintácticas que ocultan esta mecánica.
+### Demo de constructora — del objeto literal al molde
+
+**5 min en pizarra:**
+
+```
+1. Aquí hay un objeto literal:
+   let m1 = { nombre: 'Cena', tipo: 'gasto', valor: 45.50 };
+
+2. Y otro:
+   let m2 = { nombre: 'Salario', tipo: 'ingreso', valor: 3000 };
+
+3. Ambos tienen las MISMAS propiedades. ¿Por qué escribir el mismo molde 2 veces?
+
+4. Hagamos una FUNCIÓN que escribe el molde:
+   function Movimiento(nombre, tipo, valor) {
+     this.nombre = nombre;
+     this.tipo = tipo;
+     this.valor = valor;
+   }
+
+5. Y la invocamos con NEW:
+   let m1 = new Movimiento('Cena', 'gasto', 45.50);
+   let m2 = new Movimiento('Salario', 'ingreso', 3000);
+```
+
+> El alumno entiende: la constructora es **el molde**, las instancias son las **galletas**.
+
+### Transición al Lab
+
+```
+Facilitador: "P0 son 15 min de objetos literales SIN constructoras. NO se lo salten.
+Después P1 refactoriza el modelo: si en C05/C06 tienen el código, lo cambian aquí.
+P2 introduce constructoras (el molde). P3 es el form HTML.
+Si NO terminan P3, está bien — el lab del módulo se evalúa en C08, no aquí."
+```
+
+---
+
+## 🎭 Dinámicas de Clase
+
+### Dinámica 1: "Escribe el objeto"
+
+Después de P0.1: pide a 3 alumnos que escriban en pizarra un objeto que describa "su mascota" o "su libro favorito". Luego comparas las propiedades:
 
 ```javascript
-// Función constructora: el mecanismo real de JavaScript
+{ nombre: 'Firulais', edad: 5, raza: 'mestizo' }
+{ titulo: 'Cien años de soledad', autor: 'GGM', paginas: 432 }
+```
+
+> Los alumnos VEN que un objeto es una "ficha" con campos. Pierden el miedo.
+
+### Dinámica 2: "Elimina sin desincronizar"
+
+Antes de P1: pide al grupo que imagine un caso real de bug.
+
+```
+Facilitador: "En C05 tenían nombres y valores. Si quiero borrar el movimiento #2
+de Carlos, ¿qué pasos hago?"
+[Alumnos: 'nombres.splice(2, 1)' y 'valores.splice(2, 1)']
+Facilitador: "¿Y si olvido el segundo splice? ¿Qué le pasa a valores[2]?"
+[Discusión: ahora es el monto de otro movimiento — corrupción silenciosa]
+Facilitador: "Hoy con objetos, movimientos.splice(2, 1) y listo. Imposible olvidar."
+```
+
+### Dinámica 3: "Predice el constructor"
+
+Antes de P2.4: muestra `Movimiento` y pregunta:
+
+```
+Facilitador: "Tenemos Movimiento. Ahora vamos a hacer Presupuesto.
+¿Qué propiedades tendría? ¿Qué métodos?"
+[Recoger ideas: this.movimientos = [], agregar, totalIngresos, saldo]
+Facilitador: "OK, vamos a verificar si su intuición coincide."
+[Implementan P2.4]
+```
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### Ejemplo 1: Objeto literal con shorthand
+
+**Cuándo usarlo:** P0.3 cuando explicas shorthand.
+
+```javascript
+const nombre = prompt('Nombre:');
+const tipo = prompt('Tipo:');
+const valor = parseFloat(prompt('Monto:'));
+
+// Sin shorthand:
+movimientos.push({ nombre: nombre, tipo: tipo, valor: valor });
+
+// Con shorthand:
+movimientos.push({ nombre, tipo, valor });
+```
+
+**Tip:** "Es legal y común. Vas a verlo MUCHO. No es magia — es solo que cuando key y variable se llaman igual, JS asume `{ nombre: nombre }`."
+
+### Ejemplo 2: Constructor con método interno
+
+**Cuándo usarlo:** P2.2.
+
+```javascript
 function Movimiento(nombre, tipo, valor) {
-  // `this` se crea automáticamente cuando usas `new`
-  this.nombre = nombre;        // Propiedad de instancia
+  this.nombre = nombre;
   this.tipo = tipo;
   this.valor = valor;
-  this.fecha = new Date();
-  
-  // Método como propiedad de función
+
   this.esIngreso = function() {
-    return this.tipo === 'ingreso';  // `this` referencia la instancia
+    return this.tipo === 'ingreso';
   };
 }
 
-// Cada instancia tiene sus propias copias de todo
-const salario = new Movimiento('Salario', 'ingreso', 3000);
-console.log(salario.esIngreso()); // true
+const cena = new Movimiento('Cena', 'gasto', 45);
+console.log(cena.esIngreso());  // false
 ```
 
-La comprensión profunda de `this`, `new`, y la creación manual de objetos es crucial porque cuando lleguen a React, entenderán por qué `this.setState()` funciona como funciona, y por qué los arrow functions tienen problemas con `this` en métodos de clase.
+**Tip:** "El método sabe quién es `this` PORQUE se invocó con `cena.esIngreso()`. El `this` es el objeto a la izquierda del punto."
 
-## 3. `this` vs. la complejidad de contextos
+### Ejemplo 3: El form connector (las 5 líneas clave)
 
-El concepto de `this` es donde muchos bootcamps fracasan porque lo enseñan como una regla abstracta en lugar de como el mecanismo fundamental de contexto en JavaScript. En esta clase, `this` debe entenderse como "el objeto que está siendo construido o manipulado en este momento".
+**Cuándo usarlo:** P3.
 
 ```javascript
-function Presupuesto() {
-  this.movimientos = [];
-  this.meta = 0;
-  
-  this.agregarMovimiento = function(movimiento) {
-    // `this` aquí siempre referencia la instancia de Presupuesto
-    this.movimientos.push(movimiento);
-    this.recalcularEstado(); // método interno
-  };
-  
-  this.recalcularEstado = function() {
-    // Evitamos el problema de contexto perdido manteniendo todo dentro del constructor
-    console.log(`Balance actual: ${this.calcularBalance()}`);
-  };
-}
+const form = document.querySelector('#form-movimiento');
 
-// El patrón claro: `new` + función constructora = contexto garantizado
-const miPresupuesto = new Presupuesto();
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const nombre = document.querySelector('#nombre').value;
+  const tipo = document.querySelector('#tipo').value;
+  const valor = parseFloat(document.querySelector('#valor').value);
+  miPresupuesto.agregar(new Movimiento(nombre, tipo, valor));
+  form.reset();
+});
 ```
 
-Esta comprensión sólida de `this` previene la confusión que viene después con arrow functions, métodos de array, y event handlers en el DOM.
+**Tip:** "Si olvidan `event.preventDefault()`, la página RECARGA al hacer submit y pierden todo. Es el error #1 de JS↔HTML."
 
-## 4. Encapsulación: Sintaxis con propósito arquitectónico
+---
 
-La encapsulación en esta clase no es un concepto académico, es una necesidad práctica. Los estudiantes vienen de funciones que operan sobre datos externos y deben adoptar la mentalidad de "datos y comportamientos que van juntos, viven juntos".
+## ⚠️ Errores Comunes
 
-```javascript
-// Encapsulación efectiva: todo lo relacionado con un movimiento vive en Movimiento
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-  this.fecha = new Date().toLocaleDateString();
-  
-  // Validaciones encapsuladas
-  this.esValido = function() {
-    return this.valor > 0 && ['ingreso', 'gasto'].includes(this.tipo);
-  };
-  
-  // Transformaciones encapsuladas  
-  this.formatearPorTipo = function() {
-    return this.tipo === 'ingreso' ? `+$${this.valor}` : `-$${this.valor}`;
-  };
-}
-```
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| `undefined is not an object` | Olvidó `new` al invocar la constructora | "Mayúscula te recuerda que NECESITAS `new`." |
+| Todas las instancias comparten un mismo valor | Definió la propiedad fuera de `this` | Las propiedades VAN dentro del cuerpo con `this.x = ...`, no afuera |
+| `this is undefined` adentro del método | Llamó al método sin punto | `cena.esIngreso()` — el `this` viene del objeto a la izquierda del punto |
+| El form recarga la página al submit | Olvidó `event.preventDefault()` | Es la línea más importante del listener |
+| `null` al hacer querySelector | El script corre antes que el HTML exista | Confirmar que `<script>` está al FINAL del `<body>` |
+| `NaN` en el valor | `parseFloat(document.querySelector('#valor').value)` con input vacío | Validar `if (isNaN(valor))` antes de instanciar |
+| Constructora sin mayúscula | Convención violada | Renombrar a `Movimiento` (mayúscula). Funciona igual pero es señal de novato |
+| Quiere `class` ES6 desde ya | Conoce sintaxis más moderna | "En M4. Hoy entiendes lo que `class` hace POR DEBAJO." |
 
-Esta organización prepara para el pensamiento de componentes donde cada pieza de la UI es responsable de su propio estado y comportamiento.
+---
 
-## 5. Instanciación: La unidad fundamental de escalabilidad
+## ✅ Señales de Comprensión
 
-Cada instancia que crean con `new` es una unidad independiente con su propio estado. Esto es fundamentalmente diferente al paradigma funcional donde todo state era externo. Los estudiantes deben experimentar la libertad de crear múltiples presupuestos sin interferencia entre ellos.
+### El estudiante ENTIENDE cuando:
+- Diferencia objeto literal de constructora (y sabe cuándo usar cada uno).
+- Explica por qué `Movimiento(...)` sin `new` falla.
+- Reconoce que `cena.esIngreso()` funciona porque `this = cena`.
+- Conecta el refactor del modelo con la integridad de datos.
 
-Los principios universales que aprenden aquí son:
-- **Aislamiento de estado**: Cada instancia mantiene su propio estado sin contaminación
-- **Composición**: Los objetos complejos se construyen combinando objetos simples  
-- **Responsabilidad única**: Cada constructor tiene una responsabilidad clara y específica
+### El estudiante NECESITA AYUDA cuando:
+- Confunde `this` con una variable normal.
+- Olvida `new` al crear instancias.
+- Sigue usando 2 arrays paralelos (no internalizó el refactor).
+- Trata métodos como funciones globales (`esIngreso(cena)` en vez de `cena.esIngreso()`).
 
-```javascript
-// Múltiples instancias = múltiples contextos independientes
-const presupuestoPersonal = new Presupuesto();
-const presupuestoFamiliar = new Presupuesto();
+---
 
-presupuestoPersonal.agregarMovimiento(new Movimiento('Salario', 'ingreso', 3000));
-presupuestoFamiliar.agregarMovimiento(new Movimiento('Mercado', 'gasto', 500));
+## 🎯 Checkpoints de Validación
 
-// Cada uno mantiene su estado independiente
-console.log(presupuestoPersonal.movimientos.length); // 1
-console.log(presupuestoFamiliar.movimientos.length);  // 1
-```
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~15' | P0 lista | Crea un objeto literal con 3 propiedades y lee una con `.`. Identifica shorthand. |
+| ~40' | P1 lista | `movimientos` es array de objetos. `registrarMovimiento` hace 1 solo push. Filtros con `.tipo` funcionan. |
+| ~70' | P2 lista | Crea 3 instancias de `Movimiento` y las agrega a un `Presupuesto`. `miPresupuesto.resumen()` devuelve objeto con cantidad/totales/saldo. |
+| ~105' | P3 lista | Cada submit del form crea instancia + actualiza `#saldo-total` en pantalla. Form se limpia. |
 
-## 6. Funciones vs Constructores: Pragmatismo sobre purismo
+Si NO llega al Checkpoint 3 en 105 min: que cierre con P2 y termine P3 post-clase. P3 es importante pero no calificada todavía (eso es C08).
 
-Los puristas del paradigma funcional argumentarán que los objetos introducen complejidad innecesaria. Sin embargo, para estudiantes que se dirigen hacia el ecosistema profesional de JavaScript (React, Node.js, frameworks), la orientación a objetos es inevitable y necesaria.
+---
 
-```javascript
-// Pragmático: usar constructores cuando la agrupación lógica lo justifica
-function Presupuesto() {
-  this.movimientos = [];
-  
-  // Múltiples métodos relacionados agrupados logicamente
-  this.agregarMovimiento = function(movimiento) { /*...*/ };
-  this.eliminarMovimiento = function(index) { /*...*/ };
-  this.editarMovimiento = function(index, nuevoDatos) { /*...*/ };
-  this.obtenerResumen = function() { /*...*/ };
-}
+## 🧑‍🏫 Tips de Facilitación
 
-// En lugar de 4 funciones separadas que necesitan pasar el array como parámetro
-```
+### Si el grupo está callado:
+- "¿Qué propiedades tendría un objeto `Producto` de un e-commerce?" — práctica de modelado.
 
-La realidad es que el código profesional usa paradigmas híbridos. Esta clase enseña cuándo la agrupación orientada a objetos es superior a funciones dispersas.
+### Si alguien ya conocía `class`:
+- "Esa sintaxis llega en M4. Hoy hacemos la versión 'cruda' — y vas a ver que `class` es azúcar sobre esto."
 
-## 7. Gestión de la frustración inicial
+### Si la mayoría termina P2 antes:
+- Reto: implementar `obtenerMovimientosPorMes(mes)` usando la propiedad `fecha`.
 
-**Frustración típica:** "Esto es más complejo que las funciones puras. ¿Por qué no seguimos usando `map()` y `filter()`?"
+### Si pregunta sobre `this` con arrow functions:
+> "Arrow functions tienen `this` distinto a `function`. Hoy usamos `function` clásica adentro de la constructora. En M3/M4 lo profundizamos."
 
-**Estrategia de facilitación:** Reconoce que la complejidad aumentó, pero enfoca en el *tipo* de complejidad. No es complejidad técnica arbitraria, es complejidad arquitectónica que resuelve problemas reales de organización y escalabilidad.
+### Si el form NO funciona:
+1. Revisar que `<script src="app.js">` esté al final del body.
+2. Confirmar `event.preventDefault()`.
+3. Verificar IDs del HTML coinciden con los selectores.
 
-**Pregunta clave para la clase:** "Si tuvieras que agregar 15 métodos más para manejar presupuestos, ¿prefieres 15 funciones separadas que todas necesitan recibir el mismo array como parámetro, o un objeto que ya tiene todo agrupado?"
+---
 
-**Frustración típica:** "`this` cambia de significado y me confunde."
+## ❓ Preguntas Frecuentes
 
-**Estrategia de facilitación:** Mantén `this` siempre dentro del contexto de constructores durante esta clase. No introducir métodos de arrays, event handlers, o arrow functions que cambien el contexto. La confusión viene de ejemplos prematuros.
+### P: ¿Por qué `Movimiento` con mayúscula?
+**R:** Convención. Recuerda al lector (y a ti) que es una **constructora** y que necesita `new`. Sin `new`, `Movimiento(...)` devuelve `undefined`.
 
-**Pregunta clave para la clase:** "Dentro de una función constructora, ¿`this` puede ser otra cosa que no sea el objeto que se está creando?"
+### P: ¿Puedo crear el objeto literal directamente sin constructora?
+**R:** Sí, totalmente: `let m = { nombre: 'Cena', tipo: 'gasto', valor: 45 }`. La constructora aporta consistencia + reutilización cuando creas MUCHOS objetos del mismo "tipo".
 
-## 8. El error más común: Llamar constructores sin `new`
+### P: ¿`this` es como `self` en Python?
+**R:** Muy parecido — apunta al objeto actual. La diferencia: en Python `self` es explícito en cada método. En JS `this` es implícito y depende de cómo se invoque.
 
-```javascript
-// ❌ Error típico que cometerán
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-}
+### P: ¿Cómo se borra una propiedad de un objeto?
+**R:** `delete obj.propiedad`. Pero raramente lo necesitas — usualmente asignas `obj.prop = null` o ignoras la propiedad.
 
-const movimiento = Movimiento('Salario', 'ingreso', 3000); // Sin `new`
-console.log(movimiento); // undefined
-console.log(nombre); // 'Salario' - contaminó el global scope
+### P: ¿Para qué `event.preventDefault()`?
+**R:** El navegador por defecto recarga la página al hacer submit de un form. Eso destruye tu estado JS. `preventDefault` lo evita.
 
-// ✅ Versión correcta con explicación
-const movimiento = new Movimiento('Salario', 'ingreso', 3000);
-console.log(movimiento.nombre); // 'Salario'
-// `new` creó un objeto, enlazó `this` a ese objeto, y retornó el objeto automáticamente
-```
+---
 
-Este error es pedagógicamente perfecto porque enseña la diferencia fundamental entre invocar una función y construir un objeto. Úsalo para explicar que `new` no es cosmético, es funcionalmente esencial para la construcción de objetos.
+## 🔗 Conexiones del Curriculum
 
-## 9. Señales de comprensión exitosa
+### Esta clase construye sobre:
 
-Al final de la clase, busca estas evidencias de comprensión genuina:
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C05 | Arrays + push | Hoy guardamos OBJETOS en el array |
+| C06 | `.filter`, `.reduce` | Hoy operan sobre objetos: `m => m.tipo === 'ingreso'` |
+| C01-C04 (M1) | `<form>`, `<input>`, `<label>` | Hoy capturas su `.value` desde JS |
 
-- **Vocabulario apropiado**: Usan "instancia", "constructor", "encapsular" naturalmente, no "función que crea objetos"
-- **Pensamiento arquitectónico**: Agrupan automáticamente datos y comportamientos relacionados sin ser dirigidos
-- **Comprensión del flujo**: Pueden explicar paso a paso qué sucede cuando llamas `new Constructor()`
+### Conexión con C08 (Prototipos)
 
-**Pregunta de validación final:** "Si quisieras crear un sistema para manejar estudiantes de un bootcamp, cada uno con nombre, progreso, y métodos para calificar tareas, ¿cómo lo organizarías usando lo que aprendiste hoy?"
+Al cerrar:
 
-Solo responden correctamente si pueden diseñar un constructor `Estudiante` con propiedades y métodos encapsulados, no si proponen funciones separadas.
+> "Cada instancia de Movimiento que crearon hoy tiene SU PROPIO `esIngreso`. Si crean 1000 movimientos, son 1000 copias del mismo método. La próxima clase aprenden **prototipos**: el método vive UNA sola vez y todas las instancias lo comparten. Y van a crear **subtipos**: `Ingreso` e `Egreso` que heredan de `Movimiento`."
 
-## 10. Preparación para la siguiente clase
+**Pre-work implícito:** revisar [MDN — Inheritance and the prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain){:target="_blank"} para tener primer contacto antes de C08.
 
-Los conceptos de esta clase son prerrequisito directo para prototipos y herencia. La próxima clase introducirá `Constructor.prototype` para compartir métodos entre instancias, optimizando memoria y creando jerarquías.
+---
 
-### La Parte 3 — Captura desde formulario
+## 🪞 Reflexión Post-Clase
 
-Esta P3 reemplaza la "Refactorización avanzada" del lab anterior. Es el **primer puente JS↔HTML del curso**: el alumno aprende `querySelector('#id').value`, `addEventListener('submit', ...)` y `event.preventDefault()` aplicados a un form HTML pre-armado.
-
-**Reglas claves para facilitar:**
-- El HTML del form está pre-armado. **Insiste**: "no modifiques el HTML, solo escribe JS". Si alguien intenta agregar inputs o reorganizar, redirígelo.
-- Solo escriben ~5-8 líneas de JS. Si están escribiendo más, probablemente están reescribiendo lógica que ya tienen en sus constructores.
-- Esta NO es "DOM completo". No introduzcas `createElement`, ni `appendChild`, ni manipulación de `<ul>` dinámica. Eso es M3 C09 y M3 C12. Aquí solo capturan input.
-- Si alguien quiere actualizar la UI tras cada submit, ofrécele el reto autónomo (actualizar `<span id="saldo-total">` con `textContent`). NO el render dinámico de la lista — déjalo para M3.
-
-**Error más común en P3:** olvidar `event.preventDefault()` → el navegador recarga y "se pierde todo". Diagnóstico instantáneo: si el form recarga la página al submit, falta el preventDefault.
-
-**Conceptos que DEBEN estar sólidos:**
-- **Función constructora vs función regular**: Deben distinguir inmediatamente por nomenclatura y uso de `new`
-- **`this` en contexto de constructor**: Sin confusión sobre a qué referencia dentro del constructor
-
-**Conceptos que pueden seguir madurando:**
-- **Cuándo usar objetos vs funciones**: La intuición arquitectónica se desarrolla con práctica
-- **Patrones de organización**: Mejora con exposición a más casos de uso
-
-La clase fue exitosa si los estudiantes salen pensando: *"Ahora puedo organizar mi código como entidades que tienen tanto datos como comportamientos, en lugar de solo funciones que procesan datos externos."*
-
-## Notas técnicas y troubleshooting
-
-### Configuración crítica
-- Validar que todos tienen `console.log` visible en DevTools antes de empezar
-- Confirmar que pueden crear archivos `.js` y vincularlos a HTML
-
-### Errores comunes del entorno
-- **Error**: `Uncaught ReferenceError: Movimiento is not defined`
-- **Solución**: Verificar que el script esté correctamente vinculado y que la función constructora esté declarada antes de usarse
-- **Prevención**: Usar `<script>` al final del `<body>` y declarar constructores al inicio del archivo
-
-### Errores comunes de concepto
-- **Error**: `Cannot read property 'nombre' of undefined` después de llamar constructor sin `new`
-- **Solución**: Mostrar la diferencia lado a lado con y sin `new`
-- **Prevención**: Crear un checklist: "¿Usé `new`? ¿La función empieza con mayúscula?"
-
-### Recursos de emergencia
-- [MDN: Constructor functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#using_a_constructor_function)
-- Código de ejemplo para compartir pantalla si hay problemas técnicos:
-
-```javascript
-// Ejemplo de rescate completo
-function EjemploBasico(nombre) {
-  this.nombre = nombre;
-  this.saludar = function() {
-    return `Hola, soy ${this.nombre}`;
-  };
-}
-
-const ejemplo = new EjemploBasico('Estudiante');
-console.log(ejemplo.saludar());
-```
+### Preguntas para el facilitador:
+- ¿Cuántos olvidaron `new` al menos una vez? Si fue mayoría, refuerza la convención de mayúscula al inicio de C08.
+- ¿Quién conectó P3 (form) en menos de 20 min? Son los que están listos para M3 (DOM).
+- ¿Algún alumno preguntó "¿esto es como en mi otro lenguaje (Python/Java)"? Buena señal — están conectando.
+- ¿La analogía del molde de galletas funcionó? Si no, prueba otra para C08.

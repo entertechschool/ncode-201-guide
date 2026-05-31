@@ -1,271 +1,333 @@
-﻿# Guía del Facilitador: Programación Funcional
+# Guía del Facilitador — Clase 06: Programación Funcional + Arrow Functions
 
-## 1. El momento pedagógico clave
+> Tiempo de lectura: 8 minutos | Segunda clase del M2 | Prepárate antes de clase
 
-Los estudiantes llegan a esta clase habiendo dominado la programación imperativa desde la clase anterior, donde construyeron lógica paso a paso modificando variables directamente. El momento de transformación conceptual que defines aquí es el "click" donde comprenden que pueden resolver problemas sin modificar el estado original de los datos. Este paradigm shift representa el paso de pensar en "instrucciones secuenciales" a "transformaciones de datos".
+---
+
+## 🔑 Conceptos Clave
+
+- **Arrow function** (sintaxis NUEVA): `x => x * 2` equivale a `function(x) { return x * 2 }`. Es la sintaxis dominante en JS moderno (React, Node, librerías). Hoy se introduce formalmente.
+- **Función pura**: misma entrada → misma salida + sin efectos secundarios. Es la base mental del paradigma.
+- **Métodos funcionales de Array**: `.map`, `.filter`, `.find`, `.reduce`, `.forEach`. Reemplazan el `for` clásico de C05.
+- **Inmutabilidad**: los métodos funcionales NO mutan el array original — devuelven uno nuevo. Concepto crítico para React y arquitecturas modernas.
+- **Composición + DRY**: funciones pequeñas + reusarlas en vez de copy-paste.
+
+---
+
+## 🔗 Analogías Útiles
+
+**Arrow function <> Abreviación de palabras:**
+"Por favor" (3 sílabas) ↔ "Porfa" (2 sílabas). Mismo significado, menos sílabas. Para frases cortas que se dicen seguido — ideal. Para discursos formales — no. Arrow function es la abreviación: úsala donde aporta brevedad sin perder claridad.
+
+**Función pura <> Calculadora:**
+Le pides "2 + 3", siempre te dice "5". No le importa qué cálculo hiciste antes. No deja rastros en otros lados. Misma entrada → misma salida → no toca nada externo.
+
+**`.map` <> Fábrica de cajas con transformador:**
+Pasan latas por una banda. Cada lata sale pintada. Mismo número de latas que entró. La banda original sigue ahí, no se gastó.
+
+**`.filter` <> Aduana:**
+Pasan personas. Algunas pasan, otras no. El resultado: una nueva fila con solo las que pasaron.
+
+**`.reduce` <> Cuenta del restaurante:**
+Sumas plato + plato + plato → total. Empezaste en 0, terminaste en $135. El acumulador es la cuenta que va creciendo. Cada plato es el "valor actual".
+
+---
+
+## 📚 Contexto Actual
+
+### Por qué arrow functions importan hoy
+
+React, Vue, Node moderno, librerías como Lodash, RxJS — todas usan arrow functions como sintaxis por defecto. Un alumno que no las domina queda atrapado en código de hace 10 años. **Hoy las introduces formalmente; verás que en C07 y M3 vuelven todo el tiempo.**
+
+### Por qué arrancamos con arrays de números (no objetos)
+
+C06 funcional brilla con **arrays homogéneos** (todos números, todos strings). Los métodos se ven en su forma más pura — `valores.filter(v => v > 0)` es elegante porque `v` es un número simple. Cuando llegues a objetos en C07, los métodos funcionales seguirán funcionando pero con `.filter(m => m.tipo === 'ingreso')` — un nivel más. Hoy: forma pura. Mañana: aplicada a objetos.
+
+### `reduce` es el más difícil
+
+Honestamente. Si tu grupo lo capta a la primera, son rápidos. Si no, dedica 5 min extra a la **tabla de vueltas** del lab — visualizar acumulador + valor actual + nuevo acumulador es lo que hace `click`.
+
+**Fuentes:** [MDN — Arrow functions](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/Arrow_functions){:target="_blank"}, [MDN — reduce()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Intro + repaso | 15 min | El `for` de C05 + motivación: ¿qué tal si fuera 1 línea? |
+| Demo Técnica | 20 min | `function` → arrow + `.map`/`.filter`/`.reduce` sobre array de números. |
+| Lab (P0-P3) | 130 min | P0 Arrow/puras · P1 map/filter/find · P2 reduce/forEach · P3 composición. |
+| Cierre | 15 min | ¿Qué función pura más útil hicieron? Semilla C07 (objetos). |
+
+---
+
+## 🎯 Momentos Clave de la Clase
+
+### Demo Principal — la transformación
+
+**Qué mostrar (5 min):** el `for` de C05 al lado de la versión funcional.
 
 ```javascript
-// ANTES: Pensamiento imperativo (clase anterior)
-let totalIngresos = 0;
-for (let i = 0; i < movimientos.length; i++) {
-  if (movimientos[i].tipo === 'ingreso') {
-    totalIngresos += movimientos[i].valor; // ❌ Modifica estado externo
-  }
+// C05
+let saldo = 0;
+for (let i = 0; i < valores.length; i++) {
+  saldo += valores[i];
 }
 
-// DESPUÉS: Pensamiento funcional (esta clase)
-const totalIngresos = movimientos
-  .filter(mov => mov.tipo === 'ingreso')    // 🔄 Filtra sin modificar original
-  .map(mov => mov.valor)                    // 🔄 Extrae valores
-  .reduce((total, valor) => total + valor, 0); // 🔄 Suma sin efectos secundarios
+// C06
+const saldo = valores.reduce((acc, v) => acc + v, 0);
 ```
 
-Este cambio fundamental los prepara para React (donde la inmutabilidad es crítica), arquitecturas modernas de frontend, y patrones profesionales donde la predictibilidad del código es esencial para equipos colaborativos.
-
-## 2. Funciones Puras: Más que eliminación de bugs
-
-El concepto de funciones puras trasciende la simple corrección sintáctica y se convierte en filosofía de diseño profesional. En equipos reales, las funciones puras facilitan testing automatizado, debugging colaborativo, y refactoring seguro. Los estudiantes deben comprender que no se trata solo de "reglas académicas", sino de principios que hacen código mantenible en aplicaciones de producción.
-
-```javascript
-// Función pura que demuestra principios profesionales
-const calcularRendimientoMensual = (movimientos, mes) => {
-  // ✅ Entrada predecible: mismos parámetros = mismo resultado
-  const movimientosMes = movimientos.filter(mov => 
-    new Date(mov.fecha).getMonth() === mes
-  );
-  
-  const ingresos = movimientosMes
-    .filter(mov => mov.tipo === 'ingreso')
-    .reduce((sum, mov) => sum + mov.valor, 0);
-    
-  const gastos = movimientosMes
-    .filter(mov => mov.tipo === 'gasto')
-    .reduce((sum, mov) => sum + mov.valor, 0);
-  
-  // ✅ Sin efectos secundarios: no modifica arrays originales
-  // ✅ Testeable: fácil escribir unit tests
-  // ✅ Debuggeable: cualquier desarrollador puede razonar sobre el flujo
-  return { ingresos, gastos, balance: ingresos - gastos };
-};
+**Script sugerido:**
+```
+Facilitador: "5 líneas de C05 → 1 línea de C06.
+¿Hace lo mismo? Sí. ¿Es más legible? Discutible, hay que conocer reduce.
+Pero el ESPÍRITU es claro: dejé de decir CÓMO sumar y empecé a decir QUÉ quiero.
+Eso es declarativo. Y eso es lo que React hizo popular."
 ```
 
-Esta filosofía de diseño los prepara para frameworks donde la inmutabilidad es fundamental (React, Redux) y para arquitecturas modernas donde la composabilidad de funciones permite sistemas escalables.
+**Plan B (si la demo falla):** CodePen pre-creado con ambas versiones lado a lado. Cambia `valores` y muestra que ambas dan lo mismo.
 
-## 3. Métodos Funcionales vs. la complejidad innecesaria
+### Demo de arrow function — desde `function`
 
-En lugar de introducir patrones complejos como map/reduce/filter simultáneamente, priorizamos una progresión pedagógica donde cada método resuelve una necesidad específica y reconocible. Esta decisión evita la "parálisis por análisis" típica de estudiantes que intentan memorizar sintaxis sin comprender propósitos.
+**5 min en pizarra**, paso por paso:
 
-```javascript
-// Progresión pedagógica: un concepto por vez
-// 1. EXTRACCIÓN simple con map()
-const nombres = movimientos.map(mov => mov.nombre);
-// "Quiero solo los nombres" → map()
-
-// 2. SELECCIÓN condicional con filter()  
-const ingresos = movimientos.filter(mov => mov.tipo === 'ingreso');
-// "Quiero solo los que cumplan X condición" → filter()
-
-// 3. BÚSQUEDA específica con find()
-const salario = movimientos.find(mov => mov.nombre === 'Salario');
-// "Quiero encontrar uno específico" → find()
-
-// 4. COMPOSICIÓN: combinar conceptos dominados
-const promedioPorTipo = (movimientos, tipo) => {
-  const filtrados = movimientos.filter(mov => mov.tipo === tipo);
-  const valores = filtrados.map(mov => mov.valor);
-  const total = valores.reduce((sum, val) => sum + val, 0);
-  return filtrados.length > 0 ? total / filtrados.length : 0;
-};
 ```
-
-Esta aproximación gradual evita abrumar con abstracción prematura mientras construye confianza en cada herramienta individual antes de la composición.
-
-## 4. El método map(): Sintaxis con propósito
-
-Los estudiantes inicialmente perciben `map()` como "sintaxis más complicada" para hacer lo mismo que un loop. La confusión pedagógicamente valiosa surge cuando intentan usar `map()` para operaciones que requieren `filter()` o viceversa. Este es el momento perfecto para consolidar el concepto de "transformación 1:1".
-
-```javascript
-// Confusión típica: "¿Por qué map() si for loop es más fácil?"
-// Ejemplo que demuestra el valor de map()
-
-// ❌ Loop imperativo: enfoque en "cómo"
-const resultados = [];
-for (let i = 0; i < movimientos.length; i++) {
-  resultados.push({
-    descripcion: movimientos[i].nombre,
-    esIngreso: movimientos[i].tipo === 'ingreso',
-    valorFormateado: `$${movimientos[i].valor.toLocaleString()}`
-  });
+function duplicar(x) {        Paso 1: la forma clásica
+  return x * 2;
 }
 
-// ✅ map() funcional: enfoque en "qué"
-const resultados = movimientos.map(mov => ({
-  descripcion: mov.nombre,
-  esIngreso: mov.tipo === 'ingreso',
-  valorFormateado: `$${mov.valor.toLocaleString()}`
-}));
-// Mismo tamaño entrada = mismo tamaño salida (transformación 1:1)
-// Código que expresa intención claramente
-// Fácil de componer con otros métodos
-```
-
-Esta confusión inicial cataliza la discusión sobre legibilidad, intención del código, y composabilidad - conceptos que serán fundamentales cuando trabajen en equipos.
-
-## 5. Inmutabilidad: La unidad fundamental
-
-El concepto de immutabilidad trasciende JavaScript y se convierte en patrón de pensamiento que aplicarán en React state management, arquitecturas de datos, y debugging colaborativo. Los estudiantes deben comprender que la immutabilidad no es "complicación académica" sino ventaja competitiva en desarrollo profesional.
-
-Los principios universales que internalizan incluyen:
-- **Predictibilidad**: Estado que no cambia inesperadamente permite razonamiento claro sobre el código
-- **Debugging**: Datos que no mutan facilitan tracking de cambios y identificación de bugs  
-- **Testabilidad**: Funciones que no modifican inputs permiten testing paralelo y determinístico
-
-```javascript
-// Ejemplo que demuestra principios en acción profesional
-const actualizarMovimiento = (movimientos, id, cambios) => {
-  // ✅ Inmutable: retorna nuevo array sin modificar original
-  return movimientos.map(mov => 
-    mov.id === id 
-      ? { ...mov, ...cambios } // Nuevo objeto con cambios
-      : mov                    // Objeto original sin tocar
-  );
-  
-  // Este patrón es idéntico al usado en React para state updates
-  // Será familiar cuando lleguen a useState() y setState()
-  // Facilita time-travel debugging en Redux DevTools
+const duplicar = (x) => {     Paso 2: agrega const, cambia function por =>
+  return x * 2;
 };
 
-// Validación de inmutabilidad
-const movimientosOriginales = [/* data */];
-const movimientosActualizados = actualizarMovimiento(movimientosOriginales, 1, { valor: 1000 });
-console.log(movimientosOriginales === movimientosActualizados); // false ✅
-console.log(movimientosOriginales[0] === movimientosActualizados[0]); // true ✅ (no cambió)
+const duplicar = (x) => x * 2; Paso 3: 1 expresión, omite { return }
+
+const duplicar = x => x * 2;   Paso 4: 1 param, omite paréntesis
 ```
 
-## 6. Reduce como agregación: Pragmatismo sobre purismo
+> Hacer la transformación EN ORDEN ayuda más que mostrar la forma final de golpe.
 
-Aunque `reduce()` es poderoso, priorizamos casos de uso específicos y reconocibles (sumas, promedios) sobre demostraciones abstractas de versatilidad. Esta decisión pedagógica evita abrumar con un método que puede hacer "todo" y se enfoca en patrones que realmente utilizarán en proyectos profesionales.
+### Transición al Lab
 
-```javascript
-// ✅ Uso pragmático: agregaciones financieras comunes
-const estadisticasFinancieras = (movimientos) => {
-  // Suma simple con reduce - patrón más común
-  const totalIngresos = movimientos
-    .filter(mov => mov.tipo === 'ingreso')
-    .reduce((total, mov) => total + mov.valor, 0);
-  
-  // Agrupación práctica con reduce  
-  const porTipo = movimientos.reduce((grupos, mov) => {
-    if (!grupos[mov.tipo]) grupos[mov.tipo] = [];
-    grupos[mov.tipo].push(mov);
-    return grupos;
-  }, {});
-  
-  return { totalIngresos, porTipo };
-  // Funciones que realmente necesitarán en proyectos reales
-  // No abstracciones que solo existen en tutorials
-};
-
-// ❌ Evitamos demostraciones "show-off" de reduce
-// que confunden más que clarificar en esta etapa
+```
+Facilitador: "El lab tiene P0 corto (arrow + pura) — NO se lo salten.
+Si no captan P0, P1-P3 son ruido. Tómense los 15 min.
+Después: 3 funciones para map/filter/find, 3 para reduce, 3 de composición.
+Total ~9 funciones puras al final. Sí, son muchas. Por eso son CORTAS."
 ```
 
-Esta aproximación construye confianza con casos de uso reconocibles antes de expandir hacia abstracciones más complejas en clases futuras.
+---
 
-## 7. Gestión de la frustración inicial
+## 🎭 Dinámicas de Clase
 
-Los estudiantes experimentan frustración específica cuando perciben que "pueden hacer lo mismo más fácil con for loops". Esta resistencia inicial es pedagógicamente valiosa porque indica que están evaluando trade-offs - exactamente el tipo de pensamiento crítico que queremos desarrollar.
+### Dinámica 1: "Traduce a arrow"
 
-**Frustración típica:** "¿Por qué usar `filter().map().reduce()` cuando un for loop hace todo junto?"
-
-**Estrategia de facilitación:** Demuestra escenarios donde el código imperativo se vuelve difícil de mantener, especialmente cuando necesitan modificar lógica específica. Usa ejemplos donde cada método funcional permite cambios quirúrgicos sin afectar otros aspectos.
-
-**Pregunta clave para la clase:** "Si mañana te piden cambiar cómo calculas los totales pero mantener igual la lógica de filtrado, ¿cuál código es más fácil de modificar?"
+Después de P0.1, pasas 3 funciones `function` en pizarra y los alumnos las escriben como arrow:
 
 ```javascript
-// Demostración de mantenibilidad
-// ANTES: lógica entrelazada en loop imperativo
-let total = 0;
-for (let mov of movimientos) {
-  if (mov.tipo === 'ingreso' && mov.valor > 500) { // ❌ Lógica mezclada
-    total += mov.valor * 1.1; // ❌ Cálculo mezclado
-  }
+// 1)
+function esPar(n) {
+  return n % 2 === 0;
 }
 
-// DESPUÉS: lógica separada y modificable
-const total = movimientos
-  .filter(mov => mov.tipo === 'ingreso')    // 🔧 Solo cambias aquí el filtrado
-  .filter(mov => mov.valor > 500)          // 🔧 Solo cambias aquí el criterio
-  .map(mov => mov.valor * 1.1)             // 🔧 Solo cambias aquí el cálculo
-  .reduce((sum, val) => sum + val, 0);     // 🔧 Solo cambias aquí la agregación
+// 2)
+function mayor(a, b) {
+  return a > b ? a : b;
+}
+
+// 3)
+function saludar() {
+  console.log('Hola!');
+}
 ```
 
-## 8. El error más común: Confundir map() con forEach()
+**Soluciones:**
+```javascript
+const esPar = n => n % 2 === 0;
+const mayor = (a, b) => a > b ? a : b;
+const saludar = () => console.log('Hola!');
+```
+
+> Si más del 30% se equivoca con los paréntesis (1 param vs 2 params), refuérzalo.
+
+### Dinámica 2: "¿Pura o impura?"
+
+Después de P0.3, presenta 4 funciones y deben decidir:
 
 ```javascript
-// ❌ Error típico: usar map() para efectos secundarios
-movimientos.map(mov => {
-  console.log(mov.nombre); // ❌ Side effect en map()
-  // Estudiantes esperan que "haga algo" con cada elemento
-});
-
-// ❌ Error típico: no capturar retorno de map()
-movimientos.map(mov => ({
-  ...mov,
-  valorFormateado: `$${mov.valor}`
-})); // ❌ Pierde el resultado transformado
-
-// ✅ Versión correcta: map() para transformar, forEach() para efectos
-const movimientosFormateados = movimientos.map(mov => ({
-  ...mov,
-  valorFormateado: `$${mov.valor}`
-})); // ✅ Captura transformación
-
-movimientos.forEach(mov => {
-  console.log(mov.nombre); // ✅ Efecto secundario apropiado
-});
+const cuadrado = x => x * x;                              // PURA
+let contador = 0;
+const incrementar = () => contador++;                     // IMPURA (muta externo)
+const log = msg => console.log(msg);                      // IMPURA (efecto)
+const formatear = v => `$${v.toFixed(2)}`;                // PURA
 ```
 
-Este error es pedagógicamente perfecto porque fuerza la conversación sobre propósito de cada método. Los estudiantes que cometen este error están demostrando que entienden la sintaxis pero necesitan claridad conceptual sobre cuándo usar cada herramienta.
+Discusión: ¿`console.log` cuenta como impuro? Sí — es un efecto observable fuera de la función.
 
-## 9. Señales de comprensión exitosa
+### Dinámica 3: "Tabla de reduce en vivo"
 
-Al final de la clase, busca estas evidencias de comprensión genuina:
+Antes de P2.1, dibuja la tabla en pizarra y van llenándola juntos:
 
-- **Vocabulario apropiado**: Usan naturalmente "transformar", "filtrar", "inmutable" en contexto correcto
-- **Pensamiento declarativo**: Describen problemas como "quiero obtener X de Y" en lugar de "primero hago esto, luego esto"
-- **Comprensión del flujo**: Pueden explicar el pipeline de datos sin mencionar variables temporales
+| Vuelta | acc | v | nuevo acc |
+|---|---|---|---|
+| 1 | 0 | 3000 | ? |
+| 2 | ? | -45.50 | ? |
+| 3 | ? | 500 | ? |
 
-**Pregunta de validación final:** "Si necesitas obtener el promedio de gastos mayores a $300, ¿qué métodos usarías y en qué orden?" 
+Los alumnos completan. Cuando llegan al final → "ese es tu saldo". El "click" sucede aquí.
 
-Solo pueden responder correctamente (`filter().map().reduce()`) si realmente internalizaron que cada método tiene un propósito específico y que se pueden componer secuencialmente.
+---
 
-## 10. Preparación para la siguiente clase
+## 💡 Ejemplos Listos para Usar
 
-Los conceptos de esta clase son prerrequisito directo para programación orientada a objetos (Clase 07). La inmutabilidad que practican aquí será fundamental cuando trabajen con métodos de clase que no deben modificar propiedades internas. La composición de funciones prepara la mentalidad para encapsulación de comportamientos en objetos.
+### Ejemplo 1: Arrow vs function (cuándo cada una)
 
-**Conceptos que DEBEN estar sólidos:**
-- Funciones puras (validar con: ¿puede predecir el output sin ejecutar?)
-- Inmutabilidad básica (validar con: ¿original se mantiene sin cambios?)
+**Cuándo usarlo:** si alguien pregunta "¿siempre arrow?"
 
-**Conceptos que pueden seguir madurando:**
-- Composición compleja de métodos funcionales
-- Optimización de performance en pipelines largos
+```javascript
+// Arrow: ideal como argumento (anónima, corta)
+valores.map(v => v * 2);
 
-La clase fue exitosa si los estudiantes salen pensando: *"Puedo resolver problemas complejos combinando transformaciones simples sin romper mis datos originales"*
+// function: ideal para funciones nombradas reutilizables con varias líneas
+function calcularInteres(monto, tasa, anios) {
+  // ... 10 líneas de lógica ...
+  return monto * Math.pow(1 + tasa, anios);
+}
+```
 
-## Notas técnicas y troubleshooting
+**Tip:** "Arrow para argumentos, function (o const arrow nombrada) para funciones que tienen nombre y se llaman desde varios lados."
 
-### Configuración crítica
-- Verificar que Chrome DevTools esté abierto en Console para testing inmediato
-- Confirmar que tienen el array de movimientos cargado en memoria para ejemplos
+### Ejemplo 2: `.filter` que NO muta
 
-### Errores comunes del entorno
-- **Error**: `undefined` al encadenar métodos
-- **Solución**: Validar que cada método retorna el tipo esperado antes de encadenar
-- **Prevención**: Usar `console.log()` intermedio para verificar cada paso del pipeline
+**Cuándo usarlo:** si alguien dice "filter modifica el array".
 
-### Recursos de emergencia
-- MDN Array methods: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
-- Código de ejemplo listo: Array de movimientos financieros con 5 elementos variados
-- Demo backup: Comparación lado-a-lado imperativo vs funcional en pantalla dividida
+```javascript
+const valores = [3000, -45.50, 500];
+const ingresos = valores.filter(v => v > 0);
+
+console.log(valores);   // [3000, -45.50, 500] — INTACTO
+console.log(ingresos);  // [3000, 500] — NUEVO
+```
+
+**Tip:** "Si llamas filter de nuevo sobre el mismo array, da el mismo resultado. Eso es inmutabilidad."
+
+### Ejemplo 3: reduce con valor inicial
+
+**Cuándo usarlo:** si alguien olvida el valor inicial.
+
+```javascript
+// CORRECTO
+[].reduce((acc, v) => acc + v, 0)   // 0 (gracias al inicial)
+
+// INCORRECTO — reduce sin inicial sobre array vacío
+[].reduce((acc, v) => acc + v)      // TypeError
+```
+
+**Tip:** "Siempre pon el valor inicial. Es la garantía de que reduce no falle con arrays vacíos."
+
+---
+
+## ⚠️ Errores Comunes
+
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| `valores.map(...)` no cambia `valores` | El alumno esperaba mutación | Recordar: map devuelve array NUEVO. Si quieres reemplazar: `valores = valores.map(...)` |
+| `reduce` retorna `NaN` | Olvidó el valor inicial sobre números | Agregar `, 0` al final del reduce |
+| Arrow con `{}` no retorna nada | Confusión entre cuerpo expresión y cuerpo bloque | `x => { x * 2 }` ejecuta pero no retorna. Usar `x => x * 2` o `x => { return x * 2 }` |
+| `find` devuelve `undefined` | El array no tiene elementos que cumplen | Validar `if (resultado !== undefined)` antes de usar |
+| Mezcla `forEach` con `map` | "Quería transformar pero forEach no retorna" | Si transforma → `.map`. Si solo ejecuta → `.forEach` |
+| Filter usa `==` en vez de `===` | Hábito de otros lenguajes | Siempre `===` en JS para comparaciones estrictas |
+| Quiere "filtrar por nombre" | Pero los nombres están en otro array (paralelo) | "Hoy operamos sobre `valores`. En C07 cuando sean objetos, podrás filtrar por cualquier propiedad" |
+
+---
+
+## ✅ Señales de Comprensión
+
+### El estudiante ENTIENDE cuando:
+- Convierte una `function` a arrow function correctamente (paréntesis donde corresponde).
+- Predice qué retorna `valores.filter(v => v > 1000)` sin ejecutar.
+- Explica por qué `reduce` necesita un valor inicial.
+- Identifica `.map` vs `.forEach` según si "quiere transformar" o "solo ejecutar".
+
+### El estudiante NECESITA AYUDA cuando:
+- Escribe `x => { x * 2 }` esperando que retorne (olvida `return` en cuerpo bloque).
+- Usa `.forEach` para transformar y luego se queja de que el array no cambia.
+- Mezcla arrow con `function this` (no aplica hoy pero puede confundir).
+- No conecta que filter + reduce puede reemplazar un for con if dentro.
+
+---
+
+## 🎯 Checkpoints de Validación
+
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~15' | P0 lista | Identifica si una función es pura o no. Traduce 3 `function` a arrow correctamente. |
+| ~50' | P1 lista | Las 4 funciones (`obtenerIngresos`, `obtenerGastos`, `aplicarTasa`, `buscarPrimerGastoMayor`) creadas y funcionando. El array `valores` NO se mutó. |
+| ~90' | P2 lista | `imprimirReporte(nombres, valores)` muestra desglose completo con totales y saldo correctos. |
+| ~130' | P3 lista | `functional-utils.js` tiene ≥8 funciones puras + reto autónomo intentado. |
+
+---
+
+## 🧑‍🏫 Tips de Facilitación
+
+### Si el grupo está callado:
+- "¿Quién puede explicar por qué `valores.map(v => v * 2)` no muta `valores`?" — fuerza articular inmutabilidad.
+
+### Si alguien ya conocía arrow functions:
+- Pídele que explique al grupo el caso de "arrow vs function con `this`" (preview de C07).
+
+### Si la mayoría termina P3 antes:
+- Reto avanzado: implementar `agruparPorTipo(valores)` que retorne `{ ingresos: [...], gastos: [...] }` usando reduce.
+
+### Si alguien quiere usar `for` "porque me sale más fácil":
+> "Funciona, pero el lab es C06 funcional. Reto: hazlo con `.reduce`. Si te trabas, te ayudo — pero antes intenta."
+
+### Si surgen preguntas sobre `this` en arrow:
+> "Buena pregunta para C07. Hoy no nos topa porque no usamos objetos."
+
+---
+
+## ❓ Preguntas Frecuentes
+
+### P: ¿Puedo seguir usando `for` en proyectos reales?
+**R:** Sí, totalmente. `for` no está muerto — es ideal para algoritmos donde necesitas controlar el índice manualmente. Pero el 80% de los casos cotidianos (transformar, filtrar, sumar) son más limpios con métodos funcionales.
+
+### P: ¿Por qué `reduce` con valor inicial obligatorio?
+**R:** Sin inicial, reduce usa `arr[0]` como inicial. Si el array está vacío, lanza TypeError. Con inicial, reduce siempre tiene "algo" con qué arrancar.
+
+### P: ¿Funciones puras son siempre mejores?
+**R:** Para LÓGICA (cálculos, transformaciones): casi siempre. Para EFECTOS (DOM, fetch, console.log): no — necesitas impuras. La buena práctica es **separar** el cálculo (puro) del output (impuro), como hicimos en P2.4 con `generarReporte` (puro) y `imprimirReporte` (impuro).
+
+### P: ¿`.forEach` cuenta como funcional?
+**R:** Estrictamente no — siempre produce efectos. Pero es "el reemplazo decente" del `for` cuando solo iteras. Acepta que es el menos "puro" del grupo.
+
+---
+
+## 🔗 Conexiones del Curriculum
+
+### Esta clase construye sobre:
+
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C05 | Arrays + `for` + funciones imperativas | Hoy refactorizamos sobre el mismo proyecto: `for` → `.reduce`, función imperativa → función pura. |
+| Code 101 (C11) | Funciones con `function` | Hoy se introduce la sintaxis arrow como equivalente. |
+
+### Conexión con C07 (OOP)
+
+Al cerrar:
+
+> "Hoy los 2 arrays paralelos siguen siendo arrays paralelos. Cuando filtramos `valores` perdimos los nombres correspondientes — hicimos `forEach` con índice manual. En C07 los movimientos van a ser `{ nombre, tipo, valor }` en UN solo array, y todos los métodos que hoy aprendieron se vuelven MÁS expresivos."
+
+**Pre-work implícito:** que los alumnos extiendan su `functional-utils.js` con 2-3 funciones extra del Reto Autónomo. Más práctica con `.reduce` = mejor preparación para C07.
+
+---
+
+## 🪞 Reflexión Post-Clase
+
+### Preguntas para el facilitador:
+- ¿Cuántos alumnos seguían usando `for` aunque les pediste métodos funcionales? Si más del 30%, refuerza en C07.
+- ¿La tabla de `reduce` paso a paso funcionó? Si no, prueba con otro ejemplo (multiplicación, máximo) la próxima cohorte.
+- ¿Qué alumnos pidieron usar `for` por nostalgia? Identifícalos: probablemente necesitan más práctica funcional antes de C07.
+- ¿Alguien dijo "esto me suena a React"? Buena señal — están conectando.
