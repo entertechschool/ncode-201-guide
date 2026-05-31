@@ -199,7 +199,12 @@ Como ingresos son positivos y gastos negativos, **sumarlos da el saldo neto** au
 
 ### 2.3 Prueba con 3 movimientos
 
-Registra: `Salario` ingreso 3000 · `Cena` gasto 45.50 · `Freelance` ingreso 500. Al responder `no`, deberías ver `Saldo total: $3454.50`.
+Registra: 
+- `Salario` ingreso 3000
+- `Cena` gasto 45.50
+- `Freelance` ingreso 50
+
+Al responder `no`, deberías ver `Saldo total: $3454.50`.
 
 ✅ **Checkpoint 2 (~65 min):** registras 3 movimientos seguidos, el bucle termina al responder distinto a `si`, y la consola muestra el saldo correcto.
 
