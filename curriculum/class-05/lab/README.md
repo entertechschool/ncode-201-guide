@@ -168,13 +168,7 @@ while (continuar === 'si') {
   const tipo = prompt('Tipo (ingreso / gasto):');
   const monto = parseFloat(prompt('Monto:'));
 
-  if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(monto) || monto <= 0) {
-    alert('Datos inválidos. Intenta de nuevo.');
-  } else {
-    const valor = tipo === 'ingreso' ? monto : -monto;
-    nombres.push(nombre);
-    valores.push(valor);
-  }
+  //Coloca aqui el bloque if-else de validacion anterior
 
   continuar = prompt('¿Registrar otro movimiento? (si/no):');
 }
