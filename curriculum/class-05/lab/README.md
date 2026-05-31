@@ -394,8 +394,3 @@ Saldo total: $3454.50
 ```
 
 ---
-
-## 🔮 Lo que viene en C06 y C07
-
-* **C06 (Funcional)**: el `for` que escribiste hoy DESAPARECE. Vas a usar `.map()`, `.filter()`, `.reduce()` para hacer lo mismo en una línea. Conocerás **arrow functions**.
-* **C07 (OOP)**: los 2 arrays paralelos se VUELVEN UN solo array de objetos — `{ nombre, tipo, valor }`. Vas a sentir por qué objetos son mejor que arrays paralelos.
