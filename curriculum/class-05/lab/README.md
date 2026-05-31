@@ -121,7 +121,13 @@ if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(monto) || monto
   alert('Datos inválidos. Intenta de nuevo.');
 } else {
   // calcular el valor con signo
-  const valor = tipo === 'ingreso' ? monto : -monto;
+    let valor;
+  if(tipo==='ingreso'){
+    valor = monto;
+  }
+  else{
+    valor = -monto;
+  }
 
   // guardar en AMBOS arrays — siempre juntos
   nombres.push(nombre);
