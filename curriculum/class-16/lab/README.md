@@ -205,6 +205,27 @@ Todos esos cálculos siguen el mismo patrón: `función pura(state) → resultad
 - **Logro 2: Botón de recuperación rápida**  
   "Como usuario, deseo contar con un botón sencillo que permita recuperar rápidamente la última plantilla eliminada accidentalmente."
 
+## Rubrica de Evaluacion
+
+| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
+|----------|----------------|------------|---------------------|----------|
+| **HU implementadas** | HU1-HU5 del lab + ≥2 HU adicionales propias, funcionales y con criterios al 100% | HU1-HU5 + 2 HU con criterios en su mayoría cumplidos | HU1-HU5 funcionales + 1 HU adicional parcial | HU1-HU5 implementadas pero no funcionan |
+| **Calidad técnica: estado + persistencia + sincronización** | Store centralizado, persistencia con `try/catch`, sincronización automática estado↔UI, validaciones correctas | Store y persistencia correctos, sincronización funciona pero con inconsistencia menor | Persistencia funcional pero sin Store o sin sincronización automática | Estado fragmentado, persistencia sin manejo de errores |
+| **Presentación de funcionalidades en vivo** | Demo ≤5 min, muestra creación/edición/restauración/visualización, navegación clara, demuestra recuperación tras recarga | Demo muestra funcionalidades clave pero omite recuperación tras recarga | Demo entrega lo pedido pero sin mostrar todas las HU | Presenta pero la app no funciona correctamente |
+| **Argumentación técnica** | Justifica ≥2 decisiones (modelado del estado, estructura del Store, estrategia de persistencia, manejo de errores) | Justifica 1 decisión claramente | Argumentación superficial sin profundizar | No justifica o confunde Store con persistencia |
+| **Desafío: explicación de fragmento solicitado** | Explica 1 fragmento a solicitud del instructor con claridad, deploy funcional, README documentado | Explica con apoyo parcial, deploy funcional | Explica con dificultad, README incompleto | No puede explicar o sin deploy |
+
+**Total: 100 puntos** (5 criterios x 20 pts)
+
+| Nota | Rango |
+|------|-------|
+| A | 90-100 |
+| B | 80-89 |
+| C | 70-79 |
+| F | < 70 |
+
+---
+
 ## 📝 Instrucciones de Entrega
 
 1. **Documentación en README**

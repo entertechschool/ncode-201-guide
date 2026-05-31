@@ -210,6 +210,27 @@ En M5 construyes una **Agenda de Gastos**. Cada vez que se agregue una persona, 
 2. **Logro 2: Cancelar la conversión en caso de error**  
    - Impedir ejecución de `marked()` si se detecta fallo previo.
 
+## Rubrica de Evaluacion
+
+| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
+|----------|----------------|------------|---------------------|----------|
+| **HU implementadas** | HU1-HU2 del lab + ≥2 HU adicionales propias, funcionales y con criterios al 100% | HU1-HU2 + 2 HU con criterios en su mayoría cumplidos | HU1-HU2 funcionales + 1 HU adicional parcial | HU1-HU2 implementadas pero no funcionan |
+| **Calidad técnica: DOM + funciones + eventos + excepciones** | Integra DOM, funciones de orden superior, eventos, `try/catch` + `throw`; código modular y reutilizable | Integra 3 de 4 conceptos correctamente | Funcional pero código repetitivo, sin modularización | Errores no capturados, código monolítico |
+| **Presentación de funcionalidades en vivo** | Demo ≤5 min, transformación Markdown→HTML en vivo, eventos interactivos, captura de errores demostrada | Demo muestra funcionalidades pero omite captura de errores | Demo entrega lo pedido sin mostrar interactividad completa | Presenta pero no muestra editor en tiempo real |
+| **Argumentación técnica** | Justifica ≥2 decisiones (dónde poner `try/catch`, diseño de funciones reutilizables, uso del DOM) | Justifica 1 decisión claramente | Argumentación superficial sin profundizar | No justifica o confunde conceptos básicos |
+| **Desafío: explicación de fragmento solicitado** | Explica 1 fragmento a solicitud del instructor con claridad, deploy funcional, README documentado | Explica con apoyo parcial, deploy funcional | Explica con dificultad, README incompleto | No puede explicar o sin deploy |
+
+**Total: 100 puntos** (5 criterios x 20 pts)
+
+| Nota | Rango |
+|------|-------|
+| A | 90-100 |
+| B | 80-89 |
+| C | 70-79 |
+| F | < 70 |
+
+---
+
 ## 📝 Instrucciones de Entrega
 
 1. **Documentación en README**  

@@ -412,12 +412,24 @@ Agrega al README del repo:
 | Screenshot del PR mergeado | Blackboard |
 | README del repo con tokens + validaciones | En el repo |
 
-### Rúbrica (referencial)
+## Rúbrica de Evaluación
 
-- **P1 — CSS Variables (30%)**: ≥10 tokens en `:root`, ≥6 reglas refactorizadas con `var()`, estética nueva aplicada (shadow + hover + título), sitio se ve coherente.
-- **P2 + P4 — Git workflow (30%)**: rama `feature/form-validado` creada, commits atómicos, push, PR abierto y mergeado, `main` local sincronizado con `git pull`.
-- **P3 — Formulario validado (25%)**: los 3 escenarios de fallo bloquean el submit (vacío, email inválido, teléfono inválido); checkbox y select obligatorios.
-- **P5 — Deploy (15%)**: sitio público funcional con las 3 páginas, README del repo documentado.
+| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
+|----------|----------------|------------|---------------------|----------|
+| **CSS Variables y estética** | ≥10 tokens en `:root`, ≥6 reglas refactorizadas con `var()`, estética nueva (shadow + hover + título destacado) aplicada coherentemente al producto | ≥8 tokens, ≥4 reglas refactorizadas, estética nueva visible pero inconsistente en alguna sección | ≥5 tokens, ≥2 reglas refactorizadas, estética nueva mínima | Hardcodes prevalecen, sin sistema de tokens reconocible |
+| **Formulario validado** | Los 3 escenarios de fallo bloquean el submit (vacío, email inválido, teléfono inválido), checkbox y select obligatorios, mensajes nativos visibles en todos los campos | Bloquea 2 de 3 escenarios, validación funciona en la mayoría de campos | Bloquea 1 escenario, validación parcial | No bloquea el submit o no hay atributos de validación |
+| **Git workflow** | Rama `feature/form-validado` creada, commits atómicos descriptivos, push, PR abierto y mergeado vía GitHub, `main` local sincronizado con `git pull` | Flujo completo pero con 1-2 commits genéricos o push directo en algún momento | Rama creada y PR abierto, pero merge manual o sin sincronización local | Push directo a `main` o sin uso de ramas/PRs |
+| **Presentación + argumentación técnica** | Demo de ≤3 min mostrando el sitio en acción, explica con claridad ≥2 decisiones técnicas (tokens, validación o flujo Git), justifica uso de IA si aplica | Demo fluida, explica 1 decisión técnica con argumentos sólidos | Demo entrega lo pedido pero argumentación superficial | No presenta o no justifica decisiones técnicas |
+| **Desafío: HU adicionales + deploy** | ≥2 HU adicionales implementadas con criterios de aceptación cumplidos, sitio público funcional en GitHub Pages con las 3 páginas, README del repo con tabla de tokens + validaciones | 1 HU adicional, deploy funcional, README documentado | Deploy funcional pero sin HU adicionales o README incompleto | Sin deploy o sitio roto |
+
+**Total: 100 puntos** (5 criterios x 20 pts)
+
+| Nota | Rango |
+|------|-------|
+| A | 90-100 |
+| B | 80-89 |
+| C | 70-79 |
+| F | < 70 |
 
 ---
 

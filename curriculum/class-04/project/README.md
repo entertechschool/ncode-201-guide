@@ -32,16 +32,9 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 
 - El uso de herramientas de Inteligencia Artificial está permitido ✅ sin embargo, **solo debes implementar código que puedas explicar técnicamente**.
 
-## ☑️ Rúbrica de Evaluación 
+## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Historias de Usuario propuestas** | Crear e implementar al menos **2 nuevas historias de usuario** que amplíen la funcionalidad o mejoren la experiencia del usuario. Se evaluará: <br> - Análisis para entender las necesidades clave y proponer soluciones adecuadas.<br> - Propuesta claramente redactada y criterios de aceptación coherentes. | **20 pts** |
-| **Estructura Semántica, Accesible y Layout Responsive** | Evaluación de la calidad técnica del HTML5 semántico, el cumplimiento de buenas prácticas de accesibilidad (alt, roles ARIA, navegación por teclado) y la correcta adaptación responsive utilizando Flexbox, Grid y media queries. | **20 pts** |
-| **Presentación de funcionalidades en vivo** | Demostración de máximo **3 minutos**, donde el estudiante muestra el sitio en acción, navegando entre secciones y destacando las funcionalidades clave (historias de usuario implementadas y retos adicionales). Se valora: <br> - Claridad al mostrar las funcionalidades. <br> - Fluidez y confianza al navegar y explicar. <br> - Uso adecuado del tiempo. | **25 pts** |
-| **Argumentación técnica** | Capacidad para explicar y defender **decisiones técnicas clave** tomadas durante el desarrollo. Se espera que el estudiante justifique: <br> - Elección de tecnologías y etiquetas semánticas. <br> - Aplicación de técnicas de accesibilidad. <br> - Uso de Flexbox, Grid o frameworks en diferentes secciones. <br> - Validación crítica del uso de IA para generación o mejora de código. | **35 pts** |
-
-> **Puntaje Total:** 100 puntos
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: CSS Variables, formulario validado, Git workflow, presentación + argumentación técnica, y desafío (HU adicionales + deploy).
 
 ## 📣 Presentación en Vivo
 

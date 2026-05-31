@@ -38,14 +38,7 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 
 ## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Historias de Usuario implementadas** | Claridad, relevancia y exactitud en la implementación, cubriendo criterios de aceptación específicos. | **20 pts** |
-| **Calidad Técnica Implementada** | Integración efectiva y clara de manipulación del DOM, funciones avanzadas, eventos y manejo de promesas, demostrando comprensión y buenas prácticas (modularización, reutilización, asincronía). | **20 pts** |
-| **Presentación de funcionalidades en vivo** | Demostración breve (3 minutos máx.) mostrando transformación en tiempo real, interactividad del editor, funciones adicionales implementadas y navegación clara por la interfaz. | **25 pts** |
-| **Argumentación Técnica** | Justificación técnica clara sobre: <br> - Uso del DOM para transformar y renderizar. <br> - Diseño de funciones reutilizables y eventos. <br> - Implementación de validaciones y errores gestionados correctamente. | **35 pts** |
-
-> **Puntaje Total:** 100 puntos
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: HU implementadas, calidad técnica (DOM + funciones + eventos + excepciones), presentación en vivo, argumentación técnica, y desafío (explicación de fragmento de código a solicitud del instructor + deploy).
 
 ## 📣 Presentación en Vivo
 

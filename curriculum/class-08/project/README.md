@@ -32,16 +32,9 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 
 - El uso de herramientas de Inteligencia Artificial está permitido ✅ sin embargo, **solo debes implementar código que puedas explicar técnicamente**.
 
-## ☑️ Rúbrica de Evaluación 
+## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Historias de Usuario implementadas** | Se evalúa la claridad, funcionalidad y cumplimiento exacto de cada historia planteada, cubriendo los criterios de aceptación propuestos. | **20 pts** |
-| **Calidad Técnica Implementada** | Se valora la integración adecuada de los paradigmas vistos (imperativo, funcional, orientado a objetos y prototipal), demostrando comprensión profunda y aplicando buenas prácticas: funciones puras, encapsulamiento con constructores, optimización con prototipos, herencia con `Object.create()`, validaciones con `instanceof`. | **20 pts** |
-| **Presentación de funcionalidades en vivo** | Presentación breve (3 minutos máx.) mostrando funcionalidad práctica del gestor de presupuesto, resaltando filtrado, análisis por tipos y categorización dinámica, navegando con claridad por la interfaz desarrollada con Bootstrap. | **25 pts** |
-| **Argumentación Técnica** | El estudiante debe justificar de forma técnica y crítica:<br> - Selección y aplicación del paradigma de programación según la funcionalidad<br> - Razones para elegir funciones específicas del lenguaje (`map`, `filter`, funciones constructoras, prototipos)<br> - Ventajas prácticas obtenidas al usar orientación a objetos y prototipos frente al enfoque imperativo inicial<br> - Comprensión de herencia prototipal y validación de tipos | **35 pts** |
-
-> **Puntaje Total:** 100 puntos
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: HU implementadas, calidad técnica (paradigmas integrados), presentación en vivo, argumentación técnica, y desafío (explicación de código prototipal a solicitud del instructor + deploy).
 
 ## 📣 Presentación en Vivo
 

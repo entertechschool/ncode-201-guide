@@ -193,15 +193,7 @@ gastos-compartidos/
 
 ## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Funcionalidades del MVP** | Las 8 historias base (HU1–HU8) están implementadas y funcionan correctamente. | 30 pts |
-| **Calidad Técnica** | Uso correcto de estado centralizado, LocalStorage con try/catch, eventos del DOM, validaciones y algoritmo de balances. Código organizado en archivos separados. | 25 pts |
-| **Historias Adicionales / Retos** | Se implementó al menos 1 historia adicional del listado de retos (o una propuesta propia aprobada por el instructor). | 15 pts |
-| **Presentación en Vivo** | Demo clara en ≤10 minutos, mostrando el flujo completo y las funcionalidades clave. Fluidez y claridad. | 15 pts |
-| **Argumentación Técnica** | El estudiante explica con claridad al menos 2 decisiones técnicas (modelado del estado, algoritmo de transferencias, manejo de errores) y responde preguntas del instructor. | 15 pts |
-
-**🔸 Puntaje Total: 100 puntos. Puntaje mínimo de aprobación: 70/100.**
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts, aprobación mínima 70/100) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: funcionalidades del MVP (HU1-HU8), calidad técnica, historias adicionales, presentación en vivo (Demo Day C20), y argumentación técnica + Q&A.
 
 ---
 

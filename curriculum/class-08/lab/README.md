@@ -423,6 +423,27 @@ class Movimiento {
 
 ---
 
+## Rubrica de Evaluacion
+
+| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
+|----------|----------------|------------|---------------------|----------|
+| **HU implementadas** | ≥2 HU adicionales propias, funcionales y con criterios de aceptación al 100% | 2 HU con criterios en su mayoría cumplidos | 1 HU adicional con criterios parciales | HU planteada pero no funcional |
+| **Calidad técnica: paradigmas integrados** | Integra los 4 paradigmas (imperativo, funcional, OOP, prototipal) con buenas prácticas: funciones puras, encapsulamiento, herencia con `Object.create()`, validaciones con `instanceof` | Integra 3 de 4 paradigmas correctamente | Integra 2 paradigmas, funcional pero sin aprovechar el módulo completo | Solo enfoque imperativo |
+| **Presentación de funcionalidades en vivo** | Demo ≤3 min, navegación fluida, muestra filtrado/análisis dinámico, demuestra cadena de prototipos en DevTools | Demo fluida muestra funcionalidades pero omite detalle de prototipos | Demo entrega lo pedido pero sin DevTools | Presenta pero no muestra funcionalidad core |
+| **Argumentación técnica** | Justifica ≥2 decisiones técnicas (prototipos vs métodos en constructor, ventajas de herencia, eficiencia de memoria), explica cadena de prototipos | Justifica 1 decisión claramente, responde con dificultad a preguntas | Argumentación superficial, identifica conceptos sin profundizar | No justifica decisiones o confunde conceptos básicos |
+| **Desafío: implementación prototipal solicitada** | Explica 1 fragmento prototipal a solicitud del instructor con claridad técnica, deploy funcional, README documenta arquitectura de prototipos | Explica el fragmento con apoyo parcial, deploy funcional | Explica con dificultad, deploy funcional pero README incompleto | No puede explicar o sin deploy |
+
+**Total: 100 puntos** (5 criterios x 20 pts)
+
+| Nota | Rango |
+|------|-------|
+| A | 90-100 |
+| B | 80-89 |
+| C | 70-79 |
+| F | < 70 |
+
+---
+
 ## 📝 Instrucciones de Entrega
 
 ### 1. Verificar Funcionalidad Completa

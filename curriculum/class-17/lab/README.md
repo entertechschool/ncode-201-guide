@@ -238,6 +238,29 @@ gastos-compartidos/
 
 ---
 
+## Rubrica de Evaluacion
+
+> ⚠️ Esta rúbrica evalúa el **Proyecto Integrador Final M5** (Agenda de Gastos Compartidos), que se entrega y presenta en el **Demo Day (Clase 20)**. Se publica desde C17 para que la conozcas desde el primer día del módulo.
+
+| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
+|----------|----------------|------------|---------------------|----------|
+| **Funcionalidades del MVP** | Las 8 HU base (HU1-HU8) implementadas y funcionando al 100% | 6-7 HU funcionales, 1-2 con bugs menores | 4-5 HU funcionales, resto incompletas | <4 HU funcionales o flujo principal roto |
+| **Calidad Técnica** | Estado centralizado, `localStorage` con `try/catch`, código separado (state, storage, balance, ui, app), algoritmo de transferencias mínimo | Estado correcto, persistencia funcional, código separado pero con lógica filtrada | Funcional pero monolítico o sin manejo de errores | Código sin estructura, estado fragmentado |
+| **Historias Adicionales / Retos** | ≥2 HU adicionales del listado o propias aprobadas, completas con criterios cumplidos | 1 HU adicional con criterios al 100% | 1 HU adicional parcial | HU planteada pero no funciona |
+| **Presentación en Vivo — Demo Day** | Demo clara en ≤10 min, flujo completo (grupo→personas→gastos→balance→transferencias→eliminar), sin errores en vivo | Demo cubre flujo principal pero omite alguna funcionalidad o tiene tropiezos | Demo entrega lo pedido pero excede tiempo u omite funcionalidades | Demo confusa, app falla en vivo |
+| **Argumentación Técnica + Q&A** | Justifica ≥2 decisiones (modelado del estado, algoritmo de transferencias, manejo de errores) y responde correctamente Q&A sobre fragmento solicitado | Justifica 1 decisión claramente, responde Q&A con dificultad | Argumentación superficial sin profundizar | No justifica o no responde Q&A básico |
+
+**Total: 100 puntos** (5 criterios x 20 pts). **Aprobación mínima: 70/100**
+
+| Nota | Rango |
+|------|-------|
+| A | 90-100 |
+| B | 80-89 |
+| C | 70-79 |
+| F | < 70 |
+
+---
+
 ## 📝 Entrega
 
 ### Checklist

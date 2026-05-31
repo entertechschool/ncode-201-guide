@@ -55,14 +55,7 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 
 ## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Historias de Usuario Implementadas** | Se implementaron al menos 2 historias propias relevantes con criterios de aceptación claros y funcionales. | 20 pts |  |  |
-| **Calidad Técnica Implementada** | Uso correcto y efectivo de estado (store), persistencia con LocalStorage, sincronización visual, manejo de eventos y validaciones. | 25 pts |  |  |
-| **Presentación de funcionalidades en vivo** | La app fue demostrada correctamente en máximo 5 minutos, mostrando: creación, edición, restauración y visualización de plantillas. Navegación clara y fluidez. | 25 pts |  |  |
-| **Argumentación Técnica** | El estudiante explicó con claridad 2 decisiones técnicas importantes (estado, persistencia, validación, estructura del código) y respondió preguntas del instructor. | 30 pts |  |  |
-
-**🔸 Puntaje Total: 100 puntos**
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: HU implementadas, calidad técnica (estado + persistencia + sincronización), presentación en vivo, argumentación técnica, y desafío (explicación de fragmento de código a solicitud del instructor + deploy).
 
 ## 📣 Presentación en Vivo
 
