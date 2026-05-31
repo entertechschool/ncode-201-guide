@@ -164,10 +164,6 @@ Recarga la página. Acepta el `prompt` con valores válidos (`Cena`, `gasto`, `4
 let continuar = 'si';
 
 while (continuar === 'si') {
-  const nombre = prompt('Nombre del movimiento:');
-  const tipo = prompt('Tipo (ingreso / gasto):');
-  const monto = parseFloat(prompt('Monto:'));
-
   //Coloca aqui la captura de movimientos(nombre,tipo,monto) y el bloque if-else de validacion anterior
 
   continuar = prompt('¿Registrar otro movimiento? (si/no):');
