@@ -21,23 +21,6 @@ Cada clase cuenta con los siguientes documentos:
 
 ---
 
-<div style="background:#fff8e1;border-left:4px solid #f59e0b;padding:1rem 1.2rem;margin:1rem 0;border-radius:0 4px 4px 0;">
-<strong>🖥️ Acceso a Presentaciones — URL Patrón</strong><br><br>
-Para abrir la presentación de <strong>cualquier clase</strong>, reemplaza <code>XX</code> con el número de clase (con ceros: <code>01</code>, <code>02</code> … <code>20</code>) en esta URL:<br><br>
-<code>https://entertechschool.github.io/public/slides/?class=code-201_XX</code>
-</div>
-
-### Ejemplos directos
-
-| Clase | URL directa |
-|-------|-------------|
-| Clase 01 | <https://entertechschool.github.io/public/slides/?class=code-201_01> |
-| Clase 08 | <https://entertechschool.github.io/public/slides/?class=code-201_08> |
-| Clase 17 | <https://entertechschool.github.io/public/slides/?class=code-201_17> |
-| Clase 20 | <https://entertechschool.github.io/public/slides/?class=code-201_20> |
-
----
-
 ## 🌐 Módulo 1: Fundamentos de la Web Moderna
 
 **Proyecto Integrador:** Product Landing Page
