@@ -31,8 +31,7 @@
 ```
 personal-budget/
 ├── index.html
-├── app.js
-└── README.md
+└── app.js
 ```
 
 3. En `index.html` enlaza `app.js` antes del cierre de `</body>`:
