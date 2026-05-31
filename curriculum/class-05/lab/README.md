@@ -257,19 +257,33 @@ function mostrarResumen() {
 
 ```javascript
 function registrarMovimiento() {
-  const nombre = prompt('Nombre del movimiento:');
-  const tipo = prompt('Tipo (ingreso / gasto):');
-  const monto = parseFloat(prompt('Monto:'));
+  const nombre = prompt("Nombre del movimiento:");
+  const tipo = prompt("Tipo (ingreso / gasto):");
+  const monto = parseFloat(prompt("Monto:"));
 
-  if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(monto) || monto <= 0) {
-    alert('Datos inválidos.');
-    return;   // sale de la función sin guardar
+  if (
+    !nombre ||
+    (tipo !== "ingreso" && tipo !== "gasto") ||
+    isNaN(monto) ||
+    monto <= 0
+  ) {
+    alert("Datos inválidos. Intenta de nuevo.");
+    return; // sale de la función sin guardar
   }
 
-  const valor = tipo === 'ingreso' ? monto : -monto;
+  // calcular el valor con signo
+  let valor;
+  if (tipo === "ingreso") {
+    valor = monto;
+  } else {
+    valor = -monto;
+  }
+
+  // guardar en AMBOS arrays — siempre juntos
   nombres.push(nombre);
   valores.push(valor);
 }
+
 ```
 
 * **`return` sin valor** sale de la función antes de llegar al final. Útil para "validación temprana".
@@ -350,20 +364,14 @@ Saldo total: $104.50
 
 ## 🌟 Logros Adicionales
 
-- **Logro 1:** Eliminar un movimiento por nombre antes de cerrar el bucle. Pista: usa `nombres.indexOf(nombre)` para encontrar el índice, luego `splice(i, 1)` en **ambos** arrays — porque son paralelos, ambos deben actualizarse juntos.
-- **Logro 2:** Mostrar el ingreso más alto y el gasto más bajo (más negativo) registrados.
-- **Logro 3:** Validar que los nombres no se repitan al registrar.
+- **Logro 1:** Mostrar el ingreso más alto y el gasto más bajo (más negativo) registrados.
+- **Logro 2:** Validar que los nombres no se repitan al registrar.
 
 ---
 
 ## 📝 Instrucciones de Entrega
 
-1. **README.md** con:
-   - Explicación breve de cómo se usa el programa.
-   - Listado de las 3 funciones imperativas creadas y qué hace cada una.
-   - **Reflexión obligatoria:** *¿Qué pasaría si registramos un movimiento en `nombres` pero olvidamos hacerlo en `valores`? ¿Es fácil de detectar este error?* (Vas a resolver esto en C07.)
-
-2. **Entrega Final:**
+1. **Entrega Final:**
    - URL del repositorio en GitHub.
    - Captura de pantalla de la ejecución en consola con al menos 3 movimientos y el resumen final.
 
