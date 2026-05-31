@@ -261,12 +261,7 @@ function registrarMovimiento() {
   const tipo = prompt("Tipo (ingreso / gasto):");
   const monto = parseFloat(prompt("Monto:"));
 
-  if (
-    !nombre ||
-    (tipo !== "ingreso" && tipo !== "gasto") ||
-    isNaN(monto) ||
-    monto <= 0
-  ) {
+  if (!nombre || (tipo !== "ingreso" && tipo !== "gasto") || isNaN(monto) ||monto <= 0) {
     alert("Datos inválidos. Intenta de nuevo.");
     return; // sale de la función sin guardar
   }
