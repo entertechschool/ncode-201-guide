@@ -168,7 +168,7 @@ while (continuar === 'si') {
   const tipo = prompt('Tipo (ingreso / gasto):');
   const monto = parseFloat(prompt('Monto:'));
 
-  //Coloca aqui el bloque if-else de validacion anterior
+  //Coloca aqui la captura de movimientos(nombre,tipo,monto) y el bloque if-else de validacion anterior
 
   continuar = prompt('¿Registrar otro movimiento? (si/no):');
 }
