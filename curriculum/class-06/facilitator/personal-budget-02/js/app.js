@@ -7,8 +7,8 @@ let transacciones = []; // Almacenará solo números (+ para ingresos, - para ga
 // Actualizar balance
 function actualizarBalance() {
 	// Suma todos los números del array (positivos y negativos)
-	const balance = transacciones.reduce(function (acc, monto) {
-		return acc + monto;
+	const balance = transacciones.reduce(function (acumulador, monto) {
+		return acumulador + monto;
 	}, 0);
 
 	balanceAmount.textContent = formatearMonto(balance);

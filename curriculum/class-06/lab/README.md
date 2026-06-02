@@ -16,7 +16,7 @@ En esta clase **refactorizas el proyecto C05** usando programación funcional. E
 
 | Concepto | Definición |
 |---|---|
-| **Arrow function** | Sintaxis corta para funciones. `x => x * 2` equivale a `function(x) { return x * 2 }`. Útil para pasar funciones como argumento. |
+| **Arrow function** | Sintaxis corta para funciones. `valor => valor * 2` equivale a `function(valor) { return valor * 2 }`. Útil para pasar funciones como argumento. |
 | **Función pura** | Misma entrada → misma salida. **No** modifica nada fuera de sí misma. No usa `console.log`, no muta arrays externos. |
 | **Inmutabilidad** | No modificar el array original. Los métodos funcionales devuelven **arrays nuevos**. |
 | **`.map(fn)`** | Transforma cada elemento → nuevo array del mismo tamaño. |
@@ -25,7 +25,7 @@ En esta clase **refactorizas el proyecto C05** usando programación funcional. E
 | **`.some(fn)`** | Retorna `true` si **al menos un** elemento cumple la condición. Devuelve booleano. |
 | **`.reduce(fn, inicial)`** | Acumula los elementos en un solo valor (suma, máximo, promedio...). |
 | **`.forEach(fn)`** | Ejecuta una acción por cada elemento. No retorna nada — solo efecto. |
-| **`.sort(fn)`** | Ordena el array según el comparador `(a, b) => a - b`. ⚠️ **Muta** el array original. |
+| **`.sort(fn)`** | Ordena el array según el comparador `(valorA, valorB) => valorA - valorB`. ⚠️ **Muta** el array original. |
 
 ## ⚙️ Setup Inicial
 
@@ -71,20 +71,20 @@ Mira la equivalencia:
 
 ```javascript
 // Forma "function" (la que conoces de C05 y Code 101)
-function duplicar(x) {
-  return x * 2;
+function duplicar(valor) {
+  return valor * 2;
 }
 
 // Forma "arrow function" (equivalente)
-const duplicar = (x) => {
-  return x * 2;
+const duplicar = (valor) => {
+  return valor * 2;
 };
 
 // Versión COMPACTA: si el cuerpo es 1 sola expresión, omites { return ... }
-const duplicar = (x) => x * 2;
+const duplicar = (valor) => valor * 2;
 
 // Si hay 1 solo parámetro, omites los paréntesis
-const duplicar = x => x * 2;
+const duplicar = valor => valor * 2;
 ```
 
 **Reglas de simplificación:**
@@ -92,14 +92,14 @@ const duplicar = x => x * 2;
 | Caso | Sintaxis |
 |---|---|
 | 0 parámetros | `() => ...` |
-| 1 parámetro | `x => ...` (sin paréntesis) |
-| 2+ parámetros | `(a, b) => ...` (con paréntesis) |
+| 1 parámetro | `valor => ...` (sin paréntesis) |
+| 2+ parámetros | `(valorA, valorB) => ...` (con paréntesis) |
 | Cuerpo de 1 expresión | omite `{}` y `return` |
 | Cuerpo de varias líneas | `{ ...; return X; }` |
 
 ### 0.2 ¿Cuándo se usa arrow vs `function`?
 
-- **Arrow** → cuando la pasas como **argumento** a otra función (es el 90% de su uso). Ej: `valores.map(v => v * 2)`.
+- **Arrow** → cuando la pasas como **argumento** a otra función (es el 90% de su uso). Ej: `valores.map(valor => valor * 2)`.
 - **`function`** → cuando declaras una función con nombre que vas a llamar varias veces.
 
 > 💡 Hoy todas las funciones que paso a `.map`, `.filter`, etc. serán arrow.
@@ -112,14 +112,14 @@ Una función es **pura** si:
 
 ```javascript
 // PURA
-const cuadrado = x => x * x;
+const cuadrado = valor => valor * valor;
 
 // IMPURA: lee variable externa
 let factor = 10;
-const multiplicar = x => x * factor;   // depende de `factor`
+const multiplicar = valor => valor * factor;   // depende de `factor`
 
 // IMPURA: produce efecto
-const imprimir = x => console.log(x);   // efecto = imprimir
+const imprimir = valor => console.log(valor);   // efecto = imprimir
 ```
 
 > 💡 Las funciones puras son fáciles de testear (no dependen de nada externo) y fáciles de razonar (siempre comportan igual).
@@ -138,7 +138,7 @@ const imprimir = x => console.log(x);   // efecto = imprimir
 const valores = [3000, -45.50, 500, -30];
 
 // Convertir todos los valores a dólares (tipo de cambio: 4 soles = 1 dólar)
-const enDolares = valores.map(v => v / 4);
+const enDolares = valores.map(valor => valor / 4);
 console.log(enDolares);   // [750, -11.375, 125, -7.5]
 
 // El array original NO se mutó
@@ -154,15 +154,15 @@ console.log(valores);   // [3000, -45.50, 500, -30]
 
 ```javascript
 // Solo ingresos (positivos)
-const ingresos = valores.filter(v => v > 0);
+const ingresos = valores.filter(valor => valor > 0);
 console.log(ingresos);   // [3000, 500]
 
 // Solo gastos (negativos)
-const gastos = valores.filter(v => v < 0);
+const gastos = valores.filter(valor => valor < 0);
 console.log(gastos);     // [-45.50, -30]
 
 // Gastos grandes (mayor a 40 en valor absoluto)
-const grandes = gastos.filter(g => g < -40);
+const grandes = gastos.filter(gasto => gasto < -40);
 console.log(grandes);    // [-45.50]
 ```
 
@@ -174,11 +174,11 @@ console.log(grandes);    // [-45.50]
 
 ```javascript
 // Primer gasto (no array — el VALOR directo)
-const primerGasto = valores.find(v => v < 0);
+const primerGasto = valores.find(valor => valor < 0);
 console.log(primerGasto);   // -45.50
 
 // Si no encuentra nada → undefined
-const ingresoGigante = valores.find(v => v > 100000);
+const ingresoGigante = valores.find(valor => valor > 100000);
 console.log(ingresoGigante); // undefined
 ```
 
@@ -192,15 +192,15 @@ A veces no quieres el elemento ni la lista — solo saber **si hay alguno** que 
 
 ```javascript
 // ¿Hay al menos un gasto?
-const hayGastos = valores.some(v => v < 0);
+const hayGastos = valores.some(valor => valor < 0);
 console.log(hayGastos);   // true
 
 // ¿Algún movimiento supera los $1000?
-const hayMontoGrande = valores.some(v => Math.abs(v) > 1000);
+const hayMontoGrande = valores.some(valor => Math.abs(valor) > 1000);
 console.log(hayMontoGrande);   // true (3000)
 
 // ¿Algún ingreso enorme?
-const hayMillonario = valores.some(v => v > 100000);
+const hayMillonario = valores.some(valor => valor > 100000);
 console.log(hayMillonario);   // false
 ```
 
@@ -215,17 +215,17 @@ console.log(hayMillonario);   // false
 En `functional-utils.js` crea estas funciones puras:
 
 ```javascript
-const obtenerIngresos = valores => valores.filter(v => v > 0);
+const obtenerIngresos = valores => valores.filter(valor => valor > 0);
 
-const obtenerGastos = valores => valores.filter(v => v < 0);
+const obtenerGastos = valores => valores.filter(valor => valor < 0);
 
-const montosAbsolutos = valores => valores.map(v => Math.abs(v));
+const montosAbsolutos = valores => valores.map(valor => Math.abs(valor));
 
 const buscarPrimerGastoMayor = (valores, monto) =>
-  valores.find(v => v < -monto);
+  valores.find(valor => valor < -monto);
 
 const tieneGastoMayorQue = (valores, monto) =>
-  valores.some(v => v < -monto);
+  valores.some(valor => valor < -monto);
 ```
 
 Y prueba en `app.js`:
@@ -264,22 +264,22 @@ En C06 es **una línea**:
 
 ```javascript
 // C06 — funcional
-const saldo = valores.reduce((acc, v) => acc + v, 0);
+const saldo = valores.reduce((acumulador, valor) => acumulador + valor, 0);
 ```
 
 **Disección de `.reduce`:**
 
 ```javascript
-valores.reduce((acumulador, valorActual) => nuevoAcumulador, valorInicial)
+valores.reduce((acumulador, valor) => nuevoAcumulador, valorInicial)
 ```
 
 - **`acumulador`** → el resultado parcial que se va construyendo.
-- **`valorActual`** → el elemento que se procesa en cada vuelta.
+- **`valor`** → el elemento que se procesa en cada vuelta.
 - **`valorInicial`** → con qué arranca el acumulador (aquí `0`).
 
 Paso a paso para `[3000, -45.50, 500]` con inicial `0`:
 
-| Vuelta | `acc` | `v` | Nuevo `acc` |
+| Vuelta | `acumulador` | `valor` | Nuevo `acumulador` |
 |---|---|---|---|
 | 1 | 0 | 3000 | 3000 |
 | 2 | 3000 | -45.50 | 2954.50 |
@@ -293,16 +293,16 @@ Resultado final: `3454.50`.
 
 ```javascript
 const calcularSaldo = valores =>
-  valores.reduce((acc, v) => acc + v, 0);
+  valores.reduce((acumulador, valor) => acumulador + valor, 0);
 
 const totalIngresos = valores =>
-  obtenerIngresos(valores).reduce((acc, v) => acc + v, 0);
+  obtenerIngresos(valores).reduce((acumulador, valor) => acumulador + valor, 0);
 
 const totalGastos = valores =>
-  obtenerGastos(valores).reduce((acc, v) => acc + v, 0);
+  obtenerGastos(valores).reduce((acumulador, valor) => acumulador + valor, 0);
 
 const valorMaximo = valores =>
-  valores.reduce((max, v) => v > max ? v : max, valores[0]);
+  valores.reduce((maximo, valor) => valor > maximo ? valor : maximo, valores[0]);
 ```
 
 > 💡 **Composición**: `totalIngresos` usa `obtenerIngresos` y le aplica `.reduce`. Funciones pequeñas combinadas → funciones grandes. **Eso es composición.**
@@ -312,8 +312,8 @@ const valorMaximo = valores =>
 Cuando solo quieres **hacer algo con cada elemento** (imprimir, registrar) sin transformar el array, usas `.forEach`:
 
 ```javascript
-valores.forEach((v, i) => {
-  console.log(`Movimiento ${i + 1}: ${v}`);
+valores.forEach((valor, indice) => {
+  console.log(`Movimiento ${indice + 1}: ${valor}`);
 });
 ```
 
@@ -339,9 +339,9 @@ const imprimirReporte = (nombres, valores) => {
   console.log('--- Resumen Final ---');
   console.log('Total movimientos:', valores.length);
 
-  valores.forEach((v, i) => {
-    const tipo = v > 0 ? 'ingreso' : 'gasto';
-    console.log(`  ${i + 1}. ${nombres[i]} (${tipo}): $${Math.abs(v).toFixed(2)}`);
+  valores.forEach((valor, indice) => {
+    const tipo = valor > 0 ? 'ingreso' : 'gasto';
+    console.log(`  ${indice + 1}. ${nombres[indice]} (${tipo}): $${Math.abs(valor).toFixed(2)}`);
   });
 
   const reporte = generarReporte(valores);
@@ -373,7 +373,7 @@ Caso real: "¿Cuál es el promedio de mis ingresos?"
 const promedioIngresos = valores => {
   const ingresos = obtenerIngresos(valores);
   if (ingresos.length === 0) return 0;
-  return ingresos.reduce((acc, v) => acc + v, 0) / ingresos.length;
+  return ingresos.reduce((acumulador, valor) => acumulador + valor, 0) / ingresos.length;
 };
 ```
 
@@ -393,51 +393,43 @@ const promedioIngresos = valores => {
 
 ### 3.3 `.sort()` — ordenar el array
 
-`.sort()` ordena los elementos. Para números **siempre** le pasas un **comparador** `(a, b)`:
+`.sort()` ordena los elementos. Para números **siempre** le pasas un **comparador** `(valorA, valorB)`:
 
 ```javascript
-const nums = [3000, -45.50, 500, -30];
+const numeros = [3000, -45.50, 500, -30];
 
 // Ascendente (menor a mayor)
-nums.sort((a, b) => a - b);   // [-45.50, -30, 500, 3000]
+numeros.sort((valorA, valorB) => valorA - valorB);   // [-45.50, -30, 500, 3000]
 
 // Descendente (mayor a menor)
-nums.sort((a, b) => b - a);   // [3000, 500, -30, -45.50]
+numeros.sort((valorA, valorB) => valorB - valorA);   // [3000, 500, -30, -45.50]
 ```
 
 **Regla del comparador:**
-- `a - b` → **ascendente** (de menor a mayor).
-- `b - a` → **descendente** (de mayor a menor).
+- `valorA - valorB` → **ascendente** (de menor a mayor).
+- `valorB - valorA` → **descendente** (de mayor a menor).
 
 > ⚠️ **`.sort()` MUTA el array original** — rompe la inmutabilidad que vimos en P0. A diferencia de `.map`/`.filter`, NO devuelve una copia: reordena el array sobre el que lo llamas.
 
 ```javascript
 const original = [3, 1, 2];
-original.sort((a, b) => a - b);
+original.sort((valorA, valorB) => valorA - valorB);
 console.log(original);   // [1, 2, 3] — ¡cambió!
 ```
 
-Para ordenar **sin mutar**, primero copias con el spread `[...]`:
+> 💡 Sin comparador, `.sort()` ordena como **texto**: `[10, 2, 1].sort()` da `[1, 10, 2]` (porque `"10" < "2"`). Por eso para números SIEMPRE usa `(valorA, valorB) => valorA - valorB`.
 
-```javascript
-const ordenado = [...valores].sort((a, b) => b - a);
-console.log(valores);   // intacto
-console.log(ordenado);  // copia ordenada
-```
-
-> 💡 Sin comparador, `.sort()` ordena como **texto**: `[10, 2, 1].sort()` da `[1, 10, 2]` (porque `"10" < "2"`). Por eso para números SIEMPRE usa `(a, b) => a - b`.
-
-### 3.4 `topGastos(valores, n)` — los N gastos más grandes
+### 3.4 `topGastos(valores, cantidad)` — los N gastos más grandes
 
 Combinamos lo aprendido en una función pura: filtra gastos, quita el signo, ordena de mayor a menor y toma los primeros `n`:
 
 ```javascript
-const topGastos = (valores, n) =>
+const topGastos = (valores, cantidad) =>
   [...valores]
-    .filter(v => v < 0)
-    .map(v => Math.abs(v))
-    .sort((a, b) => b - a)
-    .slice(0, n);
+    .filter(valor => valor < 0)
+    .map(valor => Math.abs(valor))
+    .sort((valorA, valorB) => valorB - valorA)
+    .slice(0, cantidad);
 ```
 
 Pruébalo en `app.js`:
@@ -454,17 +446,17 @@ Mira de nuevo `topGastos` — eso ES **method chaining**: el resultado de un mé
 
 ```javascript
 [...valores]
-  .filter(v => v < 0)    // solo gastos
-  .map(v => Math.abs(v)) // quita el signo
-  .sort((a, b) => b - a) // ordena de mayor a menor
-  .slice(0, n);          // toma los primeros n
+  .filter(valor => valor < 0)                // solo gastos
+  .map(valor => Math.abs(valor))             // quita el signo
+  .sort((valorA, valorB) => valorB - valorA) // ordena de mayor a menor
+  .slice(0, cantidad);                       // toma los primeros (cantidad)
 ```
 
 Sin chaining serían 4 variables intermedias. Ahora, si quieres la **suma** de esos top N en vez de la lista, reusa `topGastos` (DRY) y encadenas un `.reduce`:
 
 ```javascript
-const sumaTopGastos = (valores, n) =>
-  topGastos(valores, n).reduce((acc, v) => acc + v, 0);
+const sumaTopGastos = (valores, cantidad) =>
+  topGastos(valores, cantidad).reduce((acumulador, valor) => acumulador + valor, 0);
 
 console.log('Suma top 2 gastos:', sumaTopGastos(valores, 2));   // 75.5
 ```

@@ -4,7 +4,7 @@
 
 ## Resumen
 
-En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `for` clásico que escribiste para calcular el saldo va a **desaparecer** — vas a sustituirlo por métodos funcionales sobre arrays: `.map()`, `.filter()`, `.find()`, `.reduce()` y `.forEach()`. Antes de tocar esos métodos, aprendes la sintaxis nueva que vas a ver en TODO código JS moderno: las **arrow functions** (`x => x * 2`). Comprendes qué es una **función pura** y por qué son fáciles de testear y razonar. El modelo de datos sigue siendo los **2 arrays paralelos** de C05 — los métodos funcionales operan sobre `valores[]` (array de números puros), ideal para demos limpias del paradigma.
+En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `for` clásico que escribiste para calcular el saldo va a **desaparecer** — vas a sustituirlo por métodos funcionales sobre arrays: `.map()`, `.filter()`, `.find()`, `.some()`, `.reduce()` y `.forEach()`, y aprenderás a ordenar con `.sort()`. Antes de tocar esos métodos, aprendes la sintaxis nueva que vas a ver en TODO código JS moderno: las **arrow functions** (`valor => valor * 2`). Comprendes qué es una **función pura** y por qué son fáciles de testear y razonar. El modelo de datos sigue siendo los **2 arrays paralelos** de C05 — los métodos funcionales operan sobre `valores[]` (array de números puros), ideal para demos limpias del paradigma.
 
 ## Estructura sugerida
 
@@ -34,7 +34,7 @@ Al finalizar esta clase, serás capaz de:
 #### 🔍 Misión de Investigación
 
 **1. Arrow functions:**
-- Investiga: ¿Cómo se escribe `function suma(a, b) { return a + b }` como arrow function?
+- Investiga: ¿Cómo se escribe `function suma(valorA, valorB) { return valorA + valorB }` como arrow function?
 - Encuentra: 3 ejemplos donde arrow function es más legible que `function`.
 - Prepárate para explicar: ¿Cuándo arrow function NO es buena idea?
 
@@ -69,7 +69,7 @@ Al finalizar esta clase, serás capaz de:
 
 ## Glosario de Nuevos Términos
 
-* **Arrow function**: Sintaxis corta para funciones. `x => x * 2` equivale a `function(x) { return x * 2 }`.
+* **Arrow function**: Sintaxis corta para funciones. `valor => valor * 2` equivale a `function(valor) { return valor * 2 }`.
 * **Función pura**: Función que (1) misma entrada → misma salida, y (2) no produce efectos secundarios.
 * **Efecto secundario**: Cualquier acción de una función fuera de su retorno — `console.log`, mutar variable externa, hacer fetch, etc.
 * **Inmutabilidad**: Principio de no modificar datos existentes; crear nuevas versiones transformadas.
@@ -79,6 +79,6 @@ Al finalizar esta clase, serás capaz de:
 * **`.some(fn)`**: Retorna `true` si al menos un elemento cumple la condición. Devuelve booleano.
 * **`.reduce(fn, inicial)`**: Acumula todos los elementos en un solo valor (suma, máximo, agrupación, etc.).
 * **`.forEach(fn)`**: Ejecuta una acción por cada elemento. No retorna nada — solo efecto.
-* **`.sort(fn)`**: Ordena el array según el comparador `(a, b) => a - b`. Muta el array original (copiar con `[...arr]` para evitarlo).
+* **`.sort(fn)`**: Ordena el array según el comparador `(valorA, valorB) => valorA - valorB`. Muta el array original (copiar con `[...arr]` para evitarlo).
 * **Composición de funciones**: Combinar funciones pequeñas para resolver problemas grandes.
 * **Principio DRY** (Don't Repeat Yourself): Evitar repetir código; reusar funciones existentes.

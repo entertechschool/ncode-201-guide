@@ -178,11 +178,11 @@
 ];
 
 <span class="tag-blue">// filter() → array con TODOS los que cumplen</span>
-<span class="tag-muted">const</span> ingresos = movs.<span class="tag-blue">filter</span>(m => m.tipo === "ingreso");
+<span class="tag-muted">const</span> ingresos = movs.<span class="tag-blue">filter</span>(movimiento => movimiento.tipo === "ingreso");
 <span class="tag-muted">// → [{ Salario… }, { Freelance… }]</span>
 
 <span class="tag-blue">// find() → el PRIMER elemento que cumple (o undefined)</span>
-<span class="tag-muted">const</span> salario  = movs.<span class="tag-blue">find</span>(m => m.nombre === "Salario");
+<span class="tag-muted">const</span> salario  = movs.<span class="tag-blue">find</span>(movimiento => movimiento.nombre === "Salario");
 <span class="tag-muted">// → { nombre:"Salario", tipo:"ingreso", valor:3000 }</span></code></pre>
       <table class="method-table">
         <tr>
@@ -212,7 +212,7 @@
 }
 
 <span class="tag-orange">// FUNCIONAL — describe el resultado deseado</span>
-<span class="tag-muted">const</span> ingresos = movs.filter(m => m.tipo === "ingreso");</code></pre>
+<span class="tag-muted">const</span> ingresos = movs.filter(movimiento => movimiento.tipo === "ingreso");</code></pre>
     </div>
 
   </section>

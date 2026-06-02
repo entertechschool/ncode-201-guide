@@ -6,11 +6,11 @@
 
 ## 🔑 Conceptos Clave
 
-- **Arrow function** (sintaxis NUEVA): `x => x * 2` equivale a `function(x) { return x * 2 }`. Es la sintaxis dominante en JS moderno (React, Node, librerías). Hoy se introduce formalmente.
+- **Arrow function** (sintaxis NUEVA): `valor => valor * 2` equivale a `function(valor) { return valor * 2 }`. Es la sintaxis dominante en JS moderno (React, Node, librerías). Hoy se introduce formalmente.
 - **Función pura**: misma entrada → misma salida + sin efectos secundarios. Es la base mental del paradigma.
 - **Métodos funcionales de Array**: `.map`, `.filter`, `.find`, `.some`, `.reduce`, `.forEach`. Reemplazan el `for` clásico de C05.
 - **`.some()`** (NUEVO): devuelve booleano — "¿hay al menos uno que cumple?". Primo de `.find` pero responde sí/no en vez de dar el elemento.
-- **`.sort()`** (NUEVO): ordena con comparador `(a, b) => a - b`. ⚠️ La excepción que **SÍ muta** — contrasta con `.map`/`.filter`. Se enseña junto a `topGastos` y la copia `[...arr]` para no mutar.
+- **`.sort()`** (NUEVO): ordena con comparador `(valorA, valorB) => valorA - valorB`. ⚠️ La excepción que **SÍ muta** — contrasta con `.map`/`.filter`. Se enseña junto a `topGastos` y la copia `[...arr]` para no mutar.
 - **Inmutabilidad**: los métodos funcionales NO mutan el array original — devuelven uno nuevo. `.sort` es la excepción que confirma la regla. Concepto crítico para React y arquitecturas modernas.
 - **Composición + DRY**: funciones pequeñas + reusarlas en vez de copy-paste.
 
@@ -43,7 +43,7 @@ React, Vue, Node moderno, librerías como Lodash, RxJS — todas usan arrow func
 
 ### Por qué arrancamos con arrays de números (no objetos)
 
-C06 funcional brilla con **arrays homogéneos** (todos números, todos strings). Los métodos se ven en su forma más pura — `valores.filter(v => v > 0)` es elegante porque `v` es un número simple. Cuando llegues a objetos en C07, los métodos funcionales seguirán funcionando pero con `.filter(m => m.tipo === 'ingreso')` — un nivel más. Hoy: forma pura. Mañana: aplicada a objetos.
+C06 funcional brilla con **arrays homogéneos** (todos números, todos strings). Los métodos se ven en su forma más pura — `valores.filter(valor => valor > 0)` es elegante porque `valor` es un número simple. Cuando llegues a objetos en C07, los métodos funcionales seguirán funcionando pero con `.filter(movimiento => movimiento.tipo === 'ingreso')` — un nivel más. Hoy: forma pura. Mañana: aplicada a objetos.
 
 ### `reduce` es el más difícil
 
@@ -78,7 +78,7 @@ for (let i = 0; i < valores.length; i++) {
 }
 
 // C06
-const saldo = valores.reduce((acc, v) => acc + v, 0);
+const saldo = valores.reduce((acumulador, valor) => acumulador + valor, 0);
 ```
 
 **Script sugerido:**
@@ -96,17 +96,17 @@ Eso es declarativo. Y eso es lo que React hizo popular."
 **5 min en pizarra**, paso por paso:
 
 ```
-function duplicar(x) {        Paso 1: la forma clásica
-  return x * 2;
+function duplicar(valor) {             Paso 1: la forma clásica
+  return valor * 2;
 }
 
-const duplicar = (x) => {     Paso 2: agrega const, cambia function por =>
-  return x * 2;
+const duplicar = (valor) => {          Paso 2: agrega const, cambia function por =>
+  return valor * 2;
 };
 
-const duplicar = (x) => x * 2; Paso 3: 1 expresión, omite { return }
+const duplicar = (valor) => valor * 2; Paso 3: 1 expresión, omite { return }
 
-const duplicar = x => x * 2;   Paso 4: 1 param, omite paréntesis
+const duplicar = valor => valor * 2;   Paso 4: 1 param, omite paréntesis
 ```
 
 > Hacer la transformación EN ORDEN ayuda más que mostrar la forma final de golpe.
@@ -130,13 +130,13 @@ Después de P0.1, pasas 3 funciones `function` en pizarra y los alumnos las escr
 
 ```javascript
 // 1)
-function esPar(n) {
-  return n % 2 === 0;
+function esPar(valor) {
+  return valor % 2 === 0;
 }
 
 // 2)
-function mayor(a, b) {
-  return a > b ? a : b;
+function mayor(valorA, valorB) {
+  return valorA > valorB ? valorA : valorB;
 }
 
 // 3)
@@ -147,8 +147,8 @@ function saludar() {
 
 **Soluciones:**
 ```javascript
-const esPar = n => n % 2 === 0;
-const mayor = (a, b) => a > b ? a : b;
+const esPar = valor => valor % 2 === 0;
+const mayor = (valorA, valorB) => valorA > valorB ? valorA : valorB;
 const saludar = () => console.log('Hola!');
 ```
 
@@ -159,11 +159,11 @@ const saludar = () => console.log('Hola!');
 Después de P0.3, presenta 4 funciones y deben decidir:
 
 ```javascript
-const cuadrado = x => x * x;                              // PURA
+const cuadrado = valor => valor * valor;                  // PURA
 let contador = 0;
 const incrementar = () => contador++;                     // IMPURA (muta externo)
 const log = msg => console.log(msg);                      // IMPURA (efecto)
-const formatear = v => `$${v.toFixed(2)}`;                // PURA
+const formatear = valor => `$${valor.toFixed(2)}`;        // PURA
 ```
 
 Discusión: ¿`console.log` cuenta como impuro? Sí — es un efecto observable fuera de la función.
@@ -172,7 +172,7 @@ Discusión: ¿`console.log` cuenta como impuro? Sí — es un efecto observable 
 
 Antes de P2.1, dibuja la tabla en pizarra y van llenándola juntos:
 
-| Vuelta | acc | v | nuevo acc |
+| Vuelta | acumulador | valor | nuevo acumulador |
 |---|---|---|---|
 | 1 | 0 | 3000 | ? |
 | 2 | ? | -45.50 | ? |
@@ -190,7 +190,7 @@ Los alumnos completan. Cuando llegan al final → "ese es tu saldo". El "click" 
 
 ```javascript
 // Arrow: ideal como argumento (anónima, corta)
-valores.map(v => v * 2);
+valores.map(valor => valor * 2);
 
 // function: ideal para funciones nombradas reutilizables con varias líneas
 function calcularInteres(monto, tasa, anios) {
@@ -207,7 +207,7 @@ function calcularInteres(monto, tasa, anios) {
 
 ```javascript
 const valores = [3000, -45.50, 500];
-const ingresos = valores.filter(v => v > 0);
+const ingresos = valores.filter(valor => valor > 0);
 
 console.log(valores);   // [3000, -45.50, 500] — INTACTO
 console.log(ingresos);  // [3000, 500] — NUEVO
@@ -221,10 +221,10 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 
 ```javascript
 // CORRECTO
-[].reduce((acc, v) => acc + v, 0)   // 0 (gracias al inicial)
+[].reduce((acumulador, valor) => acumulador + valor, 0)   // 0 (gracias al inicial)
 
 // INCORRECTO — reduce sin inicial sobre array vacío
-[].reduce((acc, v) => acc + v)      // TypeError
+[].reduce((acumulador, valor) => acumulador + valor)      // TypeError
 ```
 
 **Tip:** "Siempre pon el valor inicial. Es la garantía de que reduce no falle con arrays vacíos."
@@ -237,11 +237,11 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 |---|---|---|
 | `valores.map(...)` no cambia `valores` | El alumno esperaba mutación | Recordar: map devuelve array NUEVO. Si quieres reemplazar: `valores = valores.map(...)` |
 | `reduce` retorna `NaN` | Olvidó el valor inicial sobre números | Agregar `, 0` al final del reduce |
-| Arrow con `{}` no retorna nada | Confusión entre cuerpo expresión y cuerpo bloque | `x => { x * 2 }` ejecuta pero no retorna. Usar `x => x * 2` o `x => { return x * 2 }` |
+| Arrow con `{}` no retorna nada | Confusión entre cuerpo expresión y cuerpo bloque | `valor => { valor * 2 }` ejecuta pero no retorna. Usar `valor => valor * 2` o `valor => { return valor * 2 }` |
 | `find` devuelve `undefined` | El array no tiene elementos que cumplen | Validar `if (resultado !== undefined)` antes de usar |
 | `valores` cambió de orden "solo" | Llamó `valores.sort()` directo — sort MUTA | Ordenar sobre copia: `[...valores].sort(...)`. Es la excepción a la inmutabilidad. |
-| `[10, 2, 1].sort()` da `[1, 10, 2]` | Sort sin comparador ordena como texto | Para números SIEMPRE pasar `(a, b) => a - b` |
-| `topGastos` devuelve gastos negativos | Olvidó el `.map(v => Math.abs(v))` antes del sort | Quitar el signo antes de ordenar y cortar |
+| `[10, 2, 1].sort()` da `[1, 10, 2]` | Sort sin comparador ordena como texto | Para números SIEMPRE pasar `(valorA, valorB) => valorA - valorB` |
+| `topGastos` devuelve gastos negativos | Olvidó el `.map(valor => Math.abs(valor))` antes del sort | Quitar el signo antes de ordenar y cortar |
 | `SyntaxError: Identifier 'calcularSaldo' has already been declared` | Dejó `function calcularSaldo()` en `app.js` (de C05) Y `const calcularSaldo` en `functional-utils.js` | Borrar `calcularSaldo` y `mostrarResumen` de `app.js`: ahora viven en `functional-utils.js` / `imprimirReporte` (ver P3.6) |
 | Los `console.log` de P1–P2 imprimen `[]` o `undefined` | `valores` está vacío (flujo de prompt aún no corre) | Para probar, hardcodear `let valores = [3000, -45.50, 500, -30]` en `app.js`; reconectar prompt en P3.6 |
 | Mezcla `forEach` con `map` | "Quería transformar pero forEach no retorna" | Si transforma → `.map`. Si solo ejecuta → `.forEach` |
@@ -254,12 +254,12 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 
 ### El estudiante ENTIENDE cuando:
 - Convierte una `function` a arrow function correctamente (paréntesis donde corresponde).
-- Predice qué retorna `valores.filter(v => v > 1000)` sin ejecutar.
+- Predice qué retorna `valores.filter(valor => valor > 1000)` sin ejecutar.
 - Explica por qué `reduce` necesita un valor inicial.
 - Identifica `.map` vs `.forEach` según si "quiere transformar" o "solo ejecutar".
 
 ### El estudiante NECESITA AYUDA cuando:
-- Escribe `x => { x * 2 }` esperando que retorne (olvida `return` en cuerpo bloque).
+- Escribe `valor => { valor * 2 }` esperando que retorne (olvida `return` en cuerpo bloque).
 - Usa `.forEach` para transformar y luego se queja de que el array no cambia.
 - Mezcla arrow con `function this` (no aplica hoy pero puede confundir).
 - No conecta que filter + reduce puede reemplazar un for con if dentro.
@@ -280,7 +280,7 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 ## 🧑‍🏫 Tips de Facilitación
 
 ### Si el grupo está callado:
-- "¿Quién puede explicar por qué `valores.map(v => v * 2)` no muta `valores`?" — fuerza articular inmutabilidad.
+- "¿Quién puede explicar por qué `valores.map(valor => valor * 2)` no muta `valores`?" — fuerza articular inmutabilidad.
 
 ### Si alguien ya conocía arrow functions:
 - Pídele que explique al grupo el caso de "arrow vs function con `this`" (preview de C07).

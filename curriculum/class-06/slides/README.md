@@ -26,7 +26,7 @@ for (let i = 0; i < valores.length; i++) {
 Hoy lo reemplazamos por:
 
 ```javascript
-const saldo = valores.reduce((acc, v) => acc + v, 0);
+const saldo = valores.reduce((acumulador, valor) => acumulador + valor, 0);
 ```
 
 > Una línea. Misma lógica. Pero hay 2 conceptos nuevos: arrow + reduce.
@@ -37,16 +37,16 @@ const saldo = valores.reduce((acc, v) => acc + v, 0);
 
 ```javascript
 // Forma "function" (la que conoces)
-function duplicar(x) {
-  return x * 2;
+function duplicar(valor) {
+  return valor * 2;
 }
 
 // Forma arrow function (equivalente)
-const duplicar = x => x * 2;
+const duplicar = valor => valor * 2;
 ```
 
 * Sin `function`, sin `{}`, sin `return`.
-* `x => x * 2` = "recibe x, devuelve x * 2".
+* `valor => valor * 2` = "recibe valor, devuelve valor * 2".
 
 > Se usa MUCHO como argumento de otros métodos.
 
@@ -57,15 +57,15 @@ const duplicar = x => x * 2;
 | Caso | Sintaxis |
 |---|---|
 | 0 parámetros | `() => ...` |
-| 1 parámetro | `x => ...` (sin paréntesis) |
-| 2+ parámetros | `(a, b) => ...` |
+| 1 parámetro | `valor => ...` (sin paréntesis) |
+| 2+ parámetros | `(valorA, valorB) => ...` |
 | Cuerpo 1 expresión | omite `{}` y `return` |
 | Cuerpo multilínea | `{ ...; return X; }` |
 
 ```javascript
-const sumar = (a, b) => a + b;
+const sumar = (valorA, valorB) => valorA + valorB;
 const saludar = () => console.log('Hola');
-const formatear = v => `$${v.toFixed(2)}`;
+const formatear = valor => `$${valor.toFixed(2)}`;
 ```
 
 ---
@@ -78,11 +78,11 @@ Una función es **pura** si:
 
 ```javascript
 // PURA
-const cuadrado = x => x * x;
+const cuadrado = valor => valor * valor;
 
 // IMPURA — depende de variable externa
 let factor = 10;
-const escalar = x => x * factor;
+const escalar = valor => valor * factor;
 ```
 
 > Las puras son fáciles de testear: no dependen de nada externo.
@@ -94,7 +94,7 @@ const escalar = x => x * factor;
 ```javascript
 const valores = [3000, -45.50, 500, -30];
 
-const enDolares = valores.map(v => v / 4);
+const enDolares = valores.map(valor => valor / 4);
 // [750, -11.375, 125, -7.5]
 
 // El array original NO se mutó:
@@ -109,10 +109,10 @@ console.log(valores); // [3000, -45.50, 500, -30]
 ## 🔍 `.filter()` — Filtrar
 
 ```javascript
-const ingresos = valores.filter(v => v > 0);
+const ingresos = valores.filter(valor => valor > 0);
 // [3000, 500]
 
-const gastos = valores.filter(v => v < 0);
+const gastos = valores.filter(valor => valor < 0);
 // [-45.50, -30]
 ```
 
@@ -124,10 +124,10 @@ const gastos = valores.filter(v => v < 0);
 ## 🎯 `.find()` — Buscar el primero
 
 ```javascript
-const primerGasto = valores.find(v => v < 0);
+const primerGasto = valores.find(valor => valor < 0);
 // -45.50 (NO array — el valor directo)
 
-const enorme = valores.find(v => v > 100000);
+const enorme = valores.find(valor => valor > 100000);
 // undefined (no encontró)
 ```
 
@@ -139,10 +139,10 @@ const enorme = valores.find(v => v > 100000);
 ## ❓ `.some()` — ¿existe al menos uno?
 
 ```javascript
-const hayGastos = valores.some(v => v < 0);
+const hayGastos = valores.some(valor => valor < 0);
 // true
 
-const hayMillonario = valores.some(v => v > 100000);
+const hayMillonario = valores.some(valor => valor > 100000);
 // false
 ```
 
@@ -156,10 +156,10 @@ const hayMillonario = valores.some(v => v > 100000);
 ## 🔥 `.reduce()` — El más poderoso
 
 ```javascript
-const saldo = valores.reduce((acc, v) => acc + v, 0);
+const saldo = valores.reduce((acumulador, valor) => acumulador + valor, 0);
 ```
 
-| Vuelta | acc | v | nuevo acc |
+| Vuelta | acumulador | valor | nuevo acumulador |
 |---|---|---|---|
 | 1 | 0 | 3000 | 3000 |
 | 2 | 3000 | -45.50 | 2954.50 |
@@ -173,8 +173,8 @@ const saldo = valores.reduce((acc, v) => acc + v, 0);
 ## 🔁 `.forEach()` — Efecto sin retorno
 
 ```javascript
-valores.forEach((v, i) => {
-  console.log(`Movimiento ${i + 1}: ${v}`);
+valores.forEach((valor, indice) => {
+  console.log(`Movimiento ${indice + 1}: ${valor}`);
 });
 ```
 
@@ -190,14 +190,14 @@ valores.forEach((v, i) => {
 ## 🧬 Composición — funciones pequeñas combinadas
 
 ```javascript
-const obtenerIngresos = v => v.filter(x => x > 0);
+const obtenerIngresos = valores => valores.filter(valor => valor > 0);
 
-const totalIngresos = v =>
-  obtenerIngresos(v).reduce((acc, x) => acc + x, 0);
+const totalIngresos = valores =>
+  obtenerIngresos(valores).reduce((acumulador, valor) => acumulador + valor, 0);
 
-const promedioIngresos = v => {
-  const ing = obtenerIngresos(v);
-  return ing.length === 0 ? 0 : totalIngresos(v) / ing.length;
+const promedioIngresos = valores => {
+  const ingresos = obtenerIngresos(valores);
+  return ingresos.length === 0 ? 0 : totalIngresos(valores) / ingresos.length;
 };
 ```
 
@@ -208,13 +208,13 @@ const promedioIngresos = v => {
 ## ↕️ `.sort()` — Ordenar
 
 ```javascript
-const nums = [3000, -45.50, 500, -30];
+const numeros = [3000, -45.50, 500, -30];
 
-nums.sort((a, b) => a - b);   // ascendente
-nums.sort((a, b) => b - a);   // descendente
+numeros.sort((valorA, valorB) => valorA - valorB);   // ascendente
+numeros.sort((valorA, valorB) => valorB - valorA);   // descendente
 ```
 
-* Comparador: `a - b` sube, `b - a` baja.
+* Comparador: `valorA - valorB` sube, `valorB - valorA` baja.
 * ⚠️ **`.sort()` MUTA** el original (a diferencia de `.map`/`.filter`).
 * Para no mutar: `[...valores].sort(...)`.
 
@@ -225,12 +225,12 @@ nums.sort((a, b) => b - a);   // descendente
 ## 🔗 Method Chaining
 
 ```javascript
-const topGastos = (valores, n) =>
+const topGastos = (valores, cantidad) =>
   [...valores]
-    .filter(v => v < 0)
-    .map(v => Math.abs(v))
-    .sort((a, b) => b - a)
-    .slice(0, n);
+    .filter(valor => valor < 0)
+    .map(valor => Math.abs(valor))
+    .sort((valorA, valorB) => valorB - valorA)
+    .slice(0, cantidad);
 ```
 
 * El resultado de un método es la entrada del siguiente.
@@ -257,7 +257,7 @@ Los métodos funcionales se aplican sobre `valores` (array de números).
 Cuando necesitamos cruzar con `nombres`, lo hacemos manualmente con index:
 
 ```javascript
-valores.forEach((v, i) => console.log(nombres[i], v));
+valores.forEach((valor, indice) => console.log(nombres[indice], valor));
 ```
 
 > En C07 cuando volvamos a `[{ nombre, valor }]`, este awkwardness desaparece.
@@ -288,8 +288,8 @@ let movimientos = [
 ];
 
 // Tus funciones funcionales siguen funcionando:
-movimientos.filter(m => m.tipo === 'ingreso');
-movimientos.find(m => m.nombre === 'Cena');
+movimientos.filter(movimiento => movimiento.tipo === 'ingreso');
+movimientos.find(movimiento => movimiento.nombre === 'Cena');
 ```
 
 ---
