@@ -88,6 +88,7 @@ const duplicar = x => x * 2;
 ```
 
 **Reglas de simplificación:**
+
 | Caso | Sintaxis |
 |---|---|
 | 0 parámetros | `() => ...` |
@@ -471,7 +472,7 @@ console.log('Suma top 2 gastos:', sumaTopGastos(valores, 2));   // 75.5
 > 💡 No reescribas el `filter`/`map`/`sort`: ya vive en `topGastos`. Componer funciones que ya tienes es el corazón del paradigma funcional.
 
 ### 3.6 Conecta al `app.js` final
-
+Ahi
 ```javascript
 // app.js (versión funcional)
 let nombres = [];
