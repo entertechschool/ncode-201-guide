@@ -94,8 +94,8 @@ const escalar = x => x * factor;
 ```javascript
 const valores = [3000, -45.50, 500, -30];
 
-const enSoles = valores.map(v => v * 4);
-// [12000, -182, 2000, -120]
+const enDolares = valores.map(v => v / 4);
+// [750, -11.375, 125, -7.5]
 
 // El array original NO se mutó:
 console.log(valores); // [3000, -45.50, 500, -30]

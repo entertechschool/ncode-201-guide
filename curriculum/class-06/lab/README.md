@@ -137,9 +137,9 @@ const imprimir = x => console.log(x);   // efecto = imprimir
 ```javascript
 const valores = [3000, -45.50, 500, -30];
 
-// Convertir todos los valores a soles (asumiendo dólares × 4)
-const enSoles = valores.map(v => v * 4);
-console.log(enSoles);   // [12000, -182, 2000, -120]
+// Convertir todos los valores a dólares (tipo de cambio: 4 soles = 1 dólar)
+const enDolares = valores.map(v => v / 4);
+console.log(enDolares);   // [750, -11.375, 125, -7.5]
 
 // El array original NO se mutó
 console.log(valores);   // [3000, -45.50, 500, -30]
