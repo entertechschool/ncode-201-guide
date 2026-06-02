@@ -12,7 +12,7 @@ En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `f
 |---|---|---|
 | **1. Introducción y Contexto** | 15 min | Repaso C05 (imperativo + arrays + for) + motivación: ¿qué tal si el `for` fuera UNA línea? |
 | **2. Demo Técnica** | 20 min | Demo en vivo: `function` → arrow function, luego `.map`/`.filter`/`.reduce` sobre array de números. |
-| **3. Laboratorio (4 partes)** | 140 min | P0 Arrow + funciones puras (~15 min) · P1 map/filter/find/some (~35 min) · P2 reduce/forEach (~40 min) · P3 composición + sort + DRY (~50 min). |
+| **3. Laboratorio (4 partes)** | 130 min | P0 Arrow + funciones puras (~15 min) · P1 map/filter/find/some (~35 min) · P2 reduce/forEach (~40 min) · P3 composición + sort (demo) + DRY (~40 min). |
 | **4. Cierre y Síntesis** | 15 min | Discusión: ¿qué funciones puras te resultaron más útiles? + semilla C07. |
 
 ## 🎯 Objetivos de aprendizaje

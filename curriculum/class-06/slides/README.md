@@ -222,23 +222,6 @@ numeros.sort((valorA, valorB) => valorB - valorA);   // descendente
 
 ---
 
-## 🔗 Method Chaining
-
-```javascript
-const topGastos = (valores, cantidad) =>
-  [...valores]
-    .filter(valor => valor < 0)
-    .map(valor => Math.abs(valor))
-    .sort((valorA, valorB) => valorB - valorA)
-    .slice(0, cantidad);
-```
-
-* El resultado de un método es la entrada del siguiente.
-* `[...valores]` mantiene la función **pura** (sort solo muta la copia).
-* Sin chaining serían 4 variables intermedias.
-
----
-
 ## ⚙️ Estructura del Lab
 
 | Parte | Tiempo | Contenido |
@@ -246,7 +229,7 @@ const topGastos = (valores, cantidad) =>
 | **P0** | ~15 min | Arrow functions + funciones puras |
 | **P1** | ~35 min | `.map` · `.filter` · `.find` · `.some` |
 | **P2** | ~40 min | `.reduce` · `.forEach` + reporte |
-| **P3** | ~50 min | Composición + `.sort` + `topGastos` + DRY |
+| **P3** | ~40 min | Composición + `.sort` (demo) + DRY |
 
 ---
 

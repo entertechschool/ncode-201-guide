@@ -2,7 +2,7 @@
 
 En esta clase **refactorizas el proyecto C05** usando programación funcional. El `for` que escribiste en C05 va a **desaparecer** — vas a sustituirlo por `.map()`, `.filter()`, `.find()`, `.some()`, `.reduce()` y `.forEach()`, y ordenarás datos con `.sort()`. Conoces las **arrow functions** (`=>`) — la sintaxis corta que vas a ver en TODO código JS moderno (React, Node, librerías).
 
-> ⏱️ **Checkpoints**: 4 momentos de validación grupal (~15 min, ~50 min, ~90 min, ~140 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación grupal (~15 min, ~50 min, ~90 min, ~130 min).
 
 ## 🎯 Objetivos de Aprendizaje
 
@@ -290,6 +290,7 @@ Resultado final: `3454.50`.
 > 💡 `.reduce` es **el más poderoso** de los métodos funcionales: con él puedes sumar, contar, encontrar máximo, agrupar... Lo demás (`.map`, `.filter`) son casos especiales más legibles.
 
 ### 2.2 Funciones puras con `.reduce`
+En `functional-utils.js`:
 
 ```javascript
 const calcularSaldo = valores =>
@@ -361,9 +362,9 @@ const imprimirReporte = (nombres, valores) => {
 
 ---
 
-## Parte 3 — Composición + `.sort()` + DRY (~50 min)
+## Parte 3 — Composición + `.sort()` + DRY (~40 min)
 
-> **Objetivo:** combinar funciones pequeñas, ordenar arrays con `.sort()` y resolver casos reales (top N) sin repetir código.
+> **Objetivo:** combinar funciones pequeñas, conocer `.sort()` como demostración y reusar funciones (DRY) sin repetir código.
 
 ### 3.1 Composición — funciones pequeñas combinadas
 
@@ -419,52 +420,8 @@ console.log(original);   // [1, 2, 3] — ¡cambió!
 
 > 💡 Sin comparador, `.sort()` ordena como **texto**: `[10, 2, 1].sort()` da `[1, 10, 2]` (porque `"10" < "2"`). Por eso para números SIEMPRE usa `(valorA, valorB) => valorA - valorB`.
 
-### 3.4 `topGastos(valores, cantidad)` — los N gastos más grandes
+### 3.4 Conecta al `app.js` final
 
-Combinamos lo aprendido en una función pura: filtra gastos, quita el signo, ordena de mayor a menor y toma los primeros `n`:
-
-```javascript
-const topGastos = (valores, cantidad) =>
-  [...valores]
-    .filter(valor => valor < 0)
-    .map(valor => Math.abs(valor))
-    .sort((valorA, valorB) => valorB - valorA)
-    .slice(0, cantidad);
-```
-
-Pruébalo en `app.js`:
-
-```javascript
-console.log('Top 2 gastos:', topGastos(valores, 2));   // [45.5, 30]
-```
-
-> 💡 Empezamos con `[...valores]` (copia) para que la función sea **pura**: aunque `.sort()` muta, solo muta la copia, no el array que recibió.
-
-### 3.5 Encadenar métodos: el chaining que ya usaste
-
-Mira de nuevo `topGastos` — eso ES **method chaining**: el resultado de un método es la entrada del siguiente, todo en una sola expresión.
-
-```javascript
-[...valores]
-  .filter(valor => valor < 0)                // solo gastos
-  .map(valor => Math.abs(valor))             // quita el signo
-  .sort((valorA, valorB) => valorB - valorA) // ordena de mayor a menor
-  .slice(0, cantidad);                       // toma los primeros (cantidad)
-```
-
-Sin chaining serían 4 variables intermedias. Ahora, si quieres la **suma** de esos top N en vez de la lista, reusa `topGastos` (DRY) y encadenas un `.reduce`:
-
-```javascript
-const sumaTopGastos = (valores, cantidad) =>
-  topGastos(valores, cantidad).reduce((acumulador, valor) => acumulador + valor, 0);
-
-console.log('Suma top 2 gastos:', sumaTopGastos(valores, 2));   // 75.5
-```
-
-> 💡 No reescribas el `filter`/`map`/`sort`: ya vive en `topGastos`. Componer funciones que ya tienes es el corazón del paradigma funcional.
-
-### 3.6 Conecta al `app.js` final
-Ahi
 ```javascript
 // app.js (versión funcional)
 let nombres = [];
@@ -497,7 +454,7 @@ imprimirReporte(nombres, valores);
 console.log('Promedio de ingresos: $' + promedioIngresos(valores).toFixed(2));
 ```
 
-✅ **Checkpoint 3 (~140 min):** ejecutas el flujo, registras 4 movimientos (2 ingresos, 2 gastos), y el reporte muestra cantidad, ingresos totales, gastos totales, saldo y promedio de ingresos correctos. `topGastos(valores, 2)` devuelve los 2 gastos más grandes sin mutar `valores`. Tu `functional-utils.js` tiene al menos 10 funciones puras.
+✅ **Checkpoint 3 (~130 min):** ejecutas el flujo, registras 4 movimientos (2 ingresos, 2 gastos), y el reporte muestra cantidad, ingresos totales, gastos totales, saldo y promedio de ingresos correctos. Tu `functional-utils.js` tiene al menos 10 funciones puras.
 
 🏆 **Reto autónomo:** crea `validarPresupuesto(valores, limite)` que retorne `true` si el total de gastos NO supera el límite. Pista: compara `Math.abs(totalGastos(valores))` con `limite`.
 
@@ -513,7 +470,7 @@ console.log('Promedio de ingresos: $' + promedioIngresos(valores).toFixed(2));
 
 ## 📝 Instrucciones de Entrega
 
-1. **`functional-utils.js`** con al menos 10 funciones puras (incluyendo `tieneGastoMayorQue` con `.some()` y `topGastos` con `.sort()`).
+1. **`functional-utils.js`** con al menos 10 funciones puras (incluyendo `tieneGastoMayorQue` con `.some()`).
 2. **`app.js`** que use esas funciones para generar el reporte completo.
 3. **Entrega Final:**
    - URL del repositorio en GitHub.

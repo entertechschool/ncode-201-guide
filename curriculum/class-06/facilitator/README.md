@@ -10,7 +10,7 @@
 - **Función pura**: misma entrada → misma salida + sin efectos secundarios. Es la base mental del paradigma.
 - **Métodos funcionales de Array**: `.map`, `.filter`, `.find`, `.some`, `.reduce`, `.forEach`. Reemplazan el `for` clásico de C05.
 - **`.some()`** (NUEVO): devuelve booleano — "¿hay al menos uno que cumple?". Primo de `.find` pero responde sí/no en vez de dar el elemento.
-- **`.sort()`** (NUEVO): ordena con comparador `(valorA, valorB) => valorA - valorB`. ⚠️ La excepción que **SÍ muta** — contrasta con `.map`/`.filter`. Se enseña junto a `topGastos` y la copia `[...arr]` para no mutar.
+- **`.sort()`** (NUEVO): ordena con comparador `(valorA, valorB) => valorA - valorB`. ⚠️ La excepción que **SÍ muta** — contrasta con `.map`/`.filter`. Se enseña **solo como demostración** (no se aplica a una función entregable); tip: la copia `[...arr]` evita mutar.
 - **Inmutabilidad**: los métodos funcionales NO mutan el array original — devuelven uno nuevo. `.sort` es la excepción que confirma la regla. Concepto crítico para React y arquitecturas modernas.
 - **Composición + DRY**: funciones pequeñas + reusarlas en vez de copy-paste.
 
@@ -59,7 +59,7 @@ Honestamente. Si tu grupo lo capta a la primera, son rápidos. Si no, dedica 5 m
 |---|---|---|
 | Intro + repaso | 15 min | El `for` de C05 + motivación: ¿qué tal si fuera 1 línea? |
 | Demo Técnica | 20 min | `function` → arrow + `.map`/`.filter`/`.reduce` sobre array de números. |
-| Lab (P0-P3) | 140 min | P0 Arrow/puras · P1 map/filter/find/some · P2 reduce/forEach · P3 composición + sort + topGastos. |
+| Lab (P0-P3) | 130 min | P0 Arrow/puras · P1 map/filter/find/some · P2 reduce/forEach · P3 composición + sort (demo). |
 | Cierre | 15 min | ¿Qué función pura más útil hicieron? Semilla C07 (objetos). |
 
 ---
@@ -116,7 +116,7 @@ const duplicar = valor => valor * 2;   Paso 4: 1 param, omite paréntesis
 ```
 Facilitador: "El lab tiene P0 corto (arrow + pura) — NO se lo salten.
 Si no captan P0, P1-P3 son ruido. Tómense los 15 min.
-Después: 4 funciones para map/filter/find/some, 3 para reduce, sort + topGastos, composición.
+Después: 4 funciones para map/filter/find/some, 3 para reduce, sort (demostración), composición.
 Total ~10 funciones puras al final. Sí, son muchas. Por eso son CORTAS."
 ```
 
@@ -241,7 +241,6 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 | `find` devuelve `undefined` | El array no tiene elementos que cumplen | Validar `if (resultado !== undefined)` antes de usar |
 | `valores` cambió de orden "solo" | Llamó `valores.sort()` directo — sort MUTA | Ordenar sobre copia: `[...valores].sort(...)`. Es la excepción a la inmutabilidad. |
 | `[10, 2, 1].sort()` da `[1, 10, 2]` | Sort sin comparador ordena como texto | Para números SIEMPRE pasar `(valorA, valorB) => valorA - valorB` |
-| `topGastos` devuelve gastos negativos | Olvidó el `.map(valor => Math.abs(valor))` antes del sort | Quitar el signo antes de ordenar y cortar |
 | `SyntaxError: Identifier 'calcularSaldo' has already been declared` | Dejó `function calcularSaldo()` en `app.js` (de C05) Y `const calcularSaldo` en `functional-utils.js` | Borrar `calcularSaldo` y `mostrarResumen` de `app.js`: ahora viven en `functional-utils.js` / `imprimirReporte` (ver P3.6) |
 | Los `console.log` de P1–P2 imprimen `[]` o `undefined` | `valores` está vacío (flujo de prompt aún no corre) | Para probar, hardcodear `let valores = [3000, -45.50, 500, -30]` en `app.js`; reconectar prompt en P3.6 |
 | Mezcla `forEach` con `map` | "Quería transformar pero forEach no retorna" | Si transforma → `.map`. Si solo ejecuta → `.forEach` |
@@ -273,7 +272,7 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 | ~15' | P0 lista | Identifica si una función es pura o no. Traduce 3 `function` a arrow correctamente. |
 | ~50' | P1 lista | Las 5 funciones (`obtenerIngresos`, `obtenerGastos`, `montosAbsolutos`, `buscarPrimerGastoMayor`, `tieneGastoMayorQue` con `.some`) creadas y funcionando. El array `valores` NO se mutó. |
 | ~90' | P2 lista | `imprimirReporte(nombres, valores)` muestra desglose completo con totales y saldo correctos. |
-| ~140' | P3 lista | `functional-utils.js` tiene ≥10 funciones puras (incl. `topGastos` con `.sort` sin mutar) + reto autónomo intentado. |
+| ~130' | P3 lista | `functional-utils.js` tiene ≥10 funciones puras + reto autónomo intentado. |
 
 ---
 
