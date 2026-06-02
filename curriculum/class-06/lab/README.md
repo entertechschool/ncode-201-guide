@@ -1,15 +1,16 @@
 # Laboratorio 06: Programación Funcional + Arrow Functions
 
-En esta clase **refactorizas el proyecto C05** usando programación funcional. El `for` que escribiste en C05 va a **desaparecer** — vas a sustituirlo por `.map()`, `.filter()`, `.find()`, `.reduce()` y `.forEach()`. Conoces las **arrow functions** (`=>`) — la sintaxis corta que vas a ver en TODO código JS moderno (React, Node, librerías).
+En esta clase **refactorizas el proyecto C05** usando programación funcional. El `for` que escribiste en C05 va a **desaparecer** — vas a sustituirlo por `.map()`, `.filter()`, `.find()`, `.some()`, `.reduce()` y `.forEach()`, y ordenarás datos con `.sort()`. Conoces las **arrow functions** (`=>`) — la sintaxis corta que vas a ver en TODO código JS moderno (React, Node, librerías).
 
-> ⏱️ **Checkpoints**: 3 momentos de validación grupal (~35 min, ~75 min, ~115 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación grupal (~15 min, ~50 min, ~90 min, ~140 min).
 
 ## 🎯 Objetivos de Aprendizaje
 
 1. **Escribir arrow functions** y reconocer su equivalencia con `function`.
-2. **Aplicar métodos funcionales** de Array: `.map()`, `.filter()`, `.find()`, `.reduce()`, `.forEach()`.
-3. **Identificar funciones puras** vs. funciones imperativas.
-4. **Refactorizar** el `for` clásico de C05 a métodos funcionales.
+2. **Aplicar métodos funcionales** de Array: `.map()`, `.filter()`, `.find()`, `.some()`, `.reduce()`, `.forEach()`.
+3. **Ordenar arrays** con `.sort()` y entender que **muta** el original (cómo evitarlo con copia).
+4. **Identificar funciones puras** vs. funciones imperativas.
+5. **Refactorizar** el `for` clásico de C05 a métodos funcionales.
 
 ## 🔑 Conceptos Clave
 
@@ -21,8 +22,10 @@ En esta clase **refactorizas el proyecto C05** usando programación funcional. E
 | **`.map(fn)`** | Transforma cada elemento → nuevo array del mismo tamaño. |
 | **`.filter(fn)`** | Conserva solo elementos que cumplen condición → nuevo array menor o igual. |
 | **`.find(fn)`** | Retorna el **primer** elemento que cumple condición (no array). |
+| **`.some(fn)`** | Retorna `true` si **al menos un** elemento cumple la condición. Devuelve booleano. |
 | **`.reduce(fn, inicial)`** | Acumula los elementos en un solo valor (suma, máximo, promedio...). |
 | **`.forEach(fn)`** | Ejecuta una acción por cada elemento. No retorna nada — solo efecto. |
+| **`.sort(fn)`** | Ordena el array según el comparador `(a, b) => a - b`. ⚠️ **Muta** el array original. |
 
 ## ⚙️ Setup Inicial
 
@@ -53,6 +56,8 @@ let valores = [3000, -45.50, 500, -30];
 ```
 
 **Convención de signos**: positivo = ingreso, negativo = gasto.
+
+> 🧪 **Datos de prueba (importante):** en C05 tu `app.js` arranca con `let valores = []` y se llena por `prompt`. Para probar las funciones de P1–P3 **sin escribir prompts cada vez**, en tu `app.js` reemplaza temporalmente esas líneas vacías por el array de ejemplo de arriba (`let valores = [3000, -45.50, 500, -30]`) y haz ahí mismo los `console.log` de prueba. Así los resultados coinciden con los comentarios de cada parte. **`functional-utils.js` solo contiene funciones — nunca declares `nombres` ni `valores` ahí** (estarían duplicados con `app.js`). En **P3.6** vuelves a dejar los arrays vacíos y reconectas el flujo real de `prompt`.
 
 ---
 
@@ -180,7 +185,31 @@ console.log(ingresoGigante); // undefined
 - `.filter` → array (puede estar vacío)
 - `.find` → un solo elemento (o `undefined`)
 
-### 1.4 Aplica los 3 al proyecto
+### 1.4 `.some()` — ¿existe al menos uno?
+
+A veces no quieres el elemento ni la lista — solo saber **si hay alguno** que cumple. Para eso está `.some()`, que devuelve un **booleano**:
+
+```javascript
+// ¿Hay al menos un gasto?
+const hayGastos = valores.some(v => v < 0);
+console.log(hayGastos);   // true
+
+// ¿Algún movimiento supera los $1000?
+const hayMontoGrande = valores.some(v => Math.abs(v) > 1000);
+console.log(hayMontoGrande);   // true (3000)
+
+// ¿Algún ingreso enorme?
+const hayMillonario = valores.some(v => v > 100000);
+console.log(hayMillonario);   // false
+```
+
+**Diferencia con `.find()`:**
+- `.find` → te da el **elemento** (o `undefined`).
+- `.some` → te da `true`/`false`. Ideal para condiciones en un `if`.
+
+> 💡 `.some()` para en cuanto encuentra el primero que cumple — no recorre el array completo si no hace falta.
+
+### 1.5 Aplica al proyecto
 
 En `functional-utils.js` crea estas funciones puras:
 
@@ -193,6 +222,9 @@ const aplicarTasa = (valores, tasa) => valores.map(v => v * tasa);
 
 const buscarPrimerGastoMayor = (valores, monto) =>
   valores.find(v => v < -monto);
+
+const tieneGastoMayorQue = (valores, monto) =>
+  valores.some(v => v < -monto);
 ```
 
 Y prueba en `app.js`:
@@ -202,11 +234,12 @@ console.log('Ingresos:', obtenerIngresos(valores));
 console.log('Gastos:', obtenerGastos(valores));
 console.log('En soles:', aplicarTasa(valores, 4));
 console.log('Primer gasto > $40:', buscarPrimerGastoMayor(valores, 40));
+console.log('¿Hay gastos > $40?:', tieneGastoMayorQue(valores, 40));
 ```
 
-✅ **Checkpoint 1 (~50 min):** las 4 funciones funcionan, el array `valores` original NO cambió después de aplicar `.map()` y `.filter()`.
+✅ **Checkpoint 1 (~50 min):** las 5 funciones funcionan, el array `valores` original NO cambió después de aplicar `.map()` y `.filter()`, y `tieneGastoMayorQue` devuelve `true`/`false` (no un número).
 
-🏆 **Reto autónomo:** crea `obtenerPositivosOrdenados(valores)` que devuelva los ingresos ordenados de mayor a menor. Pista: `.filter` primero, luego `.sort((a, b) => b - a)`.
+🏆 **Reto autónomo:** crea `primerIngresoSiHayGastos(valores)`: si `.some()` detecta al menos un gasto, devuelve el primer ingreso con `.find()`; si no hay gastos, devuelve `null`.
 
 ---
 
@@ -327,9 +360,9 @@ const imprimirReporte = (nombres, valores) => {
 
 ---
 
-## Parte 3 — Composición Avanzada + DRY (~40 min)
+## Parte 3 — Composición + `.sort()` + DRY (~50 min)
 
-> **Objetivo:** combinar funciones pequeñas para resolver casos reales sin repetir código.
+> **Objetivo:** combinar funciones pequeñas, ordenar arrays con `.sort()` y resolver casos reales (top N) sin repetir código.
 
 ### 3.1 Composición — funciones pequeñas combinadas
 
@@ -357,30 +390,87 @@ const promedioIngresos = valores => {
 
 > 💡 **Principio DRY** (Don't Repeat Yourself): si ya tienes `totalIngresos`, NO escribas el `.reduce` otra vez. Reusa.
 
-### 3.3 Encadenar métodos directamente
+### 3.3 `.sort()` — ordenar el array
 
-JavaScript permite encadenar métodos de array — el resultado de uno es la entrada del siguiente:
+`.sort()` ordena los elementos. Para números **siempre** le pasas un **comparador** `(a, b)`:
 
 ```javascript
-// Suma de los 3 gastos más grandes
-const top3Gastos = valores
-  .filter(v => v < 0)
-  .map(v => Math.abs(v))
-  .sort((a, b) => b - a)
-  .slice(0, 3)
-  .reduce((acc, v) => acc + v, 0);
+const nums = [3000, -45.50, 500, -30];
+
+// Ascendente (menor a mayor)
+nums.sort((a, b) => a - b);   // [-45.50, -30, 500, 3000]
+
+// Descendente (mayor a menor)
+nums.sort((a, b) => b - a);   // [3000, 500, -30, -45.50]
 ```
 
-**Disección:**
-1. `.filter(v => v < 0)` → solo gastos
-2. `.map(v => Math.abs(v))` → quita el signo
-3. `.sort((a, b) => b - a)` → ordena de mayor a menor
-4. `.slice(0, 3)` → toma los primeros 3
-5. `.reduce(...)` → suma
+**Regla del comparador:**
+- `a - b` → **ascendente** (de menor a mayor).
+- `b - a` → **descendente** (de mayor a menor).
 
-Sin método chaining serían 5 variables intermedias.
+> ⚠️ **`.sort()` MUTA el array original** — rompe la inmutabilidad que vimos en P0. A diferencia de `.map`/`.filter`, NO devuelve una copia: reordena el array sobre el que lo llamas.
 
-### 3.4 Conecta al `app.js` final
+```javascript
+const original = [3, 1, 2];
+original.sort((a, b) => a - b);
+console.log(original);   // [1, 2, 3] — ¡cambió!
+```
+
+Para ordenar **sin mutar**, primero copias con el spread `[...]`:
+
+```javascript
+const ordenado = [...valores].sort((a, b) => b - a);
+console.log(valores);   // intacto
+console.log(ordenado);  // copia ordenada
+```
+
+> 💡 Sin comparador, `.sort()` ordena como **texto**: `[10, 2, 1].sort()` da `[1, 10, 2]` (porque `"10" < "2"`). Por eso para números SIEMPRE usa `(a, b) => a - b`.
+
+### 3.4 `topGastos(valores, n)` — los N gastos más grandes
+
+Combinamos lo aprendido en una función pura: filtra gastos, quita el signo, ordena de mayor a menor y toma los primeros `n`:
+
+```javascript
+const topGastos = (valores, n) =>
+  [...valores]
+    .filter(v => v < 0)
+    .map(v => Math.abs(v))
+    .sort((a, b) => b - a)
+    .slice(0, n);
+```
+
+Pruébalo en `app.js`:
+
+```javascript
+console.log('Top 2 gastos:', topGastos(valores, 2));   // [45.5, 30]
+```
+
+> 💡 Empezamos con `[...valores]` (copia) para que la función sea **pura**: aunque `.sort()` muta, solo muta la copia, no el array que recibió.
+
+### 3.5 Encadenar métodos: el chaining que ya usaste
+
+Mira de nuevo `topGastos` — eso ES **method chaining**: el resultado de un método es la entrada del siguiente, todo en una sola expresión.
+
+```javascript
+[...valores]
+  .filter(v => v < 0)    // solo gastos
+  .map(v => Math.abs(v)) // quita el signo
+  .sort((a, b) => b - a) // ordena de mayor a menor
+  .slice(0, n);          // toma los primeros n
+```
+
+Sin chaining serían 4 variables intermedias. Ahora, si quieres la **suma** de esos top N en vez de la lista, reusa `topGastos` (DRY) y encadenas un `.reduce`:
+
+```javascript
+const sumaTopGastos = (valores, n) =>
+  topGastos(valores, n).reduce((acc, v) => acc + v, 0);
+
+console.log('Suma top 2 gastos:', sumaTopGastos(valores, 2));   // 75.5
+```
+
+> 💡 No reescribas el `filter`/`map`/`sort`: ya vive en `topGastos`. Componer funciones que ya tienes es el corazón del paradigma funcional.
+
+### 3.6 Conecta al `app.js` final
 
 ```javascript
 // app.js (versión funcional)
@@ -414,7 +504,7 @@ imprimirReporte(nombres, valores);
 console.log('Promedio de ingresos: $' + promedioIngresos(valores).toFixed(2));
 ```
 
-✅ **Checkpoint 3 (~115 min):** ejecutas el flujo, registras 4 movimientos (2 ingresos, 2 gastos), y el reporte muestra cantidad, ingresos totales, gastos totales, saldo y promedio de ingresos correctos. Tu `functional-utils.js` tiene al menos 8 funciones puras.
+✅ **Checkpoint 3 (~140 min):** ejecutas el flujo, registras 4 movimientos (2 ingresos, 2 gastos), y el reporte muestra cantidad, ingresos totales, gastos totales, saldo y promedio de ingresos correctos. `topGastos(valores, 2)` devuelve los 2 gastos más grandes sin mutar `valores`. Tu `functional-utils.js` tiene al menos 10 funciones puras.
 
 🏆 **Reto autónomo:** crea `validarPresupuesto(valores, limite)` que retorne `true` si el total de gastos NO supera el límite. Pista: compara `Math.abs(totalGastos(valores))` con `limite`.
 
@@ -422,41 +512,16 @@ console.log('Promedio de ingresos: $' + promedioIngresos(valores).toFixed(2));
 
 ## 🌟 Logros Adicionales
 
-- **Logro 1 — Sort y top N:** función `topGastos(valores, n)` que devuelva los `n` gastos más grandes ordenados.
-- **Logro 2 — Estadística:** funciones `mediana`, `desviacionEstandar` sobre `valores`.
-- **Logro 3 — Categorización:** función `categorizarPorMonto(valores)` que devuelva `{ bajo: [...], medio: [...], alto: [...] }`.
+- **Logro 1 — Estadística:** funciones `mediana`, `desviacionEstandar` sobre `valores`.
+- **Logro 2 — Categorización:** función `categorizarPorMonto(valores)` que devuelva `{ bajo: [...], medio: [...], alto: [...] }`.
+- **Logro 3 — `.every()`:** prima de `.some()` — crea `todosLosIngresosSuperan(valores, monto)` que devuelva `true` solo si TODOS los ingresos superan `monto`.
 
 ---
 
 ## 📝 Instrucciones de Entrega
 
-1. **`functional-utils.js`** con al menos 8 funciones puras.
+1. **`functional-utils.js`** con al menos 10 funciones puras (incluyendo `tieneGastoMayorQue` con `.some()` y `topGastos` con `.sort()`).
 2. **`app.js`** que use esas funciones para generar el reporte completo.
-3. **README.md** con:
-   - Lista de funciones puras creadas + una línea por cada una.
-   - **Reflexión obligatoria:** *¿Qué te resultó más difícil — `reduce` o aceptar que `.map` y `.filter` no muten el array original? ¿Por qué?*
-4. **Entrega Final:**
+3. **Entrega Final:**
    - URL del repositorio en GitHub.
    - Captura de la consola con el reporte completo.
-
----
-
-## 🔮 Lo que viene en C07
-
-En C07 los **2 arrays paralelos** (`nombres` + `valores`) se vuelven **UN solo array de objetos**:
-
-```javascript
-let movimientos = [
-  { nombre: 'Salario', tipo: 'ingreso', valor: 3000 },
-  { nombre: 'Cena', tipo: 'gasto', valor: 45.50 }
-];
-```
-
-Y tus funciones funcionales se adaptan naturalmente:
-
-```javascript
-movimientos.filter(m => m.tipo === 'ingreso')   // ahora SÍ puedes filtrar por tipo
-movimientos.find(m => m.nombre === 'Cena')      // y buscar por nombre
-```
-
-Esa será la última pieza para que sientas para qué sirven los objetos.

@@ -6,7 +6,8 @@
 ## 🎯 Objetivo de la Clase
 
 - Conocer las **arrow functions** (`=>`).
-- Aplicar métodos funcionales: `.map`, `.filter`, `.find`, `.reduce`, `.forEach`.
+- Aplicar métodos funcionales: `.map`, `.filter`, `.find`, `.some`, `.reduce`, `.forEach`.
+- Ordenar con `.sort()` y entender que **muta** el array.
 - Refactorizar el `for` de C05 en **una sola línea**.
 - Entender qué es una **función pura**.
 
@@ -135,6 +136,23 @@ const enorme = valores.find(v => v > 100000);
 
 ---
 
+## ❓ `.some()` — ¿existe al menos uno?
+
+```javascript
+const hayGastos = valores.some(v => v < 0);
+// true
+
+const hayMillonario = valores.some(v => v > 100000);
+// false
+```
+
+* Devuelve un **booleano** (`true`/`false`).
+* `.find` te da el elemento; `.some` solo dice **si existe**.
+
+> Ideal para condiciones en un `if`.
+
+---
+
 ## 🔥 `.reduce()` — El más poderoso
 
 ```javascript
@@ -187,19 +205,37 @@ const promedioIngresos = v => {
 
 ---
 
+## ↕️ `.sort()` — Ordenar
+
+```javascript
+const nums = [3000, -45.50, 500, -30];
+
+nums.sort((a, b) => a - b);   // ascendente
+nums.sort((a, b) => b - a);   // descendente
+```
+
+* Comparador: `a - b` sube, `b - a` baja.
+* ⚠️ **`.sort()` MUTA** el original (a diferencia de `.map`/`.filter`).
+* Para no mutar: `[...valores].sort(...)`.
+
+> Sin comparador ordena como TEXTO: `[10, 2].sort()` → `[10, 2]` mal.
+
+---
+
 ## 🔗 Method Chaining
 
 ```javascript
-const top3Gastos = valores
-  .filter(v => v < 0)
-  .map(v => Math.abs(v))
-  .sort((a, b) => b - a)
-  .slice(0, 3)
-  .reduce((acc, v) => acc + v, 0);
+const topGastos = (valores, n) =>
+  [...valores]
+    .filter(v => v < 0)
+    .map(v => Math.abs(v))
+    .sort((a, b) => b - a)
+    .slice(0, n);
 ```
 
 * El resultado de un método es la entrada del siguiente.
-* Sin chaining serían 5 variables intermedias.
+* `[...valores]` mantiene la función **pura** (sort solo muta la copia).
+* Sin chaining serían 4 variables intermedias.
 
 ---
 
@@ -208,9 +244,9 @@ const top3Gastos = valores
 | Parte | Tiempo | Contenido |
 |---|---|---|
 | **P0** | ~15 min | Arrow functions + funciones puras |
-| **P1** | ~35 min | `.map` · `.filter` · `.find` |
+| **P1** | ~35 min | `.map` · `.filter` · `.find` · `.some` |
 | **P2** | ~40 min | `.reduce` · `.forEach` + reporte |
-| **P3** | ~40 min | Composición + DRY + chaining |
+| **P3** | ~50 min | Composición + `.sort` + `topGastos` + DRY |
 
 ---
 

@@ -8,8 +8,10 @@
 
 - **Arrow function** (sintaxis NUEVA): `x => x * 2` equivale a `function(x) { return x * 2 }`. Es la sintaxis dominante en JS moderno (React, Node, librerías). Hoy se introduce formalmente.
 - **Función pura**: misma entrada → misma salida + sin efectos secundarios. Es la base mental del paradigma.
-- **Métodos funcionales de Array**: `.map`, `.filter`, `.find`, `.reduce`, `.forEach`. Reemplazan el `for` clásico de C05.
-- **Inmutabilidad**: los métodos funcionales NO mutan el array original — devuelven uno nuevo. Concepto crítico para React y arquitecturas modernas.
+- **Métodos funcionales de Array**: `.map`, `.filter`, `.find`, `.some`, `.reduce`, `.forEach`. Reemplazan el `for` clásico de C05.
+- **`.some()`** (NUEVO): devuelve booleano — "¿hay al menos uno que cumple?". Primo de `.find` pero responde sí/no en vez de dar el elemento.
+- **`.sort()`** (NUEVO): ordena con comparador `(a, b) => a - b`. ⚠️ La excepción que **SÍ muta** — contrasta con `.map`/`.filter`. Se enseña junto a `topGastos` y la copia `[...arr]` para no mutar.
+- **Inmutabilidad**: los métodos funcionales NO mutan el array original — devuelven uno nuevo. `.sort` es la excepción que confirma la regla. Concepto crítico para React y arquitecturas modernas.
 - **Composición + DRY**: funciones pequeñas + reusarlas en vez de copy-paste.
 
 ---
@@ -57,7 +59,7 @@ Honestamente. Si tu grupo lo capta a la primera, son rápidos. Si no, dedica 5 m
 |---|---|---|
 | Intro + repaso | 15 min | El `for` de C05 + motivación: ¿qué tal si fuera 1 línea? |
 | Demo Técnica | 20 min | `function` → arrow + `.map`/`.filter`/`.reduce` sobre array de números. |
-| Lab (P0-P3) | 130 min | P0 Arrow/puras · P1 map/filter/find · P2 reduce/forEach · P3 composición. |
+| Lab (P0-P3) | 140 min | P0 Arrow/puras · P1 map/filter/find/some · P2 reduce/forEach · P3 composición + sort + topGastos. |
 | Cierre | 15 min | ¿Qué función pura más útil hicieron? Semilla C07 (objetos). |
 
 ---
@@ -114,8 +116,8 @@ const duplicar = x => x * 2;   Paso 4: 1 param, omite paréntesis
 ```
 Facilitador: "El lab tiene P0 corto (arrow + pura) — NO se lo salten.
 Si no captan P0, P1-P3 son ruido. Tómense los 15 min.
-Después: 3 funciones para map/filter/find, 3 para reduce, 3 de composición.
-Total ~9 funciones puras al final. Sí, son muchas. Por eso son CORTAS."
+Después: 4 funciones para map/filter/find/some, 3 para reduce, sort + topGastos, composición.
+Total ~10 funciones puras al final. Sí, son muchas. Por eso son CORTAS."
 ```
 
 ---
@@ -237,6 +239,11 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 | `reduce` retorna `NaN` | Olvidó el valor inicial sobre números | Agregar `, 0` al final del reduce |
 | Arrow con `{}` no retorna nada | Confusión entre cuerpo expresión y cuerpo bloque | `x => { x * 2 }` ejecuta pero no retorna. Usar `x => x * 2` o `x => { return x * 2 }` |
 | `find` devuelve `undefined` | El array no tiene elementos que cumplen | Validar `if (resultado !== undefined)` antes de usar |
+| `valores` cambió de orden "solo" | Llamó `valores.sort()` directo — sort MUTA | Ordenar sobre copia: `[...valores].sort(...)`. Es la excepción a la inmutabilidad. |
+| `[10, 2, 1].sort()` da `[1, 10, 2]` | Sort sin comparador ordena como texto | Para números SIEMPRE pasar `(a, b) => a - b` |
+| `topGastos` devuelve gastos negativos | Olvidó el `.map(v => Math.abs(v))` antes del sort | Quitar el signo antes de ordenar y cortar |
+| `SyntaxError: Identifier 'calcularSaldo' has already been declared` | Dejó `function calcularSaldo()` en `app.js` (de C05) Y `const calcularSaldo` en `functional-utils.js` | Borrar `calcularSaldo` y `mostrarResumen` de `app.js`: ahora viven en `functional-utils.js` / `imprimirReporte` (ver P3.6) |
+| Los `console.log` de P1–P2 imprimen `[]` o `undefined` | `valores` está vacío (flujo de prompt aún no corre) | Para probar, hardcodear `let valores = [3000, -45.50, 500, -30]` en `app.js`; reconectar prompt en P3.6 |
 | Mezcla `forEach` con `map` | "Quería transformar pero forEach no retorna" | Si transforma → `.map`. Si solo ejecuta → `.forEach` |
 | Filter usa `==` en vez de `===` | Hábito de otros lenguajes | Siempre `===` en JS para comparaciones estrictas |
 | Quiere "filtrar por nombre" | Pero los nombres están en otro array (paralelo) | "Hoy operamos sobre `valores`. En C07 cuando sean objetos, podrás filtrar por cualquier propiedad" |
@@ -264,9 +271,9 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
 | ~15' | P0 lista | Identifica si una función es pura o no. Traduce 3 `function` a arrow correctamente. |
-| ~50' | P1 lista | Las 4 funciones (`obtenerIngresos`, `obtenerGastos`, `aplicarTasa`, `buscarPrimerGastoMayor`) creadas y funcionando. El array `valores` NO se mutó. |
+| ~50' | P1 lista | Las 5 funciones (`obtenerIngresos`, `obtenerGastos`, `aplicarTasa`, `buscarPrimerGastoMayor`, `tieneGastoMayorQue` con `.some`) creadas y funcionando. El array `valores` NO se mutó. |
 | ~90' | P2 lista | `imprimirReporte(nombres, valores)` muestra desglose completo con totales y saldo correctos. |
-| ~130' | P3 lista | `functional-utils.js` tiene ≥8 funciones puras + reto autónomo intentado. |
+| ~140' | P3 lista | `functional-utils.js` tiene ≥10 funciones puras (incl. `topGastos` con `.sort` sin mutar) + reto autónomo intentado. |
 
 ---
 
