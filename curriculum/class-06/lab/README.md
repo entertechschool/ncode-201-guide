@@ -55,9 +55,8 @@ let nombres = ['Salario', 'Cena', 'Freelance', 'Transporte'];
 let valores = [3000, -45.50, 500, -30];
 ```
 
-**Convención de signos**: positivo = ingreso, negativo = gasto.
-
-> 🧪 **Datos de prueba (importante):** en C05 tu `app.js` arranca con `let valores = []` y se llena por `prompt`. Para probar las funciones de P1–P3 **sin escribir prompts cada vez**, en tu `app.js` reemplaza temporalmente esas líneas vacías por el array de ejemplo de arriba (`let valores = [3000, -45.50, 500, -30]`) y haz ahí mismo los `console.log` de prueba. Así los resultados coinciden con los comentarios de cada parte. **`functional-utils.js` solo contiene funciones — nunca declares `nombres` ni `valores` ahí** (estarían duplicados con `app.js`). En **P3.6** vuelves a dejar los arrays vacíos y reconectas el flujo real de `prompt`.
+> 🧪 **Datos de prueba (importante):** en C05 tu `app.js` arranca con `let valores = []` y se llena por `prompt`. Para probar las funciones de P1–P3 **sin escribir prompts cada vez**, en tu `app.js` reemplaza temporalmente esas líneas vacías por el array de ejemplo de arriba (`let valores = [3000, -45.50, 500, -30]`) y haz ahí mismo los `console.log` de prueba.
+> Así los resultados coinciden con los comentarios de cada parte. **`functional-utils.js` solo contiene funciones — nunca declares `nombres` ni `valores` ahí** (estarían duplicados con `app.js`). En **P3.4** vuelves a dejar los arrays vacíos y reconectas el flujo real de `prompt`.
 
 ---
 
