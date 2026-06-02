@@ -271,7 +271,7 @@ console.log(ingresos);  // [3000, 500] — NUEVO
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
 | ~15' | P0 lista | Identifica si una función es pura o no. Traduce 3 `function` a arrow correctamente. |
-| ~50' | P1 lista | Las 5 funciones (`obtenerIngresos`, `obtenerGastos`, `aplicarTasa`, `buscarPrimerGastoMayor`, `tieneGastoMayorQue` con `.some`) creadas y funcionando. El array `valores` NO se mutó. |
+| ~50' | P1 lista | Las 5 funciones (`obtenerIngresos`, `obtenerGastos`, `montosAbsolutos`, `buscarPrimerGastoMayor`, `tieneGastoMayorQue` con `.some`) creadas y funcionando. El array `valores` NO se mutó. |
 | ~90' | P2 lista | `imprimirReporte(nombres, valores)` muestra desglose completo con totales y saldo correctos. |
 | ~140' | P3 lista | `functional-utils.js` tiene ≥10 funciones puras (incl. `topGastos` con `.sort` sin mutar) + reto autónomo intentado. |
 

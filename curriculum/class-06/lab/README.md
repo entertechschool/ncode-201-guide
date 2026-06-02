@@ -219,7 +219,7 @@ const obtenerIngresos = valores => valores.filter(v => v > 0);
 
 const obtenerGastos = valores => valores.filter(v => v < 0);
 
-const aplicarTasa = (valores, tasa) => valores.map(v => v * tasa);
+const montosAbsolutos = valores => valores.map(v => Math.abs(v));
 
 const buscarPrimerGastoMayor = (valores, monto) =>
   valores.find(v => v < -monto);
@@ -233,7 +233,7 @@ Y prueba en `app.js`:
 ```javascript
 console.log('Ingresos:', obtenerIngresos(valores));
 console.log('Gastos:', obtenerGastos(valores));
-console.log('En soles:', aplicarTasa(valores, 4));
+console.log('Montos sin signo:', montosAbsolutos(valores));   // [3000, 45.5, 500, 30]
 console.log('Primer gasto > $40:', buscarPrimerGastoMayor(valores, 40));
 console.log('¿Hay gastos > $40?:', tieneGastoMayorQue(valores, 40));
 ```
