@@ -4,7 +4,7 @@
 
 ## Resumen
 
-En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `for` clásico que escribiste para calcular el saldo va a **desaparecer** — vas a sustituirlo por métodos funcionales sobre arrays: `.map()`, `.filter()`, `.find()`, `.some()`, `.reduce()` y `.forEach()`, y aprenderás a ordenar con `.sort()`. Antes de tocar esos métodos, aprendes la sintaxis nueva que vas a ver en TODO código JS moderno: las **arrow functions** (`valor => valor * 2`). Comprendes qué es una **función pura** y por qué son fáciles de testear y razonar. El modelo de datos sigue siendo los **2 arrays paralelos** de C05 — los métodos funcionales operan sobre `valores[]` (array de números puros), ideal para demos limpias del paradigma.
+En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `for` clásico que escribiste para calcular el saldo va a **desaparecer** — vas a sustituirlo por métodos funcionales sobre arrays: `.map()`, `.filter()`, `.find()`, `.reduce()` y `.forEach()`. Antes de tocar esos métodos, aprendes la sintaxis nueva que vas a ver en TODO código JS moderno: las **arrow functions** (`valor => valor * 2`). Comprendes qué es una **función pura** y por qué son fáciles de testear y razonar. El modelo de datos sigue siendo los **2 arrays paralelos** de C05 — los métodos funcionales operan sobre `valores[]` (array de números puros), ideal para demos limpias del paradigma.
 
 ## Estructura sugerida
 
@@ -12,7 +12,7 @@ En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `f
 |---|---|---|
 | **1. Introducción y Contexto** | 15 min | Repaso C05 (imperativo + arrays + for) + motivación: ¿qué tal si el `for` fuera UNA línea? |
 | **2. Demo Técnica** | 20 min | Demo en vivo: `function` → arrow function, luego `.map`/`.filter`/`.reduce` sobre array de números. |
-| **3. Laboratorio (4 partes)** | 130 min | P0 Arrow + funciones puras (~15 min) · P1 map/filter/find/some (~35 min) · P2 reduce/forEach (~40 min) · P3 composición + sort (demo) + DRY (~40 min). |
+| **3. Laboratorio (4 partes)** | 120 min | P0 Arrow + funciones puras (~15 min) · P1 map/filter/find (~35 min) · P2 reduce/forEach (~40 min) · P3 composición + DRY (~30 min). |
 | **4. Cierre y Síntesis** | 15 min | Discusión: ¿qué funciones puras te resultaron más útiles? + semilla C07. |
 
 ## 🎯 Objetivos de aprendizaje
@@ -20,10 +20,9 @@ En esta clase **refactorizas el proyecto C05** con el paradigma funcional. El `f
 Al finalizar esta clase, serás capaz de:
 
 1. **Escribir arrow functions** y reconocer su equivalencia con `function`.
-2. **Aplicar métodos funcionales** de Array — `.map()`, `.filter()`, `.find()`, `.some()`, `.reduce()`, `.forEach()`.
-3. **Ordenar arrays** con `.sort()` y su comparador, entendiendo que **muta** el original.
-4. **Identificar funciones puras** y separarlas de funciones con efectos secundarios.
-5. **Refactorizar `for` clásico** a métodos funcionales que no mutan el array original.
+2. **Aplicar métodos funcionales** de Array — `.map()`, `.filter()`, `.find()`, `.reduce()`, `.forEach()`.
+3. **Identificar funciones puras** y separarlas de funciones con efectos secundarios.
+4. **Refactorizar `for` clásico** a métodos funcionales que no mutan el array original.
 
 ---
 
@@ -53,11 +52,6 @@ Al finalizar esta clase, serás capaz de:
 - Encuentra: Un ejemplo de `.reduce` sumando los números de un array.
 - Prepárate para explicar: ¿Por qué `.reduce` se considera "el más poderoso" de los métodos funcionales?
 
-**5. Métodos `.some()` y `.sort()`:**
-- Investiga: ¿Qué devuelve `.some()` y en qué se diferencia de `.find()`?
-- Encuentra: Por qué `.sort()` sin comparador ordena `[10, 2, 1]` como `[1, 10, 2]`.
-- Prepárate para explicar: ¿Por qué se dice que `.sort()` "muta" el array y cómo evitarlo?
-
 #### 📚 Recursos previos sugeridos
 
 * [Arrow functions — MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/Arrow_functions){:target="_blank"}
@@ -76,9 +70,7 @@ Al finalizar esta clase, serás capaz de:
 * **`.map(fn)`**: Transforma cada elemento del array. Devuelve nuevo array del mismo tamaño.
 * **`.filter(fn)`**: Conserva solo los elementos que cumplen la condición. Devuelve nuevo array.
 * **`.find(fn)`**: Retorna el primer elemento que cumple la condición (o `undefined`).
-* **`.some(fn)`**: Retorna `true` si al menos un elemento cumple la condición. Devuelve booleano.
 * **`.reduce(fn, inicial)`**: Acumula todos los elementos en un solo valor (suma, máximo, agrupación, etc.).
 * **`.forEach(fn)`**: Ejecuta una acción por cada elemento. No retorna nada — solo efecto.
-* **`.sort(fn)`**: Ordena el array según el comparador `(valorA, valorB) => valorA - valorB`. Muta el array original (copiar con `[...arr]` para evitarlo).
 * **Composición de funciones**: Combinar funciones pequeñas para resolver problemas grandes.
 * **Principio DRY** (Don't Repeat Yourself): Evitar repetir código; reusar funciones existentes.
