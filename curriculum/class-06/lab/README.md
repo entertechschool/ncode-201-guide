@@ -297,26 +297,28 @@ valores.forEach((valor, indice) => {
 En `functional-utils.js`:
 
 ```javascript
-const generarReporte = valores => ({
-  cantidad: valores.length,
-  totalIngresos: totalIngresos(valores),
-  totalGastos: totalGastos(valores),
-  saldo: calcularSaldo(valores),
-});
+// Retorna: [cantidad, totalIngresos, totalGastos, saldo]
+const generarValoresReporte = valores => [
+  valores.length,
+  totalIngresos(valores),
+  totalGastos(valores),
+  calcularSaldo(valores)
+];
 
 const imprimirReporte = (nombres, valores) => {
   console.log('--- Resumen Final ---');
-  console.log('Total movimientos:', valores.length);
-
+  
   valores.forEach((valor, indice) => {
     const tipo = valor > 0 ? 'ingreso' : 'gasto';
     console.log(`  ${indice + 1}. ${nombres[indice]} (${tipo}): $${Math.abs(valor).toFixed(2)}`);
   });
 
-  const reporte = generarReporte(valores);
-  console.log('Total ingresos: $' + reporte.totalIngresos.toFixed(2));
-  console.log('Total gastos: $' + Math.abs(reporte.totalGastos).toFixed(2));
-  console.log('Saldo: $' + reporte.saldo.toFixed(2));
+
+  const reporte = generarValoresReporte(valores);
+  console.log('Total movimientos:', reporte[0]);
+  console.log('Total ingresos: $' + reporte[1].toFixed(2));
+  console.log('Total gastos: $' + Math.abs(reporte[2]).toFixed(2));
+  console.log('Saldo: $' + reporte[3].toFixed(2));
 };
 ```
 
