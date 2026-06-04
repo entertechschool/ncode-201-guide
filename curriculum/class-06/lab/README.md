@@ -320,7 +320,7 @@ const imprimirReporte = (nombres, valores) => {
 };
 ```
 
-> 💡 **`generarReporte` es PURA** (recibe `valores`, retorna un objeto). **`imprimirReporte` es IMPURA** (`console.log` es efecto). Es buena práctica separar el cálculo (puro) del output (impuro).
+> 💡 **`generarValoresReporte` es PURA** (recibe `valores`, retorna un array). **`imprimirReporte` es IMPURA** (`console.log` es efecto). Es buena práctica separar el cálculo (puro) del output (impuro).
 
 > ⚠️ **Nota intencional**: `imprimirReporte` necesita `nombres` y `valores` por separado porque son **arrays paralelos**. En C07 verás cómo objetos eliminan esta torpeza.
 
