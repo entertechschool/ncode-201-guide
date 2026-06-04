@@ -270,8 +270,6 @@ const totalIngresos = valores =>
 const totalGastos = valores =>
   obtenerGastos(valores).reduce((acumulador, valor) => acumulador + valor, 0);
 
-const valorMaximo = valores =>
-  valores.reduce((maximo, valor) => valor > maximo ? valor : maximo, valores[0]);
 ```
 
 > 💡 **Composición**: `totalIngresos` usa `obtenerIngresos` y le aplica `.reduce`. Funciones pequeñas combinadas → funciones grandes. **Eso es composición.**
