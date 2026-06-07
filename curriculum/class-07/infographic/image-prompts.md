@@ -4,4 +4,4 @@
 
 ---
 
-No se requieren imágenes generadas con AI para esta infografía. Los conceptos de funciones constructoras, this, instanciación y el puente JS↔HTML son representables con bloques de código y elementos visuales CSS.
+No se requieren imágenes generadas con AI para esta infografía. Los conceptos de objetos literales, `class` por capas (propiedades → constructor → métodos), instanciación con `this`/`new` y encapsulación son representables con bloques de código y elementos visuales CSS.

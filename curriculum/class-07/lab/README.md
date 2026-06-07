@@ -1,44 +1,46 @@
-# Laboratorio 07: Objetos Literales + Programación Orientada a Objetos
+# Laboratorio 07: Objetos + POO con `class` — el modelo del Gestor
 
-En esta clase resuelves el dolor de los **2 arrays paralelos** de C05/C06. Aprendes **objetos literales** (`{ key: value }`) y **funciones constructoras** (`function Movimiento() { this.x = ... }`). Refactorizas el proyecto **Gestor de Presupuesto Personal** para que cada movimiento sea un objeto rico — y al final conectas todo con un **formulario HTML** (primer puente JS↔HTML del curso).
+En C05/C06 tu modelo eran **2 arrays paralelos** (`nombres` + `valores`), y el **tipo** se codificaba con el **signo**. Hoy cada movimiento pasa a ser **un objeto** y aprendes a crear "moldes" de objetos con **`class`**, paso a paso. Al terminar, la lógica del **Gestor de Presupuesto** queda completa y probada en **consola**.
 
-> ⏱️ **Checkpoints**: 4 momentos de validación grupal (~25 min, ~65 min, ~95 min, ~125 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación grupal (~15 min, ~50 min, ~90 min, ~120 min).
+>
+> 🧠 Hoy trabajas en **consola** (F12). No tocas HTML/CSS — la interfaz visual es C08.
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. **Crear objetos literales** con `{ key: value }` y leer/escribir propiedades con `obj.prop`.
-2. **Implementar funciones constructoras** con `function Constructor() {}` + `this` + `new`.
-3. **Refactorizar** el modelo de 2 arrays paralelos a UN array de objetos.
-4. **Conectar JS con HTML** capturando inputs de un form (primer puente JS↔HTML).
+1. **Manipular objetos** literales: acceder, modificar y array de objetos.
+2. **Refactorizar** el modelo: de 2 arrays paralelos (tipo por signo) a UN array de objetos (tipo explícito).
+3. **Construir una clase por capas**: propiedades → constructor → métodos (`this`, `new`).
+4. **Encapsular** datos + métodos en una clase `Presupuesto`.
 
 ## 🔑 Conceptos Clave
 
 | Concepto | Definición |
 |---|---|
-| **Objeto literal** | Colección de pares `key: value` declarada con `{}`. `let p = { nombre: 'Ana', edad: 30 }` |
-| **Acceso a propiedad** | `obj.prop` para leer o escribir. `p.nombre` → `'Ana'`. `p.edad = 31` modifica. |
-| **Shorthand property** | Si la key es igual al nombre de la variable, escribes solo una vez: `{ nombre }` equivale a `{ nombre: nombre }`. |
-| **Función constructora** | Función que crea objetos cuando se llama con `new`. Por convención su nombre arranca en mayúscula. |
-| **`this`** | Dentro de una constructora, `this` apunta al objeto que se está creando. |
-| **`new`** | Operador que invoca la constructora y devuelve el objeto recién creado. |
-| **Método** | Función adentro de un objeto. Se llama con `obj.metodo()`. |
-| **DOM básico** | `document.querySelector('#id')` para encontrar un elemento + `.value` para leer su contenido. |
-| **`event.preventDefault()`** | Evita que el navegador recargue al hacer submit del form. |
+| **Objeto literal** | Pares `key: value` dentro de `{}`. `let p = { nombre: 'Ana' }` |
+| **Acceso a propiedad** | `obj.prop` para leer o escribir. `p.nombre` → `'Ana'` |
+| **Array de objetos** | Lista de objetos: `[{...}, {...}]`. Orden + nombres descriptivos. |
+| **`class`** | Molde para crear muchos objetos con la misma forma y comportamiento. |
+| **Instancia / `new`** | Objeto concreto creado desde una clase con `new Clase()`. |
+| **Propiedad de instancia** | Dato guardado en el objeto con `this.prop = ...`. |
+| **`constructor()`** | Método que corre al hacer `new`; pone las propiedades iniciales. |
+| **Método** | Función dentro de la clase que usa las propiedades (`this.x`). |
+| **Encapsulación** | Agrupar datos + métodos relacionados dentro de un mismo objeto. |
 
 ## ⚙️ Setup Inicial
 
-Seguimos en el mismo repo `personal-budget`. Nuevo archivo:
+Seguimos en `personal-budget`. Estructura:
 
 ```
 personal-budget/
 ├── index.html
-├── app.js
-├── functional-utils.js     (de C06)
-├── oop-objects.js          (NUEVO)
+├── app.js                 (de C05/C06 — lo adaptamos)
+├── functional-utils.js    (de C06 — lo adaptamos)
+├── oop-objects.js         (NUEVO — aquí van las clases)
 └── README.md
 ```
 
-En `index.html` enlaza el nuevo archivo:
+En `index.html`, orden de scripts:
 
 ```html
 <script src="oop-objects.js"></script>
@@ -48,60 +50,37 @@ En `index.html` enlaza el nuevo archivo:
 
 ---
 
-## Parte 0 — Objetos Literales (~15 min)
+## Parte 0 — Objetos: lo básico (~15 min)
 
-> **Objetivo:** entender la sintaxis y mecánica básica de objetos antes de tocar constructoras.
+> **Objetivo:** declarar objetos, acceder y modificar propiedades. La base antes de las clases.
 
-### 0.1 Sintaxis de objeto literal
+### 0.1 ¿Qué es un objeto?
 
-Un **objeto literal** agrupa datos relacionados como pares `key: value`:
+Un objeto agrupa datos relacionados como pares `key: value`:
 
 ```javascript
-let persona = {
+const persona = {
   nombre: 'Ana',
   edad: 30,
   pais: 'Perú'
 };
 
-console.log(persona.nombre);   // 'Ana'
+console.log(persona.nombre);   // 'Ana'  → acceso con punto
 console.log(persona.edad);     // 30
 ```
 
-* `{}` declara un objeto.
-* Cada propiedad es `key: value` separadas por **coma**.
-* Se accede con `.` y el nombre de la propiedad.
+* `{}` declara un objeto · cada propiedad es `key: value` separada por **coma** · se accede con `.` y el nombre.
 
-### 0.2 Leer y modificar propiedades
+### 0.2 Leer, modificar y agregar propiedades
 
 ```javascript
-persona.nombre = 'Beatriz';       // modificar
-persona.email = 'b@mail.com';     // agregar propiedad nueva
-console.log(persona);
-// { nombre: 'Beatriz', edad: 30, pais: 'Perú', email: 'b@mail.com' }
+persona.edad = 31;              // modificar
+persona.email = 'a@mail.com';   // agregar propiedad nueva
 ```
 
-> 💡 Diferencia clave con arrays: en arrays accedes por **índice** (`arr[0]`); en objetos accedes por **nombre de propiedad** (`obj.nombre`).
+> 💡 En arrays accedes por **índice** (`arr[0]`); en objetos por **nombre** (`obj.nombre`).
 
-### 0.3 Shorthand property (azúcar sintáctica)
-
-Cuando la **key** y el **nombre de la variable** son iguales, puedes escribirlo solo una vez:
-
-```javascript
-const nombre = 'Ana';
-const edad = 30;
-
-// Forma larga
-const persona1 = { nombre: nombre, edad: edad };
-
-// Shorthand (equivalente)
-const persona2 = { nombre, edad };
-```
-
-Vas a ver esto MUCHO en código real.
-
-### 0.4 Array de objetos
-
-Puedes meter objetos dentro de un array:
+### 0.3 Array de objetos
 
 ```javascript
 const personas = [
@@ -109,43 +88,38 @@ const personas = [
   { nombre: 'Carlos', edad: 25 }
 ];
 
-console.log(personas[0].nombre);  // 'Ana'
-console.log(personas[1].edad);    // 25
+console.log(personas[0].nombre);   // 'Ana'
 ```
 
-> 💡 **Combinación poderosa**: un array de objetos te da lo mejor de los dos mundos — orden + nombres descriptivos. **Esto es lo que va a reemplazar los arrays paralelos.**
+> 💡 Un **array de objetos** = orden + nombres descriptivos. **Esto reemplaza los arrays paralelos.**
 
-✅ **Checkpoint 0 (~15 min):** sabes declarar objetos literales, acceder a propiedades con `.`, usar shorthand, y leer un array de objetos.
+✅ **Checkpoint 0 (~15 min):** declaras objetos, accedes/modificas con `.` y lees un array de objetos.
 
 ---
 
-## Parte 1 — Refactor del modelo: arrays paralelos → array de objetos (~25 min)
+## Parte 1 — Refactor del modelo: arrays paralelos → array de objetos (~35 min)
 
-> **Objetivo:** eliminar el dolor de C05/C06. Los 2 arrays paralelos se convierten en UN array de objetos.
+> **Objetivo:** migrar TODO el código de C06 al nuevo modelo. Aquí corriges `registrarMovimiento`, las funciones de `functional-utils.js` e `imprimirReporte`.
 
-### 1.1 Lado a lado: el antes y el después
+### 1.1 El antes y el después
 
 ```javascript
-// ANTES (C05/C06) — 2 arrays paralelos, frágiles
+// ANTES (C05/C06) — 2 arrays paralelos; el TIPO se codifica con el SIGNO
 let nombres = ['Salario', 'Cena'];
-let valores = [3000, -45.50];
+let valores = [3000, -45.50];          // +ingreso / -gasto
 
-// AHORA (C07) — 1 array de objetos, integridad garantizada
+// AHORA (C07) — 1 array de objetos; tipo EXPLÍCITO, valor SIEMPRE positivo
 let movimientos = [
   { nombre: 'Salario', tipo: 'ingreso', valor: 3000 },
-  { nombre: 'Cena', tipo: 'gasto', valor: 45.50 }
+  { nombre: 'Cena',    tipo: 'gasto',   valor: 45.50 }
 ];
 ```
 
-**Ganancias inmediatas:**
-- **Una sola estructura** que mantener (no 2, no 3).
-- **`tipo` es explícito** — ya no codificamos ingreso/gasto con el signo del número.
-- **Si borras un movimiento, borras todo junto** — imposible desincronizar.
-- **Los nombres ahora viajan con su valor** — `movimientos[5].nombre` y `movimientos[5].valor` están unidos para siempre.
+> ⚠️ **Cambio clave:** ya no usamos el signo. `valor` es siempre positivo y `tipo` dice qué es. Esto obliga a **corregir varias funciones** (¡ojo con `calcularSaldo`!).
 
-### 1.2 Reescribe `registrarMovimiento()` para usar objetos
+### 1.2 Adaptar `registrarMovimiento` (en `app.js`)
 
-En `app.js`, modifica la captura. Usa **shorthand** donde puedas:
+De **2 push con signo** → **1 push de un objeto**:
 
 ```javascript
 let movimientos = [];
@@ -156,145 +130,264 @@ function registrarMovimiento() {
   const valor = parseFloat(prompt('Monto:'));
 
   if (!nombre || (tipo !== 'ingreso' && tipo !== 'gasto') || isNaN(valor) || valor <= 0) {
-    alert('Datos inválidos.');
+    alert('Datos inválidos. Intenta de nuevo.');
     return;
   }
 
-  // 1 push en vez de 2. Shorthand para nombre, tipo, valor.
-  movimientos.push({ nombre, tipo, valor });
+  // 1 solo push de un objeto. valor SIEMPRE positivo.
+  movimientos.push({ nombre: nombre, tipo: tipo, valor: valor });
 }
 ```
 
-> 💡 **Compara con C05**: antes hacías `nombres.push(nombre)` + `valores.push(valor)` con conversión de signo. Ahora: **un solo `push`**, y `tipo` es explícito.
+> 💡 Adiós a la conversión de signo (`valor = -monto`). El `tipo` ya guarda esa información.
 
-### 1.3 Refactor de las funciones funcionales de C06
+### 1.3 Corregir las funciones de `functional-utils.js`
 
-Tus funciones funcionales ahora pueden filtrar/buscar **por cualquier propiedad**:
+Ahora filtran/operan **por propiedad** (`movimiento.tipo`, `movimiento.valor`):
 
 ```javascript
-const obtenerIngresos = movs => movs.filter(m => m.tipo === 'ingreso');
+const obtenerIngresos = movimientos =>
+  movimientos.filter(movimiento => movimiento.tipo === 'ingreso');
 
-const obtenerGastos = movs => movs.filter(m => m.tipo === 'gasto');
+const obtenerGastos = movimientos =>
+  movimientos.filter(movimiento => movimiento.tipo === 'gasto');
 
-const buscarPorNombre = (movs, texto) =>
-  movs.find(m => m.nombre.toLowerCase().includes(texto.toLowerCase()));
+const totalIngresos = movimientos =>
+  obtenerIngresos(movimientos).reduce((acumulador, movimiento) => acumulador + movimiento.valor, 0);
 
-const totalIngresos = movs =>
-  obtenerIngresos(movs).reduce((acc, m) => acc + m.valor, 0);
+const totalGastos = movimientos =>
+  obtenerGastos(movimientos).reduce((acumulador, movimiento) => acumulador + movimiento.valor, 0);
 
-const totalGastos = movs =>
-  obtenerGastos(movs).reduce((acc, m) => acc + m.valor, 0);
+// ⚠️ CAMBIA DE LÓGICA: antes valores tenían signo y bastaba SUMAR todo.
+// Ahora valor es positivo y el tipo es explícito → saldo = ingresos - gastos.
+const calcularSaldo = movimientos =>
+  totalIngresos(movimientos) - totalGastos(movimientos);
 
-const calcularSaldo = movs => totalIngresos(movs) - totalGastos(movs);
+// ⚠️ EL SIGNO SE INVIERTE: antes buscaba valor < -monto; ahora valor > monto.
+const buscarPrimerGastoMayor = (movimientos, monto) =>
+  obtenerGastos(movimientos).find(movimiento => movimiento.valor > monto);
+
+// Retorna: [cantidad, totalIngresos, totalGastos, saldo]
+const generarValoresReporte = movimientos => [
+  movimientos.length,
+  totalIngresos(movimientos),
+  totalGastos(movimientos),
+  calcularSaldo(movimientos)
+];
 ```
 
-> 💡 Ahora `.filter(m => m.tipo === 'ingreso')` es legible — no necesitamos la convención de signos. El objeto **dice explícitamente** qué tipo es.
+> 🗑️ **`montosAbsolutos` queda obsoleta:** existía para quitar el signo con `Math.abs`. Como ahora `valor` ya es positivo, no se necesita — **bórrala**. (Buen ejemplo de cómo un mejor modelo elimina código.)
 
-✅ **Checkpoint 1 (~40 min):** tu `movimientos` es array de objetos. Registras 3 movimientos con `prompt` y la consola muestra `[{ nombre, tipo, valor }, ...]`. Las funciones de filtro funcionan por `m.tipo`.
+### 1.4 Corregir `imprimirReporte` — de 2 arrays a 1
 
-🏆 **Reto autónomo:** crea `agruparPorTipo(movs)` que devuelva `{ ingresos: [...], gastos: [...] }` usando `.reduce`.
+```javascript
+// ANTES: imprimirReporte(nombres, valores)  → necesitaba 2 arrays paralelos
+// AHORA: imprimirReporte(movimientos)        → un solo array; cada objeto trae nombre y tipo
+const imprimirReporte = movimientos => {
+  console.log('--- Resumen Final ---');
+
+  movimientos.forEach((movimiento, indice) => {
+    console.log(`  ${indice + 1}. ${movimiento.nombre} (${movimiento.tipo}): $${movimiento.valor.toFixed(2)}`);
+  });
+
+  const reporte = generarValoresReporte(movimientos);
+  console.log('Total movimientos:', reporte[0]);
+  console.log('Total ingresos: $' + reporte[1].toFixed(2));
+  console.log('Total gastos: $' + reporte[2].toFixed(2));   // ya es positivo: sin Math.abs
+  console.log('Saldo: $' + reporte[3].toFixed(2));
+};
+```
+
+> 💡 Antes `imprimirReporte` cruzaba `nombres[indice]` con `valores[indice]` (frágil). Ahora cada `movimiento` trae su propio nombre y tipo — **imposible desincronizar**.
+
+### 1.5 Flujo final en `app.js`
+
+```javascript
+let continuar = 'si';
+while (continuar === 'si') {
+  registrarMovimiento();
+  continuar = prompt('¿Registrar otro movimiento? (si/no):');
+}
+
+imprimirReporte(movimientos);   // un solo argumento
+```
+
+✅ **Checkpoint 1 (~50 min):** registras 3 movimientos; `imprimirReporte(movimientos)` muestra el desglose y un saldo correcto. `calcularSaldo` resta gastos (no suma signos) y `buscarPrimerGastoMayor` usa `valor > monto`.
+
+🏆 **Reto autónomo:** `agruparPorTipo(movimientos)` → `{ ingresos: [...], gastos: [...] }` con `.reduce`.
 
 ---
 
-## Parte 2 — Funciones Constructoras (~30 min)
+## Parte 2 — POO con `class`, paso a paso (~40 min)
 
-> **Objetivo:** crear objetos con un "tipo personalizado" — `Movimiento` — usando función constructora + `new` + `this`.
+> **Objetivo:** construir la clase `Movimiento` **por capas** — primero las propiedades, luego el constructor, luego los métodos. Nada de golpe.
 
-### 2.1 ¿Para qué constructoras si ya tengo objetos literales?
+### 2.1 ¿Por qué una clase?
 
-Hasta ahora cada movimiento es `{ nombre, tipo, valor }` escrito a mano. Pero ¿qué pasa si:
-- Quiero que **todo movimiento tenga una fecha automática**?
-- Quiero que **cada movimiento sepa decir si es ingreso** (sin tener que recordar la lógica afuera)?
-- Quiero que **crear un movimiento sea una sola línea reutilizable**?
+En la P1 escribiste `{ nombre, tipo, valor }` a mano por cada movimiento. Una **clase** es un **molde** que crea objetos con la misma forma — y, además, con **comportamiento** propio. La vamos a construir en 3 capas.
 
-Para eso existen las **funciones constructoras**: un molde que crea objetos consistentes con datos + comportamiento.
+### 2.2 Capa 1 — Propiedades (los datos de cada objeto)
 
-### 2.2 Tu primera constructora
-
-En `oop-objects.js`:
+Una clase vacía ya sirve de molde. Con `new` creas una **instancia** y le pones **propiedades**:
 
 ```javascript
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-  this.fecha = new Date().toLocaleDateString();
+class Movimiento {}              // molde vacío
 
-  this.esIngreso = function() {
-    return this.tipo === 'ingreso';
-  };
+const m = new Movimiento();      // 'new' crea una INSTANCIA (objeto a partir del molde)
+m.nombre = 'Cena';               // le agregas PROPIEDADES
+m.tipo = 'gasto';
+m.valor = 45.5;
 
-  this.esGasto = function() {
-    return this.tipo === 'gasto';
-  };
-}
+console.log(m.nombre);           // 'Cena'
 ```
 
-**Reglas de constructora:**
-- **Nombre en MAYÚSCULA** (`Movimiento`, no `movimiento`) — convención que la marca como constructora.
-- **`this.propiedad = valor`** dentro del cuerpo guarda datos en el objeto que se crea.
-- **`this.metodo = function() {...}`** agrega comportamiento al objeto.
+* **Propiedad** = un dato del objeto (`nombre`, `tipo`, `valor`).
+* **`new Movimiento()`** crea un objeto vacío a partir del molde.
 
-### 2.3 Crear instancias con `new`
+> ⚠️ Pero asignar las 3 propiedades **a mano cada vez** que creas un movimiento es tedioso y fácil de olvidar. Vamos a automatizarlo → eso hace el **constructor**.
+
+### 2.3 Capa 2 — Constructor (pon las propiedades automáticamente)
+
+El **`constructor`** es un método especial que corre al hacer `new`. Su trabajo: **recibir los datos y guardarlos como propiedades** usando `this`:
+
+```javascript
+class Movimiento {
+  constructor(nombre, tipo, valor) {
+    this.nombre = nombre;   // "guarda en ESTE objeto la propiedad nombre"
+    this.tipo = tipo;
+    this.valor = valor;
+  }
+}
+
+const cena = new Movimiento('Cena', 'gasto', 45.5);   // 1 sola línea
+console.log(cena.nombre);   // 'Cena'
+console.log(cena.valor);    // 45.5
+```
+
+* **`this`** = el objeto que se está creando.
+* **`new Movimiento('Cena', 'gasto', 45.5)`** llama al constructor y te devuelve el objeto **ya con sus propiedades**.
+
+> 💡 Son las **mismas propiedades** de la capa 1 (`nombre`, `tipo`, `valor`), pero ahora se ponen **solas** al crear. Eso es el constructor: "cada vez que nace un `Movimiento`, ponle estas propiedades".
+>
+> ⚠️ Si olvidas `new`, `class` lanza un error claro: `Class constructor Movimiento cannot be invoked without 'new'`.
+
+### 2.4 Capa 3 — Métodos (comportamiento que usa las propiedades)
+
+Un **método** es una función dentro de la clase que **usa las propiedades** (`this.x`):
+
+```javascript
+class Movimiento {
+  constructor(nombre, tipo, valor) {
+    this.nombre = nombre;
+    this.tipo = tipo;
+    this.valor = valor;
+    this.fecha = new Date().toLocaleDateString();
+  }
+
+  esIngreso() {
+    return this.tipo === 'ingreso';   // usa la propiedad 'tipo'
+  }
+
+  esGasto() {
+    return this.tipo === 'gasto';
+  }
+
+  formatear() {
+    const signo = this.esIngreso() ? '+' : '-';
+    return `${this.nombre}: ${signo}$${this.valor.toFixed(2)}`;
+  }
+}
+```
 
 ```javascript
 const salario = new Movimiento('Salario', 'ingreso', 3000);
-const cena = new Movimiento('Cena', 'gasto', 45.50);
-
-console.log(salario.nombre);       // 'Salario'
-console.log(salario.fecha);        // '24/05/2026' (fecha de hoy)
 console.log(salario.esIngreso());  // true
-console.log(cena.esGasto());       // true
+console.log(salario.formatear());  // 'Salario: +$3000.00'
 ```
 
-**Qué hace `new`:**
-1. Crea un objeto vacío `{}`.
-2. Lo asigna a `this`.
-3. Ejecuta el cuerpo de la constructora (que llena `this` con propiedades y métodos).
-4. Retorna `this`.
+> 💡 Un objeto literal también puede tener métodos (`{ formatear() {} }`); en `class` se escriben **igual**, solo que el molde se los da a **todas** las instancias.
 
-> ⚠️ **Sin `new`**, la constructora no funciona. `Movimiento('Salario', 'ingreso', 3000)` (sin `new`) NO retorna un objeto — retorna `undefined`. Y peor, contamina el `this` global.
+### 2.5 Usa la clase en el proyecto
 
-### 2.4 Constructora `Presupuesto` que gestiona los movimientos
+`registrarMovimiento` ahora crea **instancias** en vez de objetos literales:
 
 ```javascript
-function Presupuesto() {
-  this.movimientos = [];
+movimientos.push(new Movimiento(nombre, tipo, valor));
+```
 
-  this.agregar = function(movimiento) {
+Y como cada movimiento es un `Movimiento`, `imprimirReporte` puede usar `movimiento.formatear()`:
+
+```javascript
+movimientos.forEach((movimiento, indice) => {
+  console.log(`  ${indice + 1}. ${movimiento.formatear()}`);
+});
+```
+
+✅ **Checkpoint 2 (~90 min):** construiste `Movimiento` por capas (propiedades → constructor → métodos); registras movimientos como instancias y el reporte usa `formatear()`.
+
+🏆 **Reto autónomo:** método `antiguedadEnDias()` que calcule días desde `this.fecha` hasta hoy.
+
+---
+
+## Parte 3 — `class Presupuesto`: encapsulación (~30 min)
+
+> **Objetivo:** aplicar el mismo patrón (propiedad → constructor → métodos) a una segunda clase que **contiene y gestiona** los movimientos. Aquí **cierras la lógica** del Gestor.
+
+### 3.1 El molde con estado + comportamiento
+
+Ya conoces el patrón. `Presupuesto` tiene **una propiedad** (un array) y **varios métodos**:
+
+```javascript
+class Presupuesto {
+  constructor() {
+    this.movimientos = [];          // propiedad: el array de movimientos
+  }
+
+  agregar(movimiento) {
     this.movimientos.push(movimiento);
-  };
+  }
 
-  this.totalIngresos = function() {
+  eliminar(nombre) {
+    this.movimientos = this.movimientos.filter(movimiento => movimiento.nombre !== nombre);
+  }
+
+  totalIngresos() {
     return this.movimientos
-      .filter(m => m.esIngreso())
-      .reduce((acc, m) => acc + m.valor, 0);
-  };
+      .filter(movimiento => movimiento.esIngreso())
+      .reduce((acumulador, movimiento) => acumulador + movimiento.valor, 0);
+  }
 
-  this.totalGastos = function() {
+  totalGastos() {
     return this.movimientos
-      .filter(m => m.esGasto())
-      .reduce((acc, m) => acc + m.valor, 0);
-  };
+      .filter(movimiento => movimiento.esGasto())
+      .reduce((acumulador, movimiento) => acumulador + movimiento.valor, 0);
+  }
 
-  this.saldo = function() {
+  saldo() {
     return this.totalIngresos() - this.totalGastos();
-  };
+  }
 
-  this.resumen = function() {
+  buscarPorNombre(texto) {
+    return this.movimientos.find(movimiento =>
+      movimiento.nombre.toLowerCase().includes(texto.toLowerCase()));
+  }
+
+  resumen() {
     return {
       cantidad: this.movimientos.length,
-      totalIngresos: this.totalIngresos(),
-      totalGastos: this.totalGastos(),
+      ingresos: this.totalIngresos(),
+      gastos: this.totalGastos(),
       saldo: this.saldo()
     };
-  };
+  }
 }
 ```
 
-> 💡 **Encapsulación**: `Presupuesto` tiene SU array de movimientos Y los métodos que operan sobre ellos, todos juntos. Antes el array estaba "suelto" en una global; ahora vive dentro del objeto. Es el alma de OOP.
+> 💡 **Encapsulación:** el array vivía suelto en una global y las funciones estaban aparte en `functional-utils.js`. Ahora **datos + métodos viven juntos** dentro de `Presupuesto`. Las funciones sueltas de la P1 quedan absorbidas como **métodos** → puedes borrarlas de `functional-utils.js`.
+>
+> 🆙 **Mejora del reporte:** `resumen()` devuelve un **objeto con nombres** (`.cantidad`, `.saldo`) en vez del array posicional `generarValoresReporte` (`reporte[0]`, `reporte[1]`…). Mismo salto "posicional → nombrado" que hiciste con el modelo.
 
-### 2.5 Prueba el modelo completo
+### 3.2 Prueba el modelo completo en consola
 
 ```javascript
 const miPresupuesto = new Presupuesto();
@@ -303,130 +396,29 @@ miPresupuesto.agregar(new Movimiento('Cena', 'gasto', 45.50));
 miPresupuesto.agregar(new Movimiento('Freelance', 'ingreso', 500));
 
 console.log(miPresupuesto.resumen());
-// { cantidad: 3, totalIngresos: 3500, totalGastos: 45.50, saldo: 3454.50 }
+// { cantidad: 3, ingresos: 3500, gastos: 45.5, saldo: 3454.5 }
+
+miPresupuesto.eliminar('Cena');
+console.log(miPresupuesto.saldo());                              // 3500
+console.log(miPresupuesto.buscarPorNombre('free').formatear());  // 'Freelance: +$500.00'
 ```
 
-✅ **Checkpoint 2 (~70 min):** creas 3 instancias de `Movimiento` y las agregas a una instancia de `Presupuesto`. `miPresupuesto.resumen()` devuelve un objeto con cantidad, totales y saldo correctos.
+✅ **Checkpoint 3 (~120 min):** `miPresupuesto.resumen()` devuelve cantidad/ingresos/gastos/saldo correctos; `eliminar` y `buscarPorNombre` funcionan. **El Gestor está completo en lógica.**
 
-🏆 **Reto autónomo:** agrega un método `formatear()` al constructor `Movimiento` que retorne un string como `"Salario: +$3000"` para ingresos o `"Cena: -$45.50"` para gastos.
-
----
-
-## Parte 3 — Primer puente JS ↔ HTML (~35 min)
-
-> **Objetivo:** capturar input desde un formulario HTML real (no más `prompt`). Es el primer puente entre tu código y la página.
->
-> ⚠️ El HTML del form viene **pre-armado** en el template del lab. **No modifiques el HTML** — concéntrate en escribir ~5-8 líneas de JS nuevas.
-
-### 3.1 Template HTML pre-armado
-
-En `index.html` (ya incluido en el repo template del lab) tienes:
-
-```html
-<form id="form-movimiento">
-  <label for="nombre">Nombre</label>
-  <input type="text" id="nombre" required>
-
-  <label for="tipo">Tipo</label>
-  <select id="tipo" required>
-    <option value="">Selecciona</option>
-    <option value="ingreso">Ingreso</option>
-    <option value="gasto">Gasto</option>
-  </select>
-
-  <label for="valor">Monto</label>
-  <input type="number" id="valor" min="0.01" required>
-
-  <button type="submit">Agregar</button>
-</form>
-
-<p>Saldo total: <span id="saldo-total">0</span></p>
-```
-
-> 💡 Reconoces este patrón: form accesible de C01 + validación nativa de C04.
-
-### 3.2 Conceptos DOM nuevos (mínimos)
-
-| Concepto | Para qué |
-|---|---|
-| **`document.querySelector('#id')`** | Encuentra un elemento por su `id`. Devuelve el elemento (o `null` si no existe). |
-| **`.value`** | Lee (o escribe) el contenido de un input/select. |
-| **`.textContent`** | Lee/escribe el texto adentro de cualquier elemento. |
-| **`element.addEventListener('evento', fn)`** | Llama `fn` cuando ocurra el evento (`'click'`, `'submit'`, etc.). |
-| **`event.preventDefault()`** | Evita el comportamiento por defecto del navegador (en submit: recargar la página). |
-
-### 3.3 Conecta el form al modelo OOP
-
-En `app.js` después de definir `Presupuesto`:
-
-```javascript
-const form = document.querySelector('#form-movimiento');
-const saldoSpan = document.querySelector('#saldo-total');
-const miPresupuesto = new Presupuesto();
-
-form.addEventListener('submit', function(event) {
-  event.preventDefault();   // sin esto, la página recarga
-
-  const nombre = document.querySelector('#nombre').value;
-  const tipo = document.querySelector('#tipo').value;
-  const valor = parseFloat(document.querySelector('#valor').value);
-
-  const movimiento = new Movimiento(nombre, tipo, valor);
-  miPresupuesto.agregar(movimiento);
-
-  saldoSpan.textContent = '$' + miPresupuesto.saldo().toFixed(2);
-
-  console.log('Agregado:', movimiento);
-  console.log('Estado:', miPresupuesto.movimientos);
-
-  form.reset();   // limpia el form
-});
-```
-
-### 3.4 Prueba en navegador
-
-1. Abre `index.html` en navegador.
-2. Abre DevTools (F12 → Console).
-3. Llena el form 3 veces (1 ingreso, 2 gastos) y haz submit cada vez.
-4. Verifica:
-   - El `saldo-total` se actualiza en pantalla.
-   - La consola muestra el array `miPresupuesto.movimientos` con todas las instancias.
-   - Cada movimiento es **una instancia de `Movimiento`** (tiene `nombre`, `tipo`, `valor`, `fecha`, `esIngreso()`, `esGasto()`).
-   - El form se limpia después de cada envío.
-
-✅ **Checkpoint 3 (~105 min):** cada submit del form crea una nueva instancia de `Movimiento` y la agrega al `Presupuesto`. El saldo en pantalla se actualiza solo.
-
-🏆 **Reto autónomo:** agrega validación pre-instancia: si el `tipo` no es válido o el `valor` es 0 o negativo, **no agregues** y muestra `alert`. Pista: condición antes de crear el `new Movimiento(...)`.
-
-> 📝 **Lo que NO haces aquí:** `createElement`, lista dinámica de `<li>`, eventos múltiples (delete, edit). Eso es M3. Aquí: solo capturar input y actualizar UN texto.
+🏆 **Reto autónomo:** método `topGastos(n)` que devuelva los `n` gastos más grandes (filtra gastos → ordena por `valor` desc → corta).
 
 ---
 
 ## ⭐ Logros Adicionales
 
-- **Logro 1 — Lista en pantalla:** después de cada submit, muestra el nombre y monto del movimiento en un `<ul>` ya pre-armado en el HTML. Pista: `ul.innerHTML += '<li>...</li>'` (en M3 verás la forma correcta con `createElement`).
-- **Logro 2 — Validación con `esValido()`:** agrega un método `esValido()` al constructor `Movimiento` que retorne `true/false` validando todos sus campos. Refactoriza el listener del form para usarlo.
-- **Logro 3 — Alerta de gastos:** método `verificarLimites()` en `Presupuesto` que alerte cuando gastos superen 80% de ingresos.
+- **Logro 1 — `formatearTodos()`:** método en `Presupuesto` que devuelva un array de strings (`movimiento.formatear()` de cada uno). Lo reusaremos en C08 para pintar la lista.
+- **Logro 2 — `verificarLimites()`:** método que avise cuando los gastos superen el 80% de los ingresos.
+- **Logro 3 — Validación en `Movimiento`:** método `esValido()` que verifique nombre, tipo y valor; úsalo en `agregar` antes de aceptar el movimiento.
 
 ---
 
 ## 📝 Instrucciones de Entrega
 
-1. **`oop-objects.js`** con `Movimiento` y `Presupuesto`.
-2. **`app.js`** con el listener del form conectado al modelo.
-3. **README.md** con:
-   - Explicación breve del refactor: ¿qué era array paralelo, qué es ahora array de objetos?
-   - Lista de propiedades y métodos de cada constructora.
-   - **Reflexión obligatoria:** *Compara cómo eliminabas un movimiento en C05 (2 splices) con cómo lo harías ahora (1 splice sobre array de objetos). ¿Es más seguro? ¿Por qué?*
-4. **Entrega Final:**
-   - URL del repositorio.
-   - URL de GitHub Pages funcional.
-   - Captura del form + consola con 3 movimientos creados como instancias.
+1. **`oop-objects.js`** con `class Movimiento` y `class Presupuesto`.
+2. **Entrega:** URL del repo + captura de consola con el `resumen()` de 3 movimientos.
 
----
-
-## 🔮 Lo que viene en C08
-
-Cada instancia de `Movimiento` que creas hoy tiene SUS PROPIOS métodos (`esIngreso`, `esGasto`) — eso es **memoria duplicada**. Si creas 1000 movimientos, son 1000 copias del mismo `esIngreso()`. En C08 vas a aprender **prototipos**: una forma de **compartir** métodos entre todas las instancias usando memoria una sola vez. Además crearás subtipos `Ingreso` e `Egreso` que heredan de `Movimiento`.
-
-> Y en M4 verás que la sintaxis `class` de ES6 es **azúcar sobre prototipos**. Lo que escribes hoy es la base real.

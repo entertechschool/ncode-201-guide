@@ -1,4 +1,4 @@
-# Guía del Facilitador — Clase 07: Objetos Literales + POO
+# Guía del Facilitador — Clase 07: Objetos + POO con `class`
 
 > Tiempo de lectura: 8 minutos | Tercera clase del M2 | Prepárate antes de clase
 
@@ -6,50 +6,45 @@
 
 ## 🔑 Conceptos Clave
 
-- **Objeto literal** (NUEVO): `{ key: value }`, acceso con `.prop`, **shorthand property** `{ nombre, tipo, valor }`. Esto es lo más importante de la clase — todo lo demás se construye sobre esto.
-- **Función constructora**: nombre en mayúscula + `this.x = ...` + se invoca con `new`. Crea objetos consistentes "de un mismo tipo".
-- **`this` y `new`**: dentro de la constructora `this` apunta al objeto que se crea. `new` orquesta el proceso (crea objeto vacío → asigna a this → ejecuta cuerpo → retorna this).
-- **Encapsulación**: datos (propiedades) y comportamientos (métodos) viven dentro del mismo objeto.
-- **Primer puente JS↔HTML**: `document.querySelector('#id').value` + `addEventListener('submit', fn)` + `event.preventDefault()` — los 3 mínimos para capturar input de un form.
+- **Objeto literal** (NUEVO): `{ key: value }`, acceso/modificación con `.prop`. Es la base — todo lo demás se construye sobre esto.
+- **`class`** (NUEVO): el **molde** para crear muchos objetos con la misma forma y comportamiento. Se enseña **por capas**: propiedades → constructor → métodos.
+- **`constructor` + `this` + `new`**: el `constructor` corre al hacer `new` e inicializa las propiedades con `this` (el objeto que se está creando).
+- **Método**: función dentro de la clase que usa las propiedades (`this.x`).
+- **Encapsulación**: datos (propiedades) + comportamientos (métodos) viven dentro del mismo objeto (`class Presupuesto`).
+
+> ❗ C07 es **solo lógica, en consola**. No hay HTML/CSS ni DOM (eso es C08/M3). No hay herencia ni prototipos (unidad de POO posterior).
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Objeto literal <> Ficha de inscripción:**
-Una ficha tiene campos con etiquetas (nombre, edad, email). Cada campo es una **propiedad**. La ficha agrupa datos heterogéneos relacionados entre sí. Un array sería una lista de fichas vacías numeradas; un objeto es UNA ficha llena.
+**Objeto literal ⟷ Ficha de inscripción:** una ficha tiene campos con etiquetas (nombre, edad). Cada campo es una **propiedad**. Un array sería una pila de fichas numeradas; un objeto es UNA ficha llena.
 
-**Constructora <> Molde de galletas:**
-El molde dice qué forma tendrán las galletas. Cada galleta que sacas con el molde tiene la misma forma pero distinto sabor/color. La constructora es el molde; las instancias son las galletas.
+**`class` ⟷ Molde de galletas:** el molde define la forma; cada galleta sale igual de forma pero con distinto sabor. La clase es el molde; las **instancias** (`new`) son las galletas.
 
-**`this` <> "Yo" en un curriculum:**
-Cuando rellenas un CV, "Yo" cambia cada vez que un nuevo postulante lo escribe. La plantilla es la misma, pero "yo" apunta a la persona actual. Dentro de la constructora, `this` apunta al objeto que se está creando AHORA.
+**`this` ⟷ "Yo" en un CV:** la plantilla del CV es la misma, pero "Yo" apunta al postulante que lo está llenando AHORA. Dentro de la clase, `this` apunta al objeto que se crea en ese momento.
 
-**Encapsulación <> Caja de herramientas:**
-Cada herramienta vive con las cosas que necesita: el destornillador con las puntas, el taladro con las brocas. En vez de tener todas las herramientas sueltas en el piso y todas las puntas en otra caja, cada herramienta + sus accesorios viven juntos. Un objeto encapsula datos + sus métodos.
+**Encapsulación ⟷ Caja de herramientas:** cada herramienta vive con sus accesorios (taladro + brocas), no todo suelto. Un objeto encapsula datos + sus métodos.
 
-**Array paralelo → Objeto <> Hojas separadas vs ficha unificada:**
-Antes tenías una hoja con nombres y otra hoja con valores. Si las sacas del mismo orden, todo descalibra. Ahora tienes UNA ficha por movimiento con todos los datos juntos. Imposible perder la sincronización.
+**Arrays paralelos → Objeto ⟷ Hojas sueltas vs ficha unificada:** antes una hoja de nombres y otra de valores; si las descalibras, todo se corrompe. Ahora UNA ficha por movimiento, imposible desincronizar.
 
 ---
 
 ## 📚 Contexto Actual
 
-### Por qué objetos literales primero, constructoras después
+### Por qué objetos primero, `class` después
 
-Pedagógicamente CRÍTICO. Si saltas directo a `function Movimiento() { this... }`, el alumno aprende `this` + `new` + sintaxis especial de constructora al mismo tiempo que aprende qué es un objeto. **Demasiado.**
+Pedagógicamente CRÍTICO. Si saltas directo a `class`, el alumno aprende `class` + `constructor` + `this` + `new` al mismo tiempo que aprende qué es un objeto. **Demasiado.** Primero (P0+P1) usa objetos literales directamente; cuando llegue `class` (P2), el `this.x = ...` se siente "ah, está armando el objeto que ya entendí".
 
-Primero (P0+P1): "esto es un objeto, así se accede a sus propiedades, así se ven en arrays". El alumno usa objetos literales **directamente** en su código. Cuando llegue P2 con constructoras, el `this.x = ...` se vuelve "ah, está construyendo el objeto que ya entendí".
+### Por qué `class` y NO funciones constructoras
 
-### Por qué constructoras y no `class` ES6 directamente
+En M2 ya **no enseñamos prototipos** (se difieren). La única razón para empezar con funciones constructoras era revelar después "class es azúcar sobre prototipos" — sin esa revelación, las constructoras son solo una forma más vieja y enredada de lo mismo. Ventajas de `class`: (1) transición casi nula desde el objeto literal (el `metodo() {}` se escribe igual); (2) **más seguro** — sin `new` lanza un error claro; (3) es el estándar moderno.
 
-`class` ES6 es azúcar sobre constructoras + prototipos. Si arrancas con `class`, el alumno NO entiende qué pasa por debajo. La filosofía del M2 (y de Code 201) es: **mostrar lo que está debajo primero**. En M4 verás `class` y el alumno reconocerá: "ah, esto es lo que ya aprendí". Lo opuesto sería magia.
+### Por qué construir `class` por capas (no de golpe)
 
-### Por qué un form HTML pre-armado (no creado por el alumno)
+Mostrar la clase completa de una abruma. La secuencia **propiedades → constructor → métodos** hace que cada capa **motive** la siguiente: "asignar propiedades a mano es tedioso → el constructor las pone solas → ahora dales comportamiento con métodos". Es construcción de aprendizaje, no volcado.
 
-El foco de C07 es OOP. Si dedicas 30 min a escribir HTML del form, el alumno pierde el hilo. El template viene listo desde C01-C04 (form accesible + validación nativa). Aquí solo conecta JS al form. **El DOM completo (createElement, render dinámico) llega en M3.**
-
-**Fuentes:** [MDN — Trabajando con objetos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics){:target="_blank"}, [MDN — Constructor functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects#using_a_constructor_function){:target="_blank"}
+**Fuentes:** [MDN — Trabajando con objetos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics){:target="_blank"}, [MDN — Classes](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes){:target="_blank"}
 
 ---
 
@@ -58,22 +53,22 @@ El foco de C07 es OOP. Si dedicas 30 min a escribir HTML del form, el alumno pie
 | Fase | Tiempo | Foco |
 |---|---|---|
 | Intro + repaso | 15 min | El dolor de arrays paralelos + motivación: ¿y si fueran un objeto? |
-| Demo Técnica | 20 min | Objeto literal → array de objetos → constructora con `new`. |
-| Lab (P0-P3) | 105 min | P0 Objetos literales · P1 Refactor del modelo · P2 Constructoras · P3 Form HTML. |
-| Cierre | 15 min | Lo que ganamos con OOP + semilla C08 (prototipos). |
+| Demo Técnica | 20 min | Objeto literal → array de objetos → `class` por capas. |
+| Lab (P0-P3) | 120 min | P0 Objetos · P1 Refactor del modelo · P2 `class` por capas · P3 `class Presupuesto`. |
+| Cierre | 15 min | Qué ganamos con objetos + `class` · semilla C08 (interfaz con Tailwind). |
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo Principal — el refactor del modelo
+### Demo Principal — el refactor del modelo (5 min)
 
-**Qué mostrar (5 min):** lado a lado, arrays paralelos vs array de objetos.
+Lado a lado, arrays paralelos vs array de objetos:
 
 ```javascript
 // ANTES
 let nombres = ['Salario', 'Cena'];
-let valores = [3000, -45.50];
+let valores = [3000, -45.50];          // tipo por signo
 
 // AHORA
 let movimientos = [
@@ -82,157 +77,91 @@ let movimientos = [
 ];
 
 // Eliminar el primer movimiento:
-// ANTES: nombres.shift(); valores.shift();  ← 2 operaciones, si olvidas una, desastre
-// AHORA: movimientos.shift();                ← 1 operación, integridad garantizada
+// ANTES: nombres.shift(); valores.shift();  ← 2 ops; si olvidas una, corrupción silenciosa
+// AHORA: movimientos.shift();               ← 1 op, integridad garantizada
 ```
 
-**Script sugerido:**
-```
-Facilitador: "Antes el nombre y el valor eran 2 entradas separadas — si las desincronizabas,
-nadie te avisaba. Era responsabilidad del programador mantenerlas alineadas.
-Ahora viajan JUNTAS. Si elimino movimientos[2], elimino TODO de ese movimiento.
-Es imposible desincronizar. Eso es lo que objetos nos dan."
-```
+> **Script:** "Antes el nombre y el valor eran entradas separadas. Si las desincronizabas, nadie te avisaba. Ahora viajan JUNTAS — imposible desincronizar."
 
-**Plan B (si la demo falla):** CodePen con el `shift()` desincronizado en pizarra digital.
+⚠️ **Aviso clave del refactor:** con `tipo` explícito y `valor` positivo, **`calcularSaldo` cambia** (ya no es sumar el array; es `ingresos - gastos`) y **`imprimirReporte` pasa de `(nombres, valores)` a `(movimientos)`**. Es el punto donde más alumnos se traban.
 
-### Demo de constructora — del objeto literal al molde
-
-**5 min en pizarra:**
+### Demo de `class` por capas (5 min en pizarra)
 
 ```
-1. Aquí hay un objeto literal:
-   let m1 = { nombre: 'Cena', tipo: 'gasto', valor: 45.50 };
+1. Molde vacío + propiedades a mano:
+   class Movimiento {}
+   const m = new Movimiento();  m.nombre = 'Cena';  m.valor = 45.5;
+   → "ponerlas a mano cada vez es tedioso..."
 
-2. Y otro:
-   let m2 = { nombre: 'Salario', tipo: 'ingreso', valor: 3000 };
+2. Constructor: las pone solas
+   class Movimiento { constructor(nombre, tipo, valor) { this.nombre = nombre; ... } }
+   const cena = new Movimiento('Cena', 'gasto', 45.5);
 
-3. Ambos tienen las MISMAS propiedades. ¿Por qué escribir el mismo molde 2 veces?
-
-4. Hagamos una FUNCIÓN que escribe el molde:
-   function Movimiento(nombre, tipo, valor) {
-     this.nombre = nombre;
-     this.tipo = tipo;
-     this.valor = valor;
-   }
-
-5. Y la invocamos con NEW:
-   let m1 = new Movimiento('Cena', 'gasto', 45.50);
-   let m2 = new Movimiento('Salario', 'ingreso', 3000);
+3. Métodos: comportamiento sobre las propiedades
+   esIngreso() { return this.tipo === 'ingreso'; }
 ```
 
-> El alumno entiende: la constructora es **el molde**, las instancias son las **galletas**.
+> El alumno ve la clase **nacer por capas**, no caer del cielo completa.
 
 ### Transición al Lab
 
 ```
-Facilitador: "P0 son 15 min de objetos literales SIN constructoras. NO se lo salten.
-Después P1 refactoriza el modelo: si en C05/C06 tienen el código, lo cambian aquí.
-P2 introduce constructoras (el molde). P3 es el form HTML.
-Si NO terminan P3, está bien — el lab del módulo se evalúa en C08, no aquí."
+"P0 son 15 min de objetos básicos. P1 refactoriza TODO el código de C06
+(registrarMovimiento, las funciones, imprimirReporte) — ojo con calcularSaldo.
+P2 construye class por capas. P3 encapsula en Presupuesto.
+Todo en consola: hoy no se toca HTML."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Escribe el objeto"
+### Dinámica 1: "Escribe el objeto" (tras P0.1)
+3 alumnos escriben en pizarra un objeto de "su mascota" o "su libro favorito"; comparas las propiedades. Pierden el miedo: un objeto es una "ficha" con campos.
 
-Después de P0.1: pide a 3 alumnos que escriban en pizarra un objeto que describa "su mascota" o "su libro favorito". Luego comparas las propiedades:
+### Dinámica 2: "Elimina sin desincronizar" (antes de P1)
+"En C05 tenías `nombres` y `valores`. ¿Cómo borras el movimiento #2? ¿Y si olvidas el segundo `splice`?" → discusión sobre corrupción silenciosa → "hoy con objetos, `movimientos.splice(2,1)` y listo."
 
-```javascript
-{ nombre: 'Firulais', edad: 5, raza: 'mestizo' }
-{ titulo: 'Cien años de soledad', autor: 'GGM', paginas: 432 }
-```
-
-> Los alumnos VEN que un objeto es una "ficha" con campos. Pierden el miedo.
-
-### Dinámica 2: "Elimina sin desincronizar"
-
-Antes de P1: pide al grupo que imagine un caso real de bug.
-
-```
-Facilitador: "En C05 tenían nombres y valores. Si quiero borrar el movimiento #2
-de Carlos, ¿qué pasos hago?"
-[Alumnos: 'nombres.splice(2, 1)' y 'valores.splice(2, 1)']
-Facilitador: "¿Y si olvido el segundo splice? ¿Qué le pasa a valores[2]?"
-[Discusión: ahora es el monto de otro movimiento — corrupción silenciosa]
-Facilitador: "Hoy con objetos, movimientos.splice(2, 1) y listo. Imposible olvidar."
-```
-
-### Dinámica 3: "Predice el constructor"
-
-Antes de P2.4: muestra `Movimiento` y pregunta:
-
-```
-Facilitador: "Tenemos Movimiento. Ahora vamos a hacer Presupuesto.
-¿Qué propiedades tendría? ¿Qué métodos?"
-[Recoger ideas: this.movimientos = [], agregar, totalIngresos, saldo]
-Facilitador: "OK, vamos a verificar si su intuición coincide."
-[Implementan P2.4]
-```
+### Dinámica 3: "Predice `Presupuesto`" (antes de P3)
+"Ya tienen `class Movimiento`. Ahora `class Presupuesto`: ¿qué propiedad tendría? ¿qué métodos?" → recoger ideas (`this.movimientos = []`, `agregar`, `saldo`, `resumen`) → implementan P3 y verifican su intuición.
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: Objeto literal con shorthand
-
-**Cuándo usarlo:** P0.3 cuando explicas shorthand.
+### Ejemplo 1: el `this` se decide al invocar
 
 ```javascript
-const nombre = prompt('Nombre:');
-const tipo = prompt('Tipo:');
-const valor = parseFloat(prompt('Monto:'));
-
-// Sin shorthand:
-movimientos.push({ nombre: nombre, tipo: tipo, valor: valor });
-
-// Con shorthand:
-movimientos.push({ nombre, tipo, valor });
-```
-
-**Tip:** "Es legal y común. Vas a verlo MUCHO. No es magia — es solo que cuando key y variable se llaman igual, JS asume `{ nombre: nombre }`."
-
-### Ejemplo 2: Constructor con método interno
-
-**Cuándo usarlo:** P2.2.
-
-```javascript
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-
-  this.esIngreso = function() {
-    return this.tipo === 'ingreso';
-  };
-}
-
 const cena = new Movimiento('Cena', 'gasto', 45);
-console.log(cena.esIngreso());  // false
+cena.esIngreso();   // this = cena (el objeto a la izquierda del punto)
 ```
+**Tip:** "El método sabe quién es `this` PORQUE se invocó con `cena.esIngreso()`."
 
-**Tip:** "El método sabe quién es `this` PORQUE se invocó con `cena.esIngreso()`. El `this` es el objeto a la izquierda del punto."
-
-### Ejemplo 3: El form connector (las 5 líneas clave)
-
-**Cuándo usarlo:** P3.
+### Ejemplo 2: la trampa del refactor (`calcularSaldo`)
 
 ```javascript
-const form = document.querySelector('#form-movimiento');
+// ❌ Heredado de C06 (valores con signo): ahora da MAL el saldo
+const calcularSaldo = movimientos =>
+  movimientos.reduce((a, m) => a + m.valor, 0);   // suma TODO como si fuera ingreso
 
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  const nombre = document.querySelector('#nombre').value;
-  const tipo = document.querySelector('#tipo').value;
-  const valor = parseFloat(document.querySelector('#valor').value);
-  miPresupuesto.agregar(new Movimiento(nombre, tipo, valor));
-  form.reset();
-});
+// ✅ Correcto: el tipo es explícito, valor es positivo
+const calcularSaldo = movimientos =>
+  totalIngresos(movimientos) - totalGastos(movimientos);
 ```
+**Tip:** "Si copian `calcularSaldo` de C06 tal cual, el saldo sale inflado. El signo ya no existe."
 
-**Tip:** "Si olvidan `event.preventDefault()`, la página RECARGA al hacer submit y pierden todo. Es el error #1 de JS↔HTML."
+### Ejemplo 3: clase vacía → con constructor
+
+```javascript
+class Movimiento {}                     // molde vacío, instancia "manual"
+const a = new Movimiento(); a.nombre = 'Cena';
+
+class Movimiento {                       // con constructor: automático
+  constructor(nombre, tipo, valor) { this.nombre = nombre; this.tipo = tipo; this.valor = valor; }
+}
+const b = new Movimiento('Cena', 'gasto', 45);
+```
+**Tip:** "Mismas propiedades; el constructor solo automatiza lo que hacías a mano."
 
 ---
 
@@ -240,29 +169,28 @@ form.addEventListener('submit', function(event) {
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| `undefined is not an object` | Olvidó `new` al invocar la constructora | "Mayúscula te recuerda que NECESITAS `new`." |
-| Todas las instancias comparten un mismo valor | Definió la propiedad fuera de `this` | Las propiedades VAN dentro del cuerpo con `this.x = ...`, no afuera |
-| `this is undefined` adentro del método | Llamó al método sin punto | `cena.esIngreso()` — el `this` viene del objeto a la izquierda del punto |
-| El form recarga la página al submit | Olvidó `event.preventDefault()` | Es la línea más importante del listener |
-| `null` al hacer querySelector | El script corre antes que el HTML exista | Confirmar que `<script>` está al FINAL del `<body>` |
-| `NaN` en el valor | `parseFloat(document.querySelector('#valor').value)` con input vacío | Validar `if (isNaN(valor))` antes de instanciar |
-| Constructora sin mayúscula | Convención violada | Renombrar a `Movimiento` (mayúscula). Funciona igual pero es señal de novato |
-| Quiere `class` ES6 desde ya | Conoce sintaxis más moderna | "En M4. Hoy entiendes lo que `class` hace POR DEBAJO." |
+| `Class constructor ... cannot be invoked without 'new'` | Llamó la clase sin `new` | Siempre `new Movimiento(...)` |
+| Saldo inflado / incorrecto | Copió `calcularSaldo` de C06 (suma con signo) | Ahora `saldo = totalIngresos - totalGastos` |
+| `imprimirReporte` falla | Sigue pasando `(nombres, valores)` | Ahora recibe `(movimientos)` — un solo array |
+| `montosAbsolutos` ya no se usa | Quedó de C06 para quitar el signo | Bórrala: `valor` ya es positivo |
+| `this is undefined` en un método | Llamó el método sin punto | `cena.esIngreso()` — `this` viene del objeto a la izquierda |
+| Propiedad compartida entre instancias | Definió el dato fuera del `constructor` | Las propiedades van en el `constructor` con `this.x = ...` |
+| Sigue con 2 arrays paralelos | No internalizó el refactor | Volver a la Dinámica 2 (desincronización) |
 
 ---
 
 ## ✅ Señales de Comprensión
 
-### El estudiante ENTIENDE cuando:
-- Diferencia objeto literal de constructora (y sabe cuándo usar cada uno).
-- Explica por qué `Movimiento(...)` sin `new` falla.
+**ENTIENDE cuando:**
+- Diferencia objeto literal de `class` (instancia vs molde).
+- Explica que el `constructor` "pone las propiedades" al hacer `new`.
 - Reconoce que `cena.esIngreso()` funciona porque `this = cena`.
-- Conecta el refactor del modelo con la integridad de datos.
+- Corrige `calcularSaldo` al nuevo modelo sin ayuda.
 
-### El estudiante NECESITA AYUDA cuando:
+**NECESITA AYUDA cuando:**
 - Confunde `this` con una variable normal.
 - Olvida `new` al crear instancias.
-- Sigue usando 2 arrays paralelos (no internalizó el refactor).
+- Mantiene 2 arrays paralelos.
 - Trata métodos como funciones globales (`esIngreso(cena)` en vez de `cena.esIngreso()`).
 
 ---
@@ -271,79 +199,61 @@ form.addEventListener('submit', function(event) {
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~15' | P0 lista | Crea un objeto literal con 3 propiedades y lee una con `.`. Identifica shorthand. |
-| ~40' | P1 lista | `movimientos` es array de objetos. `registrarMovimiento` hace 1 solo push. Filtros con `.tipo` funcionan. |
-| ~70' | P2 lista | Crea 3 instancias de `Movimiento` y las agrega a un `Presupuesto`. `miPresupuesto.resumen()` devuelve objeto con cantidad/totales/saldo. |
-| ~105' | P3 lista | Cada submit del form crea instancia + actualiza `#saldo-total` en pantalla. Form se limpia. |
-
-Si NO llega al Checkpoint 3 en 105 min: que cierre con P2 y termine P3 post-clase. P3 es importante pero no calificada todavía (eso es C08).
+| ~15' | P0 | Crea un objeto con 3 propiedades y lee/modifica una con `.`. |
+| ~50' | P1 | `movimientos` es array de objetos; `registrarMovimiento` hace 1 push; `calcularSaldo` resta gastos; `imprimirReporte(movimientos)` correcto. |
+| ~90' | P2 | Construyó `Movimiento` por capas; crea instancias con `new`; `.formatear()` y `.esIngreso()` funcionan. |
+| ~120' | P3 | `miPresupuesto.resumen()` devuelve cantidad/ingresos/gastos/saldo; `eliminar` y `buscarPorNombre` funcionan. |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-### Si el grupo está callado:
-- "¿Qué propiedades tendría un objeto `Producto` de un e-commerce?" — práctica de modelado.
-
-### Si alguien ya conocía `class`:
-- "Esa sintaxis llega en M4. Hoy hacemos la versión 'cruda' — y vas a ver que `class` es azúcar sobre esto."
-
-### Si la mayoría termina P2 antes:
-- Reto: implementar `obtenerMovimientosPorMes(mes)` usando la propiedad `fecha`.
-
-### Si pregunta sobre `this` con arrow functions:
-> "Arrow functions tienen `this` distinto a `function`. Hoy usamos `function` clásica adentro de la constructora. En M3/M4 lo profundizamos."
-
-### Si el form NO funciona:
-1. Revisar que `<script src="app.js">` esté al final del body.
-2. Confirmar `event.preventDefault()`.
-3. Verificar IDs del HTML coinciden con los selectores.
+- **Grupo callado:** "¿Qué propiedades tendría un objeto `Producto` de un e-commerce?" — práctica de modelado.
+- **Alguien ya conocía `class`:** pídele que explique al grupo qué hace `new` por dentro (crea el objeto, corre el constructor).
+- **Terminan P2 antes:** reto `obtenerMovimientosPorMes(mes)` usando la propiedad `fecha`.
+- **Preguntan por herencia (`extends`):** "Es la unidad de POO posterior. Hoy: una sola clase, sin herencia."
+- **Preguntan por arrow `this`:** "Hoy los métodos de `class` usan `this` clásico. Las diferencias con arrow las vemos más adelante."
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### P: ¿Por qué `Movimiento` con mayúscula?
-**R:** Convención. Recuerda al lector (y a ti) que es una **constructora** y que necesita `new`. Sin `new`, `Movimiento(...)` devuelve `undefined`.
+**P: ¿Cuál es la diferencia entre la clase y la instancia?**
+R: La clase es el **molde** (`class Movimiento`); la instancia es un **objeto concreto** creado con `new Movimiento(...)`. Una clase, muchas instancias.
 
-### P: ¿Puedo crear el objeto literal directamente sin constructora?
-**R:** Sí, totalmente: `let m = { nombre: 'Cena', tipo: 'gasto', valor: 45 }`. La constructora aporta consistencia + reutilización cuando creas MUCHOS objetos del mismo "tipo".
+**P: ¿Puedo usar un objeto literal en vez de una clase?**
+R: Sí: `{ nombre: 'Cena', tipo: 'gasto', valor: 45 }`. La clase aporta consistencia + métodos compartidos cuando creas MUCHOS objetos del mismo "tipo".
 
-### P: ¿`this` es como `self` en Python?
-**R:** Muy parecido — apunta al objeto actual. La diferencia: en Python `self` es explícito en cada método. En JS `this` es implícito y depende de cómo se invoque.
+**P: ¿`this` es como `self` en Python?**
+R: Muy parecido — apunta al objeto actual. En Python `self` es explícito en cada método; en JS `this` es implícito y depende de cómo se invoque.
 
-### P: ¿Cómo se borra una propiedad de un objeto?
-**R:** `delete obj.propiedad`. Pero raramente lo necesitas — usualmente asignas `obj.prop = null` o ignoras la propiedad.
-
-### P: ¿Para qué `event.preventDefault()`?
-**R:** El navegador por defecto recarga la página al hacer submit de un form. Eso destruye tu estado JS. `preventDefault` lo evita.
+**P: ¿Por qué los nombres de clase van en mayúscula (`Movimiento`)?**
+R: Convención: señala que es una clase y que se usa con `new`.
 
 ---
 
 ## 🔗 Conexiones del Curriculum
 
-### Esta clase construye sobre:
+### Construye sobre:
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C05 | Arrays + push | Hoy guardamos OBJETOS en el array |
-| C06 | `.filter`, `.reduce` | Hoy operan sobre objetos: `m => m.tipo === 'ingreso'` |
-| C01-C04 (M1) | `<form>`, `<input>`, `<label>` | Hoy capturas su `.value` desde JS |
+| C05 | Arrays + `push` | Hoy guardamos OBJETOS (instancias) en el array |
+| C06 | `.filter`, `.reduce` | Hoy operan sobre objetos: `m => m.tipo === 'ingreso'` — y se corrigen al nuevo modelo |
 
-### Conexión con C08 (Prototipos)
+### Conexión con C08 (Tailwind)
 
 Al cerrar:
 
-> "Cada instancia de Movimiento que crearon hoy tiene SU PROPIO `esIngreso`. Si crean 1000 movimientos, son 1000 copias del mismo método. La próxima clase aprenden **prototipos**: el método vive UNA sola vez y todas las instancias lo comparten. Y van a crear **subtipos**: `Ingreso` e `Egreso` que heredan de `Movimiento`."
+> "El modelo del Gestor ya está completo, pero solo lo ven en consola. En C08 aprenden **Tailwind CSS** para darle una **interfaz visual** — el Gestor por fin tendrá cara. Conectar esa UI a estas clases (clicks, formulario en vivo) es M3, con el DOM."
 
-**Pre-work implícito:** revisar [MDN — Inheritance and the prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain){:target="_blank"} para tener primer contacto antes de C08.
+**Más adelante (unidad de POO):** `extends`/`super` (herencia), polimorfismo y los prototipos que `class` usa por debajo.
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
-### Preguntas para el facilitador:
-- ¿Cuántos olvidaron `new` al menos una vez? Si fue mayoría, refuerza la convención de mayúscula al inicio de C08.
-- ¿Quién conectó P3 (form) en menos de 20 min? Son los que están listos para M3 (DOM).
-- ¿Algún alumno preguntó "¿esto es como en mi otro lenguaje (Python/Java)"? Buena señal — están conectando.
-- ¿La analogía del molde de galletas funcionó? Si no, prueba otra para C08.
+- ¿Cuántos olvidaron `new` al menos una vez? Si fue mayoría, refuerza al inicio de C08.
+- ¿Cuántos copiaron `calcularSaldo` de C06 sin corregirlo? Es el error más típico del refactor.
+- ¿La construcción de `class` por capas funcionó, o hubo que volver a "propiedad → constructor"?
+- ¿Algún alumno conectó con otro lenguaje (Python/Java)? Buena señal — están generalizando POO.
