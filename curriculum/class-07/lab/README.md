@@ -353,15 +353,23 @@ class Presupuesto {
     this.movimientos = this.movimientos.filter(movimiento => movimiento.nombre !== nombre);
   }
 
+  obtenerIngresos() {
+    return this.movimientos.filter(movimiento => movimiento.esIngreso());
+  }
+
+  obtenerGastos() {
+    return this.movimientos.filter(movimiento => movimiento.esGasto());
+  }
+
+  // Llama a obtenerIngresos() y acumula el valor directo de ese array resultante
   totalIngresos() {
-    return this.movimientos
-      .filter(movimiento => movimiento.esIngreso())
+    return this.obtenerIngresos()
       .reduce((acumulador, movimiento) => acumulador + movimiento.valor, 0);
   }
 
+  // Llama a obtenerGastos() y acumula el valor directo de ese array resultante
   totalGastos() {
-    return this.movimientos
-      .filter(movimiento => movimiento.esGasto())
+    return this.obtenerGastos()
       .reduce((acumulador, movimiento) => acumulador + movimiento.valor, 0);
   }
 
