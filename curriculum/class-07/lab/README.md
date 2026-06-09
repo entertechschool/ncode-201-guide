@@ -287,7 +287,7 @@ class Movimiento {
     return this.tipo === 'gasto';
   }
 
-  formatear() {
+  datosMovimiento() {
       let signo;
       
       if (this.esIngreso()) {
@@ -296,7 +296,7 @@ class Movimiento {
         signo = '-';
       }
       
-      return `${this.nombre}: ${signo}$${this.valor.toFixed(2)}`;
+      return `${this.nombre} (${this.tipo}): ${signo}$${this.valor.toFixed(2)}`;
     }
 }
 ```
@@ -304,7 +304,7 @@ class Movimiento {
 ```javascript
 const salario = new Movimiento('Salario', 'ingreso', 3000);
 console.log(salario.esIngreso());  // true
-console.log(salario.formatear());  // 'Salario: +$3000.00'
+console.log(salario.datosMovimiento());  
 ```
 
 > 💡 Un objeto literal también puede tener métodos (`{ formatear() {} }`); en `class` se escriben **igual**, solo que el molde se los da a **todas** las instancias.
@@ -317,11 +317,11 @@ console.log(salario.formatear());  // 'Salario: +$3000.00'
 movimientos.push(new Movimiento(nombre, tipo, valor));
 ```
 
-Y como cada movimiento es un `Movimiento`, `imprimirReporte` puede usar `movimiento.formatear()`:
+Y como cada movimiento es un `Movimiento`, `imprimirReporte` puede usar `movimiento.datosMovimiento()`:
 
 ```javascript
 movimientos.forEach((movimiento, indice) => {
-  console.log(`  ${indice + 1}. ${movimiento.formatear()}`);
+  console.log(`  ${indice + 1}. ${movimiento.datosMovimiento()}`);
 });
 ```
 
@@ -402,7 +402,7 @@ console.log(miPresupuesto.resumen());
 
 miPresupuesto.eliminar('Cena');
 console.log(miPresupuesto.saldo());                              // 3500
-console.log(miPresupuesto.buscarPorNombre('free').formatear());  // 'Freelance: +$500.00'
+console.log(miPresupuesto.buscarPorNombre('free').datosMovimiento());  
 ```
 
 ✅ **Checkpoint 3 (~120 min):** `miPresupuesto.resumen()` devuelve cantidad/ingresos/gastos/saldo correctos; `eliminar` y `buscarPorNombre` funcionan. **El Gestor está completo en lógica.**
@@ -412,10 +412,8 @@ console.log(miPresupuesto.buscarPorNombre('free').formatear());  // 'Freelance: 
 ---
 
 ## ⭐ Logros Adicionales
-
-- **Logro 1 — `formatearTodos()`:** método en `Presupuesto` que devuelva un array de strings (`movimiento.formatear()` de cada uno). Lo reusaremos en C08 para pintar la lista.
-- **Logro 2 — `verificarLimites()`:** método que avise cuando los gastos superen el 80% de los ingresos.
-- **Logro 3 — Validación en `Movimiento`:** método `esValido()` que verifique nombre, tipo y valor; úsalo en `agregar` antes de aceptar el movimiento.
+- **Logro 1 — `verificarLimites()`:** método que avise cuando los gastos superen el 80% de los ingresos.
+- **Logro 2 — Validación en `Movimiento`:** método `esValido()` que verifique nombre, tipo y valor; úsalo en `agregar` antes de aceptar el movimiento.
 
 ---
 
