@@ -288,9 +288,16 @@ class Movimiento {
   }
 
   formatear() {
-    const signo = this.esIngreso() ? '+' : '-';
-    return `${this.nombre}: ${signo}$${this.valor.toFixed(2)}`;
-  }
+      let signo;
+      
+      if (this.esIngreso()) {
+        signo = '+';
+      } else {
+        signo = '-';
+      }
+      
+      return `${this.nombre}: ${signo}$${this.valor.toFixed(2)}`;
+    }
 }
 ```
 
