@@ -226,25 +226,20 @@ imprimirReporte(movimientos);   // un solo argumento
 
 En la P1 escribiste `{ nombre, tipo, valor }` a mano por cada movimiento. Una **clase** es un **molde** que crea objetos con la misma forma — y, además, con **comportamiento** propio. La vamos a construir en 3 capas.
 
-### 2.2 Capa 1 — Propiedades (los datos de cada objeto)
+### 2.2 Capa 1 — Clase
 
-Una clase vacía ya sirve de molde. Con `new` creas una **instancia** y le pones **propiedades**:
+Una clase vacía ya sirve de molde. Con `new` creas una **instancia**:
 
 ```javascript
 class Movimiento {}              // molde vacío
 
 const m = new Movimiento();      // 'new' crea una INSTANCIA (objeto a partir del molde)
-m.nombre = 'Cena';               // le agregas PROPIEDADES
-m.tipo = 'gasto';
-m.valor = 45.5;
-
-console.log(m.nombre);           // 'Cena'
 ```
 
 * **Propiedad** = un dato del objeto (`nombre`, `tipo`, `valor`).
 * **`new Movimiento()`** crea un objeto vacío a partir del molde.
 
-> ⚠️ Pero asignar las 3 propiedades **a mano cada vez** que creas un movimiento es tedioso y fácil de olvidar. Vamos a automatizarlo → eso hace el **constructor**.
+> ⚠️ Pero tu molde esta vacio, necesitas agregar propiedades.
 
 ### 2.3 Capa 2 — Constructor (pon las propiedades automáticamente)
 
