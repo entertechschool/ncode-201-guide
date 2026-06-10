@@ -1,20 +1,19 @@
 <!-- .slide: data-background="#0A192F" -->
 # Clase 09: DOM como API de Objetos
-## Manipulación dinámica + Tailwind formalizado
+## Manipulación dinámica del DOM + Regex
 
 ---
 
 ## 🔄 TRANSICIÓN: C08 → C09
 
 ### Clase anterior (M2):
-- Prototipos en JavaScript
-- Usaste un template con clases como `bg-white rounded-lg shadow p-6`
-- Esas clases eran **Tailwind pasivo** — no se explicaron, solo se usaron
+- Tailwind: le diste **interfaz** al Gestor y lo conectaste con JavaScript
+- Cerraste el Módulo 2 con una **app funcional**
 
 ### Hoy (M3):
 - Tratas el DOM como una **API de objetos** con propiedades y métodos
 - Aprendes la **familia coherente** de APIs del DOM
-- Formalizamos Tailwind: ahora sabes qué hace cada utility class
+- Estilizas con Tailwind (ya lo dominas) mientras el foco está en el DOM
 
 > "El HTML deja de ser texto inerte. Hoy lo manipulas como objeto vivo."
 
@@ -66,25 +65,18 @@ Tienes una página con 8 `<h1>`, `<h2>` y `<h3>` mezclados. Quieres **cambiarles
 
 ---
 
-## 🎨 Tailwind formalizado
+## 🎨 Tailwind — ya lo dominas (C08)
 
-### Lo que viste pasivamente en C08:
+Los estilos del editor usan Tailwind, que aprendiste a fondo en C08:
 
 ```html
 <div class="bg-white rounded-lg shadow p-6">...</div>
-<button class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
-  Enviar
-</button>
 ```
 
-### Utility-first vs Component classes
+* **clase-propiedad** (`p-6`, `bg-white`) · **prefijo-modificador** (`hover:`, `md:`)
+* Hoy solo lo **aplicas** — el foco es el DOM y Regex.
 
-| Bootstrap (component) | Tailwind (utility) |
-|---|---|
-| `class="card"` | `class="bg-white rounded-lg shadow p-6"` |
-| Componente cerrado | Bloques de Lego, personalizables |
-
-**Setup hoy:** `<script src="https://cdn.tailwindcss.com"></script>`
+**Setup:** `<script src="https://cdn.tailwindcss.com"></script>`
 
 ---
 
@@ -195,7 +187,7 @@ Click en el botón "Contrastar Encabezados".
 - Manipular el DOM como objetos JavaScript
 - Transformar Markdown a HTML con Regex
 - Aplicar estilos dinámicos con `querySelectorAll` + `forEach`
-- Leer Tailwind con propósito
+- Estilizar el editor con Tailwind (ya conocido de C08)
 
 ### Próxima clase (C10):
 - **Callbacks** y funciones de orden superior
@@ -208,5 +200,5 @@ Click en el botón "Contrastar Encabezados".
 
 ### Preguntas de cierre:
 1. ¿Cuándo usarías `querySelector` y cuándo `querySelectorAll`? Da un ejemplo de cada uno.
-2. ¿Qué ventaja tiene Tailwind sobre escribir tu propio CSS para este lab?
+2. ¿Por qué tratar el DOM como "API de objetos" (con propiedades y métodos) cambia tu forma de manipular la página?
 3. ¿Qué le agregarías a tu Regex para detectar **negrita** e *itálica*?

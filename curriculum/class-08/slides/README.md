@@ -1,210 +1,185 @@
-# Clase 08: Prototipos en JavaScript
-
-## 🎯 Objetivo General
-
-Optimizar el **Gestor de Presupuesto Personal** implementando la cadena de prototipos en JavaScript, moviendo métodos compartidos al prototipo y creando herencia prototipal con subtipos especializados.
+# Clase 08 — Tailwind CSS: la interfaz del Gestor
+### Code 201 · Módulo 2 (cierre)
 
 ---
 
-## 💡 ¿Por qué aprender Prototipos?
+## 🎯 Objetivo de la Clase
 
-* **Optimización de memoria**: Métodos compartidos entre todas las instancias
-* **Herencia nativa**: Base fundamental de JavaScript antes de ES6 classes
-* **Preparación profesional**: Comprensión profunda del funcionamiento interno de JS
-
-> "Los prototipos son el corazón de JavaScript: entenderlos es entender cómo realmente funciona la herencia en este lenguaje."
-
----
-
-## 🧠 ¿Qué es la Cadena de Prototipos exactamente?
-
-* **Mecanismo de herencia**: Permite a objetos acceder a métodos y propiedades de sus prototipos
-* **Búsqueda automática**: JavaScript busca métodos primero en el objeto, luego en su prototipo
-* **Optimización**: Un método definido una vez es usado por todas las instancias
-
-> "Es como una cadena de bibliotecas: si no encuentras un libro en tu biblioteca personal, automáticamente buscas en la biblioteca de tu familia."
+- Instalar **Tailwind** por CDN y entender **utility-first**.
+- Construir la UI del Gestor **por grupos de clases**, por capas.
+- Distinguir **clases-propiedad** de **prefijos-modificador**.
+- **Conectar el formulario** con JS → el Gestor funciona.
 
 ---
 
-## 🔧 Constructor.prototype: Métodos Compartidos
+## 📖 De CSS a mano → Tailwind
 
-```javascript
-// ❌ Métodos en constructor - cada instancia tiene su propia copia
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.esIngreso = function() { // Nueva función para cada instancia
-    return this.tipo === 'ingreso';
-  };
-}
+En M1 escribías CSS en un archivo:
 
-// ✅ Métodos en prototipo - compartidos entre todas las instancias
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-}
-Movimiento.prototype.esIngreso = function() { // Una sola función compartida
-  return this.tipo === 'ingreso';
-};
+```css
+.tarjeta { padding: 24px; background: white; border-radius: 12px; }
 ```
 
-* **Eficiencia**: Una función vs N funciones en memoria
-* **Mantenimiento**: Cambios en el prototipo afectan todas las instancias
-* **Debugging**: Fácil inspección en DevTools
+Hoy lo escribes como **clases utilitarias** en el HTML:
 
----
-
-## 🧩 Herencia Prototipal con Object.create()
-
-```javascript
-// Constructor padre
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-}
-
-// Constructor hijo
-function Ingreso(nombre, valor, fuente) {
-  Movimiento.call(this, nombre, 'ingreso', valor); // Llamar constructor padre
-  this.fuente = fuente;
-}
-
-// Establecer herencia prototipal
-Ingreso.prototype = Object.create(Movimiento.prototype);
-Ingreso.prototype.constructor = Ingreso;
-
-// Método especializado
-Ingreso.prototype.esFijo = function() {
-  return ['salario', 'pension'].includes(this.fuente);
-};
+```html
+<div class="p-6 bg-white rounded-xl">...</div>
 ```
 
-| **Concepto** | **Descripción** | **Uso** |
-|--------------|-----------------|---------|
-| **Object.create()** | Crea objeto con prototipo específico | Establecer herencia |
-| **call()** | Ejecuta función con contexto específico | Llamar constructor padre |
-| **instanceof** | Verifica tipo de objeto | Validaciones de herencia |
+> Mismo CSS. Otra notación. No es una bestia nueva.
 
 ---
 
-## 🔢 Parte 1: Migración a Prototipos (~30 min)
+## 🧩 Las 2 clases de Tailwind
 
-### 🎯 Objetivo:
-Optimizar funciones constructoras moviendo métodos del constructor al prototipo
+```html
+<!-- clase-propiedad: 1 clase = 1 propiedad CSS -->
+<p class="text-lg font-bold text-gray-800">...</p>
 
-### ✅ Criterios de Validación:
-- ✅ Métodos movidos correctamente a `Constructor.prototype`
-- ✅ Instancias acceden a métodos compartidos
-- ✅ Funcionalidad idéntica con mejor rendimiento
+<!-- prefijo-modificador: aplica una clase BAJO una condición -->
+<button class="bg-blue-600 hover:bg-blue-700 md:w-auto">...</button>
+```
 
-### 🏆 Reto Autónomo:
-Agregar método `obtenerInfo()` al prototipo que retorne información completa del movimiento
+* **Propiedad** = el vocabulario (construye el look).
+* **Prefijo** (`hover:`, `md:`) = la gramática (cuándo aplica).
 
----
-
-## 🏗️ Parte 2: Herencia Prototipal (~40 min)
-
-### 🎯 Objetivo:
-Crear subtipos `Ingreso` y `Egreso` que heredan de `Movimiento`
-
-### ✅ Criterios de Validación:
-- ✅ Herencia establecida con `Object.create()`
-- ✅ Métodos especializados funcionando
-- ✅ Validaciones con `instanceof` operativas
-
-### 🏆 Retos Autónomos:
-**Reto 1**: Implementar `filtrarPorTipo(TipoConstructor)` usando `instanceof`
-**Reto 2**: Agregar `contarPorCategoria()` que analice movimientos por tipo
+> Primero el vocabulario, luego la gramática.
 
 ---
 
-## 🌐 Parte 3: Integración UI (~50 min)
+## 🪜 Mejora progresiva por capas
 
-### 🎯 Objetivo:
-Integrar sistema de prototipos con interface HTML Bootstrap
+Se pega el esqueleto del Gestor **sin clases** y cada parte aplica **un grupo** a toda la página:
 
-### ✅ Criterios de Validación:
-- ✅ Interface HTML funcional con formularios dinámicos
-- ✅ Herencia prototipal integrada con DOM
-- ✅ Inspección de cadena visible en DevTools
+| Parte | Grupo |
+|---|---|
+| **P1** | Layout (Flexbox + Grid) |
+| **P2** | Caja (espaciado + tamaño) |
+| **P3** | Estética (tipografía, color, bordes/sombra) |
+| **P4** | Modificadores (estados + responsive) |
+| **P5** | Conectar con JavaScript |
 
-### 🏆 Retos Autónomos:
-**Reto 1**: Botón "Limpiar Historial" funcional
-**Reto 2**: Contador de movimientos por tipo en resumen
-**Reto 3**: Método `exportarDatos()` que genere JSON completo
+> La UI se transforma capa por capa.
 
 ---
 
-## 🔍 Validación con instanceof
+## 🧱 P1 — Layout (lo que ya sabes)
 
-```javascript
-// Verificar tipos en tiempo de ejecución
-const salario = new Ingreso('Salario', 3000, 'salario');
-const comida = new Egreso('Comida', 200, 'comida');
+| CSS (M1) | Tailwind |
+|---|---|
+| `display: flex` (C02) | `flex` |
+| `justify-content` | `justify-between` |
+| `display: grid` (C03) | `grid` |
+| `grid-template-columns: 1fr 1fr` | `grid-cols-2` |
+| `gap` | `gap-6` |
 
-console.log(salario instanceof Movimiento);  // true
-console.log(salario instanceof Ingreso);     // true
-console.log(comida instanceof Ingreso);      // false
-
-// Filtrar por tipo específico
-function filtrarIngresos(movimientos) {
-  return movimientos.filter(m => m instanceof Ingreso);
-}
+```html
+<section class="grid grid-cols-2 gap-6">
 ```
 
 ---
 
-### 🎯 Conceptos Clave Consolidados:
-* **Constructor.prototype**: Métodos compartidos para optimización
-* **Herencia Prototipal**: Especialización con `Object.create()`
-* **instanceof**: Validación de tipos en jerarquías
-* **Cadena de prototipos**: Mecanismo de búsqueda automática
+## 📦 P2 — Caja · 📐 escala fija
 
-### 💭 prototype vs __proto__:
-* **`prototype`**: Propiedad de funciones, define qué heredarán las instancias
-* **`__proto__`**: Propiedad de objetos, apunta a su prototipo actual
+```html
+<div class="p-6 mt-4">
+<input class="w-full p-2">
+```
 
+| CSS | Tailwind |
+|---|---|
+| `padding` / `margin` | `p-6`, `mt-4` |
+| `width` / `max-width` | `w-full`, `max-w-4xl` |
 
-### Inspección en DevTools:
-* **`__proto__`**: Referencia al prototipo del objeto
-* **`prototype`**: Propiedad de las funciones constructoras
-* **Cadena completa**: Desde objeto hasta Object.prototype
+> La escala es fija: `p-2`=8px, `p-4`=16px, `p-6`=24px. No inventas píxeles.
 
 ---
 
-## 🌉 Puente sintáctico: de constructora a `class`
+## 🎨 P3 — Estética (los simples)
 
-Lo que escribiste en P1-P2:
-
-```javascript
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-}
-Movimiento.prototype.formatear = function() {
-  return `${this.nombre}`;
-};
+```html
+<h1 class="text-3xl font-bold text-gray-800">
+<li class="bg-green-50 border-l-4 border-green-500 rounded">
 ```
 
-Es **azúcar sintáctica** para:
+* Tipografía: `text-3xl`, `font-bold`
+* Color: `text-gray-800`, `bg-green-50` (¡las variables de C04!)
+* Borde/sombra: `rounded-xl`, `shadow`
 
-```javascript
-class Movimiento {
-  constructor(nombre, tipo, valor) {
-    this.nombre = nombre;
-  }
-  formatear() {
-    return `${this.nombre}`;
-  }
-}
-```
-
-- `class` NO es un mecanismo nuevo — JS sigue usando prototipos por debajo.
-- En **M4** vas a usar `class` como sintaxis principal. Ya entiendes qué pasa abajo.
+> Color semántico: verde = ingreso, rojo = gasto.
 
 ---
 
-## 💭 Síntesis y Reflexión
+## 📱 P4 — Modificadores
 
-* ¿Cuándo usar prototipos vs métodos en constructor?
-* ¿Qué ventajas tiene `instanceof` sobre typeof?
-* ¿Por qué JavaScript eligió prototipos en lugar de clases tradicionales?
-* ¿Qué parte te resultó más desafiante?
+```html
+<!-- estado: al pasar el mouse / al enfocar -->
+<button class="bg-blue-600 hover:bg-blue-700 transition">
+
+<!-- responsive: base = móvil, md: agrega desktop -->
+<section class="grid grid-cols-1 md:grid-cols-2">
+```
+
+* `hover:` / `focus:` = el `:hover` de C02-C03.
+* `md:` = una media query, en notación corta.
+
+> **Mobile-first de verdad:** el look base ES el móvil.
+
+---
+
+## 🔌 P5 — Conectar el Gestor (JS)
+
+```javascript
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const nombre = document.getElementById('nombre').value;
+  const tipo   = document.getElementById('tipo').value;
+  const valor  = parseFloat(document.getElementById('monto').value);
+  presupuesto.agregar(new Movimiento(nombre, tipo, valor));
+  render();
+  e.target.reset();
+});
+```
+
+> Reusas tus clases de C07. El JS es solo el **cable** entre el form y tu modelo.
+
+---
+
+## ⚙️ Estructura del Lab
+
+| Parte | Tiempo | Contenido |
+|---|---|---|
+| **P0** | ~20 min | CDN + esqueleto + mapa de grupos |
+| **P1** | ~30 min | Layout (flex + grid) |
+| **P2** | ~20 min | Caja (espaciado + tamaño) |
+| **P3** | ~25 min | Estética (tipografía/color/bordes/sombra) |
+| **P4** | ~30 min | Modificadores (estados + responsive) |
+| **P5** | ~20 min | Conectar el formulario con JS |
+
+---
+
+## 🏁 Cierre del Módulo 2
+
+```
+C05  Imperativo   → variables, arrays, bucles
+C06  Funcional    → map/filter/reduce, funciones puras
+C07  OOP          → class, objetos, encapsulación
+C08  Interfaz     → Tailwind + el Gestor FUNCIONA
+```
+
+> Empezaste con `console.log`. Terminas con una **app real, desplegada**.
+
+---
+
+## 🤔 Discusión Final
+
+- ¿Qué te resultó más rápido: escribir CSS a mano (M1) o utilidades?
+- ¿Por qué responsive va con prefijos al final y no al inicio?
+- ¿Notas cómo el formulario reusa TODO lo de C07 sin reescribir lógica?
+
+> **Reflexión:** Tailwind no reemplaza saber CSS — lo acelera. Y hoy tu proyecto del módulo quedó **completo y funcional**.
+
+---
+
+## ¡Gracias! 🙌
+### Code 201 · Enter Tech School

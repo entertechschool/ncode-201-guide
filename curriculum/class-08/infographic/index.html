@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prototipos en JavaScript — Herencia eficiente y cadena de búsqueda</title>
+  <title>Tailwind CSS — La interfaz del Gestor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -118,83 +118,71 @@
 <body>
 
   <section class="hero">
-    <div class="badge">Módulo 2 · Clase 08</div>
-    <h1>Prototipos en JavaScript — Herencia eficiente y cadena de búsqueda</h1>
-    <p class="subtitle">Métodos compartidos en <code>.prototype</code>, herencia con <code>Object.create()</code> y el puente a la sintaxis <code>class</code></p>
+    <div class="badge">Módulo 2 · Clase 08 · Cierre</div>
+    <h1>Tailwind CSS — La interfaz del Gestor</h1>
+    <p class="subtitle">Utility-first, grupos de clases por capas, responsive mobile-first y la conexión del formulario con JavaScript</p>
   </section>
 
   <section>
 
-    <!-- 1: Cadena de Prototipos -->
+    <!-- 1: Utility-first -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> Cadena de Prototipos — Cómo JavaScript busca métodos</h3>
-      <p class="desc">Cuando llamas un método, JavaScript lo busca primero en el objeto, luego en su prototipo, y así hacia arriba hasta <code>Object.prototype</code>.</p>
-      <img src="prototype-chain.png" alt="Diagrama de la cadena de prototipos: objeto → Movimiento.prototype → Object.prototype">
-    </div>
-
-    <!-- 2: Constructor.prototype -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> Constructor.prototype — Una función para todas las instancias</h3>
-      <p class="desc">Los métodos en el constructor se duplican en cada instancia. Los métodos en el prototipo son compartidos — una sola copia en memoria.</p>
+      <h3><span class="tag-purple">1.</span> Utility-first — el mismo CSS, dentro del HTML</h3>
+      <p class="desc">En vez de escribir reglas en un archivo <code>.css</code>, compones el diseño con clases pequeñas en el HTML. Cada clase equivale a una propiedad CSS que ya conoces de M1.</p>
       <div class="comparison">
         <div class="comparison-col">
-          <div class="col-label" style="color:#f87171;">❌ En el constructor (ineficiente)</div>
-          <pre><code><span class="tag-muted">function</span> Movimiento(n,t,v) {
-  <span class="tag-muted">this</span>.nombre = n;
-  <span class="tag-red">this</span>.esIngreso =        <span class="tag-muted">function</span>() {
-    <span class="tag-muted">return this</span>.tipo === "ingreso";
-  };
-  <span class="tag-muted">// ← copia nueva en cada instancia</span>
+          <div class="col-label" style="color:#94a3b8;">CSS a mano (M1)</div>
+          <pre><code><span class="tag-muted">.tarjeta</span> {
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
 }</code></pre>
         </div>
         <div class="comparison-col">
-          <div class="col-label" style="color:#4ade80;">✅ En el prototipo (eficiente)</div>
-          <pre><code><span class="tag-muted">function</span> Movimiento(n,t,v) {
-  <span class="tag-muted">this</span>.nombre = n;
-}
-<span class="tag-green">Movimiento.prototype.esIngreso =</span>
-  <span class="tag-muted">function</span>() {
-    <span class="tag-muted">return this</span>.tipo === "ingreso";
-  };
-<span class="tag-muted">// ← compartida por todas las instancias</span></code></pre>
+          <div class="col-label" style="color:#d946ef;">Tailwind (utility-first)</div>
+          <pre><code>&lt;div <span class="tag-purple">class</span>=<span class="tag-purple">"p-6 bg-white rounded-xl"</span>&gt;
+  ...
+&lt;/div&gt;
+
+<span class="tag-muted">// mismo resultado, otra notación</span></code></pre>
         </div>
       </div>
     </div>
 
-    <!-- 3: Herencia con Object.create() -->
-    <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Herencia Prototipal — Object.create() + call()</h3>
-      <p class="desc"><code>Object.create()</code> establece el prototipo de un subtipo. <code>call(this)</code> reutiliza el constructor padre.</p>
-      <pre><code><span class="tag-muted">function</span> Ingreso(nombre, valor, fuente) {
-  Movimiento.<span class="tag-blue">call</span>(<span class="tag-muted">this</span>, nombre, <span class="tag-blue">"ingreso"</span>, valor);  <span class="tag-muted">// llama al padre</span>
-  <span class="tag-muted">this</span>.fuente = fuente;
-}
+    <!-- 2: Dos tipos de clase -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Dos tipos de clase — vocabulario y gramática</h3>
+      <p class="desc"><strong>Clase-propiedad</strong>: 1 clase = 1 propiedad CSS. <strong>Prefijo-modificador</strong>: hace que una clase aplique bajo una condición (hover, tamaño de pantalla).</p>
+      <pre><code><span class="tag-muted">// clase-propiedad — el vocabulario</span>
+&lt;p class="<span class="tag-green">text-lg font-bold text-gray-800</span>"&gt;
 
-Ingreso.prototype = <span class="tag-blue">Object.create</span>(Movimiento.prototype);  <span class="tag-muted">// hereda</span>
-Ingreso.prototype.constructor = Ingreso;             <span class="tag-muted">// restaura ref</span>
-
-Ingreso.prototype.esFijo = <span class="tag-muted">function</span>() {
-  <span class="tag-muted">return</span> [<span class="tag-blue">"salario"</span>, <span class="tag-blue">"pension"</span>].includes(<span class="tag-muted">this</span>.fuente);
-};
-
-<span class="tag-muted">const</span> s = <span class="tag-muted">new</span> Ingreso(<span class="tag-blue">"Salario"</span>, 3000, <span class="tag-blue">"salario"</span>);
-s instanceof Movimiento;  <span class="tag-muted">// → true</span>
-s instanceof Ingreso;     <span class="tag-muted">// → true</span></code></pre>
+<span class="tag-muted">// prefijo-modificador — la gramática</span>
+&lt;button class="bg-blue-600 <span class="tag-green">hover:</span>bg-blue-700 <span class="tag-green">md:</span>w-auto"&gt;
+<span class="tag-muted">//                         ↑ al pasar el mouse  ↑ desde tablet</span></code></pre>
     </div>
 
-    <!-- 4: Puente a class -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Constructora + Prototipo = azúcar sintáctica para <code>class</code></h3>
-      <p class="desc">La sintaxis <code>class</code> de ES6 no cambia el mecanismo — JavaScript sigue usando prototipos por debajo. Solo es más legible.</p>
-      <pre><code><span class="tag-muted">// Lo que escribiste en M2</span>
-<span class="tag-muted">function</span> Movimiento(nombre, tipo, valor) { <span class="tag-muted">this</span>.nombre = nombre; }
-Movimiento.prototype.formatear = <span class="tag-muted">function</span>() { <span class="tag-muted">return this</span>.nombre; };
+    <!-- 3: Mejora progresiva por capas -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Por capas — un grupo de utilidades por vez</h3>
+      <p class="desc">Sobre un esqueleto sin estilos, cada parte aplica UN grupo a toda la página. La UI se transforma capa por capa: estructura → aire → estética → adaptación.</p>
+      <pre><code><span class="tag-blue">P1 Layout</span>       flex · grid · grid-cols-2 · gap-6
+<span class="tag-blue">P2 Caja</span>         p-6 · mt-4 · w-full · max-w-4xl
+<span class="tag-blue">P3 Estética</span>     text-3xl · font-bold · bg-white · rounded-xl · shadow
+<span class="tag-blue">P4 Modificador</span>  hover: · focus: · md:grid-cols-2   <span class="tag-muted">(mobile-first)</span></code></pre>
+    </div>
 
-<span class="tag-muted">// Lo que escribirás en M4 — mismo mecanismo, otra sintaxis</span>
-<span class="tag-orange">class</span> Movimiento {
-  <span class="tag-orange">constructor</span>(nombre, tipo, valor) { <span class="tag-muted">this</span>.nombre = nombre; }
-  formatear() { <span class="tag-muted">return this</span>.nombre; }  <span class="tag-muted">// va al .prototype automáticamente</span>
-}</code></pre>
+    <!-- 4: Conectar el Gestor -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Conectar el Gestor — el formulario funciona</h3>
+      <p class="desc">Unas líneas de JavaScript conectan el formulario con tus clases de C07. El Gestor agrega movimientos y actualiza el saldo en vivo: el proyecto del módulo <strong>cierra funcionando</strong>.</p>
+      <pre><code>form.<span class="tag-orange">addEventListener</span>(<span class="tag-orange">"submit"</span>, <span class="tag-muted">function</span> (e) {
+  e.preventDefault();
+  <span class="tag-muted">const</span> nombre = document.getElementById(<span class="tag-orange">"nombre"</span>).value;
+  <span class="tag-muted">// ...lee tipo y valor...</span>
+  presupuesto.<span class="tag-orange">agregar</span>(<span class="tag-muted">new</span> Movimiento(nombre, tipo, valor));  <span class="tag-muted">// ← reusa C07</span>
+  render();  <span class="tag-muted">// pinta lista + saldo</span>
+  e.target.reset();
+});</code></pre>
     </div>
 
   </section>
@@ -203,20 +191,20 @@ Movimiento.prototype.formatear = <span class="tag-muted">function</span>() { <sp
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Prototype chain</strong>
-        <span>Cadena de búsqueda automática: objeto → Constructor.prototype → Object.prototype.</span>
+        <strong>Utility-first</strong>
+        <span>Componer el diseño con muchas clases pequeñas en el HTML, en vez de reglas en un <code>.css</code>.</span>
       </div>
       <div class="term">
-        <strong>Object.create()</strong>
-        <span>Crea un objeto cuyo prototipo es el argumento dado. Usado para establecer herencia.</span>
+        <strong>Clase-propiedad</strong>
+        <span>1 clase = 1 propiedad CSS. Ej. <code>text-center</code> = <code>text-align: center</code>.</span>
       </div>
       <div class="term">
-        <strong>instanceof</strong>
-        <span>Verifica si un objeto está en la cadena de prototipos de un constructor.</span>
+        <strong>Prefijo-modificador</strong>
+        <span>Hace que una clase aplique bajo una condición: <code>hover:</code>, <code>focus:</code>, <code>md:</code>.</span>
       </div>
       <div class="term">
-        <strong>call()</strong>
-        <span>Llama una función con un <code>this</code> específico. Permite reutilizar el constructor padre.</span>
+        <strong>Mobile-first</strong>
+        <span>Las clases base son el móvil; <code>md:</code>/<code>lg:</code> agregan estilos para pantallas grandes.</span>
       </div>
     </div>
   </section>

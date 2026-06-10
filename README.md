@@ -38,10 +38,10 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
     - Variables, loops (`for`, `while`) y condicionales como herramientas principales.
 6. Programación Funcional
     - Funciones puras, `map()`, `filter()`, `reduce()` y principio DRY.
-7. Programación Orientada a Objetos
-    - Funciones constructoras con `function Constructor() {}` y `new`.
-8. Prototipos en JavaScript
-    - Cadena de prototipos, `Constructor.prototype` e `instanceof`.
+7. Programación Orientada a Objetos con `class`
+    - Clases con `class`, `constructor`, `this` y `new`, construidas por capas (propiedades → constructor → métodos) y encapsulación.
+8. Tailwind CSS e Interfaz del Gestor
+    - Utility-first con Tailwind (Play CDN), construcción de la UI por grupos de clases (layout, espaciado, estética, modificadores) y conexión del formulario con JavaScript para cerrar el proyecto del módulo.
 
 ### Módulo 3 — Aplicaciones Web con Objetos
 > **Proyecto Integrador:** Editor de Markdown en vivo

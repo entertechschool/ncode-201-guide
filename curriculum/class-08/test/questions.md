@@ -93,16 +93,16 @@ const movimientos = [
 
 ### Pregunta 5 (Conceptual)
 
-En JavaScript, ¿cuál es el propósito de la palabra clave `new` al invocar una función constructora como `new Movimiento("gasto", 100)`?
+En JavaScript, ¿cuál es el propósito de la palabra clave `new` al crear una instancia de una clase como `new Movimiento("gasto", 100)`?
 
-- A) Ejecuta la función constructora pero descarta su resultado
+- A) Ejecuta el `constructor` pero descarta su resultado
 - B) Crea un nuevo objeto vacío, lo vincula al constructor y permite que `this` dentro de la función apunte a ese nuevo objeto
 - C) Convierte cualquier función en una función pura sin efectos secundarios
 - D) Hace que la función se ejecute de manera asíncrona
 
 > Respuesta: B
 
-> **Retroalimentación:** Cuando usas `new` con una función constructora, JavaScript: (1) crea un objeto vacío, (2) vincula `this` dentro del constructor a ese objeto, (3) ejecuta el cuerpo del constructor (asignando propiedades con `this.x = ...`), y (4) retorna el nuevo objeto automáticamente. Las opciones A, C y D describen comportamientos inexistentes: `new` no descarta resultados, no convierte funciones en puras, ni genera ejecución asíncrona.
+> **Retroalimentación:** Cuando usas `new` con una clase, JavaScript: (1) crea un objeto vacío, (2) vincula `this` dentro del `constructor` a ese objeto, (3) ejecuta el cuerpo del `constructor` (asignando propiedades con `this.x = ...`), y (4) retorna el nuevo objeto automáticamente. Las opciones A, C y D describen comportamientos inexistentes: `new` no descarta resultados, no convierte funciones en puras, ni genera ejecución asíncrona.
 
 ---
 
@@ -111,9 +111,11 @@ En JavaScript, ¿cuál es el propósito de la palabra clave `new` al invocar una
 Observa el siguiente código:
 
 ```javascript
-function Movimiento(tipo, monto) {
-  this.tipo = tipo;
-  this.monto = monto;
+class Movimiento {
+  constructor(tipo, monto) {
+    this.tipo = tipo;
+    this.monto = monto;
+  }
 }
 const m1 = new Movimiento("gasto", 200);
 console.log(m1.monto);
@@ -123,29 +125,29 @@ console.log(m1.monto);
 
 - A) `undefined`, porque `this.monto` no se asignó correctamente
 - B) `"gasto"`, porque `monto` siempre toma el valor del primer argumento
-- C) `200`, porque `new` crea el objeto y asigna `monto = 200` al `this` del nuevo objeto
-- D) Un error, porque falta la sintaxis `class` para crear objetos
+- C) `200`, porque `new` crea el objeto y el `constructor` asigna `monto = 200` al `this` del nuevo objeto
+- D) Un error, porque las propiedades deben declararse antes del `constructor`
 
 > Respuesta: C
 
-> **Retroalimentación:** `new Movimiento("gasto", 200)` crea un nuevo objeto donde `this.tipo = "gasto"` y `this.monto = 200`. Al acceder a `m1.monto` se obtiene `200`. La opción A es incorrecta: `this.monto` sí se asigna. La B confunde los argumentos. La D es falsa: en Code 201 se usan **funciones constructoras** con `new`, no la sintaxis `class` (esa se reserva para Code 301).
+> **Retroalimentación:** `new Movimiento("gasto", 200)` ejecuta el `constructor`, que asigna `this.tipo = "gasto"` y `this.monto = 200`. Al acceder a `m1.monto` se obtiene `200`. La opción A es incorrecta: `this.monto` sí se asigna. La B confunde los argumentos. La D es falsa: en una clase las propiedades se crean **dentro del `constructor`** con `this.x = ...`, no se declaran aparte.
 
 ---
 
-## Pregunta 7 (Clase 08: Aplicación Práctica - Prototipos)
+## Pregunta 7 (Clase 08: Aplicación Práctica - Tailwind)
 
 ### Pregunta 7
 
-En el Gestor de Presupuesto, quieres que **todas las instancias** de `Movimiento` compartan el mismo método `describir()` sin duplicarlo en memoria por cada objeto. ¿Cuál es la forma correcta de definirlo?
+En el Gestor, quieres que la sección de resumen y formulario se vea en **2 columnas en escritorio** pero **apilada en móvil**. ¿Cuál es la forma correcta (mobile-first) en Tailwind?
 
-- A) Asignar `this.describir = function() {...}` dentro del constructor
-- B) Asignar `Movimiento.prototype.describir = function() {...}` fuera del constructor
-- C) Declarar `describir()` como una función global al inicio del archivo
-- D) Usar `Object.create(describir)` dentro del constructor
+- A) `class="grid grid-cols-2 sm:grid-cols-1"`
+- B) `class="grid grid-cols-1 md:grid-cols-2"`
+- C) `class="flex flex-row"`
+- D) `class="grid grid-cols-2"`
 
 > Respuesta: B
 
-> **Retroalimentación:** Al asignar métodos al **prototipo** del constructor (`Movimiento.prototype.describir = ...`), el método vive **una sola vez** en memoria y todas las instancias lo comparten a través de la cadena de prototipos. La opción A funciona, pero crea una copia del método en **cada instancia**, desperdiciando memoria — justamente lo que los prototipos buscan evitar. La opción C no asocia el método al constructor ni permite usar `this` para acceder al estado del objeto. La D malinterpreta el uso de `Object.create()`, que sirve para establecer herencia entre prototipos, no para definir métodos.
+> **Retroalimentación:** En Tailwind las clases sin prefijo son la **base (móvil)**: `grid-cols-1` apila. El prefijo `md:` agrega el comportamiento desde tablet en adelante: `md:grid-cols-2` pone 2 columnas en pantallas medianas/grandes. Eso es **mobile-first**. La A está al revés (desktop-first, base 2 columnas). La C no controla cuántas columnas hay según el ancho. La D es fija: 2 columnas siempre, apretado en móvil.
 
 ---
 
@@ -153,7 +155,7 @@ En el Gestor de Presupuesto, quieres que **todas las instancias** de `Movimiento
 
 ### Pregunta 8
 
-Después de completar este módulo, ¿cómo describirías tu nivel de confianza para **refactorizar una aplicación JavaScript desde programación imperativa hacia un modelo orientado a objetos con prototipos**?
+Después de completar este módulo, ¿cómo describirías tu nivel de confianza para **refactorizar una aplicación JavaScript desde programación imperativa hacia un modelo orientado a objetos con `class`, y darle una interfaz visual con Tailwind**?
 
 - A) Muy seguro/a - podría hacerlo sin ayuda
 - B) Bastante seguro/a - con algo de referencia

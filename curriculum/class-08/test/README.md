@@ -22,8 +22,8 @@ Este test verifica tu comprensión de los conceptos de las Clases 05 a 08:
 |-------|-------|
 | Clase 05 | Programación Imperativa (control de flujo, variables, funciones acopladas) |
 | Clase 06 | Programación Funcional (funciones puras, `map()`, `filter()`, `find()`) |
-| Clase 07 | Programación Orientada a Objetos (funciones constructoras, `this`, `new`) |
-| Clase 08 | Prototipos en JavaScript (`prototype`, herencia prototipal, `instanceof`) |
+| Clase 07 | Programación Orientada a Objetos con `class` (`constructor`, `this`, `new`, encapsulación) |
+| Clase 08 | Tailwind CSS e interfaz del Gestor (utility-first, clases por grupos, conexión con JavaScript) |
 
 ---
 

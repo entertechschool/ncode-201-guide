@@ -1,29 +1,29 @@
 # Lectura y Debate 08
 
 ## 🎯 Objetivos de la Lectura y el Debate
-Debatir en esta sesión te permitirá profundizar en el funcionamiento de la herencia prototipal en JavaScript. A través del análisis crítico, comprenderás cómo se conecta la cadena de prototipos (prototype chain), diferenciarás entre `prototype` y `__proto__`, y explorarás el uso de funciones constructoras para crear objetos. Este debate te ayudará a aplicar estos conceptos en el desarrollo de aplicaciones modernas y escalables.
+Debatir en esta sesión te permitirá analizar críticamente el enfoque **utility-first** de Tailwind CSS frente al CSS que escribiste a mano en M1. Comprenderás qué es una **clase-propiedad** y un **prefijo-modificador**, por qué Tailwind es **mobile-first**, y cuándo conviene (o no) este enfoque. El debate te ayudará a entender que Tailwind no reemplaza saber CSS — lo acelera.
 
 ## 🔑 Conceptos Clave a profundizar
-- **Prototype Chain:** Comprender cómo los objetos en JavaScript se enlazan y comparten métodos y propiedades a través de una cadena de prototipos.
-- **`__proto__` vs. `prototype`:** Diferenciar entre la referencia interna que tiene cada objeto (`__proto__`) y la propiedad `prototype` de las funciones constructoras, fundamental para establecer la herencia.
-- **Funciones Constructoras:** Utilizar funciones constructoras para crear objetos que compartan métodos mediante el prototipo, facilitando la implementación de patrones de herencia.
+- **Utility-first:** componer el diseño con muchas clases pequeñas en el HTML, en vez de escribir reglas en un archivo `.css`. Cada clase equivale a una propiedad CSS que ya conoces de M1.
+- **Clase-propiedad vs prefijo-modificador:** una clase = una propiedad (`p-4`, `bg-white`); un prefijo (`hover:`, `md:`) hace que una clase aplique bajo una condición.
+- **Mobile-first:** las clases base aplican a móvil; los prefijos `md:`/`lg:` agregan estilos para pantallas grandes.
 
 ## 📚 Artículos recomendados para leer
-- [MDN Web Docs - Inheritance and the prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain){:target="_blank"}
+- [Tailwind CSS — Utility-First Fundamentals](https://tailwindcss.com/docs/utility-first){:target="_blank"}
 
-- [MDN Web Docs - Working with objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects){:target="_blank"}
+- [Tailwind CSS — Responsive Design](https://tailwindcss.com/docs/responsive-design){:target="_blank"}
 
-- [Youtube: ¿Que son los PROTOTIPOS y como funcionan en JavaScript?](https://www.youtube.com/watch?v=TWSI9SybwmI){:target="_blank"}
+- [Tailwind CSS — Hover, Focus & Other States](https://tailwindcss.com/docs/hover-focus-and-other-states){:target="_blank"}
 
 ## ☑️ Lista de Mitos y Verdades para Analizar
-1. "El `prototype` de una función y el `__proto__` de un objeto son exactamente lo mismo."  
+1. "Usar Tailwind significa que ya no necesitas entender CSS."
 
-2. "La cadena de prototipos permite la reutilización de métodos y propiedades, lo cual es esencial para la herencia en JavaScript."
+2. "Una clase de Tailwind como `text-center` equivale exactamente a una propiedad CSS (`text-align: center`)."
 
-3. "Las funciones constructoras son obsoletas y no se usan en el desarrollo moderno de JavaScript."  
+3. "Escribir muchas clases en el HTML es siempre peor que tener un archivo `.css` separado."
 
-4. "Manipular correctamente `__proto__` puede mejorar la reutilización de código, pero su uso inadecuado puede generar problemas de seguridad y mantenimiento."
+4. "El prefijo `md:` es una media query escrita en notación corta; sin él, la clase aplica desde móvil."
 
-5. "Modificar el `prototype` de una función siempre afecta a todas las instancias existentes sin excepción."  
+5. "Tailwind necesita obligatoriamente `npm` y un paso de compilación para funcionar."
 
-> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas recomendadas o basándote en tus experiencias previas.
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas recomendadas o basándote en lo que ya sabes de CSS desde M1.

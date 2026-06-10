@@ -48,26 +48,26 @@
    - **USAR**: Principio DRY y composición de funciones pequeñas
    - **NO USAR**: Funciones complejas como `sort()` como obligatorias (solo en retos opcionales)
    - Refactorizar código imperativo hacia transformaciones declarativas
-7. **Programación Orientada a Objetos** (180 min, blend)
-   - **USAR**: `function Constructor() {}` + `new Constructor()` exclusivamente
-   - **USAR**: `this.propiedad` para estado, `this.metodo = function() {}` para comportamiento
-   - **NO USAR**: Sintaxis `class` (reservada para Code 301)
-   - **NO USAR**: Arrow functions como métodos (problemas con `this` binding)
-8. **Prototipos en JavaScript** (180 min, blend)
-   - **USAR**: `Constructor.prototype.metodo = function() {}` para métodos compartidos
-   - **USAR**: Demostrar `__proto__` chain con Chrome DevTools
-   - **USAR**: `instanceof` y `hasOwnProperty()` para validaciones de tipo
-   - **NO USAR**: `Object.create()` como concepto principal (demasiado abstracto para Code 201)
+7. **Programación Orientada a Objetos con `class`** (180 min, blend)
+   - **USAR**: `class` + `constructor` + `new`, construida por capas (propiedades → constructor → métodos)
+   - **USAR**: `this.propiedad` para estado y métodos dentro de la clase para comportamiento
+   - **USAR**: Encapsulación en una clase `Presupuesto` (datos + métodos juntos)
+   - **NO USAR**: Herencia (`extends`/`super`) ni prototipos (unidad de POO posterior)
+8. **Tailwind CSS e Interfaz del Gestor** (180 min, blend)
+   - **USAR**: Tailwind por Play CDN (un `<script>`, sin build) y clases utilitarias por grupos
+   - **USAR**: Mejora progresiva por capas (layout → caja → estética → modificadores) sobre el Gestor
+   - **USAR**: Conectar el formulario con JavaScript (reusando las clases de C07) para cerrar el proyecto
+   - **NO USAR**: `npm`/build de Tailwind; DOM avanzado (eso es M3)
 
 #### Enfoque Pedagógico
 
-- **Progresión**: Imperativo → Funcional → OOP → Prototipos (sin saltos conceptuales)
-- **Proyecto continuado**: Mismo codebase evoluciona a través de 4 paradigmas
+- **Progresión**: Imperativo → Funcional → OOP (`class`) → Interfaz (Tailwind + conexión) (sin saltos conceptuales)
+- **Proyecto continuado**: Mismo codebase evoluciona clase a clase hasta convertirse en una app funcional
 - **Refactoring guiado**: Cada clase mejora la estructura del código anterior
-- **Debugging intensivo**: Usar `console.log()`, breakpoints, y prototype inspection
+- **Debugging intensivo**: Usar `console.log()`, breakpoints y DevTools (modo responsive, inspección de clases)
 
 > #### Proyecto Integrador: **Gestor de Presupuesto Personal**
-> Una aplicación web sencilla que permite gestionar un presupuesto mensual, registrando ingresos y gastos, categorizándolos y visualizando un balance actualizado. El proyecto evoluciona clase a clase, pasando de una solución imperativa a un sistema basado en objetos, con cálculos funcionales y extensión por medio de prototipos.
+> Una aplicación web sencilla que permite gestionar un presupuesto mensual, registrando ingresos y gastos, categorizándolos y visualizando un balance actualizado. El proyecto evoluciona clase a clase, pasando de una solución imperativa a un sistema basado en objetos (`class`), con cálculos funcionales y una interfaz visual con Tailwind que el formulario actualiza en vivo.
 
 
 ### Módulo 3: Aplicaciones Web con Objetos

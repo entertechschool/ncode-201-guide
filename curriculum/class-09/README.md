@@ -6,7 +6,7 @@
 
 En la Clase 09 se trabaja activamente sobre la manipulación avanzada del DOM (Document Object Model), destacando cómo JavaScript permite tratar los elementos HTML como objetos, con propiedades y métodos propios. Durante esta sesión se enfatiza la importancia de entender y utilizar la jerarquía y las relaciones del DOM (padres, hijos y hermanos), integrando una visión práctica de JavaScript orientado a objetos.
 
-Esta clase también **formaliza Tailwind CSS** como utility-first framework. Los estudiantes ya lo vieron pasivamente en el template del lab de C08 (M2). Aquí lo aprenden conscientemente: qué son las utility classes, por qué funcionan en el HTML del template y cómo aplicarlas con propósito en su propio markup.
+Para los estilos del editor se usa **Tailwind CSS**, que los estudiantes **ya dominan de C08** (M2, donde fue la herramienta principal). Aquí no se vuelve a enseñar: simplemente lo **aplican** para estilizar la interfaz del editor de Markdown, mientras el foco de la clase está en el **DOM y Regex**.
 
 Se utilizan tres recursos fundamentales:
 
@@ -46,41 +46,20 @@ Al culminar esta clase, los estudiantes serán capaces de manipular el DOM usand
 - Una barra de herramientas dinámica adaptada a diferentes tipos de dispositivo.
 - Generación automática y dinámica de una vista previa HTML desde texto Markdown, usando métodos `.replace()` y Regex.
 - Estilos dinámicos aplicados mediante selección múltiple de elementos usando `querySelectorAll()`.
-- Estilos del editor con **Tailwind CSS** (utility classes) — formalizando lo visto pasivamente en C08.
+- Estilos del editor con **Tailwind CSS** (utility classes), reusando lo que ya dominan de C08.
 
 ---
 
-## 🎨 Tailwind CSS — formalización
+## 🎨 Tailwind CSS — recordatorio
 
-En C08 (M2) usaron un template HTML con clases como `bg-white rounded-lg shadow p-6` y `flex flex-col md:flex-row gap-4`. Esas son **utility classes de Tailwind**.
+Los estilos del editor usan **Tailwind CSS**, que ya aprendieron a fondo en **C08** (M2): **clases-propiedad** (`p-6`, `bg-white`, `flex`) y **prefijos-modificador** (`hover:`, `md:`). Hoy solo lo **aplican** — el foco de la clase es el DOM y Regex.
 
-### Utility-first vs Component classes
-
-| Bootstrap (component classes) | Tailwind (utility classes) |
-|---|---|
-| `<div class="card">` | `<div class="bg-white rounded-lg shadow p-6">` |
-| `<button class="btn btn-primary">` | `<button class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">` |
-| Componente prediseñado, dificulta personalizar | Bloques de Lego, total control desde el HTML |
-
-### Tabla de utility classes más usadas
-
-| Categoría | Ejemplos |
-|---|---|
-| Layout | `flex`, `grid`, `block`, `hidden`, `flex-col`, `flex-row` |
-| Spacing | `p-4` (padding), `m-2` (margin), `gap-4`, `space-y-2` |
-| Alignment | `justify-center`, `items-center`, `text-center` |
-| Colors | `bg-white`, `bg-blue-600`, `text-gray-700` |
-| Borders | `rounded`, `rounded-lg`, `border`, `border-gray-300` |
-| Effects | `shadow`, `shadow-lg`, `hover:bg-blue-700` |
-
-### Setup en este lab
-
-Tailwind se carga con **Play CDN** (igual que en C08):
+Se carga con **Play CDN** (igual que en C08):
 
 ```html
 <script src="https://cdn.tailwindcss.com"></script>
 ```
 
-No requiere build step. Para producción real se compilaría, pero para aprender alcanza con el CDN.
+> Si necesitas refrescar una utility class, vuelve al lab de C08 o a la [documentación de Tailwind](https://tailwindcss.com/docs){:target="_blank"}.
 
 

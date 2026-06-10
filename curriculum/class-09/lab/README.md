@@ -43,13 +43,13 @@
 >
 > Mantén estos IDs **idénticos en todos los labs del M3** para que el código de cada clase siga funcionando con el de las anteriores.
 
-- **Tailwind por Play CDN** (igual que en C08 — recuerda que ya lo viste pasivamente ahí):
+- **Tailwind por Play CDN** (igual que en C08, donde lo aprendiste a fondo):
 
 ```html
 <script src="https://cdn.tailwindcss.com"></script>
 ```
 
-   Aquí lo usas **conscientemente**: cada utility class que escribas (`flex`, `p-4`, `bg-white`, `rounded-lg`, etc.) debes saber qué hace. Si tienes dudas, revisa la [documentación de Tailwind](https://tailwindcss.com/docs){:target="_blank"} o vuelve a la tabla del README de la clase.
+   Ya dominas las utility classes (`flex`, `p-4`, `bg-white`, `rounded-lg`, etc.) desde C08 — aquí solo las **aplicas** mientras el foco está en el DOM y Regex. Si necesitas refrescar alguna, revisa la [documentación de Tailwind](https://tailwindcss.com/docs){:target="_blank"}.
 
 ## 📋 Historias de Usuario
 

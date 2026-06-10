@@ -1,275 +1,199 @@
-﻿# Guía del Facilitador: Prototipos en JavaScript
+# Guía del Facilitador — Clase 08: Tailwind CSS (cierre del Módulo 2)
 
-## 1. El momento pedagógico clave
+> Tiempo de lectura: 8 minutos | Última clase del M2 | Prepárate antes de clase
 
-Los estudiantes llegan a esta clase habiendo dominado funciones constructoras y el concepto de `this`, pero ahora deben experimentar la transformación mental más profunda del módulo: entender que JavaScript no solo permite crear objetos, sino que tiene un sistema de herencia nativo basado en prototipos que es fundamentalmente diferente a las clases tradicionales. El "click" conceptual aquí es reconocer que cada método que colocan en el constructor está creando una nueva función en memoria para cada instancia, y que existe una forma más elegante y eficiente de compartir comportamientos.
+---
 
-```javascript
-// El "antes" - ineficiencia de memoria
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.calcularImpacto = function() { // Nueva función para cada instancia
-    return this.tipo === 'ingreso' ? this.valor : -this.valor;
-  };
-}
+## 🔑 Conceptos Clave
 
-// El "después" - optimización con prototipos
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-}
-Movimiento.prototype.calcularImpacto = function() { // Una función compartida
-  return this.tipo === 'ingreso' ? this.valor : -this.valor;
-};
+- **Utility-first** (NUEVO): componer el diseño con muchas clases pequeñas en el HTML, en vez de reglas en un `.css`. Es **el mismo CSS de M1, otra notación**.
+- **Dos tipos de clase:** **clase-propiedad** (`p-4` = 1 propiedad CSS) y **prefijo-modificador** (`hover:`, `md:` = aplican una clase bajo una condición). Vocabulario vs gramática.
+- **Mejora progresiva por grupos:** se estiliza el Gestor capa por capa (layout → caja → estética → modificadores), un grupo de utilidades por parte.
+- **Mobile-first:** las clases base = móvil; los prefijos `md:`/`lg:` agregan el desktop. El look base que arman en P1–P3 ya es el móvil.
+- **P5 — conexión:** ~25 líneas de JS conectan el formulario con las clases `Movimiento`/`Presupuesto` de C07. Es **aplicación**, no tema nuevo → cierra el proyecto del módulo.
+
+> ❗ **Única herramienta nueva: Tailwind (vía CDN).** El JS de P5 reusa lo que ya saben (eventos, `.value`, `innerHTML`). Si alguien lo siente "nuevo", recuérdale que es lo que ya hicieron antes — hoy solo lo aplican para cerrar.
+
+---
+
+## 🔗 Analogías Útiles
+
+**Utility-first ⟷ Bloques de Lego:** en vez de comprar un mueble armado (un componente de Bootstrap), juntas piezas pequeñas (`flex`, `p-4`, `bg-white`) hasta lograr exactamente lo que quieres. Más piezas, pero control total.
+
+**Clase-propiedad vs prefijo ⟷ Palabra vs conjugación:** `bg-blue-600` es una palabra; `hover:bg-blue-700` es esa palabra "conjugada" para una situación (al pasar el mouse). El prefijo no es una clase nueva — modifica **cuándo** aplica.
+
+**Mejora progresiva ⟷ Capas de pintura:** primero el boceto (layout), luego el relleno (espaciado), luego el color (estética), luego los detalles (sombra, hover). Entre capa y capa se ve "a medio hacer" — eso es normal y demuestra qué aporta cada grupo.
+
+**Mobile-first ⟷ Construir de lo pequeño a lo grande:** diseñas para la pantalla más chica (la base) y vas **agregando** para las grandes con `md:`. Nunca al revés.
+
+---
+
+## 📚 Contexto Actual
+
+### Por qué Tailwind se enseña por GRUPOS (no por componentes)
+
+Si construyes "tarjeta por tarjeta", cada tarjeta mezcla layout + espaciado + color + sombra a la vez, y el alumno no puede practicar **un** concepto aislado. Enseñar **por grupos** (un tipo de utilidad por parte, aplicado a toda la página) permite "hoy: espaciado → practícalo; ahora: color → practícalo". El lab es el vehículo de práctica; su estructura sigue la secuencia de conceptos.
+
+### Por qué responsive va al FINAL
+
+Responsive (`md:`) es un **prefijo-modificador**, igual que `hover:`. No puedes enseñar `md:grid-cols-2` sin que sepan `grid-cols-2`. Además, un prefijo necesita un look base que adaptar — y ese look base (P1–P3) **es el móvil**. Así que responsive al final no contradice mobile-first: lo cumple.
+
+### Por qué C08 cierra el proyecto (P5)
+
+Es la **última clase del M2**. El Gestor tenía cerebro (lógica de C07) pero no cara. C08 le da cara (Tailwind) y, en P5, la **conecta** con ~25 líneas que reusan C07. El módulo no debe terminar en una maqueta bonita pero muerta, sino en una **app real**.
+
+**Fuentes:** [Tailwind Docs](https://tailwindcss.com/docs){:target="_blank"}, [Utility-First](https://tailwindcss.com/docs/utility-first){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Intro + contexto | 15 min | De CSS a mano (M1) a utility-first. |
+| Demo Técnica | 20 min | CDN + 2 tipos de clase + mejora progresiva. |
+| Lab (P0-P5) | 145 min | P0 esqueleto · P1 Layout · P2 Caja · P3 Estética · P4 Modificadores · P5 Conectar (JS). |
+| Cierre | 20 min | El Gestor funcionando + síntesis del M2. |
+
+---
+
+## 🎯 Momentos Clave de la Clase
+
+### Demo 1 — instalación + "magia" del CDN (3 min)
+Pega `<script src="https://cdn.tailwindcss.com"></script>` y un `<h1 class="text-2xl font-bold text-blue-600">`. Recarga → estilizado sin tocar CSS. "Una línea, cero configuración."
+
+### Demo 2 — los 2 tipos de clase (4 min)
+Escribe `bg-blue-600` (propiedad) y luego `hover:bg-blue-600` (prefijo). Pasa el mouse. "El prefijo no es una clase nueva — es la misma, condicionada." Esto es **la idea que ordena toda la clase**.
+
+### Demo 3 — la página crece por capas (5 min)
+Muestra el esqueleto sin clases → agrega solo layout → solo espaciado → solo color. Que VEAN cada capa. "Entre capa y capa se ve incompleto. Eso es la prueba de qué hace cada grupo."
+
+### Transición al Lab
+```
+"P0–P4 son Tailwind por capas: layout, caja, estética, modificadores.
+Cada parte muestra el <body> completo con lo nuevo marcado ← Px.
+P5 es el cierre: ~25 líneas de JS para que el form funcione, reusando sus clases de C07.
+Al final: su Gestor desplegado y funcionando."
 ```
 
-Este cambio representa la maduración hacia un pensamiento arquitectónico más sofisticado, donde la eficiencia de recursos y la escalabilidad se vuelven consideraciones primarias, preparándolos para el pensamiento que necesitarán en frameworks como React donde la optimización de componentes es crucial.
+---
 
-## 2. Constructor.prototype: Más que optimización de memoria
+## 🎭 Dinámicas de Clase
 
-La decisión de enseñar `Constructor.prototype` como patrón fundamental no es una reliquia del pasado, es preparación estratégica para comprender cómo funciona JavaScript internamente. Los estudiantes necesitan entender que incluso cuando usen la sintaxis `class` en Code 301, bajo el capó JavaScript sigue usando el sistema de prototipos que están aprendiendo ahora.
+### Dinámica 1: "¿Propiedad o prefijo?" (tras Demo 2)
+Pasa 5 clases en pizarra (`p-4`, `md:flex`, `text-center`, `hover:underline`, `bg-red-50`) y que clasifiquen cada una. Refuerza la distinción que ordena todo.
 
+### Dinámica 2: "Traduce de M1 a Tailwind" (antes de P1)
+Das CSS de M1 (`display:flex; justify-content:space-between; gap:1rem`) y escriben el equivalente Tailwind (`flex justify-between gap-4`). Ven que ya lo sabían.
+
+### Dinámica 3: "Predice el responsive" (en P4)
+"`grid-cols-1 md:grid-cols-2`: ¿cómo se ve en móvil? ¿y en desktop?" Antes de probarlo en DevTools.
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### Clases dinámicas en P5 (por si preguntan)
+Las clases que el JS inserta (`bg-green-50`, `bg-red-50`) **sí funcionan** con Play CDN porque observa el DOM en vivo. Tip: usar **nombres completos** condicionados (`ingreso ? 'bg-green-50' : 'bg-red-50'`), NO interpolar el color (`bg-${color}-50`), para que sea robusto.
+
+### El JS de P5 reusa C07
 ```javascript
-// Patrón prototipal: el mecanismo real de JavaScript
-function Presupuesto() {
-  this.movimientos = [];
-}
-
-// Métodos compartidos en el prototipo
-Presupuesto.prototype.agregarMovimiento = function(movimiento) {
-  this.movimientos.push(movimiento);
-  this.actualizarBalance(); // Método interno que también usa prototipos
-};
-
-Presupuesto.prototype.actualizarBalance = function() {
-  // Lógica compartida entre todas las instancias
-  console.log(`Balance actual: ${this.calcularTotal()}`);
-};
-
-// Cada instancia accede a los mismos métodos en memoria
-const presupuesto1 = new Presupuesto();
-const presupuesto2 = new Presupuesto();
-console.log(presupuesto1.agregarMovimiento === presupuesto2.agregarMovimiento); // true
+presupuesto.agregar(new Movimiento(nombre, tipo, valor));  // clases de C07
+render();                                                   // pinta lista + saldo
 ```
+"No escriben lógica nueva. Solo conectan el form a su modelo."
 
-Esta comprensión profunda les permitirá entender por qué React puede re-renderizar componentes eficientemente, por qué los hooks funcionan como funcionan, y por qué las optimizaciones de performance en aplicaciones modernas son posibles.
+---
 
-## 3. Object.create() vs. la sobrecarga de herencia tradicional
+## ⚠️ Errores Comunes
 
-En lugar de introducir conceptos complejos de herencia múltiple o patrones académicos, usamos `Object.create()` como la herramienta precisa para establecer relaciones prototipos de manera explícita y controlada. Esta elección pedagógica evita la confusión de sintaxis mientras enfoca en el concepto fundamental.
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| Nada se estiliza | Falta el `<script>` de Tailwind o está mal escrito | Verificar el CDN en el `<head>` |
+| Una clase no hace nada | Nombre mal escrito (`bg-grey-50`, `flex-col-1`) | Tailwind ignora clases inexistentes; revisar el nombre exacto |
+| El layout no es responsive | Usó `grid-cols-2` sin `md:` | Base `grid-cols-1` + `md:grid-cols-2` (mobile-first) |
+| `hover:` no reacciona | Lo puso en el elemento equivocado o sin estado base | El prefijo va en el mismo elemento que cambia |
+| El form recarga la página (P5) | Olvidó `event.preventDefault()` | Es la línea #1 del listener |
+| `null` al hacer `getElementById` | El `id` del HTML no coincide con el del JS | Igualar los `id` exactos |
+| Filas nuevas sin color (P5) | El template del `<li>` no incluye las clases | Construir el `<li>` con sus clases en el string |
 
-```javascript
-// Herencia prototipal explícita y limpia
-function Ingreso(nombre, valor, fuente) {
-  Movimiento.call(this, nombre, 'ingreso', valor); // Llamada explícita al constructor padre
-  this.fuente = fuente;
-}
+---
 
-// Establecimiento claro de la cadena prototipal
-Ingreso.prototype = Object.create(Movimiento.prototype);
-Ingreso.prototype.constructor = Ingreso; // Importante para instanceof
+## ✅ Señales de Comprensión
 
-// Especialización sin romper la cadena
-Ingreso.prototype.esFijo = function() {
-  return ['salario', 'pension', 'renta'].includes(this.fuente);
-};
-```
+**ENTIENDE cuando:**
+- Clasifica una clase como propiedad o prefijo sin dudar.
+- Traduce CSS de M1 a Tailwind y viceversa.
+- Explica por qué la base es el móvil y `md:` agrega el desktop.
+- En P5, reconoce que reusa C07 y solo "conecta".
 
-La belleza de este enfoque es que cada paso es explícito y debuggeable. Los estudiantes pueden inspeccionar cada parte de la cadena en DevTools y entender exactamente qué está sucediendo, preparándolos para diagnosticar problemas en aplicaciones más complejas.
+**NECESITA AYUDA cuando:**
+- Inventa nombres de clases (no internalizó que son finitos/predecibles).
+- Pone responsive como desktop-first (`grid-cols-2` + `sm:grid-cols-1`).
+- Cree que P5 es "lógica nueva" en vez de aplicación.
+- Olvida `preventDefault` y se frustra con la recarga.
 
-## 4. instanceof y hasOwnProperty: Validación en tiempo real
+---
 
-Estos métodos no son curiosidades técnicas, son herramientas de supervivencia en aplicaciones complejas donde la validación de tipos se vuelve crítica. Los estudiantes deben experimentar la potencia de tener validaciones robustas que funcionen a través de jerarquías de herencia.
+## 🎯 Checkpoints de Validación
 
-```javascript
-// Validación sofisticada en sistemas complejos
-function validarMovimiento(obj) {
-  // Verificar que es instancia de la jerarquía correcta
-  if (!(obj instanceof Movimiento)) {
-    throw new Error('Objeto debe ser instancia de Movimiento');
-  }
-  
-  // Verificar propiedades propias vs heredadas
-  if (!obj.hasOwnProperty('valor') || !obj.hasOwnProperty('fecha')) {
-    throw new Error('Faltan propiedades requeridas');
-  }
-  
-  // Validación específica por tipo
-  if (obj instanceof Ingreso && !obj.hasOwnProperty('fuente')) {
-    throw new Error('Ingreso debe tener fuente definida');
-  }
-  
-  return true;
-}
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~20' | P0 | Tailwind carga (CDN); ve el esqueleto feo pero estructurado; distingue los 2 tipos de clase. |
+| ~50' | P1 | Layout aplicado: contenedor centrado, 2 columnas, filas con `justify-between`. |
+| ~70' | P2 | La página respira (padding/margin/espaciado). |
+| ~95' | P3 | Tarjetas blancas con sombra, color semántico verde/rojo, tipografía. |
+| ~125' | P4 | Botón con hover, inputs con foco, responsive (apila en móvil, 2 col en desktop). |
+| ~145' | P5 | El form agrega movimientos en vivo; lista + saldo se actualizan. **Gestor funcional.** |
 
-// Filtrado inteligente por tipo
-function separarPorTipo(movimientos) {
-  return {
-    ingresos: movimientos.filter(m => m instanceof Ingreso),
-    egresos: movimientos.filter(m => m instanceof Egreso),
-    ingresosFijos: movimientos.filter(m => m instanceof Ingreso && m.esFijo())
-  };
-}
-```
+---
 
-Esta capacidad de validación y filtrado dinámico es exactamente lo que necesitarán en React cuando trabajen con props, estado y componentes condicionales.
+## 🧑‍🏫 Tips de Facilitación
 
-## 5. Cadena de prototipos: La unidad fundamental de escalabilidad
+- **Grupo callado:** "¿A qué CSS de M1 equivale `rounded-lg`? ¿Y `flex`?" — fuerza el mapeo.
+- **Alguien ya sabía Tailwind:** pídele que explique al grupo por qué `md:` es mobile-first.
+- **Terminan P4 antes:** que prueben el logro de modo oscuro (`dark:`).
+- **En P5, si el form no funciona:** revisar (1) scripts cargados (`oop-objects.js` antes de `app.js`), (2) `preventDefault`, (3) `id`s coinciden.
+- **No te pierdas en la "pureza" de Tailwind:** la meta es que el alumno construya una UI real y la conecte, no memorizar todas las utilidades.
 
-La cadena de prototipos no es un concepto abstracto, es el mecanismo que permite que las aplicaciones JavaScript escalen sin colapsar bajo su propio peso. Los estudiantes deben experimentar cómo una decisión arquitectónica al nivel de prototipos impacta la performance y mantenibilidad de toda la aplicación.
+---
 
-Los principios universales que internalizan aquí son:
-- **Delegación eficiente**: Un método definido una vez, usado por miles de instancias
-- **Extensibilidad controlada**: Nuevos comportamientos sin modificar código existente
-- **Debugging predecible**: Cadena de búsqueda clara y rastreable
+## ❓ Preguntas Frecuentes
 
-```javascript
-// Extensibilidad sin modificación
-// Después de que la aplicación está en producción, podemos agregar:
-Movimiento.prototype.convertirMoneda = function(tasaCambio) {
-  return this.valor * tasaCambio;
-};
+**P: ¿Tailwind reemplaza saber CSS?**
+R: No. Tailwind ES CSS con otra notación. Quien no entiende `flex` no entiende `flex` de Tailwind. Lo acelera, no lo sustituye.
 
-// Inmediatamente disponible para todas las instancias existentes
-// Sin necesidad de modificar código o recrear objetos
-```
+**P: ¿Por qué CDN y no instalación "real"?**
+R: Este curso es un sitio estático sin build. El Play CDN da Tailwind con un `<script>`. La instalación con `npm`/PostCSS es para proyectos con herramientas de build, más adelante.
 
-## 6. Tailwind como exposición pasiva: foco en JS, no en CSS
+**P: ¿No es mucho escribir tantas clases en el HTML?**
+R: Al principio sí, pero ganas velocidad y consistencia (escala fija, nada de inventar valores). En proyectos grandes se extraen componentes; eso es Code 301.
 
-La decisión de usar Tailwind en el template de la P3 (sin enseñarlo formalmente) es estratégica: el alumno **lee** clases utility (`bg-white rounded-lg shadow p-6`) sin que el módulo le pida aprenderlas. El foco de la clase es JS (prototipos, herencia, `instanceof`), no CSS. Tailwind se formaliza recién en C09.
+**P: ¿El JS de P5 no es adelantar M3?**
+R: No. M3 (DOM como API, `createElement`, `querySelectorAll`, regex, eventos avanzados) va mucho más profundo. P5 solo aplica lo básico ya conocido para cerrar el proyecto.
 
-```javascript
-// Integración realista con utility classes — el alumno solo escribe JS
-function renderizarMovimiento(movimiento) {
-  const tipoClase = movimiento instanceof Ingreso
-    ? 'bg-green-100 text-green-800'
-    : 'bg-red-100 text-red-800';
-  const icono = movimiento instanceof Ingreso ? '💰' : '💸';
+---
 
-  return `
-    <div class="${tipoClase} p-3 rounded mb-2 flex justify-between">
-      <span>${icono} ${movimiento.formatear()}</span>
-      <small>${movimiento.constructor.name}</small>
-    </div>
-  `;
-}
-```
+## 🔗 Conexiones del Curriculum
 
-**Mensaje al alumno:** "El HTML del template usa Tailwind. No lo modifiquen — concéntrense en escribir el JS. En C09 aprenden Tailwind formalmente."
+### Construye sobre:
 
-## 7. Gestión de la frustración inicial
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C01-C04 (M1) | CSS a mano (Flexbox, Grid, variables, media queries) | Hoy es lo mismo, en clases utilitarias |
+| C07 | `class Movimiento` / `Presupuesto` | P5 reusa esas clases para que el form funcione |
 
-**Frustración típica:** "¿Por qué no puedo poner simplemente todos los métodos en el constructor? Es más fácil."
+### Conexión con M3 (C09+)
 
-**Estrategia de facilitación:** Reconoce que la simplicidad inicial es tentadora, pero usa la analogía de la biblioteca: "Si cada persona llevara todos los libros que necesita en su mochila, sería más 'simple' no tener que ir a la biblioteca, pero imagina el peso. Los prototipos son la biblioteca compartida."
+Al cerrar:
 
-**Pregunta clave para la clase:** "Si tu aplicación tuviera 10,000 movimientos, ¿preferirías 10,000 copias de la función `calcularImpacto()` o una sola función compartida?"
+> "Su Gestor ya funciona con lo justo de JavaScript. En M3 profundizan el **DOM como API de objetos** (C09), callbacks (C10) y eventos (C11) sobre un proyecto nuevo (Editor de Markdown) — y **Tailwind ya lo dominan desde hoy**, así que ahí solo lo aplican."
 
-**Frustración típica:** "No entiendo cuándo usar `prototype` vs cuándo usar `__proto__`."
+---
 
-**Estrategia de facilitación:** Mantén `__proto__` como herramienta de inspección únicamente. Enfoca en que `prototype` es para desarrolladores (cuando escribes código) y `__proto__` es para JavaScript interno (cuando debuggeas).
+## 🪞 Reflexión Post-Clase
 
-**Pregunta clave para la clase:** "¿Alguna vez escribirías código que modifique `__proto__` directamente, o es solo para entender qué está pasando cuando debuggeas?"
-
-## 8. El error más común: Romper la cadena prototipal
-
-```javascript
-// ❌ Error típico que cometerán
-function Ingreso(nombre, valor, fuente) {
-  Movimiento.call(this, nombre, 'ingreso', valor);
-  this.fuente = fuente;
-}
-
-// Asignación directa que rompe instanceof
-Ingreso.prototype = Movimiento.prototype; // ¡MALO!
-
-// ✅ Versión correcta con explicación
-Ingreso.prototype = Object.create(Movimiento.prototype);
-Ingreso.prototype.constructor = Ingreso;
-
-// Verificación que funciona correctamente
-const ingreso = new Ingreso('Salario', 3000, 'trabajo');
-console.log(ingreso instanceof Ingreso); // true
-console.log(ingreso instanceof Movimiento); // true - ¡esto es lo importante!
-```
-
-Este error es pedagógicamente perfecto porque enseña la diferencia entre referencia y herencia. Úsalo para explicar que `Object.create()` establece una nueva cadena, mientras que la asignación directa crea una referencia compartida que rompe la especialización.
-
-## 9. Señales de comprensión exitosa
-
-Al final de la clase, busca estas evidencias de comprensión genuina:
-
-- **Vocabulario preciso**: Distinguen claramente entre "prototipo", "cadena prototipal" y "herencia prototipal"
-- **Pensamiento en optimización**: Automáticamente consideran la eficiencia de memoria al diseñar objetos
-- **Debugging instintivo**: Usan DevTools para inspeccionar la cadena prototipal cuando algo no funciona
-
-**Pregunta de validación final:** "Si quisieras agregar un método `exportarCSV()` a todos los movimientos existentes y futuros en tu aplicación, sin modificar el código de los constructores, ¿cómo lo harías?"
-
-Solo responden correctamente si proponen agregar el método al prototipo después de que los constructores ya están definidos, demostrando que entienden la naturaleza dinámica y extensible de los prototipos.
-
-## 10. Preparación para la siguiente clase
-
-Los conceptos de esta clase son prerrequisito directo para DOM como API de objetos. La próxima clase usará la mentalidad prototipal para entender cómo `document.querySelector()` retorna objetos con métodos heredados, y cómo los eventos son objetos con su propia cadena prototipal.
-
-### Bloque de cierre obligatorio: puente constructora → `class`
-
-Al final del lab, dedica **~10 min** al bloque puente del lab/README.md (sección "Cierre — De funciones constructoras a `class`"). El alumno reescribe `Movimiento` y `Presupuesto` con sintaxis `class` ES6 y verifica que sigue funcionando idéntico. Mensaje clave: **"`class` es azúcar sintáctica sobre prototipos. No es un mecanismo nuevo — es la misma cadena prototipal con sintaxis más legible."**
-
-Esto **prepara directamente M4 C13**, que arranca usando `class` sin necesidad de "discusión teórica" sobre la equivalencia (ya fue cerrada aquí). Si te pasas de tiempo, el bloque puede quedar como tarea autónoma con material claro — pero NO lo elimines: M4 lo asume cerrado.
-
-**Conceptos que DEBEN estar sólidos:**
-- **Cadena de prototipos**: Deben poder rastrear mentalmente la búsqueda de un método
-- **Object.create() vs asignación directa**: Sin confusión sobre cuándo usar cada uno
-
-**Conceptos que pueden seguir madurando:**
-- **Cuándo usar herencia vs composición**: La intuición arquitectónica se desarrolla con práctica
-- **Performance de prototipos**: Los matices de optimización vienen con experiencia
-
-La clase fue exitosa si los estudiantes salen pensando: *"Ahora entiendo que JavaScript tiene un sistema de herencia nativo que es diferente pero más flexible que las clases tradicionales, y puedo usar este conocimiento para escribir código más eficiente y escalable."*
-
-## Notas técnicas y troubleshooting
-
-### Configuración crítica
-- Verificar que Bootstrap CDN funciona antes de empezar
-- Confirmar que DevTools está disponible para inspección de prototipos
-
-### Errores comunes del entorno
-- **Error**: `Cannot read property 'prototype' of undefined`
-- **Solución**: Verificar que las funciones constructoras están declaradas antes de intentar extender sus prototipos
-- **Prevención**: Usar el patrón de declarar todos los constructores primero, luego todos los prototipos
-
-### Errores comunes de concepto
-- **Error**: `instanceof` retorna `false` después de herencia
-- **Solución**: Verificar que se usó `Object.create()` y no asignación directa
-- **Prevención**: Crear un checklist: "¿Usé Object.create()? ¿Restablecí el constructor?"
-
-### Recursos de emergencia
-- [MDN: Inheritance and the prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
-- Código de ejemplo para compartir pantalla si hay problemas técnicos:
-
-```javascript
-// Ejemplo de rescate completo
-function Animal(nombre) {
-  this.nombre = nombre;
-}
-
-Animal.prototype.hablar = function() {
-  return `${this.nombre} hace un sonido`;
-};
-
-function Perro(nombre, raza) {
-  Animal.call(this, nombre);
-  this.raza = raza;
-}
-
-Perro.prototype = Object.create(Animal.prototype);
-Perro.prototype.constructor = Perro;
-
-Perro.prototype.hablar = function() {
-  return `${this.nombre} ladra`;
-};
-
-const miPerro = new Perro('Max', 'Labrador');
-console.log(miPerro.hablar()); // "Max ladra"
-console.log(miPerro instanceof Perro); // true
-console.log(miPerro instanceof Animal); // true
-```
+- ¿Cuántos intentaron `grid-cols-2` directo (desktop-first)? Si fue mayoría, refuerza mobile-first.
+- ¿El "2 tipos de clase" ordenó la clase, o hubo que repetirlo?
+- ¿Cuántos cerraron P5 con el form funcionando? Ese es el éxito del módulo.
+- ¿Alguien dijo "esto es más rápido que escribir CSS"? Buena señal — captaron el valor.

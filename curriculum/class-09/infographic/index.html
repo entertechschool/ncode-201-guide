@@ -179,32 +179,15 @@ document.<span class="tag-green">querySelectorAll</span>(<span class="tag-green"
 <span class="tag-muted">// Flag /m → ^ y $ matchean inicio/fin de cada línea</span></code></pre>
     </div>
 
-    <!-- 4: Tailwind utility-first -->
+    <!-- 4: Tailwind (recordatorio de C08) -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Tailwind CSS — Utility-first en lugar de componentes</h3>
-      <p class="desc">En lugar de un componente predefinido como <code>.card</code>, combinas utilidades pequeñas directamente en el HTML. Total control, cero CSS propio.</p>
-      <div class="tw-compare">
-        <div class="tw-col">
-          <div class="tw-label" style="color:#94a3b8;">Bootstrap (componente cerrado)</div>
-          <pre><code><span class="tag-muted">&lt;div class="card"&gt;</span>
-  ...
-<span class="tag-muted">&lt;/div&gt;</span>
-
-<span class="tag-muted">&lt;button class="btn btn-primary"&gt;</span>
-  Enviar
-<span class="tag-muted">&lt;/button&gt;</span></code></pre>
-        </div>
-        <div class="tw-col">
-          <div class="tw-label" style="color:#fb923c;">Tailwind (bloques de Lego)</div>
-          <pre><code><span class="tag-orange">&lt;div class="bg-white rounded-lg shadow p-6"&gt;</span>
+      <h3><span class="tag-orange">4.</span> Tailwind CSS — ya lo dominas (C08)</h3>
+      <p class="desc">Los estilos del editor usan Tailwind, que aprendiste a fondo en C08. Hoy solo lo <strong>aplicas</strong>: clases-propiedad (<code>p-6</code>, <code>bg-white</code>) y prefijos (<code>hover:</code>, <code>md:</code>). El foco de esta clase es el <strong>DOM y Regex</strong>.</p>
+      <pre><code><span class="tag-orange">&lt;div class="bg-white rounded-lg shadow p-6"&gt;</span>
   ...
 <span class="tag-orange">&lt;/div&gt;</span>
 
-<span class="tag-orange">&lt;button class="bg-blue-600 text-white py-2 px-4 rounded"&gt;</span>
-  Enviar
-<span class="tag-orange">&lt;/button&gt;</span></code></pre>
-        </div>
-      </div>
+<span class="tag-muted">// 1 clase = 1 propiedad CSS · un prefijo = una condición</span></code></pre>
     </div>
 
   </section>

@@ -8,7 +8,7 @@
 |---------|---------|
 | **Proyecto** | Gestor de Presupuesto Personal |
 | **Modulo** | M2 — Fundamentos de Programación |
-| **Clase** | C08 — Prototipos en JavaScript |
+| **Clase** | C08 — Tailwind CSS e Interfaz del Gestor (cierre del módulo) |
 | **Puntaje Total** | 100 puntos |
 
 ---
@@ -33,22 +33,21 @@
 
 ---
 
-### 2. Calidad técnica: paradigmas integrados (20 puntos)
+### 2. Calidad técnica: lógica + interfaz integradas (20 puntos)
 
 | Nivel | Puntos | Descripcion |
 |-------|--------|-------------|
-| **Excelente** | 20 | Integra correctamente los 4 paradigmas (imperativo, funcional, OOP, prototipal), aplica buenas prácticas: funciones puras, encapsulamiento, herencia con `Object.create()`, validaciones con `instanceof` |
-| **Bueno** | 15 | Integra 3 de 4 paradigmas correctamente, alguna inconsistencia menor |
-| **Satisfactorio** | 10 | Integra 2 paradigmas, código funcional pero sin aprovechar todas las técnicas del módulo |
-| **Bajo** | 5 | Solo usa enfoque imperativo, no aplica los conceptos del módulo |
-| **No entregado** | 0 | Código no funcional o sin paradigmas reconocibles |
+| **Excelente** | 20 | Integra la lógica del módulo (imperativo, funcional, OOP con `class` + encapsulación) con una **interfaz Tailwind responsiva**, y la **conecta**: el formulario crea movimientos y actualiza la lista + saldo en vivo |
+| **Bueno** | 15 | Lógica y estilo correctos; la conexión funciona con alguna inconsistencia menor |
+| **Satisfactorio** | 10 | Interfaz estilizada pero la conexión es parcial (ej. agrega pero no actualiza el saldo) |
+| **Bajo** | 5 | Solo maqueta estática o lógica suelta sin interfaz |
+| **No entregado** | 0 | Código no funcional |
 
 **Aspectos evaluados:**
-- Uso de `map()`, `filter()`, `reduce()` para operaciones sobre movimientos
-- Funciones constructoras con `function Constructor()` + `new`
-- Métodos en `Constructor.prototype` (no en cuerpo del constructor)
-- Herencia con `Object.create()` y subtipos (`Ingreso`, `Egreso`)
-- Validaciones con `instanceof` y `hasOwnProperty()`
+- `class Movimiento` / `Presupuesto` con encapsulación (de C07)
+- UI con utility classes de Tailwind, responsiva (`md:`) y mobile-first
+- Conexión: `addEventListener('submit')` + `new Movimiento(...)` + `presupuesto.agregar(...)` + render
+- Color semántico (verde ingreso / rojo gasto)
 
 ---
 
@@ -56,17 +55,16 @@
 
 | Nivel | Puntos | Descripcion |
 |-------|--------|-------------|
-| **Excelente** | 20 | Demo ≤3 min, navegación fluida, muestra filtrado/análisis/categorización dinámica, demuestra cadena de prototipos en DevTools |
-| **Bueno** | 15 | Demo fluida muestra funcionalidades clave pero omite detalle de prototipos |
-| **Satisfactorio** | 10 | Demo entrega lo pedido pero sin uso de DevTools |
+| **Excelente** | 20 | Demo ≤3 min, fluida: agrega movimientos en vivo, muestra la lista y el saldo actualizándose, y demuestra el responsive (móvil/escritorio) en DevTools |
+| **Bueno** | 15 | Demo fluida muestra el agregado en vivo pero omite el responsive |
+| **Satisfactorio** | 10 | Demo entrega lo pedido pero la app no actualiza en vivo |
 | **Bajo** | 5 | Presenta pero no muestra la funcionalidad core del gestor |
 | **No entregado** | 0 | Sin presentación |
 
 **Aspectos evaluados:**
 - Tiempo: máximo 3 min, uso eficiente
-- Muestra crear movimientos (ingresos y egresos)
-- Demuestra filtrado y análisis por tipo
-- Abre DevTools y muestra `__proto__` para evidenciar la cadena
+- Agrega un movimiento desde el formulario → aparece en la lista, el saldo cambia
+- Muestra el layout responsivo (apila en móvil, 2 columnas en escritorio)
 - No se evalúa fluidez verbal ni nervios
 
 ---
@@ -75,25 +73,25 @@
 
 | Nivel | Puntos | Descripcion |
 |-------|--------|-------------|
-| **Excelente** | 20 | Justifica ≥2 decisiones técnicas con argumentos sólidos: por qué prototipos vs métodos en constructor, ventajas de herencia prototipal, eficiencia de memoria; explica cadena de prototipos al ser preguntado |
-| **Bueno** | 15 | Justifica 1 decisión técnica claramente, responde con dificultad pero correcto al preguntar por prototipos |
+| **Excelente** | 20 | Justifica ≥2 decisiones técnicas con argumentos sólidos: por qué `class` + encapsulación, por qué utility-first/mobile-first, cómo el JS conecta el form con el modelo de C07 |
+| **Bueno** | 15 | Justifica 1 decisión técnica claramente, responde con dificultad pero correcto |
 | **Satisfactorio** | 10 | Argumentación superficial, identifica los conceptos pero sin profundizar |
 | **Bajo** | 5 | No justifica decisiones técnicas o confunde conceptos básicos |
 | **No entregado** | 0 | Sin argumentación |
 
 **Aspectos evaluados:**
-- Compara ventajas de prototipos vs constructor (memoria, mantenibilidad)
-- Explica cuándo aplicó cada paradigma y por qué
-- Distingue `__proto__` de `prototype` al ser preguntado
+- Diferencia clase-propiedad vs prefijo-modificador en Tailwind
+- Por qué mobile-first (base = móvil, `md:` agrega desktop)
+- Cómo el formulario reusa las clases de C07 sin reescribir lógica
 - Si usó IA: explica qué porción del código entiende técnicamente
 
 ---
 
-### 5. Desafío: implementación prototipal solicitada por el Instructor (20 puntos)
+### 5. Desafío: explicación de código solicitada por el Instructor (20 puntos)
 
 | Nivel | Puntos | Descripcion |
 |-------|--------|-------------|
-| **Excelente** | 20 | Explica 1 fragmento de código prototipal a solicitud del instructor con claridad técnica, sitio desplegado en GitHub Pages funcional, README documentado con arquitectura de prototipos |
+| **Excelente** | 20 | Explica 1 fragmento (una clase de C07 o el listener del form) a solicitud del instructor con claridad técnica, sitio desplegado en GitHub Pages funcional, README documentado |
 | **Bueno** | 15 | Explica el fragmento con apoyo parcial del instructor, deploy funcional |
 | **Satisfactorio** | 10 | Explica con dificultad, deploy funcional pero README incompleto |
 | **Bajo** | 5 | No puede explicar el fragmento o sitio no desplegado |
@@ -102,7 +100,7 @@
 **Aspectos evaluados:**
 - Capacidad para explicar el código entregado bajo demanda
 - GitHub Pages cargando sin errores
-- README del repo con explicación de la arquitectura de prototipos
+- README del repo con explicación de la arquitectura (modelo de C07 + interfaz Tailwind)
 - Enlace al sitio desplegado documentado
 
 ---
@@ -127,13 +125,13 @@
 
 ### Documentacion
 - [ ] README del repo con retos adicionales documentados
-- [ ] README del repo con explicación de la arquitectura de prototipos implementada
-- [ ] README del repo con decisiones técnicas clave sobre paradigmas
+- [ ] README del repo con explicación de la arquitectura (modelo de C07 + interfaz Tailwind)
+- [ ] README del repo con decisiones técnicas clave
 
 ### Verificacion Tecnica
-- [ ] DevTools muestra la cadena de prototipos en los objetos del gestor
-- [ ] `instance instanceof Movimiento` retorna `true` para movimientos válidos
-- [ ] Métodos compartidos viven en `Constructor.prototype` (no en el constructor)
+- [ ] El formulario agrega un movimiento y la lista + saldo se actualizan en vivo
+- [ ] La interfaz es responsiva (apila en móvil, 2 columnas en escritorio)
+- [ ] El JS reusa `class Movimiento` / `Presupuesto` de C07
 - [ ] El sitio carga sin errores en consola
 
 ---
@@ -142,7 +140,7 @@
 
 1. **No penalices nervios en la presentación.** Lo que se evalúa es la comprensión técnica, no fluidez verbal.
 2. **El uso de IA está permitido**, pero el estudiante debe poder explicar técnicamente el código que entrega. Si no puede argumentar una decisión, baja el Criterio 4.
-3. **El fragmento del Criterio 5 lo eliges tú** en vivo durante la presentación — pide explícitamente "explícame esta función prototipal" señalando una porción del código.
+3. **El fragmento del Criterio 5 lo eliges tú** en vivo durante la presentación — pide explícitamente "explícame esta función" señalando una porción (una clase de C07 o el listener del formulario).
 4. **Distingue Criterio 2 de Criterio 4:** Criterio 2 es CÓDIGO entregado, Criterio 4 es ARGUMENTACIÓN sobre ese código.
 
 ---
@@ -150,7 +148,7 @@
 ## Ejemplo de Retroalimentacion
 
 ### Retroalimentacion Positiva
-> "La separación de `Movimiento` como constructor base y `Ingreso`/`Egreso` como subtipos con `Object.create()` está bien implementada. La explicación de por qué los métodos viven en `prototype` vs en el constructor (memoria compartida vs duplicada) fue precisa y técnica. Excelente uso de `instanceof` para validar antes de procesar."
+> "El modelo de C07 (`Movimiento`/`Presupuesto`) quedó bien encapsulado y la interfaz con Tailwind es limpia y responsiva. La conexión del formulario reusa `presupuesto.agregar(new Movimiento(...))` y re-renderiza la lista y el saldo correctamente. Explicaste con claridad por qué la base es móvil y `md:` agrega el desktop."
 
 ### Areas de Mejora
-> "El gestor funciona pero los métodos de cálculo (`obtenerBalance`, `filtrarPorTipo`) están dentro del constructor en vez del prototipo — esto duplica la función por cada instancia. Mueve estos métodos a `Movimiento.prototype` para corregir el Criterio 2. La argumentación técnica fue clara pero no pudiste explicar la diferencia entre `__proto__` y `prototype` cuando se preguntó."
+> "La interfaz se ve bien pero el saldo no se actualiza al agregar un movimiento — revisa que `render()` se llame dentro del listener del `submit` (Criterio 2). Además, usaste `grid-cols-2` fijo: pásalo a `grid-cols-1 md:grid-cols-2` para que sea mobile-first. La argumentación fue clara pero no distinguiste clase-propiedad de prefijo-modificador cuando se preguntó."
