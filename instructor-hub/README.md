@@ -86,7 +86,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 06](https://entertechschool.github.io/public/slides/?class=code-201_06){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 06](https://entertechschool.github.io/ncode-201-guide/curriculum/class-06/facilitator/){:target="_blank"} |
 
-### Clase 07 — Programación Orientada a Objetos
+### Clase 07 — Objetos + POO con `class`
 
 | Documento | Enlace |
 |-----------|--------|
@@ -95,7 +95,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 07](https://entertechschool.github.io/public/slides/?class=code-201_07){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/facilitator/){:target="_blank"} |
 
-### ⭐ Clase 08 — Prototipos en JavaScript *(Lab Evaluado M2)*
+### ⭐ Clase 08 — Tailwind CSS e Interfaz del Gestor *(Lab Evaluado M2)*
 
 | Documento | Enlace |
 |-----------|--------|
@@ -251,8 +251,8 @@ Cada clase cuenta con los siguientes documentos:
 | **04** | **Frameworks CSS Modernos** | [**Lab 04**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/lab/){:target="_blank"} | ⭐ **Evaluado M1** |
 | 05 | Programación Imperativa | [Lab 05](https://entertechschool.github.io/ncode-201-guide/curriculum/class-05/lab/){:target="_blank"} | Regular |
 | 06 | Programación Funcional | [Lab 06](https://entertechschool.github.io/ncode-201-guide/curriculum/class-06/lab/){:target="_blank"} | Regular |
-| 07 | Programación Orientada a Objetos | [Lab 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/lab/){:target="_blank"} | Regular |
-| **08** | **Prototipos en JavaScript** | [**Lab 08**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/lab/){:target="_blank"} | ⭐ **Evaluado M2** |
+| 07 | Objetos + POO con `class` | [Lab 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/lab/){:target="_blank"} | Regular |
+| **08** | **Tailwind CSS e Interfaz del Gestor** | [**Lab 08**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/lab/){:target="_blank"} | ⭐ **Evaluado M2** |
 | 09 | DOM como API de Objetos | [Lab 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/lab/){:target="_blank"} | Regular |
 | 10 | Funciones y Callbacks | [Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} | Regular |
 | 11 | Event Handling Básico | [Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} | Regular |
