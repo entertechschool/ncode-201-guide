@@ -438,10 +438,28 @@ presupuesto.agregar(new Movimiento('Freelance', 'ingreso', 500));
 
 // Construye el <li> de un movimiento (mismo estilo que armaste en P3)
 function liHTML(m) {
+  // 1. Evaluamos si es ingreso
   const ingreso = m.esIngreso();
-  const caja  = ingreso ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500';
-  const texto = ingreso ? 'text-green-700' : 'text-red-700';
-  const signo = ingreso ? '+' : '-';
+  
+  // 2. Declaramos las variables usando 'let' porque vamos a asignarles un valor más adelante
+  let caja;
+  let texto;
+  let signo;
+
+  // 3. Estructura condicional clásica
+  if (ingreso) {
+    // Si es verdadero (es un ingreso)
+    caja = 'bg-green-50 border-green-500';
+    texto = 'text-green-700';
+    signo = '+';
+  } else {
+    // Si es falso (es un gasto)
+    caja = 'bg-red-50 border-red-500';
+    texto = 'text-red-700';
+    signo = '-';
+  }
+
+  // 4. Retornamos la plantilla HTML con los valores ya definidos
   return `<li class="flex items-center justify-between p-3 border-l-4 rounded ${caja}">
             <span class="text-gray-800"><span class="font-medium">${m.nombre}</span> <span class="text-xs text-gray-500">(${m.tipo})</span></span>
             <span class="font-semibold ${texto}">${signo}$${m.valor.toFixed(2)}</span>
@@ -450,8 +468,19 @@ function liHTML(m) {
 
 // Pinta la lista y el saldo desde el Presupuesto
 function render() {
+  
+  // 1. RENDERIZADO DE LA LISTA
+  // Toma el arreglo 'movimientos', transforma cada elemento en texto HTML usando 'liHTML',
+  // luego los une todos en una sola cadena (sin comas) con join(''), 
+  // y finalmente reemplaza el contenido interno del contenedor 'lista'.
   lista.innerHTML = presupuesto.movimientos.map(liHTML).join('');
+
+  // 2. RENDERIZADO DEL SALDO
+  // Selecciona el elemento HTML con el id 'saldo' y cambia su texto.
+  // Llama al método .saldo() para calcular el total, usa .toFixed(2) para forzar 2 decimales,
+  // y le concatena el símbolo del dólar al principio.
   document.getElementById('saldo').textContent = '$' + presupuesto.saldo().toFixed(2);
+  
 }
 
 // Al enviar el formulario: crea el movimiento, lo agrega y re-pinta
