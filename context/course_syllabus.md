@@ -4,7 +4,7 @@
 1. **Consolidar Fundamentos Técnicos**  
    - Asimilar conceptos avanzados de HTML5 y CSS (Layouts con Flexbox, Grid y Frameworks Modernos).  
    - Fortalecer las bases de la programación en JavaScript (imperativo, funcional y orientado a objetos).  
-   - Explorar la manipulación del DOM, eventos y persistencia de datos (LocalStorage y JSON).  
+   - Explorar el render dinámico del DOM, el consumo de APIs (`fetch`/`async/await`) y la persistencia de datos (LocalStorage y JSON).  
 
 2. **Fomentar el Uso Efectivo de la IA**  
    - Emplear la IA para aprender y producir soluciones de software, complementando la instrucción humana.  
@@ -70,31 +70,31 @@
 > Una aplicación web sencilla que permite gestionar un presupuesto mensual, registrando ingresos y gastos, categorizándolos y visualizando un balance actualizado. El proyecto evoluciona clase a clase, pasando de una solución imperativa a un sistema basado en objetos (`class`), con cálculos funcionales y una interfaz visual con Tailwind que el formulario actualiza en vivo.
 
 
-### Módulo 3: Aplicaciones Web con Objetos
-9. **DOM como API de Objetos** (180 min, blend)
-10. **Funciones y Callbacks** (180 min, blend)
-11. **Event Handling Básico** (180 min, blend)
-12. **Excepciones en Javascript** (180 min, blend) <!-- antes: Promesas -->
+### Módulo 3: JavaScript Moderno y Consumo de APIs
+9. **JavaScript Moderno y Render Dinámico** (180 min, blend)
+10. **Asincronía y Promesas** (180 min, blend)
+11. **async/await, fetch y JSON** (180 min, blend)
+12. **Manejo de Errores y Estados** (180 min, blend)
 - **Presentación del Proyecto Integrador** (180 min, demo)
 
 #### Subtemas complementarios:
-- Regex (Expresiones Regulares)
-- Librerías Externas (importadas vía CDN)
-- Técnicas de Depuración
-- Try - Catch
-- Principio DRY (Don't repeat your self)
+- Sintaxis ES6+ (template literals, destructuring, spread, optional chaining)
+- Render dinámico del DOM (`createElement` / `appendChild`)
+- JSON como formato de intercambio (lectura, no persistencia — eso es M4)
+- API REST pública vía CDN (PokeAPI, sin clave)
+- Estados de UI (carga / error / vacío) y Markdown para documentar
 
-> #### Proyecto Integrador: **Editor de Markdown en vivo**
-> El proyecto consiste en desarrollar un Editor de Markdown con vista previa en tiempo real, donde los estudiantes implementarán la manipulación dinámica del DOM para reflejar los cambios de formato, organizarán la lógica de transformación mediante funciones y callbacks, controlarán los eventos (por ejemplo, al teclear o cargar un archivo) para refrescar la interfaz al instante, y finalmente incorporarán una gestión efectiva de excepciones para realizar importaciones o exportaciones de contenido previniendo posibles errores, cubriendo así todos los temas fundamentales del Módulo 3.
+> #### Proyecto Integrador: **Pokédex**
+> El proyecto consiste en desarrollar una Pokédex que consume la **PokeAPI**: los estudiantes parten renderizando datos locales con sintaxis moderna de JavaScript (template literals, destructuring, `createElement`), aprenden a manejar operaciones asíncronas con Promesas, reemplazan los datos locales por llamadas reales con `fetch` + `async/await` interpretando respuestas JSON, y finalmente hacen la app robusta con manejo de errores (`try/catch/finally`, validación de `response.ok`) y estados de UI, documentando el proyecto en Markdown. Cubre así todos los temas fundamentales del Módulo 3.
 >
 > **Características clave**:
-> - Estilización con Tailwind CSS
-> - Barra de herramientas flotante
-> - Importar archivos .md
-> - Contador de palabras y caracteres
+> - Estilización con Tailwind CSS (reusada de M2)
+> - Buscador de Pokémon por nombre
+> - Consumo de una API real (PokeAPI, sin clave)
+> - Render dinámico de tarjetas desde datos
+> - Estados de carga, error y vacío
+> - README documentado en Markdown
 > - Diseño responsivo
-> - Exportar contenido generado como HTML
-> - Exportar contenido generado en formato PDF
 
 ### Módulo 4: Estado y Persistencia
 13. **Modelado de Objetos y Estado** (180 min, blend)

@@ -1,75 +1,64 @@
-﻿📦 **Módulo 3:** Clase 11 de 12
+> 📦 **Módulo 3:** Clase 11 de 12
 
-# Clase 11: Event Handling Básico en JavaScript
+# Clase 11: async/await, fetch y JSON
 
 ## Resumen
 
-En la Clase 11 exploramos cómo capturar y gestionar eventos básicos en JavaScript para crear interfaces web más dinámicas e interactivas. La sesión combinó tres recursos clave:
+En la Clase 11 la Pokédex deja de usar datos locales y empieza a **consumir una API real**. Los estudiantes aprenden el formato **JSON** (cómo viajan los datos entre servidor y navegador), la función **`fetch`** para pedirlos, y la sintaxis **`async/await`** para escribir código asíncrono legible. La promesa simulada de C10 se reemplaza por una llamada real a [PokeAPI](https://pokeapi.co/){:target="_blank"}.
 
-1. **Guía de Lectura y Debate:** Actividad que permitió profundizar en los conceptos clave de event listeners, el objeto evento y funciones callback mediante reflexión crítica guiada por la interacción previa con herramientas de IA.
+Es la clase que conecta todo lo anterior: el render de C09 se reusa tal cual (porque el dato de la API tiene la misma forma que el local) y las promesas de C10 se vuelven concretas con datos de internet. Es, además, la habilidad más pedida por la industria a un desarrollador JavaScript: consumir servicios web.
 
-2. **Guía de Laboratorio:** Sesión práctica que aplicó directamente la gestión dinámica de eventos en la implementación de funcionalidades esenciales como actualización automática de contenido, botones interactivos y contadores en tiempo real.
+Se utilizan dos recursos fundamentales:
 
+1. **Guía de Lectura y Debate:** análisis sobre qué es una API, por qué JSON es el formato universal de intercambio y cuándo conviene `async/await` frente a `.then`.
+2. **Guía de Laboratorio:** implementación de un buscador de Pokémon que pide datos reales con `fetch`, los convierte con `response.json()` y los muestra reusando el render de C09.
 
-## Estructura sugerida
+## Estructura Sugerida
 
 | **Fase** | **Duración** | **Descripción** |
-|---------|--------------|------------|
-| **1. Ejercicio de Descubrimiento** | 20 min       | Actividad práctica para descubrir y activar conocimientos previos sobre eventos en JavaScript. |
-| **2. Debate y Demo Técnica**   | 30 min       | Discusión guiada sobre listeners, objeto evento y callbacks, combinada con demostraciones prácticas en vivo. |
-| **3. Laboratorio**             | 100 min      | Desarrollo de funcionalidades interactivas con validación en checkpoints:                      |
-|                                |              | - [30'] Actualización automática de Preview                                                    |
-|                                |              | - [60'] Botón para limpiar editor                                                              |
-|                                |              | - [90'] Contador dinámico de palabras y caracteres                                             |
-| **4. Cierre**                  | 20 min       | Retroalimentación, síntesis de aprendizajes y preparación para la siguiente sesión.            |
+|---|---|---|
+| **1. Refuerzo Inicial** | 15 min | Repaso de promesas (C10). ¿Qué es una API? Mostrar JSON real de PokeAPI. |
+| **2. Debate Técnico** | 30 min | JSON como formato, `fetch`, `async/await` vs `.then`. |
+| **3. Demostración** | 15 min | Demo en vivo: buscar un Pokémon real y mostrarlo. |
+| **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (30', 60', 90'). |
+| **5. Cierre** | 20 min | Síntesis + anticipación al manejo de errores (C12). |
 
 ---
 
-## Resultados esperados
+## Resultados Esperados
 
-Al finalizar la clase, los estudiantes habrán consolidado su comprensión sobre la gestión básica de eventos en JavaScript, siendo capaces de implementar soluciones interactivas y dinámicas.
+Al culminar esta clase, los estudiantes podrán consumir una API REST pública, interpretar su respuesta JSON y mostrarla en la interfaz.
 
 ### Podrán hacer
 
-1. **Registrar eventos del DOM con JavaScript:**
-   Capturar interacciones del usuario usando event listeners en diversos elementos HTML mediante `addEventListener()`.
-
-2. **Manejar dinámicamente el DOM con eventos:**
-   Modificar elementos de la interfaz en tiempo real al reaccionar a acciones específicas de los usuarios.
-
-3. **Implementar funciones callback efectivas:**
-   Crear callbacks que gestionen apropiadamente las respuestas dinámicas frente a diferentes tipos de eventos.
+- Pedir datos a una URL con `fetch` y esperarlos con `await`.
+- Convertir una respuesta JSON en objeto JavaScript con `response.json()`.
+- Escribir funciones `async` que devuelven datos de una API.
 
 ### Podrán explicar
 
-1. **Cómo funcionan los Event Listeners en JavaScript:**
-   Describir la importancia y uso práctico del método `addEventListener()` en aplicaciones web modernas.
-
-2. **Propiedades del objeto evento (event object):**
-   Explicar qué información contiene este objeto y cómo puede usarse para mejorar la interactividad y la precisión de respuestas a eventos específicos.
-
-3. **La utilidad práctica de funciones callback:**
-   Justificar la importancia de utilizar callbacks para mantener modularidad, claridad y eficiencia en el manejo de eventos.
+- Qué es JSON y por qué su forma refleja los objetos de JavaScript.
+- La diferencia entre la **respuesta** (`response`) y su **cuerpo** ya convertido.
+- Por qué `async/await` hace el código asíncrono más legible que `.then` encadenado.
 
 ### Podrán implementar
 
-1. **Actualización Automática del Preview:**
-   Reaccionar dinámicamente al input del usuario para actualizar la visualización del Markdown en tiempo real.
-
-2. **Botón para Limpiar Contenido:**
-   Desarrollar una función que limpie eficientemente el contenido del editor y la vista previa con un solo clic.
-
-3. **Contador de Palabras y Caracteres:**
-   Mostrar de forma dinámica y precisa la cantidad de palabras y caracteres escritos en tiempo real, mejorando la usabilidad del editor.
+- Una función `buscarPokemon(nombre)` que consulta la PokeAPI.
+- Un buscador conectado a un input y un botón (y a la tecla Enter).
+- La reutilización del render de C09 con datos reales.
 
 ---
 
-## Glosario de Nuevos Términos
+## 🌐 De la simulación a la red real
 
-- **Event Listener:** Método para registrar eventos en elementos específicos del DOM.
-- **Event Object:** Objeto generado automáticamente que contiene información relevante del evento capturado.
-- **Callback:** Función que se ejecuta como respuesta a un evento registrado.
-- **addEventListener:** Método específico de JavaScript para gestionar eventos.
-- **`event.preventDefault()`:** Método del objeto evento que **detiene el comportamiento default del navegador** para esa acción (ej. evita que `Tab` cambie el foco dentro de un textarea, o que un `<form>` recargue la página al submit). Lo vas a necesitar en M5 cuando manejes submits de formularios reales.
-- **`event.key`:** Propiedad del evento de teclado que indica qué tecla fue presionada (ej. `'Tab'`, `'Enter'`, `'a'`).
+| C10 (simulado) | C11 (real) |
+|---|---|
+| `new Promise` + `setTimeout` | `fetch(url)` |
+| `resolve(pokemonLocal)` | `await response.json()` |
+| consumir con `.then` | consumir con `await` |
 
+> El render de C09 no cambia: el dato de la API tiene la **misma forma** que el local. Solo cambió **de dónde** vienen los datos.
+
+## ⚠️ Nota sobre la red
+
+Esta clase requiere **conexión a internet**. La PokeAPI es gratuita y no necesita clave. Si un nombre no existe, la app fallará — eso se resuelve en C12 con manejo de errores.

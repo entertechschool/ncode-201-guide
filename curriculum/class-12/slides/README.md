@@ -1,141 +1,142 @@
-# Clase 12: Excepciones en JavaScript
-
-### 🎯 Objetivo de la clase
-
-Comprender y aplicar estructuras de manejo de errores en JavaScript para validar entradas, capturar fallas y mejorar la robustez del código.
+# Clase 12 — Manejo de Errores y Estados
+### Code 201 · Módulo 3 (cierre) · Proyecto: Pokédex
 
 ---
 
-## ❓ ¿Qué es una Excepción?
+## 🎯 Objetivo de la Clase
 
-- Evento que interrumpe el flujo normal del programa.
-- Ocurre cuando se rompe una expectativa lógica o técnica.
-- Puede ser lanzada manualmente o surgir del sistema.
+- Manejar errores con **`try/catch/finally`** y **`throw`**.
+- Detectar respuestas fallidas con **`response.ok`** (404).
+- Mostrar estados de UI y documentar con **Markdown**.
+
+> Hacemos la Pokédex **robusta** y cerramos el módulo.
 
 ---
 
-## 🧱 Estructura Básica
+## 💥 El problema de C11
 
-```js
+```javascript
+// buscas "pikachuu" (no existe) → la app se ROMPE 💀
+```
+
+Una app real no puede romperse ante un error.
+
+> Hoy: que falle **con gracia**.
+
+---
+
+## 🛡️ try / catch
+
+```javascript
 try {
-  // Código que puede fallar
+  const response = await fetch(url);
+  const pokemon  = await response.json();
+  render([pokemon]);
 } catch (error) {
-  // Código para manejar el error
-} finally {
-  // Siempre se ejecuta
+  mensaje.textContent = "Algo salió mal";
 }
 ```
 
+* `try` = código que podría fallar.
+* `catch (error)` = lo atrapa; la app sigue viva.
+
 ---
 
-## 🚨 throw: Lanzar un error
+## 🚩 fetch NO falla en 404
 
-```js
-if (!userInput) {
-  throw new Error("El campo no puede estar vacío");
+```javascript
+if (!response.ok) {                       // 404, 500…
+  throw new Error(`No se encontró "${nombre}"`);
 }
 ```
 
-* `throw` lanza una excepción.
-* Se puede lanzar cualquier tipo de valor, pero se recomienda `Error`.
+* `fetch` solo falla si **no hay red**.
+* Un 404 llega "ok=false" → hay que **revisarlo**.
+* `throw` salta directo al `catch`.
 
 ---
 
-## 🔄 Ciclo de un error controlado
+## ♻️ finally — corre SIEMPRE
 
-1. Validación previa (`if`)
-2. Lanzamiento (`throw`)
-3. Captura (`catch`)
-4. Retroalimentación al usuario
-5. Recuperación o cancelación del flujo
-
----
-
-## 🛠 Ejemplo aplicado al editor
-
-```js
+```javascript
+spinner.classList.remove("hidden");   // ⏳ al empezar
 try {
-  const html = marked.parse(markdownInput);
-  output.innerHTML = html;
-} catch (err) {
-  alert("Hubo un problema con el formato Markdown.");
+  // ... buscar
+} catch (error) {
+  // ... mostrar error
+} finally {
+  spinner.classList.add("hidden");    // ✅ pase lo que pase
 }
 ```
 
----
-
-## 🧠 Pregunta para el debate
-
-**¿Siempre deberíamos capturar los errores?**
-
-* ¿Cuándo conviene dejar que un error "explote"?
-* ¿Es peor capturar demasiado o no capturar nunca?
-* ¿Cómo influye esto en el diseño del software?
+> Éxito o error, el spinner siempre se oculta.
 
 ---
 
-## 🧪 Actividad práctica
+## 🎛️ Estados de UI
 
-* Detectar Markdown vacío → lanzar error
-* Detectar encabezados mal formados (`##Título`) → lanzar error
-* Capturar fallas en `marked()` sin detener la app
-
----
-
-## 🧰 Buenas prácticas
-
-✅ Lanza errores **descriptivos**
-✅ Captura solo lo necesario
-✅ No escondas errores graves
-✅ Informa al usuario claramente
-✅ Usa `finally` para limpiar o finalizar procesos
-
----
-
-## ✨ `finally` aplicado: el spinner que siempre se oculta
-
-```js
-function procesarMarkdown(texto) {
-  spinner.classList.remove('hidden');     // muestra spinner
-
-  try {
-    if (!texto) throw new Error('Editor vacío');
-    preview.innerHTML = marked.parse(texto);
-  } catch (error) {
-    mostrarError(error.message);
-  } finally {
-    spinner.classList.add('hidden');      // SIEMPRE oculta
-  }
-}
+```
+⏳ loading  → "Cargando…"
+✅ success  → la tarjeta
+❌ error    → "No se encontró…"
+∅  empty    → "Busca un Pokémon 🔍"
 ```
 
-* Sin `finally`, el spinner queda visible si hay error.
-* Con `finally`, la UI siempre vuelve a estado consistente.
-* En M5 lo usarás para `JSON.parse(localStorage.getItem(...))` con cleanup.
+> Una buena app siempre dice en qué estado está.
 
 ---
 
-## 🎁 Bonus al cierre: Renderizado dinámico de listas
+## 📄 Markdown — documentar el proyecto
 
-`createElement` + `appendChild` — crear nodos desde JS, no escribirlos en HTML.
+```markdown
+# Pokédex
+Buscador que consume la PokeAPI.
 
-```js
-const items = ['Manzana', 'Pera', 'Plátano'];
-const lista = document.querySelector('#mi-lista');
-
-items.forEach(item => {
-  const li = document.createElement('li');
-  li.textContent = item;
-  lista.appendChild(li);
-});
+## Tecnologías
+- JavaScript (fetch, async/await)
+- [PokeAPI](https://pokeapi.co/)
 ```
 
-> Patrón crítico para M5: cada gasto, persona o transferencia será un `<li>` creado dinámicamente.
+* `#` títulos · `**negrita**` · `- listas` · `[link](url)`
+* Va en el `README.md` de tu repo.
 
 ---
 
-## 📌 Recordatorio
+## ⚙️ Estructura del Lab (evaluado)
 
-* Este conocimiento es clave para la siguiente fase (Promesas y asincronía).
-* El manejo de errores es una herramienta, no un parche.
-* La claridad en los errores mejora la experiencia de usuario y del equipo.
+| HU | Tiempo | Contenido |
+|---|---|---|
+| **HU1** | ~30 min | `try/catch` |
+| **HU2** | ~30 min | `response.ok` + `throw` |
+| **HU3** | ~30 min | estados + `finally` |
+| 📄 | — | README en Markdown |
+
+> Calificado con rúbrica (5 × 20 = 100).
+
+---
+
+## 🏁 Cierre del Módulo 3
+
+```
+C09  JS Moderno   → render de datos
+C10  Asincronía   → Promesas
+C11  fetch + JSON → datos REALES
+C12  Errores      → app robusta + README
+```
+
+> De un array local a una app que consume una API y no se rompe.
+
+---
+
+## 🤔 Discusión Final
+
+- ¿Cuándo capturar un error y cuándo dejarlo propagar?
+- ¿Qué hace bueno a un mensaje de error?
+- ¿Por qué `finally` y no poner la línea al final del `try`?
+
+> **Reflexión:** el código que maneja errores es lo que separa un demo de un producto.
+
+---
+
+## ¡Gracias! 🙌
+### Code 201 · Enter Tech School

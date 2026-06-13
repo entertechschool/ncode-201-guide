@@ -1,132 +1,141 @@
-﻿# Laboratorio 10: Funciones y Callbacks en JavaScript
+# Laboratorio 10: Asincronía y Promesas
 
-¡Bienvenido al décimo laboratorio del proyecto integrador **Editor Avanzado de Markdown en Vivo**! En esta sesión profundizarás en el uso de **funciones de primera clase, funciones de orden superior y callbacks**, aplicándolos en la transformación dinámica del contenido del editor Markdown en HTML, mejorando su interactividad.  
+En C09 los datos estaban **listos al instante** en un array. Pero una API real **tarda** en responder — medio segundo, a veces dos. Hoy aprendes cómo JavaScript maneja algo que **no llega de inmediato**: la **asincronía**, con `setTimeout` y **Promesas**. Aún no tocamos la red: simulamos la demora sobre tu array local, para entender el concepto sin el ruido de internet.
 
-> ⏱️ **Nota sobre Checkpoints**: Este laboratorio incluye tres momentos de validación grupal (a los 45, 60 y 75 minutos). Mantenerse al día es clave para recibir retroalimentación efectiva del instructor y de los compañeros.  
+> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
+>
+> 🧠 Reusas tu `render()` y `crearTarjeta()` de C09 **sin cambios**. Lo nuevo es **cómo y cuándo** llegan los datos al render.
 
-## 🎯 **Objetivos de Aprendizaje**  
+## 🎯 Objetivos de Aprendizaje
 
-1. **Comprender el concepto de funciones como objetos de primera clase** y su importancia en JavaScript.  
-2. **Implementar funciones de orden superior con callbacks** para modularizar el código y mejorar su reutilización.  
-3. **Diferenciar entre funciones declarativas, expresiones de función y funciones anónimas** y su aplicación en programación funcional.  
+1. Distinguir código **sincrónico** (bloqueante) de **asincrónico** (no bloqueante).
+2. Usar `setTimeout` para simular una operación que tarda.
+3. Crear y consumir una **Promesa** con `.then()` y `.catch()`.
 
-## 🔑 **Conceptos Clave**  
+## 🔑 Conceptos Clave
 
-1. **Funciones de Primera Clase**  
-2. **Callbacks**  
-3. **Funciones de Orden Superior**  
+| Concepto | Definición |
+|---|---|
+| **Sincrónico** | Una instrucción tras otra; cada una **bloquea** hasta terminar. |
+| **Asincrónico** | Una operación "tarda" y JavaScript **sigue trabajando** mientras tanto. |
+| **`setTimeout`** | Ejecuta una función **después** de N milisegundos. |
+| **Promesa** | Objeto que representa un **valor futuro**: algo que llegará (o fallará) luego. |
+| **Estados** | Una promesa está `pending` (esperando), `fulfilled` (resuelta) o `rejected` (falló). |
+| **`.then` / `.catch`** | `.then(cb)` corre cuando la promesa se resuelve; `.catch(cb)` cuando falla. |
 
-## ⚙️ **Setup Inicial**  
+## ⚙️ Setup Inicial
 
-1. **Repositorio:**  
-   - Continúa trabajando sobre el repositorio del laboratorio anterior (`markdown-editor`).  
-   - Crea una nueva rama `lab10-funciones-callbacks`.  
+1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab10-asincronia`.
+2. **Punto de partida:** tu `js/app.js` de C09 con `pokemonLocal`, `crearTarjeta()` y `render()`. **No borres nada** — hoy construyes encima.
 
-2. **Estructura de Archivos:**  
-   Mantén la estructura del proyecto asegurando la organización modular del código:  
-   ```
-   markdown-editor/
-   ├── index.html
-   ├── css/
-   │   └── styles.css
-   ├── js/
-   │   ├── app.js
-   │   ├── format.js       <-- (nuevo archivo para funciones de formato)
-   │   ├── lists.js        <-- (nuevo archivo para listas dinámicas)
-   │   ├── blocks.js    <-- (nuevo archivo para resaltado de bloques de código)
-   └── README.md
-   ```  
+> 🧪 **Idea mental antes de empezar:** imagina que pides una pizza. No te quedas congelado en la puerta esperando (sincrónico); sigues con tu vida y, **cuando llega**, reaccionas (asincrónico). Una **Promesa** es el "ticket" de esa pizza que aún no llega.
 
-3. **Configuración Base:**  
-   - Verifica que `index.html` contenga una estructura semántica clara (`header`, `main`, `footer`).  
-   - Asegúrate de enlazar los **4 archivos JS** en el `index.html` en este orden:
-
-   ```html
-   <script src="js/format.js"></script>
-   <script src="js/lists.js"></script>
-   <script src="js/blocks.js"></script>
-   <script src="js/app.js"></script>
-   ```
-
-   - **Asignación por HU** (verás esta nota al inicio de cada HU):
-     - HU1 (negrita/cursiva) → `js/format.js`
-     - HU2 (listas `<ol>`) → `js/lists.js`
-     - HU3 (resaltado de código) → `js/blocks.js`
-     - `app.js` coordina invocando las funciones de los anteriores.
-
+---
 
 ## 📋 Historias de Usuario
 
-### HU1: Botón para Alternar el Formato de Texto
+### HU1: Simular la demora con `setTimeout`
 
-> **Archivo destino:** `js/format.js`
+> *"Como usuario, quiero ver un mensaje de 'Cargando…' y que las tarjetas aparezcan un momento después, como en una app real que espera datos."*
 
-📌 *"Como usuario, quiero un botón que aplique o quite automáticamente un formato (negrita o cursiva) al texto seleccionado en el editor, utilizando una función de orden superior."*  
+`setTimeout(funcion, ms)` corre la función **después** de los milisegundos indicados. Mientras tanto, el resto del programa **no se congela**:
 
-**Criterios de Aceptación:**  
-- Implementar un botón **"Aplicar Formato"** que alterne entre negrita y cursiva.  
-- Usar **una función de orden superior** que reciba un callback para aplicar o quitar formato.  
-- Formatos soportados:  
-  - **Negrita:** `**texto**`  
-  - **Cursiva:** `*texto*`  
-- Mantener la estructura del `textarea` sin alterar el resto del contenido.  
+```javascript
+const contenedor = document.getElementById("resultado");
 
-- **Checkpoint 1 (45 min)**:  
-  🔍 **Revisión:**  
-  - La función de orden superior debe ejecutar un callback correctamente.  
-  - El botón debe alternar entre aplicar y quitar formato.  
-  - No se deben afectar otras partes del texto.  
+// se ve de inmediato
+contenedor.innerHTML = `<p class="col-span-full text-center text-slate-500">Cargando…</p>`;
 
-### HU2: Generación de Listas Numéricas Dinámicamente
+// se ejecuta 1.5 s después
+setTimeout(function () {
+  render(pokemonLocal);
+}, 1500);
+```
 
-> **Archivo destino:** `js/lists.js`
+> 💡 Para comprobar que NO se bloquea, agrega un `console.log("sigo trabajando")` **después** del `setTimeout`. Verás que se imprime **antes** de que aparezcan las tarjetas. JavaScript no se quedó esperando.
 
-📌 *"Como usuario, quiero que al escribir listas numeradas (`1. Item 1`, `2. Item 2`), el editor las transforme en listas HTML `<ol>` sin necesidad de presionar un botón manualmente, utilizando una función de orden superior."*  
+**Criterios de Aceptación:**
+- Al cargar, se ve "Cargando…" durante ~1.5 s.
+- Luego aparecen las 6 tarjetas (con tu `render` de C09).
+- Un `console.log` posterior al `setTimeout` se imprime **antes** que las tarjetas.
 
-**Criterios de Aceptación:**  
-- Detectar automáticamente cuando el usuario escribe una lista numerada en el editor (`1. Item 1`, `2. Item 2` …).  
-- Utilizar una **función de orden superior** que reciba un callback para transformar cada línea en un `<li>`.  
-- Convertir listas numeradas en `<ol>` al presionar el botón **"Generar Vista Previa"**.  
-- Mantener la numeración correcta en HTML.  
+- **Checkpoint 1 (~30 min):** la página muestra "Cargando…" y, tras la demora, las tarjetas. Entiendes que JavaScript siguió trabajando durante la espera.
 
-- **Checkpoint 2 (60 min)**:  
-  🔍 **Revisión:**  
-  - La función de orden superior debe aplicar correctamente el callback.  
-  - Se debe generar una estructura válida `<ol><li>Item</li></ol>`.  
-  - La numeración debe mantenerse intacta en la conversión.  
+---
 
+### HU2: Envolver los datos en una Promesa
 
-### HU3: Resaltado Dinámico de Código en el Preview
+> *"Como desarrollador, quiero una función que me 'prometa' los datos del Pokémon y me los entregue cuando estén listos, como hará la API real en C11."*
 
-> **Archivo destino:** `js/blocks.js`
+Una **Promesa** es un objeto que representa un valor que **llegará después**. Se crea con `new Promise`, que recibe dos "palancas": `resolve` (los datos llegaron bien) y `reject` (algo falló):
 
-📌 *"Como usuario, quiero que al escribir código en el editor dentro de triple backticks (```) se aplique resaltado automático en la vista previa, utilizando funciones de primera clase para transformar el contenido."*  
+```javascript
+function obtenerPokemones() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
+      resolve(pokemonLocal);   // ✅ "los datos están listos, aquí van"
+      // reject(new Error("No se pudo cargar"));  // ❌ así se señalaría un fallo
+    }, 1500);
+  });
+}
+```
 
-**Criterios de Aceptación:**  
-- Detectar automáticamente cuando el usuario ingresa código entre triple backticks (` ``` `).  
-- Usar una **función de primera clase** para encapsular la lógica de transformación.  
-- Aplicar una clase CSS de resaltado al bloque de código en la vista previa (`<pre><code>`).  
-- Permitir múltiples bloques de código en un mismo documento sin interferencias.  
+* Mientras el `setTimeout` corre, la promesa está **`pending`** (esperando).
+* Al llamar `resolve(...)`, pasa a **`fulfilled`** y entrega el valor.
+* Si llamaras `reject(...)`, pasaría a **`rejected`**.
 
-- **Checkpoint 3 (75 min)**:  
-  🔍 **Revisión:**  
-  - La detección de código entre triple backticks debe funcionar correctamente.  
-  - La función de primera clase debe ser reutilizable.  
-  - La estructura generada debe ser `<pre><code>contenido</code></pre>`.  
-  - La sintaxis debe reflejarse correctamente en la vista previa con estilos de resaltado.  
+> 💡 `obtenerPokemones()` **no devuelve los datos directamente** — devuelve una *promesa* de ellos. Por eso en HU3 hay que "abrir" esa promesa para usarlos.
 
+**Criterios de Aceptación:**
+- Existe `obtenerPokemones()` que **retorna** `new Promise`.
+- La promesa se resuelve con `pokemonLocal` tras un `setTimeout`.
 
-## 🌟 **Logros Adicionales (Opcionales)**  
+- **Checkpoint 2 (~60 min):** en consola, `console.log(obtenerPokemones())` muestra un objeto `Promise {<pending>}`. Confirma que la función entrega una promesa, no el array.
 
-📌 **Logro 1: Atajos de Teclado para Formateo Rápido**  
-*"Como usuario, quiero poder aplicar formato de negrita (`Ctrl+B`) y cursiva (`Ctrl+I`) mediante atajos de teclado en el editor."*  
+---
 
-## 📝 **Instrucciones de Entrega**  
+### HU3: Consumir la Promesa con `.then()` y `.catch()`
 
-1. **Despliegue**  
-   - Publica los cambios en GitHub Pages y proporciona el enlace correspondiente.  
+> *"Como usuario, quiero que las tarjetas se muestren cuando la promesa se resuelve, y un mensaje claro si algo falla."*
 
-2. **Entrega Final**  
-   - URL del repositorio en GitHub.  
-   - URL del proyecto desplegado en GitHub Pages.  
+Para usar el valor de una promesa se encadena `.then()` (éxito) y `.catch()` (error):
 
+```javascript
+function cargar() {
+  contenedor.innerHTML = `<p class="col-span-full text-center text-slate-500">Cargando…</p>`;
+
+  obtenerPokemones()
+    .then(function (lista) {        // ✅ corre cuando resolve(...)
+      render(lista);
+    })
+    .catch(function (error) {       // ❌ corre cuando reject(...)
+      contenedor.innerHTML = `<p class="col-span-full text-center text-red-600">Error: ${error.message}</p>`;
+    });
+}
+
+cargar();
+```
+
+**Probar el camino de error:** en `obtenerPokemones`, comenta el `resolve(...)` y descomenta el `reject(new Error("No se pudo cargar"))`. Recarga: en vez de tarjetas verás el mensaje rojo. **El `.catch` atrapó el fallo.** Vuelve a dejar el `resolve` activo al terminar.
+
+**Criterios de Aceptación:**
+- `.then()` recibe la lista y la pasa a `render()`.
+- `.catch()` muestra un mensaje de error en `#resultado`.
+- Al forzar `reject`, se ve el mensaje de error en vez de las tarjetas.
+
+- **Checkpoint 3 (~90 min):** con `resolve`, ves "Cargando…" → tarjetas. Al cambiar a `reject`, ves "Cargando…" → mensaje de error. Distingues los dos caminos de una promesa.
+
+---
+
+## 🌟 Logros Adicionales (Opcionales)
+
+- **Logro 1 — Demora aleatoria:** usa `Math.random() * 2000` como tiempo del `setTimeout` para simular una red inestable.
+- **Logro 2 — Fallo aleatorio:** que la promesa haga `reject` ~1 de cada 3 veces (`Math.random() < 0.33`) para ver ambos caminos sin editar el código.
+- **Logro 3 — Spinner real:** reemplaza el texto "Cargando…" por un spinner animado con clases de Tailwind (`animate-spin`).
+
+## 📝 Instrucciones de Entrega
+
+1. **Despliegue:** publica en GitHub Pages y comparte el enlace.
+2. **Entrega Final:** URL del repositorio + URL del sitio desplegado.
+
+> ℹ️ Sin README todavía — lo agregarás en C12.

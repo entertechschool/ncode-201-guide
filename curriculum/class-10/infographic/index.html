@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Funciones y Callbacks — Código modular y reutilizable</title>
+  <title>Asincronía y Promesas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
       width: 1080px;
       margin: 0 auto;
       background: #060913;
-      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
       color: #e2e8f0;
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
@@ -34,14 +34,11 @@
 
     section { padding: 2rem 3rem; }
 
-    .hero {
-      text-align: center;
-      padding: 3.5rem 3rem 2.5rem;
-    }
+    .hero { text-align: center; padding: 3.5rem 3rem 2.5rem; }
     .hero .badge {
       display: inline-block;
-      background: rgba(217, 70, 239, 0.15);
-      color: #d946ef;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
       padding: 0.25rem 0.75rem;
       border-radius: 999px;
       font-size: 0.8rem;
@@ -62,55 +59,49 @@
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
 
-    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-cyan   { border-left: 3px solid #38bdf8; }
+    .accent-purple { border-left: 3px solid #c084fc; }
+    .accent-amber  { border-left: 3px solid #fbbf24; }
     .accent-green  { border-left: 3px solid #4ade80; }
-    .accent-blue   { border-left: 3px solid #93c5fd; }
-    .accent-orange { border-left: 3px solid #fb923c; }
 
-    .tag-purple { color: #d946ef; }
+    .tag-cyan   { color: #38bdf8; }
+    .tag-purple { color: #c084fc; }
+    .tag-amber  { color: #fbbf24; }
     .tag-green  { color: #4ade80; }
-    .tag-blue   { color: #93c5fd; }
-    .tag-orange { color: #fb923c; }
+    .tag-red    { color: #f87171; }
     .tag-muted  { color: #64748b; }
 
-    /* Módulos visuales */
-    .modules {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 0.75rem;
-      flex-wrap: wrap;
-    }
-    .module-box {
-      background: #161b22;
-      border: 1px solid rgba(251, 146, 60, 0.25);
-      border-radius: 8px;
-      padding: 0.8rem 1rem;
-      flex: 1 1 160px;
-    }
-    .module-box .mod-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78em;
-      color: #fb923c;
-      margin-bottom: 0.3rem;
-    }
-    .module-box .mod-desc {
-      font-size: 0.78rem;
-      color: #94a3b8;
-    }
-
-    /* Glosario */
-    .glossary {
+    .states {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
+      margin-top: 0.75rem;
     }
+    .states .state {
+      background: #161b22;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .states .state .ico { font-size: 1.6rem; display: block; margin-bottom: 0.35rem; }
+    .states .state strong { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; display: block; }
+    .states .state span { color: #94a3b8; font-size: 0.78rem; }
+
+    .glossary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     .glossary .term {
       background: #0d1117;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 8px;
       padding: 1rem;
     }
-    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
     .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
 
     .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
@@ -121,109 +112,82 @@
 
   <section class="hero">
     <div class="badge">Módulo 3 · Clase 10</div>
-    <h1>Funciones y Callbacks — Código modular y reutilizable</h1>
-    <p class="subtitle">Las funciones son valores de primera clase: puedes pasarlas, guardarlas y retornarlas como cualquier dato</p>
+    <h1>Asincronía y Promesas</h1>
+    <p class="subtitle">Cómo JavaScript maneja datos que tardan en llegar</p>
   </section>
 
   <section>
 
-    <!-- 1: Funciones de Primera Clase -->
+    <!-- 1: sync vs async -->
+    <div class="card accent-cyan">
+      <h3><span class="tag-cyan">1.</span> JavaScript no espera</h3>
+      <p class="desc"><code>setTimeout</code> programa algo para "más tarde". El programa <strong>sigue</strong> mientras tanto — no se congela.</p>
+      <pre><code>console.log(<span class="tag-cyan">"A"</span>);
+setTimeout(() =&gt; console.log(<span class="tag-cyan">"B"</span>), 1000);
+console.log(<span class="tag-cyan">"C"</span>);
+
+<span class="tag-muted">// imprime:  A  C  B   ← la B llega al final</span></code></pre>
+    </div>
+
+    <!-- 2: Promise -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> Funciones de Primera Clase</h3>
-      <p class="desc">En JavaScript, las funciones son valores. Puedes asignarlas a variables, pasarlas como argumentos y retornarlas desde otras funciones.</p>
-      <pre><code><span class="tag-muted">// Asignada a variable</span>
-<span class="tag-muted">const</span> saludar = <span class="tag-muted">function</span>(nombre) { <span class="tag-muted">return</span> <span class="tag-purple">`Hola, ${nombre}!`</span>; };
-
-<span class="tag-muted">// Pasada como argumento</span>
-[<span class="tag-purple">"Ana"</span>, <span class="tag-purple">"Luis"</span>].forEach(saludar);    <span class="tag-muted">// ← saludar es un callback</span>
-
-<span class="tag-muted">// Guardada en un array</span>
-<span class="tag-muted">const</span> formatos = [negrita, cursiva, subrayado]; <span class="tag-muted">// funciones como datos</span></code></pre>
+      <h3><span class="tag-purple">2.</span> Una Promesa — el ticket de un valor futuro</h3>
+      <p class="desc"><code>new Promise</code> recibe dos palancas: <code>resolve</code> (llegó bien) y <code>reject</code> (falló).</p>
+      <pre><code><span class="tag-muted">function</span> obtenerPokemones() {
+  <span class="tag-muted">return</span> <span class="tag-purple">new Promise</span>((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      <span class="tag-green">resolve</span>(pokemonLocal);          <span class="tag-muted">// ✅</span>
+      <span class="tag-muted">// reject(new Error("falló"));   // ❌</span>
+    }, 1500);
+  });
+}</code></pre>
     </div>
 
-    <!-- 2: Callbacks -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> Callbacks — Funciones que se pasan como argumento</h3>
-      <p class="desc">Un <strong>callback</strong> es una función que le entregas a otra función para que la llame en el momento apropiado.</p>
-      <pre><code><span class="tag-muted">// El callback es la función que va dentro de addEventListener</span>
-document.querySelector(<span class="tag-green">'#btn'</span>).addEventListener(<span class="tag-green">'click'</span>, <span class="tag-muted">function</span>(event) {
-  <span class="tag-muted">// ← esto es un callback: se llama cuando ocurre el click</span>
-  procesarFormato(event.target.dataset.formato);
-});
-
-<span class="tag-muted">// También con arrow functions</span>
-document.querySelector(<span class="tag-green">'#btn'</span>).addEventListener(<span class="tag-green">'click'</span>,
-  (e) => procesarFormato(e.target.dataset.formato)
-);</code></pre>
-    </div>
-
-    <!-- 3: Funciones de Orden Superior -->
-    <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Funciones de Orden Superior — Reciben o retornan funciones</h3>
-      <p class="desc">Una función de orden superior toma otra función como parámetro y la usa internamente — permite cambiar el comportamiento sin duplicar código.</p>
-      <pre><code><span class="tag-muted">// La función de orden superior recibe el callback "formatear"</span>
-<span class="tag-muted">function</span> aplicarFormato(texto, formatear) {
-  <span class="tag-muted">const</span> seleccion = obtenerSeleccion(texto);
-  <span class="tag-muted">return</span> texto.replace(seleccion, <span class="tag-blue">formatear(seleccion)</span>);
-}
-
-<span class="tag-muted">// Reutilizable con cualquier transformación</span>
-aplicarFormato(contenido, texto => <span class="tag-blue">`**${texto}**`</span>);  <span class="tag-muted">// negrita</span>
-aplicarFormato(contenido, texto => <span class="tag-blue">`*${texto}*`</span>);   <span class="tag-muted">// cursiva</span>
-
-<span class="tag-muted">// Sin orden superior: código duplicado para cada formato ❌</span></code></pre>
-    </div>
-
-    <!-- 4: Modularización -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Modularización — Una responsabilidad por archivo</h3>
-      <p class="desc">Separar funciones en módulos hace el código más fácil de leer, testear y modificar sin romper todo lo demás.</p>
-      <div class="modules">
-        <div class="module-box">
-          <div class="mod-name">format.js</div>
-          <div class="mod-desc">Negrita, cursiva — funciones de formato de texto</div>
-        </div>
-        <div class="module-box">
-          <div class="mod-name">lists.js</div>
-          <div class="mod-desc">Conversión de listas numeradas a &lt;ol&gt;&lt;li&gt;</div>
-        </div>
-        <div class="module-box">
-          <div class="mod-name">blocks.js</div>
-          <div class="mod-desc">Resaltado de bloques de código del editor</div>
-        </div>
-        <div class="module-box">
-          <div class="mod-name">app.js</div>
-          <div class="mod-desc">Orquesta e invoca las funciones de los otros módulos</div>
-        </div>
+    <!-- 3: states -->
+    <div class="card accent-amber">
+      <h3><span class="tag-amber">3.</span> Los tres estados</h3>
+      <p class="desc">Una promesa empieza esperando y termina en éxito o fallo.</p>
+      <div class="states">
+        <div class="state"><span class="ico">⏳</span><strong class="tag-amber">pending</strong><span>esperando</span></div>
+        <div class="state"><span class="ico">✅</span><strong class="tag-green">fulfilled</strong><span>resolve(...)</span></div>
+        <div class="state"><span class="ico">❌</span><strong class="tag-red">rejected</strong><span>reject(...)</span></div>
       </div>
+    </div>
+
+    <!-- 4: then/catch -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">4.</span> Consumir: <code>.then</code> y <code>.catch</code></h3>
+      <p class="desc"><code>.then</code> corre cuando la promesa se resuelve; <code>.catch</code> cuando falla. Dos caminos, siempre cubiertos.</p>
+      <pre><code>obtenerPokemones()
+  .<span class="tag-green">then</span>(lista =&gt; render(lista))          <span class="tag-muted">// ✅ camino feliz</span>
+  .<span class="tag-red">catch</span>(error =&gt; mostrarError(error));  <span class="tag-muted">// ❌ camino de error</span></code></pre>
     </div>
 
   </section>
 
-  <!-- GLOSARIO -->
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Primera clase</strong>
-        <span>Las funciones son valores que se pueden asignar, pasar y retornar como cualquier otro dato.</span>
+        <strong>Asincrónico</strong>
+        <span>Una operación tarda y el programa sigue trabajando.</span>
       </div>
       <div class="term">
-        <strong>Callback</strong>
-        <span>Función pasada como argumento a otra función para que la llame en el momento correcto.</span>
+        <strong>setTimeout</strong>
+        <span>Ejecuta una función después de N milisegundos.</span>
       </div>
       <div class="term">
-        <strong>Orden superior</strong>
-        <span>Función que recibe una función como parámetro o retorna una función como resultado.</span>
+        <strong>Promesa</strong>
+        <span>Objeto que representa un valor que llegará (o fallará).</span>
       </div>
       <div class="term">
-        <strong>Módulo</strong>
-        <span>Archivo JS con una sola responsabilidad. Mantiene el código organizado y testeable.</span>
+        <strong>.then / .catch</strong>
+        <span>Reaccionar cuando el valor llega / cuando falla.</span>
       </div>
     </div>
   </section>
 
   <section class="footer">
-    Code 201 — EnterTechSchool <span>·</span> Clase 10 <span>·</span> Módulo 3
+    Code 201 — EnterTechSchool <span>·</span> Clase 10 <span>·</span> Módulo 3 — Pokédex
   </section>
 
   <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">

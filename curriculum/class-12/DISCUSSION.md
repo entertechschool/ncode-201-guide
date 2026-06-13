@@ -1,26 +1,33 @@
-# Debate 12
+# Lectura y Debate 12: Manejo de Errores y Estados
 
 ## 🎯 Objetivos de la Preparación para el Debate
-> Esta discusión busca que los estudiantes:
-1. **Identifiquen los fundamentos de las Promesas y la asincronía en JavaScript**, comprendiendo las ventajas de no bloquear la UI y cómo orquestar múltiples tareas en paralelo o secuencia.
-2. **Reflexionen sobre la importancia del manejo de excepciones (try/catch)** para garantizar la estabilidad del flujo asíncrono y ofrecer retroalimentación adecuada al usuario.
+
+Debatir en esta sesión te permitirá desarrollar criterios para **manejar errores** de forma profesional: cuándo capturar una excepción y cuándo dejar que se propague, cómo comunicar fallos de manera clara al usuario, y por qué una app debe comunicar sus **estados** (cargando, error, vacío). Analizarás un punto clave que confunde a muchos: por qué `fetch` no falla automáticamente ante un 404.
 
 ## 🔑 Conceptos Clave a profundizar
-- **Promesa**: Objeto que representa la finalización (o falla) de una operación asíncrona, con sus métodos (`then()`, `catch()`, `finally()`).
-- **Asincronía**: Capacidad de ejecutar tareas prolongadas sin congelar la interfaz principal, devolviendo el control a la aplicación mientras se procesan operaciones en segundo plano.
-- **Manejo de Excepciones (try/catch)**: Técnica fundamental para capturar escenarios inesperados y actuar sin detener todo el flujo asíncrono, informando con claridad al usuario.
 
-## 🔍 Prompt para preparar con la IA
-Utiliza tu herramienta de IA favorita (ChatGPT, Claude, u otra) y prueba el siguiente prompt. En lugar de pedir soluciones concretas, busca claridad en los conceptos y fundamentos:
+- **`try/catch/finally`:** `try` ejecuta código que puede fallar, `catch` lo atrapa, `finally` corre siempre (haya error o no).
+- **`response.ok` y `throw`:** `fetch` solo falla si no hay red; un 404 hay que detectarlo con `response.ok` y lanzar un error propio con `throw new Error(...)`.
+- **Estados de UI:** loading / success / error / empty — lo que el usuario ve en cada momento. Una buena app nunca deja al usuario sin saber qué pasa.
 
-> Estoy estudiando los conceptos fundamentales de software con Javascript y recién iniciaré a estudiar sobre las promesas y la asincronia. Estoy construyendo un Editor de Markdown que debe leer archivos de forma asíncrona y exportar su contenido sin bloquear la aplicación. Quiero entender por qué la asincronía es clave en este flujo, qué beneficios ofrecen las Promesas frente a callbacks tradicionales, y cómo el bloque try/catch me ayuda a controlar posibles fallos. Además, me interesa la diferencia entender cómo usar .then() y .catch().
+## 📚 Artículos recomendados para leer
 
-## 🧠 Reflexiones para analizar críticamente
+- [MDN — try...catch](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch){:target="_blank"}
 
-1. **¿De qué manera las Promesas contribuyen a que la experiencia de usuario sea fluida y evite bloqueos, en comparación con un enfoque sincrónico?**  
-2. **¿Cómo influye la claridad con que manejamos excepciones en la mantenibilidad y confiabilidad del proyecto?**  
-3. **¿En qué escenarios sería más conveniente utilizar `async/await` frente a `then()/.catch()`, y qué implicaciones tiene para la legibilidad del código?**  
-4. **¿Qué pasa si no proporcionamos feedback al usuario mientras se lee un archivo grande o se exporta un documento largo a PDF?**  
-5. **¿Cómo afectan las buenas prácticas de asincronía (spinners, mensajes de error) a la percepción de robustez del Editor de Markdown?**  
+- [MDN — Response.ok](https://developer.mozilla.org/es/docs/Web/API/Response/ok){:target="_blank"}
 
-> **Instrucción:** Ejecuta el prompt con la IA, revisa las respuestas y compáralas con tus conocimientos. Reflexiona: ¿qué ideas principales sobre asincronía y manejo de excepciones reafirman tus lecturas? ¿Qué nuevas preguntas emergen para debatir en clase? Lleva ejemplos concretos y comentarios al aula para debatir en vivo.
+- [MDN — Markdown en GitHub (Basic writing and formatting)](https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax){:target="_blank"}
+
+## ☑️ Lista de Mitos y Verdades para Analizar
+
+1. "`fetch` lanza un error automáticamente cuando el servidor responde 404 (no encontrado)."
+
+2. "El bloque `finally` solo se ejecuta cuando NO hubo ningún error."
+
+3. "Capturar todos los errores con `try/catch` y no hacer nada con ellos siempre es buena idea: evita que la app se rompa."
+
+4. "Un mensaje de error específico ('No se encontró \"pikachuu\"') es más útil para el usuario que uno genérico ('Error')."
+
+5. "Markdown es un lenguaje de programación que se ejecuta en el navegador."
+
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas o con lo que comprobaste al hacer robusta tu Pokédex.

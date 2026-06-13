@@ -1,169 +1,129 @@
-# Clase 11  
-## Event Handling Básico en JavaScript
+# Clase 11 — async/await, fetch y JSON
+### Code 201 · Módulo 3 · Proyecto: Pokédex
 
 ---
 
-### Bienvenida y Conexión Inicial
-- ¿Has creado algo interactivo con JavaScript?
-- Recordamos: funciones y manipulación DOM
+## 🎯 Objetivo de la Clase
+
+- Entender **JSON** como formato de intercambio.
+- Pedir datos reales con **`fetch`** + **`response.json()`**.
+- Escribir asincronía legible con **`async/await`**.
+
+> La Pokédex deja los datos locales y consume la **PokeAPI** real.
 
 ---
 
-## 📌 Pero primero, recordamos:
+## 🧬 ¿Qué es JSON?
 
-## Funciones y callbacks:
-
-> Crea una función llamada `ejecutarOperacion` que reciba **tres parámetros**:
->
-> * `a`: número 1
-> * `b`: número 2
-> * `operacion`: una función callback que indique qué operación realizar (`suma`, `multiplicacion`, `potencia`, etc.)
-
----
-
-## 📌 Ahora, recordamos:
-
-## Manipulación DOM:
-
-> Crea una función llamada `aplicarEstilo` que reciba:
->
-> * un **selector CSS** (ej. `"#titulo"`),
-> * y una **función callback** que indique cómo modificar ese elemento.
->
-> Por ejemplo: `aplicarEstilo("#titulo", mayusculas);`
-
----
-
-## 🔑 Conceptos Clave a profundizar
-
-1. **Event Object**
-2. **Event Listener**
-3. **Callback**
-
----
-
-### ¿Qué es un Evento?
-- Un evento es cualquier interacción del usuario con la página (click, keydown, etc)
-- JavaScript puede "escuchar" y reaccionar
-
----
-
-### addEventListener: Sintaxis
-```js
-element.addEventListener("click", function() {
-  console.log("Haz hecho clic!");
-});
-```
-
----
-
-### Demo en Vivo
-
-* Crear botón que cambia de color al hacer clic
-* Agregar lógica condicional en la función
-
----
-
-### ¿Qué es el `event`?
-
-* Objeto especial que contiene detalles del evento
-* `event.target`, `event.type`, `event.key`, etc
-
----
-
-### Exploración Guiada
-
-```js
-button.addEventListener("click", function(event) {
-  console.log(event);
-});
-```
-
----
-
-### Funciones Callback Reusables
-
-```js
-function cambiarColor() {
-  caja.classList.toggle("activo");
+```json
+{
+  "name": "pikachu",
+  "types": [ { "type": { "name": "electric" } } ]
 }
-boton.addEventListener("click", cambiarColor);
 ```
 
+* Es **texto** con la forma de un objeto JS.
+* Las APIs hablan JSON.
+* `response.json()` lo convierte en objeto usable.
+
+> Misma forma que tu `pokemonLocal` de C09.
+
 ---
 
-### HTML onEvent vs JS moderno
+## 🌐 fetch — pedir datos a una URL
 
-* `<button onclick="alert('Hola')">` ❌
-* `addEventListener()` ✅
+```javascript
+const response = await fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
+```
+
+* Devuelve una **Promesa** (como las de C10).
+* `response` es la respuesta cruda del servidor.
+* Falta **leer su cuerpo** para tener los datos.
 
 ---
 
-### 🚫 `event.preventDefault()` — cuando el default rompe lo que quieres
+## 🔑 async / await
 
-Algunos eventos del navegador tienen un **comportamiento default**:
+```javascript
+async function buscarPokemon(nombre) {
+  const response = await fetch(url);        // espera la respuesta
+  const pokemon  = await response.json();   // espera el parseo
+  return pokemon;
+}
+```
 
-* `Tab` en un textarea → mueve el foco al siguiente elemento.
-* `<form>` submit → recarga la página.
-* Click en un `<a>` → navega al `href`.
+* `async` habilita `await` dentro.
+* `await` **pausa** hasta que la promesa resuelve.
+* Más legible que `.then` encadenado.
 
-Cuando ese default estorba, lo detenemos:
+---
 
-```js
-textarea.addEventListener("keydown", function(event) {
-  if (event.key === "Tab") {
-    event.preventDefault();  // Tab ya no cambia el foco
-    // ahora podemos hacer otra cosa con Tab
-  }
+## 🔁 ¿Por qué DOS await?
+
+```
+await fetch(url)        → esperar que LLEGUE la respuesta
+await response.json()   → esperar que se LEA y convierta
+```
+
+> Dos operaciones que tardan = dos promesas = dos `await`.
+
+---
+
+## 🖼️ Mostrarlo: reusar C09
+
+```javascript
+async function mostrarPokemon(nombre) {
+  const pokemon = await buscarPokemon(nombre);
+  render([pokemon]);   // render espera un array
+}
+```
+
+> No reescribes `crearTarjeta` ni `render`: el dato tiene la misma forma.
+
+---
+
+## 🔍 Conectar el buscador
+
+```javascript
+boton.addEventListener("click", function () {
+  const nombre = input.value.trim();
+  if (nombre !== "") mostrarPokemon(nombre);
 });
 ```
 
-> "Sin `preventDefault`, el navegador hace lo suyo. Con `preventDefault`, mandas tú."
+> Input + botón (+ Enter) → Pokémon real en pantalla.
 
 ---
 
-## 🧠 Reflexiones Clave para Analizar
+## ⚙️ Estructura del Lab
 
-1. ¿Qué ventajas ofrecen los event listeners frente a otros métodos tradicionales de gestión de eventos (por ejemplo, atributos HTML)?
-> Separación de Estructura y Lógica.
+| HU | Tiempo | Contenido |
+|---|---|---|
+| **HU1** | ~30 min | `buscarPokemon` con `fetch` + `await` |
+| **HU2** | ~30 min | Mostrar el Pokémon (reusa render C09) |
+| **HU3** | ~30 min | Conectar input + botón + Enter |
 
-2. ¿Cómo impacta en la experiencia del usuario manejar adecuadamente el objeto evento en aplicaciones web?
-> Acceso detallado al contexto de la interacción.
-
-3. ¿Cuáles son los criterios que debes considerar para elegir entre funciones anónimas o funciones nombradas como callbacks?
-> Reutilización.
-
----
-
-### Desafío de Laboratorio (Parte 1)
-
-* Objetivo: Crear vista previa de Markdown en vivo
-* Capturar `input` del usuario y actualizar un div
+> Datos: **PokeAPI** real (sin clave).
 
 ---
 
-### Checkpoint 1
+## 🤔 Discusión
 
-* Input actualizado dinámicamente al escribir
-* Uso de `input.addEventListener("input", ...)`
+- ¿Por qué JSON y no otro formato para las APIs?
+- ¿Qué pasa si buscas un Pokémon que no existe? (👀 C12)
+- ¿En qué se parece esto a cómo una app de clima trae el pronóstico?
 
----
-
-### Checkpoint 2
-
-* Separar lógica en funciones reusables
-* Limpiar espacios y texto con `.trim()`
+> **Idea clave:** consumir APIs es el pan de cada día de un dev web.
 
 ---
 
-### Revisión entre Pares
+## ➡️ Lo que viene (C12)
 
-* Validar estructura
-* Probar eventos cruzados y refactor
+Si buscas "pikachuu", la app **se rompe**. Una app real no puede romperse así.
+
+> En C12: manejar errores con `try/catch`, estados de carga, y cerrar el módulo.
 
 ---
 
-### Cierre y Conexión con Clase 12
-
-* ¿Qué aprendiste hoy?
-
+## ¡Gracias! 🙌
+### Code 201 · Enter Tech School
