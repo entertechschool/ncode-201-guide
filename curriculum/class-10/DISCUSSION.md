@@ -1,60 +1,33 @@
-# Lectura y Debate 10: Funciones y Callbacks en JavaScript
+# Lectura y Debate 10: Asincronía y Promesas
 
-Las funciones en JavaScript son **objetos de primera clase**, lo que significa que pueden almacenarse en variables, pasarse como argumentos y retornarse desde otras funciones. Esta característica es la base del desarrollo modular y funcional en el lenguaje, permitiendo la creación de **callbacks** y **funciones de orden superior**, herramientas clave para el manejo de eventos, asincronía y estructuras dinámicas.  
+## 🎯 Objetivos de la Lectura y el Debate
 
-Sin embargo, el uso excesivo de callbacks puede generar código difícil de leer y mantener, un problema conocido como **callback hell**. ¿Hasta qué punto los callbacks siguen siendo una solución óptima en la programación moderna? ¿Cómo pueden las funciones de orden superior mejorar la legibilidad y escalabilidad del código? Estas son algunas de las preguntas que exploraremos en el debate.  
+Debatir en esta sesión te permitirá entender por qué existe la **asincronía** en JavaScript y qué problema resuelve. Comprenderás que una app no puede "congelarse" mientras espera datos lentos, y cómo las **Promesas** representan un valor que llegará en el futuro, permitiendo reaccionar cuando llega (`.then`) o cuando falla (`.catch`).
 
-> **Esta actividad es fundamental y esperamos que la completes antes de la clase.**  
+## 🔑 Conceptos Clave a profundizar
 
----
+- **Sincrónico vs asincrónico:** el código sincrónico bloquea (cada línea espera a la anterior); el asincrónico permite que una operación "tarde" mientras el programa sigue.
+- **Promesa:** objeto que representa un valor futuro. Tiene tres estados: `pending`, `fulfilled`, `rejected`.
+- **`.then` / `.catch`:** consumir una promesa — reaccionar cuando se resuelve o cuando se rechaza.
 
-## 🔑 **Conceptos Clave de esta Clase**  
+## 📚 Artículos recomendados para leer
 
-1. **Funciones de Primera Clase:**  
-   JavaScript permite tratar las funciones como valores, lo que significa que pueden ser asignadas a variables, almacenadas en estructuras de datos, pasadas como argumentos y devueltas como resultado de otras funciones.  
+- [MDN — Usar promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises){:target="_blank"}
 
-2. **Callbacks:**  
-   Funciones que se pasan como argumentos a otras funciones y se ejecutan en un momento específico. Se usan comúnmente en el manejo de eventos y en la programación asincrónica.  
+- [MDN — setTimeout](https://developer.mozilla.org/es/docs/Web/API/setTimeout){:target="_blank"}
 
-3. **Funciones de Orden Superior:**  
-   Funciones que reciben otras funciones como parámetros o retornan funciones. Son esenciales para la programación funcional y facilitan la reutilización del código.  
+- [MDN — Introducción al JavaScript asíncrono](https://developer.mozilla.org/es/docs/Learn/JavaScript/Asynchronous/Introducing){:target="_blank"}
 
----
+## ☑️ Lista de Mitos y Verdades para Analizar
 
-## 🗂️ **Contexto de esta Clase**  
+1. "`setTimeout` pausa el programa: nada se ejecuta hasta que el tiempo termina."
 
-Hasta ahora, hemos trabajado con funciones en su forma más básica, creando bloques de código reutilizables para encapsular lógica específica. En este punto, damos un paso adelante para entender cómo JavaScript permite **tratar las funciones como datos** y usarlas para escribir código más flexible y dinámico.  
+2. "Una Promesa devuelve los datos directamente; por eso puedes usarlos en la línea siguiente."
 
-Este tema es clave para la implementación del **Editor de Markdown en Vivo**, donde necesitamos manejar eventos del usuario, transformar dinámicamente contenido de texto y modularizar la funcionalidad en pequeñas unidades reutilizables.  
+3. "Si una promesa falla y no tiene `.catch`, el error simplemente desaparece sin consecuencias."
 
----
+4. "El código asíncrono existe para que la interfaz no se congele mientras espera operaciones lentas."
 
-## 📚 **Artículos Recomendados para Leer**  
+5. "Una promesa puede pasar de `fulfilled` a `rejected` varias veces durante su vida."
 
-1. [Funciones en JavaScript: Conceptos Fundamentales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions){:target="_blank"}  
-2. [JavaScript Callbacks: Qué Son y Cómo Funcionan](https://javascript.info/callbacks){:target="_blank"}  
-3. [Funciones de Orden Superior en JavaScript](https://www.eloquentjavascript.es/05_higher_order.html){:target="_blank"}  
-
-
-## 🧠 **Reflexiones para Analizar Críticamente**  
-
-1. **Funciones como valores:**  
-   ¿Qué ventajas tiene el tratar a las funciones como valores en JavaScript? ¿En qué situaciones esta característica puede generar código difícil de depurar?  
-
-2. **Uso de Callbacks:**  
-   ¿Cuándo es recomendable usar callbacks en vez de ejecutar directamente una función? ¿Cómo afectan los callbacks a la legibilidad del código?  
-
-3. **Callback Hell:**  
-   ¿Por qué el uso excesivo de callbacks puede llevar a código difícil de entender? ¿Qué alternativas existen para evitar este problema?  
-
-4. **Funciones de Orden Superior en la Práctica:**  
-   ¿Cómo el uso de funciones de orden superior puede hacer que el código sea más modular y reutilizable? ¿Puedes mencionar un ejemplo donde una función de orden superior simplifique una tarea común?  
-
-5. **Eficiencia y Performance:**  
-   ¿Las funciones de orden superior y los callbacks afectan el rendimiento de una aplicación? ¿Cuándo es mejor evitar su uso?  
-
-6. **Aplicación en el Editor de Markdown:**  
-   ¿Cómo podríamos aprovechar funciones de orden superior en la implementación del editor? ¿En qué parte del código sería más útil su uso?  
-
-> **Instrucción:**  
-Reflexiona sobre los puntos planteados y toma notas. Prepárate para justificar tus respuestas con evidencia de las lecturas recomendadas, tu experiencia previa y la lógica de programación. Durante el debate, la **capacidad para argumentar tus decisiones técnicas** será clave para fortalecer tus habilidades críticas.  
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas o con lo que probaste en el laboratorio.

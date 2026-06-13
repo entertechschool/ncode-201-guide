@@ -6,131 +6,167 @@
 
 ---
 
-## Pregunta 1 — Clase 09: DOM como API de Objetos
+## Pregunta 1 — Clase 09: JavaScript Moderno y Render Dinámico
 
-Tienes el siguiente HTML dentro de un editor:
-
-```html
-<div id="editor">
-  <p class="line">Hola</p>
-  <p class="line">Mundo</p>
-  <p class="line">!</p>
-</div>
-```
-
-¿Qué código selecciona los **tres** párrafos para luego recorrerlos con `forEach`?
-
-- A) `document.getElementById(".line")`
-- B) `document.querySelector(".line")`
-- C) `document.querySelectorAll(".line")`
-- D) `document.getElementByClassName("line")`
-
-> Respuesta: C
-
-> **Retroalimentación:** `querySelectorAll(".line")` retorna una `NodeList` con los tres `<p>`, que es iterable con `forEach` o `for...of`. La opción A confunde el método: `getElementById` solo acepta IDs, no selectores con punto. La B retorna **solo el primer** elemento que coincide, no los tres. La D tiene un error de nombre (el real es `getElementsByClassName`, con "s") y además recibe el nombre de la clase **sin punto**.
-
----
-
-## Pregunta 2 — Clase 10: Funciones y Callbacks
-
-¿Qué imprime el siguiente código en consola?
+Tienes un array de objetos y quieres generar una tarjeta HTML por cada uno dentro de `<div id="resultado">`. ¿Qué código aplica correctamente el **patrón render**?
 
 ```javascript
-function aplicar(valor, operacion) {
-  return operacion(valor);
-}
-
-const duplicar = (n) => n * 2;
-
-console.log(aplicar(5, duplicar));
+const contenedor = document.getElementById("resultado");
+const pokemones = [ { name: "pikachu" }, { name: "ditto" } ];
 ```
 
-- A) `5`
-- B) `10`
-- C) `"duplicar"`
-- D) Error: no se puede pasar una función como argumento
+- A)
+  ```javascript
+  contenedor.innerHTML = "pokemones";
+  ```
+- B)
+  ```javascript
+  pokemones.forEach((p) => {
+    const el = document.createElement("article");
+    el.textContent = p.name;
+    contenedor.appendChild(el);
+  });
+  ```
+- C)
+  ```javascript
+  contenedor.appendChild(pokemones);
+  ```
+- D)
+  ```javascript
+  document.createElement(pokemones);
+  ```
 
 > Respuesta: B
 
-> **Retroalimentación:** `aplicar` es una **función de orden superior** que recibe otra función (`duplicar`) como **callback** y la ejecuta sobre el valor `5`. `duplicar(5)` retorna `10`. Esto es posible porque en JavaScript las funciones son **ciudadanos de primera clase**: pueden almacenarse en variables, pasarse como argumentos y retornarse desde otras funciones. La opción A ignora la ejecución del callback. La C confunde el nombre con el resultado. La D es falsa: el patrón es nativo en JavaScript.
+> **Retroalimentación:** El patrón render recorre los datos (`forEach`), crea un nodo por cada uno (`createElement`), le da contenido (`textContent`) y lo inserta (`appendChild`). La opción A asigna el texto literal `"pokemones"`, no genera tarjetas. La C intenta insertar un **array** como si fuera un nodo del DOM (error). La D pasa un array a `createElement`, que espera el **nombre de una etiqueta** (string).
 
 ---
 
-## Pregunta 3 — Clase 11: Event Handling Básico
+## Pregunta 2 — Clase 10: Asincronía y Promesas
 
-Quieres que cada vez que el usuario escriba en un `<textarea id="editor">` se actualice automáticamente un `<div id="preview">` con el texto ingresado. ¿Cuál es la implementación correcta?
+¿Qué imprime el siguiente código en consola y en qué orden?
 
-- A) `document.getElementById("editor").onload = () => { ... }`
-- B) `document.getElementById("editor").addEventListener("input", (event) => { document.getElementById("preview").textContent = event.target.value; })`
-- C) `document.getElementById("preview").addEventListener("click", () => { ... })`
-- D) `document.getElementById("editor").value = "preview"`
+```javascript
+console.log("A");
+setTimeout(() => console.log("B"), 1000);
+console.log("C");
+```
+
+- A) `A` `B` `C`
+- B) `A` `C` `B`
+- C) `B` `A` `C`
+- D) `C` `B` `A`
 
 > Respuesta: B
 
-> **Retroalimentación:** El evento `"input"` se dispara cada vez que el contenido del `<textarea>` cambia (al teclear, pegar, cortar). El callback recibe el objeto `event`, y `event.target.value` lee el texto actual del editor para asignarlo al `textContent` del preview. La opción A usa `onload`, que solo dispara al cargar la página, no al escribir. La C escucha clicks en el preview, pero nunca reacciona al input. La D simplemente sobrescribe el valor del textarea con el string `"preview"`.
+> **Retroalimentación:** JavaScript **no se detiene** en el `setTimeout`: programa la función para dentro de 1000 ms y continúa con la siguiente línea. Por eso imprime `A`, luego `C`, y al final `B` (cuando vence el temporizador). Esto demuestra el comportamiento **asincrónico**: el código no bloqueante sigue ejecutándose mientras una operación "tarda". Las demás opciones asumen, incorrectamente, que `setTimeout` pausa el programa.
 
 ---
 
-## Pregunta 4 — Clase 12: Manejo de Excepciones
+## Pregunta 3 — Clase 11: async/await, fetch y JSON
 
-En el Editor de Markdown quieres validar que el archivo importado por el usuario **no esté vacío**. Si lo está, debes mostrar un mensaje de error y **no interrumpir** el resto del programa. ¿Cuál es la implementación correcta?
+Quieres traer un Pokémon de la PokeAPI y obtener su objeto JavaScript. ¿Cuál es la implementación correcta?
 
-- A) `console.log("vacío")` y continuar normalmente, sin `try/catch`.
-- B) `try { if (texto === "") throw new Error("Archivo vacío"); } catch (e) { mostrarError(e.message); }`
-- C) Ignorar el caso: si el archivo está vacío, el programa simplemente fallará.
-- D) Usar un `if/else` sin lanzar ninguna excepción, así nunca se interrumpe la ejecución.
+- A)
+  ```javascript
+  async function buscar(nombre) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
+    const pokemon = await response.json();
+    return pokemon;
+  }
+  ```
+- B)
+  ```javascript
+  function buscar(nombre) {
+    const response = fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
+    return response.json();
+  }
+  ```
+- C)
+  ```javascript
+  async function buscar(nombre) {
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`);
+    return pokemon;
+  }
+  ```
+- D)
+  ```javascript
+  function buscar(nombre) {
+    return JSON.parse(fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`));
+  }
+  ```
+
+> Respuesta: A
+
+> **Retroalimentación:** Se necesitan **dos** `await`: uno para esperar la respuesta (`fetch`) y otro para esperar la conversión del cuerpo JSON a objeto (`response.json()`), todo dentro de una función `async`. La opción B usa `await`/`async` ausentes: `fetch` sin `await` devuelve una promesa, no la respuesta. La C olvida `response.json()`: devuelve el objeto `response` crudo, no el Pokémon. La D usa `JSON.parse` sobre una promesa (incorrecto: `JSON.parse` es síncrono y para texto, no para respuestas de `fetch`).
+
+---
+
+## Pregunta 4 — Clase 12: Manejo de Errores y Estados
+
+Buscas un Pokémon que no existe. La API responde con **status 404**. ¿Qué afirmación es correcta sobre cómo manejar este caso?
+
+- A) `fetch` lanza automáticamente un error en un 404, así que el `catch` lo atrapa solo.
+- B) Hay que revisar `response.ok`; si es `false`, lanzar el error manualmente con `throw new Error(...)`.
+- C) Un 404 detiene el programa por completo sin posibilidad de manejarlo.
+- D) `response.json()` corrige el 404 automáticamente y devuelve un objeto válido.
 
 > Respuesta: B
 
-> **Retroalimentación:** El patrón correcto es **lanzar una excepción** con `throw new Error(...)` cuando se detecta la condición inválida y **capturarla** con `try/catch` para mostrar un mensaje sin romper el flujo. Esto centraliza el manejo de errores y permite dar feedback claro al usuario. La opción A no maneja el error como excepción y mezcla responsabilidades con `console.log`. La C es la ausencia de manejo de errores. La D pierde la ventaja de propagar el error de forma estructurada y reutilizar un único punto de captura.
+> **Retroalimentación:** `fetch` **solo** rechaza su promesa cuando la petición no se puede realizar (sin red, DNS, CORS). Un 404 es una respuesta válida a nivel de red, así que `fetch` lo considera "exitoso". Por eso hay que revisar `response.ok` (que será `false`) y lanzar el error nosotros con `throw new Error(...)` para que el `catch` lo maneje. La A es el malentendido más común. La C es falsa: se maneja sin problema. La D es falsa: `response.json()` intentaría parsear el cuerpo de error, no corrige nada.
 
 ---
 
 ## Pregunta 5 — Integradora (Clases 11 + 12)
 
-Tienes un formulario que importa un archivo de texto. Quieres que **al hacer click** en el botón `<button id="importar">` se valide el contenido y, si está vacío, se capture el error sin romper la app. ¿Cuál es la implementación correcta?
-
-```javascript
-const boton = document.getElementById("importar");
-const editor = document.getElementById("editor");
-
-// ¿Cuál opción completa correctamente este patrón?
-```
+¿Cuál implementación maneja correctamente la búsqueda, captura errores y garantiza que el spinner **siempre** se oculte?
 
 - A)
   ```javascript
-  boton.addEventListener("click", () => {
-    if (editor.value === "") throw new Error("Vacío");
-  });
+  async function mostrar(nombre) {
+    const response = await fetch(url);
+    const pokemon = await response.json();
+    render([pokemon]);
+    spinner.classList.add("hidden");
+  }
   ```
 - B)
   ```javascript
-  boton.addEventListener("click", () => {
+  async function mostrar(nombre) {
+    spinner.classList.remove("hidden");
     try {
-      if (editor.value === "") throw new Error("Vacío");
-      console.log("Archivo importado");
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("No se encontró");
+      const pokemon = await response.json();
+      render([pokemon]);
     } catch (e) {
-      mostrarError(e.message);
+      mensaje.textContent = e.message;
+    } finally {
+      spinner.classList.add("hidden");
     }
-  });
+  }
   ```
 - C)
   ```javascript
-  try {
-    boton.addEventListener("click", () => {
-      if (editor.value === "") throw new Error("Vacío");
-    });
-  } catch (e) {
-    mostrarError(e.message);
+  function mostrar(nombre) {
+    try {
+      const pokemon = fetch(url);
+      render([pokemon]);
+    } catch (e) {
+      mensaje.textContent = e.message;
+    }
   }
   ```
 - D)
   ```javascript
-  boton.onload = () => {
-    if (editor.value === "") mostrarError("Vacío");
-  };
+  async function mostrar(nombre) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("No se encontró");
+    const pokemon = await response.json();
+    render([pokemon]);
+  }
   ```
 
 > Respuesta: B
 
-> **Retroalimentación:** El `try/catch` debe vivir **dentro** del callback del evento, porque el error ocurre cuando el usuario hace click — no cuando se registra el listener. La opción A lanza el error pero no lo captura, así que rompe la ejecución del callback y queda sin manejar. La C envuelve el `addEventListener` (no el callback), por lo que el `catch` solo capturaría errores al **registrar** el listener, no al ejecutarlo. La D usa `onload`, que no aplica a botones, y además no usa el patrón de excepciones del módulo.
+> **Retroalimentación:** La opción B es completa: muestra el spinner, valida `response.ok` y lanza el error con `throw`, captura cualquier fallo en `catch`, y oculta el spinner en `finally` (que corre **siempre**, haya éxito o error). La A oculta el spinner solo en el camino feliz: si falla, se queda pegado, y además no captura el error. La C no usa `await` (recibe una promesa, no datos) ni valida `ok`. La D valida y lanza, pero **no captura** el error (sin `catch`) ni oculta el spinner en `finally`: ante un fallo, rompe y el spinner queda visible.

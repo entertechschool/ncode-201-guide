@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manejo de Excepciones — Código robusto que no se rompe en producción</title>
+  <title>Manejo de Errores y Estados</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
       width: 1080px;
       margin: 0 auto;
       background: #060913;
-      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(248, 113, 113, 0.08) 0%, transparent 60%);
       color: #e2e8f0;
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
@@ -34,14 +34,11 @@
 
     section { padding: 2rem 3rem; }
 
-    .hero {
-      text-align: center;
-      padding: 3.5rem 3rem 2.5rem;
-    }
+    .hero { text-align: center; padding: 3.5rem 3rem 2.5rem; }
     .hero .badge {
       display: inline-block;
-      background: rgba(217, 70, 239, 0.15);
-      color: #d946ef;
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
       padding: 0.25rem 0.75rem;
       border-radius: 999px;
       font-size: 0.8rem;
@@ -62,77 +59,48 @@
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
 
-    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-red    { border-left: 3px solid #f87171; }
+    .accent-amber  { border-left: 3px solid #fbbf24; }
     .accent-green  { border-left: 3px solid #4ade80; }
-    .accent-blue   { border-left: 3px solid #93c5fd; }
-    .accent-orange { border-left: 3px solid #fb923c; }
+    .accent-blue   { border-left: 3px solid #60a5fa; }
 
-    .tag-purple { color: #d946ef; }
-    .tag-green  { color: #4ade80; }
-    .tag-blue   { color: #93c5fd; }
-    .tag-orange { color: #fb923c; }
-    .tag-muted  { color: #64748b; }
     .tag-red    { color: #f87171; }
+    .tag-amber  { color: #fbbf24; }
+    .tag-green  { color: #4ade80; }
+    .tag-blue   { color: #60a5fa; }
+    .tag-muted  { color: #64748b; }
 
-    /* Bloques try/catch visual */
-    .try-visual {
+    .states {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 0.75rem;
       margin-top: 0.75rem;
     }
-    .try-block {
+    .states .state {
       background: #161b22;
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: 8px;
-      padding: 0.9rem;
+      padding: 0.85rem;
       text-align: center;
-      border-top: 2px solid;
     }
-    .try-block.block-try    { border-top-color: #4ade80; }
-    .try-block.block-catch  { border-top-color: #f87171; }
-    .try-block.block-finally{ border-top-color: #93c5fd; }
-    .try-block .block-kw {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85em;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-    }
-    .try-block .block-desc { font-size: 0.78rem; color: #94a3b8; }
+    .states .state .ico { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+    .states .state strong { font-size: 0.82rem; display: block; }
+    .states .state span { color: #94a3b8; font-size: 0.72rem; }
 
-    /* Criterios */
-    .criteria {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 0.75rem;
-    }
-    .criteria-col .col-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.35rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .criteria-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
-    .criteria-col li { font-size: 0.8rem; color: #94a3b8; padding-left: 1.2rem; position: relative; }
-    .criteria-col li::before { position: absolute; left: 0; font-size: 0.85em; }
-    .col-do   li::before { content: "✓"; color: #4ade80; }
-    .col-dont li::before { content: "✗"; color: #f87171; }
-
-    /* Glosario */
-    .glossary {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
+    .glossary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     .glossary .term {
       background: #0d1117;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 8px;
       padding: 1rem;
     }
-    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
     .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
 
     .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
@@ -142,135 +110,85 @@
 <body>
 
   <section class="hero">
-    <div class="badge">Módulo 3 · Clase 12</div>
-    <h1>Manejo de Excepciones — Código robusto que no se rompe en producción</h1>
-    <p class="subtitle"><code>try/catch/finally</code> y <code>throw</code> para controlar qué pasa cuando algo falla</p>
+    <div class="badge">Módulo 3 · Clase 12 · Cierre</div>
+    <h1>Manejo de Errores y Estados</h1>
+    <p class="subtitle">De una app frágil a una robusta — y tu primer README</p>
   </section>
 
   <section>
 
-    <!-- 1: try/catch/finally -->
-    <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> try / catch / finally — La estructura base</h3>
-      <p class="desc"><code>try</code> intenta ejecutar código. Si lanza un error, <code>catch</code> lo captura. <code>finally</code> se ejecuta siempre, sin importar el resultado.</p>
-      <pre><code><span class="tag-purple">try</span> {
-  <span class="tag-muted">const</span> html = procesarMarkdown(editor.value);
-  preview.innerHTML = html;
-} <span class="tag-purple">catch</span> (error) {
-  <span class="tag-muted">// Se ejecuta si procesarMarkdown() lanza un error</span>
-  mostrarMensaje(<span class="tag-purple">`Error: ${error.message}`</span>);
-} <span class="tag-purple">finally</span> {
-  <span class="tag-muted">// Se ejecuta SIEMPRE — éxito o fracaso</span>
-  spinner.style.display = <span class="tag-purple">"none"</span>;  <span class="tag-muted">// ocultar cargando</span>
+    <!-- 1: try/catch -->
+    <div class="card accent-red">
+      <h3><span class="tag-red">1.</span> try / catch — la red de seguridad</h3>
+      <p class="desc">El código que puede fallar va en <code>try</code>; si algo sale mal, <code>catch</code> lo atrapa y la app sigue viva.</p>
+      <pre><code><span class="tag-red">try</span> {
+  <span class="tag-muted">const</span> response = <span class="tag-muted">await</span> fetch(url);
+  <span class="tag-muted">const</span> pokemon  = <span class="tag-muted">await</span> response.json();
+  render([pokemon]);
+} <span class="tag-red">catch</span> (error) {
+  mensaje.textContent = error.message;
 }</code></pre>
-      <div class="try-visual">
-        <div class="try-block block-try">
-          <div class="block-kw" style="color:#4ade80;">try</div>
-          <div class="block-desc">Código que puede fallar. Si falla, salta al catch.</div>
-        </div>
-        <div class="try-block block-catch">
-          <div class="block-kw" style="color:#f87171;">catch</div>
-          <div class="block-desc">Captura el error. Recibe el objeto con message y stack.</div>
-        </div>
-        <div class="try-block block-finally">
-          <div class="block-kw" style="color:#93c5fd;">finally</div>
-          <div class="block-desc">Siempre se ejecuta. Ideal para limpiar estado.</div>
-        </div>
-      </div>
     </div>
 
-    <!-- 2: throw -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> throw — Lanzar errores con intención</h3>
-      <p class="desc">No esperes a que JavaScript detecte el error. Si los datos son inválidos, lánzalo tú con un mensaje claro.</p>
-      <pre><code><span class="tag-muted">function</span> parsearNumero(valor) {
-  <span class="tag-green">if</span> (!valor || valor.trim() === <span class="tag-green">""</span>) {
-    <span class="tag-green">throw new</span> Error(<span class="tag-green">"El campo no puede estar vacío"</span>);
-  }
-  <span class="tag-muted">const</span> numero = parseFloat(valor);
-  <span class="tag-green">if</span> (isNaN(numero)) {
-    <span class="tag-green">throw new</span> Error(<span class="tag-green">`"${valor}" no es un número válido`</span>);
-  }
-  <span class="tag-muted">return</span> numero;
+    <!-- 2: response.ok + throw -->
+    <div class="card accent-amber">
+      <h3><span class="tag-amber">2.</span> fetch NO falla en 404 → revísalo</h3>
+      <p class="desc"><code>fetch</code> solo falla si no hay red. Un 404 llega con <code>ok=false</code>: hay que revisarlo y lanzar el error con <code>throw</code>.</p>
+      <pre><code><span class="tag-muted">if</span> (!response.<span class="tag-amber">ok</span>) {                  <span class="tag-muted">// 404, 500…</span>
+  <span class="tag-amber">throw new Error</span>(`No se encontró "${nombre}"`);
 }
-
-<span class="tag-muted">try</span> {
-  <span class="tag-muted">const</span> monto = parsearNumero(inputMonto.value);
-} <span class="tag-muted">catch</span> (e) {
-  errorLabel.textContent = e.message;  <span class="tag-muted">// muestra el mensaje al usuario</span>
-}</code></pre>
+<span class="tag-muted">// throw salta directo al catch</span></code></pre>
     </div>
 
-    <!-- 3: El objeto Error -->
-    <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> El Objeto Error — Qué información trae</h3>
-      <p class="desc"><code>new Error(mensaje)</code> crea un objeto con propiedades que ayudan a depurar. <code>console.error(e)</code> muestra la traza completa en DevTools.</p>
-      <pre><code><span class="tag-blue">try</span> {
-  procesarDatos(null);
-} <span class="tag-blue">catch</span> (e) {
-  console.log(e.name);     <span class="tag-muted">// "Error" (o "TypeError", "RangeError"…)</span>
-  console.log(e.message);  <span class="tag-muted">// "Cannot read properties of null"</span>
-  console.log(e.stack);    <span class="tag-muted">// traza con líneas del archivo donde ocurrió</span>
-
-  <span class="tag-muted">// Usar instanceof para distinguir tipos</span>
-  <span class="tag-blue">if</span> (e <span class="tag-blue">instanceof</span> TypeError) {
-    <span class="tag-muted">// error de tipo: null, undefined, método inexistente</span>
-  }
-}</code></pre>
-    </div>
-
-    <!-- 4: Cuándo capturar vs no -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Cuándo capturar — y cuándo no</h3>
-      <p class="desc">Capturar todos los errores sin criterio oculta bugs. Solo captura cuando puedes hacer algo útil con el error.</p>
-      <div class="criteria">
-        <div class="criteria-col col-do">
-          <div class="col-title" style="color:#4ade80;">Capturar cuando…</div>
-          <ul>
-            <li>El input viene del usuario y puede ser inválido</li>
-            <li>Llamas a una API externa o lees localStorage</li>
-            <li>Puedes mostrar un mensaje claro al usuario</li>
-            <li>Puedes recuperar el estado o reintentar</li>
-          </ul>
-        </div>
-        <div class="criteria-col col-dont">
-          <div class="col-title" style="color:#f87171;">No capturar cuando…</div>
-          <ul>
-            <li>El error indica un bug en tu propio código</li>
-            <li>El catch está vacío o solo tiene <code>console.log</code></li>
-            <li>Oculta el error sin dar feedback al usuario</li>
-            <li>No puedes hacer nada útil con él</li>
-          </ul>
-        </div>
+    <!-- 3: finally + estados -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">3.</span> finally + estados de UI</h3>
+      <p class="desc"><code>finally</code> corre SIEMPRE — ideal para ocultar el spinner pase lo que pase. La app comunica su estado en todo momento.</p>
+      <div class="states">
+        <div class="state"><span class="ico">⏳</span><strong class="tag-amber">loading</strong><span>Cargando…</span></div>
+        <div class="state"><span class="ico">✅</span><strong class="tag-green">success</strong><span>la tarjeta</span></div>
+        <div class="state"><span class="ico">❌</span><strong class="tag-red">error</strong><span>No se encontró</span></div>
+        <div class="state"><span class="ico">🔍</span><strong class="tag-blue">empty</strong><span>busca algo</span></div>
       </div>
+    </div>
+
+    <!-- 4: Markdown -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">4.</span> Markdown — documenta tu proyecto</h3>
+      <p class="desc">Todo repo profesional lleva un <code>README.md</code> escrito en Markdown: títulos, listas, links y código.</p>
+      <pre><code><span class="tag-blue"># Pokédex</span>
+Buscador que consume la PokeAPI.
+
+<span class="tag-blue">## Tecnologías</span>
+- JavaScript (fetch, async/await)
+- [PokeAPI](https://pokeapi.co/)</code></pre>
     </div>
 
   </section>
 
-  <!-- GLOSARIO -->
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Excepción</strong>
-        <span>Evento que interrumpe el flujo normal. Puede ser del sistema o lanzada con <code>throw</code>.</span>
+        <strong>try / catch</strong>
+        <span>Captura errores sin que la app se rompa.</span>
       </div>
       <div class="term">
-        <strong>throw</strong>
-        <span>Lanza manualmente una excepción. Detiene la ejecución y pasa al bloque <code>catch</code>.</span>
+        <strong>throw / response.ok</strong>
+        <span>Lanzar un error propio cuando la respuesta falla (404).</span>
       </div>
       <div class="term">
         <strong>finally</strong>
-        <span>Se ejecuta siempre al salir del try/catch, sin importar si hubo error o no.</span>
+        <span>Corre siempre: deja la UI consistente.</span>
       </div>
       <div class="term">
-        <strong>stack trace</strong>
-        <span>Traza de ejecución que indica qué archivo y línea originaron el error.</span>
+        <strong>Markdown</strong>
+        <span>Formato del <code>README.md</code>: títulos, listas, links.</span>
       </div>
     </div>
   </section>
 
   <section class="footer">
-    Code 201 — EnterTechSchool <span>·</span> Clase 12 <span>·</span> Módulo 3
+    Code 201 — EnterTechSchool <span>·</span> Clase 12 <span>·</span> Módulo 3 — Pokédex
   </section>
 
   <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">

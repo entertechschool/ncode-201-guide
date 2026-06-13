@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DOM como API de Objetos — Manipula el HTML con JavaScript</title>
+  <title>JavaScript Moderno y Render Dinámico</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -40,8 +40,8 @@
     }
     .hero .badge {
       display: inline-block;
-      background: rgba(217, 70, 239, 0.15);
-      color: #d946ef;
+      background: rgba(250, 204, 21, 0.15);
+      color: #facc15;
       padding: 0.25rem 0.75rem;
       border-radius: 999px;
       font-size: 0.8rem;
@@ -61,56 +61,32 @@
     }
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
-    .card img { max-width: 100%; border-radius: 8px; margin-top: 0.5rem; }
 
-    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-yellow { border-left: 3px solid #facc15; }
     .accent-green  { border-left: 3px solid #4ade80; }
     .accent-blue   { border-left: 3px solid #93c5fd; }
-    .accent-orange { border-left: 3px solid #fb923c; }
+    .accent-red    { border-left: 3px solid #f87171; }
 
-    .tag-purple { color: #d946ef; }
+    .tag-yellow { color: #facc15; }
     .tag-green  { color: #4ade80; }
     .tag-blue   { color: #93c5fd; }
-    .tag-orange { color: #fb923c; }
+    .tag-red    { color: #f87171; }
     .tag-muted  { color: #64748b; }
 
-    /* Tabla de APIs DOM */
-    .api-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.5rem;
-      font-size: 0.8rem;
-    }
-    .api-table th {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      text-align: left;
-      padding: 0.45rem 0.7rem;
-      color: #4ade80;
-      border-bottom: 1px solid rgba(74,222,128,0.2);
-    }
-    .api-table td {
-      padding: 0.45rem 0.7rem;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      color: #94a3b8;
-    }
-    .api-table td:first-child { font-family: 'JetBrains Mono', monospace; color: #4ade80; font-size: 0.78em; }
-    .api-table tr:last-child td { border-bottom: none; }
-
-    /* Tailwind comparativa */
-    .tw-compare {
+    /* Comparativa antes/después */
+    .comparison {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
       margin-top: 0.75rem;
     }
-    .tw-col .tw-label {
+    .comparison-col pre { margin: 0; }
+    .comparison-col .col-label {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.8rem;
       font-weight: 600;
       margin-bottom: 0.4rem;
     }
-    .tw-col pre { margin: 0; }
 
     /* Glosario */
     .glossary {
@@ -124,7 +100,13 @@
       border-radius: 8px;
       padding: 1rem;
     }
-    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
     .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
 
     .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
@@ -134,60 +116,62 @@
 <body>
 
   <section class="hero">
-    <div class="badge">Módulo 3 · Clase 09</div>
-    <h1>DOM como API de Objetos — Manipula el HTML con JavaScript</h1>
-    <p class="subtitle">Cada etiqueta es un nodo-objeto. Selecciónalo, modifícalo y transforma su contenido con Regex</p>
+    <div class="badge">Módulo 3 · Clase 09 · Apertura</div>
+    <h1>JavaScript Moderno y Render Dinámico</h1>
+    <p class="subtitle">Sintaxis ES6+, generar HTML desde datos y la base de la Pokédex</p>
   </section>
 
   <section>
 
-    <!-- 1: DOM como árbol -->
-    <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> El DOM — Árbol de objetos vivos</h3>
-      <p class="desc">El navegador convierte el HTML en un árbol de objetos. Cada etiqueta es un nodo con propiedades (<code>.textContent</code>, <code>.classList</code>) y métodos (<code>.addEventListener</code>).</p>
-      <img src="dom-tree.png" alt="Árbol del DOM: document → html → head y body → elementos hijos">
+    <!-- 1: Template literals -->
+    <div class="card accent-yellow">
+      <h3><span class="tag-yellow">1.</span> Template literals — construir HTML legible</h3>
+      <p class="desc">Strings con backticks que insertan valores con <code>${...}</code> y permiten varias líneas. Reemplazan la concatenación con <code>+</code>.</p>
+      <div class="comparison">
+        <div class="comparison-col">
+          <div class="col-label" style="color:#94a3b8;">Concatenación (vieja)</div>
+          <pre><code>"Hola, " + nombre + "!"</code></pre>
+        </div>
+        <div class="comparison-col">
+          <div class="col-label" style="color:#facc15;">Template literal</div>
+          <pre><code>`Hola, <span class="tag-yellow">${nombre}</span>!`</code></pre>
+        </div>
+      </div>
     </div>
 
-    <!-- 2: APIs del DOM -->
+    <!-- 2: Patrón render -->
     <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> La Familia de APIs del DOM</h3>
-      <p class="desc">Una API por intención: selección, clases, estilos y transformación de texto. No las mezcles.</p>
-      <table class="api-table">
-        <tr><th>API</th><th>Para qué</th></tr>
-        <tr><td>querySelector('sel')</td><td>Trae el <strong style="color:#e2e8f0;">primer</strong> elemento que matchea — o null</td></tr>
-        <tr><td>querySelectorAll('sel')</td><td>Trae <strong style="color:#e2e8f0;">todos</strong> los elementos → NodeList iterable</td></tr>
-        <tr><td>classList.add/remove/toggle()</td><td>Modifica clases CSS del elemento</td></tr>
-        <tr><td>style.propiedad = 'valor'</td><td>Aplica estilo inline desde JavaScript</td></tr>
-        <tr><td>texto.replace(/regex/g, '...')</td><td>Transforma strings con expresiones regulares</td></tr>
-      </table>
-      <pre style="margin-top:0.75rem;"><code><span class="tag-muted">// ← 1 elemento | todos → ←</span>
-document.<span class="tag-green">querySelector</span>(<span class="tag-green">'#btn'</span>).textContent = <span class="tag-green">'Hecho'</span>;
-document.<span class="tag-green">querySelectorAll</span>(<span class="tag-green">'h2'</span>).<span class="tag-green">forEach</span>(h => h.classList.toggle(<span class="tag-green">'highlight'</span>));</code></pre>
+      <h3><span class="tag-green">2.</span> El patrón render — la UI refleja los datos</h3>
+      <p class="desc">Limpiar el contenedor → recorrer los datos → crear un nodo por cada uno y agregarlo. Cambias el array y la pantalla cambia, sin tocar el HTML.</p>
+      <pre><code><span class="tag-muted">function</span> render(lista) {
+  contenedor.innerHTML = <span class="tag-green">""</span>;               <span class="tag-muted">// 1. limpia</span>
+  lista.forEach(pokemon => {
+    <span class="tag-muted">const</span> tarjeta = crearTarjeta(pokemon); <span class="tag-muted">// 2. crea</span>
+    contenedor.<span class="tag-green">appendChild</span>(tarjeta);        <span class="tag-muted">// 3. agrega</span>
+  });
+}</code></pre>
     </div>
 
-    <!-- 3: Regex en el DOM -->
+    <!-- 3: Destructuring -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Regex — Transforma Markdown a HTML con replace()</h3>
-      <p class="desc">El método <code>replace()</code> con expresiones regulares convierte texto Markdown en etiquetas HTML reales.</p>
-      <pre><code><span class="tag-muted">function</span> markdownToHtml(texto) {
-  <span class="tag-muted">return</span> texto
-    .replace(<span class="tag-blue">/^## (.+)$/gm</span>, <span class="tag-blue">'&lt;h2&gt;$1&lt;/h2&gt;'</span>)  <span class="tag-muted">// primero ## (más específico)</span>
-    .replace(<span class="tag-blue">/^# (.+)$/gm</span>,  <span class="tag-blue">'&lt;h1&gt;$1&lt;/h1&gt;'</span>)  <span class="tag-muted">// luego #</span>
-    .replace(<span class="tag-blue">/^- (.+)$/gm</span>,  <span class="tag-blue">'&lt;li&gt;$1&lt;/li&gt;'</span>); <span class="tag-muted">// listas</span>
-}
-<span class="tag-muted">// Flag /g → reemplaza TODOS los matches, no solo el primero</span>
-<span class="tag-muted">// Flag /m → ^ y $ matchean inicio/fin de cada línea</span></code></pre>
+      <h3><span class="tag-blue">3.</span> Destructuring — datos limpios</h3>
+      <p class="desc">Sacas las propiedades de un objeto a variables en una sola línea, sin repetir <code>pokemon.</code> por todos lados.</p>
+      <pre><code><span class="tag-muted">// de un objeto a tres variables</span>
+<span class="tag-muted">const</span> { <span class="tag-blue">name</span>, <span class="tag-blue">sprites</span>, <span class="tag-blue">types</span> } = pokemon;
+
+<span class="tag-muted">// tipos como badges: map + join</span>
+types.map(t => `&lt;span&gt;${t.type.name}&lt;/span&gt;`).join(<span class="tag-blue">""</span>);</code></pre>
     </div>
 
-    <!-- 4: Tailwind (recordatorio de C08) -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Tailwind CSS — ya lo dominas (C08)</h3>
-      <p class="desc">Los estilos del editor usan Tailwind, que aprendiste a fondo en C08. Hoy solo lo <strong>aplicas</strong>: clases-propiedad (<code>p-6</code>, <code>bg-white</code>) y prefijos (<code>hover:</code>, <code>md:</code>). El foco de esta clase es el <strong>DOM y Regex</strong>.</p>
-      <pre><code><span class="tag-orange">&lt;div class="bg-white rounded-lg shadow p-6"&gt;</span>
-  ...
-<span class="tag-orange">&lt;/div&gt;</span>
+    <!-- 4: Optional chaining -->
+    <div class="card accent-red">
+      <h3><span class="tag-red">4.</span> Optional chaining <code>?.</code> — datos seguros</h3>
+      <p class="desc">Los datos reales siempre tienen huecos. <code>?.</code> accede a lo anidado sin romper el programa; <code>??</code> da un valor de respaldo.</p>
+      <pre><code><span class="tag-muted">// sin ?. → "cannot read property of undefined"</span>
+<span class="tag-muted">const</span> img = pokemon.sprites.front_default;
 
-<span class="tag-muted">// 1 clase = 1 propiedad CSS · un prefijo = una condición</span></code></pre>
+<span class="tag-muted">// con ?. → seguro</span>
+<span class="tag-muted">const</span> img = pokemon.sprites<span class="tag-red">?.</span>front_default <span class="tag-red">??</span> "placeholder.png";</code></pre>
     </div>
 
   </section>
@@ -196,26 +180,26 @@ document.<span class="tag-green">querySelectorAll</span>(<span class="tag-green"
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Nodo DOM</strong>
-        <span>Cada etiqueta HTML representada como objeto JavaScript con propiedades y métodos.</span>
+        <strong>Template literal</strong>
+        <span>String con backticks e interpolación <code>${...}</code>. Ideal para construir HTML.</span>
       </div>
       <div class="term">
-        <strong>NodeList</strong>
-        <span>Resultado de <code>querySelectorAll</code>. Colección iterable de nodos DOM.</span>
+        <strong>Patrón render</strong>
+        <span>Limpiar → recorrer → crear → agregar. La UI depende de los datos.</span>
       </div>
       <div class="term">
-        <strong>Regex /g flag</strong>
-        <span>Flag global en la expresión regular. Sin él, <code>replace()</code> cambia solo el primer match.</span>
+        <strong>Destructuring</strong>
+        <span>Sacar propiedades a variables: <code>const { name } = pokemon</code>.</span>
       </div>
       <div class="term">
-        <strong>classList.toggle()</strong>
-        <span>Agrega la clase si no existe, la quita si ya existe. Perfecto para botones de alternancia.</span>
+        <strong>Optional chaining</strong>
+        <span><code>obj?.prop</code> accede sin romper si el dato falta.</span>
       </div>
     </div>
   </section>
 
   <section class="footer">
-    Code 201 — EnterTechSchool <span>·</span> Clase 09 <span>·</span> Módulo 3
+    Code 201 — EnterTechSchool <span>·</span> Clase 09 <span>·</span> Módulo 3 — Pokédex
   </section>
 
   <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">

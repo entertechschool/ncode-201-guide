@@ -1,65 +1,62 @@
-﻿> 📦 **Módulo 3:** Clase 09 de 12
+> 📦 **Módulo 3:** Clase 09 de 12
 
-# Clase 09: DOM como API de Objetos
+# Clase 09: JavaScript Moderno y Render Dinámico
 
 ## Resumen
 
-En la Clase 09 se trabaja activamente sobre la manipulación avanzada del DOM (Document Object Model), destacando cómo JavaScript permite tratar los elementos HTML como objetos, con propiedades y métodos propios. Durante esta sesión se enfatiza la importancia de entender y utilizar la jerarquía y las relaciones del DOM (padres, hijos y hermanos), integrando una visión práctica de JavaScript orientado a objetos.
+La Clase 09 abre el **Módulo 3 — JavaScript Moderno y Consumo de APIs**, cuyo proyecto integrador es una **Pokédex**. En esta primera sesión los estudiantes aprenden la **sintaxis moderna de JavaScript (ES6+)** que usa la industria y la habilidad central de toda app web: **generar HTML desde datos** (render dinámico del DOM).
 
-Para los estilos del editor se usa **Tailwind CSS**, que los estudiantes **ya dominan de C08** (M2, donde fue la herramienta principal). Aquí no se vuelve a enseñar: simplemente lo **aplican** para estilizar la interfaz del editor de Markdown, mientras el foco de la clase está en el **DOM y Regex**.
+Se trabaja con un **array local** de Pokémon —con la misma forma que devolverá la API real en C11— para aislar el aprendizaje del *render* del ruido de la red. Los estilos usan **Tailwind CSS**, que ya dominan de C08; aquí solo lo aplican.
 
-Se utilizan tres recursos fundamentales:
+Se utilizan dos recursos fundamentales:
 
-1. **Guía de Lectura y Debate**: Análisis crítico sobre mitos y verdades relacionados con la selección dinámica de nodos y uso de Regex.
-2. **Guía de Laboratorio**: Implementación práctica de una barra de herramientas dinámica, selección y transformación del contenido mediante Regex y métodos del DOM, usando Tailwind para los estilos.
+1. **Guía de Lectura y Debate:** análisis crítico sobre la sintaxis moderna (template literals vs concatenación, destructuring) y cuándo el render dinámico supera al HTML escrito a mano.
+2. **Guía de Laboratorio:** construcción de la base de la Pokédex renderizando tarjetas desde un array con `createElement`, template literals, destructuring, spread y optional chaining.
 
 ## Estructura Sugerida
 
-| **Fase**                 | **Duración** | **Descripción**                                                                                  |
-|--------------------------|--------------|--------------------------------------------------------------------------------------------------|
-| **1. Refuerzo Inicial**  | 15 min       | Repaso breve de conceptos previos de JavaScript OOP y DOM básico.                               |
-| **2. Debate Técnico**    | 30 min       | Discusión sobre selección dinámica de nodos y el uso eficiente de Regex.                      |
-| **3. Demostración**      | 15 min       | Demo técnica sobre manipulación avanzada del DOM y ejemplos prácticos con Regex.              |
-| **4. Laboratorio**       | 100 min      | Implementación guiada del laboratorio con validación mediante checkpoints (30', 60', 90').   |
-| **5. Cierre**            | 20 min       | Retroalimentación grupal sobre logros, dificultades y conclusiones de aprendizaje.            |
+| **Fase** | **Duración** | **Descripción** |
+|---|---|---|
+| **1. Refuerzo Inicial** | 15 min | Repaso de arrays de objetos (C06) y DOM básico. Conexión con el proyecto del módulo. |
+| **2. Debate Técnico** | 30 min | Sintaxis moderna: ¿por qué template literals y destructuring? Render dinámico vs HTML estático. |
+| **3. Demostración** | 15 min | Demo en vivo: de un array de objetos a tarjetas en pantalla. |
+| **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (30', 60', 90'). |
+| **5. Cierre** | 20 min | Retroalimentación y conexión con la asincronía de C10. |
 
 ---
 
 ## Resultados Esperados
 
-Al culminar esta clase, los estudiantes serán capaces de manipular el DOM usando técnicas avanzadas con JavaScript, comprender claramente la estructura jerárquica del DOM y utilizar expresiones regulares (Regex) para transformar dinámicamente contenido Markdown a HTML.
+Al culminar esta clase, los estudiantes podrán escribir JavaScript con sintaxis moderna y generar interfaces a partir de datos, sin escribir el HTML elemento por elemento.
 
 ### Podrán hacer
 
-- Seleccionar y manipular elementos del DOM mediante métodos como `querySelector()` y `querySelectorAll()`.
-- Aplicar Regex básico para transformar contenido textual, específicamente desde Markdown a HTML.
-- Crear interfaces responsivas que se adapten dinámicamente según el tipo de dispositivo.
+- Escribir **template literals** con interpolación (`${...}`) y varias líneas.
+- Extraer datos con **destructuring** de objetos y arrays.
+- Generar nodos del DOM con `document.createElement()` y `appendChild()`.
 
 ### Podrán explicar
 
-- La importancia y funcionamiento de la jerarquía y relaciones DOM (padres, hijos, hermanos).
-- Las ventajas de usar Regex para transformación de texto frente al uso de librerías externas.
-- Las diferencias técnicas entre métodos de selección como `querySelector()`, `querySelectorAll()` y métodos más tradicionales (`getElementById`).
+- La diferencia entre `innerHTML` (interpreta HTML) y `textContent` (texto plano).
+- Por qué el **patrón render** (limpiar → recorrer → agregar) hace que la UI dependa de los datos.
+- Cómo `optional chaining` (`?.`) evita errores con datos que pueden faltar.
 
 ### Podrán implementar
 
-- Una barra de herramientas dinámica adaptada a diferentes tipos de dispositivo.
-- Generación automática y dinámica de una vista previa HTML desde texto Markdown, usando métodos `.replace()` y Regex.
-- Estilos dinámicos aplicados mediante selección múltiple de elementos usando `querySelectorAll()`.
-- Estilos del editor con **Tailwind CSS** (utility classes), reusando lo que ya dominan de C08.
+- Una rejilla de tarjetas de Pokémon **generada desde un array** con JavaScript.
+- Badges de tipo construidos con `.map()` + `spread` + `.join()`.
+- Acceso seguro a datos anidados con `?.` y valor de respaldo con `??`.
 
 ---
 
-## 🎨 Tailwind CSS — recordatorio
+## 🧰 Sintaxis moderna — vocabulario de la clase
 
-Los estilos del editor usan **Tailwind CSS**, que ya aprendieron a fondo en **C08** (M2): **clases-propiedad** (`p-6`, `bg-white`, `flex`) y **prefijos-modificador** (`hover:`, `md:`). Hoy solo lo **aplican** — el foco de la clase es el DOM y Regex.
+| Herramienta | Para qué |
+|---|---|
+| **Template literal** `` `...${x}...` `` | Construir strings de HTML legibles. |
+| **Destructuring** `const { name } = pokemon` | Leer propiedades sin repetir `pokemon.`. |
+| **Spread** `[...a, ...b]` | Expandir/combinar arrays. |
+| **Optional chaining** `obj?.prop` | Acceso seguro a datos anidados. |
+| **`createElement` / `appendChild`** | Crear e insertar nodos del DOM. |
 
-Se carga con **Play CDN** (igual que en C08):
-
-```html
-<script src="https://cdn.tailwindcss.com"></script>
-```
-
-> Si necesitas refrescar una utility class, vuelve al lab de C08 o a la [documentación de Tailwind](https://tailwindcss.com/docs){:target="_blank"}.
-
-
+> El proyecto Pokédex evoluciona durante todo el módulo: hoy con **datos locales**; en C11 con datos **reales** de la API. La forma del dato es la misma desde el día 1.

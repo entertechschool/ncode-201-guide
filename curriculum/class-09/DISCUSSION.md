@@ -1,38 +1,33 @@
-# Lectura y Debate 09: DOM como API de Objetos
+# Lectura y Debate 09: JavaScript Moderno y Render Dinámico
 
 ## 🎯 Objetivos de la Lectura y el Debate
-Sabemos que leer te proporciona las bases, pero **debatir en clase** permite que concretes rápidamente tu aprendizaje. La lectura y el debate están profundamente relacionados, **no hay sentido en uno sin el otro**.
 
-A través de esta guía, te prepararás para participar en un debate dinámico con tus compañeros y el instructor, facilitando la comprensión profunda de los conceptos clave del DOM como un sistema orientado a objetos en JavaScript.
+Debatir en esta sesión te permitirá analizar críticamente por qué el JavaScript moderno (ES6+) y el **render dinámico** —generar HTML desde datos— son la base de toda aplicación web real. Comprenderás cuándo conviene generar la interfaz con código en lugar de escribirla a mano, y cómo la sintaxis moderna (template literals, destructuring, optional chaining) hace ese código más claro y seguro.
 
-## 🔑 Conceptos Clave a Profundizar
-- **DOM como Árbol de Objetos:** Comprender cómo cada etiqueta HTML se representa como nodos objeto que pueden manipularse dinámicamente.
-- **Selección Dinámica de Nodos:** Utilizar métodos de selección como `querySelector()` y especialmente `querySelectorAll()` para modificar múltiples nodos simultáneamente.
-- **Regex básico:** Explorar expresiones regulares simples para realizar transformaciones de texto, particularmente para convertir contenido Markdown a HTML.
+## 🔑 Conceptos Clave a profundizar
+
+- **Render dinámico:** la interfaz se genera recorriendo los datos y creando un nodo por cada uno, en vez de escribir el HTML elemento por elemento. La UI pasa a ser un **reflejo de los datos**.
+- **Template literals:** strings con backticks e interpolación `${...}`; legibles y multilínea, ideales para construir HTML.
+- **Destructuring y optional chaining:** `const { name } = pokemon` saca propiedades de una; `?.` accede a datos anidados que podrían faltar sin romper el programa.
 
 ## 📚 Artículos recomendados para leer
-- [MDN Web Docs - ¿Qué es el DOM?](https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model/Introduction){:target="_blank"}
 
-- [MDN Web Docs - Usando querySelectorAll()](https://developer.mozilla.org/es/docs/Web/API/Document/querySelectorAll){:target="_blank"}
+- [MDN — Template literals](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Template_literals){:target="_blank"}
 
-- [Regex en JavaScript - Guía introductoria](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions){:target="_blank"}
+- [MDN — Destructuring assignment](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment){:target="_blank"}
+
+- [MDN — Document.createElement](https://developer.mozilla.org/es/docs/Web/API/Document/createElement){:target="_blank"}
 
 ## ☑️ Lista de Mitos y Verdades para Analizar
 
-1. Usar `querySelector()` siempre devuelve una colección de nodos, incluso si selecciona uno solo.
+1. "Generar el HTML desde datos con JavaScript es más complicado y peor que escribirlo a mano en el archivo `.html`."
 
-2. El DOM permite manipular estilos CSS directamente desde JavaScript usando propiedades específicas como `.style` y `.classList`.
+2. "Un template literal (`` `Hola ${nombre}` ``) hace exactamente lo mismo que la concatenación con `+`, solo que se ve mejor."
 
-3. Una expresión regular (Regex) siempre devolverá el mismo resultado sin importar el contexto o idioma del texto que analice.
+3. "`innerHTML` y `textContent` son intercambiables: dan el mismo resultado."
 
-4. Utilizar `querySelectorAll()` es menos eficiente que `getElementById` cuando se busca un único elemento por su ID.
+4. "El optional chaining (`?.`) esconde errores y por eso es mala práctica."
 
-5. Todos los métodos del DOM devuelven elementos del mismo tipo, no existen diferencias entre ellos.
+5. "El destructuring crea copias nuevas de los datos del objeto."
 
-6. `querySelectorAll()` permite seleccionar múltiples elementos y devuelve una lista estática (no viva) de nodos.
-
-7. Las expresiones regulares (Regex) se pueden utilizar para transformar contenido de texto (Markdown a HTML, por ejemplo) sin necesidad de librerías externas.
-
-8. Los cambios realizados en los nodos del DOM usando JavaScript son permanentes incluso después de refrescar la página.
-
-> **Instrucción:** Identifica cuáles afirmaciones son mitos y cuáles son verdades. Prepárate para justificar tus respuestas con evidencia de lecturas recomendadas y tus experiencias previas.
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas o con lo que ya sabes de objetos y arrays desde M2.

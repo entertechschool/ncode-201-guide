@@ -1,180 +1,129 @@
-# Guía del Facilitador - Clase 12: Manejo de Excepciones
+# Guía del Facilitador — Clase 12: Manejo de Errores y Estados (cierre M3)
 
-> Tiempo de lectura: 8 minutos | **Lab CALIFICADO + Test Diagnóstico del M3** | Prepárate antes de clase
-
----
-
-## 📦 Antes de Llegar (Preparativos Obligatorios)
-
-C12 cierra el M3. Tiene **tres responsabilidades simultáneas**:
-
-1. **Lab calificado** sobre manejo de excepciones (rúbrica referencial al final del lab).
-2. **Test diagnóstico del M3** (5 preguntas en Blackboard — única clase del curso con test activo).
-3. **Bloque puente al M5** con el bonus de `createElement` (no obligatorio pero crítico).
-
-**Preparativos:**
-- Verifica que Blackboard tenga publicado el test del M3 antes de la clase.
-- Ten listo el repo template del editor de Markdown con `marked` ya enlazado (los alumnos vienen de C11).
-- Prepara un timer visible para los 15 min del test.
+> Tiempo de lectura: 8 minutos | Última clase del M3 · Lab evaluado | Prepárate antes de clase
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **`try/catch`**: estructura para envolver código que puede fallar y capturar el error sin detener la app.
-- **`throw new Error('mensaje')`**: lanza una excepción controlada con mensaje descriptivo.
-- **`finally`**: bloque que se ejecuta **siempre**, hubo éxito o error. Garantiza limpieza de UI.
-- **`createElement` + `appendChild`** (bonus): crear nodos DOM desde JS — preparación para M5.
+- **`try / catch`** (NUEVO): `try` ejecuta código que podría fallar; `catch (error)` lo atrapa para que la app no muera. `error.message` trae la descripción.
+- **`throw new Error(msg)`** (NUEVO): lanzar un error propio. Interrumpe el `try` y salta al `catch`.
+- **`response.ok`** (NUEVO): `fetch` **no** falla solo por un 404. Hay que revisar `response.ok` y lanzar el error manualmente. Punto clave de la clase.
+- **`finally`** (NUEVO): corre **siempre**, haya éxito o error. Se usa para ocultar el spinner sin importar el resultado.
+- **Estados de UI** (NUEVO): loading / success / error / empty. Una app profesional comunica en qué estado está.
+- **Markdown** (NUEVO, documentación): títulos, listas, links, código. Se enseña aquí porque es la clase más liviana en JS y la entrega evaluada → se pide el `README.md`.
+
+> ❗ **Dos baldes distintos:** los conceptos JS (try/catch/finally/ok) y la habilidad de documentación (Markdown). Markdown no es un tema de programación; es carga ligera y encaja en la clase con menos JS nuevo.
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**`try/catch` <> Red de seguridad del circo:**
-El trapecista hace su acto (`try`). Si falla, cae en la red (`catch`) — no se rompe la nuca. Sin red, un fallo termina el espectáculo. La red **no evita la caída**, solo evita que sea fatal.
+**try/catch ⟷ Red de seguridad del trapecista:** el trapecista intenta el truco (`try`); si cae, la red lo atrapa (`catch`) y el show continúa. Sin red, una caída termina la función.
 
-**`finally` <> Apagar las luces del salón al terminar:**
-Hagas lo que hagas durante el evento (presentación exitosa o cancelación de emergencia), al final alguien apaga las luces. `finally` es ese alguien. Garantiza que la UI termine consistente.
+**throw ⟷ Tirar de la alarma:** cuando detectas algo mal (`!response.ok`), tú decides lanzar la alarma (`throw`) con un mensaje. No esperas a que el sistema se caiga solo.
 
-**`throw` <> Levantar la mano en el aeropuerto:**
-Cuando el escáner detecta un objeto prohibido, el operador **detiene la fila** y avisa. No deja pasar y luego "ya veremos". `throw` hace eso: detiene el flujo en el momento exacto del problema, con un mensaje claro.
+**finally ⟷ Apagar la luz al salir:** entres como entres o salgas como salgas de la habitación, al final apagas la luz. El spinner se oculta pase lo que pase.
 
-**`createElement` <> Imprimir una etiqueta y pegarla:**
-El HTML estático es como etiquetas pre-impresas. `createElement` es imprimir una etiqueta nueva en el momento (con el nombre exacto del producto que llegó) y pegarla. M5 las imprime constantemente.
+**response.ok ⟷ Recibir un paquete dañado:** el repartidor llegó (`fetch` no falló), pero la caja está rota (404). Tienes que **revisarla** antes de usar lo de adentro.
 
 ---
 
 ## 📚 Contexto Actual
 
-### Por qué `finally` es la clave de UIs profesionales
+### Por qué `fetch` no falla en 404 (el malentendido clave)
 
-Aplicaciones como Slack, Notion o Figma muestran spinners ("guardando…") que **siempre se ocultan**, incluso si la operación falla. ¿Cómo? `finally`. Si solo confías en `try`, un error deja el spinner girando para siempre. Si solo confías en `catch`, escribes la lógica de cleanup dos veces (una en `try`, otra en `catch`). `finally` la centraliza.
+`fetch` solo rechaza su promesa si la petición **no se pudo hacer** (sin red, DNS, CORS). Si el servidor responde —aunque sea con 404— `fetch` lo considera "exitoso a nivel de red". Por eso hay que revisar `response.ok` y `throw` manualmente. Es el error conceptual #1 de la clase; insiste en él.
 
-> **Para contar en clase:** "Cuando ven una app profesional que NUNCA se queda con un loading infinito, hay un `finally` haciendo su trabajo."
+### Por qué `finally` y no "la línea al final del try"
 
-### El patrón se repite en cada framework
+Si pones `spinner.add('hidden')` al final del `try` y antes ocurre un `throw`, esa línea **nunca corre** (saltó al `catch`) y el spinner se queda pegado. `finally` garantiza que corra siempre. El reto autónomo lo demuestra en vivo.
 
-React tiene `useEffect` con cleanup, Vue tiene `onUnmounted`, Angular tiene `ngOnDestroy`. Todos resuelven el mismo problema: **garantizar limpieza sin importar el flujo**. Lo que están aprendiendo hoy con `finally` es la versión vanilla de un patrón que verán en cada framework moderno.
+### Por qué Markdown se enseña aquí
 
-**Fuentes:** [MDN: try...catch](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch){:target="_blank"}, [MDN: Document.createElement](https://developer.mozilla.org/es/docs/Web/API/Document/createElement){:target="_blank"}
+Es la clase con menos conceptos JS nuevos (6) y es la entrega evaluada: "documenta tu proyecto" es el momento natural. Antes (C09-C11) no se pedía README porque Markdown no se había enseñado. Desde hoy queda disponible para M4/M5.
+
+**Fuentes:** [MDN: try...catch](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch){:target="_blank"}, [MDN: Response.ok](https://developer.mozilla.org/es/docs/Web/API/Response/ok){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Refuerzo práctico | 20 min | El fallo de C11 en vivo. ¿Por qué se rompe? |
+| Debate + Demo | 20 min | `try/catch`, `response.ok`, `finally`. |
+| Break | 10 min | Descanso. |
+| Lab (HU1-HU3 + README) | 100 min | HU1 `try/catch` · HU2 `throw`/`ok` · HU3 estados/`finally` · README |
+| Síntesis + Test | 20 min | Cierre del módulo + test diagnóstico M3. |
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo Principal — El spinner que NO se oculta
+### Demo 1 — el fallo de C11 (3 min)
+Busca "pikachuu" con la app de C11. Pantalla rota / error en consola. "Una app real no puede hacer esto. Hoy lo arreglamos."
 
-**Qué mostrar:** 3 minutos de demo en vivo. Editor con Markdown válido → procesa, spinner aparece y desaparece. Editor vacío → spinner aparece, error se muestra, **spinner NO desaparece** (porque el cleanup está dentro del `try`). Mover el cleanup a `finally` → ahora SÍ desaparece en ambos casos.
-
-**Script sugerido:**
+### Demo 2 — fetch "ok" con 404 (4 min)
+```javascript
+const r = await fetch("https://pokeapi.co/api/v2/pokemon/xxxx");
+console.log(r.ok, r.status);   // false 404 — ¡pero fetch NO lanzó error!
 ```
-Facilitador: "Miren mi spinner. Texto válido → todo bien, desaparece.
-[Demo path feliz]
-Facilitador: "Ahora dejo el editor vacío y proceso.
-[Demo path triste - spinner queda visible]
-Facilitador: "¿Ven? El error fue capturado, pero el spinner quedó girando.
-Es lo que pasa cuando el cleanup vive en el lugar equivocado.
-Muevo esta línea a finally..."
-[Refactor en vivo]
-Facilitador: "Ahora pruebo de nuevo con editor vacío. Spinner aparece, error sale, spinner se oculta.
-ESO es finally."
-```
+"Mira: fetch no falló. Por eso revisamos `response.ok` nosotros." **La idea central.**
 
-**Plan B (si la demo falla):** Tener un CodePen pre-creado con ambas versiones lado a lado. Cambiar entre tabs.
+### Demo 3 — el spinner pegado (3 min)
+Pon el `add('hidden')` al final del `try`, fuerza un error: el spinner se queda. Muévelo a `finally`: se oculta. "Por eso existe `finally`."
 
 ### Transición al Lab
-
-**Momento crítico:** Los alumnos pueden tratar HU1-HU3 como "más try/catch" y subestimar HU4. La HU4 es **el momento conceptual de la clase**.
-
-**Script sugerido:**
 ```
-Facilitador: "HU1-HU3 las hacen rápido — try/catch ya lo entendieron.
-HU4 es la HU clave: cuando lleguen ahí, paren y prueben los 3 escenarios.
-Si el spinner NO se oculta en alguno, su finally está mal puesto."
+"HU1: envuelven el fetch en try/catch (deja de romperse).
+ HU2: revisan response.ok y lanzan 'No se encontró' con throw.
+ HU3: spinner + estado vacío, y finally que lo oculta siempre.
+ Y documentan: su primer README en Markdown.
+ Esto es evaluado — revisen la rúbrica."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Romper el finally a propósito"
+### Dinámica 1: "¿Falla o no?" (tras Demo 2)
+Lista situaciones (sin internet / nombre inexistente / API caída 500 / nombre válido) y que digan si `fetch` rechaza o no, y si `response.ok` es true/false.
 
-Después del Checkpoint 4 (HU4 lista), reta a la clase:
+### Dinámica 2: "¿Dónde va la línea?" (en HU3)
+Das una línea (`ocultarSpinner()`) y tres lugares (try, catch, finally). ¿Dónde garantiza que siempre corra?
 
-> "¿Qué pasa si pongo `classList.add('hidden')` dentro del try en vez del finally?"
-
-**Dinámica sugerida:**
-```
-Facilitador: "Hagan el cambio. Quiten finally, muevan la línea al try.
-Prueben los 3 escenarios.
-Cuando vean el spinner que NO se oculta con error, levanten la mano.
-[Cuenta manos]
-Esa es la razón EXACTA por la que existe finally."
-```
-
-### Dinámica 2: "Cuándo NO capturar"
-
-Antes del Checkpoint 2, lanza el debate del README:
-
-> "¿Cuándo NO deberíamos usar try/catch?"
-
-**Dinámica sugerida:**
-```
-Facilitador: "Si yo divido por cero y no lo capturo, ¿qué pasa?
-[Respuestas: 'se cae', 'sale Infinity'...]
-Facilitador: "Si capturo todos los errores 'por si acaso', ¿qué problema causa?
-[Respuestas: 'no me entero de bugs reales']
-Facilitador: 'Capturar de más esconde bugs. Capturar de menos rompe UX.
-La regla: capturas lo que sabes manejar.'"
-```
-
-### Dinámica 3: "Bonus opcional — preview a M5"
-
-Al llegar al bloque bonus (`createElement`), enmarcalo:
-
-> "Esto NO es HU calificada. Es el adelanto de M5 — si la clase se pasa, lo dejan como tarea."
+### Dinámica 3: "Escribe el mensaje" (en HU2)
+Que redacten un buen mensaje de error para "no encontrado". Compara vagos ("error") vs claros ("No se encontró 'pikachuu'").
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: HU4 verbatim (el spinner con finally)
-
-**Cuándo usarlo:** Si alguien copia mal de las slides.
-
+### El patrón completo (referencia)
 ```javascript
-function procesarMarkdown(texto) {
-  document.getElementById('spinner').classList.remove('hidden');
-  try {
-    if (!texto || texto.trim() === '') throw new Error('El editor está vacío');
-    document.getElementById('preview').innerHTML = marked.parse(texto);
-  } catch (error) {
-    mostrarError(error.message);
-  } finally {
-    document.getElementById('spinner').classList.add('hidden');
-  }
+spinner.classList.remove("hidden");
+try {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`No se encontró "${nombre}"`);
+  const pokemon = await response.json();
+  render([pokemon]);
+} catch (error) {
+  mensaje.textContent = error.message;
+  mensaje.classList.remove("hidden");
+} finally {
+  spinner.classList.add("hidden");
 }
 ```
 
-**Tip:** En pizarra, numera las 3 secciones (try → catch → finally) como pasos secuenciales obligatorios.
-
-### Ejemplo 2: createElement aplicado al editor (bonus)
-
-**Cuándo usarlo:** Si llegan al bonus con tiempo y necesitan un caso de uso.
-
-```javascript
-function renderizarErrores(errores) {
-  const lista = document.querySelector('#lista-errores');
-  lista.innerHTML = '';
-  errores.forEach(err => {
-    const li = document.createElement('li');
-    li.textContent = err;
-    lista.appendChild(li);
-  });
-}
+### Markdown mínimo del README
+```markdown
+# Pokédex
+Buscador que consume la PokeAPI.
+## Tecnologías
+- JavaScript (fetch, async/await)
+- [PokeAPI](https://pokeapi.co/)
 ```
-
-**Tip:** Resaltar `lista.innerHTML = ''` al inicio — sin esa línea, los errores se acumulan en cada llamada.
 
 ---
 
@@ -182,26 +131,28 @@ function renderizarErrores(errores) {
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| El spinner se queda visible tras un error | `classList.add('hidden')` está dentro del `try` en vez del `finally` | Mover esa línea al bloque `finally` |
-| `marked is not defined` | Olvidaron el CDN de `marked` en index.html | Verificar `<script src="...marked.min.js">` antes de `app.js` |
-| `catch` atrapa el error pero la app se sigue rompiendo | Hicieron `console.log(error)` pero no `mostrarError(error.message)` | Mostrar el error en la UI, no solo en consola |
-| Los `<li>` se duplican al re-renderizar | Falta `lista.innerHTML = ''` antes del `forEach` | Limpiar la lista antes de rellenarla |
-| El `throw` no se ve en consola | Está dentro de un `try` que lo captura, lo cual es correcto | Verificar que el catch sí muestre el mensaje |
-| Confunden `throw new Error('x')` con `throw 'x'` | Ambas funcionan, pero `Error` da stack trace | Usar siempre `new Error(...)` por convención |
+| Buscar "xxxx" no muestra error | No revisan `response.ok` | `if (!response.ok) throw new Error(...)` |
+| El spinner se queda pegado | Lo ocultan en el `try`, no en `finally` | Mover a `finally` |
+| `catch` no atrapa nada | El error ocurre fuera del `try` | Envolver TODO lo que puede fallar |
+| Mensaje de error vacío | Usaron `error` en vez de `error.message` | `mensaje.textContent = error.message` |
+| El README no renderiza | Sintaxis Markdown mal (faltó espacio tras `#`) | `# Título`, con espacio |
+| Múltiples errores se acumulan | No limpian `#mensaje` antes de cada búsqueda | `mensaje.classList.add("hidden")` al inicio |
 
 ---
 
 ## ✅ Señales de Comprensión
 
-### El estudiante ENTIENDE cuando:
-- Predice en qué casos `finally` se ejecuta (respuesta: siempre).
-- Explica por qué `finally` y no `catch` para ocultar el spinner.
-- Identifica el patrón `try → throw → catch → finally` sin mirar apuntes.
+**ENTIENDE cuando:**
+- Explica por qué `fetch` no falla en 404 y hay que revisar `response.ok`.
+- Sabe que `throw` salta al `catch`.
+- Justifica `finally` con el caso del spinner pegado.
+- Escribe un README con la estructura básica en Markdown.
 
-### El estudiante NECESITA AYUDA cuando:
-- Pone toda la lógica dentro del `try` "por seguridad".
-- Confunde `finally` con `else` (no son lo mismo).
-- Captura el error pero no le da retroalimentación al usuario.
+**NECESITA AYUDA cuando:**
+- Espera que `fetch` lance error solo ante un 404.
+- Pone el ocultar-spinner en el `try` y no entiende por qué se pega.
+- Da mensajes de error vagos o usa el objeto `error` completo.
+- Confunde la sintaxis básica de Markdown.
 
 ---
 
@@ -209,97 +160,59 @@ function renderizarErrores(errores) {
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 lista | Editor vacío → se muestra mensaje "No se ingresó contenido" en la UI (no solo consola). |
-| ~60' | HU2 lista | Markdown malformado (ej. `##Título`) → mensaje descriptivo del problema. |
-| ~90' | HU3 lista | Forzar error en `marked.parse` → la app sigue funcionando, mensaje claro al usuario. |
-| ~110' | HU4 lista | Los 3 escenarios (válido, vacío, malformado): el spinner siempre termina oculto. |
-| ~125' | Bonus (opcional) | `<ul id="lista-errores">` tiene `<li>` creados por JS, visibles en DevTools Elements. |
-
----
-
-## 📊 Test Diagnóstico del Módulo
-
-### Logística (30 min total)
-
-| Actividad | Tiempo | Qué hacer |
-|---|---|---|
-| Test en Blackboard | 15 min | Proyectar countdown, ambiente silencioso |
-| Revisión en vivo | 15 min | Compartir pantalla Blackboard, solo estadísticas (no nombres) |
-
-### Durante el test
-
-> "Tienen 15 minutos. Es individual y a libro cerrado. Recuerden: esto NO afecta su calificación — es para que **nosotros** sepamos qué temas del M3 necesitan más práctica antes de empezar M4."
-
-**Tips:**
-- Proyectar un timer en pantalla.
-- Circular por el salón sin presionar (los alumnos sienten la presencia).
-- Tener Blackboard listo en la pestaña de "Estadísticas de Quiz" para mostrar al final.
-
-### Revisión de resultados
-
-**Qué buscar:**
-- Preguntas con <60% acierto → tema que necesita refuerzo asíncrono o repaso en M4.
-- Preguntas con >90% acierto → tema dominado, celebrar.
-- Pregunta de autoevaluación → termómetro de confianza del grupo de cara a M4.
+| ~30' | HU1 | Con red caída, la búsqueda muestra mensaje en vez de romperse. |
+| ~60' | HU2 | "pikachuu" → "No se encontró…"; "pikachu" → tarjeta. |
+| ~90' | HU3 | Spinner aparece y SIEMPRE desaparece (3 escenarios); estado vacío inicial; README creado. |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-### Si la clase se pasa de tiempo:
-- HU4 es obligatoria. El bonus (createElement) puede quedar como tarea con instrucciones claras del lab/README.md.
-- NO sacrifiques el test del M3 — está agendado en Blackboard.
-
-### Si alguien quiere usar `Promise` o `async/await`:
-> "Excelente que ya conozcan ese tema. Hoy nos quedamos con `try/catch` sincrónico — las promesas son Code 301. Tu solución funciona, pero por consistencia con el grupo, mantente con el patrón de hoy."
-
-### Si la mayoría termina HU3 antes:
-- Mándalos directo a HU4. El bonus también es buen destino.
+- **Grupo callado:** corre Demo 2 (`r.ok` con 404) y que adivinen el valor antes de verlo.
+- **Alguien ya sabía try/catch:** pídele que explique por qué `fetch` no falla en 404.
+- **Terminan antes:** logro de botón "reintentar" o spinner animado.
+- **Para el README:** que abran un repo conocido en GitHub y miren su README como modelo.
+- **Es evaluado:** recuérdales revisar la rúbrica y preparar la explicación de un fragmento.
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### P: ¿Puedo usar `try` sin `catch`?
-**R:** No directamente en sincrónico. Si pones `try { ... } finally { ... }` sin catch, los errores se propagan hacia arriba pero el `finally` igual corre. En esta clase usamos siempre los 3 bloques.
+**P: ¿Por qué `fetch` no lanza error en un 404?**
+R: Porque la petición sí se completó: el servidor respondió. `fetch` solo rechaza si la red falla. El 404 es una respuesta válida que debemos interpretar con `response.ok`.
 
-### P: ¿Qué diferencia hay entre `throw 'error'` y `throw new Error('error')`?
-**R:** Funcionalmente similares, pero `new Error` te da stack trace para debugging. Convención de la industria: siempre `new Error(...)`.
+**P: ¿`try/catch` sirve para cualquier error?**
+R: Para errores en tiempo de ejecución dentro del `try` (incluido lo que lances con `throw`). No atrapa errores de sintaxis ni de código fuera del bloque.
 
-### P: ¿`finally` corre incluso si hago `return` dentro del `try`?
-**R:** Sí. `finally` corre **siempre** — antes de que la función retorne. Es exactamente lo que lo hace útil.
+**P: ¿Cuándo NO capturar un error?**
+R: Cuando no puedes hacer nada útil con él y conviene que se propague (que falle ruidosamente en desarrollo). Capturar "todo y callar" esconde bugs.
 
-### P: ¿El bonus de `createElement` es obligatorio para el lab calificado?
-**R:** No. La rúbrica evalúa HU1-HU4. El bonus es preparación opcional para M5.
+**P: ¿Por qué aprender Markdown justo ahora?**
+R: Es la entrega evaluada del módulo y toca documentar. Markdown es simple y lo usarás en todo repo de aquí en adelante (M4, M5, y en tu carrera).
 
 ---
 
 ## 🔗 Conexiones del Curriculum
 
-### Esta clase construye sobre:
+### Construye sobre:
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C09 | DOM + querySelector | Hoy lo usas con `getElementById` para mostrar/ocultar el spinner |
-| C10 | Callbacks + funciones de orden superior | El `forEach` del bonus es callback puro |
-| C11 | `addEventListener` + `preventDefault` | Hoy capturas errores en handlers de eventos |
+| C11 | `fetch`, `async/await` | Hoy se envuelve en `try/catch` y se valida `response.ok` |
+| C10 | promesas, `.catch` | `try/catch` con `await` es el equivalente del `.catch` |
+| C09 | render | Se reusa para mostrar el resultado exitoso |
 
-### Conexión con M4 y M5
+### Conexión con M4
 
-Al cerrar, planta la semilla:
+Al cerrar:
 
-> "Hoy cerramos M3. En M4 vamos a guardar estado en LocalStorage — y `JSON.parse` puede tirar excepción si los datos están corruptos. Adivinen qué patrón van a usar para protegerlo... exacto: `try { JSON.parse(...) } catch { ... } finally { ... }`. Lo que hicieron hoy se vuelve obligatorio en M5 HU8."
-
-> "Y el bonus de createElement no era anecdótico — en M5 cada gasto, persona y transferencia es un `<li>` creado por JS, no hardcodeado en HTML."
-
-**Pre-work implícito:** Que prueben deliberadamente sus 3 escenarios de finally y compartan screenshots del spinner ocultándose en cada caso.
+> "Cierran el M3 con una app que consume una API y no se rompe. En M4 dan el siguiente paso: **estado y persistencia** — guardar datos con `localStorage` y `JSON.stringify`/`parse`, para que la app recuerde información entre sesiones. El `try/catch` de hoy también se usa ahí (al leer datos guardados)."
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
-### Preguntas para el facilitador:
-- ¿Cuántos pudieron completar HU4 en clase (vs post-clase)? Si <50%, refuerza el patrón al inicio de M4 C15.
-- ¿El test del M3 reveló debilidades en `finally` específicamente? Identifica esos alumnos para seguimiento.
-- ¿Cuántos llegaron al bonus de `createElement`? Si pocos, asegúrate de que M5 C18 lo presente como recordatorio, no como tutorial nuevo.
-- ¿Algún alumno propuso `async/await` espontáneamente? Marcalo para Code 301 — probablemente ya está listo.
+- ¿Cuántos creían que `fetch` fallaría solo en un 404? Ese es el aprendizaje clave.
+- ¿El reto del spinner pegado dejó clara la utilidad de `finally`?
+- ¿Cuántos entregaron un README legible? Es el inicio de un hábito profesional.
+- ¿La app de cada quien sobrevive a los 3 escenarios (ok / no encontrado / sin red)? Ese es el éxito del módulo.

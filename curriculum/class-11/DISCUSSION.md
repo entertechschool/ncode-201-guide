@@ -1,43 +1,33 @@
-# Debate 11
+# Lectura y Debate 11: async/await, fetch y JSON
 
-## 🎯 Objetivos de la Preparación para el Debate
+## 🎯 Objetivos de la Lectura y el Debate
 
-La discusión en esta sesión está orientada a fortalecer tu capacidad para capturar y gestionar eventos básicos en JavaScript. A través del debate crítico, explorarás cómo implementar **event listeners**, manipular el **event object** y emplear eficazmente funciones **callback** para crear aplicaciones web interactivas. Al debatir estos conceptos, profundizarás en tu comprensión técnica y desarrollarás habilidades prácticas esenciales para la implementación del proyecto integrador.
+Debatir en esta sesión te permitirá comprender qué es una **API**, por qué **JSON** es el formato universal con que viajan los datos en la web, y cómo `fetch` + `async/await` te permiten consumir servicios reales. Analizarás la diferencia entre la respuesta cruda (`response`) y su contenido ya convertido, y por qué `async/await` hace el código asíncrono más legible.
 
 ## 🔑 Conceptos Clave a profundizar
 
-- **Event Listener:**
-  Comprender cómo registrar eventos mediante el método `addEventListener` para que los elementos HTML reaccionen dinámicamente a interacciones del usuario.
+- **JSON:** formato de texto para intercambiar datos cuya sintaxis refleja los objetos y arrays de JavaScript. Es lo que devuelve toda API; `response.json()` lo convierte en objeto JS.
+- **`fetch`:** función para pedir datos a una URL; devuelve una Promesa (las de C10).
+- **`async/await`:** sintaxis que hace el código asíncrono lea como pasos secuenciales; `await` pausa hasta que la promesa resuelva.
 
-- **Event Object:**
-  Explorar el objeto evento generado automáticamente, sus propiedades y cómo usarlo para obtener información específica sobre la interacción del usuario.
+## 📚 Artículos recomendados para leer
 
-- **Callback:**
-  Entender cómo definir y utilizar funciones callback que gestionen la respuesta a eventos específicos, permitiendo modularidad y claridad en el código.
+- [MDN — Usar Fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch){:target="_blank"}
 
+- [MDN — async / await](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function){:target="_blank"}
 
-## 🤖 Prompt sugerido para interacción con IA
+- [PokeAPI — Documentación](https://pokeapi.co/docs/v2){:target="_blank"}
 
-Utiliza el siguiente prompt cuidadosamente diseñado para conversar con ChatGPT y obtener los conocimientos esenciales antes del debate en clase:
+## ☑️ Lista de Mitos y Verdades para Analizar
 
-> **Prompt:**
-> "Actúa como instructor experto en JavaScript y desarrollo web. Explícame detalladamente cómo funcionan los event listeners en JavaScript, incluyendo el método `addEventListener`. Detalla qué es el event object, qué información contiene y cómo puedo aprovecharlo en eventos comunes como `click`, `input` o `submit`. Finalmente, explícame qué es un callback, cuál es su rol dentro de los eventos y dame un ejemplo práctico de implementación combinando estos tres conceptos. Usa un lenguaje claro y proporciona ejemplos de código breves pero completos."
+1. "El objeto `response` que devuelve `fetch` ya contiene los datos del Pokémon listos para usar."
 
-## 🧠 Reflexiones Clave para Analizar
+2. "JSON es un tipo de objeto de JavaScript, no un formato de texto."
 
-1. ¿Qué ventajas ofrecen los event listeners frente a otros métodos tradicionales de gestión de eventos (por ejemplo, atributos HTML)?
+3. "`async/await` reemplaza por completo a las Promesas: son tecnologías distintas y opuestas."
 
-2. ¿Cómo impacta en la experiencia del usuario manejar adecuadamente el objeto evento en aplicaciones web?
+4. "`response.json()` y `JSON.parse()` hacen exactamente lo mismo y son intercambiables."
 
-3. ¿Cuáles son los criterios que debes considerar para elegir entre funciones anónimas o funciones nombradas como callbacks?
+5. "Para usar `await` dentro de una función, esa función debe declararse con `async`."
 
-4. ¿Qué implicaciones tiene la correcta eliminación de event listeners en la gestión del rendimiento de una aplicación?
-
-5. ¿De qué manera facilita el uso de callbacks la modularidad y la reutilización del código en proyectos de desarrollo?
-
-6. ¿Cómo podemos prevenir errores comunes relacionados con la gestión de eventos al implementar event listeners y callbacks?
-
----
-
-> **Instrucción:** Utiliza las reflexiones anteriores como guía para profundizar en tu preparación y argumentar tus respuestas durante el debate en clase. Prepárate para aportar experiencias prácticas o ejemplos concretos obtenidos mediante la interacción con la IA.
-
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas o con lo que observaste al consumir la PokeAPI.

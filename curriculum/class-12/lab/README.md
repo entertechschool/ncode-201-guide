@@ -1,245 +1,204 @@
-# Laboratorio 12: Manejo de Excepciones en Javascript
+# Laboratorio 12: Manejo de Errores y Estados (Lab Evaluado M3)
 
-📘 Bienvenido al **laboratorio 12** de tu proyecto integrador. En esta sesión trabajaremos exclusivamente el manejo de **excepciones en operaciones de validación y transformación de texto Markdown**, sin depender de carga de archivos externos. El objetivo es robustecer el editor capturando errores en entradas erróneas o mal estructuradas por parte del usuario.
+Última clase del módulo. Tu Pokédex ya trae datos reales… pero si buscas un nombre que no existe, **se rompe**. Hoy la haces **robusta**: manejas errores con `try/catch`, detectas respuestas fallidas (404), y muestras estados claros de **carga**, **error** y **vacío**. Al final documentas el proyecto con un **README en Markdown** y cierras el Módulo 3.
+
+> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
+>
+> 📋 **Lab evaluado:** este laboratorio se califica con la rúbrica de [rubric.md](rubric.md) (5 criterios × 20 pts = 100). Incluye el README documentado.
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. **Comprender el concepto de Excepciones en JavaScript**  
-   - Qué es una excepción, cuándo ocurre y cómo debe manejarse.  
-   - Su utilidad para anticipar fallas y brindar retroalimentación controlada.
-
-2. **Manejar validaciones con `try/catch` y `throw`**  
-   - Detectar entradas vacías, sintaxis mal estructurada o uso incorrecto de Markdown.  
-   - Lanzar errores personalizados que ayuden al usuario a corregir su contenido.
+1. Capturar errores con `try/catch/finally` y lanzar los propios con `throw`.
+2. Detectar respuestas HTTP fallidas (`response.ok`) y comunicarlas al usuario.
+3. Mostrar estados de UI (cargando / error / vacío) y documentar el proyecto en **Markdown**.
 
 ## 🔑 Conceptos Clave
 
-1. **Excepción**  
-   Evento inesperado que interrumpe la ejecución normal del programa.
-
-2. **try...catch**  
-   Estructura para capturar y manejar errores sin detener el flujo general de ejecución.
-
-3. **throw**  
-   Herramienta para lanzar manualmente un error con un mensaje específico cuando se detecta una condición inválida.
+| Concepto | Definición |
+|---|---|
+| **`try / catch`** | `try` ejecuta código que podría fallar; `catch (error)` lo atrapa sin que la app muera. |
+| **`throw new Error(msg)`** | Lanza un error propio con un mensaje claro. |
+| **`response.ok`** | `false` si la respuesta HTTP fue un error (ej. 404). `fetch` **no** falla solo por un 404. |
+| **`finally`** | Bloque que corre **siempre**, haya éxito o error. Ideal para ocultar un spinner. |
+| **Estados de UI** | Loading (cargando), error (mensaje), empty (vacío inicial): lo que el usuario ve en cada momento. |
+| **Markdown** | Formato de texto para documentar (títulos, listas, links, código). Se usa en el `README.md`. |
 
 ## ⚙️ Setup Inicial
 
-1. **Repositorio**  
-   - Continúa trabajando en tu repositorio del editor de Markdown.  
-   - Crea una rama nueva llamada `lab12-excepciones`.
+1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab12-errores`.
+2. **Agrega las zonas de estado** al `index.html`, debajo del buscador y encima de `#resultado`:
 
-2. **Librería Marked**
-   - Enlaza marked vía CDN en tu index.html:
    ```html
-   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+   <div id="spinner" class="hidden text-center text-slate-500 my-4">Cargando…</div>
+   <div id="mensaje" class="hidden text-center text-red-600 font-medium my-4"></div>
    ```
-   > Es importante importar la librería marked ANTES de tu script de lógica `app.js`
 
+   > 📌 Convención del proyecto: `#spinner` (estado de carga) y `#mensaje` (errores / vacío). La clase `hidden` de Tailwind los oculta hasta que el JS los muestre.
 
+---
 
-## 🏆 Historias de Usuario
+## 📋 Historias de Usuario
 
-1. **HU1: Validación de entrada vacía**  
-   > "Como usuario, quiero recibir un mensaje si intento procesar Markdown sin haber escrito nada."
+### HU1: Atrapar errores con `try/catch`
 
-   - Criterios de aceptación:
-     - Validación con `if` dentro de `try`.
-     - `throw new Error("No se ingresó contenido")`.
-     - Mensaje claro mostrado en la interfaz.
-   
-   - **[30'] Checkpoint 1:** Validación de entrada vacía o inválida con `throw`.
+> *"Como usuario, si algo falla al buscar, quiero ver un mensaje claro en vez de que la app se rompa."*
 
-2. **HU2: Validación de sintaxis Markdown mal formada**  
-   > "Como usuario, quiero que el sistema detecte si escribí encabezados o listas con errores."
-
-   - Criterios de aceptación:
-     - Detección de patrones como `##Título`, `-elemento` sin espacio, etc.
-     - Lanzar errores con `throw` y capturarlos con `catch`.
-     - Mensajes descriptivos en UI sin detener el flujo.
-   
-   - **[60'] Checkpoint 2:** Manejo adecuado de errores durante la conversión con `marked()`.
-
-3. **HU3: Manejo general de errores inesperados en la conversión**  
-   > "Como usuario, quiero que si hay un error interno durante la conversión, se me notifique sin que el editor se bloquee."
-
-   - Criterios de aceptación:
-     - Envolver `marked()` en `try/catch`.
-     - Captura de errores con `console.error` + alerta visual o log en interfaz.
-   
-   - **[90'] Checkpoint 3:** Comunicación clara al usuario de errores capturados.
-
-### HU4: Indicador de procesamiento con `finally`
-
-> "Como usuario, cuando la conversión toma tiempo, quiero ver un spinner que aparezca antes y se oculte cuando termine — **incluso si la conversión falla**. La UI debe quedar consistente sin importar qué pase."
-
-Para garantizar que el spinner se oculte sin importar si hay error, se usa `finally`.
-
-#### Sub-pasos
-
-4.1. Agrega al `index.html` un spinner oculto:
-
-```html
-<div id="spinner" class="hidden">Procesando...</div>
-```
-
-Y en `styles.css`:
-
-```css
-.hidden { display: none; }
-```
-
-4.2. Asegúrate de tener una zona donde mostrar errores en `index.html` (probablemente la creaste en HU1):
-
-```html
-<div id="error" class="hidden"></div>
-```
-
-Define la función `mostrarError` y modifica la función que procesa el Markdown para usar `try/catch/finally`:
+Envuelve la lógica que puede fallar en `try`; si algo sale mal, `catch` lo maneja:
 
 ```javascript
-function mostrarError(mensaje) {
-  const errorBox = document.getElementById('error');
-  errorBox.textContent = mensaje;
-  errorBox.classList.remove('hidden');
-}
+const resultado = document.getElementById("resultado");
+const mensaje   = document.getElementById("mensaje");
 
-function procesarMarkdown(texto) {
-  document.getElementById('spinner').classList.remove('hidden');
-  document.getElementById('error').classList.add('hidden'); // limpia errores previos
+async function mostrarPokemon(nombre) {
+  mensaje.classList.add("hidden");   // limpia errores anteriores
+  resultado.innerHTML = "";
 
   try {
-    if (!texto || texto.trim() === '') {
-      throw new Error('El editor está vacío');
-    }
-    const html = marked.parse(texto);
-    document.getElementById('preview').innerHTML = html;
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
+    const pokemon  = await response.json();
+    render([pokemon]);
   } catch (error) {
-    mostrarError(error.message);
-  } finally {
-    document.getElementById('spinner').classList.add('hidden');
+    mensaje.textContent = "Algo salió mal. Revisa tu conexión.";
+    mensaje.classList.remove("hidden");
   }
 }
 ```
 
-> 💡 **Nota:** `#preview` ya lo tienes desde C09 (es donde se renderiza la vista previa). `#spinner` lo agregaste en 4.1. `#error` lo agregas ahora si no existía.
+> 💡 `catch (error)` recibe un objeto `Error` con un `.message`. Hoy la app ya no muere: el fallo se convierte en un mensaje.
 
-4.3. Verifica los **3 escenarios** y observa el spinner en cada uno:
+**Criterios de Aceptación:**
+- La búsqueda usa `try/catch`.
+- Un fallo (ej. apagar el WiFi y buscar) muestra el mensaje, no una pantalla rota.
 
-- Editor con texto válido → spinner aparece y desaparece, preview se actualiza.
-- Editor vacío → spinner aparece, error se muestra, **spinner desaparece** igual.
-- Markdown malformado (provoca excepción de `marked.parse`) → spinner aparece, error se muestra, **spinner desaparece** igual.
-
-✅ **Checkpoint:** en los 3 casos, el spinner termina oculto. **Esa es la garantía de `finally`** — el código corre sin importar si hubo éxito o error.
-
-🏆 **Reto autónomo (5 min):** ¿Qué pasaría si pones el `classList.add('hidden')` dentro del `try` en lugar del `finally`? Pruébalo eliminando el bloque `finally` y poniendo la línea al final del `try`. Observa qué ocurre cuando hay un error.
-
-> 💡 **Lo que viene en M5:** este patrón es exactamente lo que usarás en HU8 (cargar de LocalStorage) — `try { JSON.parse(localStorage.getItem(...)) } catch { ... } finally { ... }`. Te garantiza que la UI nunca queda en estado inconsistente.
+- **Checkpoint 1 (~30 min):** con internet, busca normal. Desconecta la red y busca: ves el mensaje de error, la app sigue viva.
 
 ---
 
-## Cierre — Bonus: Renderizado dinámico de listas (~15 min)
+### HU2: Detectar "Pokémon no encontrado" con `throw`
 
-> Este bloque NO es una HU obligatoria. Es una **herramienta crítica** que vas a necesitar en M5 (Proyecto Final). Si la clase se está pasando, queda como **tarea autónoma post-clase**.
+> *"Como usuario, si escribo un nombre que no existe, quiero un mensaje que diga exactamente eso."*
 
-Hasta ahora actualizaste el DOM con `.innerHTML` o `.textContent` sobre un nodo existente. Para **crear nodos nuevos desde JS**:
-
-### Patrón base
+Ojo: `fetch` **no** falla solo porque la API responda 404. Hay que revisarlo con `response.ok` y **lanzar** nuestro propio error:
 
 ```javascript
-const items = ['Manzana', 'Pera', 'Plátano'];
-const lista = document.querySelector('#mi-lista');
+try {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
 
-items.forEach(function(item) {
-  const li = document.createElement('li');     // crea el nodo
-  li.textContent = item;                        // le da contenido
-  lista.appendChild(li);                        // lo inserta en el DOM
-});
-```
+  if (!response.ok) {                                   // 404, 500, etc.
+    throw new Error(`No se encontró "${nombre}"`);     // lanza un error propio
+  }
 
-### Aplicación al editor: lista de errores
-
-Si la validación detecta varios errores en el Markdown, podemos mostrar la **lista** de errores en vez de uno solo.
-
-#### Sub-pasos del bonus
-
-C.1. Agrega al `index.html`:
-
-```html
-<ul id="lista-errores"></ul>
-```
-
-C.2. En `app.js`, escribe una función que reciba un array de errores y los renderice como `<li>`:
-
-```javascript
-function renderizarErrores(errores) {
-  const lista = document.querySelector('#lista-errores');
-  lista.innerHTML = '';  // limpia errores previos
-
-  errores.forEach(function(error) {
-    const li = document.createElement('li');
-    li.textContent = error;
-    li.classList.add('error-item');
-    lista.appendChild(li);
-  });
+  const pokemon = await response.json();
+  render([pokemon]);
+} catch (error) {
+  mensaje.textContent = error.message;                 // usa el mensaje del error
+  mensaje.classList.remove("hidden");
 }
-
-// Prueba
-renderizarErrores([
-  'Línea 3: encabezado mal cerrado',
-  'Línea 7: lista sin guion inicial',
-  'Línea 12: bloque de código sin triple backtick de cierre'
-]);
 ```
 
-C.3. Verifica que aparezcan los 3 `<li>` en el DOM.
+> 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines aquí es el que se muestra. Un buen mensaje de error es parte de una buena app.
 
-✅ **Checkpoint:** abre DevTools (F12 → Elements) y observa cómo `<ul id="lista-errores">` ahora tiene 3 `<li>` que **NO están en el HTML estático** — son creados por JS.
+**Criterios de Aceptación:**
+- Se valida `response.ok` antes de leer el JSON.
+- Buscar un nombre inexistente (ej. "pikachuu") muestra `No se encontró "pikachuu"`.
+- Un nombre válido sigue funcionando normal.
 
-### Por qué importa para M5
+- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → tarjeta normal.
 
-En M5 construyes una **Agenda de Gastos**. Cada vez que se agregue una persona, un gasto o una transferencia sugerida, debe aparecer un nuevo `<li>` (o `<tr>`, o `<div>`) en el DOM **sin recargar la página**. El patrón `createElement` + `appendChild` es exactamente eso. Hoy lo viste con errores; en M5 lo aplicarás a personas, gastos y balances.
+---
+
+### HU3: Estados de carga y vacío con `finally`
+
+> *"Como usuario, quiero ver 'Cargando…' mientras espera y que desaparezca siempre, tenga éxito o falle."*
+
+Muestra el spinner al empezar y ocúltalo en `finally` (corre **siempre**):
+
+```javascript
+const spinner = document.getElementById("spinner");
+
+async function mostrarPokemon(nombre) {
+  spinner.classList.remove("hidden");   // ⏳ muestra carga
+  mensaje.classList.add("hidden");
+  resultado.innerHTML = "";
+
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
+    if (!response.ok) {
+      throw new Error(`No se encontró "${nombre}"`);
+    }
+    const pokemon = await response.json();
+    render([pokemon]);
+  } catch (error) {
+    mensaje.textContent = error.message;
+    mensaje.classList.remove("hidden");
+  } finally {
+    spinner.classList.add("hidden");      // ✅ oculta carga SIEMPRE
+  }
+}
+```
+
+**Estado vacío inicial:** al cargar la página (sin buscar nada aún), muestra una pista en `#mensaje`:
+
+```javascript
+mensaje.textContent = "Busca un Pokémon para empezar 🔍";
+mensaje.classList.remove("hidden");
+```
+
+**Criterios de Aceptación:**
+- El spinner aparece durante la búsqueda y se oculta **en los tres casos** (éxito, no encontrado, error de red).
+- Al cargar la página sin buscar, se ve un estado vacío con una pista.
+
+- **Checkpoint 3 (~90 min):** prueba los 3 escenarios y observa el spinner aparecer y **siempre** desaparecer. Esa es la garantía de `finally`.
+
+🏆 **Reto autónomo (5 min):** mueve `spinner.classList.add("hidden")` del `finally` al final del `try`. Busca un nombre inexistente: el spinner **se queda pegado**. Eso prueba por qué va en `finally`.
 
 ---
 
-## 🌟 Logros Adicionales
+## 📄 Documentación: tu primer README en Markdown
 
-1. **Logro 1: Simular errores intencionales**  
-   - Crear un botón que inyecte texto erróneo para probar el manejo de excepciones.
+Un repositorio profesional siempre lleva un **`README.md`** que explica el proyecto. Se escribe en **Markdown**, un formato de texto simple:
 
-2. **Logro 2: Cancelar la conversión en caso de error**  
-   - Impedir ejecución de `marked()` si se detecta fallo previo.
+```markdown
+# Pokédex
 
-## Rubrica de Evaluacion
+Buscador de Pokémon que consume la PokeAPI.
 
-| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
-|----------|----------------|------------|---------------------|----------|
-| **HU implementadas** | HU1-HU2 del lab + ≥2 HU adicionales propias, funcionales y con criterios al 100% | HU1-HU2 + 2 HU con criterios en su mayoría cumplidos | HU1-HU2 funcionales + 1 HU adicional parcial | HU1-HU2 implementadas pero no funcionan |
-| **Calidad técnica: DOM + funciones + eventos + excepciones** | Integra DOM, funciones de orden superior, eventos, `try/catch` + `throw`; código modular y reutilizable | Integra 3 de 4 conceptos correctamente | Funcional pero código repetitivo, sin modularización | Errores no capturados, código monolítico |
-| **Presentación de funcionalidades en vivo** | Demo ≤5 min, transformación Markdown→HTML en vivo, eventos interactivos, captura de errores demostrada | Demo muestra funcionalidades pero omite captura de errores | Demo entrega lo pedido sin mostrar interactividad completa | Presenta pero no muestra editor en tiempo real |
-| **Argumentación técnica** | Justifica ≥2 decisiones (dónde poner `try/catch`, diseño de funciones reutilizables, uso del DOM) | Justifica 1 decisión claramente | Argumentación superficial sin profundizar | No justifica o confunde conceptos básicos |
-| **Desafío: explicación de fragmento solicitado** | Explica 1 fragmento a solicitud del instructor con claridad, deploy funcional, README documentado | Explica con apoyo parcial, deploy funcional | Explica con dificultad, README incompleto | No puede explicar o sin deploy |
+## Cómo usarlo
+1. Abre el sitio desplegado.
+2. Escribe el nombre de un Pokémon y presiona **Buscar**.
 
-**Total: 100 puntos** (5 criterios x 20 pts)
+## Tecnologías
+- JavaScript (`fetch`, `async/await`)
+- Tailwind CSS
+- [PokeAPI](https://pokeapi.co/)
 
-| Nota | Rango |
-|------|-------|
-| A | 90-100 |
-| B | 80-89 |
-| C | 70-79 |
-| F | < 70 |
+## Demo
+🔗 [Ver en GitHub Pages](https://tu-usuario.github.io/pokedex/)
+```
+
+| Sintaxis | Resultado |
+|---|---|
+| `# Título` / `## Subtítulo` | Encabezados |
+| `**negrita**` · `*cursiva*` | Énfasis |
+| `- item` | Lista con viñetas |
+| `` `código` `` | Código en línea |
+| `[texto](url)` | Enlace |
+
+**Crea un `README.md`** en la raíz de tu repo con: título, descripción, cómo usarlo, tecnologías y el enlace al sitio desplegado.
 
 ---
+
+## 🌟 Logros Adicionales (Opcionales)
+
+- **Logro 1 — Botón reintentar:** tras un error, muestra un botón "Reintentar" que repite la última búsqueda.
+- **Logro 2 — Spinner animado:** reemplaza "Cargando…" por un spinner con `animate-spin` de Tailwind.
+- **Logro 3 — Capturas en el README:** agrega imágenes de la app funcionando con `![alt](ruta)`.
 
 ## 📝 Instrucciones de Entrega
 
-1. **Documentación en README**  
-   - Explica cómo usaste las promesas o el bloque try/catch en cada historia de usuario.  
-   - Añade capturas de pantalla de los mensajes de “cargando…” y de error.
+1. **Documentación:** `README.md` completo en Markdown (título, descripción, uso, tecnologías, enlace).
+2. **Mezcla de ramas:** Pull Request de `lab12-errores` a `main` y fusiónalo.
+3. **Despliegue:** actualiza GitHub Pages.
+4. **Entrega Final:** URL del repositorio + URL del sitio desplegado.
 
-2. **Despliegue**  
-   - Fusiona tu rama `lab12-excepciones` a `main` y actualiza la versión desplegada en GitHub Pages (o la plataforma que uses).
-
-3. **Entrega Final**  
-   - URL del repositorio.  
-   - URL del sitio desplegado.
+> 📋 Evaluado con [rubric.md](rubric.md). Prepárate para explicar un fragmento de tu código a solicitud del instructor.

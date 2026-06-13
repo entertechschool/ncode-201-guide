@@ -107,11 +107,11 @@ Cada clase cuenta con los siguientes documentos:
 
 ---
 
-## 🔧 Módulo 3: Aplicaciones Web con Objetos
+## 🔧 Módulo 3: JavaScript Moderno y Consumo de APIs
 
-**Proyecto Integrador:** Editor de Markdown en vivo
+**Proyecto Integrador:** Pokédex (consume la PokeAPI)
 
-### Clase 09 — DOM como API de Objetos
+### Clase 09 — JavaScript Moderno y Render Dinámico
 
 | Documento | Enlace |
 |-----------|--------|
@@ -120,7 +120,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 09](https://entertechschool.github.io/public/slides/?class=code-201_09){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/facilitator/){:target="_blank"} |
 
-### Clase 10 — Funciones y Callbacks
+### Clase 10 — Asincronía y Promesas
 
 | Documento | Enlace |
 |-----------|--------|
@@ -129,7 +129,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 10](https://entertechschool.github.io/public/slides/?class=code-201_10){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/facilitator/){:target="_blank"} |
 
-### Clase 11 — Event Handling Básico
+### Clase 11 — async/await, fetch y JSON
 
 | Documento | Enlace |
 |-----------|--------|
@@ -138,7 +138,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 11](https://entertechschool.github.io/public/slides/?class=code-201_11){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/facilitator/){:target="_blank"} |
 
-### ⭐ Clase 12 — Excepciones en JavaScript *(Lab Evaluado M3)*
+### ⭐ Clase 12 — Manejo de Errores y Estados *(Lab Evaluado M3)*
 
 | Documento | Enlace |
 |-----------|--------|
@@ -253,10 +253,10 @@ Cada clase cuenta con los siguientes documentos:
 | 06 | Programación Funcional | [Lab 06](https://entertechschool.github.io/ncode-201-guide/curriculum/class-06/lab/){:target="_blank"} | Regular |
 | 07 | Objetos + POO con `class` | [Lab 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/lab/){:target="_blank"} | Regular |
 | **08** | **Tailwind CSS e Interfaz del Gestor** | [**Lab 08**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/lab/){:target="_blank"} | ⭐ **Evaluado M2** |
-| 09 | DOM como API de Objetos | [Lab 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/lab/){:target="_blank"} | Regular |
-| 10 | Funciones y Callbacks | [Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} | Regular |
-| 11 | Event Handling Básico | [Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} | Regular |
-| **12** | **Excepciones en JavaScript** | [**Lab 12**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/lab/){:target="_blank"} | ⭐ **Evaluado M3** |
+| 09 | JavaScript Moderno y Render Dinámico | [Lab 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/lab/){:target="_blank"} | Regular |
+| 10 | Asincronía y Promesas | [Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} | Regular |
+| 11 | async/await, fetch y JSON | [Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} | Regular |
+| **12** | **Manejo de Errores y Estados** | [**Lab 12**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/lab/){:target="_blank"} | ⭐ **Evaluado M3** |
 | 13 | Modelado de Objetos y Estado | [Lab 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/lab/){:target="_blank"} | Regular |
 | 14 | App State Management | [Lab 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/lab/){:target="_blank"} | Regular |
 | 15 | JSON y LocalStorage | [Lab 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/lab/){:target="_blank"} | Regular |

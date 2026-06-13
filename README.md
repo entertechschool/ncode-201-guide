@@ -43,21 +43,21 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
 8. Tailwind CSS e Interfaz del Gestor
     - Utility-first con Tailwind (Play CDN), construcción de la UI por grupos de clases (layout, espaciado, estética, modificadores) y conexión del formulario con JavaScript para cerrar el proyecto del módulo.
 
-### Módulo 3 — Aplicaciones Web con Objetos
-> **Proyecto Integrador:** Editor de Markdown en vivo
+### Módulo 3 — JavaScript Moderno y Consumo de APIs
+> **Proyecto Integrador:** Pokédex (consume la PokeAPI)
 
-9. DOM como API de Objetos
-    - Selección de nodos con `querySelector()` y `querySelectorAll()`.
-    - Jerarquía DOM (padres, hijos, hermanos) y transformación de contenido con Regex.
-10. Funciones y Callbacks en JavaScript
-    - Funciones de primera clase y funciones de orden superior.
-    - Uso de callbacks para modularizar la lógica y manejar eventos.
-11. Event Handling Básico en JavaScript
-    - Registro de eventos con `addEventListener()` y el objeto `event`.
-    - Implementación de funciones callback para reaccionar a interacciones del usuario.
-12. Manejo de Excepciones en JavaScript
-    - Estructura `try`, `catch`, `finally` y palabra clave `throw`.
-    - Definición de errores personalizados y validación de entradas del usuario.
+9. JavaScript Moderno y Render Dinámico
+    - Sintaxis ES6+: template literals, destructuring, spread y optional chaining.
+    - Generar HTML desde datos con `createElement` / `appendChild` (patrón render).
+10. Asincronía y Promesas
+    - Código sincrónico vs asincrónico, `setTimeout` y el modelo del event loop.
+    - Creación y consumo de Promesas (`new Promise`, `.then`, `.catch`).
+11. async/await, fetch y JSON
+    - Consumo de una API real con `fetch` y `response.json()`.
+    - JSON como formato de datos y `async/await` para asincronía legible.
+12. Manejo de Errores y Estados
+    - `try`, `catch`, `finally`, `throw` y validación de `response.ok`.
+    - Estados de UI (carga / error / vacío) y documentación con Markdown.
 
 ### Módulo 4 — Estado y Persistencia
 > **Proyecto Integrador:** Gestor de Plantillas para WhatsApp
@@ -87,4 +87,4 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
     - Presentación formal del proyecto con rúbrica de 100 puntos.
     - Cierre del curso y conexión con Code 301.
 
-> El Proyecto Integrador de M5 integra los aprendizajes de los Módulos 1 al 4: layout responsivo, lógica algorítmica, manipulación del DOM con eventos, manejo de excepciones y estado persistido con LocalStorage.
+> El Proyecto Integrador de M5 integra los aprendizajes de los Módulos 1 al 4: layout responsivo, lógica algorítmica, consumo de APIs con `fetch` y manejo de errores, y estado persistido con LocalStorage.

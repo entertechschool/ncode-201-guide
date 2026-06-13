@@ -1,4 +1,4 @@
-# Test Diagnóstico - Módulo 3: Aplicaciones Web con Objetos
+# Test Diagnóstico - Módulo 3: JavaScript Moderno y Consumo de APIs
 
 ## Información General
 
@@ -18,10 +18,10 @@ Este test verifica tu comprensión de los conceptos de las Clases 09 a 12:
 
 | Clase | Temas |
 |-------|-------|
-| Clase 09 | DOM como API de Objetos (`querySelector`, jerarquía DOM, Regex básico) |
-| Clase 10 | Funciones y Callbacks (funciones de primera clase, orden superior) |
-| Clase 11 | Event Handling Básico (`addEventListener`, objeto `event`, callbacks) |
-| Clase 12 | Manejo de Excepciones (`try/catch/finally`, `throw`, errores personalizados) |
+| Clase 09 | JavaScript Moderno y Render Dinámico (template literals, destructuring, `createElement`) |
+| Clase 10 | Asincronía y Promesas (`setTimeout`, `new Promise`, `.then`/`.catch`) |
+| Clase 11 | async/await, fetch y JSON (`fetch`, `response.json()`, `async/await`) |
+| Clase 12 | Manejo de Errores y Estados (`try/catch/finally`, `throw`, `response.ok`) |
 
 ---
 

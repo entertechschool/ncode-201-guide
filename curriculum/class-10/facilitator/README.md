@@ -1,78 +1,204 @@
-﻿# Guía del Instructor: Depuración en JS y más CSS: Layout
+# Guía del Facilitador — Clase 10: Asincronía y Promesas
 
-## Resumen
+> Tiempo de lectura: 8 minutos | Módulo 3 · Clase 10 | Prepárate antes de clase
 
-Esta es otra clase importante para la revisión del código ya que los estudiantes están terminando con sus aplicaciones Salmon Cookies. Idealmente, a este punto los estudiantes deberán estar más centrados en el aspecto y el estilo de la aplicación que en su funcionalidad en JavaScript. Dicho esto, este es el mejor momento para volver a abordar los conceptos de depuración, proporcionando algunos recordatorios y repasos acerca de lo que los estudiantes han experimentado con la depuración en JS, y para tocar algunos de los temas más avanzados que ahora están listos para abordar.
+---
 
-El componente CSS Layout de esta clase de nuevo dependerá del progreso de un grupo en particular. Si se necesita más tiempo con los conceptos fundamentales, o en una exploración práctica de los sistemas de grid, entonces es lo que se deberá de hacer. Sin embargo, si la clase es más avanzada, esta puede ser una oportunidad para explorar temas como los frameworks de CSS o el diseño responsivo.
+## 🔑 Conceptos Clave
 
-### ¿Qué lugar ocupa este tema?
+- **Sincrónico vs asincrónico** (NUEVO): el código sincrónico bloquea (una línea espera a la anterior); el asincrónico permite que una operación "tarde" mientras el programa sigue. Es el cambio mental central de la clase.
+- **`setTimeout`** (NUEVO): ejecuta una función después de N milisegundos. Sirve para simular una operación lenta y demostrar que JavaScript no se congela.
+- **Promesa** (NUEVO): objeto que representa un valor futuro. Se crea con `new Promise(resolve, reject)` y tiene tres estados: `pending`, `fulfilled`, `rejected`.
+- **`.then` / `.catch`** (NUEVO): consumir una promesa — `.then` corre al resolverse, `.catch` al fallar.
 
-**¿Qué hicimos?**:
-En la clase anterior, los estudiantes aprendieron acerca de los eventos de JavaScript y el event handling. También se les pidió que armaran un formulario HTML en su aplicación con el propósito de añadir nuevas tiendas a su tabla de ventas.
+> ❗ **Hoy NO hay red.** Se simula la demora con `setTimeout` sobre el array local. Es deliberado: aislar el concepto de asincronía del ruido de internet. En C11 la promesa simulada se vuelve un `fetch` real; el `.then`/`.catch` no cambia.
 
-**¿En qué nos centraremos en esta clase?**:
-En esta clase, los estudiantes se dividirán en flujos de trabajo de depuración de JavaScript. Los estudiantes también tendrán otro laboratorio de pair programming que se centrará en el CSS layout.
+---
 
-**¿Qué haremos?**:
-¡En la siguiente clase comenzaremos con un nuevo proyecto! Esperamos que este proyecto ayude a consolidar los conceptos aprendidos del proyecto anterior.
+## 🔗 Analogías Útiles
 
-## Objetivos de aprendizaje
+**Asincronía ⟷ Pedir una pizza:** no te quedas paralizado en la puerta esperando (sincrónico); sigues con tu vida y reaccionas cuando suena el timbre (asincrónico). La **Promesa** es el ticket del pedido.
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+**Promesa ⟷ Ticket de guardarropa:** te dan un papelito (la promesa) ahora; el abrigo (el valor) lo recibes después. El ticket puede terminar en "aquí está tu abrigo" (`resolve`) o "lo perdimos" (`reject`).
 
-## Preparativos
+**`pending`/`fulfilled`/`rejected` ⟷ Estado de un envío:** "en camino" / "entregado" / "devuelto". Empieza en camino y termina en uno de los otros dos.
 
-1. Añade los contenidos ubicados en la carpeta `lab-assets` a tu repositorio de la clase en el directorio `class-10/lab-a`.
-1. El laboratorio de esta clase será uno de pair programming. 
-   - Publica las parejas antes del laboratorio. 
-   - Nota: Toma en consideración los niveles de habilidad y el entendimiento general del contenido.
-3. Hojea las lecturas y prepárate en caso de que los alumnos tengan preguntas. 
+**`.then`/`.catch` ⟷ Plan A y plan B:** "cuando llegue el paquete, hago esto (`.then`); si se pierde, hago esto otro (`.catch`)."
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+---
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+## 📚 Contexto Actual
 
-### Revisión del código
-  
-- Céntrate en la construcción del código en Salmon Cookies.
+### Por qué la asincronía va ANTES del `fetch`
 
-### Depuración en JavaScript
+`fetch` es asíncrono por naturaleza: devuelve una promesa. Si introdujéramos `fetch` sin entender promesas, el alumno copiaría `.then` sin saber qué es. Separar el **concepto** (C10, simulado) del **uso real** (C11, red) hace que `fetch` se sienta familiar en vez de mágico.
 
-- **¿Por qué?**
-  - ¡Queremos un código libre de errores!
-- **¿Qué?**
-  - La depuración es el proceso de detectar y eliminar errores en el código del software.
-- **¿Cómo?**
-  - Debate con la clase acerca de diferentes formas de depurar el código. Haz que los estudiantes se involucren y pregúntales ejemplos.
-  - Hablen acerca de los diferentes tipos de mensajes de error que pueden encontrar en la consola. Proporciona un ejemplo para cada tipo de error.
-  - Los instructores pueden escoger utilizar un Replit lleno de errores y poner a los estudiantes en pequeños grupos para encontrar los errores en el código.
-    - Para las clases en línea utiliza las salas de Zoom (o su equivalente).
+### Por qué simular con `setTimeout`
 
-### Preparación para el laboratorio
+Una llamada real puede fallar por mil razones (sin internet, API caída, nombre mal escrito) que distraen del concepto. `setTimeout` da una demora **controlada y predecible**: el alumno ve "tarda → llega" sin variables externas. Y permite forzar el camino de error (`reject`) a voluntad.
 
-- **¿Por qué?**
-  - Proporciona las herramientas que los estudiantes necesitan para completar su laboratorio.
-- **¿Qué?**
-  - Revisa las instrucciones del Laboratorio 10a en Blackboard.
-- **¿Cómo?**
-  - Avísale a los estudiantes que este es un laboratorio con un límite de tiempo y que trabajarán en parejas.
-  - Dirige a los estudiantes a los assets para este laboratorio en el repositorio de la clase.
-  - Consulta las notas del laboratorio a continuación para más información.
+### Por qué importa para la empleabilidad
 
-## Notas de Laboratorio
+Toda app moderna es asíncrona: carga datos, espera respuestas, maneja demoras. Entender promesas es prerrequisito de `fetch`, `async/await`, y cualquier framework. Es de los temas más pedidos en entrevistas JS.
 
-Los estudiantes tendrán aproximádamente cuatro horas para trabajar en esta tarea y hacer que su proyecto se vea lo más parecido posible a la maqueta. El segundo propósito de tener un tiempo limitado es para alentar a los estudiantes a que vayan a casa y descansen.
+**Fuentes:** [MDN: Usar promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises){:target="_blank"}, [MDN: setTimeout](https://developer.mozilla.org/es/docs/Web/API/setTimeout){:target="_blank"}
 
-Esta tarea es más "hacer un montón de CSS" que tratar de alcanzar una solución ideal. Preséntalo como un rompecabezas e incentiva a que los estudiantes colaboren en lo posible para comparar sus soluciones. Si se esfuerzan, califícalos con todos los créditos. Esto es más acerca del proceso que el producto.
+---
 
-El propósito de este laboratorio es que profundicen en un problema, ideen un plan para solucionarlo, elaboren las mecánicas de gestionar los recursos de imágenes, armen el HTML y hagan todo lo posible con el CSS. Toca varios temas. Idealmente, aprenden bastante mientras trabajan, y el instructor se les acerca y les da consejos.
+## 🎯 Estructura Resumida
 
-## ¿Qué cambió desde la clase anterior?
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Refuerzo + disparador | 15 min | Render de C09. "¿Y si los datos tardan?" |
+| Debate Técnico | 30 min | Sync vs async, event loop, promesas y estados. |
+| Demo | 15 min | "Cargando…" → tarjetas con `setTimeout` y Promesa. |
+| Lab (HU1-HU3) | 100 min | HU1 `setTimeout` · HU2 `new Promise` · HU3 `.then`/`.catch` |
+| Cierre | 20 min | Síntesis + puente a `fetch` (C11). |
 
-No hubieron grandes cambios desde la clase anterior.
+---
 
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+## 🎯 Momentos Clave de la Clase
 
-Puede que los estudiantes todavía tengan problemas obteniendo el total general en su tabla funcionando correctamente en sus aplicaciones. La revisión del código de esta clase podrá ser de ayuda para muchos estudiantes que aún tienen dificultades con ese componente.
+### Demo 1 — "JavaScript no espera" (4 min)
+```javascript
+console.log("A");
+setTimeout(() => console.log("B"), 1000);
+console.log("C");
+```
+Pregunta antes de correr: ¿en qué orden imprime? (Respuesta: A, C, B.) "JavaScript no se quedó esperando el segundo — siguió con C." Esta es **la idea que ordena la clase**.
+
+### Demo 2 — la promesa en consola (3 min)
+`console.log(obtenerPokemones())` → `Promise {<pending>}`. "No te dio los datos. Te dio un *ticket* que dice 'esperando'." Luego muestra cómo `.then` "abre" el ticket cuando se resuelve.
+
+### Demo 3 — forzar el error (3 min)
+Cambia `resolve` por `reject(new Error("API caída"))`. Recarga: mensaje rojo. "El `.catch` atrapó el fallo. Por eso siempre lo ponemos." Anticipa C12.
+
+### Transición al Lab
+```
+"HU1: simulan la demora con setTimeout (Cargando → tarjetas).
+ HU2: envuelven los datos en una Promise.
+ HU3: la consumen con .then/.catch, y prueban el camino de error.
+ La forma es idéntica a la del fetch que viene en C11."
+```
+
+---
+
+## 🎭 Dinámicas de Clase
+
+### Dinámica 1: "Ordena la salida" (tras Demo 1)
+Tres `console.log` con un `setTimeout` en medio. Que predigan el orden antes de correr. Discute por qué el del timeout va al final.
+
+### Dinámica 2: "¿Qué estado?" (en HU2)
+Describe situaciones ("el setTimeout aún corre", "se llamó resolve", "se llamó reject") y que digan el estado (`pending`/`fulfilled`/`rejected`).
+
+### Dinámica 3: "¿then o catch?" (en HU3)
+Das escenarios (datos llegan / API falla / nombre inválido) y que digan qué bloque corre.
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### El "ticket" que aún no se abre
+```javascript
+const p = obtenerPokemones();   // Promise {<pending>}
+p.then(lista => render(lista)); // se "abre" cuando resuelve
+```
+"La promesa existe ya; el valor, todavía no. `.then` espera por ti."
+
+### Por qué retornar la promesa
+```javascript
+function obtenerPokemones() {
+  return new Promise(...);   // sin return, no puedes hacer .then afuera
+}
+```
+"Si olvidas el `return`, `.then` da error: no hay promesa que encadenar."
+
+---
+
+## ⚠️ Errores Comunes
+
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| `.then is not a function` | Olvidaron `return new Promise` | La función debe **retornar** la promesa |
+| Las tarjetas salen al instante (sin demora) | Pusieron el `render` fuera del `setTimeout` | El `render` va **dentro** del callback del timeout |
+| El error nunca se muestra | No hay `.catch`, o nunca se llama `reject` | Agregar `.catch`; para probar, forzar `reject` |
+| "Cargando…" se queda para siempre | La promesa nunca resuelve (faltó `resolve`) | Verificar que `resolve(...)` se llame dentro del timeout |
+| Esperan que `setTimeout` "pause" el código | Creen que es sincrónico | Recordar Demo 1: el código sigue, el timeout corre después |
+
+---
+
+## ✅ Señales de Comprensión
+
+**ENTIENDE cuando:**
+- Predice correctamente el orden A, C, B de la Demo 1.
+- Explica que `obtenerPokemones()` devuelve una promesa, no los datos.
+- Sabe que `.then` corre al resolver y `.catch` al rechazar.
+- Conecta la promesa simulada de hoy con el `fetch` que viene.
+
+**NECESITA AYUDA cuando:**
+- Cree que `setTimeout` "pausa" el programa.
+- Olvida el `return` de la promesa y no entiende el error.
+- Pone el `render` fuera del callback y no ve la demora.
+- No distingue cuándo corre `.then` vs `.catch`.
+
+---
+
+## 🎯 Checkpoints de Validación
+
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~30' | HU1 | "Cargando…" visible ~1.5 s, luego tarjetas; el `console.log` posterior se imprime antes. |
+| ~60' | HU2 | `console.log(obtenerPokemones())` muestra `Promise {<pending>}`. |
+| ~90' | HU3 | Con `resolve` → tarjetas; con `reject` → mensaje de error. Distingue ambos caminos. |
+
+---
+
+## 🧑‍🏫 Tips de Facilitación
+
+- **Grupo callado:** corre la Demo 1 sin decir el resultado; que voten el orden a mano alzada.
+- **Alguien ya sabía promesas:** pídele que explique con sus palabras qué es `pending`.
+- **Terminan antes:** logro de fallo aleatorio (`Math.random() < 0.33` → `reject`) para ver ambos caminos.
+- **Si se atascan:** insiste en la analogía de la pizza/ticket antes de volver al código.
+- **No te metas aún en `async/await`:** es C11. Hoy es `.then`/`.catch` para que entiendan la promesa "cruda".
+
+---
+
+## ❓ Preguntas Frecuentes
+
+**P: ¿Por qué no usamos `fetch` directamente?**
+R: Porque `fetch` es asíncrono y devuelve una promesa. Sin entender promesas, copiarían `.then` sin saber qué es. Hoy aislamos el concepto; en C11 lo aplican a la red.
+
+**P: ¿`setTimeout` es lo mismo que dormir el programa?**
+R: No. No pausa nada: programa una función para después y el código sigue. Por eso A, C, B y no A, B, C.
+
+**P: ¿Qué pasa si no pongo `.catch`?**
+R: Si la promesa falla, el error queda sin manejar (aparece en consola como "uncaught"). Siempre conviene un `.catch`. En C12 se profundiza el manejo de errores.
+
+**P: ¿`async/await` no es más fácil?**
+R: Sí, y lo verán en C11. Pero `async/await` es "azúcar" sobre las promesas; entender la promesa cruda primero hace que `await` tenga sentido.
+
+---
+
+## 🔗 Conexiones del Curriculum
+
+### Construye sobre:
+
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C09 | `render()`, `crearTarjeta()` | Se reusan tal cual; hoy cambia cuándo llegan los datos |
+| C06 | callbacks (`.map`, `.forEach`) | `.then`/`.catch` reciben callbacks, ya familiares |
+
+### Conexión con C11
+
+Al cerrar:
+
+> "Hoy la promesa era una simulación con `setTimeout`. En C11 la reemplazan por una **real**: `fetch` a la PokeAPI también devuelve una promesa, y se consume con el mismo `.then`/`.catch` —o con `async/await`, que aprenderán ahí. Por dentro: datos de internet de verdad."
+
+---
+
+## 🪞 Reflexión Post-Clase
+
+- ¿Cuántos acertaron el orden A, C, B? Si fueron pocos, refuerza el event loop.
+- ¿La analogía de la pizza/ticket ayudó, o hubo que insistir con el código?
+- ¿Probaron el camino de `reject`? Vivirlo fija la importancia del `.catch`.
+- ¿Alguien conectó solo "esto es lo que hará `fetch`"? Excelente — está listo para C11.
