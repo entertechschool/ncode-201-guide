@@ -106,8 +106,8 @@ spinner.classList.remove("hidden");
 try {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`No se encontró "${nombre}"`);
-  const pokemon = await response.json();
-  render([pokemon]);
+  const data = await response.json();
+  render([adaptarPokemon(data)]);
 } catch (error) {
   mensaje.textContent = error.message;
   mensaje.classList.remove("hidden");

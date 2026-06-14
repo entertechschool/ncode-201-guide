@@ -35,7 +35,7 @@
 
    > 📌 Convención del proyecto: `#spinner` (estado de carga) y `#mensaje` (errores / vacío). La clase `hidden` de Tailwind los oculta hasta que el JS los muestre.
 
-3. **Conservas de C11** las funciones `adaptarPokemon(data)`, `crearTarjeta()` y `render()`. Hoy solo robusteces `mostrarPokemon`.
+3. **Conservas de C11** las funciones `adaptarPokemon(data)`, `crearTarjeta()` y `render()`. Hoy robusteces `mostrarPokemon`: el `fetch` que en C11 vivía en `buscarPokemon` ahora va **dentro del `try`** de `mostrarPokemon`, para poder validar `response.ok` antes de leer el JSON.
 
 ---
 
@@ -139,7 +139,7 @@ async function mostrarPokemon(nombre) {
 }
 ```
 
-**Estado vacío inicial:** al cargar la página (sin buscar nada aún), muestra una pista en `#mensaje`:
+**Estado vacío inicial:** al cargar la página (sin buscar nada aún), muestra una pista en `#mensaje`. Coloca estas líneas **al final de tu `app.js`**, en el nivel superior (fuera de `mostrarPokemon`), para que corran una vez al cargar:
 
 ```javascript
 mensaje.textContent = "Busca un Pokémon para empezar 🔍";

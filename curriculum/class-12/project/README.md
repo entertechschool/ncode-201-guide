@@ -4,7 +4,7 @@
 
 Este proyecto consolida todo lo aprendido durante el **Módulo 3: JavaScript Moderno y Consumo de APIs**. El objetivo es que cada estudiante desarrolle una Pokédex que consume una API real, integrando sintaxis moderna de JavaScript, render dinámico del DOM, asincronía con `fetch`/`async/await`, y manejo robusto de errores y estados de UI, creando una aplicación interactiva y confiable.
 
-> ⏳ Cada estudiante presentará su proyecto en una **demostración en vivo de máximo 10 minutos**, explicando sus **decisiones técnicas clave**.
+> ⏳ Cada estudiante presentará su proyecto en una **presentación en vivo de máximo 10 minutos** (5 de demostración + 5 de argumentación técnica), explicando sus **decisiones técnicas clave**.
 
 ---
 

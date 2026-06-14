@@ -123,8 +123,8 @@
       <p class="desc">El código que puede fallar va en <code>try</code>; si algo sale mal, <code>catch</code> lo atrapa y la app sigue viva.</p>
       <pre><code><span class="tag-red">try</span> {
   <span class="tag-muted">const</span> response = <span class="tag-muted">await</span> fetch(url);
-  <span class="tag-muted">const</span> pokemon  = <span class="tag-muted">await</span> response.json();
-  render([pokemon]);
+  <span class="tag-muted">const</span> data     = <span class="tag-muted">await</span> response.json();
+  render([adaptarPokemon(data)]);
 } <span class="tag-red">catch</span> (error) {
   mensaje.textContent = error.message;
 }</code></pre>

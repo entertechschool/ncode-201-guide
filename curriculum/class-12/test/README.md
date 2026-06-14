@@ -28,7 +28,7 @@ Este test verifica tu comprensión de los conceptos de las Clases 09 a 12:
 ## Instrucciones
 
 1. Se realiza en Blackboard durante la clase
-2. Tienes 15 minutos
+2. Tienes 10 minutos
 3. Individual y sin materiales de apoyo
 
 > **Nota:** Este test es diagnóstico — nos ayuda a identificar qué temas necesitan más práctica. **No afecta tu calificación**.

@@ -30,8 +30,8 @@ Una app real no puede romperse ante un error.
 ```javascript
 try {
   const response = await fetch(url);
-  const pokemon  = await response.json();
-  render([pokemon]);
+  const data     = await response.json();
+  render([adaptarPokemon(data)]);   // adaptarPokemon viene de C11
 } catch (error) {
   mensaje.textContent = "Algo salió mal";
 }

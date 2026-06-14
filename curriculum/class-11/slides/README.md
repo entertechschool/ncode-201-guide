@@ -26,7 +26,7 @@
 * Las APIs hablan JSON.
 * `response.json()` lo convierte en objeto usable.
 
-> Misma forma que tu `pokemonLocal` de C09.
+> ⚠️ **NO** es la forma de tu `pokemonLocal`: está **anidada** → la adaptarás.
 
 ---
 
@@ -46,9 +46,9 @@ const response = await fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
 
 ```javascript
 async function buscarPokemon(nombre) {
-  const response = await fetch(url);        // espera la respuesta
-  const pokemon  = await response.json();   // espera el parseo
-  return pokemon;
+  const response = await fetch(url);      // espera la respuesta
+  const data     = await response.json(); // forma CRUDA de la API
+  return data;
 }
 ```
 
