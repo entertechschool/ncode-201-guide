@@ -4,7 +4,7 @@
 
 > ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
 >
-> 🧠 **Hoy NO tocamos internet.** Trabajas con un **array local** de Pokémon (con la misma forma que tendrá la API real en C11). Así aíslas el *render* del *ruido* de la red.
+> 🧠 **Hoy NO tocamos internet.** Trabajas con un **array local** de Pokémon, con propiedades claras y directas. Así te enfocas solo en lo nuevo: generar la interfaz desde datos.
 
 ## 🎯 Objetivos de Aprendizaje
 
@@ -17,9 +17,9 @@
 | Concepto | Definición |
 |---|---|
 | **Template literal** | String con backticks `` ` `` que permite interpolar valores con `${...}` y escribir varias líneas. |
-| **Destructuring** | Sacar propiedades de un objeto (o ítems de un array) a variables en una línea: `const { name } = pokemon`. |
+| **Destructuring** | Sacar propiedades de un objeto (o ítems de un array) a variables en una línea: `const { nombre } = pokemon`. |
 | **Spread `...`** | Expandir un array/objeto dentro de otro: `[...a, ...b]`. |
-| **Optional chaining `?.`** | Acceso seguro a datos anidados que **podrían no existir**: `pokemon?.sprites?.front_default`. |
+| **Optional chaining `?.` + `??`** | Acceso seguro a datos que **podrían no existir** (`tipos?.[0]`) y valor de respaldo (`imagen ?? "..."`). |
 | **Patrón render** | Limpiar un contenedor → recorrer los datos → crear y agregar un nodo por cada uno. |
 
 ## ⚙️ Setup Inicial
@@ -58,16 +58,16 @@
 
    > 📌 **Convención del proyecto** (la reusarás en C10-C12): el contenedor de resultados **siempre** es `<div id="resultado">`. No le cambies el `id`.
 
-4. **El dato (array local)** — pega esto al inicio de `js/app.js`. Tiene **la misma forma que devuelve la API real** que usarás en C11:
+4. **El dato (array local)** — pega esto al inicio de `js/app.js`. Es una lista de objetos con **propiedades claras y directas** (`nombre`, `imagen`, `tipos`):
 
    ```javascript
    const pokemonLocal = [
-     { id: 1,  name: "bulbasaur",  sprites: { front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" },  types: [{ type: { name: "grass" } }, { type: { name: "poison" } }] },
-     { id: 4,  name: "charmander", sprites: { front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" },  types: [{ type: { name: "fire" } }] },
-     { id: 7,  name: "squirtle",   sprites: { front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" },  types: [{ type: { name: "water" } }] },
-     { id: 25, name: "pikachu",    sprites: { front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" }, types: [{ type: { name: "electric" } }] },
-     { id: 39, name: "jigglypuff", sprites: { front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png" }, types: [{ type: { name: "normal" } }, { type: { name: "fairy" } }] },
-     { id: 94, name: "gengar",     sprites: { front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png" },  types: [{ type: { name: "ghost" } }, { type: { name: "poison" } }] }
+     { nombre: "bulbasaur",  imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",  tipos: ["grass", "poison"] },
+     { nombre: "charmander", imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",  tipos: ["fire"] },
+     { nombre: "squirtle",   imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",  tipos: ["water"] },
+     { nombre: "pikachu",    imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png", tipos: ["electric"] },
+     { nombre: "jigglypuff", imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png", tipos: ["normal", "fairy"] },
+     { nombre: "gengar",     imagen: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png",  tipos: ["ghost", "poison"] }
    ];
    ```
 
@@ -121,8 +121,8 @@ function crearTarjeta(pokemon) {
   const articulo = document.createElement("article");   // crea el nodo <article>
   articulo.className = "bg-white rounded-xl shadow p-4 text-center";
   articulo.innerHTML = `
-    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" class="w-24 h-24 mx-auto">
-    <h2 class="capitalize font-bold text-slate-800 mt-2">${pokemon.name}</h2>
+    <img src="${pokemon.imagen}" alt="${pokemon.nombre}" class="w-24 h-24 mx-auto">
+    <h2 class="capitalize font-bold text-slate-800 mt-2">${pokemon.nombre}</h2>
   `;
   return articulo;
 }
@@ -149,9 +149,9 @@ render(pokemonLocal);   // ¡píntalo!
 
 ---
 
-### HU3: Datos limpios con destructuring, tipos con spread y datos seguros con `?.`
+### HU3: Datos limpios con destructuring, tipos con `.map`, y acceso seguro con `?.` / `??`
 
-> *"Como usuario, quiero ver los tipos de cada Pokémon (uno o varios) y que la tarjeta no se rompa si a un Pokémon le falta la imagen."*
+> *"Como usuario, quiero ver los tipos de cada Pokémon (uno o varios) y que la tarjeta no se rompa si a un Pokémon le falta algún dato."*
 
 Vas a **refactorizar** `crearTarjeta` con tres herramientas modernas.
 
@@ -159,44 +159,45 @@ Vas a **refactorizar** `crearTarjeta` con tres herramientas modernas.
 
 ```javascript
 function crearTarjeta(pokemon) {
-  const { name, sprites, types } = pokemon;   // ← destructuring de objeto
-  // ahora usas name, sprites, types directo
+  const { nombre, imagen, tipos } = pokemon;   // ← destructuring de objeto
+  // ahora usas nombre, imagen, tipos directo
 }
 ```
 
-**b) `.map()` + spread para los badges de tipo** — `types` es un array; conviértelo en HTML de badges:
+**b) `.map()` + `.join()` para los badges de tipo** — `tipos` es un array de textos; conviértelo en HTML de badges:
 
 ```javascript
-const badges = types
-  .map(function (t) {
-    return `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded-full">${t.type.name}</span>`;
+const badges = tipos
+  .map(function (tipo) {
+    return `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded-full">${tipo}</span>`;
   })
   .join("");   // une el array de strings en uno solo
 ```
 
-**c) Optional chaining `?.`** — algunos Pokémon podrían no traer imagen. `sprites?.front_default` devuelve `undefined` en vez de **romper** el programa:
+**c) Acceso seguro: `??` y `?.`** — los datos a veces tienen huecos. `??` da un **valor de respaldo**, y `?.` accede de forma **segura** a algo que podría no existir:
 
 ```javascript
-const imagen = sprites?.front_default ?? "https://via.placeholder.com/96?text=?";
+const img = imagen ?? "https://via.placeholder.com/96?text=?";   // ?? : respaldo si falta la imagen
+const cuantos = tipos?.length ?? 0;                              // ?. : si 'tipos' faltara, no rompe (da undefined)
 ```
 
-> 💡 El `??` ("nullish coalescing") da un valor de respaldo cuando lo de la izquierda es `null`/`undefined`. Juntos, `?.` y `??` evitan el clásico error *"cannot read property of undefined"*.
+> 💡 El `??` ("nullish coalescing") da un respaldo cuando lo de la izquierda es `null`/`undefined`. El `?.` ("optional chaining") evita el clásico error *"cannot read property of undefined"*. Juntos blindan tu código contra datos incompletos.
 
 Arma la tarjeta final juntando las piezas:
 
 ```javascript
 function crearTarjeta(pokemon) {
-  const { name, sprites, types } = pokemon;
-  const imagen = sprites?.front_default ?? "https://via.placeholder.com/96?text=?";
-  const badges = types.map(function (t) {
-    return `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded-full">${t.type.name}</span>`;
+  const { nombre, imagen, tipos } = pokemon;
+  const img = imagen ?? "https://via.placeholder.com/96?text=?";
+  const badges = tipos.map(function (tipo) {
+    return `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-1 rounded-full">${tipo}</span>`;
   }).join("");
 
   const articulo = document.createElement("article");
   articulo.className = "bg-white rounded-xl shadow p-4 text-center";
   articulo.innerHTML = `
-    <img src="${imagen}" alt="${name}" class="w-24 h-24 mx-auto">
-    <h2 class="capitalize font-bold text-slate-800 mt-2">${name}</h2>
+    <img src="${img}" alt="${nombre}" class="w-24 h-24 mx-auto">
+    <h2 class="capitalize font-bold text-slate-800 mt-2">${nombre}</h2>
     <div class="flex gap-1 justify-center mt-2 flex-wrap">${badges}</div>
   `;
   return articulo;
@@ -204,19 +205,19 @@ function crearTarjeta(pokemon) {
 ```
 
 **Criterios de Aceptación:**
-- `crearTarjeta` usa **destructuring** para leer `name`, `sprites`, `types`.
+- `crearTarjeta` usa **destructuring** para leer `nombre`, `imagen`, `tipos`.
 - Cada tarjeta muestra **todos** sus tipos como badges (bulbasaur y gengar tienen 2).
-- Si borras la imagen de un Pokémon del array, la tarjeta **no se rompe** (muestra el placeholder).
+- Si quitas la propiedad `imagen` de un Pokémon del array, la tarjeta **no se rompe** (muestra el placeholder).
 
-- **Checkpoint 3 (~90 min):** las 6 tarjetas muestran sus badges de tipo (varios en bulbasaur/jigglypuff/gengar). Prueba a poner `sprites: {}` en un Pokémon: la tarjeta sigue viva gracias a `?.`.
+- **Checkpoint 3 (~90 min):** las 6 tarjetas muestran sus badges de tipo (varios en bulbasaur/jigglypuff/gengar). Borra la propiedad `imagen` de un Pokémon: la tarjeta sigue viva gracias a `??`.
 
 ---
 
 ## 🌟 Logros Adicionales (Opcionales)
 
 - **Logro 1 — Color por tipo:** pinta cada badge según el tipo (`fire` rojo, `water` azul…) usando un objeto `{ fire: "bg-red-200", water: "bg-blue-200", ... }`.
-- **Logro 2 — Número de Pokédex:** muestra el `id` con formato `#025` (pista: destructuring de `id` + `String(id).padStart(3, "0")`).
-- **Logro 3 — Destructuring de array:** muestra "Tipo principal: X" tomando el primero con `const [principal] = types`.
+- **Logro 2 — Spread e inmutabilidad:** agrega un Pokémon nuevo **sin mutar** el array original con `const ampliada = [...pokemonLocal, nuevo]` y renderiza `ampliada`.
+- **Logro 3 — Destructuring de array:** muestra "Tipo principal: X" tomando el primero con `const [principal] = tipos`.
 
 ## 📝 Instrucciones de Entrega
 

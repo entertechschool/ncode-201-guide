@@ -157,21 +157,21 @@
       <h3><span class="tag-blue">3.</span> Destructuring — datos limpios</h3>
       <p class="desc">Sacas las propiedades de un objeto a variables en una sola línea, sin repetir <code>pokemon.</code> por todos lados.</p>
       <pre><code><span class="tag-muted">// de un objeto a tres variables</span>
-<span class="tag-muted">const</span> { <span class="tag-blue">name</span>, <span class="tag-blue">sprites</span>, <span class="tag-blue">types</span> } = pokemon;
+<span class="tag-muted">const</span> { <span class="tag-blue">nombre</span>, <span class="tag-blue">imagen</span>, <span class="tag-blue">tipos</span> } = pokemon;
 
 <span class="tag-muted">// tipos como badges: map + join</span>
-types.map(t => `&lt;span&gt;${t.type.name}&lt;/span&gt;`).join(<span class="tag-blue">""</span>);</code></pre>
+tipos.map(tipo => `&lt;span&gt;${tipo}&lt;/span&gt;`).join(<span class="tag-blue">""</span>);</code></pre>
     </div>
 
     <!-- 4: Optional chaining -->
     <div class="card accent-red">
-      <h3><span class="tag-red">4.</span> Optional chaining <code>?.</code> — datos seguros</h3>
-      <p class="desc">Los datos reales siempre tienen huecos. <code>?.</code> accede a lo anidado sin romper el programa; <code>??</code> da un valor de respaldo.</p>
-      <pre><code><span class="tag-muted">// sin ?. → "cannot read property of undefined"</span>
-<span class="tag-muted">const</span> img = pokemon.sprites.front_default;
+      <h3><span class="tag-red">4.</span> Acceso seguro: <code>??</code> y <code>?.</code></h3>
+      <p class="desc">Los datos a veces tienen huecos. <code>??</code> da un valor de respaldo; <code>?.</code> accede de forma segura a algo que podría no existir, sin romper el programa.</p>
+      <pre><code><span class="tag-muted">// ?? : respaldo si falta la imagen</span>
+<span class="tag-muted">const</span> img = pokemon.imagen <span class="tag-red">??</span> "placeholder.png";
 
-<span class="tag-muted">// con ?. → seguro</span>
-<span class="tag-muted">const</span> img = pokemon.sprites<span class="tag-red">?.</span>front_default <span class="tag-red">??</span> "placeholder.png";</code></pre>
+<span class="tag-muted">// ?. : acceso seguro si el dato no existe</span>
+<span class="tag-muted">const</span> cuantos = pokemon.tipos<span class="tag-red">?.</span>length <span class="tag-red">??</span> 0;</code></pre>
     </div>
 
   </section>
@@ -189,7 +189,7 @@ types.map(t => `&lt;span&gt;${t.type.name}&lt;/span&gt;`).join(<span class="tag-
       </div>
       <div class="term">
         <strong>Destructuring</strong>
-        <span>Sacar propiedades a variables: <code>const { name } = pokemon</code>.</span>
+        <span>Sacar propiedades a variables: <code>const { nombre } = pokemon</code>.</span>
       </div>
       <div class="term">
         <strong>Optional chaining</strong>

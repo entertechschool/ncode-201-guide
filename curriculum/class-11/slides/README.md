@@ -69,16 +69,35 @@ await response.json()   → esperar que se LEA y convierta
 
 ---
 
+## 🔄 Adaptar la estructura de la API
+
+La API da SU forma (anidada). La traduces a la limpia de C09:
+
+```javascript
+function adaptarPokemon(data) {
+  return {
+    nombre: data.name,
+    imagen: data.sprites?.front_default ?? "...",
+    tipos:  data.types.map(t => t.type.name)
+  };
+}
+```
+
+> No controlas la API — **te adaptas a ella**.
+
+---
+
 ## 🖼️ Mostrarlo: reusar C09
 
 ```javascript
 async function mostrarPokemon(nombre) {
-  const pokemon = await buscarPokemon(nombre);
-  render([pokemon]);   // render espera un array
+  const data    = await buscarPokemon(nombre);   // forma API
+  const pokemon = adaptarPokemon(data);          // forma limpia
+  render([pokemon]);                             // render espera un array
 }
 ```
 
-> No reescribes `crearTarjeta` ni `render`: el dato tiene la misma forma.
+> Gracias al adaptador, `crearTarjeta`/`render` no cambian.
 
 ---
 

@@ -10,8 +10,9 @@
 - **`fetch(url)`** (NUEVO): pide datos a una URL; devuelve una promesa (las de C10). Entrega un objeto `response` (la respuesta cruda).
 - **`response.json()`** (NUEVO): lee el cuerpo de la respuesta y lo convierte de JSON (texto) a objeto JavaScript. También devuelve una promesa. **No es** `JSON.parse` (eso es M4, para persistencia).
 - **`async` / `await`** (NUEVO): `async` marca una función asíncrona; `await` pausa hasta que una promesa resuelva y entrega el valor directo. Más legible que `.then` encadenado.
+- **Función adaptadora** (NUEVO): la API entrega una estructura **anidada** (`sprites.front_default`, `types[].type.name`), distinta a la limpia del proyecto (`{ nombre, imagen, tipos }`). `adaptarPokemon(data)` traduce de una a otra.
 
-> ❗ **El render no cambia.** `crearTarjeta`/`render` de C09 se reusan tal cual porque el dato de la API tiene la **misma forma** que el local. Hoy solo cambia **de dónde** vienen los datos. Ese fue el motivo de diseñar el dato local idéntico desde C09.
+> ❗ **El render no cambia, pero hay que ADAPTAR la entrada.** En C09 los datos eran limpios a propósito. La API da SU estructura (anidada), así que se escribe una pequeña función adaptadora que la traduce a la limpia. Reusar `crearTarjeta`/`render` sin tocarlos es la recompensa de separar *la forma de los datos* de *cómo se pintan*. Es justo lo que hace un dev real: **adaptarse a lo que entrega cada API**.
 
 ---
 
@@ -60,18 +61,21 @@ Hoy se usa `response.json()` para **leer** datos de una API. En M4 se usará `JS
 ## 🎯 Momentos Clave de la Clase
 
 ### Demo 1 — el JSON real en el navegador (3 min)
-Abre `https://pokeapi.co/api/v2/pokemon/pikachu` en el navegador. "Esto es JSON: texto con forma de objeto. Es lo que tu app va a recibir." Señala `name`, `sprites`, `types` — los mismos que su dato local.
+Abre `https://pokeapi.co/api/v2/pokemon/pikachu` en el navegador. "Esto es JSON: texto con forma de objeto. Es lo que tu app va a recibir." Señala lo **anidado**: `sprites.front_default`, `types[].type.name`. "Fíjense: NO es el objeto limpio de C09. La API manda SU forma; en HU2 nos adaptamos a ella."
 
 ### Demo 2 — fetch en vivo (4 min)
 En consola: `fetch(url).then(r => r.json()).then(p => console.log(p))`. Luego reescríbelo con `async/await`. "Mismo resultado, pero el segundo se lee como una receta paso a paso."
 
 ### Demo 3 — los dos await (3 min)
-Quita el segundo `await` (deja `const pokemon = response.json()`) y muestra que `pokemon` es una `Promise`, no el objeto. "Por eso el segundo `await`: `.json()` también tarda."
+Quita el segundo `await` (deja `const data = response.json()`) y muestra que `data` es una `Promise`, no el objeto. "Por eso el segundo `await`: `.json()` también tarda."
+
+### Demo 4 — el adaptador (3 min)
+En consola muestra `data.types` → un array de objetos `{ type: { name } }`. Luego `data.types.map(t => t.type.name)` → `["electric"]`. "La API lo complica; el adaptador lo simplifica a lo que tu tarjeta necesita. Eso es `adaptarPokemon`."
 
 ### Transición al Lab
 ```
-"HU1: una función que trae UN Pokémon de la API con fetch + await.
- HU2: mostrarlo — reusan render de C09, envolviendo en [pokemon].
+"HU1: una función que trae UN Pokémon CRUDO de la API con fetch + await.
+ HU2: adaptarPokemon(data) traduce la forma de la API a la limpia, y se muestra reusando render.
  HU3: conectan el buscador (input + botón + Enter).
  Si buscan algo que no existe, se rompe. Eso lo arreglamos en C12."
 ```
@@ -81,7 +85,7 @@ Quita el segundo `await` (deja `const pokemon = response.json()`) y muestra que 
 ## 🎭 Dinámicas de Clase
 
 ### Dinámica 1: "Lee el JSON" (tras Demo 1)
-Muestra el JSON de un Pokémon y pregunta: "¿cómo accedes a su primer tipo?" (`pokemon.types[0].type.name`). Conecta con el destructuring de C09.
+Muestra el JSON de un Pokémon y pregunta: "¿cómo accedes a su primer tipo?" (`data.types[0].type.name`). Eso justifica por qué el adaptador simplifica esa anidación.
 
 ### Dinámica 2: "¿response o datos?" (en HU1)
 "`fetch` te da `response`. ¿Ya tienes el Pokémon?" (No — falta `.json()`.) Refuerza la distinción respuesta vs cuerpo.
@@ -99,11 +103,12 @@ const url = `https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`;
 ```
 "`toLowerCase` porque la API espera minúsculas. Template literal de C09 para armar la URL."
 
-### Reusar render con un solo Pokémon
+### Adaptar y reusar render
 ```javascript
-render([pokemon]);   // render espera un array; envolvemos en [ ]
+const pokemon = adaptarPokemon(data);  // forma de la API → forma limpia
+render([pokemon]);                      // render espera un array; envolvemos en [ ]
 ```
-"No tocamos render. Solo le damos una lista de uno."
+"No tocamos render. Adaptamos la entrada y le damos una lista de uno."
 
 ---
 
@@ -111,8 +116,9 @@ render([pokemon]);   // render espera un array; envolvemos en [ ]
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| `pokemon` es `Promise {<pending>}` | Falta el segundo `await` (en `.json()`) | `const pokemon = await response.json()` |
+| `data` es `Promise {<pending>}` | Falta el segundo `await` (en `.json()`) | `const data = await response.json()` |
 | `await is only valid in async function` | Usaron `await` en una función sin `async` | Marcar la función con `async` |
+| Imagen rota / tipos como `[object Object]` | Pasaron `data` (forma API) directo sin adaptar | `const pokemon = adaptarPokemon(data)` antes de `render` |
 | La búsqueda no hace nada | El `id` del input/botón no coincide | Verificar `#buscador` y `#btn-buscar` |
 | Funciona "pikachu" pero no "Pikachu" | La API espera minúsculas | `nombre.toLowerCase()` en la URL |
 | Pantalla en blanco al buscar algo raro | El nombre no existe (404) → falla | Es esperado; se maneja en C12 |
@@ -126,7 +132,7 @@ render([pokemon]);   // render espera un array; envolvemos en [ ]
 - Explica que JSON es texto y `response.json()` lo convierte en objeto.
 - Sabe por qué hay dos `await` (respuesta + parseo).
 - Reescribe una cadena `.then` como `async/await`.
-- Reconoce que reusa el render de C09 sin cambios.
+- Reconoce que reusa el render de C09 sin cambios, adaptando la entrada con `adaptarPokemon`.
 
 **NECESITA AYUDA cuando:**
 - Cree que `response` ya son los datos.
@@ -178,7 +184,7 @@ R: No lo reemplaza; es otra forma de lo mismo, más legible para código secuenc
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C09 | render, destructuring | Se reusa el render; el JSON tiene la misma forma |
+| C09 | render, destructuring, `?.`/`??` | El adaptador reusa el render; el JSON viene con otra forma |
 | C10 | promesas, `.then`/`.catch` | `fetch` devuelve una promesa; `await` la consume |
 | C08 | Tailwind | Estiliza el buscador y la tarjeta |
 

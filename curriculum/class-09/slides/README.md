@@ -68,8 +68,8 @@ function render(lista) {
 const articulo = document.createElement("article");
 articulo.className = "bg-white rounded-xl shadow p-4";
 articulo.innerHTML = `
-  <img src="${pokemon.sprites.front_default}">
-  <h2>${pokemon.name}</h2>
+  <img src="${pokemon.imagen}">
+  <h2>${pokemon.nombre}</h2>
 `;
 ```
 
@@ -83,11 +83,11 @@ articulo.innerHTML = `
 
 ```javascript
 // sin destructuring
-const name = pokemon.name;
-const types = pokemon.types;
+const nombre = pokemon.nombre;
+const tipos = pokemon.tipos;
 
 // con destructuring (una línea)
-const { name, sprites, types } = pokemon;
+const { nombre, imagen, tipos } = pokemon;
 ```
 
 > Sacas las propiedades que necesitas, sin repetir `pokemon.`.
@@ -97,12 +97,12 @@ const { name, sprites, types } = pokemon;
 ## ✨ Spread + .map para los tipos
 
 ```javascript
-const badges = types
-  .map(t => `<span class="badge">${t.type.name}</span>`)
+const badges = tipos
+  .map(tipo => `<span class="badge">${tipo}</span>`)
   .join("");
 ```
 
-* `types` es un **array** (uno o varios tipos).
+* `tipos` es un **array** de textos (uno o varios tipos).
 * `.map()` → un badge por tipo · `.join("")` → un solo string.
 
 ---
@@ -110,11 +110,11 @@ const badges = types
 ## 🛡️ Optional chaining `?.`
 
 ```javascript
-// si falta sprites, esto ROMPE:
-const img = pokemon.sprites.front_default;
+// ?? : respaldo si falta la imagen
+const img = pokemon.imagen ?? "placeholder.png";
 
-// acceso seguro:
-const img = pokemon.sprites?.front_default ?? "placeholder.png";
+// ?. : acceso seguro si el dato no existe
+const cuantos = pokemon.tipos?.length ?? 0;
 ```
 
 * `?.` → devuelve `undefined` en vez de romper.

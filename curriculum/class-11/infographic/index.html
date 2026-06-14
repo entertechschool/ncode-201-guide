@@ -122,7 +122,7 @@
   <span class="tag-green">"name"</span>: "pikachu",
   <span class="tag-green">"types"</span>: [ { "type": { "name": "electric" } } ]
 }
-<span class="tag-muted">// misma forma que tu pokemonLocal de C09</span></code></pre>
+<span class="tag-muted">// estructura anidada: distinta a tu objeto limpio → la adaptarás</span></code></pre>
     </div>
 
     <!-- 2: fetch -->
@@ -139,15 +139,15 @@
       <p class="desc"><code>async</code> habilita <code>await</code>; <code>await</code> pausa hasta que la promesa resuelve. Dos esperas: que llegue y que se lea.</p>
       <pre><code><span class="tag-purple">async</span> <span class="tag-muted">function</span> buscarPokemon(nombre) {
   <span class="tag-muted">const</span> response = <span class="tag-purple">await</span> fetch(url);          <span class="tag-muted">// 1. llega</span>
-  <span class="tag-muted">const</span> pokemon  = <span class="tag-purple">await</span> response.json();    <span class="tag-muted">// 2. se lee</span>
-  <span class="tag-muted">return</span> pokemon;
+  <span class="tag-muted">const</span> data     = <span class="tag-purple">await</span> response.json();    <span class="tag-muted">// 2. se lee (forma de la API)</span>
+  <span class="tag-muted">return</span> data;
 }</code></pre>
     </div>
 
     <!-- 4: de simulado a real -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> De la simulación (C10) a la red real</h3>
-      <p class="desc">El render de C09 no cambia: el dato de la API tiene la misma forma. Solo cambió <strong>de dónde</strong> vienen los datos.</p>
+      <h3><span class="tag-orange">4.</span> Adaptar la estructura de la API</h3>
+      <p class="desc">La API entrega <strong>otra estructura</strong> (anidada). Una función adaptadora la traduce a la limpia de C09, y el render no cambia.</p>
       <div class="comparison">
         <div class="comparison-col">
           <div class="col-label" style="color:#94a3b8;">C10 — simulado</div>
@@ -159,6 +159,7 @@ resolve(pokemonLocal)
           <div class="col-label" style="color:#fb923c;">C11 — real</div>
           <pre><code>await fetch(url)
 await response.json()
+adaptarPokemon(data)
 render([pokemon])</code></pre>
         </div>
       </div>

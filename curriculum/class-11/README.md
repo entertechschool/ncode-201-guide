@@ -6,7 +6,7 @@
 
 En la Clase 11 la Pokédex deja de usar datos locales y empieza a **consumir una API real**. Los estudiantes aprenden el formato **JSON** (cómo viajan los datos entre servidor y navegador), la función **`fetch`** para pedirlos, y la sintaxis **`async/await`** para escribir código asíncrono legible. La promesa simulada de C10 se reemplaza por una llamada real a [PokeAPI](https://pokeapi.co/){:target="_blank"}.
 
-Es la clase que conecta todo lo anterior: el render de C09 se reusa tal cual (porque el dato de la API tiene la misma forma que el local) y las promesas de C10 se vuelven concretas con datos de internet. Es, además, la habilidad más pedida por la industria a un desarrollador JavaScript: consumir servicios web.
+Es la clase que conecta todo lo anterior: las promesas de C10 se vuelven concretas con datos de internet, y el render de C09 se reutiliza intacto gracias a una pequeña **función adaptadora** que traduce la estructura (anidada) que entrega la API a la estructura limpia del proyecto. Aprender a *adaptarse a lo que da la API* es, además, parte central de lo que la industria pide a un desarrollador JavaScript.
 
 Se utilizan dos recursos fundamentales:
 
@@ -45,7 +45,7 @@ Al culminar esta clase, los estudiantes podrán consumir una API REST pública, 
 
 - Una función `buscarPokemon(nombre)` que consulta la PokeAPI.
 - Un buscador conectado a un input y un botón (y a la tecla Enter).
-- La reutilización del render de C09 con datos reales.
+- Una función adaptadora que traduce la estructura de la API a la del proyecto, reusando el render de C09.
 
 ---
 
@@ -57,7 +57,7 @@ Al culminar esta clase, los estudiantes podrán consumir una API REST pública, 
 | `resolve(pokemonLocal)` | `await response.json()` |
 | consumir con `.then` | consumir con `await` |
 
-> El render de C09 no cambia: el dato de la API tiene la **misma forma** que el local. Solo cambió **de dónde** vienen los datos.
+> La API entrega los datos con **otra estructura** (anidada). Una **función adaptadora** la traduce a la estructura limpia de C09, así el render no cambia — solo se adapta lo que entra.
 
 ## ⚠️ Nota sobre la red
 

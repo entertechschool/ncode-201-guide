@@ -1,6 +1,6 @@
 # Laboratorio 11: async/await, fetch y JSON
 
-Llegó el momento: hoy tu Pokédex deja de usar datos locales y **trae Pokémon reales de internet**. Aprendes el formato en que viajan los datos (**JSON**), cómo pedirlos con **`fetch`** y cómo escribir código asíncrono limpio con **`async/await`**. La promesa **simulada** de C10 se convierte en una llamada **real** a la PokeAPI.
+Llegó el momento: hoy tu Pokédex deja de usar datos locales y **trae Pokémon reales de internet**. Aprendes el formato en que viajan los datos (**JSON**), cómo pedirlos con **`fetch`** y cómo escribir código asíncrono limpio con **`async/await`**. La promesa **simulada** de C10 se convierte en una llamada **real** a la PokeAPI — y descubres que la API entrega los datos con **su propia estructura**, así que tendrás que **adaptarla** a la tuya.
 
 > ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
 >
@@ -21,6 +21,7 @@ Llegó el momento: hoy tu Pokédex deja de usar datos locales y **trae Pokémon 
 | **`response`** | La respuesta del servidor. Hay que **leer su cuerpo** para obtener los datos. |
 | **`response.json()`** | Convierte el cuerpo (JSON) en un **objeto JavaScript**. También devuelve una promesa. |
 | **`async` / `await`** | `async` marca una función asíncrona; `await` **pausa** hasta que una promesa resuelva. |
+| **Función adaptadora** | Traduce la estructura que entrega la API a tu estructura limpia (`{ nombre, imagen, tipos }`). |
 
 ## ⚙️ Setup Inicial
 
@@ -54,7 +55,9 @@ Cuando le pides un Pokémon a la API, te responde con **texto en formato JSON**.
 }
 ```
 
-> 💡 **JSON ≠ objeto JS (todavía).** Lo que llega es **texto**. Para usarlo como objeto JavaScript (con `.name`, `.types`…) hay que **convertirlo** — eso hace `response.json()`. Fíjate que la **forma es la misma** que tu `pokemonLocal` de C09: por eso tu `crearTarjeta` ya sirve.
+> 💡 **JSON ≠ objeto JS (todavía).** Lo que llega es **texto**. Para usarlo como objeto JavaScript (con `.name`, `.types`…) hay que **convertirlo** — eso hace `response.json()`.
+
+⚠️ **Fíjate: esta estructura NO es la de tus datos limpios de C09.** Tu objeto era plano y claro: `{ nombre, imagen, tipos: ["electric"] }`. La API, en cambio, usa `name`, esconde la imagen en `sprites.front_default`, y los tipos en un array anidado `types[].type.name`. **Tú no controlas la forma de la API — te adaptas a ella.** Eso lo resolverás en HU2 con una pequeña función adaptadora.
 
 Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON real que devuelve la API.
 
@@ -72,16 +75,17 @@ Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON 
 async function buscarPokemon(nombre) {
   const url = `https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`;
 
-  const response = await fetch(url);        // 1. espera la respuesta del servidor
-  const pokemon  = await response.json();   // 2. espera el parseo de JSON → objeto JS
+  const response = await fetch(url);     // 1. espera la respuesta del servidor
+  const data     = await response.json(); // 2. el objeto CRUDO de la API (estructura anidada)
 
-  return pokemon;
+  return data;
 }
 ```
 
 * **`async`** delante de `function` habilita el uso de `await` dentro.
 * **Primer `await`**: `fetch` devuelve la respuesta cruda.
 * **Segundo `await`**: `response.json()` convierte el cuerpo JSON en objeto JS.
+* Devolvemos `data`: el objeto **tal cual lo da la API** (con `name`, `sprites`, `types`). En HU2 lo adaptarás.
 
 > 💡 **¿Por qué dos `await`?** Uno espera a que **llegue** la respuesta; otro a que se **lea y convierta** su contenido. Ambas operaciones tardan, ambas son promesas.
 
@@ -94,28 +98,44 @@ async function buscarPokemon(nombre) {
 
 ---
 
-### HU2: Mostrar el Pokémon buscado en pantalla
+### HU2: Adaptar la estructura de la API y mostrarla
 
 > *"Como usuario, quiero ver la tarjeta del Pokémon que busqué, con su imagen y tipos."*
 
-`buscarPokemon` devuelve **un** Pokémon; tu `render()` espera un **array**. Lo envuelves en `[ ]` y reusas todo lo de C09:
+La API te da una estructura **anidada** (`data.sprites.front_default`, `data.types[].type.name`), pero tu `crearTarjeta` de C09 espera la estructura **limpia** (`{ nombre, imagen, tipos }`). En vez de reescribir el render, escribes una **función adaptadora** que traduce de una forma a la otra:
+
+```javascript
+function adaptarPokemon(data) {
+  return {
+    nombre: data.name,
+    imagen: data.sprites?.front_default ?? "https://via.placeholder.com/96?text=?",
+    tipos:  data.types.map(t => t.type.name)   // [{type:{name:"electric"}}] → ["electric"]
+  };
+}
+```
+
+> 💡 Aquí reusas el `?.` y el `??` de C09: los datos anidados de una API real **sí** pueden venir incompletos, así que el acceso seguro cobra todo su sentido.
+
+Ahora `mostrarPokemon` busca, **adapta** y renderiza —reusando tu `render` de C09 intacto:
 
 ```javascript
 async function mostrarPokemon(nombre) {
-  const pokemon = await buscarPokemon(nombre);
-  render([pokemon]);   // render espera una lista → array de uno
+  const data    = await buscarPokemon(nombre);   // estructura de la API
+  const pokemon = adaptarPokemon(data);          // tu estructura limpia
+  render([pokemon]);                              // render espera una lista → array de uno
 }
 
 mostrarPokemon("pikachu");   // prueba inicial
 ```
 
-> 💡 No reescribes `crearTarjeta` ni `render`: el dato de la API tiene la **misma forma** que tus datos locales de C09. Esa fue la razón de diseñarlos iguales desde el día 1.
+> 💡 Esto es exactamente lo que hace un dev real: **la API dicta su estructura y tú la adaptas a la de tu app**. Gracias al adaptador, tu `crearTarjeta` no cambia aunque la fuente de datos sí.
 
 **Criterios de Aceptación:**
-- Al llamar `mostrarPokemon("pikachu")`, aparece la tarjeta de Pikachu con datos reales.
+- Existe `adaptarPokemon(data)` que devuelve `{ nombre, imagen, tipos }`.
+- `mostrarPokemon` **adapta** los datos antes de renderizar.
 - Se reusa `render()` / `crearTarjeta()` de C09 sin reescribirlos.
 
-- **Checkpoint 2 (~60 min):** la página muestra la tarjeta de un Pokémon traído de la API (imagen + nombre + tipos reales).
+- **Checkpoint 2 (~60 min):** la página muestra la tarjeta de un Pokémon real, idéntica en apariencia a las de C09 — pero los datos vinieron de la API y pasaron por tu adaptador.
 
 ---
 

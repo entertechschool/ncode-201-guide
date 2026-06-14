@@ -9,7 +9,7 @@
 - **Template literal** (NUEVO): string con backticks que interpola valores (`${...}`) y admite varias líneas. Reemplaza la concatenación con `+`. Es la base para construir HTML legible.
 - **Patrón render** (NUEVO): limpiar el contenedor (`innerHTML = ""`) → recorrer los datos → crear un nodo por cada uno y agregarlo. La UI deja de ser HTML fijo y pasa a ser **un reflejo de los datos**.
 - **`createElement` / `appendChild`** (NUEVO): crear nodos del DOM desde JS e insertarlos. Distinguir `innerHTML` (interpreta HTML) de `textContent` (texto plano).
-- **Destructuring** (NUEVO): `const { name, types } = pokemon` saca propiedades a variables en una línea.
+- **Destructuring** (NUEVO): `const { nombre, tipos } = pokemon` saca propiedades a variables en una línea.
 - **Spread `...` y optional chaining `?.`** (NUEVOS): combinar arrays/objetos y acceder a datos anidados que podrían faltar sin romper el programa.
 
 > ❗ **Nada de internet hoy.** Se trabaja con un array local que tiene **la forma exacta de la API real** (C11). Así el alumno aprende a *renderizar* sin el ruido de la red. En C11 solo cambia la **fuente** de los datos, no el render.
@@ -66,8 +66,8 @@ Escribe `"Hola, " + nombre + "!"` y luego `` `Hola, ${nombre}!` ``. "Mismo resul
 ### Demo 2 — el array manda (5 min)
 Muestra `render(pokemonLocal)` pintando 6 tarjetas. Borra un elemento del array, recarga: una tarjeta menos. "No tocaste el HTML. Cambiaste los datos y la UI siguió." **Esta es la idea que ordena toda la clase.**
 
-### Demo 3 — `?.` salva la vida (3 min)
-Pon `sprites: {}` en un Pokémon. Sin `?.`: error rojo en consola, app rota. Con `?.`: placeholder, app viva. "Los datos reales SIEMPRE tienen huecos. `?.` es tu cinturón de seguridad."
+### Demo 3 — `??` salva la vida (3 min)
+Quita la propiedad `imagen` de un Pokémon. Sin `??`: la tarjeta queda con imagen rota. Con `imagen ?? respaldo`: muestra el placeholder, app viva. "Los datos a veces tienen huecos. `??` es tu valor de respaldo."
 
 ### Transición al Lab
 ```
@@ -85,7 +85,7 @@ Pon `sprites: {}` en un Pokémon. Sin `?.`: error rojo en consola, app rota. Con
 Pon `` `Tengo ${2 + 3} pokémon` `` en pizarra. ¿Imprime `2 + 3` o `5`? (Imprime `5` — `${}` evalúa la expresión.)
 
 ### Dinámica 2: "Arma el destructuring" (antes de HU3)
-Das `const pokemon = { name: "eevee", id: 133 }` y piden sacar `name` e `id` en una línea. Comparan con hacerlo en dos.
+Das `const pokemon = { nombre: "eevee", tipos: ["normal"] }` y piden sacar `nombre` y `tipos` en una línea. Comparan con hacerlo en dos.
 
 ### Dinámica 3: "Predice el render" (en HU2)
 "Si el array tiene 3 Pokémon, ¿cuántas veces corre `crearTarjeta`? ¿Y cuántos `appendChild`?" Antes de probarlo.
@@ -103,7 +103,7 @@ el.textContent = "<b>hola</b>";  // se ve: <b>hola</b> (literal)
 
 ### .map + .join para los badges
 ```javascript
-types.map(t => `<span>${t.type.name}</span>`).join("")
+tipos.map(tipo => `<span>${tipo}</span>`).join("")
 ```
 "`.map` te da un array de strings; `.join("")` los pega en uno solo para meterlo al HTML."
 
@@ -114,10 +114,10 @@ types.map(t => `<span>${t.type.name}</span>`).join("")
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
 | Las tarjetas no aparecen | `app.js` cargado antes del `<div id="resultado">` o `id` mal escrito | El `<script>` va al final del `<body>`; verificar el `id` |
-| Sale `[object Object]` | Interpolaron un objeto, no una propiedad | Usar `${pokemon.name}`, no `${pokemon}` |
+| Sale `[object Object]` | Interpolaron un objeto, no una propiedad | Usar `${pokemon.nombre}`, no `${pokemon}` |
 | Se duplican las tarjetas al re-renderizar | Falta `innerHTML = ""` al inicio de `render` | Limpiar el contenedor primero |
-| `cannot read property 'front_default' of undefined` | Acceso sin `?.` a un dato que falta | `sprites?.front_default ?? respaldo` |
-| Solo se ve el último tipo | Usaron `=` en vez de `.map`/`.join` para varios | Recorrer el array `types` con `.map` |
+| Imagen rota en la tarjeta | El Pokémon no traía `imagen` y no hay respaldo | `imagen ?? "placeholder"` |
+| Solo se ve el último tipo | Usaron `=` en vez de `.map`/`.join` para varios | Recorrer el array `tipos` con `.map` |
 | El HTML sale como texto | Usaron `textContent` en vez de `innerHTML` | Para etiquetas, `innerHTML` |
 
 ---
@@ -144,7 +144,7 @@ types.map(t => `<span>${t.type.name}</span>`).join("")
 |---|---|---|
 | ~30' | HU1 | Ve una tarjeta de ejemplo bien maquetada con Tailwind dentro de la rejilla. |
 | ~60' | HU2 | Las 6 tarjetas se generan desde el array; al borrar un dato, desaparece la tarjeta. |
-| ~90' | HU3 | Tarjetas con destructuring + badges de todos los tipos; no se rompe sin imagen (`?.`). |
+| ~90' | HU3 | Tarjetas con destructuring + badges de todos los tipos; no se rompe sin imagen (`??`). |
 
 ---
 
@@ -161,7 +161,7 @@ types.map(t => `<span>${t.type.name}</span>`).join("")
 ## ❓ Preguntas Frecuentes
 
 **P: ¿Por qué no usamos la API real desde hoy?**
-R: Para separar el render (hoy) de la red (C11). Dos cosas nuevas a la vez confunden. El array local tiene la misma forma que la API, así que el render que escriben hoy servirá igual en C11.
+R: Para separar el render (hoy) de la red (C11). Dos cosas nuevas a la vez confunden. Hoy los datos tienen términos claros (`nombre`/`imagen`/`tipos`); en C11 verán que la API entrega **otra** estructura y aprenderán a adaptarla a la suya.
 
 **P: ¿`createElement` o `innerHTML`? ¿Cuál es mejor?**
 R: Ambos se usan. Hoy combinamos: `createElement` para el contenedor de la tarjeta y `innerHTML` para su contenido. Es un patrón común y legible para empezar.
@@ -196,5 +196,5 @@ Al cerrar:
 
 - ¿Cuántos intentaron escribir las tarjetas a mano antes de captar el patrón render?
 - ¿La demo de "borrar un dato → desaparece la tarjeta" hizo clic?
-- ¿El error de dato faltante (sin `?.`) lo vivieron en carne propia? Eso lo fija.
+- ¿El dato faltante (sin `??`) lo vivieron en carne propia? Eso lo fija.
 - ¿Alguien preguntó "¿y si fueran 1000 Pokémon?"? Excelente — captaron por qué el render dinámico importa.

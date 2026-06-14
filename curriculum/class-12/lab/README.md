@@ -35,6 +35,8 @@
 
    > 📌 Convención del proyecto: `#spinner` (estado de carga) y `#mensaje` (errores / vacío). La clase `hidden` de Tailwind los oculta hasta que el JS los muestre.
 
+3. **Conservas de C11** las funciones `adaptarPokemon(data)`, `crearTarjeta()` y `render()`. Hoy solo robusteces `mostrarPokemon`.
+
 ---
 
 ## 📋 Historias de Usuario
@@ -55,8 +57,8 @@ async function mostrarPokemon(nombre) {
 
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
-    const pokemon  = await response.json();
-    render([pokemon]);
+    const data     = await response.json();
+    render([adaptarPokemon(data)]);   // adaptarPokemon viene de C11
   } catch (error) {
     mensaje.textContent = "Algo salió mal. Revisa tu conexión.";
     mensaje.classList.remove("hidden");
@@ -88,8 +90,8 @@ try {
     throw new Error(`No se encontró "${nombre}"`);     // lanza un error propio
   }
 
-  const pokemon = await response.json();
-  render([pokemon]);
+  const data = await response.json();
+  render([adaptarPokemon(data)]);
 } catch (error) {
   mensaje.textContent = error.message;                 // usa el mensaje del error
   mensaje.classList.remove("hidden");
@@ -126,8 +128,8 @@ async function mostrarPokemon(nombre) {
     if (!response.ok) {
       throw new Error(`No se encontró "${nombre}"`);
     }
-    const pokemon = await response.json();
-    render([pokemon]);
+    const data = await response.json();
+    render([adaptarPokemon(data)]);
   } catch (error) {
     mensaje.textContent = error.message;
     mensaje.classList.remove("hidden");

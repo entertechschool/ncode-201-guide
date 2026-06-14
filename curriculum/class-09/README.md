@@ -6,7 +6,7 @@
 
 La Clase 09 abre el **Módulo 3 — JavaScript Moderno y Consumo de APIs**, cuyo proyecto integrador es una **Pokédex**. En esta primera sesión los estudiantes aprenden la **sintaxis moderna de JavaScript (ES6+)** que usa la industria y la habilidad central de toda app web: **generar HTML desde datos** (render dinámico del DOM).
 
-Se trabaja con un **array local** de Pokémon —con la misma forma que devolverá la API real en C11— para aislar el aprendizaje del *render* del ruido de la red. Los estilos usan **Tailwind CSS**, que ya dominan de C08; aquí solo lo aplican.
+Se trabaja con un **array local** de Pokémon con **propiedades claras y directas** (`nombre`, `imagen`, `tipos`) para aislar el aprendizaje del *render* del ruido de la red. Los estilos usan **Tailwind CSS**, que ya dominan de C08; aquí solo lo aplican.
 
 Se utilizan dos recursos fundamentales:
 
@@ -54,9 +54,9 @@ Al culminar esta clase, los estudiantes podrán escribir JavaScript con sintaxis
 | Herramienta | Para qué |
 |---|---|
 | **Template literal** `` `...${x}...` `` | Construir strings de HTML legibles. |
-| **Destructuring** `const { name } = pokemon` | Leer propiedades sin repetir `pokemon.`. |
+| **Destructuring** `const { nombre } = pokemon` | Leer propiedades sin repetir `pokemon.`. |
 | **Spread** `[...a, ...b]` | Expandir/combinar arrays. |
 | **Optional chaining** `obj?.prop` | Acceso seguro a datos anidados. |
 | **`createElement` / `appendChild`** | Crear e insertar nodos del DOM. |
 
-> El proyecto Pokédex evoluciona durante todo el módulo: hoy con **datos locales**; en C11 con datos **reales** de la API. La forma del dato es la misma desde el día 1.
+> El proyecto Pokédex evoluciona durante todo el módulo: hoy con **datos locales** de propiedades claras; en C11 con datos **reales** traídos de la web, donde aprenderán a adaptar la estructura recibida a la suya.

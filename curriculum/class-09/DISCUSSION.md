@@ -8,7 +8,7 @@ Debatir en esta sesión te permitirá analizar críticamente por qué el JavaScr
 
 - **Render dinámico:** la interfaz se genera recorriendo los datos y creando un nodo por cada uno, en vez de escribir el HTML elemento por elemento. La UI pasa a ser un **reflejo de los datos**.
 - **Template literals:** strings con backticks e interpolación `${...}`; legibles y multilínea, ideales para construir HTML.
-- **Destructuring y optional chaining:** `const { name } = pokemon` saca propiedades de una; `?.` accede a datos anidados que podrían faltar sin romper el programa.
+- **Destructuring y acceso seguro:** `const { nombre } = pokemon` saca propiedades de una; `??` da un valor de respaldo y `?.` accede a datos que podrían faltar sin romper el programa.
 
 ## 📚 Artículos recomendados para leer
 
