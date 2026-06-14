@@ -45,7 +45,8 @@ Al culminar esta clase, los estudiantes podrán escribir JavaScript con sintaxis
 
 - Una rejilla de tarjetas de Pokémon **generada desde un array** con JavaScript.
 - Badges de tipo construidos con `.map()` + `spread` + `.join()`.
-- Acceso seguro a datos anidados con `?.` y valor de respaldo con `??`.
+- Acceso seguro a datos con `?.` y valor de respaldo con `??`.
+- Un **filtro en vivo** que vuelve a renderizar la lista al escribir (la UI reacciona a los datos).
 
 ---
 

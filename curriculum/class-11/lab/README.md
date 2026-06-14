@@ -26,7 +26,7 @@ Llegó el momento: hoy tu Pokédex deja de usar datos locales y **trae Pokémon 
 ## ⚙️ Setup Inicial
 
 1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab11-fetch`.
-2. **Agrega un buscador** al `index.html`, encima de `#resultado`:
+2. **Reusa el buscador de C09** y agrégale un **botón** al lado. Ya tienes `<input id="buscador">`; envuélvelo así en tu `index.html`:
 
    ```html
    <div class="max-w-md mx-auto flex gap-2 mb-6">
@@ -38,7 +38,7 @@ Llegó el momento: hoy tu Pokédex deja de usar datos locales y **trae Pokémon 
    </div>
    ```
 
-3. Conservas tu `crearTarjeta()` y `render()` de C09. Ya **no** necesitas `pokemonLocal` ni la promesa simulada de C10 (puedes dejarlos comentados como referencia).
+3. Conservas tu `crearTarjeta()` y `render()` de C09. Ya **no** necesitas `pokemonLocal` ni la promesa simulada de C10 (puedes dejarlos comentados como referencia). **Quita el listener de filtro local** (`buscador.addEventListener("input", …)`) de C09: en HU3 lo reemplazas por una búsqueda a la API.
 
 ---
 
@@ -139,11 +139,13 @@ mostrarPokemon("pikachu");   // prueba inicial
 
 ---
 
-### HU3: Conectar el buscador
+### HU3: Del filtro local a la búsqueda en la API
 
 > *"Como usuario, quiero escribir un nombre, presionar Buscar (o Enter) y ver ese Pokémon."*
 
-Conecta el input y el botón a tu función:
+En C09 tu buscador filtraba la **lista local** en cada tecla (`input` + `.filter`). Ahora cada búsqueda va a la **red**, y llamar a la API en cada tecla sería un abuso. Así que cambias el disparador: buscas al hacer **clic en el botón** (o con **Enter**), no en cada pulsación.
+
+Reemplaza el listener de filtro local de C09 por este:
 
 ```javascript
 const input = document.getElementById("buscador");
@@ -152,7 +154,7 @@ const boton = document.getElementById("btn-buscar");
 boton.addEventListener("click", function () {
   const nombre = input.value.trim();
   if (nombre !== "") {
-    mostrarPokemon(nombre);
+    mostrarPokemon(nombre);   // ← ahora va a la API (antes filtraba local)
   }
 });
 
@@ -163,6 +165,8 @@ input.addEventListener("keydown", function (event) {
   }
 });
 ```
+
+> 💡 Mismo buscador, otra fuente de datos: antes mostraba lo que **ya tenías**; ahora trae lo que **no tenías**. Y se dispara con un evento puntual (clic/Enter), no en cada tecla, para no saturar la API.
 
 **Criterios de Aceptación:**
 - Escribir un nombre y hacer clic en **Buscar** muestra ese Pokémon.

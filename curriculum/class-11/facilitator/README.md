@@ -76,7 +76,7 @@ En consola muestra `data.types` → un array de objetos `{ type: { name } }`. Lu
 ```
 "HU1: una función que trae UN Pokémon CRUDO de la API con fetch + await.
  HU2: adaptarPokemon(data) traduce la forma de la API a la limpia, y se muestra reusando render.
- HU3: conectan el buscador (input + botón + Enter).
+ HU3: el buscador de C09 (filtro local en vivo) pasa a buscar en la API con botón/Enter — no en cada tecla, para no saturarla.
  Si buscan algo que no existe, se rompe. Eso lo arreglamos en C12."
 ```
 
@@ -119,6 +119,7 @@ render([pokemon]);                      // render espera un array; envolvemos en
 | `data` es `Promise {<pending>}` | Falta el segundo `await` (en `.json()`) | `const data = await response.json()` |
 | `await is only valid in async function` | Usaron `await` en una función sin `async` | Marcar la función con `async` |
 | Imagen rota / tipos como `[object Object]` | Pasaron `data` (forma API) directo sin adaptar | `const pokemon = adaptarPokemon(data)` antes de `render` |
+| La API recibe muchísimas llamadas | Dejaron el listener `input` de C09 (busca en cada tecla) | Buscar con clic/Enter, quitar el `input` de filtro local |
 | La búsqueda no hace nada | El `id` del input/botón no coincide | Verificar `#buscador` y `#btn-buscar` |
 | Funciona "pikachu" pero no "Pikachu" | La API espera minúsculas | `nombre.toLowerCase()` en la URL |
 | Pantalla en blanco al buscar algo raro | El nombre no existe (404) → falla | Es esperado; se maneja en C12 |

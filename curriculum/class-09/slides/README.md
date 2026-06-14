@@ -131,6 +131,7 @@ const cuantos = pokemon.tipos?.length ?? 0;
 | **HU1** | ~30 min | Maqueta de la tarjeta con Tailwind |
 | **HU2** | ~30 min | Render dinámico (template literals + createElement) |
 | **HU3** | ~30 min | Destructuring + spread + optional chaining |
+| **HU4** | ~10 min | Filtro en vivo: re-render al escribir |
 
 > Datos: array local de 6 Pokémon (forma de la API).
 

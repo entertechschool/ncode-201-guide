@@ -53,7 +53,7 @@ Es lo que toda empresa espera de un dev JS hoy. Template literals, destructuring
 | Refuerzo + contexto | 15 min | Arrays de objetos (C06), DOM básico. Presentar el proyecto Pokédex. |
 | Debate Técnico | 30 min | Sintaxis moderna y render dinámico vs HTML a mano. |
 | Demo | 15 min | De un array a tarjetas en pantalla. |
-| Lab (HU1-HU3) | 100 min | HU1 maqueta · HU2 render dinámico · HU3 destructuring/spread/`?.` |
+| Lab (HU1-HU4) | 100 min | HU1 maqueta · HU2 render dinámico · HU3 destructuring/spread/`?.` · HU4 filtro en vivo (re-render) |
 | Cierre | 20 min | Síntesis + puente a la asincronía (C10). |
 
 ---
@@ -127,6 +127,7 @@ tipos.map(tipo => `<span>${tipo}</span>`).join("")
 **ENTIENDE cuando:**
 - Convierte una concatenación en template literal sin dudar.
 - Explica que cambiar el array cambia la UI (sin tocar HTML).
+- En HU4, entiende que `render()` se vuelve a llamar con la lista filtrada y la pantalla reacciona.
 - Sabe cuándo usar `innerHTML` vs `textContent`.
 - Reconoce que `?.` evita el error con datos faltantes.
 
@@ -145,6 +146,7 @@ tipos.map(tipo => `<span>${tipo}</span>`).join("")
 | ~30' | HU1 | Ve una tarjeta de ejemplo bien maquetada con Tailwind dentro de la rejilla. |
 | ~60' | HU2 | Las 6 tarjetas se generan desde el array; al borrar un dato, desaparece la tarjeta. |
 | ~90' | HU3 | Tarjetas con destructuring + badges de todos los tipos; no se rompe sin imagen (`??`). |
+| ~100' | HU4 | Al escribir en el buscador la lista se filtra (re-render); al borrar, vuelven todos. |
 
 ---
 

@@ -101,16 +101,18 @@ async function mostrarPokemon(nombre) {
 
 ---
 
-## 🔍 Conectar el buscador
+## 🔍 Del filtro local a la API
+
+El buscador de C09 filtraba la lista local **en cada tecla**. Ahora va a la red → buscas con **botón / Enter** (no en cada tecla):
 
 ```javascript
 boton.addEventListener("click", function () {
   const nombre = input.value.trim();
-  if (nombre !== "") mostrarPokemon(nombre);
+  if (nombre !== "") mostrarPokemon(nombre);   // ahora va a la API
 });
 ```
 
-> Input + botón (+ Enter) → Pokémon real en pantalla.
+> Mismo buscador, otra fuente: antes mostraba lo que ya tenías; ahora trae lo que no tenías.
 
 ---
 

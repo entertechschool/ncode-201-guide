@@ -2,7 +2,7 @@
 
 ¡Bienvenido al primer laboratorio del **Módulo 3**! Durante las próximas 4 clases construirás una **Pokédex**: una app que busca Pokémon y muestra sus datos. Hoy montas la base con **JavaScript moderno (ES6+)** y aprendes a **generar HTML desde datos** — la habilidad que está detrás de toda app web.
 
-> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
+> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min) + el cierre con HU4 (~100 min).
 >
 > 🧠 **Hoy NO tocamos internet.** Trabajas con un **array local** de Pokémon, con propiedades claras y directas. Así te enfocas solo en lo nuevo: generar la interfaz desde datos.
 
@@ -11,6 +11,7 @@
 1. Escribir JavaScript con **sintaxis moderna**: template literals, destructuring, spread y optional chaining.
 2. **Generar elementos del DOM desde datos** con `createElement` + `appendChild` (el patrón render).
 3. Renderizar una lista de objetos como tarjetas, sin escribir el HTML a mano.
+4. **Actualizar la interfaz** volviendo a renderizar cuando los datos cambian (filtrado en vivo).
 
 ## 🔑 Conceptos Clave
 
@@ -210,6 +211,46 @@ function crearTarjeta(pokemon) {
 - Si quitas la propiedad `imagen` de un Pokémon del array, la tarjeta **no se rompe** (muestra el placeholder).
 
 - **Checkpoint 3 (~90 min):** las 6 tarjetas muestran sus badges de tipo (varios en bulbasaur/jigglypuff/gengar). Borra la propiedad `imagen` de un Pokémon: la tarjeta sigue viva gracias a `??`.
+
+---
+
+### HU4: Filtrar la lista en vivo (la UI reacciona a los datos)
+
+> *"Como usuario, quiero escribir un nombre y que la lista se filtre al instante, para encontrar un Pokémon rápido."*
+
+Hasta ahora llamaste `render(pokemonLocal)` **una sola vez**. Pero `render()` es una función: puedes llamarla **cada vez que los datos cambian**, y la UI se actualiza sola. Eso vas a comprobar.
+
+Agrega un campo de búsqueda **encima** de `#resultado` en tu `index.html`:
+
+```html
+<div class="max-w-md mx-auto mb-6">
+  <input id="buscador" type="text" placeholder="Filtra por nombre…"
+         class="w-full p-2 rounded-lg border border-slate-300">
+</div>
+```
+
+Y en `js/app.js`, filtra y vuelve a renderizar cada vez que el usuario escribe:
+
+```javascript
+const buscador = document.getElementById("buscador");
+
+buscador.addEventListener("input", function () {
+  const texto = buscador.value.toLowerCase();
+  const filtrados = pokemonLocal.filter(p => p.nombre.includes(texto));
+  render(filtrados);   // ← el MISMO render, con datos distintos
+});
+```
+
+> 💡 No reescribes `render` ni `crearTarjeta`: les das **otra lista**. Esa es la prueba de que *la UI es un reflejo de los datos* — cambian los datos, cambia la pantalla.
+
+**Criterios de Aceptación:**
+- Existe un `<input id="buscador">` encima de la rejilla.
+- Al escribir, la rejilla muestra **solo** los Pokémon cuyo nombre coincide.
+- Al borrar el texto, vuelven a aparecer todos.
+
+- **Checkpoint 4 (~100 min):** escribe "pi" → queda solo Pikachu; borra el texto → vuelven los 6. La lista **reacciona** a lo que escribes.
+
+> 🔮 Este buscador hoy filtra tu **lista local**. En C11 le cambiarás la lógica para que, en vez de filtrar lo que ya tienes, **traiga Pokémon nuevos desde una API**.
 
 ---
 
