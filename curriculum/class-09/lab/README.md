@@ -93,8 +93,9 @@ Antes de generar nada con JS, mira **a dónde quieres llegar**. Así se ve **una
 ```
 
 **Criterios de Aceptación:**
-- `#resultado` usa `grid` de Tailwind (2 columnas en móvil, 3 en escritorio — ya viene en el HTML base).
-- La tarjeta de ejemplo se ve: imagen centrada, nombre en negrita, badge de tipo.
+- Las tarjetas de Pokémon se muestran organizadas en una **rejilla**, no apiladas en una sola columna.
+- Cada tarjeta deja ver de un vistazo la **imagen**, el **nombre** y el/los **tipo(s)** del Pokémon.
+- La rejilla se **adapta al tamaño de pantalla**: muestra menos columnas en el móvil y más en el escritorio.
 
 - **Checkpoint 1 (~30 min):** ves al menos una tarjeta de ejemplo bien maquetada dentro de la rejilla. **Borra la tarjeta de prueba antes de seguir** — en HU2 la genera el JS.
 
@@ -142,9 +143,9 @@ render(pokemonLocal);   // ¡píntalo!
 > 💡 **`innerHTML` vs `textContent`:** `innerHTML` interpreta el string como **HTML** (crea etiquetas); `textContent` lo pone como **texto plano**. Para construir la tarjeta usamos `innerHTML`; para meter solo texto sin etiquetas, `textContent`.
 
 **Criterios de Aceptación:**
-- Las **6** tarjetas aparecen, generadas por el JS (no escritas a mano en el HTML).
-- `render()` limpia el contenedor antes de pintar (`innerHTML = ""`).
-- Cada tarjeta muestra imagen y nombre.
+- Todas las tarjetas de la lista de Pokémon aparecen en la rejilla.
+- Cada tarjeta muestra su imagen y su nombre.
+- Si la lista de datos cambia (agregar o quitar un Pokémon), la rejilla muestra exactamente esos Pokémon, sin duplicados ni restos.
 
 - **Checkpoint 2 (~60 min):** abre la página: las 6 tarjetas aparecen solas. Borra una entrada del array `pokemonLocal`, recarga, y verás que desaparece — la UI **depende de los datos**.
 
@@ -206,9 +207,9 @@ function crearTarjeta(pokemon) {
 ```
 
 **Criterios de Aceptación:**
-- `crearTarjeta` usa **destructuring** para leer `nombre`, `imagen`, `tipos`.
-- Cada tarjeta muestra **todos** sus tipos como badges (bulbasaur y gengar tienen 2).
-- Si quitas la propiedad `imagen` de un Pokémon del array, la tarjeta **no se rompe** (muestra el placeholder).
+- Cada tarjeta muestra **todos** los tipos del Pokémon (los de doble tipo, como bulbasaur y gengar, muestran ambos).
+- Si a un Pokémon le falta la imagen, su tarjeta **no se rompe**: aparece una imagen de respaldo.
+- El nombre y los tipos se leen claros y completos en cada tarjeta.
 
 - **Checkpoint 3 (~90 min):** las 6 tarjetas muestran sus badges de tipo (varios en bulbasaur/jigglypuff/gengar). Borra la propiedad `imagen` de un Pokémon: la tarjeta sigue viva gracias a `??`.
 
@@ -244,9 +245,9 @@ buscador.addEventListener("input", function () {
 > 💡 No reescribes `render` ni `crearTarjeta`: les das **otra lista**. Esa es la prueba de que *la UI es un reflejo de los datos* — cambian los datos, cambia la pantalla.
 
 **Criterios de Aceptación:**
-- Existe un `<input id="buscador">` encima de la rejilla.
-- Al escribir, la rejilla muestra **solo** los Pokémon cuyo nombre coincide.
-- Al borrar el texto, vuelven a aparecer todos.
+- Al escribir en el campo de búsqueda, la rejilla muestra **solo** los Pokémon cuyo nombre coincide.
+- Al borrar lo escrito, vuelven a aparecer todos.
+- El filtrado se actualiza **al instante** mientras escribes, sin pulsar ningún botón.
 
 - **Checkpoint 4 (~100 min):** escribe "pi" → queda solo Pikachu; borra el texto → vuelven los 6. La lista **reacciona** a lo que escribes.
 
