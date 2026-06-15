@@ -38,6 +38,11 @@ En C09 los datos estaban **listos al instante** en un array. Pero una API real *
 
 > *"Como usuario, quiero ver un mensaje de 'Cargando…' y que las tarjetas aparezcan un momento después, como en una app real que espera datos."*
 
+**Criterios de Aceptación:**
+- Al cargar la página, primero se ve un mensaje de "Cargando…".
+- Tras una breve espera, el mensaje desaparece y aparecen las tarjetas.
+- Durante la espera, la página no se congela (sigue respondiendo).
+
 `setTimeout(funcion, ms)` corre la función **después** de los milisegundos indicados. Mientras tanto, el resto del programa **no se congela**:
 
 ```javascript
@@ -54,11 +59,6 @@ setTimeout(function () {
 
 > 💡 Para comprobar que NO se bloquea, agrega un `console.log("sigo trabajando")` **después** del `setTimeout`. Verás que se imprime **antes** de que aparezcan las tarjetas. JavaScript no se quedó esperando.
 
-**Criterios de Aceptación:**
-- Al cargar, se ve "Cargando…" durante ~1.5 s.
-- Luego aparecen las 6 tarjetas (con tu `render` de C09).
-- Un `console.log` posterior al `setTimeout` se imprime **antes** que las tarjetas.
-
 - **Checkpoint 1 (~30 min):** la página muestra "Cargando…" y, tras la demora, las tarjetas. Entiendes que JavaScript siguió trabajando durante la espera.
 
 ---
@@ -66,6 +66,10 @@ setTimeout(function () {
 ### HU2: Envolver los datos en una Promesa
 
 > *"Como desarrollador, quiero una función que me 'prometa' los datos del Pokémon y me los entregue cuando estén listos, como hará la API real en C11."*
+
+**Criterios de Aceptación:**
+- Al llamar la función, devuelve una **promesa**, no el array directamente.
+- La promesa empieza "pendiente" y, tras la espera, se **resuelve** entregando la lista de Pokémon.
 
 Una **Promesa** es un objeto que representa un valor que **llegará después**. Se crea con `new Promise`, que recibe dos "palancas": `resolve` (los datos llegaron bien) y `reject` (algo falló):
 
@@ -86,10 +90,6 @@ function obtenerPokemones() {
 
 > 💡 `obtenerPokemones()` **no devuelve los datos directamente** — devuelve una *promesa* de ellos. Por eso en HU3 hay que "abrir" esa promesa para usarlos.
 
-**Criterios de Aceptación:**
-- Existe `obtenerPokemones()` que **retorna** `new Promise`.
-- La promesa se resuelve con `pokemonLocal` tras un `setTimeout`.
-
 - **Checkpoint 2 (~60 min):** en consola, `console.log(obtenerPokemones())` muestra un objeto `Promise {<pending>}`. Confirma que la función entrega una promesa, no el array.
 
 ---
@@ -97,6 +97,11 @@ function obtenerPokemones() {
 ### HU3: Consumir la Promesa con `.then()` y `.catch()`
 
 > *"Como usuario, quiero que las tarjetas se muestren cuando la promesa se resuelve, y un mensaje claro si algo falla."*
+
+**Criterios de Aceptación:**
+- Cuando la promesa se resuelve, las tarjetas aparecen en pantalla.
+- Cuando la promesa falla, en lugar de las tarjetas se muestra un mensaje de error claro.
+- La app distingue ambos caminos (éxito y error) sin romperse.
 
 Para usar el valor de una promesa se encadena `.then()` (éxito) y `.catch()` (error):
 
@@ -117,11 +122,6 @@ cargar();
 ```
 
 **Probar el camino de error:** en `obtenerPokemones`, comenta el `resolve(...)` y descomenta el `reject(new Error("No se pudo cargar"))`. Recarga: en vez de tarjetas verás el mensaje rojo. **El `.catch` atrapó el fallo.** Vuelve a dejar el `resolve` activo al terminar.
-
-**Criterios de Aceptación:**
-- `.then()` recibe la lista y la pasa a `render()`.
-- `.catch()` muestra un mensaje de error en `#resultado`.
-- Al forzar `reject`, se ve el mensaje de error en vez de las tarjetas.
 
 - **Checkpoint 3 (~90 min):** con `resolve`, ves "Cargando…" → tarjetas. Al cambiar a `reject`, ves "Cargando…" → mensaje de error. Distingues los dos caminos de una promesa.
 

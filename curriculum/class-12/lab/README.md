@@ -45,6 +45,10 @@
 
 > *"Como usuario, si algo falla al buscar, quiero ver un mensaje claro en vez de que la app se rompa."*
 
+**Criterios de Aceptación:**
+- Si la búsqueda falla (p. ej. sin internet), aparece un **mensaje claro** en vez de una pantalla rota.
+- La app **sigue viva** tras el fallo: puedes volver a buscar sin recargar.
+
 Envuelve la lógica que puede fallar en `try`; si algo sale mal, `catch` lo maneja:
 
 ```javascript
@@ -68,10 +72,6 @@ async function mostrarPokemon(nombre) {
 
 > 💡 `catch (error)` recibe un objeto `Error` con un `.message`. Hoy la app ya no muere: el fallo se convierte en un mensaje.
 
-**Criterios de Aceptación:**
-- La búsqueda usa `try/catch`.
-- Un fallo (ej. apagar el WiFi y buscar) muestra el mensaje, no una pantalla rota.
-
 - **Checkpoint 1 (~30 min):** con internet, busca normal. Desconecta la red y busca: ves el mensaje de error, la app sigue viva.
 
 ---
@@ -79,6 +79,11 @@ async function mostrarPokemon(nombre) {
 ### HU2: Detectar "Pokémon no encontrado" con `throw`
 
 > *"Como usuario, si escribo un nombre que no existe, quiero un mensaje que diga exactamente eso."*
+
+**Criterios de Aceptación:**
+- Buscar un nombre que no existe (p. ej. "pikachuu") muestra el mensaje "No se encontró 'pikachuu'".
+- El mensaje es **específico** (nombra lo que se buscó), no genérico.
+- Un nombre válido sigue mostrando su tarjeta con normalidad.
 
 Ojo: `fetch` **no** falla solo porque la API responda 404. Hay que revisarlo con `response.ok` y **lanzar** nuestro propio error:
 
@@ -100,11 +105,6 @@ try {
 
 > 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines aquí es el que se muestra. Un buen mensaje de error es parte de una buena app.
 
-**Criterios de Aceptación:**
-- Se valida `response.ok` antes de leer el JSON.
-- Buscar un nombre inexistente (ej. "pikachuu") muestra `No se encontró "pikachuu"`.
-- Un nombre válido sigue funcionando normal.
-
 - **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → tarjeta normal.
 
 ---
@@ -112,6 +112,11 @@ try {
 ### HU3: Estados de carga y vacío con `finally`
 
 > *"Como usuario, quiero ver 'Cargando…' mientras espera y que desaparezca siempre, tenga éxito o falle."*
+
+**Criterios de Aceptación:**
+- Mientras la búsqueda está en curso, se ve un indicador de **"Cargando…"**.
+- El indicador **siempre desaparece** al terminar, haya éxito o error.
+- Al abrir la página sin buscar nada, se ve un estado inicial con una pista.
 
 Muestra el spinner al empezar y ocúltalo en `finally` (corre **siempre**):
 
@@ -145,10 +150,6 @@ async function mostrarPokemon(nombre) {
 mensaje.textContent = "Busca un Pokémon para empezar 🔍";
 mensaje.classList.remove("hidden");
 ```
-
-**Criterios de Aceptación:**
-- El spinner aparece durante la búsqueda y se oculta **en los tres casos** (éxito, no encontrado, error de red).
-- Al cargar la página sin buscar, se ve un estado vacío con una pista.
 
 - **Checkpoint 3 (~90 min):** prueba los 3 escenarios y observa el spinner aparecer y **siempre** desaparecer. Esa es la garantía de `finally`.
 

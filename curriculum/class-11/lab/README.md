@@ -69,6 +69,11 @@ Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON 
 
 > *"Como desarrollador, quiero una función que reciba un nombre y traiga ese Pokémon desde la PokeAPI."*
 
+**Criterios de Aceptación:**
+- Al llamar la función con un nombre, trae de la PokeAPI los **datos de ese Pokémon**.
+- Los datos quedan disponibles como un **objeto** JavaScript utilizable (no como texto ni como promesa sin resolver).
+- Al probarla en consola, devuelve el Pokémon pedido con sus datos reales.
+
 `async/await` es la forma moderna y legible de trabajar con promesas. `await` **pausa** la función hasta que la promesa resuelva, y te entrega el valor directo (sin `.then`):
 
 ```javascript
@@ -89,11 +94,6 @@ async function buscarPokemon(nombre) {
 
 > 💡 **¿Por qué dos `await`?** Uno espera a que **llegue** la respuesta; otro a que se **lea y convierta** su contenido. Ambas operaciones tardan, ambas son promesas.
 
-**Criterios de Aceptación:**
-- Existe `async function buscarPokemon(nombre)`.
-- Usa `await fetch(...)` y `await response.json()`.
-- Pruébala desde consola: `buscarPokemon("charizard").then(p => console.log(p))` imprime el objeto del Pokémon.
-
 - **Checkpoint 1 (~30 min):** en consola, `buscarPokemon("ditto")` (vía `.then(console.log)`) muestra el objeto real traído de la API, con `name`, `sprites`, `types`.
 
 ---
@@ -101,6 +101,11 @@ async function buscarPokemon(nombre) {
 ### HU2: Adaptar la estructura de la API y mostrarla
 
 > *"Como usuario, quiero ver la tarjeta del Pokémon que busqué, con su imagen y tipos."*
+
+**Criterios de Aceptación:**
+- La tarjeta del Pokémon buscado aparece con su **imagen, nombre y tipos**.
+- Los datos de la API se muestran correctamente, aunque la API los entregue con otra estructura.
+- La tarjeta se ve igual que las de C09, pero ahora con datos reales.
 
 La API te da una estructura **anidada** (`data.sprites.front_default`, `data.types[].type.name`), pero tu `crearTarjeta` de C09 espera la estructura **limpia** (`{ nombre, imagen, tipos }`). En vez de reescribir el render, escribes una **función adaptadora** que traduce de una forma a la otra:
 
@@ -130,11 +135,6 @@ mostrarPokemon("pikachu");   // prueba inicial
 
 > 💡 Esto es exactamente lo que hace un dev real: **la API dicta su estructura y tú la adaptas a la de tu app**. Gracias al adaptador, tu `crearTarjeta` no cambia aunque la fuente de datos sí.
 
-**Criterios de Aceptación:**
-- Existe `adaptarPokemon(data)` que devuelve `{ nombre, imagen, tipos }`.
-- `mostrarPokemon` **adapta** los datos antes de renderizar.
-- Se reusa `render()` / `crearTarjeta()` de C09 sin reescribirlos.
-
 - **Checkpoint 2 (~60 min):** la página muestra la tarjeta de un Pokémon real, idéntica en apariencia a las de C09 — pero los datos vinieron de la API y pasaron por tu adaptador.
 
 ---
@@ -142,6 +142,11 @@ mostrarPokemon("pikachu");   // prueba inicial
 ### HU3: Del filtro local a la búsqueda en la API
 
 > *"Como usuario, quiero escribir un nombre, presionar Buscar (o Enter) y ver ese Pokémon."*
+
+**Criterios de Aceptación:**
+- Escribir un nombre y hacer clic en **Buscar** muestra ese Pokémon.
+- Presionar **Enter** en el campo de búsqueda hace lo mismo.
+- El buscador ignora una búsqueda vacía.
 
 En C09 tu buscador filtraba la **lista local** en cada tecla (`input` + `.filter`). Ahora cada búsqueda va a la **red**, y llamar a la API en cada tecla sería un abuso. Así que cambias el disparador: buscas al hacer **clic en el botón** (o con **Enter**), no en cada pulsación.
 
@@ -167,11 +172,6 @@ input.addEventListener("keydown", function (event) {
 ```
 
 > 💡 Mismo buscador, otra fuente de datos: antes mostraba lo que **ya tenías**; ahora trae lo que **no tenías**. Y se dispara con un evento puntual (clic/Enter), no en cada tecla, para no saturar la API.
-
-**Criterios de Aceptación:**
-- Escribir un nombre y hacer clic en **Buscar** muestra ese Pokémon.
-- Presionar **Enter** en el input hace lo mismo.
-- El buscador ignora una búsqueda vacía.
 
 - **Checkpoint 3 (~90 min):** escribes "bulbasaur", presionas Enter y aparece su tarjeta. Pruebas varios nombres y la Pokédex responde con datos reales.
 
