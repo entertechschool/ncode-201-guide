@@ -1,54 +1,39 @@
-# Clase 11 — async/await, fetch y JSON
+# Clase 11 — async/await y búsqueda en la API
 ### Code 201 · Módulo 3 · Proyecto: Pokédex
 
 ---
 
 ## 🎯 Objetivo de la Clase
 
-- Entender **JSON** como formato de intercambio.
-- Pedir datos reales con **`fetch`** + **`response.json()`**.
-- Escribir asincronía legible con **`async/await`**.
+- **Reformular** el `.then` de C10 con **`async/await`**.
+- **Buscar** un Pokémon por nombre en la API.
+- **Agregar** lo buscado a tu colección (`pokedex`).
 
-> La Pokédex deja los datos locales y consume la **PokeAPI** real.
-
----
-
-## 🧬 ¿Qué es JSON?
-
-```json
-{
-  "name": "pikachu",
-  "types": [ { "type": { "name": "electric" } } ]
-}
-```
-
-* Es **texto** con la forma de un objeto JS.
-* Las APIs hablan JSON.
-* `response.json()` lo convierte en objeto usable.
-
-> ⚠️ **NO** es la forma de tu `pokemonLocal`: está **anidada** → la adaptarás.
+> Misma lógica de C10, más legible — y el buscador ahora va a la API.
 
 ---
 
-## 🌐 fetch — pedir datos a una URL
+## 🔁 .then → async/await
 
 ```javascript
-const response = await fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
+// C10
+fetch(url).then(r => r.json()).then(data => { ... });
+
+// C11 — mismo resultado
+const response = await fetch(url);
+const data     = await response.json();
 ```
 
-* Devuelve una **Promesa** (como las de C10).
-* `response` es la respuesta cruda del servidor.
-* Falta **leer su cuerpo** para tener los datos.
+> No es nuevo: es la **misma promesa**, escrita como pasos.
 
 ---
 
 ## 🔑 async / await
 
 ```javascript
-async function buscarPokemon(nombre) {
-  const response = await fetch(url);      // espera la respuesta
-  const data     = await response.json(); // forma CRUDA de la API
-  return data;
+async function obtenerPokemon(idONombre) {
+  const response = await fetch(`.../pokemon/${idONombre}`);
+  return response.json();
 }
 ```
 
@@ -58,61 +43,49 @@ async function buscarPokemon(nombre) {
 
 ---
 
-## 🔁 ¿Por qué DOS await?
-
-```
-await fetch(url)        → esperar que LLEGUE la respuesta
-await response.json()   → esperar que se LEA y convierta
-```
-
-> Dos operaciones que tardan = dos promesas = dos `await`.
-
----
-
-## 🔄 Adaptar la estructura de la API
-
-La API da SU forma (anidada). La traduces a la limpia de C09:
+## ⚡ Reformular la carga
 
 ```javascript
-function adaptarPokemon(data) {
-  return {
-    nombre: data.name,
-    imagen: data.sprites?.front_default ?? "...",
-    tipos:  data.types.map(t => t.type.name)
-  };
+async function cargarPokedex() {
+  const datos = await Promise.all(ids.map(obtenerPokemon));
+  pokedex = datos.map(adaptarPokemon);
+  render(pokedex);
 }
 ```
 
-> No controlas la API — **te adaptas a ella**.
+> El `Promise.all` de C10, ahora con `await`.
 
 ---
 
-## 🖼️ Mostrarlo: reusar C09
+## 🔍 De filtrar a buscar
+
+| C10 | C11 |
+|---|---|
+| filtra `pokedex` (lo que ya tienes) | consulta la **API** por nombre |
+| solo lo de la rejilla | **cualquier** Pokémon |
 
 ```javascript
-async function mostrarPokemon(nombre) {
-  const data    = await buscarPokemon(nombre);   // forma API
-  const pokemon = adaptarPokemon(data);          // forma limpia
-  render([pokemon]);                             // render espera un array
+async function buscarPokemon(nombre) {
+  const data = await obtenerPokemon(nombre.toLowerCase());
+  return adaptarPokemon(data);
 }
 ```
 
-> Gracias al adaptador, `crearTarjeta`/`render` no cambian.
-
 ---
 
-## 🔍 Del filtro local a la API
-
-El buscador de C09 filtraba la lista local **en cada tecla**. Ahora va a la red → buscas con **botón / Enter** (no en cada tecla):
+## ➕ Agregar a la Pokédex
 
 ```javascript
-boton.addEventListener("click", function () {
-  const nombre = input.value.trim();
-  if (nombre !== "") mostrarPokemon(nombre);   // ahora va a la API
-});
+async function agregarPokemon(nombre) {
+  const pokemon = await buscarPokemon(nombre);
+  if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
+    pokedex.push(pokemon);     // crece tu colección
+  }
+  render(pokedex);
+}
 ```
 
-> Mismo buscador, otra fuente: antes mostraba lo que ya tenías; ahora trae lo que no tenías.
+> `pokedex` es el **estado** de tu app: crece según lo que buscas.
 
 ---
 
@@ -120,27 +93,25 @@ boton.addEventListener("click", function () {
 
 | HU | Tiempo | Contenido |
 |---|---|---|
-| **HU1** | ~30 min | `buscarPokemon` con `fetch` + `await` |
-| **HU2** | ~30 min | Mostrar el Pokémon (reusa render C09) |
-| **HU3** | ~30 min | Conectar input + botón + Enter |
-
-> Datos: **PokeAPI** real (sin clave).
+| **HU1** | ~30 min | Reformular la carga con `async/await` |
+| **HU2** | ~30 min | Buscar por nombre en la API |
+| **HU3** | ~30 min | Agregar a la Pokédex (sin duplicar) |
 
 ---
 
 ## 🤔 Discusión
 
-- ¿Por qué JSON y no otro formato para las APIs?
+- ¿Por qué `async/await` se lee mejor que `.then` encadenado?
+- ¿Qué diferencia hay entre filtrar lo local y buscar en la API?
 - ¿Qué pasa si buscas un Pokémon que no existe? (👀 C12)
-- ¿En qué se parece esto a cómo una app de clima trae el pronóstico?
 
-> **Idea clave:** consumir APIs es el pan de cada día de un dev web.
+> **Idea clave:** el estado de tu app crece según lo que el usuario hace.
 
 ---
 
 ## ➡️ Lo que viene (C12)
 
-Si buscas "pikachuu", la app **se rompe**. Una app real no puede romperse así.
+Si buscas "pikachuu", la app **se rompe**. Una app real no puede.
 
 > En C12: manejar errores con `try/catch`, estados de carga, y cerrar el módulo.
 

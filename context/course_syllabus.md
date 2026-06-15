@@ -72,8 +72,8 @@
 
 ### Módulo 3: JavaScript Moderno y Consumo de APIs
 9. **JavaScript Moderno y Render Dinámico** (180 min, blend)
-10. **Asincronía y Promesas** (180 min, blend)
-11. **async/await, fetch y JSON** (180 min, blend)
+10. **Datos desde la web: fetch, Promesas y JSON** (180 min, blend)
+11. **async/await y búsqueda en la API** (180 min, blend)
 12. **Manejo de Errores y Estados** (180 min, blend)
 - **Presentación del Proyecto Integrador** (180 min, demo)
 

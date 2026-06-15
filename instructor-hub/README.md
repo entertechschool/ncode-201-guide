@@ -120,7 +120,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 09](https://entertechschool.github.io/public/slides/?class=code-201_09){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/facilitator/){:target="_blank"} |
 
-### Clase 10 — Asincronía y Promesas
+### Clase 10 — Datos desde la web (fetch, Promesas y JSON)
 
 | Documento | Enlace |
 |-----------|--------|
@@ -129,7 +129,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 10](https://entertechschool.github.io/public/slides/?class=code-201_10){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/facilitator/){:target="_blank"} |
 
-### Clase 11 — async/await, fetch y JSON
+### Clase 11 — async/await y búsqueda en la API
 
 | Documento | Enlace |
 |-----------|--------|
@@ -254,8 +254,8 @@ Cada clase cuenta con los siguientes documentos:
 | 07 | Objetos + POO con `class` | [Lab 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/lab/){:target="_blank"} | Regular |
 | **08** | **Tailwind CSS e Interfaz del Gestor** | [**Lab 08**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/lab/){:target="_blank"} | ⭐ **Evaluado M2** |
 | 09 | JavaScript Moderno y Render Dinámico | [Lab 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/lab/){:target="_blank"} | Regular |
-| 10 | Asincronía y Promesas | [Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} | Regular |
-| 11 | async/await, fetch y JSON | [Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} | Regular |
+| 10 | Datos desde la web (fetch, Promesas, JSON) | [Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} | Regular |
+| 11 | async/await y búsqueda en la API | [Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} | Regular |
 | **12** | **Manejo de Errores y Estados** | [**Lab 12**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/lab/){:target="_blank"} | ⭐ **Evaluado M3** |
 | 13 | Modelado de Objetos y Estado | [Lab 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/lab/){:target="_blank"} | Regular |
 | 14 | App State Management | [Lab 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/lab/){:target="_blank"} | Regular |

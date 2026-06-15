@@ -19,8 +19,8 @@ Este test verifica tu comprensión de los conceptos de las Clases 09 a 12:
 | Clase | Temas |
 |-------|-------|
 | Clase 09 | JavaScript Moderno y Render Dinámico (template literals, destructuring, `createElement`) |
-| Clase 10 | Asincronía y Promesas (`setTimeout`, `new Promise`, `.then`/`.catch`) |
-| Clase 11 | async/await, fetch y JSON (`fetch`, `response.json()`, `async/await`) |
+| Clase 10 | Datos desde la web (`fetch`, Promesas `.then`/`.catch`, JSON, `Promise.all`) |
+| Clase 11 | async/await y búsqueda en la API (`async`/`await`, buscar por nombre, agregar al estado) |
 | Clase 12 | Manejo de Errores y Estados (`try/catch/finally`, `throw`, `response.ok`) |
 
 ---

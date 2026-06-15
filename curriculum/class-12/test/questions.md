@@ -42,28 +42,30 @@ const pokemones = [ { name: "pikachu" }, { name: "ditto" } ];
 
 ---
 
-## Pregunta 2 — Clase 10: Asincronía y Promesas
+## Pregunta 2 — Clase 10: Datos desde la web
 
 ¿Qué imprime el siguiente código en consola y en qué orden?
 
 ```javascript
-console.log("A");
-setTimeout(() => console.log("B"), 1000);
-console.log("C");
+console.log("antes");
+fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
+  .then(r => r.json())
+  .then(data => console.log("datos"));
+console.log("después");
 ```
 
-- A) `A` `B` `C`
-- B) `A` `C` `B`
-- C) `B` `A` `C`
-- D) `C` `B` `A`
+- A) `antes` `datos` `después`
+- B) `antes` `después` `datos`
+- C) `datos` `antes` `después`
+- D) `después` `antes` `datos`
 
 > Respuesta: B
 
-> **Retroalimentación:** JavaScript **no se detiene** en el `setTimeout`: programa la función para dentro de 1000 ms y continúa con la siguiente línea. Por eso imprime `A`, luego `C`, y al final `B` (cuando vence el temporizador). Esto demuestra el comportamiento **asincrónico**: el código no bloqueante sigue ejecutándose mientras una operación "tarda". Las demás opciones asumen, incorrectamente, que `setTimeout` pausa el programa.
+> **Retroalimentación:** `fetch` es **asíncrono**: JavaScript no se detiene a esperar la respuesta. Imprime `antes`, sigue de inmediato con `después`, y solo cuando los datos **llegan** (la red tarda) corre el `.then` e imprime `datos`. Por eso el orden es `antes`, `después`, `datos`. Las demás opciones asumen, incorrectamente, que `fetch` entrega los datos al instante o que bloquea el programa mientras espera.
 
 ---
 
-## Pregunta 3 — Clase 11: async/await, fetch y JSON
+## Pregunta 3 — Clases 10-11: fetch con async/await
 
 Quieres traer un Pokémon de la PokeAPI y obtener su objeto JavaScript. ¿Cuál es la implementación correcta?
 

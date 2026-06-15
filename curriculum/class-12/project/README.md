@@ -13,9 +13,9 @@ Este proyecto consolida todo lo aprendido durante el **Módulo 3: JavaScript Mod
 | **Laboratorio** | **Contribución al Proyecto** |
 | --- | --- |
 | **Lab 9: JavaScript Moderno y Render Dinámico** | Construir la base de la Pokédex renderizando tarjetas desde un array local con `createElement`, template literals, destructuring y optional chaining. |
-| **Lab 10: Asincronía y Promesas** | Simular la carga asíncrona de datos con `setTimeout` y Promesas (`.then`/`.catch`), agregando un estado de "Cargando…". |
-| **Lab 11: async/await, fetch y JSON** | Reemplazar los datos locales por llamadas reales a la PokeAPI con `fetch` + `async/await`, interpretando respuestas JSON y conectando un buscador. |
-| **Lab 12: Manejo de Errores y Estados** | Hacer la app robusta con `try/catch/finally`, validación de `response.ok` (404), estados de carga/error/vacío, y documentar el proyecto en Markdown. |
+| **Lab 10: Datos desde la web (fetch, Promesas y JSON)** | Reemplazar el array local por datos reales de la PokeAPI con `fetch` y Promesas (`.then`/`.catch`), adaptar la estructura JSON y cargar la rejilla en paralelo con `Promise.all`. |
+| **Lab 11: async/await y búsqueda en la API** | Reformular la carga con `async/await`, buscar Pokémon por nombre en la API y agregarlos a la colección (`pokedex`) sin duplicar. |
+| **Lab 12: Manejo de Errores y Estados** | Hacer la app robusta con `try/catch/finally`, validación de `response.ok` (404) y estados de carga/error (en la búsqueda y la carga), y documentar el proyecto en Markdown. |
 
 ## 🎯 Retos
 

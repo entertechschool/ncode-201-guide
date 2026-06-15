@@ -2,7 +2,7 @@
 
 ## 🎯 Objetivos de la Preparación para el Debate
 
-Debatir en esta sesión te permitirá desarrollar criterios para **manejar errores** de forma profesional: cuándo capturar una excepción y cuándo dejar que se propague, cómo comunicar fallos de manera clara al usuario, y por qué una app debe comunicar sus **estados** (cargando, error, vacío). Analizarás un punto clave que confunde a muchos: por qué `fetch` no falla automáticamente ante un 404.
+Debatir en esta sesión te permitirá desarrollar criterios para **manejar errores** de forma profesional: cuándo capturar una excepción y cuándo dejar que se propague, cómo comunicar fallos de manera clara al usuario, y por qué una app debe comunicar sus **estados** (cargando, error). Analizarás un punto clave que confunde a muchos: por qué `fetch` no falla automáticamente ante un 404.
 
 ## 🔑 Conceptos Clave a profundizar
 

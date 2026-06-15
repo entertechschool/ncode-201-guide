@@ -4,7 +4,7 @@
 
 ## Resumen
 
-La Clase 12 cierra el **Módulo 3** haciendo **robusta** la Pokédex. En C11 la app ya traía datos reales, pero se rompía ante cualquier fallo (un nombre inexistente, una caída de red). Hoy los estudiantes aprenden a **manejar errores** con `try/catch/finally`, a **lanzar errores propios** con `throw`, a detectar respuestas HTTP fallidas con `response.ok`, y a comunicar al usuario estados claros de **carga**, **error** y **vacío**.
+La Clase 12 cierra el **Módulo 3** haciendo **robusta** la Pokédex. En C11 la app ya traía datos reales, pero se rompía ante cualquier fallo (un nombre inexistente, una caída de red). Hoy los estudiantes aprenden a **manejar errores** con `try/catch/finally`, a **lanzar errores propios** con `throw`, a detectar respuestas HTTP fallidas con `response.ok`, y a comunicar al usuario estados claros de **carga** y **error**.
 
 Además, por ser la clase con menos conceptos nuevos de JavaScript y la **entrega evaluada** del módulo, se introduce **Markdown** como habilidad de documentación: los estudiantes escriben el `README.md` del proyecto. Es la primera vez que el curso exige un README, y desbloquea esa práctica para M4 y M5.
 
@@ -40,12 +40,12 @@ Al finalizar esta clase, los estudiantes podrán construir aplicaciones que no s
 ### Podrán explicar
 
 - Por qué `fetch` no falla automáticamente ante un 404.
-- La diferencia entre los estados de UI: cargando, éxito, error, vacío.
+- La diferencia entre los estados de UI: cargando, éxito, error.
 - Cuándo conviene capturar un error y cuándo dejar que se propague.
 
 ### Podrán implementar
 
-- Una Pokédex robusta con spinner, mensajes de error y estado vacío.
+- Una Pokédex robusta con spinner y mensajes de error en la búsqueda y la carga.
 - Mensajes de error claros con `throw new Error(...)`.
 - Un `README.md` del proyecto escrito en Markdown.
 
@@ -69,5 +69,5 @@ Se enseña Markdown (títulos, listas, links, código) para documentar el proyec
 - **throw:** lanza manualmente un error con un mensaje.
 - **finally:** bloque que se ejecuta siempre, haya error o no.
 - **response.ok:** booleano; `false` si la respuesta HTTP fue un error.
-- **Estado de UI:** lo que el usuario ve en cada momento (cargando / éxito / error / vacío).
+- **Estado de UI:** lo que el usuario ve en cada momento (cargando / éxito / error).
 - **Markdown:** formato de texto ligero para documentar (usado en `README.md`).

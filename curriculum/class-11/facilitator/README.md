@@ -1,4 +1,4 @@
-# Guía del Facilitador — Clase 11: async/await, fetch y JSON
+# Guía del Facilitador — Clase 11: async/await y búsqueda en la API
 
 > Tiempo de lectura: 8 minutos | Módulo 3 · Clase 11 | Prepárate antes de clase
 
@@ -6,43 +6,40 @@
 
 ## 🔑 Conceptos Clave
 
-- **JSON** (NUEVO): formato de texto para intercambiar datos. Su sintaxis refleja objetos y arrays de JavaScript. Es lo que devuelve toda API. Importante: lo que llega es **texto**, no un objeto JS todavía.
-- **`fetch(url)`** (NUEVO): pide datos a una URL; devuelve una promesa (las de C10). Entrega un objeto `response` (la respuesta cruda).
-- **`response.json()`** (NUEVO): lee el cuerpo de la respuesta y lo convierte de JSON (texto) a objeto JavaScript. También devuelve una promesa. **No es** `JSON.parse` (eso es M4, para persistencia).
-- **`async` / `await`** (NUEVO): `async` marca una función asíncrona; `await` pausa hasta que una promesa resuelva y entrega el valor directo. Más legible que `.then` encadenado.
-- **Función adaptadora** (NUEVO): la API entrega una estructura **anidada** (`sprites.front_default`, `types[].type.name`), distinta a la limpia del proyecto (`{ nombre, imagen, tipos }`). `adaptarPokemon(data)` traduce de una a otra.
+- **`async` / `await`** (NUEVO): `async` marca una función asíncrona; `await` pausa hasta que una promesa resuelva y entrega el valor directo. Es **azúcar sobre las Promesas** de C10 — la misma lógica, escrita como pasos secuenciales.
+- **Reformular** (NUEVO como práctica): reescribir la carga de C10 (`.then`/`Promise.all`) con `async/await`. Mismo resultado, más legible. No es una tecnología distinta.
+- **Búsqueda en la API** (NUEVO): el buscador deja de **filtrar** lo local y pasa a **consultar** la API por nombre (`/pokemon/{nombre}`), para traer Pokémon que no están en la rejilla.
+- **Hacer crecer el estado** (NUEVO): agregar el resultado al array `pokedex` (sin duplicar) y re-renderizar. Primer roce con "el estado de la app crece según el usuario" (se formaliza en M4).
 
-> ❗ **El render no cambia, pero hay que ADAPTAR la entrada.** En C09 los datos eran limpios a propósito. La API da SU estructura (anidada), así que se escribe una pequeña función adaptadora que la traduce a la limpia. Reusar `crearTarjeta`/`render` sin tocarlos es la recompensa de separar *la forma de los datos* de *cómo se pintan*. Es justo lo que hace un dev real: **adaptarse a lo que entrega cada API**.
+> ❗ **El render no cambia.** `crearTarjeta`/`render`/`adaptarPokemon` de C09-C10 se reusan. Hoy cambia **cómo se escribe** la asincronía (`await`) y **qué hace el buscador** (buscar + agregar).
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**JSON ⟷ Un formulario en papel:** el servidor te manda los datos escritos en un formato estándar (JSON), como un formulario lleno. `response.json()` es "digitalizar" ese papel a algo que tu programa puede manipular (objeto JS).
+**`async/await` ⟷ Receta vs notas al margen:** `.then` encadenado es como instrucciones con flechas y saltos; `async/await` es la receta leída de arriba a abajo. Mismo plato, más claro.
 
-**fetch ⟷ Pedir a domicilio:** llamas (`fetch`), y te llega la respuesta. Pero la bolsa cerrada (`response`) no es la comida: hay que abrirla (`response.json()`) para usar lo de adentro.
+**Filtrar vs buscar ⟷ Buscar en tu cajón vs ir a la tienda:** filtrar (C10) es revisar lo que ya tienes en casa; buscar en la API (C11) es ir a la tienda por algo que no tienes y traerlo.
 
-**await ⟷ "Espérame aquí":** `await` le dice a la función "no sigas hasta que esto llegue". El resto del programa (fuera de la función) **no** se bloquea — solo esta función espera su turno.
-
-**Dos await ⟷ Dos esperas:** esperar que **llegue** el repartidor (`fetch`) y esperar a **abrir** la bolsa (`.json()`). Dos pasos, dos esperas.
+**Agregar a `pokedex` ⟷ Coleccionar:** cada búsqueda exitosa suma una carta a tu álbum. El álbum (`pokedex`) es el estado; `render` lo muestra.
 
 ---
 
 ## 📚 Contexto Actual
 
-### Por qué `async/await` y no solo `.then`
+### Por qué se "reformula" en vez de enseñar `async/await` de cero
 
-Ya saben `.then` de C10. `async/await` es "azúcar" sobre lo mismo, pero lee como código secuencial normal (`const x = await ...`), sin anidar callbacks. Para una cadena de dos pasos (fetch → json) es mucho más claro. Se enseña sobre la base de promesas que ya tienen.
+Ya escribieron promesas con `.then` en C10. Reescribir ESE código con `async/await` hace tangible que son lo mismo: ven el antes/después con su propio código. Es más sólido que presentar `async/await` como algo nuevo y desconectado.
 
-### Por qué JSON se enseña aquí (y no antes)
+### Por qué el buscador evoluciona
 
-JSON cobra sentido cuando hay una API que lo devuelve. Enseñarlo en abstracto sería seco; mostrarlo como "esto es lo que te manda PokeAPI" lo ancla. Es el puente natural entre "pedí datos" y "los tengo como objeto".
+En C10 el buscador filtraba lo cargado — útil, pero limitado a la rejilla. Buscar en la API es el salto natural: traer cualquier recurso. Y agregarlo a la colección conecta con la idea de **estado** que domina M4. Todo lo que se construye hoy **perdura**.
 
 ### La frontera con M4
 
-Hoy se usa `response.json()` para **leer** datos de una API. En M4 se usará `JSON.parse`/`JSON.stringify` para **persistir** el estado propio en localStorage. Son cosas distintas: leer de la web (C11) vs guardar lo tuyo (M4). No las mezcles.
+Hoy la colección (`pokedex`) crece en memoria. **Persistirla** entre visitas (localStorage, `JSON.stringify/parse`) es M4. No lo toques aquí.
 
-**Fuentes:** [MDN: Usar fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch){:target="_blank"}, [PokeAPI docs](https://pokeapi.co/docs/v2){:target="_blank"}
+**Fuentes:** [MDN: async/await](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function){:target="_blank"}, [PokeAPI](https://pokeapi.co/docs/v2){:target="_blank"}
 
 ---
 
@@ -50,33 +47,30 @@ Hoy se usa `response.json()` para **leer** datos de una API. En M4 se usará `JS
 
 | Fase | Tiempo | Foco |
 |---|---|---|
-| Refuerzo + API/JSON | 15 min | Promesas (C10). Mostrar JSON real de PokeAPI en el navegador. |
-| Debate Técnico | 30 min | JSON, `fetch`, `async/await` vs `.then`. |
-| Demo | 15 min | Buscar un Pokémon real y mostrarlo. |
-| Lab (HU1-HU3) | 100 min | HU1 `fetch`+`await` · HU2 mostrar (reusa C09) · HU3 buscador |
+| Refuerzo | 15 min | El `.then` de C10. "¿Se lee más claro?" |
+| Debate Técnico | 30 min | `async/await` como azúcar; filtrar vs buscar. |
+| Demo | 15 min | El mismo `fetch` con `.then` y con `async/await`. |
+| Lab (HU1-HU3) | 100 min | HU1 reformular · HU2 buscar en API · HU3 agregar a la Pokédex |
 | Cierre | 20 min | Síntesis + el error de "no existe" → C12. |
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo 1 — el JSON real en el navegador (3 min)
-Abre `https://pokeapi.co/api/v2/pokemon/pikachu` en el navegador. "Esto es JSON: texto con forma de objeto. Es lo que tu app va a recibir." Señala lo **anidado**: `sprites.front_default`, `types[].type.name`. "Fíjense: NO es el objeto limpio de C09. La API manda SU forma; en HU2 nos adaptamos a ella."
+### Demo 1 — el mismo código, dos formas (4 min)
+Escribe `fetch(url).then(r => r.json()).then(d => console.log(d))`. Luego reescríbelo con `async/await`. "Mismo resultado. El segundo se lee como una receta. `async/await` no reemplaza promesas: las escribe distinto."
 
-### Demo 2 — fetch en vivo (4 min)
-En consola: `fetch(url).then(r => r.json()).then(p => console.log(p))`. Luego reescríbelo con `async/await`. "Mismo resultado, pero el segundo se lee como una receta paso a paso."
+### Demo 2 — filtrar vs buscar (3 min)
+Con la rejilla de C10 cargada, filtra "char" (no aparece nada si charizard no estaba). Luego busca "charizard" en la API → aparece. "Filtrar solo ve tu cajón; buscar va a la tienda."
 
-### Demo 3 — los dos await (3 min)
-Quita el segundo `await` (deja `const data = response.json()`) y muestra que `data` es una `Promise`, no el objeto. "Por eso el segundo `await`: `.json()` también tarda."
-
-### Demo 4 — el adaptador (3 min)
-En consola muestra `data.types` → un array de objetos `{ type: { name } }`. Luego `data.types.map(t => t.type.name)` → `["electric"]`. "La API lo complica; el adaptador lo simplifica a lo que tu tarjeta necesita. Eso es `adaptarPokemon`."
+### Demo 3 — la colección crece (3 min)
+Busca dos Pokémon seguidos y muestra cómo la rejilla **crece**. Busca uno repetido: no se duplica. "`pokedex` es el estado; cada búsqueda lo hace crecer."
 
 ### Transición al Lab
 ```
-"HU1: una función que trae UN Pokémon CRUDO de la API con fetch + await.
- HU2: adaptarPokemon(data) traduce la forma de la API a la limpia, y se muestra reusando render.
- HU3: el buscador de C09 (filtro local en vivo) pasa a buscar en la API con botón/Enter — no en cada tecla, para no saturarla.
+"HU1: reescriben la carga de C10 con async/await (mismo resultado, más claro).
+ HU2: el buscador ahora consulta la API por nombre (clic/Enter).
+ HU3: lo buscado se AGREGA a la rejilla, sin duplicar.
  Si buscan algo que no existe, se rompe. Eso lo arreglamos en C12."
 ```
 
@@ -84,31 +78,32 @@ En consola muestra `data.types` → un array de objetos `{ type: { name } }`. Lu
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Lee el JSON" (tras Demo 1)
-Muestra el JSON de un Pokémon y pregunta: "¿cómo accedes a su primer tipo?" (`data.types[0].type.name`). Eso justifica por qué el adaptador simplifica esa anidación.
+### Dinámica 1: "Traduce a await" (en HU1)
+Das una cadena `.then` y piden reescribirla con `async/await`. Ven que es lo mismo.
 
-### Dinámica 2: "¿response o datos?" (en HU1)
-"`fetch` te da `response`. ¿Ya tienes el Pokémon?" (No — falta `.json()`.) Refuerza la distinción respuesta vs cuerpo.
+### Dinámica 2: "¿filtra o busca?" (en HU2)
+Describe escenarios ("quiero ver los de tipo fuego que ya cargué" vs "quiero traer a mewtwo") y que digan si es filtrar (local) o buscar (API).
 
-### Dinámica 3: "Traduce de .then a await" (en HU1)
-Das una cadena con `.then` y piden reescribirla con `async/await`. Ven que es lo mismo, más legible.
+### Dinámica 3: "¿se duplica?" (en HU3)
+"Si busco pikachu y ya estaba, ¿qué debe pasar?" → no duplicar. Discute el `some`.
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### La URL con el nombre interpolado
+### `await` necesita `async`
 ```javascript
-const url = `https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`;
+async function buscarPokemon(nombre) {   // sin async, el await falla
+  const data = await obtenerPokemon(nombre);
+  return adaptarPokemon(data);
+}
 ```
-"`toLowerCase` porque la API espera minúsculas. Template literal de C09 para armar la URL."
 
-### Adaptar y reusar render
+### Evitar duplicados
 ```javascript
-const pokemon = adaptarPokemon(data);  // forma de la API → forma limpia
-render([pokemon]);                      // render espera un array; envolvemos en [ ]
+if (!pokedex.some(p => p.nombre === pokemon.nombre)) pokedex.push(pokemon);
 ```
-"No tocamos render. Adaptamos la entrada y le damos una lista de uno."
+"`some` revisa si ya está; solo agrega si no."
 
 ---
 
@@ -116,30 +111,28 @@ render([pokemon]);                      // render espera un array; envolvemos en
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| `data` es `Promise {<pending>}` | Falta el segundo `await` (en `.json()`) | `const data = await response.json()` |
-| `await is only valid in async function` | Usaron `await` en una función sin `async` | Marcar la función con `async` |
-| Imagen rota / tipos como `[object Object]` | Pasaron `data` (forma API) directo sin adaptar | `const pokemon = adaptarPokemon(data)` antes de `render` |
-| La API recibe muchísimas llamadas | Dejaron el listener `input` de C09 (busca en cada tecla) | Buscar con clic/Enter, quitar el `input` de filtro local |
+| `await is only valid in async function` | Usaron `await` sin `async` | Marcar la función con `async` |
 | La búsqueda no hace nada | El `id` del input/botón no coincide | Verificar `#buscador` y `#btn-buscar` |
-| Funciona "pikachu" pero no "Pikachu" | La API espera minúsculas | `nombre.toLowerCase()` en la URL |
+| Funciona "pikachu" pero no "Pikachu" | La API espera minúsculas | `nombre.toLowerCase()` |
+| Al buscar, desaparece la rejilla | En HU2 hacen `render([uno])`; en HU3 deben agregar y `render(pokedex)` | Usar `agregarPokemon` (HU3) |
+| Se duplican los Pokémon | No revisan con `some` antes de `push` | Agregar el chequeo de duplicado |
 | Pantalla en blanco al buscar algo raro | El nombre no existe (404) → falla | Es esperado; se maneja en C12 |
-| `render` da error | Pasaron el objeto, no un array | `render([pokemon])` |
 
 ---
 
 ## ✅ Señales de Comprensión
 
 **ENTIENDE cuando:**
-- Explica que JSON es texto y `response.json()` lo convierte en objeto.
-- Sabe por qué hay dos `await` (respuesta + parseo).
-- Reescribe una cadena `.then` como `async/await`.
-- Reconoce que reusa el render de C09 sin cambios, adaptando la entrada con `adaptarPokemon`.
+- Reescribe una cadena `.then` como `async/await` sin dudar.
+- Explica que `async/await` es la misma promesa, más legible.
+- Distingue filtrar (local) de buscar (API).
+- Entiende que `pokedex` es el estado y que crece sin duplicar.
 
 **NECESITA AYUDA cuando:**
-- Cree que `response` ya son los datos.
-- Olvida un `await` y no entiende por qué tiene una promesa.
 - Usa `await` sin `async`.
-- No relaciona la forma del JSON con su dato local.
+- Cree que `async/await` reemplaza/elimina las promesas.
+- Espera que el buscador encuentre algo que nunca cargó (sin ir a la API).
+- Duplica Pokémon al agregar.
 
 ---
 
@@ -147,35 +140,35 @@ render([pokemon]);                      // render espera un array; envolvemos en
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 | `buscarPokemon("ditto")` (vía `.then(console.log)`) imprime el objeto real de la API. |
-| ~60' | HU2 | La página muestra la tarjeta de un Pokémon con datos reales (imagen + tipos). |
-| ~90' | HU3 | Escribir un nombre + Enter/Buscar muestra ese Pokémon. Varios nombres funcionan. |
+| ~30' | HU1 | La rejilla carga igual que en C10, pero el código usa `async/await`. |
+| ~60' | HU2 | Buscar "charizard" (no estaba) lo muestra, traído de la API. |
+| ~90' | HU3 | Lo buscado se agrega a la rejilla; un repetido no se duplica. |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-- **Grupo callado:** abre el JSON en el navegador y que naveguen la estructura en voz alta.
-- **Alguien ya sabía fetch:** pídele que explique la diferencia entre `response` y `response.json()`.
-- **Terminan antes:** logro de lista inicial (`?limit=12`) o stats con barras.
-- **Si la red falla en el aula:** ten a mano un Pokémon ya cargado en consola; el concepto se demuestra igual con `.then(console.log)`.
-- **No adelantes el manejo de errores:** que vivan el fallo de "no existe" hoy; mañana (C12) lo resuelven. El dolor motiva la solución.
+- **Grupo callado:** muestra el antes/después (`.then` vs `await`) y que voten cuál se lee mejor.
+- **Alguien ya sabía async/await:** pídele que explique por qué `await` necesita `async`.
+- **Terminan antes:** logro de stats con barras o quitar de la Pokédex.
+- **Si la red falla:** ten un Pokémon ya cargado; demuestra el concepto con datos en consola.
+- **No adelantes el manejo de errores:** que vivan el fallo de "no existe" hoy; mañana (C12) lo resuelven.
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-**P: ¿`response.json()` es lo mismo que `JSON.parse`?**
-R: Hacen algo parecido (texto JSON → objeto), pero `response.json()` es un método de `fetch` y es asíncrono. `JSON.parse` es síncrono y se usa para persistencia (M4). Hoy usamos el de fetch.
-
-**P: ¿Por qué `await` dos veces?**
-R: Dos operaciones que tardan: que llegue la respuesta (`fetch`) y que se lea/convierta su cuerpo (`.json()`). Cada una es una promesa.
-
-**P: ¿Necesito una API key para PokeAPI?**
-R: No. Es gratuita y abierta. Por eso la elegimos: cero fricción.
-
 **P: ¿`async/await` reemplaza a `.then`?**
-R: No lo reemplaza; es otra forma de lo mismo, más legible para código secuencial. `.then` sigue siendo útil. Saber ambos es lo profesional.
+R: No. Es otra forma de escribir lo mismo, más legible para código secuencial. `.then` sigue siendo válido. Saber ambos es lo profesional.
+
+**P: ¿Por qué buscar en la API si ya tengo la rejilla?**
+R: La rejilla solo tiene unos pocos. Buscar en la API te da acceso a **cualquier** Pokémon (1000+), aunque no lo hayas cargado.
+
+**P: ¿Por qué evitar duplicados?**
+R: Porque `pokedex` es una colección; agregar el mismo dos veces ensucia el estado y la UI. `some` lo previene.
+
+**P: ¿Y si quiero que la colección se guarde al recargar?**
+R: Eso es **persistencia** (localStorage + JSON), tema de M4. Hoy la colección vive en memoria.
 
 ---
 
@@ -185,21 +178,20 @@ R: No lo reemplaza; es otra forma de lo mismo, más legible para código secuenc
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C09 | render, destructuring, `?.`/`??` | El adaptador reusa el render; el JSON viene con otra forma |
-| C10 | promesas, `.then`/`.catch` | `fetch` devuelve una promesa; `await` la consume |
-| C08 | Tailwind | Estiliza el buscador y la tarjeta |
+| C10 | `fetch`, Promesas, `Promise.all`, `adaptarPokemon`, `pokedex` | Se reformula con `await`; el buscador pasa a la API |
+| C09 | `render`, `crearTarjeta`, eventos | Se reusan para mostrar y para el buscador |
 
 ### Conexión con C12
 
 Al cerrar:
 
-> "Hoy la Pokédex trae datos reales. Pero si buscas un nombre que no existe, se rompe — y una app real no puede romperse así. En C12, la última clase del módulo, aprenden a **manejar errores** con `try/catch`, mostrar estados de carga y error, y cierran el proyecto con un README."
+> "Hoy tu Pokédex busca y crece con datos reales. Pero si buscas un nombre que no existe, se rompe — y una app real no puede hacer eso. En C12, la última clase, aprenden a **manejar errores** con `try/catch`, mostrar estados de carga y error, y cierran el proyecto con un README."
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
-- ¿Cuántos olvidaron el segundo `await` y vieron una promesa? Es el tropiezo clásico.
-- ¿La demo del JSON en el navegador hizo tangible "de dónde vienen los datos"?
+- ¿Cuántos vieron claro que `async/await` es "la misma promesa, más legible"?
+- ¿La distinción filtrar vs buscar hizo clic?
+- ¿Entendieron `pokedex` como estado que crece?
 - ¿Vivieron el fallo al buscar algo inexistente? Eso prepara C12.
-- ¿Alguien dijo "esto es como cualquier app que carga datos"? Captaron el valor real.

@@ -1,4 +1,4 @@
-# Guía del Facilitador — Clase 10: Asincronía y Promesas
+# Guía del Facilitador — Clase 10: Datos desde la web (fetch, Promesas y JSON)
 
 > Tiempo de lectura: 8 minutos | Módulo 3 · Clase 10 | Prepárate antes de clase
 
@@ -6,42 +6,45 @@
 
 ## 🔑 Conceptos Clave
 
-- **Sincrónico vs asincrónico** (NUEVO): el código sincrónico bloquea (una línea espera a la anterior); el asincrónico permite que una operación "tarde" mientras el programa sigue. Es el cambio mental central de la clase.
-- **`setTimeout`** (NUEVO): ejecuta una función después de N milisegundos. Sirve para simular una operación lenta y demostrar que JavaScript no se congela.
-- **Promesa** (NUEVO): objeto que representa un valor futuro. Se crea con `new Promise(resolve, reject)` y tiene tres estados: `pending`, `fulfilled`, `rejected`.
-- **`.then` / `.catch`** (NUEVO): consumir una promesa — `.then` corre al resolverse, `.catch` al fallar.
+- **Asincronía** (NUEVO): los datos de una API **tardan** en llegar (la red no es inmediata) y JavaScript **no se congela** esperándolos — sigue trabajando y reacciona cuando llegan. Es el cambio mental central.
+- **`fetch(url)`** (NUEVO): pide datos a una URL; devuelve una **Promesa** (un "ticket" por datos futuros). Se consume con `.then`/`.catch`.
+- **JSON + `response.json()`** (NUEVO): el formato de texto en que viaja la respuesta. `response.json()` lo convierte en objeto JS. Importante: la forma de la API **no** es la forma limpia de C09.
+- **Función adaptadora** (NUEVO): traduce la estructura anidada de la API (`sprites.front_default`, `types[].type.name`) a `{ nombre, imagen, tipos }`, para reusar `crearTarjeta` sin tocarlo.
+- **`Promise.all`** (NUEVO): cargar **varios** Pokémon en paralelo (un `fetch` por cada uno) y esperar a que todos terminen.
 
-> ❗ **Hoy NO hay red.** Se simula la demora con `setTimeout` sobre el array local. Es deliberado: aislar el concepto de asincronía del ruido de internet. En C11 la promesa simulada se vuelve un `fetch` real; el `.then`/`.catch` no cambia.
+> 🔁 **`async/await` NO se enseña hoy.** Hoy se consume con `.then`. Es deliberado: en C11 se **reformula** ese mismo código con `async/await` (más legible). Si alguien lo pregunta, dile que llega la próxima clase.
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Asincronía ⟷ Pedir una pizza:** no te quedas paralizado en la puerta esperando (sincrónico); sigues con tu vida y reaccionas cuando suena el timbre (asincrónico). La **Promesa** es el ticket del pedido.
+**Asincronía ⟷ Pedir comida a domicilio:** llamas y sigues con tu vida; no te quedas paralizado en la puerta. Cuando llega, reaccionas. La red tarda igual que el repartidor.
 
-**Promesa ⟷ Ticket de guardarropa:** te dan un papelito (la promesa) ahora; el abrigo (el valor) lo recibes después. El ticket puede terminar en "aquí está tu abrigo" (`resolve`) o "lo perdimos" (`reject`).
+**`fetch`/Promesa ⟷ Ticket de pedido:** `fetch` te da un papelito (la promesa) ahora; la comida (los datos) llega después. `.then` es "cuando llegue, haz esto".
 
-**`pending`/`fulfilled`/`rejected` ⟷ Estado de un envío:** "en camino" / "entregado" / "devuelto". Empieza en camino y termina en uno de los otros dos.
+**JSON ⟷ Formulario estándar:** el servidor te manda los datos en un formato fijo (JSON), como un formulario lleno. `response.json()` lo "digitaliza" a algo que tu programa puede manipular.
 
-**`.then`/`.catch` ⟷ Plan A y plan B:** "cuando llegue el paquete, hago esto (`.then`); si se pierde, hago esto otro (`.catch`)."
+**Adaptador ⟷ Traductor:** la API habla "su idioma" (estructura anidada); el adaptador lo traduce a "tu idioma" (`{ nombre, imagen, tipos }`) para que tu `crearTarjeta` lo entienda.
+
+**`Promise.all` ⟷ Mandar varios pedidos a la vez:** en vez de pedir un plato, esperar, pedir otro… pides todos juntos y esperas a que llegue el último. Mucho más rápido.
 
 ---
 
 ## 📚 Contexto Actual
 
-### Por qué la asincronía va ANTES del `fetch`
+### Por qué la asincronía se enseña con `fetch` real (y no simulada)
 
-`fetch` es asíncrono por naturaleza: devuelve una promesa. Si introdujéramos `fetch` sin entender promesas, el alumno copiaría `.then` sin saber qué es. Separar el **concepto** (C10, simulado) del **uso real** (C11, red) hace que `fetch` se sienta familiar en vez de mágico.
+Los datos de una API **de verdad** tardan, así que la asincronía deja de ser un truco con `setTimeout` y pasa a ser lo que realmente pasa. Además, lo que se construye hoy **perdura**: la rejilla cargada de la web sigue siendo el corazón del proyecto en C11 y C12. No se tira nada.
 
-### Por qué simular con `setTimeout`
+### Por qué hace falta el adaptador
 
-Una llamada real puede fallar por mil razones (sin internet, API caída, nombre mal escrito) que distraen del concepto. `setTimeout` da una demora **controlada y predecible**: el alumno ve "tarda → llega" sin variables externas. Y permite forzar el camino de error (`reject`) a voluntad.
+`crearTarjeta` (C09) espera `{ nombre, imagen, tipos }`. La API da una estructura anidada distinta. En vez de reescribir el render, se traduce la entrada con una función adaptadora. Es justo lo que hace un dev real: mapear la respuesta de una API a su propio modelo.
 
-### Por qué importa para la empleabilidad
+### Por qué `Promise.all`
 
-Toda app moderna es asíncrona: carga datos, espera respuestas, maneja demoras. Entender promesas es prerrequisito de `fetch`, `async/await`, y cualquier framework. Es de los temas más pedidos en entrevistas JS.
+La rejilla necesita varios Pokémon, y cada uno es un `fetch`. Pedirlos uno por uno (secuencial) sería lento; `Promise.all` los pide en paralelo. Es un patrón cotidiano en apps reales.
 
-**Fuentes:** [MDN: Usar promesas](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises){:target="_blank"}, [MDN: setTimeout](https://developer.mozilla.org/es/docs/Web/API/setTimeout){:target="_blank"}
+**Fuentes:** [MDN: Usar fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch){:target="_blank"}, [MDN: Promise.all](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise/all){:target="_blank"}
 
 ---
 
@@ -49,69 +52,68 @@ Toda app moderna es asíncrona: carga datos, espera respuestas, maneja demoras. 
 
 | Fase | Tiempo | Foco |
 |---|---|---|
-| Refuerzo + disparador | 15 min | Render de C09. "¿Y si los datos tardan?" |
-| Debate Técnico | 30 min | Sync vs async, event loop, promesas y estados. |
-| Demo | 15 min | "Cargando…" → tarjetas con `setTimeout` y Promesa. |
-| Lab (HU1-HU3) | 100 min | HU1 `setTimeout` · HU2 `new Promise` · HU3 `.then`/`.catch` |
-| Cierre | 20 min | Síntesis + puente a `fetch` (C11). |
+| Refuerzo + disparador | 15 min | Render de C09. "¿Y si los datos están en internet, no en tu código?" |
+| Debate Técnico | 30 min | API, JSON, asincronía, Promesas. |
+| Demo | 15 min | El JSON real de PokeAPI + un `fetch` que carga un Pokémon. |
+| Lab (HU1-HU3) | 100 min | HU1 `fetch`+JSON · HU2 adapter+render · HU3 `Promise.all`+filtro |
+| Cierre | 20 min | Síntesis + puente a `async/await` (C11). |
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo 1 — "JavaScript no espera" (4 min)
+### Demo 1 — el JSON real en el navegador (3 min)
+Abre `https://pokeapi.co/api/v2/pokemon/pikachu`. "Esto es lo que tu app va a recibir: JSON." Señala lo **anidado** (`sprites.front_default`, `types[].type.name`). "NO es el objeto limpio de C09 — por eso habrá que adaptarlo."
+
+### Demo 2 — "los datos tardan" (4 min)
 ```javascript
-console.log("A");
-setTimeout(() => console.log("B"), 1000);
-console.log("C");
+console.log("antes");
+fetch(url).then(r => r.json()).then(d => console.log("datos", d));
+console.log("después");
 ```
-Pregunta antes de correr: ¿en qué orden imprime? (Respuesta: A, C, B.) "JavaScript no se quedó esperando el segundo — siguió con C." Esta es **la idea que ordena la clase**.
+Pregunta el orden: imprime `antes`, `después`, y al final `datos`. "JS no esperó al fetch — siguió. Eso es asincronía."
 
-### Demo 2 — la promesa en consola (3 min)
-`console.log(obtenerPokemones())` → `Promise {<pending>}`. "No te dio los datos. Te dio un *ticket* que dice 'esperando'." Luego muestra cómo `.then` "abre" el ticket cuando se resuelve.
-
-### Demo 3 — forzar el error (3 min)
-Cambia `resolve` por `reject(new Error("API caída"))`. Recarga: mensaje rojo. "El `.catch` atrapó el fallo. Por eso siempre lo ponemos." Anticipa C12.
+### Demo 3 — uno → muchos (3 min)
+Muestra un `fetch` (uno) y luego `Promise.all` de varios. "Para llenar la rejilla necesitas varios; `Promise.all` los trae a la vez."
 
 ### Transición al Lab
 ```
-"HU1: simulan la demora con setTimeout (Cargando → tarjetas).
- HU2: envuelven los datos en una Promise.
- HU3: la consumen con .then/.catch, y prueban el camino de error.
- La forma es idéntica a la del fetch que viene en C11."
+"HU1: traen UN Pokémon de la API y lo ven en consola (tarda).
+ HU2: lo adaptan a la forma de C09 y lo muestran como tarjeta.
+ HU3: con Promise.all llenan la rejilla, y reconectan el buscador.
+ Al final: su Pokédex carga de la web."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Ordena la salida" (tras Demo 1)
-Tres `console.log` con un `setTimeout` en medio. Que predigan el orden antes de correr. Discute por qué el del timeout va al final.
+### Dinámica 1: "Ordena la salida" (tras Demo 2)
+Tres `console.log` con un `fetch` en medio. Que predigan el orden. Discute por qué los datos van al final.
 
-### Dinámica 2: "¿Qué estado?" (en HU2)
-Describe situaciones ("el setTimeout aún corre", "se llamó resolve", "se llamó reject") y que digan el estado (`pending`/`fulfilled`/`rejected`).
+### Dinámica 2: "Lee el JSON" (tras Demo 1)
+Muestra el JSON y pregunta: "¿cómo accederías a la imagen?" (`data.sprites.front_default`). Eso justifica el adaptador.
 
-### Dinámica 3: "¿then o catch?" (en HU3)
-Das escenarios (datos llegan / API falla / nombre inválido) y que digan qué bloque corre.
+### Dinámica 3: "¿uno o varios?" (en HU3)
+"Si necesitas 6 Pokémon, ¿cuántos `fetch` haces? ¿Cómo esperas a que terminen todos?" → `Promise.all`.
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### El "ticket" que aún no se abre
+### Los dos `.then`
 ```javascript
-const p = obtenerPokemones();   // Promise {<pending>}
-p.then(lista => render(lista)); // se "abre" cuando resuelve
+fetch(url)
+  .then(r => r.json())   // 1. convierte la respuesta a objeto
+  .then(d => ...)        // 2. usa los datos
 ```
-"La promesa existe ya; el valor, todavía no. `.then` espera por ti."
+"El primero lee/convierte; el segundo ya tiene los datos."
 
-### Por qué retornar la promesa
+### Reusar el render con el adaptador
 ```javascript
-function obtenerPokemones() {
-  return new Promise(...);   // sin return, no puedes hacer .then afuera
-}
+render([adaptarPokemon(data)]);   // API → forma limpia → render de C09
 ```
-"Si olvidas el `return`, `.then` da error: no hay promesa que encadenar."
+"No tocas `render`. Adaptas la entrada."
 
 ---
 
@@ -119,27 +121,28 @@ function obtenerPokemones() {
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| `.then is not a function` | Olvidaron `return new Promise` | La función debe **retornar** la promesa |
-| Las tarjetas salen al instante (sin demora) | Pusieron el `render` fuera del `setTimeout` | El `render` va **dentro** del callback del timeout |
-| El error nunca se muestra | No hay `.catch`, o nunca se llama `reject` | Agregar `.catch`; para probar, forzar `reject` |
-| "Cargando…" se queda para siempre | La promesa nunca resuelve (faltó `resolve`) | Verificar que `resolve(...)` se llame dentro del timeout |
-| Esperan que `setTimeout` "pause" el código | Creen que es sincrónico | Recordar Demo 1: el código sigue, el timeout corre después |
+| `data` es `Promise {<pending>}` | Olvidaron el `.then(r => r.json())` o devolverlo | Encadenar `.then(r => r.json())` |
+| Imagen rota / tipos `[object Object]` | Pasaron `data` crudo a `render` sin adaptar | `render([adaptarPokemon(data)])` |
+| Pantalla vacía, nada carga | Sin internet, o la URL mal escrita | Revisar conexión y la URL exacta |
+| La rejilla muestra solo 1 | No usaron `Promise.all` con varios `fetch` | `Promise.all(ids.map(...))` |
+| El buscador no filtra | Sigue apuntando a `pokemonLocal` (ya no existe) | Cambiarlo a `pokedex` (la rejilla cargada) |
+| `Promise.all` no resuelve | Alguna promesa nunca termina / URL inválida | Verificar cada `fetch`/URL |
 
 ---
 
 ## ✅ Señales de Comprensión
 
 **ENTIENDE cuando:**
-- Predice correctamente el orden A, C, B de la Demo 1.
-- Explica que `obtenerPokemones()` devuelve una promesa, no los datos.
-- Sabe que `.then` corre al resolver y `.catch` al rechazar.
-- Conecta la promesa simulada de hoy con el `fetch` que viene.
+- Explica que los datos de la API tardan y que `.then` corre cuando llegan.
+- Sabe por qué hay dos `.then` (convertir + usar).
+- Reconoce que la API da otra estructura y por eso adapta.
+- Entiende que `Promise.all` espera a que todas las promesas terminen.
 
 **NECESITA AYUDA cuando:**
-- Cree que `setTimeout` "pausa" el programa.
-- Olvida el `return` de la promesa y no entiende el error.
-- Pone el `render` fuera del callback y no ve la demora.
-- No distingue cuándo corre `.then` vs `.catch`.
+- Cree que `fetch` da los datos al instante (en la línea siguiente).
+- Pasa `data` crudo a `render` y ve la tarjeta rota.
+- Hace los `fetch` uno por uno sin `Promise.all`.
+- Deja el buscador apuntando a `pokemonLocal`.
 
 ---
 
@@ -147,35 +150,35 @@ function obtenerPokemones() {
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 | "Cargando…" visible ~1.5 s, luego tarjetas; el `console.log` posterior se imprime antes. |
-| ~60' | HU2 | `console.log(obtenerPokemones())` muestra `Promise {<pending>}`. |
-| ~90' | HU3 | Con `resolve` → tarjetas; con `reject` → mensaje de error. Distingue ambos caminos. |
+| ~30' | HU1 | En consola aparece el objeto real de un Pokémon; vieron "Cargando…" antes (tarda). |
+| ~60' | HU2 | La tarjeta de un Pokémon real aparece, idéntica a C09 pero con datos de la web. |
+| ~90' | HU3 | La rejilla muestra 6 Pokémon de la API; el buscador filtra esa rejilla. |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-- **Grupo callado:** corre la Demo 1 sin decir el resultado; que voten el orden a mano alzada.
-- **Alguien ya sabía promesas:** pídele que explique con sus palabras qué es `pending`.
-- **Terminan antes:** logro de fallo aleatorio (`Math.random() < 0.33` → `reject`) para ver ambos caminos.
-- **Si se atascan:** insiste en la analogía de la pizza/ticket antes de volver al código.
-- **No te metas aún en `async/await`:** es C11. Hoy es `.then`/`.catch` para que entiendan la promesa "cruda".
+- **Grupo callado:** abre el JSON en el navegador y que naveguen la estructura en voz alta.
+- **Alguien ya sabía fetch:** pídele que explique la diferencia entre `response` y `response.json()`.
+- **Terminan antes:** logro de lista dinámica (`?limit=12`) o spinner animado.
+- **Si la red falla en el aula:** ten un Pokémon ya cargado en consola; el concepto se demuestra con `.then(console.log)`.
+- **No adelantes `async/await`:** hoy es `.then`. Mañana lo reformulan; el contraste es la lección de C11.
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-**P: ¿Por qué no usamos `fetch` directamente?**
-R: Porque `fetch` es asíncrono y devuelve una promesa. Sin entender promesas, copiarían `.then` sin saber qué es. Hoy aislamos el concepto; en C11 lo aplican a la red.
+**P: ¿Por qué no usamos `async/await` hoy?**
+R: Para que primero entiendan la promesa "cruda" con `.then`. En C11 reescriben este mismo código con `async/await` y ven que es lo mismo, más legible.
 
-**P: ¿`setTimeout` es lo mismo que dormir el programa?**
-R: No. No pausa nada: programa una función para después y el código sigue. Por eso A, C, B y no A, B, C.
+**P: ¿`fetch` da los datos de inmediato?**
+R: No. Da una **promesa**. Los datos llegan después (la red tarda) y se usan dentro del `.then`.
 
-**P: ¿Qué pasa si no pongo `.catch`?**
-R: Si la promesa falla, el error queda sin manejar (aparece en consola como "uncaught"). Siempre conviene un `.catch`. En C12 se profundiza el manejo de errores.
+**P: ¿Por qué la API no me da los datos como yo los quiero?**
+R: Porque tú no diseñas la API. Cada API tiene su estructura; tu trabajo es **adaptarla** a tu modelo. Eso hace `adaptarPokemon`.
 
-**P: ¿`async/await` no es más fácil?**
-R: Sí, y lo verán en C11. Pero `async/await` es "azúcar" sobre las promesas; entender la promesa cruda primero hace que `await` tenga sentido.
+**P: ¿Qué pasa si un `fetch` falla dentro de `Promise.all`?**
+R: `Promise.all` se rechaza si **alguna** promesa falla. El manejo fino de errores se ve en C12; hoy basta un `.catch` general.
 
 ---
 
@@ -185,20 +188,19 @@ R: Sí, y lo verán en C11. Pero `async/await` es "azúcar" sobre las promesas; 
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C09 | `render()`, `crearTarjeta()` | Se reusan tal cual; hoy cambia cuándo llegan los datos |
-| C06 | callbacks (`.map`, `.forEach`) | `.then`/`.catch` reciben callbacks, ya familiares |
+| C09 | `render`, `crearTarjeta`, buscador, `.map`, `?.`/`??` | Se reusan; hoy los datos vienen de la API y se adaptan |
 
 ### Conexión con C11
 
 Al cerrar:
 
-> "Hoy la promesa era una simulación con `setTimeout`. En C11 la reemplazan por una **real**: `fetch` a la PokeAPI también devuelve una promesa, y se consume con el mismo `.then`/`.catch` —o con `async/await`, que aprenderán ahí. Por dentro: datos de internet de verdad."
+> "Hoy tu Pokédex carga de la web con `.then`. Funciona, pero se puede leer como una receta más clara: en C11 **reformulan** este código con `async/await`, y además agregan **buscar cualquier Pokémon** en la API (no solo filtrar los que ya cargaste)."
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
-- ¿Cuántos acertaron el orden A, C, B? Si fueron pocos, refuerza el event loop.
-- ¿La analogía de la pizza/ticket ayudó, o hubo que insistir con el código?
-- ¿Probaron el camino de `reject`? Vivirlo fija la importancia del `.catch`.
-- ¿Alguien conectó solo "esto es lo que hará `fetch`"? Excelente — está listo para C11.
+- ¿Cuántos esperaban los datos "en la línea siguiente" al `fetch`? Ese es el salto mental clave.
+- ¿La demo del JSON dejó claro por qué hace falta el adaptador?
+- ¿Entendieron `Promise.all` como "todas a la vez"?
+- ¿La rejilla de cada quien carga de la API y el buscador filtra? Ese es el éxito de la clase.

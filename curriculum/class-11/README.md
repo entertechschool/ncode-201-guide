@@ -1,64 +1,77 @@
 > 📦 **Módulo 3:** Clase 11 de 12
 
-# Clase 11: async/await, fetch y JSON
+# Clase 11: async/await y búsqueda en la API
 
 ## Resumen
 
-En la Clase 11 la Pokédex deja de usar datos locales y empieza a **consumir una API real**. Los estudiantes aprenden el formato **JSON** (cómo viajan los datos entre servidor y navegador), la función **`fetch`** para pedirlos, y la sintaxis **`async/await`** para escribir código asíncrono legible. La promesa simulada de C10 se reemplaza por una llamada real a [PokeAPI](https://pokeapi.co/){:target="_blank"}.
+En la Clase 11 los estudiantes **reformulan** el código asíncrono de C10: lo que escribieron con `.then` encadenado lo reescriben con **`async/await`**, la sintaxis moderna que hace que el código asíncrono se lea como una secuencia de pasos. Es la misma lógica de promesas de C10, más legible.
 
-Es la clase que conecta todo lo anterior: las promesas de C10 se vuelven concretas con datos de internet, y el render de C09 se reutiliza intacto gracias a una pequeña **función adaptadora** que traduce la estructura (anidada) que entrega la API a la estructura limpia del proyecto. Aprender a *adaptarse a lo que da la API* es, además, parte central de lo que la industria pide a un desarrollador JavaScript.
+Además, el buscador **evoluciona**: en C10 filtraba la rejilla que ya estaba cargada; aquí pasa a **consultar la API por nombre**, para traer Pokémon que no están en la rejilla. Y esos Pokémon se **agregan** a la colección (`pokedex`), haciendo crecer el estado de la app. Es el primer contacto con la idea de "el estado de mi app crece según lo que el usuario hace" —que se formaliza en M4.
+
+> 🔁 `async/await` se enseña como **azúcar sobre las Promesas** de C10, no como una tecnología distinta.
 
 Se utilizan dos recursos fundamentales:
 
-1. **Guía de Lectura y Debate:** análisis sobre qué es una API, por qué JSON es el formato universal de intercambio y cuándo conviene `async/await` frente a `.then`.
-2. **Guía de Laboratorio:** implementación de un buscador de Pokémon que pide datos reales con `fetch`, los convierte con `response.json()` y los muestra reusando el render de C09.
+1. **Guía de Lectura y Debate:** `async/await` vs `.then`, y qué significa "buscar en una API" frente a "filtrar lo local".
+2. **Guía de Laboratorio:** reformular la carga con `async/await`, buscar por nombre en la API y agregar el resultado a la Pokédex.
 
 ## Estructura Sugerida
 
 | **Fase** | **Duración** | **Descripción** |
 |---|---|---|
-| **1. Refuerzo Inicial** | 15 min | Repaso de promesas (C10). ¿Qué es una API? Mostrar JSON real de PokeAPI. |
-| **2. Debate Técnico** | 30 min | JSON como formato, `fetch`, `async/await` vs `.then`. |
-| **3. Demostración** | 15 min | Demo en vivo: buscar un Pokémon real y mostrarlo. |
+| **1. Refuerzo Inicial** | 15 min | Repaso del `.then` de C10. ¿Se puede leer más claro? |
+| **2. Debate Técnico** | 30 min | `async/await` como azúcar sobre promesas; buscar vs filtrar. |
+| **3. Demostración** | 15 min | Demo: el mismo `fetch` con `.then` y con `async/await`. |
 | **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (30', 60', 90'). |
-| **5. Cierre** | 20 min | Síntesis + anticipación al manejo de errores (C12). |
+| **5. Cierre** | 20 min | Síntesis + el error de "no existe" → C12. |
 
 ---
 
 ## Resultados Esperados
 
-Al culminar esta clase, los estudiantes podrán consumir una API REST pública, interpretar su respuesta JSON y mostrarla en la interfaz.
+Al culminar esta clase, los estudiantes escribirán código asíncrono legible con `async/await` y consumirán una API para buscar recursos específicos.
 
 ### Podrán hacer
 
-- Pedir datos a una URL con `fetch` y esperarlos con `await`.
-- Convertir una respuesta JSON en objeto JavaScript con `response.json()`.
-- Escribir funciones `async` que devuelven datos de una API.
+- Reescribir cadenas `.then` como funciones `async` con `await`.
+- Buscar un recurso por nombre en una API con `fetch` + `await`.
+- Agregar el resultado al estado de la app (`pokedex`) y re-renderizar.
 
 ### Podrán explicar
 
-- Qué es JSON y por qué su forma refleja los objetos de JavaScript.
-- La diferencia entre la **respuesta** (`response`) y su **cuerpo** ya convertido.
-- Por qué `async/await` hace el código asíncrono más legible que `.then` encadenado.
+- Que `async/await` es otra forma de escribir promesas, más legible.
+- La diferencia entre **filtrar** lo que ya tienes y **buscar** en la API.
+- Por qué evitar duplicados al hacer crecer una colección.
 
 ### Podrán implementar
 
-- Una función `buscarPokemon(nombre)` que consulta la PokeAPI.
-- Un buscador conectado a un input y un botón (y a la tecla Enter).
-- Una función adaptadora que traduce la estructura de la API a la del proyecto, reusando el render de C09.
+- Una carga de la rejilla reformulada con `async/await`.
+- Un buscador que consulta la API por nombre (clic / Enter).
+- La función de agregar a la Pokédex sin duplicar.
 
 ---
 
-## 🌐 De la simulación a la red real
+## 🔁 De `.then` a `async/await`
 
-| C10 (simulado) | C11 (real) |
+```javascript
+// C10
+fetch(url).then(r => r.json()).then(data => { ... });
+
+// C11 — mismo resultado, se lee de arriba a abajo
+const response = await fetch(url);
+const data = await response.json();
+```
+
+> No es una tecnología nueva: es la **misma promesa**, escrita como pasos secuenciales.
+
+## 🔍 De filtrar a buscar
+
+| C10 | C11 |
 |---|---|
-| `new Promise` + `setTimeout` | `fetch(url)` |
-| `resolve(pokemonLocal)` | `await response.json()` |
-| consumir con `.then` | consumir con `await` |
-
-> La API entrega los datos con **otra estructura** (anidada). Una **función adaptadora** la traduce a la estructura limpia de C09, así el render no cambia — solo se adapta lo que entra.
+| El buscador **filtra** `pokedex` (lo que ya cargaste) | El buscador **consulta la API** por nombre |
+| Solo encuentra lo que está en la rejilla | Encuentra **cualquier** Pokémon |
+| — | El resultado se **agrega** a tu colección |
 
 ## ⚠️ Nota sobre la red
 
-Esta clase requiere **conexión a internet**. La PokeAPI es gratuita y no necesita clave. Si un nombre no existe, la app fallará — eso se resuelve en C12 con manejo de errores.
+Requiere internet. Si el nombre no existe, la app falla — eso se maneja en C12 con `try/catch`.

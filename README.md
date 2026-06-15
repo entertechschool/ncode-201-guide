@@ -49,12 +49,12 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
 9. JavaScript Moderno y Render Dinámico
     - Sintaxis ES6+: template literals, destructuring, spread y optional chaining.
     - Generar HTML desde datos con `createElement` / `appendChild` (patrón render).
-10. Asincronía y Promesas
-    - Código sincrónico vs asincrónico, `setTimeout` y el modelo del event loop.
-    - Creación y consumo de Promesas (`new Promise`, `.then`, `.catch`).
-11. async/await, fetch y JSON
-    - Consumo de una API real con `fetch` y `response.json()`.
-    - JSON como formato de datos y `async/await` para asincronía legible.
+10. Datos desde la web: fetch, Promesas y JSON
+    - Consumo de una API real con `fetch`, Promesas (`.then`/`.catch`) y el formato JSON.
+    - Adaptación de la estructura de la API y carga en paralelo con `Promise.all`.
+11. async/await y búsqueda en la API
+    - Reformulación del código asíncrono con `async/await` (azúcar sobre Promesas).
+    - Búsqueda de recursos por nombre en la API y crecimiento del estado (la colección).
 12. Manejo de Errores y Estados
     - `try`, `catch`, `finally`, `throw` y validación de `response.ok`.
     - Estados de UI (carga / error / vacío) y documentación con Markdown.

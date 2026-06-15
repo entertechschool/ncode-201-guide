@@ -1,137 +1,187 @@
-# Laboratorio 10: Asincronía y Promesas
+# Laboratorio 10: Tu Pokédex, ahora desde la web (fetch, Promesas y JSON)
 
-En C09 los datos estaban **listos al instante** en un array. Pero una API real **tarda** en responder — medio segundo, a veces dos. Hoy aprendes cómo JavaScript maneja algo que **no llega de inmediato**: la **asincronía**, con `setTimeout` y **Promesas**. Aún no tocamos la red: simulamos la demora sobre tu array local, para entender el concepto sin el ruido de internet.
+En C09 tu rejilla salía de un **array local**, listo al instante. Hoy esos datos dejan de vivir en tu código y empiezan a venir de una **API real** por internet. Eso trae dos cosas nuevas: (1) los datos **tardan** en llegar → **asincronía**; (2) llegan con **su propia estructura** → tendrás que adaptarla. Al terminar, tu Pokédex carga sus Pokémon de la web y el buscador de C09 sigue funcionando.
 
 > ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
 >
-> 🧠 Reusas tu `render()` y `crearTarjeta()` de C09 **sin cambios**. Lo nuevo es **cómo y cuándo** llegan los datos al render.
+> 🌐 Necesitas **conexión a internet**. Usamos [PokeAPI](https://pokeapi.co/){:target="_blank"} — gratis, sin registro ni clave.
+>
+> 🧠 Reusas tu `render()` y `crearTarjeta()` de C09 **sin cambios**. Lo nuevo es **de dónde** vienen los datos y **cómo** los manejas.
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. Distinguir código **sincrónico** (bloqueante) de **asincrónico** (no bloqueante).
-2. Usar `setTimeout` para simular una operación que tarda.
-3. Crear y consumir una **Promesa** con `.then()` y `.catch()`.
+1. Entender la **asincronía**: los datos de una API tardan, y JavaScript no se congela esperándolos.
+2. Pedir datos con **`fetch`** y leerlos como **JSON** con **Promesas** (`.then` / `.catch`).
+3. **Adaptar** la estructura de la API a la forma de tu app y cargar varios en paralelo con **`Promise.all`**.
 
 ## 🔑 Conceptos Clave
 
 | Concepto | Definición |
 |---|---|
-| **Sincrónico** | Una instrucción tras otra; cada una **bloquea** hasta terminar. |
-| **Asincrónico** | Una operación "tarda" y JavaScript **sigue trabajando** mientras tanto. |
-| **`setTimeout`** | Ejecuta una función **después** de N milisegundos. |
-| **Promesa** | Objeto que representa un **valor futuro**: algo que llegará (o fallará) luego. |
-| **Estados** | Una promesa está `pending` (esperando), `fulfilled` (resuelta) o `rejected` (falló). |
+| **Asincrónico** | Una operación **tarda** (como pedir datos por red) y el programa **sigue** sin congelarse. |
+| **`fetch(url)`** | Pide datos a una URL. Devuelve una **Promesa**: un "ticket" por datos que llegarán. |
+| **JSON** | Formato de texto en que viajan los datos. Su forma refleja objetos JS, pero **no** es igual a tu objeto limpio. |
+| **`response.json()`** | Convierte el cuerpo (JSON) en un **objeto JavaScript**. |
 | **`.then` / `.catch`** | `.then(cb)` corre cuando la promesa se resuelve; `.catch(cb)` cuando falla. |
+| **`Promise.all`** | Espera a que **varias** promesas terminen y entrega todos los resultados juntos. |
+| **Función adaptadora** | Traduce la estructura de la API a tu forma limpia (`{ nombre, imagen, tipos }`). |
 
 ## ⚙️ Setup Inicial
 
-1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab10-asincronia`.
-2. **Punto de partida:** tu `js/app.js` de C09 con `pokemonLocal`, `crearTarjeta()` y `render()`. **No borres nada** — hoy construyes encima.
+1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab10-api`.
+2. **Punto de partida:** conservas tu `index.html` (la rejilla `#resultado` y el `#buscador`) y tus funciones `crearTarjeta()` y `render()` de C09 **sin cambios**.
+3. **El array `pokemonLocal` de C09 ya no manda los datos** — hoy vienen de la API. Puedes dejarlo comentado como referencia; lo reemplazaremos paso a paso.
 
-> 🧪 **Idea mental antes de empezar:** imagina que pides una pizza. No te quedas congelado en la puerta esperando (sincrónico); sigues con tu vida y, **cuando llega**, reaccionas (asincrónico). Una **Promesa** es el "ticket" de esa pizza que aún no llega.
+---
+
+## 🌐 Antes de empezar: ¿qué es una API y qué es JSON?
+
+Una **API** es un servidor que te entrega datos. La **PokeAPI** te da datos de cualquier Pokémon. Le pides una URL y te responde con **texto en formato JSON**:
+
+```json
+{
+  "name": "pikachu",
+  "sprites": { "front_default": "https://.../25.png" },
+  "types": [ { "type": { "name": "electric" } } ]
+}
+```
+
+> ⚠️ **Fíjate: NO es tu objeto limpio de C09.** Tú usabas `{ nombre, imagen, tipos: ["electric"] }`. La API usa `name`, esconde la imagen en `sprites.front_default` y los tipos en un array anidado `types[].type.name`. **La API dicta su estructura; tú te adaptarás a ella** (HU2).
+
+Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON real.
 
 ---
 
 ## 📋 Historias de Usuario
 
-### HU1: Simular la demora con `setTimeout`
+### HU1: Traer un Pokémon de la API
 
-> *"Como usuario, quiero ver un mensaje de 'Cargando…' y que las tarjetas aparezcan un momento después, como en una app real que espera datos."*
+> *"Como usuario, quiero que la app traiga datos reales de un Pokémon desde internet, en vez de tenerlos fijos en el código — aunque tarden un momento en llegar."*
 
 **Criterios de Aceptación:**
-- Al cargar la página, primero se ve un mensaje de "Cargando…".
-- Tras una breve espera, el mensaje desaparece y aparecen las tarjetas.
-- Durante la espera, la página no se congela (sigue respondiendo).
+- Mientras los datos llegan, se ve un estado de **"Cargando…"**.
+- Cuando llegan, aparecen en consola los **datos reales** de un Pokémon traídos de la web.
+- La página **no se congela** durante la espera.
 
-`setTimeout(funcion, ms)` corre la función **después** de los milisegundos indicados. Mientras tanto, el resto del programa **no se congela**:
+`fetch(url)` devuelve una **Promesa** (las que conoces de la idea del "ticket"): los datos **llegarán después**, porque la red tarda. Se consumen con `.then`:
 
 ```javascript
-const contenedor = document.getElementById("resultado");
-
-// se ve de inmediato
+// `contenedor` (#resultado) ya existe desde C09 — solo lo usamos
 contenedor.innerHTML = `<p class="col-span-full text-center text-slate-500">Cargando…</p>`;
 
-// se ejecuta 1.5 s después
-setTimeout(function () {
-  render(pokemonLocal);
-}, 1500);
-```
-
-> 💡 Para comprobar que NO se bloquea, agrega un `console.log("sigo trabajando")` **después** del `setTimeout`. Verás que se imprime **antes** de que aparezcan las tarjetas. JavaScript no se quedó esperando.
-
-- **Checkpoint 1 (~30 min):** la página muestra "Cargando…" y, tras la demora, las tarjetas. Entiendes que JavaScript siguió trabajando durante la espera.
-
----
-
-### HU2: Envolver los datos en una Promesa
-
-> *"Como desarrollador, quiero una función que me 'prometa' los datos del Pokémon y me los entregue cuando estén listos, como hará la API real en C11."*
-
-**Criterios de Aceptación:**
-- Al llamar la función, devuelve una **promesa**, no el array directamente.
-- La promesa empieza "pendiente" y, tras la espera, se **resuelve** entregando la lista de Pokémon.
-
-Una **Promesa** es un objeto que representa un valor que **llegará después**. Se crea con `new Promise`, que recibe dos "palancas": `resolve` (los datos llegaron bien) y `reject` (algo falló):
-
-```javascript
-function obtenerPokemones() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      resolve(pokemonLocal);   // ✅ "los datos están listos, aquí van"
-      // reject(new Error("No se pudo cargar"));  // ❌ así se señalaría un fallo
-    }, 1500);
+fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
+  .then(function (response) {
+    return response.json();   // convierte el JSON en objeto JS (también tarda → otra promesa)
+  })
+  .then(function (data) {
+    console.log(data);        // los datos reales de la API (estructura anidada)
+  })
+  .catch(function () {
+    contenedor.innerHTML = `<p class="col-span-full text-center text-red-600">No se pudo cargar.</p>`;
   });
-}
 ```
 
-* Mientras el `setTimeout` corre, la promesa está **`pending`** (esperando).
-* Al llamar `resolve(...)`, pasa a **`fulfilled`** y entrega el valor.
-* Si llamaras `reject(...)`, pasaría a **`rejected`**.
+> 💡 **¿Por qué no aparecen los datos al instante?** Porque **tardan**: la red no es inmediata. JavaScript **no se queda congelado** — sigue trabajando y reacciona cuando llegan (`.then`). **Eso es la asincronía.** Para comprobarlo, pon un `console.log("sigo trabajando")` justo después del `fetch`: se imprime **antes** que los datos.
 
-> 💡 `obtenerPokemones()` **no devuelve los datos directamente** — devuelve una *promesa* de ellos. Por eso en HU3 hay que "abrir" esa promesa para usarlos.
-
-- **Checkpoint 2 (~60 min):** en consola, `console.log(obtenerPokemones())` muestra un objeto `Promise {<pending>}`. Confirma que la función entrega una promesa, no el array.
+- **Checkpoint 1 (~30 min):** ves "Cargando…" y, un momento después, en consola aparece el objeto real de pikachu (con `name`, `sprites`, `types`). Confirmas que los datos vienen de la web y que tardan.
 
 ---
 
-### HU3: Consumir la Promesa con `.then()` y `.catch()`
+### HU2: Adaptar la estructura y mostrar la tarjeta
 
-> *"Como usuario, quiero que las tarjetas se muestren cuando la promesa se resuelve, y un mensaje claro si algo falla."*
+> *"Como usuario, quiero ver el Pokémon como una tarjeta con su imagen, nombre y tipos, igual que en C09."*
 
 **Criterios de Aceptación:**
-- Cuando la promesa se resuelve, las tarjetas aparecen en pantalla.
-- Cuando la promesa falla, en lugar de las tarjetas se muestra un mensaje de error claro.
-- La app distingue ambos caminos (éxito y error) sin romperse.
+- La tarjeta del Pokémon real aparece con su **imagen, nombre y tipos**.
+- Se reusa el `render()` / `crearTarjeta()` de C09 sin reescribirlos.
+- Si a la API le falta algún dato (p. ej. la imagen), la tarjeta **no se rompe**.
 
-Para usar el valor de una promesa se encadena `.then()` (éxito) y `.catch()` (error):
+Tu `crearTarjeta` de C09 espera la forma limpia `{ nombre, imagen, tipos }`, pero la API da una estructura **anidada**. En vez de reescribir el render, escribes una **función adaptadora** que traduce de una forma a la otra (reusando el `?.` y el `??` de C09):
 
 ```javascript
-function cargar() {
-  contenedor.innerHTML = `<p class="col-span-full text-center text-slate-500">Cargando…</p>`;
-
-  obtenerPokemones()
-    .then(function (lista) {        // ✅ corre cuando resolve(...)
-      render(lista);
-    })
-    .catch(function (error) {       // ❌ corre cuando reject(...)
-      contenedor.innerHTML = `<p class="col-span-full text-center text-red-600">Error: ${error.message}</p>`;
-    });
+function adaptarPokemon(data) {
+  return {
+    nombre: data.name,
+    imagen: data.sprites?.front_default ?? "https://via.placeholder.com/96?text=?",
+    tipos:  data.types.map(t => t.type.name)   // [{type:{name:"electric"}}] → ["electric"]
+  };
 }
-
-cargar();
 ```
 
-**Probar el camino de error:** en `obtenerPokemones`, comenta el `resolve(...)` y descomenta el `reject(new Error("No se pudo cargar"))`. Recarga: en vez de tarjetas verás el mensaje rojo. **El `.catch` atrapó el fallo.** Vuelve a dejar el `resolve` activo al terminar.
+Ahora adapta los datos antes de renderizar:
 
-- **Checkpoint 3 (~90 min):** con `resolve`, ves "Cargando…" → tarjetas. Al cambiar a `reject`, ves "Cargando…" → mensaje de error. Distingues los dos caminos de una promesa.
+```javascript
+fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
+  .then(function (response) { return response.json(); })
+  .then(function (data) {
+    render([adaptarPokemon(data)]);   // adapta y reusa el render de C09 (espera una lista)
+  })
+  .catch(function () {
+    contenedor.innerHTML = `<p class="col-span-full text-center text-red-600">No se pudo cargar.</p>`;
+  });
+```
+
+> 💡 El adapter traduce la forma de la API a la tuya, así tu `crearTarjeta` **no cambia** aunque la fuente de datos sí. Es exactamente lo que hace un dev real con cualquier API.
+
+- **Checkpoint 2 (~60 min):** la tarjeta de un Pokémon real aparece en la rejilla, **idéntica en apariencia** a las de C09 — pero los datos vinieron de la web y pasaron por tu adaptador.
+
+---
+
+### HU3: Llenar la rejilla con varios Pokémon en paralelo
+
+> *"Como usuario, quiero ver una rejilla de varios Pokémon traídos de la web, y poder filtrarlos como antes."*
+
+**Criterios de Aceptación:**
+- La rejilla muestra **varios** Pokémon reales (no uno solo).
+- Los Pokémon se cargan **a la vez** (en paralelo), no esperando uno por uno.
+- El **buscador sigue filtrando** la rejilla cargada.
+
+Cada Pokémon es **un `fetch`**. Para traer varios **a la vez**, juntas sus promesas con **`Promise.all`**, que espera a que **todas** terminen y te entrega los resultados juntos:
+
+```javascript
+const ids = [1, 4, 7, 25, 39, 94];
+let pokedex = [];   // aquí guardamos la rejilla cargada
+
+// un fetch por cada id → un array de promesas
+const promesas = ids.map(function (id) {
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(r => r.json());
+});
+
+Promise.all(promesas)
+  .then(function (datos) {                 // datos = array con los 6 Pokémon crudos
+    pokedex = datos.map(adaptarPokemon);   // adapta todos a tu forma limpia
+    render(pokedex);
+  })
+  .catch(function () {
+    contenedor.innerHTML = `<p class="col-span-full text-center text-red-600">No se pudo cargar la Pokédex.</p>`;
+  });
+```
+
+> 💡 `Promise.all` recibe un **array de promesas** y se resuelve cuando **todas** terminan. Si pidieras los Pokémon uno por uno (esperando cada uno antes del siguiente), tardaría mucho más; **en paralelo** tardan lo que el más lento.
+
+**Reconecta el buscador de C09.** No agregues un listener nuevo: **edita el que ya tienes** y cambia esa única referencia de `pokemonLocal` a `pokedex`. Tu listener queda así:
+
+```javascript
+buscador.addEventListener("input", function () {
+  const texto = buscador.value.toLowerCase();
+  const filtrados = pokedex.filter(p => p.nombre.includes(texto));   // antes: pokemonLocal
+  render(filtrados);
+});
+```
+
+> ⚠️ `buscador` y `pokedex` ya están declarados (`buscador` desde C09; `pokedex` con `let pokedex = []` al inicio de tu `app.js`). No los vuelvas a declarar aquí.
+
+> 💡 El buscador de C09 **sigue vivo**: solo cambia la fuente. Antes filtraba un array local; ahora filtra la rejilla que cargaste de la API.
+
+- **Checkpoint 3 (~90 min):** la rejilla muestra 6 Pokémon reales de la API; escribes en el buscador y filtra esa rejilla. **Tu Pokédex ya vive de la web.**
 
 ---
 
 ## 🌟 Logros Adicionales (Opcionales)
 
-- **Logro 1 — Demora aleatoria:** usa `Math.random() * 2000` como tiempo del `setTimeout` para simular una red inestable.
-- **Logro 2 — Fallo aleatorio:** que la promesa haga `reject` ~1 de cada 3 veces (`Math.random() < 0.33`) para ver ambos caminos sin editar el código.
-- **Logro 3 — Spinner real:** reemplaza el texto "Cargando…" por un spinner animado con clases de Tailwind (`animate-spin`).
+- **Logro 1 — Lista dinámica:** en vez de IDs fijos, trae los primeros 12 con `fetch("https://pokeapi.co/api/v2/pokemon?limit=12")` (ese endpoint da `results` con nombres y URLs; haz un `fetch` de cada URL con `Promise.all`).
+- **Logro 2 — Spinner animado:** reemplaza el texto "Cargando…" por un spinner con `animate-spin` de Tailwind.
+- **Logro 3 — Un ID que no existe:** prueba con un ID inválido y evita que rompa la rejilla (adelanto del manejo de errores de C12).
 
 ## 📝 Instrucciones de Entrega
 

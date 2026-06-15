@@ -78,7 +78,7 @@ Pon el `add('hidden')` al final del `try`, fuerza un error: el spinner se queda.
 ```
 "HU1: envuelven el fetch en try/catch (deja de romperse).
  HU2: revisan response.ok y lanzan 'No se encontró' con throw.
- HU3: spinner + estado vacío, y finally que lo oculta siempre.
+ HU3: spinner durante la búsqueda y la carga, y finally que lo oculta siempre.
  Y documentan: su primer README en Markdown.
  Esto es evaluado — revisen la rúbrica."
 ```
@@ -162,7 +162,7 @@ Buscador que consume la PokeAPI.
 |---|---|---|
 | ~30' | HU1 | Con red caída, la búsqueda muestra mensaje en vez de romperse. |
 | ~60' | HU2 | "pikachuu" → "No se encontró…"; "pikachu" → tarjeta. |
-| ~90' | HU3 | Spinner aparece y SIEMPRE desaparece (3 escenarios); estado vacío inicial; README creado. |
+| ~90' | HU3 | Spinner aparece y SIEMPRE desaparece (3 escenarios), en búsqueda y carga; README creado. |
 
 ---
 

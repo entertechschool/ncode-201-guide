@@ -28,7 +28,7 @@
 **Aspectos evaluados:**
 - HU1: `try/catch` alrededor del fetch
 - HU2: detección de `!response.ok` + `throw new Error(...)`
-- HU3: estados de UI (spinner/error/vacío) con `finally`
+- HU3: estado de carga (spinner) con `finally`, en la búsqueda y en la carga inicial
 - HU adicionales (logros) en su propia rama y mergeadas vía PR
 
 ---

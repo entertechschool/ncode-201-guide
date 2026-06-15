@@ -1,16 +1,16 @@
 # Laboratorio 12: Manejo de Errores y Estados (Lab Evaluado M3)
 
-Última clase del módulo. Tu Pokédex ya trae datos reales… pero si buscas un nombre que no existe, **se rompe**. Hoy la haces **robusta**: manejas errores con `try/catch`, detectas respuestas fallidas (404), y muestras estados claros de **carga**, **error** y **vacío**. Al final documentas el proyecto con un **README en Markdown** y cierras el Módulo 3.
+Última clase del módulo. Tu Pokédex ya carga de la web y busca Pokémon… pero si buscas un nombre que no existe, o se cae la red, **se rompe**. Hoy la haces **robusta**: manejas errores con `try/catch`, detectas respuestas fallidas (404) y muestras estados claros de **carga** y **error**. Al final documentas el proyecto con un **README en Markdown** y cierras el Módulo 3.
 
 > ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
 >
-> 📋 **Lab evaluado:** este laboratorio se califica con la rúbrica de [rubric.md](rubric.md) (5 criterios × 20 pts = 100). Incluye el README documentado.
+> 📋 **Lab evaluado:** se califica con la rúbrica de [rubric.md](rubric.md) (5 criterios × 20 pts = 100). Incluye el README documentado.
 
 ## 🎯 Objetivos de Aprendizaje
 
 1. Capturar errores con `try/catch/finally` y lanzar los propios con `throw`.
 2. Detectar respuestas HTTP fallidas (`response.ok`) y comunicarlas al usuario.
-3. Mostrar estados de UI (cargando / error / vacío) y documentar el proyecto en **Markdown**.
+3. Mostrar estados de UI (cargando / error) y documentar el proyecto en **Markdown**.
 
 ## 🔑 Conceptos Clave
 
@@ -20,22 +20,21 @@
 | **`throw new Error(msg)`** | Lanza un error propio con un mensaje claro. |
 | **`response.ok`** | `false` si la respuesta HTTP fue un error (ej. 404). `fetch` **no** falla solo por un 404. |
 | **`finally`** | Bloque que corre **siempre**, haya éxito o error. Ideal para ocultar un spinner. |
-| **Estados de UI** | Loading (cargando), error (mensaje), empty (vacío inicial): lo que el usuario ve en cada momento. |
+| **Estados de UI** | Loading (cargando) y error (mensaje): lo que el usuario ve en cada momento. |
 | **Markdown** | Formato de texto para documentar (títulos, listas, links, código). Se usa en el `README.md`. |
 
 ## ⚙️ Setup Inicial
 
 1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab12-errores`.
-2. **Agrega las zonas de estado** al `index.html`, debajo del buscador y encima de `#resultado`:
+2. **Punto de partida:** tu app de C11 (`obtenerPokemon`, `buscarPokemon`, `agregarPokemon`, `cargarPokedex`, `adaptarPokemon`, `pokedex`, `render`, `#buscador`, `#btn-buscar`).
+3. **Agrega las zonas de estado** al `index.html`, debajo del buscador y encima de `#resultado`:
 
    ```html
    <div id="spinner" class="hidden text-center text-slate-500 my-4">Cargando…</div>
    <div id="mensaje" class="hidden text-center text-red-600 font-medium my-4"></div>
    ```
 
-   > 📌 Convención del proyecto: `#spinner` (estado de carga) y `#mensaje` (errores / vacío). La clase `hidden` de Tailwind los oculta hasta que el JS los muestre.
-
-3. **Conservas de C11** las funciones `adaptarPokemon(data)`, `crearTarjeta()` y `render()`. Hoy robusteces `mostrarPokemon`: el `fetch` que en C11 vivía en `buscarPokemon` ahora va **dentro del `try`** de `mostrarPokemon`, para poder validar `response.ok` antes de leer el JSON.
+   > 📌 Convención del proyecto: `#spinner` (estado de carga) y `#mensaje` (errores). La clase `hidden` de Tailwind los oculta hasta que el JS los muestre.
 
 ---
 
@@ -49,20 +48,21 @@
 - Si la búsqueda falla (p. ej. sin internet), aparece un **mensaje claro** en vez de una pantalla rota.
 - La app **sigue viva** tras el fallo: puedes volver a buscar sin recargar.
 
-Envuelve la lógica que puede fallar en `try`; si algo sale mal, `catch` lo maneja:
+Envuelve la lógica que puede fallar (la búsqueda de C11) en `try`; si algo sale mal, `catch` lo maneja:
 
 ```javascript
-const resultado = document.getElementById("resultado");
-const mensaje   = document.getElementById("mensaje");
+const mensaje = document.getElementById("mensaje");
 
-async function mostrarPokemon(nombre) {
+async function agregarPokemon(nombre) {
   mensaje.classList.add("hidden");   // limpia errores anteriores
-  resultado.innerHTML = "";
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
-    const data     = await response.json();
-    render([adaptarPokemon(data)]);   // adaptarPokemon viene de C11
+    const pokemon = await buscarPokemon(nombre);
+    if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
+      pokedex.push(pokemon);
+    }
+    render(pokedex);
+    buscador.value = "";
   } catch (error) {
     mensaje.textContent = "Algo salió mal. Revisa tu conexión.";
     mensaje.classList.remove("hidden");
@@ -83,58 +83,62 @@ async function mostrarPokemon(nombre) {
 **Criterios de Aceptación:**
 - Buscar un nombre que no existe (p. ej. "pikachuu") muestra el mensaje "No se encontró 'pikachuu'".
 - El mensaje es **específico** (nombra lo que se buscó), no genérico.
-- Un nombre válido sigue mostrando su tarjeta con normalidad.
+- Un nombre válido sigue agregándose con normalidad.
 
-Ojo: `fetch` **no** falla solo porque la API responda 404. Hay que revisarlo con `response.ok` y **lanzar** nuestro propio error:
+Ojo: `fetch` **no** falla solo porque la API responda 404. Hay que revisarlo con `response.ok` y **lanzar** nuestro propio error. Modifica tu `obtenerPokemon` de C11:
 
 ```javascript
-try {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
+async function obtenerPokemon(idONombre) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idONombre}`);
 
-  if (!response.ok) {                                   // 404, 500, etc.
-    throw new Error(`No se encontró "${nombre}"`);     // lanza un error propio
+  if (!response.ok) {                                    // 404, 500, etc.
+    throw new Error(`No se encontró "${idONombre}"`);    // lanza un error propio
   }
 
-  const data = await response.json();
-  render([adaptarPokemon(data)]);
+  return response.json();
+}
+```
+
+Y en el `catch` de `agregarPokemon`, usa el mensaje del error:
+
+```javascript
 } catch (error) {
-  mensaje.textContent = error.message;                 // usa el mensaje del error
+  mensaje.textContent = error.message;   // "No se encontró 'pikachuu'"
   mensaje.classList.remove("hidden");
 }
 ```
 
-> 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines aquí es el que se muestra. Un buen mensaje de error es parte de una buena app.
+> 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines es el que se muestra. Un buen mensaje de error es parte de una buena app.
 
-- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → tarjeta normal.
+- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → se agrega normal.
 
 ---
 
-### HU3: Estados de carga y vacío con `finally`
+### HU3: Estado de carga con `finally` (búsqueda y carga inicial)
 
 > *"Como usuario, quiero ver 'Cargando…' mientras espera y que desaparezca siempre, tenga éxito o falle."*
 
 **Criterios de Aceptación:**
 - Mientras la búsqueda está en curso, se ve un indicador de **"Cargando…"**.
 - El indicador **siempre desaparece** al terminar, haya éxito o error.
-- Al abrir la página sin buscar nada, se ve un estado inicial con una pista.
+- Si la carga inicial de la rejilla falla, también se ve un mensaje (no una página en blanco).
 
 Muestra el spinner al empezar y ocúltalo en `finally` (corre **siempre**):
 
 ```javascript
 const spinner = document.getElementById("spinner");
 
-async function mostrarPokemon(nombre) {
+async function agregarPokemon(nombre) {
   spinner.classList.remove("hidden");   // ⏳ muestra carga
   mensaje.classList.add("hidden");
-  resultado.innerHTML = "";
 
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
-    if (!response.ok) {
-      throw new Error(`No se encontró "${nombre}"`);
+    const pokemon = await buscarPokemon(nombre);
+    if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
+      pokedex.push(pokemon);
     }
-    const data = await response.json();
-    render([adaptarPokemon(data)]);
+    render(pokedex);
+    buscador.value = "";
   } catch (error) {
     mensaje.textContent = error.message;
     mensaje.classList.remove("hidden");
@@ -144,14 +148,26 @@ async function mostrarPokemon(nombre) {
 }
 ```
 
-**Estado vacío inicial:** al cargar la página (sin buscar nada aún), muestra una pista en `#mensaje`. Coloca estas líneas **al final de tu `app.js`**, en el nivel superior (fuera de `mostrarPokemon`), para que corran una vez al cargar:
+**Robustece también la carga inicial.** Tu `cargarPokedex` de C11 también puede fallar (sin red al abrir). Envuélvela en `try/catch`:
 
 ```javascript
-mensaje.textContent = "Busca un Pokémon para empezar 🔍";
-mensaje.classList.remove("hidden");
+async function cargarPokedex() {
+  spinner.classList.remove("hidden");
+  try {
+    const ids = [1, 4, 7, 25, 39, 94];
+    const datos = await Promise.all(ids.map(obtenerPokemon));
+    pokedex = datos.map(adaptarPokemon);
+    render(pokedex);
+  } catch (error) {
+    mensaje.textContent = "No se pudo cargar la Pokédex.";
+    mensaje.classList.remove("hidden");
+  } finally {
+    spinner.classList.add("hidden");
+  }
+}
 ```
 
-- **Checkpoint 3 (~90 min):** prueba los 3 escenarios y observa el spinner aparecer y **siempre** desaparecer. Esa es la garantía de `finally`.
+- **Checkpoint 3 (~90 min):** el spinner aparece durante la búsqueda/carga y **siempre** desaparece (éxito, no encontrado, sin red).
 
 🏆 **Reto autónomo (5 min):** mueve `spinner.classList.add("hidden")` del `finally` al final del `try`. Busca un nombre inexistente: el spinner **se queda pegado**. Eso prueba por qué va en `finally`.
 
@@ -168,10 +184,10 @@ Buscador de Pokémon que consume la PokeAPI.
 
 ## Cómo usarlo
 1. Abre el sitio desplegado.
-2. Escribe el nombre de un Pokémon y presiona **Buscar**.
+2. Escribe el nombre de un Pokémon y presiona **Buscar** para agregarlo.
 
 ## Tecnologías
-- JavaScript (`fetch`, `async/await`)
+- JavaScript (`fetch`, `async/await`, `Promise.all`)
 - Tailwind CSS
 - [PokeAPI](https://pokeapi.co/)
 
