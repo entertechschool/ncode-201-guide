@@ -80,6 +80,11 @@
 
 > *"Como usuario, quiero ver una rejilla de tarjetas de Pokémon, cada una con su imagen, nombre y tipos, para reconocerlos de un vistazo."*
 
+**Criterios de Aceptación:**
+- Las tarjetas de Pokémon se muestran organizadas en una **rejilla**, no apiladas en una sola columna.
+- Cada tarjeta deja ver de un vistazo la **imagen**, el **nombre** y el/los **tipo(s)** del Pokémon.
+- La rejilla se **adapta al tamaño de pantalla**: muestra menos columnas en el móvil y más en el escritorio.
+
 Antes de generar nada con JS, mira **a dónde quieres llegar**. Así se ve **una** tarjeta (pégala temporalmente dentro de `#resultado` para verla, luego la borras):
 
 ```html
@@ -92,11 +97,6 @@ Antes de generar nada con JS, mira **a dónde quieres llegar**. Así se ve **una
 </article>
 ```
 
-**Criterios de Aceptación:**
-- Las tarjetas de Pokémon se muestran organizadas en una **rejilla**, no apiladas en una sola columna.
-- Cada tarjeta deja ver de un vistazo la **imagen**, el **nombre** y el/los **tipo(s)** del Pokémon.
-- La rejilla se **adapta al tamaño de pantalla**: muestra menos columnas en el móvil y más en el escritorio.
-
 - **Checkpoint 1 (~30 min):** ves al menos una tarjeta de ejemplo bien maquetada dentro de la rejilla. **Borra la tarjeta de prueba antes de seguir** — en HU2 la genera el JS.
 
 ---
@@ -104,6 +104,11 @@ Antes de generar nada con JS, mira **a dónde quieres llegar**. Así se ve **una
 ### HU2: Generar las tarjetas desde el array con JavaScript
 
 > *"Como usuario, quiero que las tarjetas se generen automáticamente desde los datos, para no escribir el HTML de cada Pokémon a mano."*
+
+**Criterios de Aceptación:**
+- Todas las tarjetas de la lista de Pokémon aparecen en la rejilla.
+- Cada tarjeta muestra su imagen y su nombre.
+- Si la lista de datos cambia (agregar o quitar un Pokémon), la rejilla muestra exactamente esos Pokémon, sin duplicados ni restos.
 
 Aquí está el corazón de la clase: **construir HTML desde datos**. Dos piezas nuevas:
 
@@ -142,11 +147,6 @@ render(pokemonLocal);   // ¡píntalo!
 
 > 💡 **`innerHTML` vs `textContent`:** `innerHTML` interpreta el string como **HTML** (crea etiquetas); `textContent` lo pone como **texto plano**. Para construir la tarjeta usamos `innerHTML`; para meter solo texto sin etiquetas, `textContent`.
 
-**Criterios de Aceptación:**
-- Todas las tarjetas de la lista de Pokémon aparecen en la rejilla.
-- Cada tarjeta muestra su imagen y su nombre.
-- Si la lista de datos cambia (agregar o quitar un Pokémon), la rejilla muestra exactamente esos Pokémon, sin duplicados ni restos.
-
 - **Checkpoint 2 (~60 min):** abre la página: las 6 tarjetas aparecen solas. Borra una entrada del array `pokemonLocal`, recarga, y verás que desaparece — la UI **depende de los datos**.
 
 ---
@@ -154,6 +154,11 @@ render(pokemonLocal);   // ¡píntalo!
 ### HU3: Datos limpios con destructuring, tipos con `.map`, y acceso seguro con `?.` / `??`
 
 > *"Como usuario, quiero ver los tipos de cada Pokémon (uno o varios) y que la tarjeta no se rompa si a un Pokémon le falta algún dato."*
+
+**Criterios de Aceptación:**
+- Cada tarjeta muestra **todos** los tipos del Pokémon (los de doble tipo, como bulbasaur y gengar, muestran ambos).
+- Si a un Pokémon le falta la imagen, su tarjeta **no se rompe**: aparece una imagen de respaldo.
+- El nombre y los tipos se leen claros y completos en cada tarjeta.
 
 Vas a **refactorizar** `crearTarjeta` con tres herramientas modernas.
 
@@ -206,11 +211,6 @@ function crearTarjeta(pokemon) {
 }
 ```
 
-**Criterios de Aceptación:**
-- Cada tarjeta muestra **todos** los tipos del Pokémon (los de doble tipo, como bulbasaur y gengar, muestran ambos).
-- Si a un Pokémon le falta la imagen, su tarjeta **no se rompe**: aparece una imagen de respaldo.
-- El nombre y los tipos se leen claros y completos en cada tarjeta.
-
 - **Checkpoint 3 (~90 min):** las 6 tarjetas muestran sus badges de tipo (varios en bulbasaur/jigglypuff/gengar). Borra la propiedad `imagen` de un Pokémon: la tarjeta sigue viva gracias a `??`.
 
 ---
@@ -218,6 +218,11 @@ function crearTarjeta(pokemon) {
 ### HU4: Filtrar la lista en vivo (la UI reacciona a los datos)
 
 > *"Como usuario, quiero escribir un nombre y que la lista se filtre al instante, para encontrar un Pokémon rápido."*
+
+**Criterios de Aceptación:**
+- Al escribir en el campo de búsqueda, la rejilla muestra **solo** los Pokémon cuyo nombre coincide.
+- Al borrar lo escrito, vuelven a aparecer todos.
+- El filtrado se actualiza **al instante** mientras escribes, sin pulsar ningún botón.
 
 Hasta ahora llamaste `render(pokemonLocal)` **una sola vez**. Pero `render()` es una función: puedes llamarla **cada vez que los datos cambian**, y la UI se actualiza sola. Eso vas a comprobar.
 
@@ -243,11 +248,6 @@ buscador.addEventListener("input", function () {
 ```
 
 > 💡 No reescribes `render` ni `crearTarjeta`: les das **otra lista**. Esa es la prueba de que *la UI es un reflejo de los datos* — cambian los datos, cambia la pantalla.
-
-**Criterios de Aceptación:**
-- Al escribir en el campo de búsqueda, la rejilla muestra **solo** los Pokémon cuyo nombre coincide.
-- Al borrar lo escrito, vuelven a aparecer todos.
-- El filtrado se actualiza **al instante** mientras escribes, sin pulsar ningún botón.
 
 - **Checkpoint 4 (~100 min):** escribe "pi" → queda solo Pikachu; borra el texto → vuelven los 6. La lista **reacciona** a lo que escribes.
 
