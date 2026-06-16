@@ -22,7 +22,7 @@ Se utilizan dos recursos fundamentales:
 | **1. Refuerzo Inicial** | 15 min | Repaso del render de C09. ¿Y si los datos no están en tu código sino en internet? |
 | **2. Debate Técnico** | 30 min | API, JSON, asincronía: por qué los datos "tardan" y cómo se manejan con Promesas. |
 | **3. Demostración** | 15 min | Demo en vivo: el JSON real de PokeAPI y un `fetch` que carga un Pokémon. |
-| **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (15', 45', 70', 95'). |
+| **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (15', 40', 60', 80', 95'). |
 | **5. Cierre** | 20 min | Síntesis + puente a `async/await` (C11). |
 
 ---

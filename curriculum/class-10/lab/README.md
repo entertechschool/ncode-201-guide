@@ -2,7 +2,7 @@
 
 En C09 tu rejilla salía de un **array local**, listo al instante. Hoy esos datos dejan de vivir en tu código y empiezan a venir de una **API real** por internet. Eso trae dos cosas nuevas: (1) los datos **tardan** en llegar → **asincronía**; (2) llegan con **su propia estructura** → tendrás que adaptarla. Al terminar, tu Pokédex carga sus Pokémon de la web y el buscador de C09 sigue funcionando.
 
-> ⏱️ **Checkpoints**: 4 momentos de validación (~15, ~45, ~70, ~95 min).
+> ⏱️ **Checkpoints**: 5 momentos de validación (~15, ~40, ~60, ~80, ~95 min).
 >
 > 🌐 Necesitas **conexión a internet**. Usamos [PokeAPI](https://pokeapi.co/){:target="_blank"} — gratis, sin registro ni clave.
 >
@@ -116,7 +116,7 @@ fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
 
 > 💡 **¿Por qué no aparecen los datos al instante?** Porque **tardan**: la red no es inmediata. JavaScript **no se queda congelado** — sigue trabajando y reacciona cuando llegan (`.then`). **Eso es la asincronía.** Para comprobarlo, pon un `console.log("sigo trabajando")` justo después del `fetch`: se imprime **antes** que los datos.
 
-- **Checkpoint 2 (~45 min):** ves "Cargando…" y, un momento después, en consola aparece el objeto real de pikachu (con `name`, `sprites`, `types`). Confirmas que los datos vienen de la web y que tardan.
+- **Checkpoint 2 (~40 min):** ves "Cargando…" y, un momento después, en consola aparece el objeto real de pikachu (con `name`, `sprites`, `types`). Confirmas que los datos vienen de la web y que tardan.
 
 ---
 
@@ -156,7 +156,7 @@ fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
 
 > 💡 El adapter traduce la forma de la API a la tuya, así tu `crearTarjeta` **no cambia** aunque la fuente de datos sí. Es exactamente lo que hace un dev real con cualquier API.
 
-- **Checkpoint 3 (~70 min):** la tarjeta de un Pokémon real aparece en la rejilla, **idéntica en apariencia** a las de C09 — pero los datos vinieron de la web y pasaron por tu adaptador.
+- **Checkpoint 3 (~60 min):** la tarjeta de un Pokémon real aparece en la rejilla, **idéntica en apariencia** a las de C09 — pero los datos vinieron de la web y pasaron por tu adaptador.
 
 ---
 
@@ -206,15 +206,47 @@ buscador.addEventListener("input", function () {
 
 > 💡 El buscador de C09 **sigue vivo**: solo cambia la fuente. Antes filtraba un array local; ahora filtra la rejilla que cargaste de la API.
 
-- **Checkpoint 4 (~95 min):** la rejilla muestra 6 Pokémon reales de la API; escribes en el buscador y filtra esa rejilla. **Tu Pokédex ya vive de la web.**
+- **Checkpoint 4 (~80 min):** la rejilla muestra 6 Pokémon reales de la API; escribes en el buscador y filtra esa rejilla. **Tu Pokédex ya vive de la web.**
+
+---
+
+### HU5: Rejilla dinámica desde la lista de la API
+
+> *"Como usuario, quiero que la rejilla muestre los Pokémon que ofrece la API, sin que nadie escriba los IDs a mano."*
+
+**Criterios de Aceptación:**
+- La rejilla inicial se llena con los primeros **12** Pokémon que devuelve la API.
+- Los datos salen de la **lista que entrega la API**, no de IDs escritos a mano en el código.
+
+El endpoint `?limit=12` te da una **lista**, pero cada Pokémon viene solo con `name` y una `url` a su detalle (sin imagen ni tipos). Así que necesitas **dos niveles**: pedir la lista, y luego pedir el detalle de cada uno con `Promise.all`. Reemplaza tu carga de IDs fijos (HU4) por esto:
+
+```javascript
+fetch("https://pokeapi.co/api/v2/pokemon?limit=12")
+  .then(r => r.json())
+  .then(function (lista) {
+    // lista.results = [{ name, url }, ...] — solo nombre y URL al detalle
+    const promesas = lista.results.map(item => fetch(item.url).then(r => r.json()));
+    return Promise.all(promesas);   // trae el detalle de cada uno en paralelo
+  })
+  .then(function (datos) {
+    pokedex = datos.map(adaptarPokemon);
+    render(pokedex);
+  })
+  .catch(function () {
+    contenedor.innerHTML = `<p class="col-span-full text-center text-red-600">No se pudo cargar la Pokédex.</p>`;
+  });
+```
+
+> 💡 Muchas APIs funcionan así: un endpoint de **lista** (resúmenes) y un endpoint de **detalle** por cada elemento. Pides la lista, y luego los detalles en paralelo con `Promise.all`.
+
+- **Checkpoint 5 (~95 min):** la rejilla se llena con 12 Pokémon traídos de la **lista** de la API, sin IDs escritos a mano. El buscador sigue filtrando.
 
 ---
 
 ## 🌟 Logros Adicionales (Opcionales)
 
-- **Logro 1 — Lista dinámica:** en vez de IDs fijos, trae los primeros 12 con `fetch("https://pokeapi.co/api/v2/pokemon?limit=12")` (ese endpoint da `results` con nombres y URLs; haz un `fetch` de cada URL con `Promise.all`).
-- **Logro 2 — Spinner animado:** reemplaza el texto "Cargando…" por un spinner con `animate-spin` de Tailwind.
-- **Logro 3 — Un ID que no existe:** prueba con un ID inválido y evita que rompa la rejilla (adelanto del manejo de errores de C12).
+- **Logro 1 — Spinner animado:** reemplaza el texto "Cargando…" por un spinner con `animate-spin` de Tailwind.
+- **Logro 2 — Un ID que no existe:** prueba con un ID inválido y evita que rompa la rejilla (adelanto del manejo de errores de C12).
 
 ## 📝 Instrucciones de Entrega
 

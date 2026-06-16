@@ -108,7 +108,8 @@ buscador.addEventListener("input", function () {
 | **HU1** | ~15 min | Descubre la asincronía (orden en consola → Promesa) |
 | **HU2** | ~30 min | `fetch` un Pokémon + leer el JSON |
 | **HU3** | ~25 min | Adaptar la estructura + mostrar la tarjeta |
-| **HU4** | ~25 min | `Promise.all` (rejilla) + reconectar el filtro |
+| **HU4** | ~20 min | `Promise.all` (rejilla con IDs) + reconectar el filtro |
+| **HU5** | ~15 min | Rejilla dinámica (lista de la API → detalle) |
 
 > Datos: **PokeAPI** real (sin clave).
 

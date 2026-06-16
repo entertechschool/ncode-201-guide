@@ -69,8 +69,11 @@ async function obtenerPokemon(idONombre) {
 }
 
 async function cargarPokedex() {
-  const ids = [1, 4, 7, 25, 39, 94];
-  const datos = await Promise.all(ids.map(obtenerPokemon));   // varios en paralelo, con await
+  const respuesta = await fetch("https://pokeapi.co/api/v2/pokemon?limit=12");
+  const lista = await respuesta.json();
+  const datos = await Promise.all(
+    lista.results.map(item => fetch(item.url).then(r => r.json()))   // detalle de cada uno, en paralelo
+  );
   pokedex = datos.map(adaptarPokemon);
   render(pokedex);
 }
@@ -78,7 +81,7 @@ async function cargarPokedex() {
 cargarPokedex();
 ```
 
-> 💡 `await Promise.all(...)` espera a que **todas** terminen — es el `Promise.all` de C10, ahora con `await`. El `.then` no desapareció: `async/await` lo escribe distinto.
+> 💡 Es la **misma carga dinámica de C10** (lista → detalle con `Promise.all`), ahora con `async/await`: las dos esperas (`await fetch` de la lista, `await Promise.all` de los detalles) se leen de arriba a abajo. El `.then` no desapareció — `async/await` lo escribe distinto.
 
 - **Checkpoint 1 (~30 min):** la rejilla carga igual que en C10, pero tu código de carga ahora usa `async/await`. Funcionalmente idéntico, más legible.
 

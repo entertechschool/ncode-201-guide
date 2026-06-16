@@ -154,8 +154,11 @@ async function agregarPokemon(nombre) {
 async function cargarPokedex() {
   spinner.classList.remove("hidden");
   try {
-    const ids = [1, 4, 7, 25, 39, 94];
-    const datos = await Promise.all(ids.map(obtenerPokemon));
+    const respuesta = await fetch("https://pokeapi.co/api/v2/pokemon?limit=12");
+    const lista = await respuesta.json();
+    const datos = await Promise.all(
+      lista.results.map(item => fetch(item.url).then(r => r.json()))
+    );
     pokedex = datos.map(adaptarPokemon);
     render(pokedex);
   } catch (error) {
