@@ -2,7 +2,7 @@
 
 En C09 tu rejilla salía de un **array local**, listo al instante. Hoy esos datos dejan de vivir en tu código y empiezan a venir de una **API real** por internet. Eso trae dos cosas nuevas: (1) los datos **tardan** en llegar → **asincronía**; (2) llegan con **su propia estructura** → tendrás que adaptarla. Al terminar, tu Pokédex carga sus Pokémon de la web y el buscador de C09 sigue funcionando.
 
-> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación (~15, ~45, ~70, ~95 min).
 >
 > 🌐 Necesitas **conexión a internet**. Usamos [PokeAPI](https://pokeapi.co/){:target="_blank"} — gratis, sin registro ni clave.
 >
@@ -46,7 +46,7 @@ Una **API** es un servidor que te entrega datos. La **PokeAPI** te da datos de c
 }
 ```
 
-> ⚠️ **Fíjate: NO es tu objeto limpio de C09.** Tú usabas `{ nombre, imagen, tipos: ["electric"] }`. La API usa `name`, esconde la imagen en `sprites.front_default` y los tipos en un array anidado `types[].type.name`. **La API dicta su estructura; tú te adaptarás a ella** (HU2).
+> ⚠️ **Fíjate: NO es tu objeto limpio de C09.** Tú usabas `{ nombre, imagen, tipos: ["electric"] }`. La API usa `name`, esconde la imagen en `sprites.front_default` y los tipos en un array anidado `types[].type.name`. **La API dicta su estructura; tú te adaptarás a ella** (HU3).
 
 Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON real.
 
@@ -54,7 +54,40 @@ Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON 
 
 ## 📋 Historias de Usuario
 
-### HU1: Traer un Pokémon de la API
+### HU1: Descubre la asincronía
+
+> *"Como aprendiz, quiero entender por qué los datos de internet no llegan al instante, antes de usarlos en mi app."*
+
+**Criterios de Aceptación:**
+- Al correr el experimento, en consola aparece el orden `1 → 2 → 3` (no `1 → 3 → 2`).
+- Puedes explicar por qué el mensaje "llegaron" aparece al final, aunque su línea esté antes en el código.
+
+Antes de cargar nada, un experimento corto para **descubrir** cómo JavaScript maneja algo que tarda. Pega esto en `js/app.js` y mira la consola:
+
+```javascript
+console.log("1. pido los datos…");
+
+fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
+  .then(function (response) {
+    console.log("3. ¡los datos llegaron! (al final)");
+  });
+
+console.log("2. sigo trabajando sin esperar");
+```
+
+La consola imprime **1 → 2 → 3**, no `1 → 3 → 2`. De ahí salen tres ideas nuevas:
+
+- **Asincronía:** pedir datos por red **tarda**, y JavaScript **no se detiene** a esperar — sigue con la línea siguiente (por eso el `2` sale antes que el `3`).
+- **Promesa:** `fetch` devuelve una **Promesa** — un "ticket" por datos que **llegarán después**. No te da los datos al instante; te da la *promesa* de ellos.
+- **`.then`:** es cómo **reaccionas** cuando los datos llegan. El código dentro del `.then` corre al final, cuando la promesa se resuelve.
+
+> 💡 Cambia la línea del `fetch` por `console.log(fetch("..."))`: verás `Promise { <pending> }` — el "ticket", aún sin los datos.
+
+- **Checkpoint 1 (~15 min):** la consola muestra `1`, `2`, `3` en ese orden. Puedes explicar que el `3` sale al final porque `fetch` es asíncrono: JavaScript no espera, y reacciona con `.then` cuando los datos llegan.
+
+---
+
+### HU2: Traer un Pokémon de la API
 
 > *"Como usuario, quiero que la app traiga datos reales de un Pokémon desde internet, en vez de tenerlos fijos en el código — aunque tarden un momento en llegar."*
 
@@ -63,7 +96,7 @@ Abre en el navegador `https://pokeapi.co/api/v2/pokemon/pikachu` y mira el JSON 
 - Cuando llegan, aparecen en consola los **datos reales** de un Pokémon traídos de la web.
 - La página **no se congela** durante la espera.
 
-`fetch(url)` devuelve una **Promesa** (las que conoces de la idea del "ticket"): los datos **llegarán después**, porque la red tarda. Se consumen con `.then`:
+Ya viste en HU1 que `fetch` devuelve una promesa por datos que llegarán. Ahora **léelos de verdad**: usa **dos `.then`** — el primero convierte la respuesta a JSON, el segundo recibe los datos ya listos. Y muestra "Cargando…" mientras llegan:
 
 ```javascript
 // `contenedor` (#resultado) ya existe desde C09 — solo lo usamos
@@ -83,11 +116,11 @@ fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
 
 > 💡 **¿Por qué no aparecen los datos al instante?** Porque **tardan**: la red no es inmediata. JavaScript **no se queda congelado** — sigue trabajando y reacciona cuando llegan (`.then`). **Eso es la asincronía.** Para comprobarlo, pon un `console.log("sigo trabajando")` justo después del `fetch`: se imprime **antes** que los datos.
 
-- **Checkpoint 1 (~30 min):** ves "Cargando…" y, un momento después, en consola aparece el objeto real de pikachu (con `name`, `sprites`, `types`). Confirmas que los datos vienen de la web y que tardan.
+- **Checkpoint 2 (~45 min):** ves "Cargando…" y, un momento después, en consola aparece el objeto real de pikachu (con `name`, `sprites`, `types`). Confirmas que los datos vienen de la web y que tardan.
 
 ---
 
-### HU2: Adaptar la estructura y mostrar la tarjeta
+### HU3: Adaptar la estructura y mostrar la tarjeta
 
 > *"Como usuario, quiero ver el Pokémon como una tarjeta con su imagen, nombre y tipos, igual que en C09."*
 
@@ -123,11 +156,11 @@ fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
 
 > 💡 El adapter traduce la forma de la API a la tuya, así tu `crearTarjeta` **no cambia** aunque la fuente de datos sí. Es exactamente lo que hace un dev real con cualquier API.
 
-- **Checkpoint 2 (~60 min):** la tarjeta de un Pokémon real aparece en la rejilla, **idéntica en apariencia** a las de C09 — pero los datos vinieron de la web y pasaron por tu adaptador.
+- **Checkpoint 3 (~70 min):** la tarjeta de un Pokémon real aparece en la rejilla, **idéntica en apariencia** a las de C09 — pero los datos vinieron de la web y pasaron por tu adaptador.
 
 ---
 
-### HU3: Llenar la rejilla con varios Pokémon en paralelo
+### HU4: Llenar la rejilla con varios Pokémon en paralelo
 
 > *"Como usuario, quiero ver una rejilla de varios Pokémon traídos de la web, y poder filtrarlos como antes."*
 
@@ -173,7 +206,7 @@ buscador.addEventListener("input", function () {
 
 > 💡 El buscador de C09 **sigue vivo**: solo cambia la fuente. Antes filtraba un array local; ahora filtra la rejilla que cargaste de la API.
 
-- **Checkpoint 3 (~90 min):** la rejilla muestra 6 Pokémon reales de la API; escribes en el buscador y filtra esa rejilla. **Tu Pokédex ya vive de la web.**
+- **Checkpoint 4 (~95 min):** la rejilla muestra 6 Pokémon reales de la API; escribes en el buscador y filtra esa rejilla. **Tu Pokédex ya vive de la web.**
 
 ---
 

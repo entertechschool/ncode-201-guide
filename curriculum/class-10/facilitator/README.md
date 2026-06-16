@@ -55,7 +55,7 @@ La rejilla necesita varios Pokémon, y cada uno es un `fetch`. Pedirlos uno por 
 | Refuerzo + disparador | 15 min | Render de C09. "¿Y si los datos están en internet, no en tu código?" |
 | Debate Técnico | 30 min | API, JSON, asincronía, Promesas. |
 | Demo | 15 min | El JSON real de PokeAPI + un `fetch` que carga un Pokémon. |
-| Lab (HU1-HU3) | 100 min | HU1 `fetch`+JSON · HU2 adapter+render · HU3 `Promise.all`+filtro |
+| Lab (HU1-HU4) | 100 min | HU1 descubre async · HU2 `fetch`+JSON · HU3 adapter+render · HU4 `Promise.all`+filtro |
 | Cierre | 20 min | Síntesis + puente a `async/await` (C11). |
 
 ---
@@ -78,9 +78,10 @@ Muestra un `fetch` (uno) y luego `Promise.all` de varios. "Para llenar la rejill
 
 ### Transición al Lab
 ```
-"HU1: traen UN Pokémon de la API y lo ven en consola (tarda).
- HU2: lo adaptan a la forma de C09 y lo muestran como tarjeta.
- HU3: con Promise.all llenan la rejilla, y reconectan el buscador.
+"HU1: descubren la asincronía (orden 1-2-3 en consola → fetch da una promesa).
+ HU2: traen UN Pokémon y leen su JSON en consola.
+ HU3: lo adaptan a la forma de C09 y lo muestran como tarjeta.
+ HU4: con Promise.all llenan la rejilla, y reconectan el buscador.
  Al final: su Pokédex carga de la web."
 ```
 
@@ -94,7 +95,7 @@ Tres `console.log` con un `fetch` en medio. Que predigan el orden. Discute por q
 ### Dinámica 2: "Lee el JSON" (tras Demo 1)
 Muestra el JSON y pregunta: "¿cómo accederías a la imagen?" (`data.sprites.front_default`). Eso justifica el adaptador.
 
-### Dinámica 3: "¿uno o varios?" (en HU3)
+### Dinámica 3: "¿uno o varios?" (en HU4)
 "Si necesitas 6 Pokémon, ¿cuántos `fetch` haces? ¿Cómo esperas a que terminen todos?" → `Promise.all`.
 
 ---
@@ -150,9 +151,10 @@ render([adaptarPokemon(data)]);   // API → forma limpia → render de C09
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 | En consola aparece el objeto real de un Pokémon; vieron "Cargando…" antes (tarda). |
-| ~60' | HU2 | La tarjeta de un Pokémon real aparece, idéntica a C09 pero con datos de la web. |
-| ~90' | HU3 | La rejilla muestra 6 Pokémon de la API; el buscador filtra esa rejilla. |
+| ~15' | HU1 | La consola imprime `1`, `2`, `3` en ese orden; explica por qué el `3` sale al final (fetch es async). |
+| ~45' | HU2 | En consola aparece el objeto real de un Pokémon; vieron "Cargando…" antes (tarda). |
+| ~70' | HU3 | La tarjeta de un Pokémon real aparece, idéntica a C09 pero con datos de la web. |
+| ~95' | HU4 | La rejilla muestra 6 Pokémon de la API; el buscador filtra esa rejilla. |
 
 ---
 
