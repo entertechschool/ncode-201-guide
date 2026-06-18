@@ -213,7 +213,6 @@ buscador.addEventListener("input", function () {
 ## 🌟 Logros Adicionales (Opcionales)
 
 - **Logro 1 — Spinner animado:** reemplaza el texto "Cargando…" por un spinner con `animate-spin` de Tailwind.
-- **Logro 2 — Un ID que no existe:** prueba con un ID inválido y evita que rompa la rejilla (adelanto del manejo de errores de C12).
 
 ## 📝 Instrucciones de Entrega
 
