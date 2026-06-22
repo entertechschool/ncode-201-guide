@@ -7,7 +7,7 @@
 
 - **Reformular** el `.then` de C10 con **`async/await`**.
 - **Buscar** un Pokémon por nombre en la API.
-- **Agregar** lo buscado a tu colección (`pokedex`).
+- **Capturar** lo buscado en tu colección (`pokedex`).
 
 > Misma lógica de C10, más legible — y el buscador ahora va a la API.
 
@@ -73,19 +73,21 @@ async function buscarPokemon(nombre) {
 
 ---
 
-## ➕ Agregar a la Pokédex
+## ⚡ Capturar (botón en la tarjeta)
 
 ```javascript
-async function agregarPokemon(nombre) {
-  const pokemon = await buscarPokemon(nombre);
+// el resultado de búsqueda lleva un botón "Capturar"
+boton.addEventListener("click", () => capturar(pokemon));
+
+function capturar(pokemon) {
   if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
     pokedex.push(pokemon);     // crece tu colección
   }
-  render(pokedex);
+  render(pokedex);             // vuelve la colección, ya con el nuevo
 }
 ```
 
-> `pokedex` es el **estado** de tu app: crece según lo que buscas.
+> `crearTarjeta` es de C09 y devuelve un nodo → le añades el botón **solo** al resultado.
 
 ---
 
@@ -94,8 +96,8 @@ async function agregarPokemon(nombre) {
 | HU | Tiempo | Contenido |
 |---|---|---|
 | **HU1** | ~30 min | Reformular la carga con `async/await` |
-| **HU2** | ~30 min | Buscar por nombre en la API |
-| **HU3** | ~30 min | Agregar a la Pokédex (sin duplicar) |
+| **HU2** | ~30 min | Buscar y traer (mostrar el resultado) |
+| **HU3** | ~30 min | Capturar (botón en la tarjeta, sin duplicar) |
 
 ---
 

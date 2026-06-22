@@ -149,14 +149,16 @@ const data = <span class="tag-purple">await</span> response.json();</code></pre>
 }</code></pre>
     </div>
 
-    <!-- 4: agregar al estado -->
+    <!-- 4: capturar -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> La colección crece</h3>
-      <p class="desc"><code>pokedex</code> es el <strong>estado</strong> de tu app. Cada búsqueda exitosa lo hace crecer (sin duplicar), y <code>render</code> lo refleja.</p>
-      <pre><code><span class="tag-muted">if</span> (!pokedex.some(p =&gt; p.nombre === pokemon.nombre)) {
-  pokedex.<span class="tag-orange">push</span>(pokemon);   <span class="tag-muted">// crece la colección</span>
-}
-render(pokedex);</code></pre>
+      <h3><span class="tag-orange">4.</span> Capturar: la colección crece</h3>
+      <p class="desc">El resultado de búsqueda lleva un botón <strong>Capturar</strong> (añadido al nodo de <code>crearTarjeta</code>). Al pulsarlo, el Pokémon se suma a <code>pokedex</code> sin duplicar.</p>
+      <pre><code><span class="tag-muted">function</span> <span class="tag-orange">capturar</span>(pokemon) {
+  <span class="tag-muted">if</span> (!pokedex.some(p =&gt; p.nombre === pokemon.nombre)) {
+    pokedex.push(pokemon);   <span class="tag-muted">// crece la colección</span>
+  }
+  render(pokedex);
+}</code></pre>
     </div>
 
   </section>

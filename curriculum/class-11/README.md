@@ -6,14 +6,14 @@
 
 En la Clase 11 los estudiantes **reformulan** el código asíncrono de C10: lo que escribieron con `.then` encadenado lo reescriben con **`async/await`**, la sintaxis moderna que hace que el código asíncrono se lea como una secuencia de pasos. Es la misma lógica de promesas de C10, más legible.
 
-Además, el buscador **evoluciona**: en C10 filtraba la rejilla que ya estaba cargada; aquí pasa a **consultar la API por nombre**, para traer Pokémon que no están en la rejilla. Y esos Pokémon se **agregan** a la colección (`pokedex`), haciendo crecer el estado de la app. Es el primer contacto con la idea de "el estado de mi app crece según lo que el usuario hace" —que se formaliza en M4.
+Además, el buscador **evoluciona**: en C10 filtraba la rejilla que ya estaba cargada; aquí pasa a **consultar la API por nombre** y mostrar el Pokémon encontrado con un botón **Capturar**. Al capturarlo, se suma a la colección (`pokedex`), haciendo crecer el estado de la app. Es el primer contacto con la idea de "el estado de mi app crece según lo que el usuario hace" —que se formaliza en M4.
 
 > 🔁 `async/await` se enseña como **azúcar sobre las Promesas** de C10, no como una tecnología distinta.
 
 Se utilizan dos recursos fundamentales:
 
 1. **Guía de Lectura y Debate:** `async/await` vs `.then`, y qué significa "buscar en una API" frente a "filtrar lo local".
-2. **Guía de Laboratorio:** reformular la carga con `async/await`, buscar por nombre en la API y agregar el resultado a la Pokédex.
+2. **Guía de Laboratorio:** reformular la carga con `async/await`, buscar por nombre en la API y capturar el resultado en la Pokédex con un botón.
 
 ## Estructura Sugerida
 
@@ -35,7 +35,7 @@ Al culminar esta clase, los estudiantes escribirán código asíncrono legible c
 
 - Reescribir cadenas `.then` como funciones `async` con `await`.
 - Buscar un recurso por nombre en una API con `fetch` + `await`.
-- Agregar el resultado al estado de la app (`pokedex`) y re-renderizar.
+- Capturar el resultado (botón en la tarjeta) y sumarlo al estado (`pokedex`).
 
 ### Podrán explicar
 
@@ -47,7 +47,7 @@ Al culminar esta clase, los estudiantes escribirán código asíncrono legible c
 
 - Una carga de la rejilla reformulada con `async/await`.
 - Un buscador que consulta la API por nombre (clic / Enter).
-- La función de agregar a la Pokédex sin duplicar.
+- El botón **Capturar** que suma a la Pokédex sin duplicar.
 
 ---
 

@@ -26,7 +26,7 @@
 ## ⚙️ Setup Inicial
 
 1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab12-errores`.
-2. **Punto de partida:** tu app de C11 (`obtenerPokemon`, `buscarPokemon`, `agregarPokemon`, `cargarPokedex`, `adaptarPokemon`, `pokedex`, `render`, `#buscador`, `#btn-buscar`).
+2. **Punto de partida:** tu app de C11 (`obtenerPokemon`, `buscarPokemon`, `mostrarBusqueda`, `mostrarResultado`, `capturar`, `cargarPokedex`, `adaptarPokemon`, `pokedex`, `render`, `#buscador`, `#btn-buscar`).
 3. **Agrega las zonas de estado** al `index.html`, debajo del buscador y encima de `#resultado`:
 
    ```html
@@ -53,16 +53,12 @@ Envuelve la lógica que puede fallar (la búsqueda de C11) en `try`; si algo sal
 ```javascript
 const mensaje = document.getElementById("mensaje");
 
-async function agregarPokemon(nombre) {
+async function mostrarBusqueda(nombre) {
   mensaje.classList.add("hidden");   // limpia errores anteriores
 
   try {
     const pokemon = await buscarPokemon(nombre);
-    if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
-      pokedex.push(pokemon);
-    }
-    render(pokedex);
-    buscador.value = "";
+    mostrarResultado(pokemon);   // muestra la tarjeta con el botón Capturar (de C11)
   } catch (error) {
     mensaje.textContent = "Algo salió mal. Revisa tu conexión.";
     mensaje.classList.remove("hidden");
@@ -83,7 +79,7 @@ async function agregarPokemon(nombre) {
 **Criterios de Aceptación:**
 - Buscar un nombre que no existe (p. ej. "pikachuu") muestra el mensaje "No se encontró 'pikachuu'".
 - El mensaje es **específico** (nombra lo que se buscó), no genérico.
-- Un nombre válido sigue agregándose con normalidad.
+- Un nombre válido sigue mostrándose con normalidad.
 
 Ojo: `fetch` **no** falla solo porque la API responda 404. Hay que revisarlo con `response.ok` y **lanzar** nuestro propio error. Modifica tu `obtenerPokemon` de C11:
 
@@ -99,7 +95,7 @@ async function obtenerPokemon(idONombre) {
 }
 ```
 
-Y en el `catch` de `agregarPokemon`, usa el mensaje del error:
+Y en el `catch` de `mostrarBusqueda`, usa el mensaje del error:
 
 ```javascript
 } catch (error) {
@@ -110,7 +106,7 @@ Y en el `catch` de `agregarPokemon`, usa el mensaje del error:
 
 > 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines es el que se muestra. Un buen mensaje de error es parte de una buena app.
 
-- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → se agrega normal.
+- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → se muestra normal (con su botón Capturar).
 
 ---
 
@@ -128,17 +124,13 @@ Muestra el spinner al empezar y ocúltalo en `finally` (corre **siempre**):
 ```javascript
 const spinner = document.getElementById("spinner");
 
-async function agregarPokemon(nombre) {
+async function mostrarBusqueda(nombre) {
   spinner.classList.remove("hidden");   // ⏳ muestra carga
   mensaje.classList.add("hidden");
 
   try {
     const pokemon = await buscarPokemon(nombre);
-    if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
-      pokedex.push(pokemon);
-    }
-    render(pokedex);
-    buscador.value = "";
+    mostrarResultado(pokemon);
   } catch (error) {
     mensaje.textContent = error.message;
     mensaje.classList.remove("hidden");

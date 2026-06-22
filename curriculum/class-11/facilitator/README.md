@@ -9,9 +9,9 @@
 - **`async` / `await`** (NUEVO): `async` marca una función asíncrona; `await` pausa hasta que una promesa resuelva y entrega el valor directo. Es **azúcar sobre las Promesas** de C10 — la misma lógica, escrita como pasos secuenciales.
 - **Reformular** (NUEVO como práctica): reescribir la carga de C10 (`.then`/`Promise.all`) con `async/await`. Mismo resultado, más legible. No es una tecnología distinta.
 - **Búsqueda en la API** (NUEVO): el buscador deja de **filtrar** lo local y pasa a **consultar** la API por nombre (`/pokemon/{nombre}`), para traer Pokémon que no están en la rejilla.
-- **Hacer crecer el estado** (NUEVO): agregar el resultado al array `pokedex` (sin duplicar) y re-renderizar. Primer roce con "el estado de la app crece según el usuario" (se formaliza en M4).
+- **Capturar / hacer crecer el estado** (NUEVO): un botón **Capturar** en la tarjeta del resultado lo agrega al array `pokedex` (sin duplicar) y re-renderiza. Primer roce con "el estado de la app crece según el usuario" (se formaliza en M4).
 
-> ❗ **El render no cambia.** `crearTarjeta`/`render`/`adaptarPokemon` de C09-C10 se reusan. Hoy cambia **cómo se escribe** la asincronía (`await`) y **qué hace el buscador** (buscar + agregar).
+> ❗ **El render no cambia.** `crearTarjeta`/`render`/`adaptarPokemon` de C09-C10 se reusan. Hoy cambia **cómo se escribe** la asincronía (`await`) y **qué hace el buscador** (buscar + mostrar + capturar).
 
 ---
 
@@ -21,7 +21,7 @@
 
 **Filtrar vs buscar ⟷ Buscar en tu cajón vs ir a la tienda:** filtrar (C10) es revisar lo que ya tienes en casa; buscar en la API (C11) es ir a la tienda por algo que no tienes y traerlo.
 
-**Agregar a `pokedex` ⟷ Coleccionar:** cada búsqueda exitosa suma una carta a tu álbum. El álbum (`pokedex`) es el estado; `render` lo muestra.
+**Capturar ⟷ Coleccionar:** ves al Pokémon (búsqueda) y decides **capturarlo** con el botón → se suma a tu álbum. El álbum (`pokedex`) es el estado; `render` lo muestra.
 
 ---
 
@@ -50,7 +50,7 @@ Hoy la colección (`pokedex`) crece en memoria. **Persistirla** entre visitas (l
 | Refuerzo | 15 min | El `.then` de C10. "¿Se lee más claro?" |
 | Debate Técnico | 30 min | `async/await` como azúcar; filtrar vs buscar. |
 | Demo | 15 min | El mismo `fetch` con `.then` y con `async/await`. |
-| Lab (HU1-HU3) | 100 min | HU1 reformular · HU2 buscar en API · HU3 agregar a la Pokédex |
+| Lab (HU1-HU3) | 100 min | HU1 reformular · HU2 buscar y traer · HU3 capturar (botón) |
 | Cierre | 20 min | Síntesis + el error de "no existe" → C12. |
 
 ---
@@ -63,14 +63,14 @@ Escribe `fetch(url).then(r => r.json()).then(d => console.log(d))`. Luego reescr
 ### Demo 2 — filtrar vs buscar (3 min)
 Con la rejilla de C10 cargada, filtra "char" (no aparece nada si charizard no estaba). Luego busca "charizard" en la API → aparece. "Filtrar solo ve tu cajón; buscar va a la tienda."
 
-### Demo 3 — la colección crece (3 min)
-Busca dos Pokémon seguidos y muestra cómo la rejilla **crece**. Busca uno repetido: no se duplica. "`pokedex` es el estado; cada búsqueda lo hace crecer."
+### Demo 3 — capturar hace crecer la colección (3 min)
+Busca un Pokémon y pulsa **Capturar**: se suma a la rejilla. Captura uno repetido: no se duplica. "`pokedex` es el estado; capturar lo hace crecer."
 
 ### Transición al Lab
 ```
 "HU1: reescriben la carga de C10 con async/await (mismo resultado, más claro).
  HU2: el buscador ahora consulta la API por nombre (clic/Enter).
- HU3: lo buscado se AGREGA a la rejilla, sin duplicar.
+ HU3: un botón Capturar en la tarjeta suma el Pokémon a la rejilla, sin duplicar.
  Si buscan algo que no existe, se rompe. Eso lo arreglamos en C12."
 ```
 
@@ -114,7 +114,8 @@ if (!pokedex.some(p => p.nombre === pokemon.nombre)) pokedex.push(pokemon);
 | `await is only valid in async function` | Usaron `await` sin `async` | Marcar la función con `async` |
 | La búsqueda no hace nada | El `id` del input/botón no coincide | Verificar `#buscador` y `#btn-buscar` |
 | Funciona "pikachu" pero no "Pikachu" | La API espera minúsculas | `nombre.toLowerCase()` |
-| Al buscar, desaparece la rejilla | En HU2 hacen `render([uno])`; en HU3 deben agregar y `render(pokedex)` | Usar `agregarPokemon` (HU3) |
+| Tras capturar no vuelve la rejilla | `capturar` no llama a `render(pokedex)` | Llamar `render(pokedex)` dentro de `capturar` |
+| El botón "Capturar" sale en TODAS las tarjetas | Lo metieron dentro de `crearTarjeta` (C09) | Agregar el botón solo al nodo del resultado (`mostrarResultado`) |
 | Se duplican los Pokémon | No revisan con `some` antes de `push` | Agregar el chequeo de duplicado |
 | Pantalla en blanco al buscar algo raro | El nombre no existe (404) → falla | Es esperado; se maneja en C12 |
 
@@ -132,7 +133,7 @@ if (!pokedex.some(p => p.nombre === pokemon.nombre)) pokedex.push(pokemon);
 - Usa `await` sin `async`.
 - Cree que `async/await` reemplaza/elimina las promesas.
 - Espera que el buscador encuentre algo que nunca cargó (sin ir a la API).
-- Duplica Pokémon al agregar.
+- Duplica Pokémon al capturar.
 
 ---
 
@@ -142,7 +143,7 @@ if (!pokedex.some(p => p.nombre === pokemon.nombre)) pokedex.push(pokemon);
 |---|---|---|
 | ~30' | HU1 | La rejilla carga igual que en C10, pero el código usa `async/await`. |
 | ~60' | HU2 | Buscar "charizard" (no estaba) lo muestra, traído de la API. |
-| ~90' | HU3 | Lo buscado se agrega a la rejilla; un repetido no se duplica. |
+| ~90' | HU3 | El resultado tiene botón **Capturar**; al pulsarlo se suma a la rejilla; un repetido no se duplica. |
 
 ---
 
@@ -165,7 +166,7 @@ R: No. Es otra forma de escribir lo mismo, más legible para código secuencial.
 R: La rejilla solo tiene unos pocos. Buscar en la API te da acceso a **cualquier** Pokémon (1000+), aunque no lo hayas cargado.
 
 **P: ¿Por qué evitar duplicados?**
-R: Porque `pokedex` es una colección; agregar el mismo dos veces ensucia el estado y la UI. `some` lo previene.
+R: Porque `pokedex` es una colección; capturar el mismo dos veces ensucia el estado y la UI. `some` lo previene.
 
 **P: ¿Y si quiero que la colección se guarde al recargar?**
 R: Eso es **persistencia** (localStorage + JSON), tema de M4. Hoy la colección vive en memoria.

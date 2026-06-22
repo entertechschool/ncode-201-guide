@@ -84,16 +84,16 @@ cargarPokedex();
 
 ---
 
-### HU2: Buscar un Pokémon por nombre en la API
+### HU2: Buscar y traer el Pokémon
 
-> *"Como usuario, quiero escribir un nombre y traer ese Pokémon desde la API —aunque no esté en mi rejilla—, presionando Buscar o Enter."*
+> *"Como usuario, quiero escribir un nombre y traer ese Pokémon desde la API —aunque no esté en mi rejilla— para verlo, presionando Buscar o Enter."*
 
 **Criterios de Aceptación:**
 - Escribir un nombre y pulsar **Buscar** (o **Enter**) muestra ese Pokémon, aunque no estuviera en la rejilla.
 - El buscador ya **no filtra** solo lo cargado: ahora **consulta la API**.
 - El buscador ignora una búsqueda vacía.
 
-En C10 el buscador filtraba `pokedex` (lo que ya tenías). Ahora consulta la API por nombre. **Reemplaza el listener de filtro de C10** por una búsqueda:
+En C10 el buscador filtraba `pokedex` (lo que ya tenías). Ahora consulta la API por nombre y **muestra** el resultado. **Reemplaza el listener de filtro de C10** por una búsqueda:
 
 ```javascript
 const boton = document.getElementById("btn-buscar");   // el #buscador ya lo tienes de C09
@@ -103,11 +103,20 @@ async function buscarPokemon(nombre) {
   return adaptarPokemon(data);
 }
 
-boton.addEventListener("click", async function () {
-  const nombre = buscador.value.trim();
-  if (nombre === "") return;
+// muestra la tarjeta del Pokémon encontrado
+function mostrarResultado(pokemon) {
+  contenedor.innerHTML = "";
+  contenedor.appendChild(crearTarjeta(pokemon));
+}
+
+async function mostrarBusqueda(nombre) {
   const pokemon = await buscarPokemon(nombre);
-  render([pokemon]);   // muestra el resultado
+  mostrarResultado(pokemon);
+}
+
+boton.addEventListener("click", function () {
+  const nombre = buscador.value.trim();
+  if (nombre !== "") mostrarBusqueda(nombre);
 });
 
 // Buscar también con Enter
@@ -116,51 +125,51 @@ buscador.addEventListener("keydown", function (event) {
 });
 ```
 
-> 💡 Mismo buscador, otra fuente: antes mostraba lo que **ya tenías**; ahora trae lo que **no tenías**. Y se dispara con un evento puntual (clic/Enter), no en cada tecla, para no saturar la API.
+> 💡 Mismo buscador, otra fuente: antes filtraba lo que **ya tenías**; ahora trae de la **API** y lo muestra. Se dispara con clic/Enter (no en cada tecla) para no saturar la API.
 
 - **Checkpoint 2 (~60 min):** escribes "charizard" (que no estaba en la rejilla), presionas Enter y aparece su tarjeta, traída de la API.
 
 ---
 
-### HU3: Agregar el Pokémon buscado a tu Pokédex
+### HU3: Capturar el Pokémon
 
-> *"Como usuario, quiero que el Pokémon que busco se **sume** a mi rejilla, para ir armando mi colección."*
+> *"Como usuario, quiero un botón **Capturar** en el Pokémon que busqué, para sumarlo a mi Pokédex cuando yo decida."*
 
 **Criterios de Aceptación:**
-- Al buscar un Pokémon, se **agrega** a la rejilla (no reemplaza a los demás).
-- Si el Pokémon ya estaba en la rejilla, **no se duplica**.
-- Tras agregar, el campo de búsqueda queda listo para la siguiente.
+- La tarjeta del Pokémon buscado tiene un botón **"Capturar"**.
+- Al pulsar **Capturar**, el Pokémon se **agrega** a la rejilla (no reemplaza a los demás).
+- Si el Pokémon ya estaba en la Pokédex, **no se duplica**.
 
-En vez de solo mostrar el resultado, súmalo al array `pokedex` y vuelve a renderizar toda la rejilla:
+Dale al resultado un botón **Capturar** que lo sume a tu colección. `crearTarjeta` es de C09 (no la tocamos), pero **devuelve un nodo**, así que le agregas el botón a ese nodo — y así el botón aparece **solo** en el resultado de búsqueda, no en las tarjetas de la rejilla.
+
+Agrega `capturar` y modifica `mostrarResultado` para que la tarjeta lleve el botón:
 
 ```javascript
-async function agregarPokemon(nombre) {
-  const pokemon = await buscarPokemon(nombre);
-
-  const yaEsta = pokedex.some(p => p.nombre === pokemon.nombre);
-  if (!yaEsta) {
+function capturar(pokemon) {
+  if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
     pokedex.push(pokemon);   // hace crecer tu colección
   }
-
-  render(pokedex);
+  render(pokedex);           // vuelve la colección completa, ya con el nuevo
   buscador.value = "";
+}
+
+function mostrarResultado(pokemon) {
+  const tarjeta = crearTarjeta(pokemon);            // la tarjeta de C09 (un nodo)
+
+  const boton = document.createElement("button");
+  boton.textContent = "⚡ Capturar";
+  boton.className = "mt-2 w-full bg-yellow-400 font-semibold rounded-lg py-1 hover:bg-yellow-500";
+  boton.addEventListener("click", () => capturar(pokemon));
+  tarjeta.appendChild(boton);                       // el botón SOLO en el resultado
+
+  contenedor.innerHTML = "";
+  contenedor.appendChild(tarjeta);
 }
 ```
 
-**Edita** el listener del botón que escribiste en HU2 (no agregues otro `addEventListener`): que ahora llame a `agregarPokemon` en vez de `render([pokemon])`. Queda así:
+> 💡 `pokedex` es el **estado** de tu app: la lista de lo que tienes. Capturar la hace **crecer** (sin duplicar, gracias a `.some()`), y `render(pokedex)` refleja ese estado. (Persistir la colección entre visitas es M4.)
 
-```javascript
-boton.addEventListener("click", function () {
-  const nombre = buscador.value.trim();
-  if (nombre !== "") agregarPokemon(nombre);
-});
-```
-
-> ⚠️ Es el **mismo** listener de HU2, modificado. Si agregas uno nuevo sin quitar el anterior, el botón haría dos cosas en cada clic.
-
-> 💡 `pokedex` es el **estado** de tu app: la lista de lo que tienes. Buscar ya no es "ver y olvidar" — **crece** tu colección, y `render(pokedex)` refleja ese estado. (Persistir esa colección entre visitas es M4.)
-
-- **Checkpoint 3 (~90 min):** buscas "charizard" y se **suma** a la rejilla junto a los demás; buscas "pikachu" (que ya estaba) y **no se duplica**. Tu Pokédex crece.
+- **Checkpoint 3 (~90 min):** buscas "charizard" → su tarjeta con el botón **Capturar**; al pulsarlo, charizard **se une** a la rejilla; lo buscas otra vez y al capturar **no se duplica**.
 
 ---
 
