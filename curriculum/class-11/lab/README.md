@@ -28,18 +28,7 @@ En C10 tu Pokédex ya carga su rejilla desde la web, pero el código usa `.then`
 ## ⚙️ Setup Inicial
 
 1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab11-async`.
-2. **Punto de partida:** tu app de C10 (carga la rejilla con `.then`/`Promise.all`, tiene `adaptarPokemon`, `crearTarjeta`, `render` y el array `pokedex`).
-3. **Agrega un botón** de búsqueda junto a tu `<input id="buscador">`:
-
-   ```html
-   <div class="max-w-md mx-auto flex gap-2 mb-6">
-     <input id="buscador" type="text" placeholder="Busca un Pokémon (ej. charizard)"
-            class="flex-1 p-2 rounded-lg border border-slate-300">
-     <button id="btn-buscar" class="px-4 py-2 bg-yellow-400 font-semibold rounded-lg hover:bg-yellow-500">
-       Buscar
-     </button>
-   </div>
-   ```
+2. **Punto de partida:** tu app de C10 (carga la rejilla con `.then`/`Promise.all`, tiene `adaptarPokemon`, `crearTarjeta`, `render`, el `#buscador` y el array `pokedex`). El HTML de cada elemento nuevo (botón Buscar, botón Cargar más) lo agregas en la HU donde se usa.
 
 ---
 
@@ -97,7 +86,23 @@ cargarPokedex();
 - El buscador ya **no filtra** solo lo cargado: ahora **consulta la API**.
 - El buscador ignora una búsqueda vacía.
 
-En C10 el buscador filtraba `pokedex` (lo que ya tenías). Ahora consulta la API por nombre y **muestra** el resultado. **Reemplaza el listener de filtro de C10** por una búsqueda:
+En C10 el buscador filtraba `pokedex` (lo que ya tenías). Ahora consulta la API por nombre y **muestra** el resultado.
+
+Primero, agrega un botón **Buscar** junto a tu `<input id="buscador">`. El input ya existe desde C09; solo **cambia su contenedor** (a `flex gap-2`) para sumarle el botón al lado:
+
+```html
+<div class="max-w-md mx-auto flex gap-2 mb-6">
+  <input id="buscador" type="text" placeholder="Busca un Pokémon (ej. charizard)"
+         class="flex-1 p-2 rounded-lg border border-slate-300">
+  <button id="btn-buscar" class="px-4 py-2 bg-yellow-400 font-semibold rounded-lg hover:bg-yellow-500">
+    Buscar
+  </button>
+</div>
+```
+
+> ⚠️ No agregues un segundo `<input id="buscador">` — es el mismo de C09. Dos elementos con el mismo `id` rompen el JS.
+
+Luego, en `app.js`, **reemplaza el listener de filtro de C10** por una búsqueda:
 
 ```javascript
 const boton = document.getElementById("btn-buscar");   // el #buscador ya lo tienes de C09
