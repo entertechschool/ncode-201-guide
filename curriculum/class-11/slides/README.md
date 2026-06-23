@@ -91,13 +91,44 @@ function capturar(pokemon) {
 
 ---
 
+## 📊 Explorar la respuesta (stats)
+
+```javascript
+// la API trae MUCHO más: stats, height, weight, abilities…
+stats: data.stats.map(s => ({ nombre: s.stat.name, valor: s.base_stat }))
+```
+
+* Hoy solo usabas `name`, `sprites`, `types`.
+* Navegas el JSON anidado y extraes lo que importa.
+* Las stats van **solo en el resultado** (no en `crearTarjeta`).
+
+---
+
+## 🔗 Parámetros: ruta vs consulta
+
+```
+/pokemon/pikachu            → parámetro de RUTA (qué recurso)
+/pokemon?limit=12&offset=0  → parámetros de CONSULTA (cómo)
+```
+
+```javascript
+fetch(`...pokemon?limit=12&offset=${offset}`);
+offset += 12;   // siguiente página → paginación
+```
+
+> Subir `offset` = la siguiente "página". Está en casi toda API.
+
+---
+
 ## ⚙️ Estructura del Lab
 
 | HU | Tiempo | Contenido |
 |---|---|---|
-| **HU1** | ~30 min | Reformular la carga con `async/await` |
-| **HU2** | ~30 min | Buscar y traer (mostrar el resultado) |
-| **HU3** | ~30 min | Capturar (botón en la tarjeta, sin duplicar) |
+| **HU1** | ~15 min | Reformular la carga con `async/await` |
+| **HU2** | ~20 min | Buscar y traer (mostrar el resultado) |
+| **HU3** | ~20 min | Capturar (botón en la tarjeta, sin duplicar) |
+| **HU4** | ~20 min | Estadísticas (explorar la respuesta) |
+| **HU5** | ~20 min | Cargar más (`?limit`/`?offset`) |
 
 ---
 

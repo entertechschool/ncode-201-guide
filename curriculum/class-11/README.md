@@ -22,7 +22,7 @@ Se utilizan dos recursos fundamentales:
 | **1. Refuerzo Inicial** | 15 min | Repaso del `.then` de C10. ¿Se puede leer más claro? |
 | **2. Debate Técnico** | 30 min | `async/await` como azúcar sobre promesas; buscar vs filtrar. |
 | **3. Demostración** | 15 min | Demo: el mismo `fetch` con `.then` y con `async/await`. |
-| **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (30', 60', 90'). |
+| **4. Laboratorio** | 100 min | Implementación guiada con checkpoints (15', 35', 55', 75', 95'). |
 | **5. Cierre** | 20 min | Síntesis + el error de "no existe" → C12. |
 
 ---
@@ -36,18 +36,22 @@ Al culminar esta clase, los estudiantes escribirán código asíncrono legible c
 - Reescribir cadenas `.then` como funciones `async` con `await`.
 - Buscar un recurso por nombre en una API con `fetch` + `await`.
 - Capturar el resultado (botón en la tarjeta) y sumarlo al estado (`pokedex`).
+- Navegar el JSON de la respuesta para leer datos adicionales (estadísticas).
+- Pedir páginas de resultados con parámetros de consulta (`?limit`, `?offset`).
 
 ### Podrán explicar
 
 - Que `async/await` es otra forma de escribir promesas, más legible.
 - La diferencia entre **filtrar** lo que ya tienes y **buscar** en la API.
-- Por qué evitar duplicados al hacer crecer una colección.
+- La diferencia entre un parámetro de **ruta** (`/pokemon/pikachu`) y de **consulta** (`?limit=12`).
+- Que la respuesta de una API trae más de lo que se usa, y cómo extraer lo necesario.
 
 ### Podrán implementar
 
 - Una carga de la rejilla reformulada con `async/await`.
-- Un buscador que consulta la API por nombre (clic / Enter).
+- Un buscador que consulta la API por nombre y muestra el detalle (stats) del resultado.
 - El botón **Capturar** que suma a la Pokédex sin duplicar.
+- Un botón **"Cargar más"** que pagina la lista con `?limit`/`?offset`.
 
 ---
 

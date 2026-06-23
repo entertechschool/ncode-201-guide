@@ -10,8 +10,10 @@
 - **Reformular** (NUEVO como práctica): reescribir la carga de C10 (`.then`/`Promise.all`) con `async/await`. Mismo resultado, más legible. No es una tecnología distinta.
 - **Búsqueda en la API** (NUEVO): el buscador deja de **filtrar** lo local y pasa a **consultar** la API por nombre (`/pokemon/{nombre}`), para traer Pokémon que no están en la rejilla.
 - **Capturar / hacer crecer el estado** (NUEVO): un botón **Capturar** en la tarjeta del resultado lo agrega al array `pokedex` (sin duplicar) y re-renderiza. Primer roce con "el estado de la app crece según el usuario" (se formaliza en M4).
+- **Explorar la respuesta** (NUEVO): la API devuelve mucho más de lo que se usa (`stats`, `height`, `weight`…). Se extiende `adaptarPokemon` para leer `data.stats` (navegar JSON anidado) y se muestra el detalle en el resultado.
+- **Parámetro de ruta vs de consulta** (NUEVO): `/pokemon/pikachu` es un parámetro de **ruta** (qué recurso); `?limit=12&offset=0` son parámetros de **consulta** (cómo: cuántos y desde dónde). El "Cargar más" pagina subiendo `offset`.
 
-> ❗ **El render no cambia.** `crearTarjeta`/`render`/`adaptarPokemon` de C09-C10 se reusan. Hoy cambia **cómo se escribe** la asincronía (`await`) y **qué hace el buscador** (buscar + mostrar + capturar).
+> ❗ **El render no cambia.** `crearTarjeta`/`render` de C09-C10 se reusan. `adaptarPokemon` solo se **extiende** (stats). Cambia **cómo se escribe** la asincronía (`await`) y **qué hace el buscador** (buscar + mostrar detalle + capturar), más un "Cargar más" con paginación.
 
 ---
 
@@ -50,7 +52,7 @@ Hoy la colección (`pokedex`) crece en memoria. **Persistirla** entre visitas (l
 | Refuerzo | 15 min | El `.then` de C10. "¿Se lee más claro?" |
 | Debate Técnico | 30 min | `async/await` como azúcar; filtrar vs buscar. |
 | Demo | 15 min | El mismo `fetch` con `.then` y con `async/await`. |
-| Lab (HU1-HU3) | 100 min | HU1 reformular · HU2 buscar y traer · HU3 capturar (botón) |
+| Lab (HU1-HU5) | 100 min | HU1 reformular · HU2 buscar · HU3 capturar · HU4 stats (explorar respuesta) · HU5 cargar más (params de consulta) |
 | Cierre | 20 min | Síntesis + el error de "no existe" → C12. |
 
 ---
@@ -71,6 +73,8 @@ Busca un Pokémon y pulsa **Capturar**: se suma a la rejilla. Captura uno repeti
 "HU1: reescriben la carga de C10 con async/await (mismo resultado, más claro).
  HU2: el buscador ahora consulta la API por nombre (clic/Enter).
  HU3: un botón Capturar en la tarjeta suma el Pokémon a la rejilla, sin duplicar.
+ HU4: extienden adaptarPokemon con data.stats y muestran las estadísticas en el resultado.
+ HU5: 'Cargar más' con ?limit y ?offset → paginan la lista (parámetros de consulta).
  Si buscan algo que no existe, se rompe. Eso lo arreglamos en C12."
 ```
 
@@ -117,6 +121,8 @@ if (!pokedex.some(p => p.nombre === pokemon.nombre)) pokedex.push(pokemon);
 | Tras capturar no vuelve la rejilla | `capturar` no llama a `render(pokedex)` | Llamar `render(pokedex)` dentro de `capturar` |
 | El botón "Capturar" sale en TODAS las tarjetas | Lo metieron dentro de `crearTarjeta` (C09) | Agregar el botón solo al nodo del resultado (`mostrarResultado`) |
 | Se duplican los Pokémon | No revisan con `some` antes de `push` | Agregar el chequeo de duplicado |
+| Las stats salen en TODAS las tarjetas | Las metieron en `crearTarjeta` (C09) | Agregarlas solo al nodo del resultado (`mostrarResultado`) |
+| "Cargar más" trae siempre los mismos | No suben `offset` (o lo declaran dentro de la función) | `let offset = 0` a nivel de módulo; `offset += 12` tras cada carga |
 | Pantalla en blanco al buscar algo raro | El nombre no existe (404) → falla | Es esperado; se maneja en C12 |
 
 ---
@@ -141,9 +147,11 @@ if (!pokedex.some(p => p.nombre === pokemon.nombre)) pokedex.push(pokemon);
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 | La rejilla carga igual que en C10, pero el código usa `async/await`. |
-| ~60' | HU2 | Buscar "charizard" (no estaba) lo muestra, traído de la API. |
-| ~90' | HU3 | El resultado tiene botón **Capturar**; al pulsarlo se suma a la rejilla; un repetido no se duplica. |
+| ~15' | HU1 | La rejilla carga igual que en C10, pero el código usa `async/await`. |
+| ~35' | HU2 | Buscar "charizard" (no estaba) lo muestra, traído de la API. |
+| ~55' | HU3 | El resultado tiene botón **Capturar**; al pulsarlo se suma a la rejilla; un repetido no se duplica. |
+| ~75' | HU4 | El resultado de búsqueda muestra las estadísticas (HP, ataque…) además de imagen y tipos. |
+| ~95' | HU5 | "Cargar más" trae más Pokémon (`?limit`/`?offset`); al repulsar, otra página; sin duplicar. |
 
 ---
 

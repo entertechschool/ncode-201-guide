@@ -26,7 +26,7 @@
 ## ⚙️ Setup Inicial
 
 1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab12-errores`.
-2. **Punto de partida:** tu app de C11 (`obtenerPokemon`, `buscarPokemon`, `mostrarBusqueda`, `mostrarResultado`, `capturar`, `cargarPokedex`, `adaptarPokemon`, `pokedex`, `render`, `#buscador`, `#btn-buscar`).
+2. **Punto de partida:** tu app de C11 (`obtenerPokemon`, `buscarPokemon`, `mostrarBusqueda`, `mostrarResultado`, `capturar`, `cargarPokedex`, `cargarMas`, `adaptarPokemon`, `pokedex`, `render`, `#buscador`, `#btn-buscar`, `#cargar-mas`).
 3. **Agrega las zonas de estado** al `index.html`, debajo del buscador y encima de `#resultado`:
 
    ```html
