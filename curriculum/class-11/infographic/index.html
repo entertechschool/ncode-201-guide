@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>async/await y búsqueda en la API</title>
+  <title>async/await y consumo de APIs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -58,26 +58,44 @@
     }
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+    .card .desc strong { color: #cbd5e1; }
 
     .accent-purple { border-left: 3px solid #c084fc; }
     .accent-blue   { border-left: 3px solid #60a5fa; }
     .accent-green  { border-left: 3px solid #4ade80; }
     .accent-orange { border-left: 3px solid #fb923c; }
+    .accent-cyan   { border-left: 3px solid #38bdf8; }
 
     .tag-purple { color: #c084fc; }
     .tag-blue   { color: #60a5fa; }
     .tag-green  { color: #4ade80; }
     .tag-orange { color: #fb923c; }
+    .tag-cyan   { color: #38bdf8; }
     .tag-muted  { color: #64748b; }
 
     .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.75rem; }
-    .comparison-col pre { margin: 0; }
+    .comparison-col pre { margin: 0; height: 100%; }
     .comparison-col .col-label {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.8rem;
       font-weight: 600;
       margin-bottom: 0.4rem;
     }
+
+    .params { display: grid; gap: 0.6rem; margin: 0.75rem 0 1rem; }
+    .params .row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      align-items: center;
+      background: #161b22;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+    }
+    .params .row code { font-size: 0.82rem; color: #e2e8f0; white-space: nowrap; }
+    .params .row .lbl { font-size: 0.82rem; }
+    .params .row .lbl b { font-family: 'Space Grotesk', sans-serif; }
 
     .glossary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     .glossary .term {
@@ -103,62 +121,81 @@
 
   <section class="hero">
     <div class="badge">Módulo 3 · Clase 11</div>
-    <h1>async/await y búsqueda en la API</h1>
-    <p class="subtitle">Reformular las promesas y hacer crecer tu Pokédex</p>
+    <h1>async/await y consumo de APIs</h1>
+    <p class="subtitle">Reformular las promesas, buscar en la API y hacer crecer tu Pokédex</p>
   </section>
 
   <section>
 
-    <!-- 1: .then → async/await -->
+    <!-- 1: .then -> async/await -->
     <div class="card accent-purple">
       <h3><span class="tag-purple">1.</span> De <code>.then</code> a <code>async/await</code></h3>
-      <p class="desc">Misma promesa de C10, escrita como pasos secuenciales. <code>async/await</code> no reemplaza a las promesas: las hace más legibles.</p>
+      <p class="desc">La <strong>misma promesa</strong> de C10, escrita como pasos secuenciales. No reemplaza a las promesas: las hace más legibles (<em>azúcar sintáctico</em>).</p>
       <div class="comparison">
         <div class="comparison-col">
-          <div class="col-label" style="color:#94a3b8;">C10 — .then</div>
+          <div class="col-label" style="color:#64748b;">C10 — .then encadenado</div>
           <pre><code>fetch(url)
   .then(r =&gt; r.json())
-  .then(data =&gt; ...);</code></pre>
+  .then(data =&gt; render(data));</code></pre>
         </div>
         <div class="comparison-col">
-          <div class="col-label" style="color:#c084fc;">C11 — async/await</div>
-          <pre><code>const response = <span class="tag-purple">await</span> fetch(url);
-const data = <span class="tag-purple">await</span> response.json();</code></pre>
+          <div class="col-label" style="color:#c084fc;">C11 — async / await</div>
+          <pre><code><span class="tag-purple">const</span> r = <span class="tag-purple">await</span> fetch(url);
+<span class="tag-purple">const</span> data = <span class="tag-purple">await</span> r.json();
+render(data);</code></pre>
         </div>
       </div>
     </div>
 
-    <!-- 2: reformular la carga -->
+    <!-- 2: filtrar -> buscar -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">2.</span> Reformular la carga</h3>
-      <p class="desc">El <code>Promise.all</code> de C10, ahora con <code>await</code>: se lee de arriba a abajo.</p>
-      <pre><code><span class="tag-purple">async</span> <span class="tag-muted">function</span> cargarPokedex() {
-  <span class="tag-muted">const</span> datos = <span class="tag-purple">await</span> Promise.all(ids.map(obtenerPokemon));
-  pokedex = datos.map(adaptarPokemon);
-  render(pokedex);
-}</code></pre>
-    </div>
-
-    <!-- 3: de filtrar a buscar -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">3.</span> De filtrar a buscar en la API</h3>
-      <p class="desc">El buscador deja de filtrar lo local y pasa a <strong>consultar la API</strong> por nombre: encuentra cualquier Pokémon, no solo los de tu rejilla.</p>
-      <pre><code><span class="tag-purple">async</span> <span class="tag-muted">function</span> buscarPokemon(nombre) {
+      <h3><span class="tag-blue">2.</span> De filtrar a buscar en la API</h3>
+      <p class="desc">El buscador deja de <strong>filtrar lo local</strong> (tu rejilla) y pasa a <strong>consultar la API</strong> por nombre: encuentra <em>cualquier</em> Pokémon, aunque no esté cargado.</p>
+      <pre><code><span class="tag-purple">async</span> <span class="tag-muted">function</span> <span class="tag-blue">buscarPokemon</span>(nombre) {
   <span class="tag-muted">const</span> data = <span class="tag-purple">await</span> obtenerPokemon(nombre.toLowerCase());
-  <span class="tag-muted">return</span> adaptarPokemon(data);
+  <span class="tag-muted">return</span> adaptarPokemon(data);   <span class="tag-muted">// llega de la API, no de la rejilla</span>
 }</code></pre>
     </div>
 
-    <!-- 4: capturar -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Capturar: la colección crece</h3>
-      <p class="desc">El resultado de búsqueda lleva un botón <strong>Capturar</strong> (añadido al nodo de <code>crearTarjeta</code>). Al pulsarlo, el Pokémon se suma a <code>pokedex</code> sin duplicar.</p>
-      <pre><code><span class="tag-muted">function</span> <span class="tag-orange">capturar</span>(pokemon) {
+    <!-- 3: capturar / estado -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">3.</span> Capturar: el estado crece</h3>
+      <p class="desc">El resultado lleva un botón <strong>Capturar</strong>. Al pulsarlo, el Pokémon se suma a <code>pokedex</code> (sin duplicar) y la rejilla se vuelve a dibujar. Primer roce con <em>"el estado crece según el usuario"</em>.</p>
+      <pre><code><span class="tag-muted">function</span> <span class="tag-green">capturar</span>(pokemon) {
   <span class="tag-muted">if</span> (!pokedex.some(p =&gt; p.nombre === pokemon.nombre)) {
-    pokedex.push(pokemon);   <span class="tag-muted">// crece la colección</span>
+    pokedex.push(pokemon);   <span class="tag-muted">// la colección crece</span>
   }
   render(pokedex);
 }</code></pre>
+    </div>
+
+    <!-- 4: explorar la respuesta -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Explorar la respuesta (stats)</h3>
+      <p class="desc">La API trae <strong>mucho más</strong> de lo que usabas (<code>stats</code>, <code>height</code>, <code>weight</code>…). Navegas el <strong>JSON anidado</strong> y extiendes <code>adaptarPokemon</code> para leer lo que importa.</p>
+      <pre><code><span class="tag-muted">// antes: name, sprites, types — ahora también:</span>
+stats: data.stats.map(s =&gt; ({
+  nombre: s.stat.name,
+  valor: s.base_stat
+}))</code></pre>
+    </div>
+
+    <!-- 5: parametros ruta vs consulta -->
+    <div class="card accent-cyan">
+      <h3><span class="tag-cyan">5.</span> Parámetros: ruta vs consulta</h3>
+      <p class="desc">Dos formas de pedirle cosas distintas a una API. El botón <strong>"Cargar más"</strong> pagina subiendo el <code>offset</code>.</p>
+      <div class="params">
+        <div class="row">
+          <code class="tag-cyan">/pokemon/pikachu</code>
+          <span class="lbl"><b>Ruta</b> — <span style="color:#94a3b8;">qué recurso quieres</span></span>
+        </div>
+        <div class="row">
+          <code class="tag-cyan">/pokemon?limit=12&amp;offset=24</code>
+          <span class="lbl"><b>Consulta</b> — <span style="color:#94a3b8;">cuántos y desde dónde</span></span>
+        </div>
+      </div>
+      <pre><code>fetch(`...pokemon?limit=12&amp;offset=${offset}`);
+offset += 12;   <span class="tag-muted">// siguiente página → paginación</span></code></pre>
     </div>
 
   </section>
@@ -167,19 +204,19 @@ const data = <span class="tag-purple">await</span> response.json();</code></pre>
     <div class="glossary">
       <div class="term">
         <strong>async / await</strong>
-        <span>Escribir promesas como pasos secuenciales. <code>await</code> pausa hasta que resuelve.</span>
+        <span>Escribir promesas como pasos. <code>await</code> pausa hasta que resuelve.</span>
       </div>
       <div class="term">
-        <strong>Azúcar sintáctico</strong>
-        <span>No reemplaza a las promesas: es la misma lógica, más legible.</span>
-      </div>
-      <div class="term">
-        <strong>Buscar en la API</strong>
-        <span>Pedir un recurso por nombre, no filtrar lo que ya tienes.</span>
+        <strong>Filtrar vs buscar</strong>
+        <span>Filtrar revisa lo local; buscar va a la API por algo nuevo.</span>
       </div>
       <div class="term">
         <strong>Estado (pokedex)</strong>
-        <span>La colección que crece según lo que el usuario busca.</span>
+        <span>La colección que crece según lo que el usuario captura.</span>
+      </div>
+      <div class="term">
+        <strong>Ruta vs consulta</strong>
+        <span><code>/recurso</code> = qué; <code>?param</code> = cómo (filtros, paginación).</span>
       </div>
     </div>
   </section>

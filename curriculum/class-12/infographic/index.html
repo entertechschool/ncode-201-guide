@@ -58,15 +58,17 @@
     }
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+    .card .desc strong { color: #cbd5e1; }
 
     .accent-red    { border-left: 3px solid #f87171; }
     .accent-amber  { border-left: 3px solid #fbbf24; }
-    .accent-green  { border-left: 3px solid #4ade80; }
+    .accent-slate  { border-left: 3px solid #94a3b8; }
     .accent-blue   { border-left: 3px solid #60a5fa; }
 
     .tag-red    { color: #f87171; }
     .tag-amber  { color: #fbbf24; }
     .tag-green  { color: #4ade80; }
+    .tag-slate  { color: #94a3b8; }
     .tag-blue   { color: #60a5fa; }
     .tag-muted  { color: #64748b; }
 
@@ -80,12 +82,23 @@
       background: #161b22;
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 8px;
-      padding: 0.85rem;
+      padding: 0.95rem 0.6rem;
       text-align: center;
     }
-    .states .state .ico { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
-    .states .state strong { font-size: 0.82rem; display: block; }
-    .states .state span { color: #94a3b8; font-size: 0.72rem; }
+    .states .state .ico { font-size: 1.6rem; display: block; margin-bottom: 0.35rem; }
+    .states .state strong { font-size: 0.82rem; display: block; margin-bottom: 0.15rem; }
+    .states .state span { color: #94a3b8; font-size: 0.72rem; line-height: 1.3; }
+
+    .keyline {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: #161b22;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .keyline b { font-family: 'Space Grotesk', sans-serif; }
 
     .glossary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     .glossary .term {
@@ -117,45 +130,49 @@
 
   <section>
 
-    <!-- 1: try/catch -->
+    <!-- 1: try / catch / finally -->
     <div class="card accent-red">
-      <h3><span class="tag-red">1.</span> try / catch — la red de seguridad</h3>
-      <p class="desc">El código que puede fallar va en <code>try</code>; si algo sale mal, <code>catch</code> lo atrapa y la app sigue viva.</p>
-      <pre><code><span class="tag-red">try</span> {
-  <span class="tag-muted">const</span> response = <span class="tag-muted">await</span> fetch(url);
-  <span class="tag-muted">const</span> data     = <span class="tag-muted">await</span> response.json();
-  render([adaptarPokemon(data)]);
-} <span class="tag-red">catch</span> (error) {
-  mensaje.textContent = error.message;
+      <h3><span class="tag-red">1.</span> <code>try / catch / finally</code> — la red de seguridad</h3>
+      <p class="desc">El código que puede fallar va en <code>try</code>; si algo se rompe, <code>catch</code> lo atrapa y la app sigue viva. <code>finally</code> corre <strong>siempre</strong>: ideal para ocultar el spinner.</p>
+      <pre><code>spinner.classList.remove(<span class="tag-green">"hidden"</span>);   <span class="tag-muted">// ⏳ cargando</span>
+<span class="tag-red">try</span> {
+  mostrarResultado(<span class="tag-muted">await</span> buscarPokemon(nombre));
+} <span class="tag-red">catch</span> (error) {            <span class="tag-muted">// algo se rompió (sin red)</span>
+  mensaje.textContent = <span class="tag-green">"Algo salió mal."</span>;
+} <span class="tag-red">finally</span> {
+  spinner.classList.add(<span class="tag-green">"hidden"</span>);    <span class="tag-muted">// ✅ corre SIEMPRE</span>
 }</code></pre>
     </div>
 
-    <!-- 2: response.ok + throw -->
+    <!-- 2: fetch no falla en 404 -> null -->
     <div class="card accent-amber">
-      <h3><span class="tag-amber">2.</span> fetch NO falla en 404 → revísalo</h3>
-      <p class="desc"><code>fetch</code> solo falla si no hay red. Un 404 llega con <code>ok=false</code>: hay que revisarlo y lanzar el error con <code>throw</code>.</p>
-      <pre><code><span class="tag-muted">if</span> (!response.<span class="tag-amber">ok</span>) {                  <span class="tag-muted">// 404, 500…</span>
-  <span class="tag-amber">throw new Error</span>(`No se encontró "${nombre}"`);
+      <h3><span class="tag-amber">2.</span> <code>fetch</code> NO falla en 404 → trátalo como vacío</h3>
+      <p class="desc"><code>fetch</code> solo falla si no hay red. Un 404 llega con <code>ok = false</code>: lo detectas con <code>response.status</code> y, si el Pokémon no existe, devuelves <code>null</code> (un <strong>resultado vacío</strong>, no un error).</p>
+      <pre><code><span class="tag-muted">if</span> (response.<span class="tag-amber">status</span> === 404) {
+  <span class="tag-muted">return</span> null;        <span class="tag-muted">// no existe → resultado vacío</span>
 }
-<span class="tag-muted">// throw salta directo al catch</span></code></pre>
+<span class="tag-muted">if</span> (!response.<span class="tag-amber">ok</span>) {
+  <span class="tag-muted">throw new Error</span>(<span class="tag-green">"La API respondió con un error"</span>);  <span class="tag-muted">// eso sí es error</span>
+}</code></pre>
     </div>
 
-    <!-- 3: finally + estados -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">3.</span> finally + estados de UI</h3>
-      <p class="desc"><code>finally</code> corre SIEMPRE — ideal para ocultar el spinner pase lo que pase. La app comunica su estado en todo momento.</p>
+    <!-- 3: los 4 estados -->
+    <div class="card accent-slate">
+      <h3><span class="tag-slate">3.</span> Cada situación, su estado de UI</h3>
+      <p class="desc">Una app profesional <strong>siempre dice en qué estado está</strong>. La búsqueda tiene cuatro respuestas posibles:</p>
       <div class="states">
-        <div class="state"><span class="ico">⏳</span><strong class="tag-amber">loading</strong><span>Cargando…</span></div>
-        <div class="state"><span class="ico">✅</span><strong class="tag-green">success</strong><span>se agrega</span></div>
-        <div class="state"><span class="ico">❌</span><strong class="tag-red">no encontrado</strong><span>404</span></div>
-        <div class="state"><span class="ico">📡</span><strong class="tag-blue">sin red</strong><span>error de carga</span></div>
+        <div class="state"><span class="ico">⏳</span><strong class="tag-amber">Cargando</strong><span>esperando a la API</span></div>
+        <div class="state"><span class="ico">✅</span><strong class="tag-green">Encontrado</strong><span>la tarjeta del Pokémon</span></div>
+        <div class="state"><span class="ico">🔍</span><strong class="tag-slate">No encontrado</strong><span>aviso neutro: sin resultado</span></div>
+        <div class="state"><span class="ico">❌</span><strong class="tag-red">Error</strong><span>algo se rompió (sin red)</span></div>
       </div>
+      <div class="keyline"><b>No encontrado ≠ error:</b> uno es <span class="tag-slate">"no hay nada"</span> (resultado vacío); el otro es <span class="tag-red">"algo falló"</span>. Cada uno con su propio aviso.</div>
     </div>
 
     <!-- 4: Markdown -->
     <div class="card accent-blue">
       <h3><span class="tag-blue">4.</span> Markdown — documenta tu proyecto</h3>
-      <p class="desc">Todo repo profesional lleva un <code>README.md</code> escrito en Markdown: títulos, listas, links y código.</p>
+      <p class="desc">Todo repo profesional lleva un <code>README.md</code> escrito en Markdown: títulos, listas, links y código. Tu primer entregable documentado.</p>
       <pre><code><span class="tag-blue"># Pokédex</span>
 Buscador que consume la PokeAPI.
 
@@ -169,16 +186,16 @@ Buscador que consume la PokeAPI.
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>try / catch</strong>
-        <span>Captura errores sin que la app se rompa.</span>
+        <strong>try / catch / finally</strong>
+        <span>Atrapa errores sin romper la app; <code>finally</code> corre siempre.</span>
       </div>
       <div class="term">
-        <strong>throw / response.ok</strong>
-        <span>Lanzar un error propio cuando la respuesta falla (404).</span>
+        <strong>response.ok / status</strong>
+        <span><code>fetch</code> no falla en 404 — tú lo detectas y decides qué mostrar.</span>
       </div>
       <div class="term">
-        <strong>finally</strong>
-        <span>Corre siempre: deja la UI consistente.</span>
+        <strong>No encontrado (vacío)</strong>
+        <span>El 404 es un resultado vacío (<code>null</code>), no un error.</span>
       </div>
       <div class="term">
         <strong>Markdown</strong>

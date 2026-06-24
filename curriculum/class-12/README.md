@@ -22,7 +22,7 @@ Se utilizan dos recursos fundamentales:
 | **1. Refuerzo Práctico** | 20 min | El fallo de C11 (buscar algo inexistente). ¿Por qué se rompe? |
 | **2. Debate y Demo** | 20 min | `try/catch`, `response.ok`, `finally`. Demo en vivo del error manejado. |
 | **Break** | 10 min | Descanso previo al lab. |
-| **3. Laboratorio** | 100 min | Robustez + estados + README. Checkpoints (30', 60', 90'). |
+| **3. Laboratorio** | 100 min | Robustez + estados + README. Checkpoints (25', 50', 75', 95'). |
 | **4. Síntesis + Test** | 20 min | Cierre del módulo y test diagnóstico M3. |
 
 ---
@@ -40,7 +40,8 @@ Al finalizar esta clase, los estudiantes podrán construir aplicaciones que no s
 ### Podrán explicar
 
 - Por qué `fetch` no falla automáticamente ante un 404.
-- La diferencia entre los estados de UI: cargando, éxito, error.
+- La diferencia entre los estados de UI: cargando, éxito, error y "no encontrado" (vacío).
+- Por qué "no encontrado" (404) es un resultado vacío y no un error.
 - Cuándo conviene capturar un error y cuándo dejar que se propague.
 
 ### Podrán implementar
@@ -55,9 +56,9 @@ Al finalizar esta clase, los estudiantes podrán construir aplicaciones que no s
 
 | Sin manejo (C11) | Con manejo (C12) |
 |---|---|
-| Nombre inexistente → app rota | Mensaje "No se encontró…" |
-| Red caída → pantalla en blanco | Mensaje de error, app viva |
-| Sin feedback de carga | Spinner que aparece y **siempre** desaparece (`finally`) |
+| Nombre inexistente → app rota | Aviso neutro **"no se encontró"** (estado vacío, no error) |
+| Red caída → pantalla en blanco | Mensaje de **error**, app viva |
+| Sin feedback de carga | **Spinner** que aparece y **siempre** desaparece (`finally`) |
 
 ## 📄 Markdown y el README
 
@@ -69,5 +70,5 @@ Se enseña Markdown (títulos, listas, links, código) para documentar el proyec
 - **throw:** lanza manualmente un error con un mensaje.
 - **finally:** bloque que se ejecuta siempre, haya error o no.
 - **response.ok:** booleano; `false` si la respuesta HTTP fue un error.
-- **Estado de UI:** lo que el usuario ve en cada momento (cargando / éxito / error).
+- **Estado de UI:** lo que el usuario ve en cada momento (cargando / éxito / error / no encontrado).
 - **Markdown:** formato de texto ligero para documentar (usado en `README.md`).

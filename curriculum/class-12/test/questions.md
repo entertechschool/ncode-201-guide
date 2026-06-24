@@ -109,13 +109,13 @@ Quieres traer un Pokémon de la PokeAPI y obtener su objeto JavaScript. ¿Cuál 
 Buscas un Pokémon que no existe. La API responde con **status 404**. ¿Qué afirmación es correcta sobre cómo manejar este caso?
 
 - A) `fetch` lanza automáticamente un error en un 404, así que el `catch` lo atrapa solo.
-- B) Hay que revisar `response.ok`; si es `false`, lanzar el error manualmente con `throw new Error(...)`.
+- B) Hay que revisar `response.ok` (o `response.status`): `fetch` no falla solo por un 404, así que debes detectarlo en tu código y decidir qué mostrar.
 - C) Un 404 detiene el programa por completo sin posibilidad de manejarlo.
 - D) `response.json()` corrige el 404 automáticamente y devuelve un objeto válido.
 
 > Respuesta: B
 
-> **Retroalimentación:** `fetch` **solo** rechaza su promesa cuando la petición no se puede realizar (sin red, DNS, CORS). Un 404 es una respuesta válida a nivel de red, así que `fetch` lo considera "exitoso". Por eso hay que revisar `response.ok` (que será `false`) y lanzar el error nosotros con `throw new Error(...)` para que el `catch` lo maneje. La A es el malentendido más común. La C es falsa: se maneja sin problema. La D es falsa: `response.json()` intentaría parsear el cuerpo de error, no corrige nada.
+> **Retroalimentación:** `fetch` **solo** rechaza su promesa cuando la petición no se puede realizar (sin red, DNS, CORS). Un 404 es una respuesta válida a nivel de red, así que `fetch` lo considera "exitoso". Por eso **tú** debes revisar `response.ok`/`response.status` y decidir qué hacer: para un Pokémon que no existe, lo natural es mostrar un aviso de "no encontrado" (un resultado vacío), no necesariamente lanzar un error. La A es el malentendido más común. La C es falsa: se maneja sin problema. La D es falsa: `response.json()` intentaría parsear el cuerpo de error, no corrige nada.
 
 ---
 
@@ -138,7 +138,7 @@ Buscas un Pokémon que no existe. La API responde con **status 404**. ¿Qué afi
     spinner.classList.remove("hidden");
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error("No se encontró");
+      if (!response.ok) throw new Error("Error en la respuesta");
       const pokemon = await response.json();
       render([pokemon]);
     } catch (e) {

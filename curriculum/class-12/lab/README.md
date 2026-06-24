@@ -1,16 +1,16 @@
 # Laboratorio 12: Manejo de Errores y Estados (Lab Evaluado M3)
 
-Última clase del módulo. Tu Pokédex ya carga de la web y busca Pokémon… pero si buscas un nombre que no existe, o se cae la red, **se rompe**. Hoy la haces **robusta**: manejas errores con `try/catch`, detectas respuestas fallidas (404) y muestras estados claros de **carga** y **error**. Al final documentas el proyecto con un **README en Markdown** y cierras el Módulo 3.
+Última clase del módulo. Tu Pokédex ya carga de la web y busca Pokémon… pero si buscas un nombre que no existe, o se cae la red, **se rompe**. Hoy la haces **robusta**: manejas errores con `try/catch`, y muestras estados claros de **carga**, **error** y **"no encontrado"**. Al final documentas el proyecto con un **README en Markdown** y cierras el Módulo 3.
 
-> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación (~25, ~50, ~75, ~95 min).
 >
 > 📋 **Lab evaluado:** se califica con la rúbrica de [rubric.md](rubric.md) (5 criterios × 20 pts = 100). Incluye el README documentado.
 
 ## 🎯 Objetivos de Aprendizaje
 
 1. Capturar errores con `try/catch/finally` y lanzar los propios con `throw`.
-2. Detectar respuestas HTTP fallidas (`response.ok`) y comunicarlas al usuario.
-3. Mostrar estados de UI (cargando / error) y documentar el proyecto en **Markdown**.
+2. Detectar respuestas HTTP fallidas (`response.ok`) y distinguir **"no encontrado"** de un error real.
+3. Mostrar estados de UI (cargando / error / no encontrado) y documentar el proyecto en **Markdown**.
 
 ## 🔑 Conceptos Clave
 
@@ -20,7 +20,8 @@
 | **`throw new Error(msg)`** | Lanza un error propio con un mensaje claro. |
 | **`response.ok`** | `false` si la respuesta HTTP fue un error (ej. 404). `fetch` **no** falla solo por un 404. |
 | **`finally`** | Bloque que corre **siempre**, haya éxito o error. Ideal para ocultar un spinner. |
-| **Estados de UI** | Loading (cargando) y error (mensaje): lo que el usuario ve en cada momento. |
+| **Estados de UI** | Cargando, error (un fallo real) y vacío / "no encontrado" (búsqueda sin resultado): lo que el usuario ve en cada momento. |
+| **No encontrado ≠ error** | Un Pokémon que no existe (404) es un **resultado vacío**, no una falla de la app — merece su propio aviso, no el de error. |
 | **Markdown** | Formato de texto para documentar (títulos, listas, links, código). Se usa en el `README.md`. |
 
 ## ⚙️ Setup Inicial
@@ -68,7 +69,7 @@ async function mostrarBusqueda(nombre) {
 
 > 💡 `catch (error)` recibe un objeto `Error` con un `.message`. Hoy la app ya no muere: el fallo se convierte en un mensaje.
 
-- **Checkpoint 1 (~30 min):** con internet, busca normal. Desconecta la red y busca: ves el mensaje de error, la app sigue viva.
+- **Checkpoint 1 (~25 min):** con internet, busca normal. Desconecta la red y busca: ves el mensaje de error, la app sigue viva.
 
 ---
 
@@ -106,7 +107,7 @@ Y en el `catch` de `mostrarBusqueda`, usa el mensaje del error:
 
 > 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines es el que se muestra. Un buen mensaje de error es parte de una buena app.
 
-- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → se muestra normal (con su botón Capturar).
+- **Checkpoint 2 (~50 min):** busca "pikachuu" → por ahora lanza y muestra "No se encontró…" en el mensaje. Busca "pikachu" → se muestra normal (con su botón Capturar). *(En HU4 ese 404 pasará a su propio aviso.)*
 
 ---
 
@@ -159,9 +160,80 @@ async function cargarPokedex() {
 }
 ```
 
-- **Checkpoint 3 (~90 min):** el spinner aparece durante la búsqueda/carga y **siempre** desaparece (éxito, no encontrado, sin red).
+- **Checkpoint 3 (~75 min):** el spinner aparece durante la búsqueda/carga y **siempre** desaparece (éxito, no encontrado, sin red).
 
 🏆 **Reto autónomo (5 min):** mueve `spinner.classList.add("hidden")` del `finally` al final del `try`. Busca un nombre inexistente: el spinner **se queda pegado**. Eso prueba por qué va en `finally`.
+
+---
+
+### HU4: Avisar cuando el Pokémon no existe
+
+> *"Como entrenador, cuando busco un Pokémon que no existe (o escribí mal el nombre), quiero que la app me avise que no se encontró, para corregir el nombre y volver a intentar."*
+
+**Criterios de Aceptación:**
+- Buscar un nombre que no existe muestra un aviso de **"no se encontró ese Pokémon"**.
+- El aviso menciona el **nombre que se buscó** (ej. *no se encontró "pikachuu"*).
+- Tras el aviso, el entrenador puede corregir el nombre y buscar de nuevo sin recargar.
+
+En HU2, un Pokémon inexistente **lanzaba un error** y se veía como un fallo. Pero "no existe ese Pokémon" **no es un fallo** de tu app — es un **resultado válido**: simplemente no hay nada. Démosle su propio aviso.
+
+Cambia `obtenerPokemon` para que, ante un **404**, **devuelva `null`** (resultado vacío) en vez de lanzar; el `throw` queda solo para fallos de verdad:
+
+```javascript
+async function obtenerPokemon(idONombre) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idONombre}`);
+
+  if (response.status === 404) {
+    return null;                                       // no existe → resultado vacío (no es un error)
+  }
+  if (!response.ok) {
+    throw new Error("La API respondió con un error");  // otros fallos HTTP sí son error
+  }
+  return response.json();
+}
+```
+
+Propaga ese `null` en `buscarPokemon`:
+
+```javascript
+async function buscarPokemon(nombre) {
+  const data = await obtenerPokemon(nombre.toLowerCase());
+  if (data === null) return null;                      // no encontrado
+  return adaptarPokemon(data);
+}
+```
+
+Y en `mostrarBusqueda`, cuando el resultado es `null`, muestra el aviso de **"no se encontró"**:
+
+```javascript
+async function mostrarBusqueda(nombre) {
+  spinner.classList.remove("hidden");
+  mensaje.classList.add("hidden");
+
+  try {
+    const pokemon = await buscarPokemon(nombre);
+
+    if (pokemon === null) {                            // ← no se encontró
+      contenedor.innerHTML = `
+        <p class="col-span-full text-center text-slate-500 py-8">
+          No se encontró ningún Pokémon llamado "${nombre}" 🔍
+        </p>`;
+      return;
+    }
+
+    mostrarResultado(pokemon);                         // ← se encontró
+  } catch (error) {                                    // ← un fallo de verdad (sin red…)
+    mensaje.textContent = "Algo salió mal. Revisa tu conexión.";
+    mensaje.classList.remove("hidden");
+  } finally {
+    spinner.classList.add("hidden");
+  }
+}
+```
+
+> 💡 **"No encontrado" no es una excepción.** Reservar `throw`/`catch` para fallos de verdad y tratar "no hay resultado" como un valor (`null`) mantiene el `catch` limpio (solo casos inesperados) y le da a cada situación su propio aviso. Y `return` dentro del `try` **no salta** el `finally`: el spinner se oculta igual.
+
+- **Checkpoint 4 (~95 min):** busca "pikachuu" → aparece el aviso "No se encontró ningún Pokémon llamado 'pikachuu'". Busca "pikachu" → su tarjeta normal. (Y un fallo de red sigue mostrando el mensaje de error — tres situaciones, tres respuestas distintas.)
 
 ---
 

@@ -19,9 +19,9 @@
 
 | Nivel | Puntos | Descripcion |
 |-------|--------|-------------|
-| **Excelente** | 20 | HU1-HU3 del lab + ≥1 HU adicional propia, claras, funcionales y con criterios de aceptación cumplidos al 100% |
-| **Bueno** | 15 | HU1-HU3 + 1 HU adicional con criterios en su mayoría cumplidos |
-| **Satisfactorio** | 10 | HU1-HU3 funcionales sin HU adicional |
+| **Excelente** | 20 | HU1-HU4 del lab + ≥1 HU adicional propia, claras, funcionales y con criterios de aceptación cumplidos al 100% |
+| **Bueno** | 15 | HU1-HU4 + 1 HU adicional con criterios en su mayoría cumplidos |
+| **Satisfactorio** | 10 | HU1-HU4 funcionales sin HU adicional |
 | **Bajo** | 5 | HU implementadas pero no funcionan correctamente |
 | **No entregado** | 0 | Sin HU funcionales |
 
@@ -29,6 +29,7 @@
 - HU1: `try/catch` alrededor del fetch
 - HU2: detección de `!response.ok` + `throw new Error(...)`
 - HU3: estado de carga (spinner) con `finally`, en la búsqueda y en la carga inicial
+- HU4: "no encontrado" (404) como resultado vacío (`null`) con aviso neutro, distinto del error
 - HU adicionales (logros) en su propia rama y mergeadas vía PR
 
 ---
