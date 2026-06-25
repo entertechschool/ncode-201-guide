@@ -76,13 +76,13 @@ try {
 ## 🎛️ Estados de UI
 
 ```
-⏳ cargando       → "Cargando…"          (finally)
-✅ encontrado     → la tarjeta
-🔍 no encontrado  → "No se encontró…"     (404 → null, vacío)
-❌ error          → "Algo salió mal"      (catch, fallo real)
+⏳ loading  → "Cargando…"
+✅ success  → la tarjeta
+❌ error    → "No se encontró…"
+∅  empty    → "Busca un Pokémon 🔍"
 ```
 
-> "No encontrado" ≠ error: uno es **sin resultado**, el otro es **algo se rompió**.
+> Una buena app siempre dice en qué estado está.
 
 ---
 
@@ -106,10 +106,9 @@ Buscador que consume la PokeAPI.
 
 | HU | Tiempo | Contenido |
 |---|---|---|
-| **HU1** | ~25 min | `try/catch` (error) |
-| **HU2** | ~25 min | `response.ok` + `throw` |
-| **HU3** | ~25 min | "Cargando…" + `finally` |
-| **HU4** | ~20 min | "No encontrado" (404 → vacío) |
+| **HU1** | ~30 min | `try/catch` |
+| **HU2** | ~30 min | `response.ok` + `throw` |
+| **HU3** | ~30 min | estados + `finally` |
 | 📄 | — | README en Markdown |
 
 > Calificado con rúbrica (5 × 20 = 100).

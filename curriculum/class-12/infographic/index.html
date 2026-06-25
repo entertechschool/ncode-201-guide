@@ -62,13 +62,12 @@
 
     .accent-red    { border-left: 3px solid #f87171; }
     .accent-amber  { border-left: 3px solid #fbbf24; }
-    .accent-slate  { border-left: 3px solid #94a3b8; }
+    .accent-green  { border-left: 3px solid #4ade80; }
     .accent-blue   { border-left: 3px solid #60a5fa; }
 
     .tag-red    { color: #f87171; }
     .tag-amber  { color: #fbbf24; }
     .tag-green  { color: #4ade80; }
-    .tag-slate  { color: #94a3b8; }
     .tag-blue   { color: #60a5fa; }
     .tag-muted  { color: #64748b; }
 
@@ -144,29 +143,26 @@
 }</code></pre>
     </div>
 
-    <!-- 2: fetch no falla en 404 -> null -->
+    <!-- 2: fetch no falla en 404 -> revisalo -->
     <div class="card accent-amber">
-      <h3><span class="tag-amber">2.</span> <code>fetch</code> NO falla en 404 → trátalo como vacío</h3>
-      <p class="desc"><code>fetch</code> solo falla si no hay red. Un 404 llega con <code>ok = false</code>: lo detectas con <code>response.status</code> y, si el Pokémon no existe, devuelves <code>null</code> (un <strong>resultado vacío</strong>, no un error).</p>
-      <pre><code><span class="tag-muted">if</span> (response.<span class="tag-amber">status</span> === 404) {
-  <span class="tag-muted">return</span> null;        <span class="tag-muted">// no existe → resultado vacío</span>
+      <h3><span class="tag-amber">2.</span> <code>fetch</code> NO falla en 404 → revísalo</h3>
+      <p class="desc"><code>fetch</code> solo falla si no hay red. Un 404 llega con <code>ok = false</code>: hay que revisarlo con <code>response.ok</code> y lanzar el error con <code>throw</code>.</p>
+      <pre><code><span class="tag-muted">if</span> (!response.<span class="tag-amber">ok</span>) {                  <span class="tag-muted">// 404, 500…</span>
+  <span class="tag-amber">throw new Error</span>(`No se encontró "${nombre}"`);
 }
-<span class="tag-muted">if</span> (!response.<span class="tag-amber">ok</span>) {
-  <span class="tag-muted">throw new Error</span>(<span class="tag-green">"La API respondió con un error"</span>);  <span class="tag-muted">// eso sí es error</span>
-}</code></pre>
+<span class="tag-muted">// throw salta directo al catch</span></code></pre>
     </div>
 
-    <!-- 3: los 4 estados -->
-    <div class="card accent-slate">
-      <h3><span class="tag-slate">3.</span> Cada situación, su estado de UI</h3>
-      <p class="desc">Una app profesional <strong>siempre dice en qué estado está</strong>. La búsqueda tiene cuatro respuestas posibles:</p>
+    <!-- 3: estados de UI -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">3.</span> Cada situación, su estado de UI</h3>
+      <p class="desc">Una app profesional <strong>siempre dice en qué estado está</strong>. El <code>finally</code> oculta el spinner pase lo que pase. La búsqueda tiene cuatro respuestas posibles:</p>
       <div class="states">
         <div class="state"><span class="ico">⏳</span><strong class="tag-amber">Cargando</strong><span>esperando a la API</span></div>
-        <div class="state"><span class="ico">✅</span><strong class="tag-green">Encontrado</strong><span>la tarjeta del Pokémon</span></div>
-        <div class="state"><span class="ico">🔍</span><strong class="tag-slate">No encontrado</strong><span>aviso neutro: sin resultado</span></div>
-        <div class="state"><span class="ico">❌</span><strong class="tag-red">Error</strong><span>algo se rompió (sin red)</span></div>
+        <div class="state"><span class="ico">✅</span><strong class="tag-green">Éxito</strong><span>la tarjeta del Pokémon</span></div>
+        <div class="state"><span class="ico">❌</span><strong class="tag-red">No encontrado</strong><span>404 → "No se encontró"</span></div>
+        <div class="state"><span class="ico">📡</span><strong class="tag-blue">Sin red</strong><span>error de carga</span></div>
       </div>
-      <div class="keyline"><b>No encontrado ≠ error:</b> uno es <span class="tag-slate">"no hay nada"</span> (resultado vacío); el otro es <span class="tag-red">"algo falló"</span>. Cada uno con su propio aviso.</div>
     </div>
 
     <!-- 4: Markdown -->

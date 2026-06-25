@@ -10,7 +10,7 @@
 - **`throw new Error(msg)`** (NUEVO): lanzar un error propio. Interrumpe el `try` y salta al `catch`.
 - **`response.ok`** (NUEVO): `fetch` **no** falla solo por un 404. Hay que revisar `response.ok` y lanzar el error manualmente. Punto clave de la clase.
 - **`finally`** (NUEVO): corre **siempre**, haya éxito o error. Se usa para ocultar el spinner sin importar el resultado.
-- **Estados de UI** (NUEVO): cargando, encontrado, **no encontrado** (404 → resultado vacío) y error (fallo real). "No encontrado" no es un error: es un resultado vacío, con su propio aviso neutro (no el banner de error).
+- **Estados de UI** (NUEVO): loading / success / error / empty. Una app profesional comunica en qué estado está.
 - **Markdown** (NUEVO, documentación): títulos, listas, links, código. Se enseña aquí porque es la clase más liviana en JS y la entrega evaluada → se pide el `README.md`.
 
 > ❗ **Dos baldes distintos:** los conceptos JS (try/catch/finally/ok) y la habilidad de documentación (Markdown). Markdown no es un tema de programación; es carga ligera y encaja en la clase con menos JS nuevo.
@@ -54,7 +54,7 @@ Es la clase con menos conceptos JS nuevos (6) y es la entrega evaluada: "documen
 | Refuerzo práctico | 20 min | El fallo de C11 en vivo. ¿Por qué se rompe? |
 | Debate + Demo | 20 min | `try/catch`, `response.ok`, `finally`. |
 | Break | 10 min | Descanso. |
-| Lab (HU1-HU4 + README) | 100 min | HU1 `try/catch` · HU2 `throw`/`ok` · HU3 "Cargando…"/`finally` · HU4 "no encontrado" (404→vacío) · README |
+| Lab (HU1-HU3 + README) | 100 min | HU1 `try/catch` · HU2 `throw`/`ok` · HU3 estados/`finally` · README |
 | Síntesis + Test | 20 min | Cierre del módulo + test diagnóstico M3. |
 
 ---
@@ -79,7 +79,6 @@ Pon el `add('hidden')` al final del `try`, fuerza un error: el spinner se queda.
 "HU1: envuelven el fetch en try/catch (deja de romperse).
  HU2: revisan response.ok y lanzan 'No se encontró' con throw.
  HU3: spinner durante la búsqueda y la carga, y finally que lo oculta siempre.
- HU4: el 404 deja de ser error → devuelve null y muestra un aviso neutro 'no se encontró'.
  Y documentan: su primer README en Markdown.
  Esto es evaluado — revisen la rúbrica."
 ```
@@ -94,8 +93,8 @@ Lista situaciones (sin internet / nombre inexistente / API caída 500 / nombre v
 ### Dinámica 2: "¿Dónde va la línea?" (en HU3)
 Das una línea (`ocultarSpinner()`) y tres lugares (try, catch, finally). ¿Dónde garantiza que siempre corra?
 
-### Dinámica 3: "Escribe el aviso" (en HU4)
-Que redacten un buen aviso de "no encontrado" (no un error). Compara vagos ("nada") vs claros ("No se encontró 'pikachuu'"). Aprovecha para discutir por qué esto **no** es un error: la búsqueda funcionó, solo que no hay resultado.
+### Dinámica 3: "Escribe el mensaje" (en HU2)
+Que redacten un buen mensaje de error para "no encontrado". Compara vagos ("error") vs claros ("No se encontró 'pikachuu'").
 
 ---
 
@@ -161,10 +160,9 @@ Buscador que consume la PokeAPI.
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~25' | HU1 | Con red caída, la búsqueda muestra mensaje en vez de romperse. |
-| ~50' | HU2 | "pikachuu" → "No se encontró…" (por ahora vía throw); "pikachu" → tarjeta. |
-| ~75' | HU3 | Spinner aparece y SIEMPRE desaparece (3 escenarios), en búsqueda y carga. |
-| ~95' | HU4 | "pikachuu" → aviso neutro "no se encontró" (distinto del error); README creado. |
+| ~30' | HU1 | Con red caída, la búsqueda muestra mensaje en vez de romperse. |
+| ~60' | HU2 | "pikachuu" → "No se encontró…"; "pikachu" → tarjeta. |
+| ~90' | HU3 | Spinner aparece y SIEMPRE desaparece (3 escenarios), en búsqueda y carga; README creado. |
 
 ---
 
