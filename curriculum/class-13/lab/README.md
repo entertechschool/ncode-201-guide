@@ -52,9 +52,9 @@
      <h1 class="text-3xl font-bold text-center text-slate-800 mb-6">Mis Plantillas</h1>
 
      <form id="form-plantilla" class="max-w-md mx-auto bg-white p-4 rounded-xl shadow mb-6 grid gap-2">
-       <input id="titulo"  type="text" placeholder="Título"               class="p-2 border border-slate-300 rounded">
-       <input id="mensaje" type="text" placeholder="Mensaje (usa {nombre})" class="p-2 border border-slate-300 rounded">
-       <input id="hashtag" type="text" placeholder="hashtag"              class="p-2 border border-slate-300 rounded">
+       <input id="titulo"  type="text" placeholder="Título"  class="p-2 border border-slate-300 rounded">
+       <input id="hashtag" type="text" placeholder="hashtag" class="p-2 border border-slate-300 rounded">
+       <textarea id="mensaje" rows="3" placeholder="Mensaje (usa {nombre})" class="p-2 border border-slate-300 rounded"></textarea>
        <button class="bg-emerald-600 text-white py-2 rounded">Agregar plantilla</button>
      </form>
 
