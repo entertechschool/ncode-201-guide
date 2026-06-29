@@ -61,6 +61,7 @@
     }
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+    .card .desc strong { color: #cbd5e1; }
 
     .accent-purple { border-left: 3px solid #d946ef; }
     .accent-green  { border-left: 3px solid #4ade80; }
@@ -134,55 +135,57 @@
   <section class="hero">
     <div class="badge">Módulo 4 · Clase 15</div>
     <h1>JSON y LocalStorage — Persiste el estado entre sesiones</h1>
-    <p class="subtitle">Serializa objetos a texto con <code>JSON.stringify</code>, guárdalos con <code>localStorage.setItem</code>, y recuperarlos al recargar</p>
+    <p class="subtitle">Que tus plantillas sobrevivan al recargar: serializa con <code>JSON.stringify</code>, guarda con <code>localStorage</code> y recupéralas al abrir</p>
   </section>
 
   <section>
 
     <!-- 1: LocalStorage API -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> LocalStorage — 3 métodos para guardar datos en el navegador</h3>
-      <p class="desc">Almacenamiento clave-valor en el navegador. Los datos persisten hasta que el usuario los borra — sobreviven recargas y cierres de pestaña.</p>
-      <pre><code><span class="tag-muted">// Guardar (siempre como string — usa JSON.stringify para objetos)</span>
-localStorage.<span class="tag-purple">setItem</span>(<span class="tag-purple">'plantillas'</span>, JSON.stringify(array));
+      <h3><span class="tag-purple">1.</span> LocalStorage — guardar datos en el navegador</h3>
+      <p class="desc">Almacén <strong>clave→texto</strong> del navegador. Los datos persisten hasta que el usuario los borra: sobreviven recargas y cierres de pestaña.</p>
+      <pre><code><span class="tag-muted">const</span> CLAVE = <span class="tag-purple">"whatsapp-templates"</span>;
 
-<span class="tag-muted">// Leer (siempre string — usa JSON.parse para recuperar objetos)</span>
-<span class="tag-muted">const</span> raw = localStorage.<span class="tag-purple">getItem</span>(<span class="tag-purple">'plantillas'</span>);
+<span class="tag-muted">// Guardar (objeto → texto con JSON.stringify)</span>
+localStorage.<span class="tag-purple">setItem</span>(CLAVE, JSON.stringify(state.plantillas));
 
-<span class="tag-muted">// Eliminar una clave</span>
-localStorage.<span class="tag-purple">removeItem</span>(<span class="tag-purple">'plantillas'</span>);</code></pre>
+<span class="tag-muted">// Leer (devuelve texto, o null si no existe)</span>
+<span class="tag-muted">const</span> guardado = localStorage.<span class="tag-purple">getItem</span>(CLAVE);
+
+<span class="tag-muted">// Eliminar la clave</span>
+localStorage.<span class="tag-purple">removeItem</span>(CLAVE);</code></pre>
       <div class="ls-api">
         <div class="ls-method">
-          <div class="ls-name">setItem(key, val)</div>
-          <div class="ls-desc">Guardar o sobreescribir valor</div>
+          <div class="ls-name">setItem(clave, valor)</div>
+          <div class="ls-desc">Guardar o sobreescribir</div>
         </div>
         <div class="ls-method">
-          <div class="ls-name">getItem(key)</div>
-          <div class="ls-desc">Leer valor (null si no existe)</div>
+          <div class="ls-name">getItem(clave)</div>
+          <div class="ls-desc">Leer (null si no existe)</div>
         </div>
         <div class="ls-method">
-          <div class="ls-name">removeItem(key)</div>
-          <div class="ls-desc">Eliminar una clave</div>
+          <div class="ls-name">removeItem(clave)</div>
+          <div class="ls-desc">Eliminar la clave</div>
         </div>
       </div>
     </div>
 
     <!-- 2: JSON serialización -->
     <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> JSON — Serialización y Deserialización</h3>
-      <p class="desc">LocalStorage solo guarda strings. <code>JSON.stringify</code> convierte objetos a texto. <code>JSON.parse</code> los devuelve a objetos.</p>
+      <h3><span class="tag-green">2.</span> JSON — serializar y deserializar</h3>
+      <p class="desc"><code>localStorage</code> solo guarda <strong>texto</strong>. <code>JSON.stringify</code> convierte tu array de objetos en texto; <code>JSON.parse</code> lo reconstruye al cargar.</p>
       <div class="json-flow">
         <div class="json-node">
           <div class="node-label">Objeto JS</div>
-          <div class="node-val">[{nombre: "Ana"}]</div>
+          <div class="node-val">[{titulo: "Saludo"}]</div>
         </div>
         <div class="json-arrow">
           <div class="arrow-fn">JSON.stringify()</div>
           <div>→</div>
         </div>
         <div class="json-node">
-          <div class="node-label">String JSON</div>
-          <div class="node-val">'[{"nombre":"Ana"}]'</div>
+          <div class="node-label">Texto JSON</div>
+          <div class="node-val">'[{"titulo":"Saludo"}]'</div>
         </div>
         <div class="json-arrow">
           <div class="arrow-fn">JSON.parse()</div>
@@ -190,53 +193,39 @@ localStorage.<span class="tag-purple">removeItem</span>(<span class="tag-purple"
         </div>
         <div class="json-node">
           <div class="node-label">Objeto JS</div>
-          <div class="node-val">[{nombre: "Ana"}]</div>
+          <div class="node-val">[{titulo: "Saludo"}]</div>
         </div>
       </div>
-      <pre style="margin-top:0.75rem;"><code><span class="tag-green">JSON.stringify</span>([{nombre: <span class="tag-green">"Ana"</span>, activo: true}]);
-<span class="tag-muted">// → '[{"nombre":"Ana","activo":true}]'</span>
-
-<span class="tag-green">JSON.parse</span>(<span class="tag-green">'[{"nombre":"Ana","activo":true}]'</span>);
-<span class="tag-muted">// → [{nombre: "Ana", activo: true}]</span></code></pre>
+      <pre style="margin-top:0.75rem;"><code><span class="tag-muted">function</span> <span class="tag-green">guardar</span>() {
+  localStorage.setItem(CLAVE, <span class="tag-green">JSON.stringify</span>(state.plantillas));
+}</code></pre>
     </div>
 
     <!-- 3: try/catch con JSON.parse -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Patrón Seguro — JSON.parse siempre dentro de try/catch</h3>
-      <p class="desc"><code>JSON.parse</code> lanza un error si el string está corrupto. Envuélvelo siempre en try/catch para que la app no se rompa.</p>
-      <pre><code><span class="tag-muted">function</span> cargarPlantillas() {
+      <h3><span class="tag-blue">3.</span> Cargar seguro — <code>JSON.parse</code> dentro de <code>try/catch</code></h3>
+      <p class="desc"><code>JSON.parse</code> lanza un error si el texto guardado está corrupto. Envuélvelo en <strong>try/catch</strong> (refuerzo de C12) para que un dato dañado nunca rompa la app.</p>
+      <pre><code><span class="tag-muted">function</span> <span class="tag-blue">cargar</span>() {
+  <span class="tag-muted">const</span> guardado = localStorage.getItem(CLAVE);
+  <span class="tag-blue">if</span> (!guardado) <span class="tag-blue">return</span> [];              <span class="tag-muted">// primera vez: sin datos</span>
   <span class="tag-blue">try</span> {
-    <span class="tag-muted">const</span> raw = localStorage.getItem(<span class="tag-blue">'plantillas'</span>);
-    <span class="tag-blue">if</span> (!raw) <span class="tag-blue">return</span> [];                          <span class="tag-muted">// primera vez</span>
-    <span class="tag-muted">const</span> datos = <span class="tag-blue">JSON.parse</span>(raw);
-    <span class="tag-blue">if</span> (!Array.isArray(datos)) <span class="tag-blue">throw new</span> Error(<span class="tag-blue">'Datos corruptos'</span>);
-    <span class="tag-blue">return</span> datos;
-  } <span class="tag-blue">catch</span> (e) {
-    console.error(e);
-    localStorage.removeItem(<span class="tag-blue">'plantillas'</span>);           <span class="tag-muted">// limpiar dato malo</span>
-    <span class="tag-blue">return</span> [];
-  } <span class="tag-blue">finally</span> {
-    spinner.style.display = <span class="tag-blue">'none'</span>;                   <span class="tag-muted">// siempre ocultar</span>
+    <span class="tag-blue">return</span> <span class="tag-blue">JSON.parse</span>(guardado);          <span class="tag-muted">// reconstruir</span>
+  } <span class="tag-blue">catch</span> (error) {
+    console.warn(<span class="tag-blue">"Datos corruptos"</span>, error);
+    <span class="tag-blue">return</span> [];                          <span class="tag-muted">// no rompas: lista vacía</span>
   }
 }</code></pre>
     </div>
 
-    <!-- 4: Operador ternario -->
+    <!-- 4: Date no sobrevive a JSON -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Operador Ternario — Condicional compacto para validaciones</h3>
-      <p class="desc"><code>condición ? valorSiTrue : valorSiFalse</code> — ideal para asignaciones simples. Reemplaza un <code>if/else</code> de 4 líneas con 1.</p>
-      <pre><code><span class="tag-muted">// if/else — 4 líneas</span>
-<span class="tag-muted">let</span> datos;
-<span class="tag-muted">if</span> (localStorage.getItem(<span class="tag-orange">'plantillas'</span>)) {
-  datos = JSON.parse(localStorage.getItem(<span class="tag-orange">'plantillas'</span>));
-} <span class="tag-muted">else</span> { datos = []; }
+      <h3><span class="tag-orange">4.</span> Cuidado: JSON convierte <code>Date</code> en texto</h3>
+      <p class="desc">JSON solo guarda <strong>datos simples</strong>. Un <code>Date</code> se vuelve string al guardarse. Al cargar, <strong>rehidrátalo</strong> con <code>new Date(...)</code> o <code>.toLocaleDateString()</code> falla.</p>
+      <pre><code><span class="tag-muted">// p.fecha llega como string tras JSON.parse</span>
+<span class="tag-muted">// ❌ p.fecha.toLocaleDateString(...)  → error</span>
 
-<span class="tag-orange">// Ternario — 1 línea</span>
-<span class="tag-muted">const</span> raw   = localStorage.getItem(<span class="tag-orange">'plantillas'</span>);
-<span class="tag-muted">const</span> datos = raw <span class="tag-orange">?</span> JSON.parse(raw) <span class="tag-orange">:</span> [];
-
-<span class="tag-muted">// Ternario en template literal</span>
-elemento.textContent = activo <span class="tag-orange">?</span> <span class="tag-orange">"Activo"</span> <span class="tag-orange">:</span> <span class="tag-orange">"Inactivo"</span>;</code></pre>
+<span class="tag-muted">// ✅ reconstruye el Date al mostrar</span>
+<span class="tag-muted">const</span> texto = <span class="tag-orange">new Date</span>(p.fecha).toLocaleDateString(<span class="tag-orange">"es-PE"</span>);</code></pre>
     </div>
 
   </section>
@@ -245,26 +234,26 @@ elemento.textContent = activo <span class="tag-orange">?</span> <span class="tag
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>LocalStorage</strong>
-        <span>Almacenamiento clave-valor en el navegador. Persiste hasta que el usuario lo borra manualmente.</span>
+        <strong>localStorage</strong>
+        <span>Almacén clave→texto del navegador. Persiste hasta que el usuario lo borra.</span>
       </div>
       <div class="term">
-        <strong>Serialización</strong>
-        <span>Convertir un objeto JavaScript a string JSON con <code>JSON.stringify()</code> para poder guardarlo.</span>
+        <strong>Serializar</strong>
+        <span>Convertir un objeto a texto con <code>JSON.stringify()</code> para poder guardarlo.</span>
       </div>
       <div class="term">
-        <strong>Deserialización</strong>
-        <span>Convertir un string JSON de vuelta a objeto JavaScript con <code>JSON.parse()</code>.</span>
+        <strong>Deserializar</strong>
+        <span>Reconstruir el objeto desde texto con <code>JSON.parse()</code> al cargar.</span>
       </div>
       <div class="term">
         <strong>Operador ternario</strong>
-        <span><code>condición ? a : b</code> — condicional compacto para asignaciones y expresiones simples.</span>
+        <span><code>condición ? a : b</code> — condicional compacto para asignaciones simples.</span>
       </div>
     </div>
   </section>
 
   <section class="footer">
-    Code 201 — EnterTechSchool <span>·</span> Clase 15 <span>·</span> Módulo 4
+    Code 201 — EnterTechSchool <span>·</span> Clase 15 <span>·</span> Módulo 4 — Gestor de Plantillas
   </section>
 
   <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">

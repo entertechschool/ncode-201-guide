@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clases y Estado — Modela objetos con estructura y propósito</title>
+  <title>String y Date — Modela datos y transforma texto</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
       width: 1080px;
       margin: 0 auto;
       background: #060913;
-      background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(74, 222, 128, 0.08) 0%, transparent 60%);
       color: #e2e8f0;
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
@@ -34,14 +34,11 @@
 
     section { padding: 2rem 3rem; }
 
-    .hero {
-      text-align: center;
-      padding: 3.5rem 3rem 2.5rem;
-    }
+    .hero { text-align: center; padding: 3.5rem 3rem 2.5rem; }
     .hero .badge {
       display: inline-block;
-      background: rgba(217, 70, 239, 0.15);
-      color: #d946ef;
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
       padding: 0.25rem 0.75rem;
       border-radius: 999px;
       font-size: 0.8rem;
@@ -61,70 +58,65 @@
     }
     .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
     .card .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1rem; }
+    .card .desc strong { color: #cbd5e1; }
 
-    .accent-purple { border-left: 3px solid #d946ef; }
+    .accent-purple { border-left: 3px solid #c084fc; }
     .accent-green  { border-left: 3px solid #4ade80; }
-    .accent-blue   { border-left: 3px solid #93c5fd; }
+    .accent-blue   { border-left: 3px solid #60a5fa; }
     .accent-orange { border-left: 3px solid #fb923c; }
 
-    .tag-purple { color: #d946ef; }
+    .tag-purple { color: #c084fc; }
     .tag-green  { color: #4ade80; }
-    .tag-blue   { color: #93c5fd; }
+    .tag-blue   { color: #60a5fa; }
     .tag-orange { color: #fb923c; }
     .tag-muted  { color: #64748b; }
 
-    /* Estado local vs global */
-    .state-compare {
+    .methods { display: grid; gap: 0.55rem; margin: 0.5rem 0 0.25rem; }
+    .methods .row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 0.75rem;
-    }
-    .state-col {
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      align-items: center;
       background: #161b22;
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0.6rem 0.9rem;
     }
-    .state-col .state-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .state-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
-    .state-col li { font-size: 0.8rem; color: #94a3b8; padding-left: 1rem; position: relative; }
-    .state-col li::before { content: "•"; position: absolute; left: 0; }
+    .methods .row code { font-size: 0.82rem; color: #e2e8f0; white-space: nowrap; }
+    .methods .row .lbl { font-size: 0.85rem; color: #94a3b8; }
 
-    /* Instancias visuales */
-    .instances-row {
+    .flow {
       display: flex;
-      gap: 1rem;
-      margin-top: 0.75rem;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
     }
-    .inst-box {
-      flex: 1;
+    .flow .step {
       background: #161b22;
-      border: 1px solid rgba(74,222,128,0.2);
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: 8px;
-      padding: 0.8rem;
+      padding: 0.6rem 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
     }
-    .inst-box .inst-title { font-family: 'JetBrains Mono', monospace; font-size: 0.75em; color: #4ade80; margin-bottom: 0.4rem; }
-    .inst-box .inst-prop { font-family: 'JetBrains Mono', monospace; font-size: 0.72em; color: #94a3b8; margin-bottom: 0.2rem; }
-    .inst-box .inst-prop span { color: #e2e8f0; }
+    .flow .arrow { color: #4ade80; font-weight: 700; }
 
-    /* Glosario */
-    .glossary {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
+    .glossary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
     .glossary .term {
       background: #0d1117;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 8px;
       padding: 1rem;
     }
-    .glossary .term strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; margin-bottom: 0.25rem; color: #e2e8f0; }
+    .glossary .term strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.25rem;
+      color: #e2e8f0;
+    }
     .glossary .term span { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
 
     .footer { text-align: center; padding: 2rem 3rem 3rem; color: #64748b; font-size: 0.82rem; }
@@ -135,135 +127,88 @@
 
   <section class="hero">
     <div class="badge">Módulo 4 · Clase 13</div>
-    <h1>Clases y Estado — Modela objetos con estructura y propósito</h1>
-    <p class="subtitle">La sintaxis <code>class</code> organiza datos y comportamientos. El estado es el "momento actual" del objeto</p>
+    <h1>String y Date — Modela datos y transforma texto</h1>
+    <p class="subtitle">Gestor de Plantillas para WhatsApp: del estado central al mensaje final</p>
   </section>
 
   <section>
 
-    <!-- 1: Sintaxis class -->
+    <!-- 1: estado central + render -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> Sintaxis class — constructor + métodos</h3>
-      <p class="desc">La clase define la estructura. El constructor inicializa el estado. Los métodos definen el comportamiento que puede cambiarlo.</p>
-      <pre><code><span class="tag-purple">class</span> Tarea {
-  <span class="tag-purple">constructor</span>(titulo) {
-    <span class="tag-muted">this</span>.titulo     = titulo;  <span class="tag-muted">// estado local</span>
-    <span class="tag-muted">this</span>.completado = <span class="tag-purple">false</span>;  <span class="tag-muted">// estado inicial</span>
-  }
+      <h3><span class="tag-purple">1.</span> Estado central → <code>render()</code></h3>
+      <p class="desc">Modelas cada plantilla con <code>class</code> y guardas todo en un <strong>único estado</strong>. La regla de oro: <strong>cambias el estado → llamas <code>render()</code></strong>, que limpia y redibuja todo.</p>
+      <pre><code><span class="tag-purple">const</span> state = { plantillas: [] };  <span class="tag-muted">// la verdad de la app</span>
 
-  completar() {              <span class="tag-muted">// método que modifica el estado</span>
-    <span class="tag-muted">this</span>.completado = <span class="tag-purple">true</span>;
-  }
-
-  mostrarEstado() {
-    <span class="tag-muted">return</span> <span class="tag-purple">`${this.titulo}: ${this.completado ? "✓" : "pendiente"}`</span>;
-  }
-}
-
-<span class="tag-muted">// class es azúcar sintáctica — internamente sigue usando prototipos (C08)</span></code></pre>
+<span class="tag-muted">function</span> <span class="tag-purple">render</span>() {
+  lista.innerHTML = "";        <span class="tag-muted">// limpia</span>
+  state.plantillas.forEach(p =&gt; <span class="tag-muted">/* dibuja cada una */</span>);
+}</code></pre>
+      <div class="flow">
+        <div class="step">cambias el estado</div>
+        <div class="arrow">→</div>
+        <div class="step">render()</div>
+        <div class="arrow">→</div>
+        <div class="step">pantalla actualizada</div>
+      </div>
     </div>
 
-    <!-- 2: Estado local vs global -->
+    <!-- 2: metodos de String (ancla) -->
     <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> Estado Local vs Estado Global</h3>
-      <p class="desc">El estado local pertenece a una instancia. El estado global es compartido por toda la aplicación.</p>
-      <div class="state-compare">
-        <div class="state-col">
-          <div class="state-title" style="color:#4ade80;">Estado Local (de la instancia)</div>
-          <ul>
-            <li>Propiedades <code>this.x</code> del constructor</li>
-            <li>Solo accesible desde ese objeto</li>
-            <li>Cada instancia tiene el suyo</li>
-            <li>Ejemplo: <code>tarea1.completado</code></li>
-          </ul>
-        </div>
-        <div class="state-col">
-          <div class="state-title" style="color:#d946ef;">Estado Global (de la app)</div>
-          <ul>
-            <li>Arrays o variables fuera de clases</li>
-            <li>Compartido por toda la aplicación</li>
-            <li>Cualquier función puede leerlo</li>
-            <li>Ejemplo: <code>const tareas = []</code></li>
-          </ul>
-        </div>
+      <h3><span class="tag-green">2.</span> Métodos de String</h3>
+      <p class="desc">Un texto es un objeto con <strong>métodos</strong>. Ojo: <strong>no mutan</strong> el original, devuelven un texto nuevo (hay que reasignar).</p>
+      <div class="methods">
+        <div class="row"><code class="tag-green">.trim()</code><span class="lbl">quita espacios de los bordes</span></div>
+        <div class="row"><code class="tag-green">.toLowerCase()</code><span class="lbl">todo a minúsculas (unifica)</span></div>
+        <div class="row"><code class="tag-green">.startsWith("#")</code><span class="lbl">¿empieza con...? (true/false)</span></div>
+        <div class="row"><code class="tag-green">.split(" ")</code><span class="lbl">parte el texto en una lista</span></div>
+        <div class="row"><code class="tag-green">.slice(0, 40)</code><span class="lbl">recorta un trozo del texto</span></div>
       </div>
+      <pre><code>hashtag = hashtag.trim().toLowerCase(); <span class="tag-muted">// "  VENTAS " → "ventas"</span></code></pre>
     </div>
 
-    <!-- 3: Múltiples instancias -->
+    <!-- 3: mensaje final con variables -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Múltiples Instancias — Estado Independiente</h3>
-      <p class="desc">Cada <code>new</code> crea un objeto con su propio estado. Cambiar uno no afecta al otro.</p>
-      <pre><code><span class="tag-muted">const</span> t1 = <span class="tag-blue">new</span> Tarea(<span class="tag-blue">"Diseñar mockup"</span>);
-<span class="tag-muted">const</span> t2 = <span class="tag-blue">new</span> Tarea(<span class="tag-blue">"Implementar API"</span>);
-
-t1.completar();              <span class="tag-muted">// solo t1 cambia</span>
-
-console.log(t1.completado); <span class="tag-muted">// → true</span>
-console.log(t2.completado); <span class="tag-muted">// → false  ← intacto</span></code></pre>
-      <div class="instances-row">
-        <div class="inst-box">
-          <div class="inst-title">t1 (instancia 1)</div>
-          <div class="inst-prop">titulo: <span>"Diseñar mockup"</span></div>
-          <div class="inst-prop">completado: <span style="color:#4ade80;">true</span></div>
-        </div>
-        <div class="inst-box">
-          <div class="inst-title">t2 (instancia 2)</div>
-          <div class="inst-prop">titulo: <span>"Implementar API"</span></div>
-          <div class="inst-prop">completado: <span style="color:#94a3b8;">false</span></div>
-        </div>
-      </div>
+      <h3><span class="tag-blue">3.</span> Mensaje final: sustituir variables</h3>
+      <p class="desc">La plantilla trae marcadores como <code>{nombre}</code>. Con <code>.replaceAll()</code> los cambias por un valor real: <strong>una plantilla, mil mensajes</strong>.</p>
+      <pre><code><span class="tag-muted">"Hola "</span> + <span class="tag-muted">"{nombre}, gracias"</span>
+  .replaceAll(<span class="tag-blue">"{nombre}"</span>, <span class="tag-blue">"Ana"</span>);
+<span class="tag-muted">// → "Hola Ana, gracias"</span></code></pre>
+      <p class="desc" style="margin-top:0.75rem;margin-bottom:0;"><span class="tag-muted">replaceAll</span> cambia <strong>todas</strong> las apariciones; <span class="tag-muted">replace</span> solo la primera.</p>
     </div>
 
-    <!-- 4: Encapsulamiento -->
+    <!-- 4: Date -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Encapsulamiento — Los métodos controlan el estado</h3>
-      <p class="desc">En lugar de modificar propiedades desde afuera, usa métodos. Esto protege el estado de cambios incorrectos.</p>
-      <pre><code><span class="tag-muted">class</span> Usuario {
-  <span class="tag-muted">constructor</span>(nombre) {
-    <span class="tag-muted">this</span>.nombre = nombre;
-    <span class="tag-muted">this</span>.tareas = [];              <span class="tag-muted">// estado encapsulado</span>
-  }
-
-  agregarTarea(titulo) {         <span class="tag-orange">// ← acceso controlado</span>
-    <span class="tag-muted">this</span>.tareas.push(<span class="tag-muted">new</span> Tarea(titulo));
-  }
-
-  tareasCompletadas() {
-    <span class="tag-muted">return this</span>.tareas.filter(t => t.completado).length;
-  }
-}
-
-<span class="tag-muted">const</span> user = <span class="tag-muted">new</span> Usuario(<span class="tag-orange">"Ana"</span>);
-user.agregarTarea(<span class="tag-orange">"Revisar código"</span>);
-<span class="tag-muted">// user.tareas.push(x) funciona pero rompe el encapsulamiento</span></code></pre>
+      <h3><span class="tag-orange">4.</span> <code>Date</code>: fecha de creación</h3>
+      <p class="desc"><code>new Date()</code> captura el momento exacto. <code>.toLocaleDateString("es-PE")</code> lo vuelve <strong>texto legible</strong> para mostrarlo.</p>
+      <pre><code>this.fecha = <span class="tag-orange">new Date()</span>;        <span class="tag-muted">// al crear la plantilla</span>
+p.fecha.<span class="tag-orange">toLocaleDateString</span>(<span class="tag-orange">"es-PE"</span>); <span class="tag-muted">// "29/6/2026"</span></code></pre>
     </div>
 
   </section>
 
-  <!-- GLOSARIO -->
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>class</strong>
-        <span>Sintaxis ES6 para definir objetos. Es azúcar sintáctica sobre prototipos (mecanismo de C08).</span>
+        <strong>Estado central</strong>
+        <span>Único lugar que es la verdad de la app. No está ahí = no existe.</span>
       </div>
       <div class="term">
-        <strong>constructor()</strong>
-        <span>Método especial que se ejecuta al crear una instancia con <code>new</code>. Inicializa el estado.</span>
+        <strong>render()</strong>
+        <span>Limpia y redibuja todo desde el estado. Cambias datos → render.</span>
       </div>
       <div class="term">
-        <strong>Estado local</strong>
-        <span>Propiedades <code>this.x</code> de una instancia — exclusivas de ese objeto.</span>
+        <strong>Normalizar</strong>
+        <span><code>trim</code> + <code>toLowerCase</code> para que variantes queden iguales.</span>
       </div>
       <div class="term">
-        <strong>Encapsulamiento</strong>
-        <span>Acceder al estado solo a través de métodos controlados, no directamente desde afuera.</span>
+        <strong>replaceAll</strong>
+        <span>Sustituye <code>{nombre}</code> por un valor real, en todas sus apariciones.</span>
       </div>
     </div>
   </section>
 
   <section class="footer">
-    Code 201 — EnterTechSchool <span>·</span> Clase 13 <span>·</span> Módulo 4
+    Code 201 — EnterTechSchool <span>·</span> Clase 13 <span>·</span> Módulo 4 — Plantillas WhatsApp
   </section>
 
   <button id="export-btn" style="position:fixed;top:16px;right:16px;z-index:1000;background:rgba(13,17,23,0.85);color:#e2e8f0;border:1px solid rgba(255,255,255,0.12);padding:0.5rem 1.15rem;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.2s">

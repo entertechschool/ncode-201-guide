@@ -1,119 +1,165 @@
+<!-- .slide: data-background="#0A192F" -->
 # Clase 15: JSON y LocalStorage
-
-## 🎯 Módulo 4 - Estado y Persistencia
-**Duración total:** 180 minutos
+## Que tus plantillas sobrevivan a la recarga
 
 ---
 
-## ⏰ 1. Preparación Activa (25 min)
+## 🔁 TRANSICIÓN: C14 → C15
 
-- **Reflexión inicial:** ¿Qué beneficios aporta guardar el estado de una aplicación en el navegador?
-- **Revisión de conceptos clave:**
-  - Serialización y Deserialización JSON
-  - LocalStorage API (`setItem`, `getItem`, `removeItem`)
-  - Estado centralizado (Store)
-  - Mutabilidad vs Inmutabilidad
-  - Operador Ternario
+### Clase anterior:
+- Tu app gestiona el estado (`state.plantillas`)
+- CRUD completo: crear, editar, eliminar
 
----
+### Hoy:
+- Que ese estado **no se pierda** al recargar
+- `localStorage` + `JSON` = persistencia
 
-## 🧠 2. Debate Guiado (35 min)
-
-**Pregunta base:** ¿Es LocalStorage adecuado para la persistencia robusta en aplicaciones web modernas?
-
-- Ventajas y desventajas técnicas del LocalStorage
-- Escenarios ideales para usar JSON y LocalStorage
-- Importancia de aplicar patrones inmutables en la persistencia
-- Claridad y eficiencia del operador ternario en validaciones
-
-> "Persistir estado adecuadamente asegura una experiencia consistente para el usuario."
+> "Hasta ayer tu app olvidaba todo al recargar. Hoy aprende a recordar."
 
 ---
 
-## 📋 3. Laboratorio Guiado (100 min)
+## 🤔 QUIZ PRE-LAB
 
-**Repositorio:** `whatsapp-templates`
+### Pregunta:
+Tu app guarda un array de objetos. Pero `localStorage` **solo guarda texto**.
 
-**Historias de Usuario:**
-1. **Guardar Plantillas en LocalStorage**
-   - Función `guardarPlantillas()` para persistir datos automáticamente.
-2. **Cargar Plantillas desde LocalStorage**
-   - Función `cargarPlantillas()` para inicializar estado centralizado desde almacenamiento local.
-3. **Eliminar Todas las Plantillas (Función Reset)**
-   - Función `resetearPlantillas()` para limpiar Store y LocalStorage.
+¿Cómo metes una lista de objetos dentro de algo que solo acepta texto?
 
-> Las instrucciones detalladas se encuentran en el README del Laboratorio 15.
+*Toma 2-3 respuestas antes de continuar*
 
 ---
 
-## ✨ Logros Adicionales (Opcionales)
+## ✅ COMPROBACIÓN
 
-- Mensajes dinámicos de confirmación (toast notifications)
-- Validación robusta del JSON recuperado desde LocalStorage
+### Pregunta:
+Guardaste tus plantillas con `JSON.stringify` y al recargar las lees con `JSON.parse`. La fecha que mostrabas con `.toLocaleDateString()` ahora falla. ¿Por qué?
 
----
-
-## 🛡️ Patrón seguro: `JSON.parse` con `try/catch/finally`
-
-Refuerzo de C12 (M3) aplicado a persistencia:
-
-```javascript
-function cargarPlantillas() {
-  document.getElementById('estado').textContent = 'Cargando...';
-
-  try {
-    const raw = localStorage.getItem('plantillas');
-    if (!raw) return [];                       // primera vez: sin datos
-    const datos = JSON.parse(raw);
-    if (!Array.isArray(datos)) {
-      throw new Error('Formato de datos corrupto');
-    }
-    return datos;
-  } catch (error) {
-    console.error('Error al cargar:', error);
-    alert('Datos corruptos. Empezando de cero.');
-    localStorage.removeItem('plantillas');     // limpieza
-    return [];                                 // fallback seguro
-  } finally {
-    document.getElementById('estado').textContent = 'Listo';
-  }
-}
-```
-
-* **`try`** → intenta deserializar y validar.
-* **`catch`** → si falla, no rompe la app: avisa y resetea.
-* **`finally`** → siempre deja la UI en estado "Listo".
-
-> Sin este patrón, un `localStorage` manipulado a mano rompe toda tu app.
+A. `JSON.parse` está mal escrito
+B. `localStorage` borra las fechas
+C. JSON convirtió el `Date` en texto; hay que rehidratarlo con `new Date(...)`
+D. Las fechas no se pueden guardar nunca
 
 ---
 
-## 📊 Checklist de Persistencia Inicial
+## ✅ COMPROBACIÓN - Respuesta
 
-- [ ] Estado de la aplicación persiste correctamente tras recargar la página
-- [ ] Plantillas serializadas y guardadas correctamente como JSON
-- [ ] Carga inicial del Store desde LocalStorage usando operador ternario
-- [ ] Función Reset elimina correctamente datos en Store y LocalStorage
-- [ ] Código limpio y organizado en módulos específicos
+**Respuesta correcta:** C
 
----
+**Análisis de opciones:**
+- **A:** `JSON.parse` reconstruye bien; el problema no es la sintaxis.
+- **B:** `localStorage` guarda lo que le des; no borra nada selectivamente.
+- **C:** ✔ JSON solo guarda datos simples. Un `Date` se vuelve string; al cargar reconstruyes con `new Date(p.fecha)`.
+- **D:** Sí se pueden guardar (como texto), solo hay que rehidratarlas al leer.
 
-## ⚖️ Comparativa Visual: LocalStorage vs IndexedDB
-
-| Criterio              | LocalStorage                    | IndexedDB                        |
-|-----------------------|---------------------------------|----------------------------------|
-| Capacidad de Almacenamiento | ~5MB (texto plano)              | 50MB+ (objetos estructurados)    |
-| Tipo de datos         | Solo cadenas (necesita JSON)    | Objetos, tipos avanzados         |
-| Operaciones           | Síncronas                       | Asíncronas                       |
-| Rendimiento           | Rápido, pero bloquea UI         | Mejor rendimiento asíncrono      |
-| Complejidad de Uso    | Muy sencilla                    | Moderada                         |
-| Ideal para            | Datos simples, pequeñas apps    | Aplicaciones más complejas       |
+> **Clave:** JSON guarda **datos simples**, no tipos como `Date`. Rehidrata al cargar.
 
 ---
 
-## 📆 4. Cierre y Reflexión (20 min)
+## 📌 CHECKPOINT HU1: Guardar en el navegador
 
-- Revisión de dificultades técnicas comunes durante la implementación
-- Ronda rápida de aprendizajes individuales: ¿qué descubriste hoy?
-- Discusión grupal: ¿cuándo considerarías usar IndexedDB sobre LocalStorage?
+### Verificar:
+*DevTools → Application → Local Storage*
 
+**¿Qué debe verse?**
+- La clave `whatsapp-templates` con tus datos en texto
+- Se actualiza sola al agregar / editar / eliminar
+
+**Problemas comunes:**
+- No aparece nada → `guardar()` no se llama dentro de `render()`
+
+---
+
+## 📌 CHECKPOINT HU2: Recuperar al abrir
+
+### Verificar:
+Crea 2 plantillas y **recarga la página**
+
+**¿Qué debe verse?**
+- Las plantillas siguen ahí tras recargar
+- Las fechas se muestran correctas (rehidratadas)
+
+**Problemas comunes:**
+- Lista vacía al recargar → falta `state.plantillas = cargar()` al arrancar
+- Error con la fecha → falta `new Date(p.fecha)` en `render()`
+
+---
+
+## 📌 CHECKPOINT HU3: A prueba de datos corruptos
+
+### Verificar:
+En *DevTools* edita la clave y déjala inválida (ej. `[{titulo`), recarga
+
+**¿Qué debe verse?**
+- La app **no explota**: arranca vacía y sigue usable
+- En consola aparece el aviso de datos corruptos
+
+**Problemas comunes:**
+- Pantalla en blanco → falta el `try/catch` alrededor de `JSON.parse`
+
+---
+
+## 📌 CHECKPOINT HU4: Vaciar + indicador
+
+### Verificar:
+Pulsa "Vaciar todo", luego agrega una plantilla
+
+**¿Qué debe verse?**
+- La lista y el Local Storage quedan limpios
+- El indicador `#estado` cambia ("Vacío" → "Guardado ✓")
+
+**Problemas comunes:**
+- El navegador conserva datos → falta `localStorage.removeItem(CLAVE)`
+
+---
+
+## 🪞 REFLEXIÓN: Memoria vs Persistencia
+
+| Aspecto | En memoria (C13–C14) | Persistido (C15) |
+|---|---|---|
+| Vive en | Una variable | `localStorage` |
+| Al recargar | Se pierde | Sobrevive |
+| Formato | Objeto | Texto (JSON) |
+
+> **Regla memorable:** "El estado en memoria se olvida; el estado persistido recuerda."
+
+---
+
+## 🪞 REFLEXIÓN: ¿Por qué `try/catch` al parsear?
+
+### Pregunta de consolidación
+El usuario nunca toca tu código, pero los datos guardados **sí** pueden corromperse (otra pestaña, manipulación manual, un bug viejo).
+
+¿Vale la pena envolver `JSON.parse` aunque "casi nunca falle"?
+
+---
+
+## 🚀 TRANSICIÓN: Lo que viene (C16)
+
+### Hoy lograste:
+- Guardar el estado con `localStorage` + `JSON.stringify`
+- Cargarlo al abrir con `JSON.parse`
+- Blindar la carga con `try/catch`
+
+### Próxima clase:
+- **C16 cierra el Módulo 4**: integras estado + persistencia y pules tu Gestor de Plantillas.
+
+---
+
+## ❓ Preguntas de Cierre
+
+1. ¿Por qué `localStorage` necesita que conviertas tus objetos a texto antes de guardarlos?
+
+2. ¿En qué situaciones reales usarías persistencia en el cliente y en cuáles NO?
+
+3. ¿Qué le pasaría a tu app si quitaras el `try/catch` y alguien manipulara los datos guardados?
+
+---
+
+## 📦 Entrega
+
+- Repositorio `whatsapp-templates` con persistencia funcionando
+- README explicando cómo guardas / cargas y por qué usas `try/catch`
+- Sitio desplegado en GitHub Pages
+- Screenshot de *DevTools → Local Storage* con tus datos
+
+### Próxima clase: Cierre del Módulo 4

@@ -62,14 +62,14 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
 ### Módulo 4 — Estado y Persistencia
 > **Proyecto Integrador:** Gestor de Plantillas para WhatsApp
 
-13. Modelado de Objetos y Estado
-    - Diseño de estructuras de datos y gestión del estado de la aplicación.
-14. App State Management (Patrón Store)
-    - Centralización del estado con un objeto `store` y separación de responsabilidades.
+13. Modelado de Datos y Manipulación de Texto
+    - Estado central y patrón `render()`; métodos de String y objeto `Date`.
+14. Interacción y Datos Derivados
+    - Delegación de eventos, CRUD completo, `.sort()` y funciones puras sobre el estado.
 15. JSON y LocalStorage
     - Serialización con `JSON.stringify` / `JSON.parse` y persistencia en `localStorage`.
-16. Persistencia y Sincronización
-    - CRUD completo con persistencia robusta y sincronización entre módulos.
+16. Módulos ESM y Cierre
+    - Modularización con `import` / `export`, confirmaciones de UX y cierre del proyecto.
 
 ### Módulo 5 — Proyecto Integrador Final
 > **Proyecto Integrador:** Agenda de Gastos Compartidos

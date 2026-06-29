@@ -1,58 +1,86 @@
 > 📦 **Módulo 4:** Clase 14 de 16
 
-# Clase 14: App State Management (Patrón Store)
+# Clase 14: Interacción y Datos Derivados
 
 ## Resumen
 
-En la Clase 14 continuamos desarrollando el módulo sobre **Estado y Persistencia**, profundizando en el concepto de *gestión del estado centralizado* mediante el **Patrón Store**. Esta sesión permitió a los estudiantes identificar los desafíos de la mutabilidad en aplicaciones dinámicas y cómo el diseño basado en patrones aporta escalabilidad y claridad a sus proyectos.
+En la Clase 13 montaste el estado central de tu Gestor de Plantillas y lo dibujaste en pantalla con `render()`. Hoy tu app deja de ser solo "leer y agregar": se vuelve **interactiva de verdad**. Vas a **eliminar** y **editar** plantillas, y a calcular **datos derivados** —como el total y el conteo por hashtag— a partir del mismo estado.
 
-1. **Guía de Lectura y Debate:** Preparación previa enfocada en reflexionar críticamente sobre la mutabilidad y la utilidad de los patrones de diseño en aplicaciones front-end.
+La pieza nueva es la **delegación de eventos**: en lugar de enganchar un listener a cada botón (que desaparece cada vez que re-renderizas), pones **uno solo** en el contenedor y, según dónde se hizo clic, decides qué hacer. Cerrarás con `.sort()` para ordenar la lista por fecha o alfabéticamente.
 
-2. **Guía de Laboratorio:** Aplicación práctica del patrón de diseño “Store” para modelar el estado global de la aplicación, utilizando estructuras inmutables y funciones controladas para gestionar cambios en el estado.
-
-## Estructura sugerida
-
-| **Fase** | **Duración** | **Descripción** |
-|---------|--------------|-----------------|
-| **1. Refuerzo Práctico Inicial**| 15 min       | Ejercicio de repaso enfocado en distinguir entre estado local y global, revisando ejemplos del laboratorio anterior. |
-| **2. Debate Técnico y Demo**    | 45 min       | Discusión guiada sobre los desafíos que plantea la mutabilidad del estado y exploración del Patrón Store como solución. Incluye demostración práctica sobre cómo diseñar un objeto Store. |
-| **3. Laboratorio Práctico**     | 100 min      | Implementación progresiva de una Store para gestionar el estado centralizado del proyecto integrador, con checkpoints a los 30 y 60 minutos, y revisión entre pares a los 45 minutos. |
-| **4. Síntesis y Proyección**    | 20 min       | Revisión de soluciones destacadas, síntesis de beneficios del Patrón Store y preparación para abordar la persistencia con JSON y LocalStorage en la siguiente clase. |
+Seguimos sin persistencia: todo vive en memoria. En la próxima clase le pondrás `localStorage` para que tus datos sobrevivan al recargar.
 
 ---
 
-## Resultados esperados
+## ¿Por qué te sirve?
 
-Al finalizar esta clase, los estudiantes habrán desarrollado una base técnica sólida para manejar el estado global de sus aplicaciones utilizando patrones reutilizables y un enfoque inmutable.
-
-### Podrán hacer
-1. **Implementar una Store básica para controlar el estado global:**  
-   Utilizando una estructura centralizada que permite registrar y notificar cambios de manera controlada.
-
-2. **Controlar cambios al estado de manera inmutable:**  
-   Evitando mutaciones directas y promoviendo funciones puras que generan nuevos estados.
-
-3. **Actualizar dinámicamente la interfaz en función del estado:**  
-   Diseñando funciones que reaccionen a cambios de estado y actualicen el DOM en tiempo real.
-
-### Podrán explicar
-1. **Qué es un patrón de diseño y por qué se usa el Patrón Store en frontend:**  
-   Justificando su utilidad para separar la lógica del estado del resto de la aplicación.
-
-2. **Por qué la mutabilidad puede generar bugs difíciles de detectar:**  
-   Argumentando cómo los cambios directos al estado dificultan el mantenimiento y la escalabilidad.
-
-### Podrán implementar
-1. **Una Store como objeto central con métodos `getState`, `setState` y `subscribe`:**  
-   Aplicando funciones controladas y suscriptores para manejar el flujo de datos de forma declarativa.
-
-2. **Un flujo controlado de mutaciones:**  
-   Reemplazando la lógica dispersa por actualizaciones canalizadas a través del Store, promoviendo orden y consistencia.
+- **La delegación de eventos es como casi toda app real maneja listas.** Cuando tienes cientos de filas que aparecen y desaparecen (un feed, un carrito, una bandeja de correo), poner un listener por elemento es inviable. Un solo listener en el padre escala sin esfuerzo.
+- **WhatsApp, Trello y Gmail muestran "datos derivados" todo el tiempo.** El contador de no leídos, el total de tarjetas por columna, el número junto a cada etiqueta: ninguno se guarda, todos se **calculan** del estado. Eso es exactamente lo que harás hoy.
+- **El CRUD completo es la base de cualquier aplicación con datos.** Crear, leer, actualizar y borrar: dominar las cuatro operaciones —y hacerlo de forma inmutable— es una habilidad transferible a cualquier stack profesional.
 
 ---
 
-## Glosario de Nuevos Términos
+## 🎯 ¿Qué haremos en clase?
 
-- **Patrón de Diseño:** Solución reutilizable y estructurada para resolver problemas comunes de diseño de software.
-- **Mutabilidad / Inmutabilidad:** Capacidad (o no) de un objeto para ser modificado directamente después de su creación.
-- **Store:** Objeto centralizado que almacena el estado de una aplicación, permitiendo su lectura, modificación controlada y suscripción a cambios.
+1. **Implementaremos la delegación de eventos** - Un solo listener en la lista que atiende los clics de todas las tarjetas.
+2. **Completarás el CRUD** - Eliminarás y editarás plantillas sin mutar el estado, con `.filter` y `.map`.
+3. **Calcularás datos derivados** - Total y conteo por hashtag con una función pura.
+4. **Ordenarás la lista con `.sort()`** - Por fecha (más recientes primero) o alfabéticamente.
+
+---
+
+## Objetivos de Aprendizaje
+
+Al finalizar esta clase, podrás:
+
+1. **Implementar** la delegación de eventos: un único listener que usa `event.target`, `classList.contains` y `data-id` para atender N elementos.
+2. **Construir** las operaciones de editar y eliminar de forma inmutable (`.filter`, `.map` + spread).
+3. **Escribir** funciones puras que derivan datos del estado (`contarPorHashtag` con `.reduce`).
+4. **Ordenar** un array con `.sort()` y un comparador, sin mutar el estado original.
+
+---
+
+## ✅ Preparación para la Clase
+
+### De clases anteriores
+
+- Tu proyecto `whatsapp-templates` de C13, con la clase `Template`, el estado central y `render()` funcionando.
+- El patrón **estado → `render()`**: toda la UI se redibuja a partir del estado.
+- `.filter`, `.map` y `.reduce` (los viste en el Módulo 2) y el spread (`...`) para copiar sin mutar.
+
+### Reflexión previa
+
+Antes de llegar a clase, reflexiona sobre:
+
+- Si tu lista tuviera 500 plantillas, ¿tendría sentido poner 500 "escuchadores" de clic, uno por botón? ¿Qué problema traería?
+- El contador de mensajes no leídos de WhatsApp, ¿crees que se guarda en algún lado o se calcula cada vez? ¿De qué dato saldría?
+
+### Herramientas
+
+- [ ] **VS Code** con Live Server, como en clases anteriores.
+- [ ] **Tu repositorio** `whatsapp-templates` con lo de C13 funcionando.
+
+### Lectura sugerida
+
+- [MDN: Delegación de eventos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Events#delegaci%C3%B3n_de_eventos){:target="_blank"} - Qué es y por qué un solo listener basta.
+- [MDN: Array.prototype.sort()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort){:target="_blank"} - Cómo funciona el comparador `(a, b)`.
+
+---
+
+## Glosario
+
+| Término | Definición |
+|---------|------------|
+| **Delegación de eventos** | Un solo listener en el contenedor padre que, según en qué hijo se hizo clic (`event.target`), decide qué hacer. |
+| **`data-id`** | Atributo HTML (`data-id="..."`) que guarda el id de un elemento para saber sobre cuál se actuó (se lee con `dataset.id`). |
+| **CRUD** | Las cuatro operaciones sobre datos: Crear, Leer, Actualizar (editar) y Borrar (eliminar). |
+| **Función pura** | Función que recibe datos y devuelve un resultado sin modificar nada externo: `(estado) → resultado`. |
+| **Datos derivados** | Información calculada a partir del estado (total, conteos), que no se guarda: se recalcula en cada `render()`. |
+| **Comparador** | Función `(a, b)` que `.sort()` usa para ordenar: devuelve negativo si `a` va antes, positivo si va después. |
+
+---
+
+## Recursos Adicionales
+
+- [MDN: classList](https://developer.mozilla.org/es/docs/Web/API/Element/classList){:target="_blank"} - Cómo `contains()` detecta en qué botón se hizo clic.
+- [MDN: String.prototype.localeCompare()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare){:target="_blank"} - Ordenar texto respetando tildes y mayúsculas.

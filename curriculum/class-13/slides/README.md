@@ -1,88 +1,171 @@
-# Clase 13: Modelado de Objetos y Estado – JavaScript moderno
-
-## 🧠 Inicio del Módulo 4 – Estado y Persistencia
-
-**Duración total:** 180 minutos
+<!-- .slide: data-background="#0A192F" -->
+# Clase 13: Modelado de Datos y Manipulación de Texto
+## Code 201 · Módulo 4 · Proyecto: Gestor de Plantillas para WhatsApp
 
 ---
 
-## 🎯 1. Refuerzo Práctico (30 min)
+## 🔄 TRANSICIÓN: C12 → C13
 
-* Reflexión individual: ¿Qué cosas pueden "cambiar" en una app mientras está abierta?
-* Actividad escrita previa: *Debate 13 – ¿Qué es un “estado” y por qué lo necesitamos?*
-* Discusión inicial: ¿Qué relación hay entre una clase, un objeto y su estado?
+### Clase anterior (cierre M3):
+- Consumir APIs, manejar errores, cerrar la Pokédex
 
----
+### Hoy (inicio M4):
+- Modelar datos con `class` y un **estado central**
+- Dibujar la pantalla con `render()`
+- **Manipular texto** con métodos de String
 
-## 🤝 2. Debate Técnico Guiado (20 min)
-
-> 🌉 **Recordatorio rápido (C08, M2):** `class` es azúcar sintáctica sobre prototipos.
-> Aquí ya no debatimos esa equivalencia — la usamos directamente.
-
-**Preguntas clave a trabajar en grupo:**
-
-* ¿Un objeto puede existir sin tener estado?
-* ¿El estado es lo mismo que los datos?
-* ¿Qué consecuencias trae modificar el estado directamente?
-* ¿Qué ventajas tiene encapsular el estado?
-
-**Conceptos que deben emerger del intercambio:**
-
-| Concepto        | Impacto técnico real                                    |
-| --------------- | ------------------------------------------------------- |
-| Clase (`class`) | Permite modelar entidades con estructura coherente      |
-| Estado          | Representa el "momento actual" de un objeto             |
-| Encapsulamiento | Protege el estado de ser manipulado de forma incorrecta |
-| Método          | Comportamiento que puede modificar el estado            |
+> "Tu app ya no trae datos de afuera: ahora los crea, los limpia y los transforma."
 
 ---
 
-## 🚫 Sobre `extends` (herencia)
+## 🤔 QUIZ PRE-LAB
 
-* `extends` y `super` son **tema de Code 301**.
-* Para M5 (proyecto final) usas **`class` simple sin extender** de otras.
-* Si te encuentras pensando "necesito heredar de Gasto", paso: **una clase plana basta**.
+### Pregunta:
 
----
+Un usuario escribe en tu formulario: `  Ventas `, otro escribe `#VENTAS` y otro `ventas`.
 
-## Break
+¿Cómo logras que las tres entradas se guarden **exactamente igual**?
 
-⌛️ 10 min.
+*Toma 2-3 respuestas antes de continuar*
 
 ---
 
-## 🧪 3. Laboratorio Guiado (100 min)
+## ✅ COMPROBACIÓN
 
-### Historias de Usuario:
+### Pregunta:
 
-1. **Crear una clase `Tarea`** con propiedades `titulo`, `completado`
-2. **Agregar métodos** para marcar como completada y mostrar estado
-3. **Probar múltiples instancias** y modificar estado de forma aislada
+¿Qué hace `"  Hola ".trim().toLowerCase()`?
 
-**Checkpoints:**
-
-* Declarar clase y constructor
-* Instanciar objetos y verificar su estado
-* Agregar y ejecutar métodos que modifican propiedades
-* Comparar estado entre instancias
+A. Devuelve `"  hola "` (solo baja mayúsculas)
+B. Modifica la variable original a `"hola"`
+C. Devuelve un texto nuevo: `"hola"`
+D. Da error porque no se pueden encadenar métodos
 
 ---
 
-## 🧩 4. Logros Adicionales (Opcionales)
+## ✅ COMPROBACIÓN - Respuesta
 
-* Crear una clase `Usuario` con una lista de tareas como propiedad
-* Implementar método para agregar tareas a un usuario
-* Mostrar resumen de tareas completadas por usuario
+**Respuesta correcta:** C
+
+**Análisis de opciones:**
+- **A:** `trim()` SÍ quita los espacios de los bordes; no solo baja mayúsculas.
+- **B:** Los strings son inmutables; los métodos **devuelven un texto nuevo**, no mutan el original.
+- **C:** Correcta. Cada método devuelve un string y el siguiente opera sobre ese resultado.
+- **D:** Encadenar métodos de String es válido y muy común.
+
+> **Clave:** Los métodos de String NO modifican el texto: devuelven uno nuevo.
 
 ---
 
-## 🧠 5. Cierre y Reflexión (20 min)
+## 🟢 CHECKPOINT HU1: Modelar y centralizar
 
-* ¿Qué entendemos ahora por “estado” en JS?
-* ¿Qué riesgos hay al manipular directamente propiedades de un objeto?
-* ¿En qué parte del código quedó clara la separación entre estado local y global?
+### Verificar (en consola):
+```javascript
+agregarPlantilla("Saludo", "Hola {nombre}", "ventas");
+state.plantillas;   // la lista creció
+```
 
-**Conexión final:** esta clase prepara el terreno para almacenar ese estado en el navegador en la próxima sesión (Clase 14: `localStorage` + JSON).
+**¿Qué debe verse?**
+- `state.plantillas` muestra el objeto `Template`
+- Cada plantilla tiene `titulo`, `mensaje`, `hashtag` y `fecha`
 
-> "Modelar objetos no es solo describir, es decidir cómo cambian con el tiempo."
+**Problemas comunes:**
+- `state is not defined` → revisar orden de los `<script>`
 
+---
+
+## 🟢 CHECKPOINT HU2: Estado → render
+
+### Verificar:
+Llena el formulario y dale "Agregar plantilla".
+
+**¿Qué debe verse?**
+- La plantilla aparece sola en la lista, sin recargar
+- Muestra la **fecha de hoy** en formato legible
+- Agregar otra no borra la anterior
+
+**Problemas comunes:**
+- No aparece nada → falta llamar `render()` tras agregar
+
+---
+
+## 🟢 CHECKPOINT HU3: Limpiar y normalizar
+
+### Verificar:
+Escribe `  Ventas ` en el hashtag y deja el mensaje vacío.
+
+**¿Qué debe verse?**
+- El hashtag se guarda como `#ventas`
+- Con el mensaje vacío, **no** deja agregar (alerta)
+
+**Problemas comunes:**
+- Guarda con espacios → falta `.trim()`
+- No agrega el `#` → revisar `startsWith("#")`
+
+---
+
+## 🟢 CHECKPOINT HU4: Mensaje final con variables
+
+### Verificar:
+Crea una plantilla con `Hola {nombre}, gracias por tu compra`.
+
+**¿Qué debe verse?**
+- La vista previa muestra `Hola Ana, gracias...`
+- Un mensaje largo aparece recortado con `…`
+- Los hashtags se ven como etiquetas separadas
+
+**Problemas comunes:**
+- `{nombre}` no se reemplaza → revisar `replaceAll("{nombre}", ...)`
+
+---
+
+## 💡 REFLEXIÓN: Inmutable vs mutable
+
+| Acción | Resultado |
+|---|---|
+| `texto.trim()` | Devuelve un **texto nuevo** (no muta) |
+| `state.plantillas = [...]` | **Reasignamos** el estado (no mutamos) |
+
+> **Regla memorable:** "Cambias el estado → llamas `render()`. Y `render()` siempre limpia y redibuja todo."
+
+---
+
+## 🧰 REFLEXIÓN: Tu caja de herramientas de texto
+
+### Pregunta de consolidación:
+
+Si quieres convertir `"Promo {nombre}"` en `"Promo Ana"`, ¿qué método usas? ¿Y para partir `"#oferta #ya"` en dos etiquetas?
+
+> Pista: uno reemplaza, el otro divide.
+
+---
+
+## ➡️ TRANSICIÓN: Preview C14
+
+### Hoy lograste:
+- Modelar plantillas con `class` y un estado central
+- Render desde el estado (cambias datos → redibujas)
+- Limpiar, normalizar y transformar texto
+
+### Próxima clase:
+- Editar y eliminar plantillas: tu estado no solo crece, también cambia y mengua
+
+---
+
+## 🧠 Preguntas de Cierre
+
+1. ¿Por qué decimos que los métodos de String "no modifican el texto original"?
+
+2. ¿Cuándo usarías `.replaceAll()` y cuándo `.split()`?
+
+3. ¿Qué pasaría con tu app si nunca llamaras `render()` tras cambiar el estado?
+
+---
+
+## 📦 Entrega
+
+- Repo `whatsapp-templates` en GitHub Pages
+- `README.md` describiendo la clase `Template` y los métodos de String usados
+- Screenshot de la lista con una plantilla y su vista previa con `{nombre}` reemplazado
+
+### Próxima clase: Editar y eliminar plantillas

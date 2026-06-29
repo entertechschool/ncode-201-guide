@@ -1,155 +1,285 @@
-﻿# Laboratorio 14: App State Management (Patrón Store)
+# Laboratorio 14: Interacción y Datos Derivados
 
-Bienvenido al Laboratorio 14 del proyecto **Gestor de Plantillas para WhatsApp**. En esta sesión, comenzarás a construir el mecanismo central que gestionará los datos de tu aplicación: un **estado global controlado desde una Store**. A través de este patrón, aprenderás a estructurar el flujo de datos de forma más ordenada, escalable y predecible.
+¡Segundo laboratorio del **Gestor de Plantillas para WhatsApp**! En C13 montaste el estado central y el `render()`. Hoy tu app se vuelve **interactiva de verdad**: vas a **eliminar y editar** plantillas, y a calcular **datos derivados** (totales y conteos) a partir del estado. La pieza nueva es la **delegación de eventos**: un solo listener que atiende los clics de muchas tarjetas.
+
+> ⏱️ **Checkpoints**: 5 momentos de validación (~30, ~55, ~80, ~100, ~115 min).
+>
+> 🧠 Seguimos **sin persistencia**: todo vive en memoria. En C15 le pondrás `localStorage`.
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. **Comprender el patrón de gestión de estado centralizado (Store)** y su aplicación en aplicaciones web interactivas.
-2. **Implementar una Store básica en JavaScript** que permita almacenar, modificar y notificar cambios de estado.
+1. Aplicar **delegación de eventos**: un único listener en el contenedor que atiende los clics de N elementos hijos.
+2. Completar el **CRUD** del estado: eliminar y editar plantillas de forma inmutable.
+3. Calcular **datos derivados** con funciones puras: total de plantillas y conteo por hashtag.
+4. **Ordenar** la lista con `.sort()` (por fecha y alfabético).
+5. Reutilizar el patrón **estado → `render()`** para que toda la UI refleje cada cambio.
 
 ## 🔑 Conceptos Clave
 
-1. **Patrón de diseño**
-2. **Mutabilidad vs Inmutabilidad**
+| Concepto | Definición |
+|---|---|
+| **Delegación de eventos** | Poner **un solo** listener en el contenedor padre y, según en qué hijo se hizo clic (`event.target`), decidir qué hacer. |
+| **`data-id`** | Atributo HTML (`data-id="..."`) para guardar el id de cada elemento y saber sobre cuál se actuó. |
+| **CRUD** | Las 4 operaciones sobre datos: Crear, Leer, Actualizar (editar) y Borrar (eliminar). |
+| **Función pura** | Función que recibe datos y **devuelve un resultado** sin modificar nada externo: `(estado) → resultado`. |
+| **`.sort()` + comparador** | Ordena un array. Recibe una función `(a, b)` que devuelve negativo/positivo para decidir quién va primero. |
 
 ## ⚙️ Setup Inicial
 
-1. **Repositorio:**
-   - Usa el repositorio `whatsapp-templates` creado en la clase anterior.
-   - Crea una nueva rama `lab14-store` para este laboratorio.
+1. **Repositorio:** continúa en `whatsapp-templates`. Crea una rama `lab14-interaccion`.
 
-2. **Estructura de Archivos:**
-   Asegura la siguiente organización:
-   ```
-   whatsapp-templates/
-   ├── index.html
-   ├── css/
-   │   └── styles.css
-   ├── js/
-   │   ├── app.js
-   │   └── store.js     <--- archivo para tu Store
-   │   └── models/
-   │       └── Template.js
-   └── README.md
+2. **Da un `id` a cada plantilla** — lo necesitarás para saber sobre cuál actúas. En `js/models/Template.js`:
+
+   ```javascript
+   class Template {
+     constructor(titulo, mensaje, hashtag) {
+       this.id = Date.now();        // ← id único (reutilizamos Date de C13)
+       this.titulo = titulo;
+       this.mensaje = mensaje;
+       this.hashtag = hashtag;
+       this.fecha = new Date();
+     }
+   }
    ```
 
-## 🏆 Historias de Usuario
+3. **Agrega un panel de estadísticas** en `index.html`, encima de la lista:
 
-### HU0 – Implementar el Store completo
+   ```html
+   <aside id="panel-stats" class="max-w-md mx-auto mb-4 text-sm text-slate-600"></aside>
+   ```
 
-> **Objetivo:** crear un objeto `store` que centralice el estado de las plantillas y **notifique a los suscriptores** cuando cambie. Es el patrón base que vas a reutilizar en M5.
-
-#### Sub-pasos
-
-0.1. Crea `js/store.js`:
-
-```javascript
-const store = {
-  state: { plantillas: [] },
-  listeners: [],
-
-  getState() {
-    return this.state;
-  },
-
-  setState(newState) {
-    this.state = newState;
-    this.notify();
-  },
-
-  subscribe(listener) {
-    this.listeners.push(listener);
-  },
-
-  notify() {
-    this.listeners.forEach(listener => listener(this.state));
-  }
-};
-```
-
-0.2. En `app.js`, suscribe la función de renderizado al store:
-
-```javascript
-function renderizarPlantillas(state) {
-  const lista = document.querySelector('#listaPlantillas');
-  lista.innerHTML = '';
-  state.plantillas.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = p.titulo;
-    lista.appendChild(li);
-  });
-}
-
-store.subscribe(renderizarPlantillas);
-```
-
-0.3. Para agregar o eliminar plantillas, **siempre** usa `store.setState({ ...store.state, plantillas: nuevasPlantillas })`. La función `setState` automáticamente notifica a los suscriptores y re-renderiza.
-
-✅ **Checkpoint HU0:** abre DevTools (F12). Agrega 3 plantillas vía `store.setState(...)` desde la consola. La lista en pantalla se actualiza **sin que llames a `renderizarPlantillas` manualmente** — el `subscribe` lo hace.
-
-> 💡 **Nota para M5:** En el proyecto final puedes elegir entre el Store COMPLETO (subscribe/notify, más limpio) o una versión simplificada (cambio → guardar → render manual). Ambas son válidas. La simplificada es más fácil de seguir; la completa escala mejor. **Decisión profesional consciente.**
+   > 📌 **Convención del proyecto:** el panel de stats es `<aside id="panel-stats">`. El botón eliminar usará `class="btn-eliminar"` y el de editar `class="btn-editar"`, ambos con `data-id`.
 
 ---
 
-### HU1 – Ver plantillas activas desde un único estado centralizado
-> *"Como usuario, quiero ver en pantalla todas las plantillas disponibles, gestionadas desde un objeto central (store), para poder usarlas fácilmente."*
+## 📋 Historias de Usuario
 
-- **Criterios de Aceptación:**
-  - **Reemplaza** el `state` inicial de HU0 por uno con 2 plantillas de ejemplo precargadas:
+### HU1: Eliminar una plantilla con delegación de eventos
 
-    ```javascript
-    state: {
-      plantillas: [
-        new Template('Saludo', '¡Hola!', '#bienvenida'),
-        new Template('Despedida', '¡Hasta pronto!', '#chao')
-      ]
-    }
-    ```
-  - Al cargar la página, las 2 plantillas se muestran automáticamente en la interfaz **gracias al `subscribe` de HU0** (recuerda llamar `renderizarPlantillas(store.getState())` una vez en el arranque para el primer render).
-  - La manipulación del DOM se hace desde una función que lee desde la Store.
+> *"Como usuario, quiero eliminar una plantilla que ya no uso, para mantener mi lista ordenada."*
 
-- **⏱️ Checkpoint 1 (30 min):**
-  🔍 **Validación:** Store está definida como objeto global o módulo, contiene un array inicial de plantillas y hay una función para leer y mostrar las plantillas.
+**Criterios de Aceptación:**
+- Cada plantilla muestra un **botón eliminar**.
+- Al pulsarlo, **esa** plantilla desaparece y **las demás permanecen**.
+- La lista en pantalla sigue reflejando exactamente el estado.
 
-### HU2 – Agregar una plantilla nueva al presionar "Guardar"
-> *"Como usuario, quiero que al completar un formulario y presionar 'Guardar', se añada una nueva plantilla al estado y se muestre inmediatamente."*
+Primero, cada `<li>` necesita su botón con el `data-id`. En `render()`, dentro del `innerHTML`:
 
-- **Criterios de Aceptación:**
-  - El formulario dispara una función que invoca `store.setState({ ...store.getState(), plantillas: [...store.getState().plantillas, nueva] })`.
-  - No se muta directamente el array original: se genera uno nuevo con spread operator.
-  - La nueva plantilla aparece en pantalla sin recargar **gracias al `subscribe` de HU0**.
+```javascript
+li.innerHTML = `
+  <strong>${p.titulo}</strong>
+  <span class="text-xs text-slate-400">${p.fecha.toLocaleDateString("es-PE")}</span>
+  <br>${p.mensaje}
+  <button class="btn-eliminar text-red-600 text-xs" data-id="${p.id}">Eliminar</button>
+`;
+```
 
-- **⏱️ Checkpoint 2 (70 min):**
-  🔍 **Validación:** El formulario de nueva plantilla agrega correctamente al estado, se actualiza el DOM tras la inserción sin recargar la página y se respeta la inmutabilidad del array de plantillas.
+Ahora, en vez de poner un listener por cada botón, pones **uno solo** en la lista. Esa es la **delegación de eventos**:
 
-### HU3 – Eliminar una plantilla específica desde la interfaz
-> *"Como usuario, quiero poder eliminar una plantilla haciendo clic en un ícono de borrar, y que el cambio se refleje inmediatamente sin recargar la página."*
+```javascript
+function eliminarPlantilla(id) {
+  state.plantillas = state.plantillas.filter(p => p.id !== id);  // sin mutar: filtra
+  render();
+}
 
-- **Criterios de Aceptación:**
-  - Cada plantilla tiene un botón para eliminar.
-  - Al hacer clic, se filtra el array y se pasa el nuevo array a `store.setState(...)`. Sin mutaciones directas.
-  - La interfaz se actualiza al instante **gracias al `subscribe` de HU0** — no llamas a renderizar manualmente.
+lista.addEventListener("click", function (e) {
+  if (e.target.classList.contains("btn-eliminar")) {     // ¿se hizo clic en un botón eliminar?
+    const id = Number(e.target.dataset.id);              // lee el data-id
+    eliminarPlantilla(id);
+  }
+});
+```
 
-- **⏱️ Checkpoint 3 (90 min):**
-  🔍 **Validación:** El botón de eliminar funciona correctamente, se actualiza la vista tras eliminar una plantilla y se crea un nuevo array sin mutar el existente.
+> 💡 **¿Por qué uno solo?** Las tarjetas se crean y destruyen al re-renderizar. Si pusieras un listener por botón, tendrías que volver a engancharlos cada vez. Con **un listener en el padre** que escucha los clics de los hijos, funciona siempre, sin importar cuántas tarjetas haya.
 
-## 🌟 Logros Adicionales
+- **Checkpoint 1 (~30 min):** agrega 3 plantillas y elimina la del medio. Solo esa desaparece; las otras dos quedan intactas.
 
-- **Logro 1:** Mostrar un mensaje dinámico como "No hay plantillas guardadas" si el array de estado está vacío.
+---
 
-- **Logro 2:** Al eliminar una plantilla, mostrar un mensaje temporal (3 segundos) que diga "Plantilla eliminada con éxito".
+### HU2: Editar una plantilla existente
+
+> *"Como usuario, quiero editar una plantilla para corregirla, sin tener que borrarla y crearla de nuevo."*
+
+**Criterios de Aceptación:**
+- Cada plantilla muestra un **botón editar**.
+- Al pulsarlo, sus datos **se cargan en el formulario**.
+- Al guardar, la plantilla **se actualiza en su lugar** (no se crea una nueva) y la lista muestra el cambio.
+
+Agrega el botón editar en `render()` (junto al de eliminar):
+
+```javascript
+`<button class="btn-editar text-blue-600 text-xs" data-id="${p.id}">Editar</button>`
+```
+
+Amplía el mismo listener de la lista para atender también "editar":
+
+```javascript
+lista.addEventListener("click", function (e) {
+  const id = Number(e.target.dataset.id);
+  if (e.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
+  if (e.target.classList.contains("btn-editar"))   cargarEnFormulario(id);
+});
+
+function cargarEnFormulario(id) {
+  const p = state.plantillas.find(t => t.id === id);
+  titulo.value = p.titulo;
+  mensaje.value = p.mensaje;
+  hashtag.value = p.hashtag;
+  state.editandoId = id;          // recordamos que estamos editando, no creando
+}
+```
+
+Y en el `submit`, decide si **actualizas** o **creas**:
+
+```javascript
+if (state.editandoId) {
+  state.plantillas = state.plantillas.map(p =>     // actualiza solo esa, sin mutar
+    p.id === state.editandoId ? { ...p, titulo: t, mensaje: m, hashtag: normalizarHashtag(hashtag.value) } : p
+  );
+  state.editandoId = null;
+} else {
+  agregarPlantilla(t, m, normalizarHashtag(hashtag.value));
+}
+render();
+form.reset();
+```
+
+- **Checkpoint 2 (~55 min):** pulsa "Editar" en una plantilla, cambia el mensaje y guarda. Se actualiza en su sitio; no aparece una copia nueva.
+
+---
+
+### HU3: Estadísticas con una función pura
+
+> *"Como usuario, quiero ver cuántas plantillas tengo y cuántas hay por hashtag, para entender mi colección de un vistazo."*
+
+**Criterios de Aceptación:**
+- Se muestra el **total** de plantillas.
+- Se muestra un **conteo por hashtag**.
+- Estos números **se actualizan solos** al agregar, editar o eliminar.
+
+Una **función pura** recibe el estado y devuelve un resultado, sin tocar nada más:
+
+```javascript
+function contarPorHashtag(plantillas) {
+  return plantillas.reduce(function (conteo, p) {       // reduce: lo viste en M2
+    conteo[p.hashtag] = (conteo[p.hashtag] ?? 0) + 1;
+    return conteo;
+  }, {});
+}
+```
+
+Dibuja el panel desde esa función, y llámalo dentro de `render()` para que se mantenga sincronizado:
+
+```javascript
+function renderStats() {
+  const total = state.plantillas.length;
+  const porTag = contarPorHashtag(state.plantillas);
+  const detalle = Object.entries(porTag).map(([tag, n]) => `${tag}: ${n}`).join(" · ");
+  document.getElementById("panel-stats").textContent = `Total: ${total}  |  ${detalle}`;
+}
+```
+
+> 💡 Agrega `renderStats();` al final de `render()`. Como todo pasa por `render()`, las estadísticas nunca quedan desactualizadas.
+
+- **Checkpoint 3 (~80 min):** agrega plantillas con hashtags repetidos (ej. dos `#ventas`) → el panel muestra `Total: 3 | #ventas: 2 · #soporte: 1`. Elimina una y los números bajan solos.
+
+---
+
+### HU4: Filtrar por hashtag (la lista reacciona)
+
+> *"Como usuario, quiero filtrar mis plantillas por hashtag, para encontrar rápido la que necesito."*
+
+**Criterios de Aceptación:**
+- Al escribir un hashtag en el buscador, la lista muestra **solo** las plantillas que coinciden.
+- Al borrar el texto, **vuelven todas**.
+- El filtrado ocurre **al instante** mientras escribes.
+
+Agrega un buscador encima de la lista en `index.html`:
+
+```html
+<input id="buscador" type="text" placeholder="Filtra por hashtag…"
+       class="max-w-md mx-auto block w-full p-2 mb-4 border border-slate-300 rounded">
+```
+
+Calcula **qué mostrar** con una función derivada (reutiliza `.includes()` y `.toLowerCase()` de C13) y haz que `render()` la use:
+
+```javascript
+function plantillasVisibles() {
+  const f = (state.filtro ?? "").toLowerCase();
+  if (f === "") return state.plantillas;
+  return state.plantillas.filter(p => p.hashtag.toLowerCase().includes(f));
+}
+```
+
+En `render()`, recorre `plantillasVisibles()` en vez de `state.plantillas`. Y conecta el buscador:
+
+```javascript
+document.getElementById("buscador").addEventListener("input", function (e) {
+  state.filtro = e.target.value;   // el filtro vive en el estado
+  render();                        // mismo render, datos distintos
+});
+```
+
+- **Checkpoint 4 (~100 min):** escribe `vent` → quedan solo las `#ventas`; borra el texto → vuelven todas. (Nota: las estadísticas siguen contando el total real, no solo lo filtrado.)
+
+---
+
+### HU5: Ordenar las plantillas
+
+> *"Como usuario, quiero ordenar mis plantillas (las más recientes primero o por orden alfabético), para encontrarlas como me resulte más cómodo."*
+
+**Criterios de Aceptación:**
+- La lista puede mostrarse con las plantillas **más recientes primero**.
+- La lista puede mostrarse en **orden alfabético** por título.
+- El orden elegido se mantiene al agregar, editar o filtrar.
+
+`.sort()` ordena un array usando un **comparador**: una función `(a, b)` que devuelve un número negativo si `a` va antes, o positivo si va después.
+
+```javascript
+function ordenar(plantillas) {
+  const copia = [...plantillas];                 // copiamos: .sort() muta el array original
+  if (state.orden === "alfabetico") {
+    return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));   // texto: localeCompare
+  }
+  return copia.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));  // recientes primero
+}
+```
+
+Encadena el orden **después** del filtro, dentro de tu pipeline de "qué mostrar":
+
+```javascript
+function plantillasVisibles() {
+  const f = (state.filtro ?? "").toLowerCase();
+  const filtradas = f === "" ? state.plantillas : state.plantillas.filter(p => p.hashtag.toLowerCase().includes(f));
+  return ordenar(filtradas);     // primero filtra, luego ordena
+}
+```
+
+Agrega un selector en `index.html` que cambie `state.orden` y vuelva a renderizar:
+
+```html
+<select id="orden" class="max-w-md mx-auto block mb-4 p-2 border border-slate-300 rounded">
+  <option value="fecha">Más recientes</option>
+  <option value="alfabetico">Alfabético (A-Z)</option>
+</select>
+```
+
+> 💡 **`.sort()` muta** el array sobre el que actúa. Por eso copiamos con `[...plantillas]` antes de ordenar: así no alteramos el estado original (inmutabilidad, igual que en eliminar/editar).
+>
+> 💡 Comparamos fechas con `new Date(...)`: así el orden funciona tanto si `p.fecha` es un objeto `Date` como si es texto (te será útil cuando guardes los datos en C15).
+
+- **Checkpoint 5 (~115 min):** cambia el selector a "Alfabético" → la lista se reordena A-Z; vuelve a "Más recientes" → aparece arriba la última que creaste.
+
+---
+
+## 🌟 Logros Adicionales (Opcionales)
+
+- **Logro 1 — Cancelar edición:** muestra un botón "Cancelar" que limpia el formulario y pone `state.editandoId = null`.
+- **Logro 2 — Hashtag más usado:** con `contarPorHashtag`, calcula y muestra cuál hashtag tiene más plantillas.
+- **Logro 3 — Confirmar al eliminar:** muestra un aviso simple antes de borrar (en C16 lo convertirás en un modal propio de confirmación).
 
 ## 📝 Instrucciones de Entrega
 
-1. **Documentación en README**
-   - Describe cómo implementaste el patrón Store.
-   - Explica qué cambios hiciste para mantener la inmutabilidad del estado.
-
-2. **Despliegue**
-   - Publica la versión actualizada en GitHub Pages.
-   - Asegúrate de usar la rama `lab14-store` para generar el despliegue.
-
-3. **Entrega Final**
-   - URL del repositorio
-   - URL del proyecto desplegado en GitHub Pages
-
+1. **Documentación (`README.md`):** explica cómo implementaste la delegación de eventos y para qué sirve tu función `contarPorHashtag`.
+2. **Despliegue:** publica en GitHub Pages y comparte el enlace.
+3. **Entrega Final:** URL del repositorio + URL del sitio desplegado.

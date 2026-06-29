@@ -1,171 +1,131 @@
-# Guía del Facilitador - Clase 13: Modelado de Objetos y Estado
+# Guía del Facilitador — Clase 13: Modelado de Datos y Manipulación de Texto
 
-> Tiempo de lectura: 8 minutos | Primera clase del M4 | Prepárate antes de clase
+> Tiempo de lectura: 8 minutos | Primera clase del M4 · Proyecto: Gestor de Plantillas para WhatsApp | Prepárate antes de clase
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **`class` ES6**: sintaxis moderna para definir objetos con propiedades y métodos. **Recordatorio:** C08 (M2) ya cerró que es azúcar sintáctica sobre prototipos — aquí la usamos sin debate.
-- **Estado local (instancia)**: información propia de cada objeto creado con `new Template(...)`. Una plantilla tiene su título, su mensaje, su hashtag.
-- **Estado global (app)**: información compartida por la aplicación completa. El array de TODAS las plantillas vive aquí.
-- **Modelo de dominio**: la clase `Template` ES el modelo. Decidir qué propiedades tiene es una decisión profesional, no técnica.
+- **Estado central** (refuerzo): un único objeto `state = { plantillas: [] }` que es la verdad de la app. Si algo no está ahí, no existe en pantalla. Lo reasignamos, no lo mutamos.
+- **Patrón render** (refuerzo): `render()` limpia el contenedor y redibuja TODO desde el estado. La regla de oro: cambias el estado → llamas `render()`.
+- **Métodos de String** (NUEVO, ancla): un texto es un objeto con métodos. `.trim()`, `.toLowerCase()`, `.startsWith()`, `.includes()`, `.replaceAll()`, `.split()`, `.slice()`. **No mutan**: devuelven un texto nuevo.
+- **Sustitución de variables** (NUEVO): reemplazar `{nombre}` dentro de la plantilla por un valor real con `.replaceAll()` → el "mensaje final".
+- **`Date`** (NUEVO, 2ª herramienta): `new Date()` captura el momento de creación; `.toLocaleDateString("es-PE")` lo vuelve texto legible.
+
+> ❗ **MAX_TWO_NEW_TOOLS:** las dos nuevas son **String** (familia de métodos) y **Date**. El `class`/`state`/`render` son **refuerzo** de C08 y M3.
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Estado local <> Identificación personal:**
-Cada persona tiene su DNI, nombre, edad. Esos datos viven en cada persona, no en una lista compartida. La instancia `template1` tiene su `titulo`, su `mensaje` — distintos de `template2`.
+**Métodos de String ⟷ Herramientas de cocina:** un texto crudo es un ingrediente. `.trim()` le quita lo de los bordes, `.toLowerCase()` lo unifica, `.split()` lo corta en pedazos. No cambias el ingrediente original: produces uno preparado.
 
-**Estado global <> Lista de asistencia del salón:**
-El salón tiene UNA lista que dice quién está hoy. No cada persona carga su propia lista — sería caos. El array `plantillas` es esa lista de asistencia única.
+**Normalizar ⟷ Etiquetar carpetas:** si cada persona escribe la categoría a su manera (`Ventas`, ` ventas`, `#VENTAS`), el archivo es un caos. Normalizar es decidir UNA forma (`#ventas`) y forzar todo a ella.
 
-**Clase `class` <> Molde para hacer galletas:**
-El molde no es una galleta. Es la forma que produce galletas idénticas estructuralmente, pero cada una puede tener distinto sabor (datos). `class Template { ... }` es el molde; cada `new Template(...)` es una galleta.
+**Sustitución de variables ⟷ Carta modelo con espacios en blanco:** la plantilla es la carta con `{nombre}`; `replaceAll` rellena el espacio con el destinatario real. Una plantilla, mil mensajes.
 
-**`extends` (NO en esta clase) <> Especialización en medicina:**
-Sería como decir "ginecólogo extiende de médico". Es útil pero NO lo vas a usar hoy ni en M5. Si surge, redirígelo a Code 301.
+**Estado → render ⟷ Pizarra que se vuelve a copiar:** no editas la pizarra a mano; cambias tu cuaderno (estado) y vuelves a copiar todo a la pizarra (`render`). Siempre coinciden.
 
 ---
 
 ## 📚 Contexto Actual
 
-### Por qué `class` ES6 ganó el debate (y por qué C08 ya lo zanjó)
+### Por qué el texto es el verdadero protagonista
 
-La sintaxis `class` se introdujo en ECMAScript 2015 (ES6). Antes existían funciones constructoras, y ambas conviven hasta hoy. **Internamente JavaScript sigue usando prototipos** — `class` es solo sintaxis más legible. En C08 (M2) los alumnos ya hicieron el ejercicio: reescribieron `Movimiento` con `class` y comprobaron que funciona idéntico. Aquí ya partimos de `class` sin reabrir el debate.
+Casi todo lo que un usuario produce es texto: nombres, mensajes, búsquedas. Antes de guardarlo o mostrarlo, una app lo limpia y normaliza. Los métodos de String son el día a día de cualquier desarrollador — más usados que cualquier algoritmo "elegante". Hoy los alumnos los aplican a un problema real: que sus plantillas se vean limpias.
 
-> **Para contar en clase:** "Si alguien quiere debatir `class` vs constructor, recuérdale C08. Hoy estamos sobre ese conocimiento, no debajo."
+> **Para contar en clase:** "WhatsApp Business manda millones de mensajes con plantillas: `Hola {1}, tu pedido {2} llegó`. Ustedes están construyendo exactamente ese motor, en pequeño."
 
-### Estado: el concepto que separa scripts de aplicaciones
+### Inmutabilidad de los strings (anti-hype honesto)
 
-Una página estática no tiene estado. Una app sí. Slack, Notion, Figma, Spotify — todas son objetos vivos cuyo "momento actual" cambia con cada acción del usuario. Lo que distingue a un dev junior de uno sólido es saber **dónde vive cada pedazo de estado y quién puede cambiarlo**. Hoy empezamos esa conversación.
+Un error clásico: creer que `texto.trim()` cambia `texto`. No lo hace. Los strings son **inmutables**; los métodos devuelven uno nuevo. Si no guardas el resultado (`texto = texto.trim()`), se pierde. Vale la pena mostrarlo en consola — ahorra horas de confusión.
 
-**Fuentes:** [MDN: Classes](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes){:target="_blank"}, [TC39: ES6 Spec](https://tc39.es/ecma262/){:target="_blank"}
+**Fuentes:** [MDN: String](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String){:target="_blank"}, [MDN: Date](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Date){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Refuerzo | 30 min | `class`, estado central, "cambias estado → render" (de M3) |
+| Debate + Demo | 20 min | Métodos de String: ¿mutan o devuelven nuevo? |
+| Break | 10 min | — |
+| Lab (HU1-HU4) | 100 min | HU1 modelar+estado · HU2 render+Date · HU3 limpiar/normalizar · HU4 mensaje final |
+| Cierre | 20 min | Síntesis + preview C14 (editar/eliminar) |
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo Principal — Dos plantillas, dos estados locales
+### Pregunta Detonadora (QUIZ PRE-LAB)
 
-**Qué mostrar:** 3 minutos en vivo. Crear `class Template` con constructor de 3 propiedades. Hacer `const t1 = new Template('Saludo', '¡Hola!', '#bienvenida')` y `const t2 = new Template('Despedida', '¡Adiós!', '#chao')`. Mostrar en consola que `t1` y `t2` tienen **propiedades distintas** pero **misma estructura**. Luego: agregar ambas a un array global `plantillas = []`. Mostrar que el array es el estado global, cada `Template` es estado local.
+**Pregunta:** Tres usuarios escriben el mismo hashtag de tres formas (`  Ventas `, `#VENTAS`, `ventas`). ¿Cómo logras que se guarden idénticos?
+
+No hay opción correcta única — es abierta. Deja que propongan ("comparar uno por uno", "obligar formato"). Conduce hacia: *normalizar con métodos de String*.
+
+**Tip:** No reveles `trim().toLowerCase()`. Que el lab lo descubra.
+
+### Demo Principal — Los strings no mutan (4 min)
+
+**Qué mostrar:** En consola, `let s = "  Hola "`. Ejecuta `s.trim()` → devuelve `"Hola"`. Luego muestra `s` otra vez → **sigue con espacios**. "El método devolvió un texto nuevo; el original no cambió. Por eso guardamos: `s = s.trim()`." Encadena `"  VENTAS ".trim().toLowerCase()` → `"ventas"`.
 
 **Script sugerido:**
 ```
-Facilitador: "Voy a crear DOS plantillas. Cada una tiene su título, su mensaje, su hashtag.
-[Crear t1, t2 en consola]
-Facilitador: "Ahora las meto en un array global. ¿Qué cambia conceptualmente?"
-[Respuestas esperadas]
-Facilitador: "Cada Template sigue siendo su mundo. El array es OTRA cosa: la lista que la app
-conoce. Esa distinción — local vs global — es lo central de hoy."
+Facilitador: "Voy a limpiar este texto. [s.trim()] ¿Ya quedó limpio s?"
+[Mostrar s todavía con espacios]
+Facilitador: "No. El método NO modifica: devuelve uno nuevo. Hay que guardarlo."
 ```
 
-**Plan B (si la demo falla):** Tener una página HTML simple pre-creada con el `class` y la creación de 2 instancias. Solo se ejecuta en consola.
+**Plan B (si falla):** Tener una página con los ejemplos en `console.log` listos para abrir.
 
 ### Transición al Lab
 
-**Momento crítico:** Los alumnos pueden mezclar las propiedades del modelo con la estructura del array global. Aclarar antes de empezar.
+**Momento crítico:** El salto de "modelar" (HU1-HU2) a "transformar texto" (HU3-HU4) es donde está lo nuevo.
 
 **Script sugerido:**
 ```
-Facilitador: "HU1: clase Template con 3 propiedades obligatorias + 2 que ustedes elijan.
-HU2: array global. NO un array por cada instancia — UNO solo para toda la app.
-HU3: render mostrando ambos niveles.
-Si una HU se siente como otra, paren y pregunten."
+Facilitador: "HU1: clase Template + estado central. HU2: render con la fecha (Date).
+HU3: limpiar y normalizar con métodos de String + validar campos vacíos.
+HU4: reemplazar {nombre} y mostrar la vista previa recortada.
+Levanten la mano al terminar cada HU."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Inventen sus 2 propiedades"
+### Dinámica 1: "¿Muta o devuelve?" (en HU3)
+Lanza expresiones (`texto.trim()`, `arr.push(x)`, `texto.toLowerCase()`) y que digan si modifican el original o devuelven algo nuevo. Refuerza la inmutabilidad de strings.
 
-Cuando lleguen a HU1, pausa la clase 3 minutos:
+### Dinámica 2: "Arma el método" (en HU3)
+Da el objetivo ("que `#VENTAS` y ` ventas ` queden iguales") y que propongan el encadenamiento de métodos antes de ver `normalizarHashtag`.
 
-> "Las 3 propiedades obligatorias son titulo, mensaje, hashtag. Ustedes deciden 2 más. ¿Cuáles? Compartan en el chat."
-
-**Dinámica sugerida:**
-```
-Facilitador: "Veo: 'fechaCreacion', 'categoria', 'destinatario', 'usado'...
-Cada decisión revela qué problema están imaginando.
-Una plantilla de WhatsApp del mundo real — ¿qué necesita?
-Esa decisión define su modelo. No hay respuesta única."
-```
-
-### Dinámica 2: "¿Local o global?"
-
-Antes de HU3, lanza 4 preguntas rápidas:
-
-> "Levanten la mano: ¿el título de la plantilla es local o global? ¿La lista de plantillas? ¿El usuario logueado? ¿La fecha de hoy?"
-
-**Dinámica sugerida:**
-```
-Facilitador: "Título: ¿local o global?"
-[Manos]
-Facilitador: "Local — cada plantilla tiene el suyo. Lista: ¿local o global?"
-[Manos]
-Facilitador: "Global — toda la app comparte. Y el usuario logueado, ¿qué piensan?"
-[Discusión: es global, vive en la app, no en cada plantilla]
-```
-
-### Dinámica 3: "Que NO use extends"
-
-Si alguien intenta usar `extends`:
-
-> "Excelente que sepas eso. Pero hoy nos quedamos en `class` plana. Veremos por qué en M5."
-
-**Dinámica sugerida:**
-```
-Facilitador: "Si haces `class TemplateUrgente extends Template`, tu modelo se vuelve más rígido.
-En M5 vas a ver que con clases planas + un campo `prioridad` resuelves lo mismo
-con menos código. Code 301 entrará al cuándo SÍ heredar."
-```
+### Dinámica 3: "Una plantilla, mil mensajes" (en HU4)
+Escribe `Hola {nombre}` en la pizarra y pide nombres del grupo. Reemplaza en vivo mentalmente — eso es `replaceAll`. Conecta con casos reales de mensajería.
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: Constructor mínimo
-
-**Cuándo usarlo:** Si alguien se traba con la sintaxis ES6.
-
+### Encadenar métodos (no mutan)
 ```javascript
-class Template {
-  constructor(titulo, mensaje, hashtag, categoria, fechaCreacion) {
-    this.titulo = titulo;
-    this.mensaje = mensaje;
-    this.hashtag = hashtag;
-    this.categoria = categoria;
-    this.fechaCreacion = fechaCreacion;
-  }
-
-  mostrar() {
-    return `[${this.categoria}] ${this.titulo}: ${this.mensaje} ${this.hashtag}`;
-  }
-}
+let hashtag = "  VENTAS ";
+hashtag = hashtag.trim().toLowerCase();   // "ventas" — hay que reasignar
 ```
+"Si no guardas el resultado, se pierde. Los strings no se modifican solos."
 
-**Tip:** Resalta que `constructor` se llama automáticamente con `new`. No es un método regular.
-
-### Ejemplo 2: Estado global como variable módulo
-
-**Cuándo usarlo:** Si confunden estado global con variables de constructor.
-
+### Sustituir una variable
 ```javascript
-// Estado global de la app
-const plantillas = [];
-
-function agregarPlantilla(t) {
-  plantillas.push(t);
-}
-
-// Cada plantilla tiene su estado local
-const t1 = new Template('Saludo', '¡Hola!', '#bienvenida');
-agregarPlantilla(t1);
+"Hola {nombre}, gracias".replaceAll("{nombre}", "Ana");
+// "Hola Ana, gracias"
 ```
+"Una plantilla con `{nombre}` se vuelve un mensaje real."
 
-**Tip:** Dibuja en pizarra una caja grande `plantillas[]` con 2 cajitas dentro (`t1`, `t2`).
+### Date legible
+```javascript
+new Date().toLocaleDateString("es-PE");   // "29/6/2026"
+```
 
 ---
 
@@ -173,26 +133,30 @@ agregarPlantilla(t1);
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| `Cannot read property of undefined` al llamar método | Olvidó `new` antes del constructor | Recordar: `class` siempre con `new` |
-| Cada plantilla tiene su propio array `plantillas` | Confundieron estado global con propiedad de instancia | Mover el array fuera de la clase, al scope superior |
-| Quieren usar `extends` "porque queda elegante" | Sobreingeniería para M5 | Redirigir: clase plana basta, `extends` es Code 301 |
-| `this` es undefined dentro de método | Llamaron al método sin instancia (`Template.mostrar()` en vez de `t1.mostrar()`) | Recordar que los métodos viven en instancias |
-| Mezclan `function Template()` con `class Template` | Mezclando sintaxis viejo + nuevo | Quédate solo con `class` — la equivalencia ya quedó cerrada en C08 |
-| El render muestra `[object Object]` | Olvidaron usar `.titulo`/`.mensaje` o tienen `JSON.stringify` mal | Inspeccionar la instancia en consola primero |
+| `texto.trim()` "no hace nada" | No reasignaron el resultado | `texto = texto.trim()` — los strings no mutan |
+| El hashtag se guarda con espacios/mayúsculas | Falta `.trim().toLowerCase()` en `normalizarHashtag` | Revisar el encadenamiento |
+| El `#` se duplica o falta | No revisan con `startsWith("#")` | Usar el ternario `startsWith("#") ? ... : "#" + ...` |
+| `{nombre}` aparece literal en pantalla | No llamaron `replaceAll` (o usaron `replace`, solo 1 vez) | Usar `replaceAll("{nombre}", valor)` |
+| La fecha sale como objeto raro o `Invalid Date` | Usaron el objeto `Date` sin formatear | `.toLocaleDateString("es-PE")` |
+| Se agregan plantillas vacías | Falta la validación de `length === 0` | Validar `titulo`/`mensaje` antes de agregar |
+| La lista no se actualiza | No llaman `render()` tras cambiar el estado | Recordar: cambias estado → `render()` |
+| `state is not defined` | Orden de los `<script>` o falta el archivo | `Template.js` antes de `app.js` |
 
 ---
 
 ## ✅ Señales de Comprensión
 
 ### El estudiante ENTIENDE cuando:
-- Explica sin titubeos por qué `t1.titulo` y `t2.titulo` son distintos aunque la clase es la misma.
-- Identifica que el array `plantillas` NO es propiedad de la clase.
-- Decide sus 2 propiedades adicionales con un caso de uso real en mente, no por relleno.
+- Explica que `trim()` devuelve un texto nuevo y no muta el original.
+- Encadena métodos de String con intención (limpiar → unificar → asegurar `#`).
+- Usa `replaceAll` para convertir `{nombre}` en un valor real.
+- Sabe que tras cambiar el estado debe llamar `render()`.
 
 ### El estudiante NECESITA AYUDA cuando:
-- Pone el array `plantillas` como `this.plantillas` dentro del constructor.
-- Llama `Template(...)` sin `new` y obtiene `undefined`.
-- Inventa `extends` "porque vio uno en internet".
+- Cree que `texto.trim()` modifica `texto`.
+- Usa `replace` esperando que cambie todas las apariciones.
+- Edita el DOM a mano en vez de cambiar el estado y re-renderizar.
+- Guarda plantillas vacías o con espacios sin notarlo.
 
 ---
 
@@ -200,68 +164,83 @@ agregarPlantilla(t1);
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 lista | En consola: `new Template('a','b','c',...)` produce un objeto con todas las propiedades visibles. |
-| ~60' | HU2 lista | Array global `plantillas` existe. Funciones para agregar/eliminar funcionan. Verifico con 3 instancias. |
-| ~90' | HU3 lista | La página muestra una lista de plantillas (estado global) y cada una expone sus propiedades (estado local). |
+| ~30' | HU1 | En consola, `agregarPlantilla(...)` un par de veces hace crecer `state.plantillas`; cada item tiene `titulo`, `mensaje`, `hashtag`, `fecha`. |
+| ~60' | HU2 | Al enviar el formulario, la plantilla aparece sola en la lista, con la **fecha de hoy** legible; agregar otra no borra la anterior. |
+| ~90' | HU3 | `  Ventas ` se guarda como `#ventas`; con el mensaje vacío no deja agregar. |
+| ~110' | HU4 | `Hola {nombre}...` muestra `Hola Ana...` en la vista previa; un mensaje largo aparece recortado con `…`; los hashtags se ven como etiquetas. |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-### Si alguien menciona prototipos:
-> "Bien que lo recuerdes. Hoy estamos sobre ese conocimiento (lo cerramos en C08). Hoy modelas con `class` directamente."
+### Si el grupo está callado:
+- Muestra el antes/después de `s.trim()` en consola y que voten si `s` cambió.
 
-### Si alguien pregunta por `extends`:
-> "Buena curiosidad. Es Code 301. Para M5 vas a usar clases planas — vas a ver que basta."
+### Si alguien ya domina los métodos de String:
+- Pídele que explique por qué los strings son inmutables, o que implemente un logro extra (más variables, contador de caracteres).
 
-### Si la mayoría termina HU2 antes:
-- Mándalos a HU3, no permitas que empiecen "modos visuales avanzados". El foco hoy es claridad estado local/global.
+### Si la mayoría termina antes:
+- Logros adicionales: contador de caracteres, botón Copiar, soportar `{producto}`.
 
-### Si llegan al "modo grilla" (logro extra) sin entender bien la HU3:
-- Pídeles que primero expliquen en sus palabras qué cambia entre estado local y global. Si no pueden, el logro extra no aporta.
+### Si la mayoría se atrasa:
+- Prioriza HU1-HU3. HU4 (mensaje final) puede quedar como post-clase si el tiempo aprieta.
+
+### Si hay preguntas fuera de alcance (persistencia):
+> "Guardar al recargar es persistencia — eso es C15, con `localStorage`. Hoy todo vive en memoria, a propósito."
+
+---
+
+## 🔀 Diferenciación
+
+### Para estudiantes avanzados:
+- Soportar varias variables encadenando `.replaceAll()`.
+- Pregunta de extensión: "¿Por qué `replaceAll` y no `replace`?"
+
+### Para estudiantes con dificultades:
+- Pair programming.
+- Que primero hagan funcionar `normalizarHashtag` solo en consola antes de conectarlo al formulario.
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### P: ¿Por qué la clase Template no tiene un método estático para obtener todas las plantillas?
-**R:** Porque eso mezclaría estado global con la definición del modelo. La clase modela UNA plantilla. La app maneja la colección. Separación de responsabilidades.
+### P: ¿Por qué `replaceAll` y no `replace`?
+**R:** `replace` solo cambia la **primera** aparición. Si la plantilla usa `{nombre}` dos veces, `replace` deja una sin reemplazar. `replaceAll` cambia todas.
 
-### P: ¿Puedo usar `Object.freeze` para hacer las instancias inmutables?
-**R:** Funcionalmente sí, pero no es scope de hoy. Inmutabilidad la trabajan en C14 a nivel de array, no de objeto individual.
+### P: ¿Los métodos de String modifican mi variable?
+**R:** No. Los strings son inmutables; cada método devuelve uno nuevo. Hay que reasignar: `s = s.trim()`.
 
-### P: ¿Y si necesito una "Plantilla Premium" con campos extras?
-**R:** En el M5 vas a ver que se resuelve mejor con un campo `tipo: 'premium'` que con herencia. Mantén una clase, agrega campos.
+### P: ¿Por qué guardamos `new Date()` y no la fecha como texto?
+**R:** Guardar el objeto `Date` deja abierta la posibilidad de formatearlo distinto luego (hora, año, etc.). Formatear es decisión de presentación, va en `render`.
 
-### P: ¿Qué pasa si dos plantillas tienen el mismo título?
-**R:** Es estado local — pueden coexistir sin colisión. Si quieres unicidad, agrega un `id`. Buena pregunta para C14.
+### P: ¿Y si quiero que las plantillas se guarden al recargar?
+**R:** Eso es persistencia (`localStorage`), tema de C15. Hoy todo vive en memoria.
 
 ---
 
 ## 🔗 Conexiones del Curriculum
 
-### Esta clase construye sobre:
+### Construye sobre:
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C07 (M2) | Function constructor + `this` | La sintaxis cambió a `class`, el mecanismo es el mismo. |
-| C08 (M2) | Puente sintáctico class ↔ prototipos | Esta clase asume ese puente cerrado. NO se reabre. |
-| C12 (M3) | DOM con createElement | Hoy usas eso para renderizar las plantillas. |
+| C08 (M2) | `class`, `constructor`, `this` | Se reusa para modelar `Template` |
+| C09-C12 (M3) | DOM, `createElement`, eventos, "estado que crece" | Se reusan para `render` y el formulario |
 
-### Conexión con la Próxima Clase (C14)
+### Conexión con C14
 
-Al cerrar, planta la semilla:
+Al cerrar:
 
-> "Hoy crearon el modelo (clase Template) y un array global. Pero ese array está suelto: cualquiera lo modifica, nadie se entera de los cambios. La próxima clase aprenden el **Patrón Store** — `subscribe`, `getState`, `setState`, `notify` — que controla quién puede cambiar el estado y notifica automáticamente a la UI cuando cambia. Es el patrón que React, Vue y Redux usan adentro."
+> "Hoy su app crea, limpia y muestra plantillas. Pero solo crece: no pueden editar ni borrar una. La próxima clase su estado va a **cambiar y menguar** — editar y eliminar plantillas. Lo que aprendieron hoy de 'cambias el estado → render' es exactamente lo que van a reusar."
 
-**Pre-work implícito:** Pídeles que piensen "¿qué problemas tendría mi app si tengo 50 funciones tocando el array `plantillas`?" — la respuesta es exactamente el problema que Store resuelve.
+**Pre-work implícito:** Que piensen "si quisiera borrar una plantilla, ¿qué tendría que pasarle al array `state.plantillas`?"
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
 ### Preguntas para el facilitador:
-- ¿Alguien insistió en usar `extends`? Si sí, marca para seguimiento en M5 (puede saturarse con sobreingeniería).
-- ¿Las 2 propiedades extra que eligieron muestran pensamiento de producto? Si todas pusieron lo mismo, fuiste muy directivo.
-- ¿Confundieron estado local con global más de 2 veces? Refuerza con un mini-ejercicio al inicio de C14.
-- ¿Alguien preguntó por inmutabilidad? Marcalo — está listo para entender C14 con profundidad.
+- ¿Quedó claro que los strings no mutan? Si no, refuérzalo al inicio de C14.
+- ¿Confundieron `replace` con `replaceAll`? Marca para repaso.
+- ¿Entendieron "cambias estado → render" como regla, no como receta memorizada?
+- ¿Alguien preguntó por persistencia? Está listo para entender C15 con profundidad.

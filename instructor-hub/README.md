@@ -155,7 +155,7 @@ Cada clase cuenta con los siguientes documentos:
 
 **Proyecto Integrador:** Gestor de Plantillas para WhatsApp
 
-### Clase 13 — Modelado de Objetos y Estado
+### Clase 13 — Modelado de Datos y Manipulación de Texto
 
 | Documento | Enlace |
 |-----------|--------|
@@ -164,7 +164,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 13](https://entertechschool.github.io/public/slides/?class=code-201_13){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/facilitator/){:target="_blank"} |
 
-### Clase 14 — App State Management (Patrón Store)
+### Clase 14 — Interacción y Datos Derivados
 
 | Documento | Enlace |
 |-----------|--------|
@@ -182,7 +182,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 15](https://entertechschool.github.io/public/slides/?class=code-201_15){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/facilitator/){:target="_blank"} |
 
-### ⭐ Clase 16 — Persistencia y Sincronización *(Lab Evaluado M4)*
+### ⭐ Clase 16 — Módulos ESM y Cierre del Proyecto *(Lab Evaluado M4)*
 
 | Documento | Enlace |
 |-----------|--------|
@@ -257,10 +257,10 @@ Cada clase cuenta con los siguientes documentos:
 | 10 | Datos desde la web (fetch, Promesas, JSON) | [Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} | Regular |
 | 11 | async/await y búsqueda en la API | [Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} | Regular |
 | **12** | **Manejo de Errores y Estados** | [**Lab 12**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/lab/){:target="_blank"} | ⭐ **Evaluado M3** |
-| 13 | Modelado de Objetos y Estado | [Lab 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/lab/){:target="_blank"} | Regular |
-| 14 | App State Management | [Lab 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/lab/){:target="_blank"} | Regular |
+| 13 | Modelado de Datos y Manipulación de Texto | [Lab 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/lab/){:target="_blank"} | Regular |
+| 14 | Interacción y Datos Derivados | [Lab 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/lab/){:target="_blank"} | Regular |
 | 15 | JSON y LocalStorage | [Lab 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/lab/){:target="_blank"} | Regular |
-| **16** | **Persistencia y Sincronización** | [**Lab 16**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/lab/){:target="_blank"} | ⭐ **Evaluado M4** |
+| **16** | **Módulos ESM y Cierre del Proyecto** | [**Lab 16**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/lab/){:target="_blank"} | ⭐ **Evaluado M4** |
 | 17 | Ideation + Research + Stories | [Lab 17](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/lab/){:target="_blank"} | Regular (Proyecto M5) |
 | 18 | Sprint 1 | [Lab 18](https://entertechschool.github.io/ncode-201-guide/curriculum/class-18/lab/){:target="_blank"} | Regular (Proyecto M5) |
 | 19 | User Validation + Sprint 2 | [Lab 19](https://entertechschool.github.io/ncode-201-guide/curriculum/class-19/lab/){:target="_blank"} | Regular (Proyecto M5) |

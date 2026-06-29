@@ -1,284 +1,219 @@
-# Guía del Facilitador - Clase 16: Persistencia y Sincronización
+# Guía del Facilitador — Clase 16: Módulos (ESM) y Cierre del Proyecto
 
-> Tiempo de lectura: 8 minutos | **Última clase del M4 — Lab CALIFICADO + Test del módulo** | Prepárate antes de clase
-
----
-
-## 📦 Antes de Llegar (Preparativos Obligatorios)
-
-C16 cierra el M4. Tiene **tres responsabilidades**:
-
-1. **Lab calificado** (delegación de eventos + bonus cálculo sobre estado).
-2. **Test diagnóstico M4** en Blackboard (8 preguntas).
-3. **Bloque puente al M5**: cálculo sobre estado como preparación para los balances de la Agenda de Gastos.
-
-**Preparativos:**
-- Verifica que Blackboard tenga publicado el test del M4 antes de la clase.
-- Ten DevTools listos para mostrar "Event Listeners" en el panel de Elements.
-- Prepara una pizarra (física o digital) para dibujar "1 listener vs N listeners".
+> Tiempo de lectura: 8 minutos | Módulo 4 · Clase 16 | **Última clase del M4 — Lab CALIFICADO + cierre** | Prepárate antes de clase
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Guardado automático**: el Store se suscribe a sí mismo — cada `setState` dispara `guardarPlantillas`. No hay botones "guardar manual".
-- **Sincronización Store ↔ UI**: el `subscribe` ya lo hace. Hoy lo verifican en producción real.
-- **Delegación de eventos**: UN listener en el contenedor que atiende clicks de N botones internos vía `event.target`.
-- **Cálculo sobre estado (bonus)**: función pura `(state) → resultado derivado`. Patrón base para los balances de M5.
+- **Módulos ESM** (NUEVO, ancla): repartir el código en archivos que comparten con `export` y consumen con `import`. Cada archivo tiene su propio ámbito; el orden de los `<script>` deja de importar.
+- **`<script type="module">`** (NUEVO): activa ESM con un único punto de entrada (`app.js`). Requiere servidor local — **no** funciona con `file://`.
+- **Modal de confirmación propio** (NUEVO, menor): cuadro de HTML + Tailwind que se muestra/oculta con `classList`, reutilizable guardando la acción en una variable (`accionPendiente`).
+- **Estado vacío** (refuerzo): distinguir "no hay nada creado" de "el filtro no encontró nada", con un mensaje distinto para cada caso.
+- **Función pura** (refuerzo): `resumen(plantillas)` recibe datos y devuelve texto sin tocar el DOM ni el estado.
+
+> ❗ **Solo hay UN tema nuevo de peso: los módulos ESM.** El modal es un detalle de UX, y el estado vacío + resumen son integración. El resto de la clase es cerrar el proyecto del módulo.
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Guardado automático <> Autoguardado de Google Docs:**
-Nunca presionas "Guardar". Cada tecla queda guardada. El `subscribe` del Store es ese autoguardado: el cambio se persiste sin que el usuario lo pida.
+**Módulos ESM ⟷ Cajones rotulados:** un archivo gigante es un cajón donde tiras todo; los módulos son cajones rotulados (estado, storage, ui). Sabes exactamente dónde buscar.
 
-**Delegación <> Recepcionista de un edificio:**
-En vez de tener un guardia por cada piso, hay UN recepcionista en la planta baja. Cualquier visitante pasa por ahí y el recepcionista pregunta "¿a qué piso?". Un listener, N pisos.
+**`export` / `import` ⟷ Prestar y pedir:** `export` es poner algo en la repisa común; `import` es ir a buscarlo a la repisa del vecino. Nadie grita variables al aire (globales).
 
-**Cálculo sobre estado <> Calculadora de gastos del grupo:**
-Tú no anotas "Juan debe 50 a María". Anotas los gastos individuales y la calculadora **deriva** quién debe a quién. La función `calcularEstadisticas(state)` deriva información, no la guarda.
+**Modal reutilizable ⟷ Un guardia con instrucciones:** el modal siempre pregunta lo mismo ("¿seguro?"), pero la acción que ejecuta al confirmar se la pasas en el momento. Un solo guardia sirve para borrar una o todas.
 
 ---
 
 ## 📚 Contexto Actual
 
-### Delegación: la diferencia entre 5 listeners y 5000
+### Por qué ESM cierra el módulo
 
-Si renderizas una lista de 5000 items con un listener por cada uno, el navegador asigna 5000 listeners en memoria. Si usas delegación, uno solo. **Diferencia perceptible en performance** en apps reales. React lo hace por debajo de manera nativa — el `onClick` de un componente se delega al root del documento.
+Durante M4 la app creció: estado, persistencia, filtros, orden. En un solo archivo eso ya pesa. Modularizar no agrega features — **reorganiza** lo que ya funciona. Es el paso natural cuando un proyecto madura, y es exactamente lo que hace cualquier herramienta moderna (Vite, React, Vue) por debajo.
 
-> **Para contar en clase:** "Cuando lleguen a React, su `onClick` es delegación. Hoy entienden por qué funciona."
+> **Para contar en clase:** "Los `import`/`export` que aprenden hoy son los mismos que verán en cualquier proyecto profesional de frontend. No es una versión 'de juguete'."
 
-### Cálculo sobre estado: el patrón que paga sueldos
+### Por qué un modal propio y no `confirm()`
 
-Toda app moderna tiene "panels", "dashboards" o "stats". Todos calculan datos derivados del estado. Power BI, Tableau, Google Analytics — el patrón base es `función pura(datos) → resultado`. Lo que aprenden hoy con plantillas se aplica en M5 a balances de gastos.
+`confirm()` funciona pero es feo, no se puede estilizar y bloquea todo el navegador. Las apps reales (Gmail, Notion) construyen su propio modal. Es la diferencia entre un prototipo y algo presentable.
 
-**Fuentes:** [MDN: Event Delegation](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Events#delegaci%C3%B3n_de_eventos){:target="_blank"}, [Patterns: Selectors / Derived state](https://redux.js.org/usage/deriving-data-selectors){:target="_blank"}
+**Fuentes:** [MDN: Módulos JS](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Modules){:target="_blank"}, [MDN: type=module](https://developer.mozilla.org/es/docs/Web/HTML/Element/script/type/module){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Refuerzo | 15 min | Repaso de C15. "¿Cómo se hablan tus archivos hoy?" |
+| Debate + Demo | 30 min | Globales vs ESM; demo del antes/después de `import`. |
+| Lab (HU1-HU4) | 100 min | HU1 modal · HU2 estado vacío · HU3 modularizar · HU4 resumen + cierre |
+| Cierre + Presentaciones | 35 min | Demos de proyecto, síntesis del módulo. |
+
+> Ajusta los tiempos a la duración real de tu sesión. La clase es un **lab calificado** de cierre de módulo.
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo Principal — 1 listener vs N listeners en DevTools
+### Pregunta Detonadora (QUIZ PRE-LAB)
 
-**Qué mostrar:** 3 minutos. Primero, la versión "ingenua": 1 listener por cada botón eliminar. Renderizas 5 plantillas → en DevTools (Elements → Event Listeners) hay 5 listeners. Ahora la versión con delegación: 1 listener en el `<ul>`. Renderizas 100 plantillas → sigue habiendo 1 solo listener.
+**Pregunta:** Tu app crece y ya tienes 300 líneas en un solo archivo. ¿Qué problema empieza a aparecer?
+
+No tiene respuesta única — busca que mencionen: difícil encontrar código, choques de nombres, dependencia del orden de los `<script>`. Conecta cualquier respuesta con "por eso existen los módulos".
+
+### Demo Principal — el antes/después de ESM (5 min)
+
+**Qué mostrar:** un archivo con una variable global usada por otro archivo (frágil, depende del orden). Luego el mismo código con `export const state` en `state.js` e `import { state }` en `ui.js`.
 
 **Script sugerido:**
 ```
-Facilitador: "Versión 1: un listener por cada botón.
-[Renderiza 5, muestra 5 listeners en DevTools]
-Facilitador: "Versión 2: delegación. UN listener en el padre.
-[Refactor en vivo]
-Facilitador: "Ahora renderizo 100 plantillas...
-[Muestra 1 solo listener]
-Facilitador: "Mismo comportamiento, 100x menos memoria. ESO es delegación."
+Facilitador: "Hoy sus archivos se hablan por variables globales y rezan que el orden sea correcto."
+[Muestra el export/import]
+Facilitador: "Con esto, cada archivo PIDE lo que necesita. El orden ya no importa."
 ```
 
-**Plan B (si la demo falla):** Capturas de pantalla pre-tomadas mostrando "5 listeners" y "1 listener" en DevTools.
+**Plan B (si la demo falla):** muy probablemente sea `file://`. Abre con Live Server. Ten esto preparado: es el error #1 del día.
 
 ### Transición al Lab
 
-**Momento crítico:** HU3 (delegación) es la HU pedagógica más importante. HU1 y HU2 son aplicación rutinaria del Store. El bonus es opcional pero crítico para M5.
+**Momento crítico:** modularizar puede romper todo a la vez si lo hacen de golpe.
 
 **Script sugerido:**
 ```
-Facilitador: "HU1 y HU2 las hacen rápido — es Store aplicado.
-HU3 es la HU del concepto: UN listener para N botones.
-Si tienen 5 .addEventListener en su código, retroceden.
-El bonus de cálculo es opcional, pero CRÍTICO para M5. Si pueden, llegan."
+Facilitador: "HU1 y HU2 son detalles de UX rápidos: modal y estado vacío.
+ HU3 es el corazón: mueven el código a state/storage/ui/app SIN cambiar la lógica.
+ Háganlo por partes y prueben tras cada mover. Si rompe, fue el último cambio."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Cuenten los listeners"
+### Dinámica 1: "¿Quién exporta qué?" (antes de HU3)
+En la pizarra, lista los 4 archivos y pregunta qué debe exportar cada uno. Ayuda a que vean el mapa antes de tocar código.
 
-Durante HU3:
+### Dinámica 2: "¿Confirmas o no?" (en HU1)
+Da acciones ("agregar", "editar", "vaciar todo", "eliminar una") y que decidan cuáles merecen confirmación. Solo las **irreversibles**.
 
-> "Abran DevTools → Elements → seleccionen el `<ul>` → panel Event Listeners. ¿Cuántos ven? Deben ver UNO solo."
-
-**Dinámica sugerida:**
-```
-Facilitador: "Si ven más de uno, suscribieron listeners de más.
-Si ven cero, no aplicaron addEventListener al contenedor.
-Si ven 5, no usaron delegación — agregaron uno por botón.
-La cuenta correcta es: UNO."
-```
-
-### Dinámica 2: "El bonus es M5 disfrazado"
-
-Al llegar al bonus:
-
-> "Esta función `calcularEstadisticas(state)` es el patrón EXACTO que van a usar en M5 para calcular balances. Cada balance es una función pura sobre los gastos."
-
-**Dinámica sugerida:**
-```
-Facilitador: "Mañana, en M5, van a calcular: '¿cuánto debe Juan a María?'
-Esa función va a recibir `state.grupo.gastos` y va a retornar balances.
-Es EL MISMO patrón. Hoy con plantillas, mañana con gastos."
-```
-
-### Dinámica 3: "Sin recargar"
-
-Después de HU2:
-
-> "Hagan cualquier acción CRUD. Mira la UI. ¿Refrescaron la página manualmente?"
-
-**Dinámica sugerida:**
-```
-Facilitador: "Si tuvieron que recargar para ver el cambio, su subscribe está mal.
-Cero recargas. El Store + LocalStorage + subscribe = mágia."
-```
+### Dinámica 3: "Dos vacíos" (en HU2)
+"Pantalla en blanco: ¿es que no hay nada o que el filtro no encontró?" Que vean por qué el mensaje debe diferenciar.
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: Guardado automático suscrito
-
-**Cuándo usarlo:** Inicio de HU1.
-
+### Modal reutilizable (corazón de HU1)
 ```javascript
-// Después de definir store y guardarPlantillas:
-store.subscribe(state => {
-  localStorage.setItem('plantillas', JSON.stringify(state.plantillas));
-});
-```
-
-**Tip:** Una línea, persistencia automática. Cualquier `setState` ahora guarda. Es la magia del Store.
-
-### Ejemplo 2: Delegación (verbatim del lab)
-
-**Cuándo usarlo:** HU3.
-
-```javascript
-document.querySelector('#listaPlantillas').addEventListener('click', function(event) {
-  if (event.target.classList.contains('btn-eliminar')) {
-    const id = event.target.dataset.id;
-    if (confirm('¿Eliminar esta plantilla?')) {
-      store.setState({
-        ...store.getState(),
-        plantillas: store.getState().plantillas.filter(p => p.id !== id)
-      });
-    }
-  }
-});
-```
-
-**Tip:** Resaltar `event.target` — es el botón clickeado, NO el contenedor. La distinción clave de delegación.
-
-### Ejemplo 3: Cálculo sobre estado (bonus)
-
-**Cuándo usarlo:** Al llegar al bonus.
-
-```javascript
-function calcularEstadisticas(state) {
-  return {
-    total: state.plantillas.length,
-    porCategoria: state.plantillas.reduce((acc, p) => {
-      acc[p.categoria] = (acc[p.categoria] || 0) + 1;
-      return acc;
-    }, {})
-  };
+function pedirConfirmacion(mensaje, accion) {
+  document.getElementById("modal-texto").textContent = mensaje;
+  accionPendiente = accion;            // se guarda la función
+  modal.classList.remove("hidden");
 }
 ```
+"La acción se guarda en una variable; el botón Confirmar la ejecuta. Mismo modal, distintas acciones."
 
-**Tip:** "Función pura: recibe state, devuelve resultado. No modifica nada. En M5 esto es 'función pura: recibe gastos, devuelve balances'."
+### Distinguir los dos vacíos (HU2)
+```javascript
+const vacio = state.plantillas.length === 0
+  ? "Aún no tienes plantillas. ¡Crea la primera!"
+  : "No se encontraron plantillas con ese filtro.";
+```
+
+### Un solo punto de entrada (HU3)
+```html
+<script type="module" src="js/app.js"></script>
+```
+"Un solo `<script>`. Los `import` traen el resto."
 
 ---
 
 ## ⚠️ Errores Comunes
 
-| Síntoma | Qué está pasando | Qué hacer |
+| Señal | Qué está pasando | Qué hacer |
 |---|---|---|
-| Click en eliminar no hace nada | El `event.target.classList.contains` no matchea | Verificar que los botones renderizados tengan `class="btn-eliminar"` |
-| Múltiples listeners en el contenedor | Llamaron `addEventListener` dentro de `renderizar` | Mover el listener al setup, NO al render |
-| `event.target.dataset.id` es undefined | Olvidaron `data-id="${p.id}"` en el HTML del botón | Verificar template del botón |
-| Confirmación dispara dos veces | Hay un listener antiguo Y uno nuevo | Limpiar listeners viejos o no re-suscribir |
-| El subscribe del autoguardado no se dispara | Olvidaron usar `store.setState` (mutaron directo) | Refuerzo: siempre vía setState |
-| El bonus modifica el state | Pusieron `state.plantillas = ...` dentro del cálculo | Función pura: NO modifica, retorna |
+| `Failed to load module script` / CORS | Abrieron con `file://` (doble clic) | Usar Live Server o `python -m http.server` |
+| `404` al cargar un import | Ruta sin `./` o sin `.js` | `import { x } from "./state.js"` (ruta y extensión completas) |
+| `x is not defined` tras modularizar | Olvidaron `export` o `import` de ese símbolo | Exportar en el origen, importar en el destino |
+| El modal nunca aparece | No quitan la clase `hidden` | `modal.classList.remove("hidden")` |
+| Borra sin preguntar | La acción no se envolvió en `pedirConfirmacion` | Pasar la acción como callback al modal |
+| Mismo mensaje en ambos vacíos | No distinguen los dos casos | Comparar `state.plantillas.length === 0` |
+| El resumen no se actualiza | `resumen()` no se llama en `render()` | Invocarlo dentro de `render()` |
 
 ---
 
 ## ✅ Señales de Comprensión
 
 ### El estudiante ENTIENDE cuando:
-- En DevTools verifica que hay UN solo listener en el contenedor.
-- Sabe explicar por qué `event.target` (no `event.currentTarget`) en delegación.
-- Diseña funciones de cálculo sin tocar el estado.
+- Puede decir qué exporta cada archivo y por qué.
+- Explica que ESM elimina las globales y la dependencia del orden.
+- Distingue una acción que merece confirmación de una que no.
+- Reconoce los dos estados vacíos como casos distintos.
 
 ### El estudiante NECESITA AYUDA cuando:
-- Sigue agregando un listener por cada botón.
-- Confunde `target` con `currentTarget`.
-- Pone lógica de cálculo dentro del render.
+- Copia los `import` sin saber qué traen.
+- Sigue abriendo con `file://` tras el primer error.
+- Pide confirmación al agregar/editar (acciones reversibles).
+- Pone toda la lógica en un archivo "modularizado" solo de nombre.
 
 ---
 
 ## 🎯 Checkpoints de Validación
 
-| Tiempo | Checkpoint | Cómo validar |
-|---|---|---|
-| ~30' | HU1 lista | Agregar plantilla → DevTools Application muestra el cambio en LocalStorage al instante (sin guardar manual). |
-| ~60' | HU2 lista | CRUD completo sin recargar. UI sincronizada con Store sin llamadas manuales a render. |
-| ~90' | HU3 lista | DevTools: UN listener en el `<ul>` aunque haya 5+ botones. Confirmación previa al eliminar. |
-| ~110' | Bonus (opcional) | Panel de estadísticas actualizado en tiempo real al modificar plantillas. |
-
----
-
-## 📊 Test Diagnóstico del Módulo
-
-### Logística (30 min total)
-
-| Actividad | Tiempo | Qué hacer |
-|---|---|---|
-| Test en Blackboard | 15 min | Proyectar countdown, ambiente silencioso |
-| Revisión en vivo | 15 min | Compartir pantalla Blackboard, solo estadísticas (no nombres) |
-
-### Durante el test
-
-> "Tienen 15 minutos. Es individual y a libro cerrado. No afecta calificación — diagnóstico para nosotros antes de M5."
-
-**Tips:**
-- Proyectar un timer en pantalla.
-- Pregunta 7 evalúa el patrón Store + subscribe + persistencia + UI. Si <60% acierta, refuerza al inicio de M5.
-
-### Revisión de resultados
-
-**Qué buscar:**
-- Q3 (Patrón Store): si <70%, refuerza C14 antes de M5.
-- Q4 (inmutabilidad): si <70%, advertir que M5 simplifica a `.push` pero saben por qué hay alternativas.
-- Q7 (sincronización completa): es la pregunta clave — si dominan eso, están listos para M5.
+| Tiempo | Checkpoint | Cómo validar | Si no cumple |
+|---|---|---|---|
+| ~30' | HU1 modal | Eliminar abre el modal; Cancelar conserva; Eliminar borra y persiste | Revisar `classList` y el callback |
+| ~60' | HU2 estado vacío | App vacía y filtro sin match muestran mensajes distintos | Distinguir con `length === 0` |
+| ~90' | HU3 ESM | Tras modularizar, la app hace TODO lo de antes | Verificar servidor local y rutas `./...js` |
+| ~110' | HU4 resumen | El resumen refleja el total y cambia al agregar/eliminar | Llamar `resumen()` en `render()` |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-### Si saltan el bonus:
-- Está OK — es opcional. Pero recomienda fuerte que lo hagan post-clase. M5 lo asume conocido.
+### Si el grupo está callado:
+- Proyecta un archivo gigante y pregunta "¿dónde está la función de guardar?" Que sufran el desorden.
 
-### Si la mayoría está atrasada:
-- Sacrifica el bonus de cálculo, NO el test diagnóstico (está agendado en Blackboard).
-- HU3 (delegación) es no-negociable. Es el concepto pedagógico de la clase.
+### Si alguien domina la conversación:
+- "Excelente. ¿Alguien más resolvería la modularización en otro orden de archivos?"
 
-### Si alguien quiere usar `event.currentTarget`:
-> "En delegación quieres el botón clickeado (`event.target`), no el contenedor (`currentTarget`). Diferencia sutil pero clave."
+### Si la mayoría termina antes:
+- Logros adicionales: cerrar el modal al clic afuera, "deshacer" tras eliminar.
+
+### Si la mayoría se atrasa:
+- Prioriza HU3 (ESM, el tema nuevo). HU4 (resumen) puede quedar como refuerzo en casa.
+
+### Si hay preguntas fuera de alcance:
+> "Buena pregunta. Hoy enfoquémonos en cerrar bien el módulo; lo que viene después lo hablamos en su momento."
+
+---
+
+## 🔀 Diferenciación
+
+### Para estudiantes avanzados:
+- Modularizar también la lógica del modal en su propio archivo.
+- Logro "deshacer" con un temporizador.
+
+### Para estudiantes con dificultades:
+- Modularizar de a un archivo por vez, probando entre cada paso.
+- Empezar por `storage.js` (es el más contenido) antes de tocar `ui.js`.
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### P: ¿Por qué no agregar un listener por botón si funciona?
-**R:** Funciona, pero no escala. 100 listeners = 100x memoria. Delegación = 1 listener para cualquier cantidad de botones.
+### P: ¿Por qué mi app dejó de funcionar al modularizar?
+**R:** Casi siempre es `file://`. Los módulos exigen servidor local. Abre con Live Server. Segundo sospechoso: rutas de `import` sin `./` o sin `.js`.
 
-### P: ¿Qué pasa si tengo varios contenedores con botones similares?
-**R:** Un listener por contenedor. La delegación se aplica al ancestro común más cercano de los botones que quieres atender.
+### P: ¿Tengo que poner un `<script>` por cada archivo?
+**R:** No. Solo uno con `type="module"` apuntando a `app.js`. Los `import` cargan el resto.
 
-### P: ¿El bonus de cálculo es funcional puro?
-**R:** Sí — recibe state, devuelve resultado. No muta. Si tuvieran que recordar de C06, es el mismo patrón aplicado.
+### P: ¿Cuándo debo pedir confirmación?
+**R:** Solo en acciones irreversibles (borrar). Nunca al agregar o editar — eso molesta.
 
-### P: ¿Y si quiero cancelar la eliminación dentro del confirm?
-**R:** `confirm()` retorna `true`/`false`. Solo ejecutas `setState` si retorna `true`. Ya está en el ejemplo del lab.
+### P: ¿`confirm()` no servía?
+**R:** Funciona, pero es feo y no se estiliza. El modal propio es lo que hacen las apps reales.
 
 ---
 
@@ -288,27 +223,42 @@ function calcularEstadisticas(state) {
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C11 (M3) | `addEventListener` + `event.target` | Hoy lo usas para delegación |
-| C12 (M3) | Bonus de `createElement` | Hoy renderizas dinámicamente con eso |
-| C14 | Patrón Store con subscribe | Hoy lo combinas con persistencia automática |
-| C15 | LocalStorage + try/catch/finally | Hoy es automático vía subscribe |
-| C06 (M2) | `reduce` y funciones puras | El bonus de cálculo los reutiliza |
+| C15 | JSON + LocalStorage (`guardar`/`cargar`) | Pasan a `storage.js` con `export` |
+| C14 | Eventos, CRUD, datos derivados | La lógica se reparte en `state.js` y `ui.js` |
+| C13 | Modelado de datos (`Template`) | La clase vive ahora en `models/Template.js` |
 
-### Conexión con M5
+### Conexión al cerrar el módulo
 
-Al cerrar, planta la semilla:
+Al terminar, celebra el recorrido completo:
 
-> "Hoy cerramos M4. Lo que aprendieron en estas 4 clases ES el proyecto final: clase Gasto (C13) + Store de gastos (C14) + persistencia robusta con try/catch (C15) + delegación + cálculo sobre estado (C16). No hay conceptos nuevos en M5 — es ARMAR todo en un proyecto real: la Agenda de Gastos Compartidos. Vienen 4 clases de aplicación pura."
+> "Hace cuatro clases su app no guardaba nada y vivía en un solo archivo. Hoy persiste, está organizada en módulos y la pueden mostrar como un proyecto profesional. Eso es exactamente lo que hace un desarrollador frontend."
 
-**Pre-work implícito:** Que revisen el enunciado del proyecto M5 (Agenda de Gastos) y identifiquen qué pieza de C13-C16 resuelve cada HU del proyecto.
+**Pre-work / Tarea implícita:** que pulan su README y su demo antes de presentar.
+
+---
+
+## 🎤 Presentaciones de Cierre
+
+### Antes de empezar
+> "Este es SU momento. Han trabajado cuatro clases para llegar aquí. Muestren lo que construyeron con orgullo."
+
+### Durante las presentaciones (máx. 10 min c/u)
+- Mantén un ambiente positivo.
+- Una pregunta breve a cada presentador (pídele que explique 1 decisión técnica).
+- Aplaude genuinamente después de cada demo.
+
+### Si alguien no terminó
+> "Está bien no llegar al 100%. ¿Qué parte quieres mostrar?"
+
+### Cierre de las presentaciones
+> "Hace cuatro clases no sabían qué era persistir un estado. Hoy tienen una app modular, persistente y desplegada. ¡Increíble trabajo!"
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
 ### Preguntas para el facilitador:
-- ¿Cuántos completaron el bonus en clase vs post-clase? Si <30% en clase, ajusta tiempos.
-- ¿La demo "1 vs N listeners" hizo click? Si no, prueba mostrar DevTools en directo en otra cohorte.
-- ¿El test del M4 reveló debilidad en `subscribe`? Si sí, refuerza al inicio de M5 C18.
-- ¿Identificaron correctamente que el bonus de cálculo prefiguras balances? Si sí, M5 va a fluir.
-- Felicítalos — terminaron el contenido conceptual del curso. M5 es aplicación.
+- ¿Cuántos resolvieron la modularización sin romper la app?
+- ¿El error de `file://` se resolvió rápido o costó?
+- ¿Las demos mostraron comprensión real o solo copia?
+- ¿Qué concepto del módulo necesita refuerzo a futuro?

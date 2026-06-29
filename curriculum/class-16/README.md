@@ -1,60 +1,84 @@
-﻿> 📦 **Módulo 4:** Clase 16 de 16
+> 📦 **Módulo 4:** Clase 16 de 16
 
-# Clase 16: Persistencia y Sincronización
+# Clase 16: Módulos (ESM) y Cierre del Proyecto
 
 ## Resumen
 
-En la clase 16 profundizamos en técnicas avanzadas de **persistencia con LocalStorage** y **sincronización inmediata con la interfaz visual (UI)**. Implementamos soluciones automáticas para guardar datos al instante y mantener actualizada la interfaz ante cualquier cambio en el estado centralizado (Store). También analizamos críticamente estrategias para optimizar la experiencia de usuario (UX), enfocándonos en mensajes de confirmación para acciones sensibles.
+Llegaste al último laboratorio del **Gestor de Plantillas para WhatsApp**. Tu app ya crea, edita, ordena y persiste plantillas; hoy la dejarás lista para mostrar y, sobre todo, la organizarás como un profesional. Aprenderás **módulos ESM** (`export`/`import`): en lugar de un solo archivo lleno de variables globales, repartirás tu código en piezas que se comunican entre sí.
 
-## Estructura de la clase
+Además mejorarás la experiencia de usuario con dos detalles que separan un prototipo de una app de verdad: un **modal de confirmación propio** antes de borrar (nada de cuadros nativos feos) y un **estado vacío amigable** que guía al usuario en vez de mostrarle una pantalla en blanco.
 
-| **Fase** | **Duración** | **Descripción** |
-| -------- | ------------ | ---------------- |
-| **Refuerzo Práctico Inicial** | 15 min | Ejercicios breves sobre persistencia básica y conceptos clave de sincronización del Store y UI. |
-| **Debate Técnico y Demo** | 45 min | Debate crítico sobre mejores prácticas en persistencia local y sincronización visual inmediata, incluyendo análisis en vivo de código generado por IA. Demo técnica sobre sincronización y confirmaciones de usuario. |
-| **Laboratorio Práctico** | 100 min | Implementación hands-on de persistencia y sincronización avanzada en el proyecto integrador "Gestor de Plantillas para WhatsApp", con checkpoints específicos a los 30, 60 y 80 minutos. |
-| **Síntesis y Refuerzo** | 20 min | Resumen grupal, revisión crítica de implementaciones destacadas y preparación para próximos temas y proyectos finales. |
+Al cerrar, integrarás todo lo del módulo en una entrega completa: tus propias historias de usuario, un README, el despliegue en GitHub Pages y una demo en vivo.
 
 ---
 
-## Resultados Esperados
+## ¿Por qué te sirve?
 
-Al finalizar esta clase, los estudiantes podrán:
+- **Casi toda app frontend moderna usa módulos ESM.** React, Vue, Vite y los navegadores actuales se basan en `import`/`export`. Saber repartir tu código es el estándar profesional, no un lujo.
+- **Las confirmaciones evitan desastres reales.** Gmail, Notion y WhatsApp te preguntan antes de borrar. Un clic accidental no debería destruir el trabajo de nadie.
+- **Un código organizado es un código mantenible.** Separar estado, persistencia e interfaz en archivos distintos es lo que permite que un equipo trabaje sin pisarse y que tú entiendas tu propio proyecto meses después.
 
-### Podrán hacer
-1. **Persistencia Automática con LocalStorage:**  
-   Implementar guardado automático eficaz para prevenir la pérdida de información en aplicaciones frontend usando LocalStorage.
+---
 
-2. **Sincronización Inmediata Estado-Interfaz:**  
-   Vincular cambios del estado centralizado directamente con la interfaz visual (UI) para garantizar actualizaciones en tiempo real.
+## 🎯 ¿Qué haremos en clase?
 
-3. **Confirmaciones UX en Acciones Críticas:**  
-   Desarrollar e integrar mensajes visuales claros y efectivos para confirmaciones del usuario ante acciones críticas como eliminación permanente de datos.
+1. **Construiremos un modal de confirmación** - Reemplazarás el cuadro nativo por uno propio con HTML y Tailwind.
+2. **Manejarás los estados vacíos** - Distinguirás "no hay nada" de "el filtro no encontró nada".
+3. **Modularizarás con ESM** - Repartirás el código en `state.js`, `storage.js`, `ui.js` y `app.js`.
+4. **Cerrarás el proyecto** - Integrarás tus HUs, documentarás, desplegarás y prepararás tu demo.
 
-### Podrán explicar
-1. **Estrategias de Persistencia Local:**  
-   Analizar por qué y cuándo es conveniente usar LocalStorage frente a otras soluciones como IndexedDB o almacenamiento en servidor.
+---
 
-2. **Principios de Sincronización Dinámica:**  
-   Justificar técnicas y patrones que permiten una sincronización fluida e inmediata entre el estado persistente y la interfaz del usuario.
+## Objetivos de Aprendizaje
 
-3. **Importancia de la UX en Persistencia:**  
-   Argumentar cómo una buena UX en la gestión de datos persistentes mejora significativamente la confianza y satisfacción del usuario.
+Al finalizar esta clase, podrás:
 
-### Podrán implementar
-1. **Funciones de Guardado Automático:**  
-   Crear funciones robustas para guardar cambios automáticamente en LocalStorage, integradas directamente con acciones CRUD.
+1. **Construir** un modal de confirmación reutilizable que guarde la acción pendiente en una variable.
+2. **Diferenciar** los dos estados vacíos de una lista y mostrar un mensaje claro para cada uno.
+3. **Modularizar** una app con `export`/`import` y `<script type="module">`, sin variables globales.
+4. **Verificar** la sincronización completa estado ↔ almacenamiento ↔ interfaz y preparar una demo del proyecto.
 
-2. **Patrones de Actualización Visual Instantánea:**  
-   Desarrollar métodos para reflejar en tiempo real cualquier cambio en el Store sobre la interfaz visual.
+---
 
-3. **Mensajes de Confirmación de Acciones:**  
-   Incorporar confirmaciones visuales previas a la ejecución de acciones críticas (como eliminación definitiva) para evitar errores del usuario.
+## ✅ Preparación para la Clase
 
-4. **Delegación de eventos:**
-   Aplicar el patrón "un listener en el contenedor que atiende clicks de N botones hijos" usando `event.target.classList.contains(...)`. Es lo que vas a usar masivamente en M5 (listas dinámicas de personas, gastos, transferencias).
+### De clases anteriores
 
-### Bonus opcional al cierre
+- Tu **Gestor de Plantillas** de C15 funcionando: crear, editar, eliminar, filtrar, ordenar y persistir con `LocalStorage`.
+- Las funciones de estado (`plantillasVisibles`, contar) y de persistencia (`guardar`, `cargar`) operativas.
 
-5. **Cálculo sobre estado (función pura(state) → resultado):**
-   Patrón base para M5 — recibir el estado y producir resultados derivados (totales, promedios, agrupaciones). Hoy lo ves con plantillas; en M5 lo aplicas a balances y transferencias.
+### Reflexión previa
+
+Antes de llegar a clase, reflexiona sobre:
+
+- Cuando una app tiene cientos de líneas en un solo archivo, ¿cómo encuentras el código que necesitas cambiar?
+- ¿Qué pasa cuando borras algo importante por accidente? ¿Cómo te protege una buena app?
+
+### Herramientas
+
+- [ ] **Tu repositorio `whatsapp-templates`** - Con el código de C15 funcionando.
+- [ ] **Live Server (VS Code) o `python -m http.server`** - Los módulos ESM **no** funcionan abriendo el HTML con doble clic (`file://`); necesitas un servidor local.
+
+### Lectura sugerida
+
+- [MDN: Módulos de JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Modules){:target="_blank"} - Cómo funcionan `export` e `import` en el navegador.
+
+---
+
+## Glosario
+
+| Término | Definición |
+|---------|------------|
+| **Módulos ESM** | Sistema para repartir el código en archivos que comparten cosas con `export` y las usan con `import`. |
+| **`export` / `import`** | `export` expone algo de un archivo; `import` lo trae en otro indicando su ruta. |
+| **`<script type="module">`** | Activa los módulos: cada archivo tiene su propio ámbito y el orden de carga deja de importar. |
+| **Modal** | Ventana de confirmación propia (HTML + Tailwind) que se muestra u oculta alternando una clase. |
+| **Estado vacío** | Lo que ve el usuario cuando no hay datos: un mensaje claro en vez de una pantalla en blanco. |
+| **Función pura** | Función que recibe datos y devuelve un resultado, sin tocar el DOM ni el estado externo. |
+
+---
+
+## Recursos Adicionales
+
+- [MDN: `<script type="module">`](https://developer.mozilla.org/es/docs/Web/HTML/Element/script/type/module){:target="_blank"} - Por qué los módulos necesitan un servidor local.
+- [web.dev: Modal accesible](https://web.dev/articles/building/a-dialog-component){:target="_blank"} - Buenas prácticas para ventanas de confirmación.

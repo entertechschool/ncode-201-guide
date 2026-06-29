@@ -97,18 +97,19 @@
 > - Diseño responsivo
 
 ### Módulo 4: Estado y Persistencia
-13. **Modelado de Objetos y Estado** (180 min, blend)
-14. **App State Management (Patrón Store)** (180 min, blend)
+13. **Modelado de Datos y Manipulación de Texto** (180 min, blend)
+14. **Interacción y Datos Derivados** (180 min, blend)
 15. **JSON y LocalStorage** (180 min, blend)
-16. **Persistencia y Sincronización** (180 min, blend)
+16. **Módulos ESM y Cierre del Proyecto** (180 min, blend)
 - **Presentación del Proyecto Integrador** (180 min, demo)
 
 #### Subtemas complementarios:
-- Clases en Javascript (sintaxis moderna)
-- Estado una aplicación
-- Mutabilidad vs Inmutabilidad
-- Serialización y Deserialización
-- Operador ternario
+- Estado central y patrón `render()`
+- Métodos de String y objeto `Date`
+- Delegación de eventos y CRUD
+- Datos derivados (funciones puras) y `.sort()`
+- Serialización (JSON) y persistencia (LocalStorage)
+- Módulos ESM (`import` / `export`)
 
 > #### Proyecto Integrador: **Gestor de Plantillas para WhatsApp**
 > Este proyecto consiste en desarrollar una aplicación web interactiva para gestionar plantillas personalizadas destinadas a facilitar la atención rápida y efectiva de clientes o usuarios a través de WhatsApp. La aplicación permitirá crear, editar, eliminar y consultar fácilmente las plantillas guardadas, ofreciendo funcionalidades avanzadas como filtrado rápido mediante hashtags relacionados. Se utilizarán técnicas avanzadas de gestión del estado centralizado, persistencia de datos mediante JSON y LocalStorage, y una interfaz responsiva diseñada para maximizar la usabilidad tanto en escritorio como en dispositivos móviles.

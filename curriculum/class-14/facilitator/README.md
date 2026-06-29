@@ -1,179 +1,148 @@
-# Guía del Facilitador - Clase 14: Patrón Store
+# Guía del Facilitador — Clase 14: Interacción y Datos Derivados
 
-> Tiempo de lectura: 8 minutos | Segunda clase del M4 | Prepárate antes de clase
+> Tiempo de lectura: 8 minutos | Módulo 4 · Clase 14 | Prepárate antes de clase
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Patrón Store**: objeto único que centraliza el estado de la app y controla quién lo lee y lo modifica. Una sola fuente de verdad.
-- **`getState`**: método para leer el estado actual. Nunca acceso directo a `state`.
-- **`setState`**: método para reemplazar el estado por uno nuevo (inmutable). Internamente dispara `notify`.
-- **`subscribe`**: registrar una función que se ejecutará cada vez que el estado cambie. La UI se suscribe y deja de necesitar llamadas manuales a `renderizar`.
-- **`notify`**: avisa a TODOS los suscriptores que el estado cambió. Lo dispara `setState` automáticamente.
+- **Delegación de eventos** (NUEVO, ancla): un solo `addEventListener` en el contenedor padre que, según `event.target`, decide qué hacer. Reemplaza el "un listener por botón" que no sobrevive a un re-render.
+- **`data-id` + `dataset`** (NUEVO): se guarda el id en el HTML (`data-id="${p.id}"`) y se lee con `e.target.dataset.id`. Es el puente entre el clic y la plantilla correcta.
+- **`.sort()` + comparador** (NUEVO, 2ª herramienta): ordena un array con una función `(a, b)`. Por fecha (`new Date(b.fecha) - new Date(a.fecha)`) o alfabético (`localeCompare`). **Muta**, por eso se copia con `[...]` antes.
+- **CRUD inmutable** (REFUERZO): eliminar con `.filter`, editar con `.map` + spread. Nunca se toca el array original.
+- **Datos derivados / función pura** (REFUERZO): `contarPorHashtag` con `.reduce` recibe el estado y devuelve un conteo, sin guardar nada. Se recalcula en cada `render()`.
+
+> ❗ **El patrón estado → `render()` no cambia.** Todo lo nuevo (eliminar, editar, stats, filtro, orden) pasa por el mismo `render()` que ya tenían de C13. Las únicas APIs nuevas son **delegación de eventos** y **`.sort()`** (respeta MAX_TWO_NEW_TOOLS).
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Store <> Pizarra del equipo con un facilitador:**
-Nadie puede borrar la pizarra directamente. Para cambiar lo que está escrito, le pides al facilitador. Él aplica el cambio Y avisa al equipo. Eso es exactamente `setState` + `notify`.
+**Delegación de eventos ⟷ Recepcionista de un edificio:** en vez de poner un guardia en cada puerta (un listener por botón), pones **un recepcionista en la entrada** que pregunta "¿a quién buscas?" (`event.target`) y dirige. Funciona aunque cambien las oficinas (las tarjetas se redibujan).
 
-**`subscribe` <> Suscripción a un canal:**
-Cuando te suscribes a un canal de noticias, recibes cada nueva publicación sin tener que entrar a buscar. Tu función "se suscribe" y el store le manda el nuevo estado automáticamente.
+**Datos derivados ⟷ El marcador de un partido:** el marcador no se "guarda" aparte; se **calcula** de los goles que ya pasaron. Si cambias los goles, el marcador se recalcula solo. Igual que `Total` y el conteo por hashtag.
 
-**Inmutabilidad <> Tener fotocopias del documento:**
-En vez de tachar y reescribir el original, sacas una fotocopia, modificas la copia y la pones encima. Si algo sale mal, el original sigue ahí. `[...state.plantillas, nueva]` es la fotocopia.
-
-**Sin Store <> Sin Store con 50 funciones:**
-Imagina 50 personas con marcadores escribiendo en la misma pizarra al mismo tiempo. Nadie sabe quién cambió qué. Eso es estado global sin Store.
+**Inmutabilidad ⟷ Fotocopiar antes de tachar:** en vez de tachar el documento original, sacas una copia y tachas la copia. `.filter`, `.map` y `[...arr]` hacen eso con tus arrays.
 
 ---
 
 ## 📚 Contexto Actual
 
-### El Patrón Store: de Facebook a tu app vanilla
+### Por qué la delegación de eventos es la norma en apps reales
 
-En 2014 Facebook publicó **Flux** — un patrón arquitectónico donde el estado fluye en una sola dirección: acción → store → vista. Redux (2015), Vuex, Pinia y `useReducer` de React son descendientes directos. Lo que tus alumnos hacen hoy con `store.getState/setState/subscribe` es Redux en versión mínima viable, sin librerías.
+Cualquier interfaz con listas dinámicas (un feed, una bandeja de correo, un tablero Kanban) crea y destruye elementos constantemente. Enganchar y reenganchar listeners en cada cambio es frágil y costoso. Por eso el patrón estándar —y el que usan internamente librerías como React con su "synthetic events"— es **escuchar en un ancestro estable** y resolver el destino con `event.target`. Hoy lo hacen a mano, y entienden lo que esas librerías automatizan.
 
-> **Para contar en clase:** "El día que aprendan Redux van a decir 'esto ya lo hice en clase'. La sintaxis cambia, el patrón es idéntico."
+### Por qué "datos derivados" en vez de "guardar el total"
 
-### Inmutabilidad: el bug invisible que mata apps
+Un error clásico de principiante es guardar el total en una variable y actualizarla a mano en cada operación: se desincroniza enseguida. La práctica profesional es **derivar** del estado (single source of truth). Si el estado es correcto, el total siempre es correcto. Esta idea es la semilla de los "selectores" o "computed" de frameworks modernos.
 
-Cuando dos partes del código tienen referencia al mismo array y una lo muta, la otra ve cambios que no pidió. Es el bug más frustrante de debuggear porque no hay error explícito — solo comportamiento raro. El patrón `[...arr, nuevo]` evita esto porque cada `setState` produce un array nuevo, no muta el anterior.
+### La frontera con C15
 
-**Fuentes:** [Flux architecture](https://facebookarchive.github.io/flux/){:target="_blank"}, [Redux docs](https://redux.js.org){:target="_blank"}
+Hoy todo vive en memoria: al recargar, se pierde. **Persistir** con `localStorage` + `JSON.stringify/parse` es C15. No lo adelantes.
+
+**Fuentes:** [MDN: Delegación de eventos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Events){:target="_blank"}, [MDN: Array.sort()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Refuerzo | 15 min | El `render()` de C13. "¿Cómo le agrego un botón a cada tarjeta?" |
+| Debate / Demo | 30 min | Listener por botón vs delegación; qué es un dato derivado. |
+| Demo | 15 min | Un listener en la lista atiende clics de varias tarjetas. |
+| Lab (HU1-HU5) | 100 min | HU1 eliminar · HU2 editar · HU3 stats · HU4 filtro · HU5 ordenar |
+| Cierre | 20 min | Síntesis + "si recargas, se pierde" → C15. |
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo Principal — El store completo en 30 líneas
+### Pregunta Detonadora
 
-**Qué mostrar:** 4 minutos en vivo. Construye el objeto `store` con `state`, `listeners`, `getState`, `setState`, `subscribe`, `notify`. Crea una función `renderizar` y `store.subscribe(renderizar)`. Llama `store.setState({ plantillas: [...] })` desde la consola — la pantalla se actualiza sola. Llama dos veces más — se actualiza dos veces más, sin que invoques `renderizar` manualmente.
+**Pregunta (QUIZ PRE-LAB):** Si re-dibujas la lista cada vez que cambia el estado, ¿qué pasa con los listeners que pusiste botón por botón?
+
+**Respuesta esperada:** Se pierden — el `render()` reemplaza el HTML, así que los nodos viejos (con sus listeners) desaparecen. Hay que reengancharlos cada vez... o usar delegación.
+
+**Tip:** No la cierres aún. Deja que lleguen solos a "qué fastidio reengancharlos siempre" — ahí entra la delegación como alivio.
+
+### Comprobación (post-demo)
+
+**Pregunta:** ¿Qué es la delegación de eventos?
+**Respuesta correcta:** C — un solo listener en el padre que decide según `event.target`.
+
+**Por qué las otras NO:**
+| Opción | Por qué NO |
+|---|---|
+| A | Listener por hijo: muere en cada re-render. |
+| B | `onclick` inline: no escala, mezcla HTML/JS. |
+| D | Reenganchar listeners es justo lo que la delegación evita. |
+
+### Demo Principal
+
+**Qué mostrar:** Una lista con 3 tarjetas. Pones **un** `addEventListener("click")` en el `<ul>` y, con `if (e.target.classList.contains("btn-eliminar"))`, eliminas la correcta. Eliminas una, re-renderizas, y el mismo listener sigue funcionando sin tocar nada.
 
 **Script sugerido:**
 ```
-Facilitador: "Miren mi consola. Voy a cambiar el estado tres veces seguidas:
-[store.setState({...}) x3]
-Facilitador: "¿Vieron? Yo no llamé a renderizar ni una sola vez.
-El store lo hizo por mí porque renderizar está suscrito. Esa es la magia."
+Facilitador: "Voy a poner UN listener en la lista, no en cada botón."
+[Hace clic en eliminar de la tarjeta 2 → desaparece]
+Facilitador: "Re-renderizo... y miren: sigue funcionando sin reenganchar nada. ¿Por qué?"
 ```
 
-**Plan B (si la demo falla):** Tener un CodePen pre-armado con la demo funcionando. Mostrar y narrar.
+**Plan B (si algo falla):** muestra en consola `e.target` al hacer clic en distintas zonas de la tarjeta; que vean que cambia según dónde tocan.
 
 ### Transición al Lab
 
-**Momento crítico:** La HU0 (Store completo) es el corazón de la clase. Si la pasan rápido, HU1-HU3 son consecuencia natural. Si la pasan sin entender, no hay forma de salvar HU1-HU3.
-
-**Script sugerido:**
 ```
-Facilitador: "HU0 es donde van a pelear. NO sigan a HU1 hasta que su demo funcione:
-agregar al store debe disparar render sin que ustedes lo llamen.
-Si llaman render manualmente, retrocedan."
+"HU1: botón Eliminar con delegación (un listener en la lista).
+ HU2: botón Editar que carga el formulario y actualiza en su lugar (state.editandoId).
+ HU3: panel de stats con contarPorHashtag (función pura, reduce).
+ HU4: buscador que filtra por hashtag (la lista reacciona).
+ HU5: selector que ordena con .sort() (fecha o alfabético).
+ Todo pasa por el mismo render(). Si recargan la página... se pierde. Eso es C15."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Buscar la llamada manual"
+### Dinámica 1: "¿En qué hice clic?" (antes de HU1)
+Proyecta una tarjeta con título, mensaje y dos botones. Haz clic en distintas zonas y pregunta "¿qué creen que es `event.target` aquí?". Conecta con `classList.contains` para distinguir.
 
-Después del Checkpoint 1, pide a los alumnos que revisen su código:
+### Dinámica 2: "Mutar o no mutar" (en HU2)
+Da tres operaciones (eliminar, editar, ordenar) y que digan cuál es la versión inmutable. Refuerza `.filter` / `.map` / `[...arr]`.
 
-> "Si ven una sola línea que diga `renderizar()` fuera del `subscribe`, levanten la mano."
-
-**Dinámica sugerida:**
-```
-Facilitador: "Cada `renderizar()` manual es una oportunidad de bug.
-Si su store funciona bien, NUNCA tienen que llamarlo a mano.
-Solo `store.setState(...)`. El render se dispara solo."
-```
-
-### Dinámica 2: "Romper la inmutabilidad a propósito"
-
-Después de HU2:
-
-> "Cambien `[...state.plantillas, nueva]` por `state.plantillas.push(nueva)`. Recarguen y prueben."
-
-**Dinámica sugerida:**
-```
-Facilitador: "¿Qué pasó? Aparentemente nada. La app sigue funcionando.
-Pero ahora pierden la capacidad de comparar 'antes vs después'.
-Si después agregan undo/redo, este pequeño cambio rompe TODO.
-Por eso inmutabilidad."
-```
-
-### Dinámica 3: "Suscribir dos funciones"
-
-Reto rápido al final del lab:
-
-> "Suscriban una segunda función `console.log` al store. ¿Qué pasa al hacer `setState`?"
-
-**Dinámica sugerida:**
-```
-Facilitador: "Ahora son DOS suscriptores. Cada cambio dispara las dos.
-Imaginen 5 componentes UI suscritos al mismo store. Ese es el poder."
-```
+### Dinámica 3: "¿Se guarda o se calcula?" (en HU3)
+Lista cosas de apps reales (no leídos de WhatsApp, total del carrito, likes) y que clasifiquen: ¿dato guardado o derivado del estado?
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: Store completo (mínimo viable)
-
-**Cuándo usarlo:** Si alguien se atasca en HU0.
-
+### Un listener atiende dos botones
 ```javascript
-const store = {
-  state: { plantillas: [] },
-  listeners: [],
-  getState() { return this.state; },
-  setState(newState) {
-    this.state = newState;
-    this.notify();
-  },
-  subscribe(listener) { this.listeners.push(listener); },
-  notify() { this.listeners.forEach(fn => fn(this.state)); }
-};
-```
-
-**Tip:** En pizarra, dibuja flechas: `setState → state se reemplaza → notify → cada listener corre`.
-
-### Ejemplo 2: Agregar inmutablemente
-
-**Cuándo usarlo:** Si alguien hace `state.plantillas.push(...)`.
-
-```javascript
-const actual = store.getState();
-store.setState({
-  ...actual,
-  plantillas: [...actual.plantillas, nueva]
+lista.addEventListener("click", function (e) {
+  const id = Number(e.target.dataset.id);
+  if (e.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
+  if (e.target.classList.contains("btn-editar"))   cargarEnFormulario(id);
 });
 ```
+"Un solo listener; `event.target` y `classList` deciden la acción."
 
-**Tip:** "El spread es tu mejor amigo. Si no lo usas, mutas. Si mutas, el subscribe puede no detectar el cambio en frameworks reales."
-
-### Ejemplo 3: Render reactivo
-
-**Cuándo usarlo:** Si confunden HU0 con HU1.
-
+### Editar sin mutar
 ```javascript
-function renderizar(state) {
-  const lista = document.querySelector('#listaPlantillas');
-  lista.innerHTML = '';
-  state.plantillas.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = p.titulo;
-    lista.appendChild(li);
-  });
-}
-
-store.subscribe(renderizar);
-renderizar(store.getState()); // primera vez
+state.plantillas = state.plantillas.map(p =>
+  p.id === state.editandoId ? { ...p, titulo: t } : p
+);
 ```
+"`.map` devuelve un array nuevo; el spread copia la plantilla y cambia solo lo necesario."
 
-**Tip:** Esa primera llamada manual es porque `subscribe` no dispara inmediatamente. Es la única vez que `renderizar` se llama a mano.
+### Ordenar copiando primero
+```javascript
+const copia = [...plantillas];
+return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
+```
+".sort() muta; por eso copiamos antes."
 
 ---
 
@@ -181,68 +150,80 @@ renderizar(store.getState()); // primera vez
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| `renderizar` se llama dos veces por cada cambio | Suscribieron dos veces la misma función | Una sola llamada a `subscribe` por listener |
-| `setState` no dispara el render | Olvidaron llamar `this.notify()` dentro de `setState` | Revisar la implementación del Store |
-| La lista no se actualiza visualmente | Mutaron con `push` en vez de `setState` | Reemplazar `push` por spread + setState |
-| `this` es undefined en `notify` | Llamaron `setState` como callback sin `bind` | Usar arrow functions o estructura como en el ejemplo |
-| Después de `setState`, `getState` devuelve lo viejo | Asignaron a `state` con `=` en vez de pasar por `setState` | Solo `setState` puede modificar; nunca `store.state = ...` directo |
-| Render dispara render dispara render… | Dentro de `renderizar` están haciendo `setState` | Render solo lee del estado, nunca lo modifica |
+| El clic en eliminar no hace nada | Mal nombre de clase en `classList.contains` | Debe coincidir con `btn-eliminar` exacto |
+| `eliminarPlantilla(undefined)` | `data-id` no está en el botón, o leen otro nodo | Verificar `data-id="${p.id}"` y `e.target.dataset.id` |
+| `id` no coincide nunca | `dataset.id` es texto, `p.id` es número | Envolver con `Number(e.target.dataset.id)` |
+| Al editar se crea una copia | No usan `state.editandoId` en el `submit` | Decidir `map` (editar) vs `agregar` (crear) según `editandoId` |
+| Las stats no se actualizan | No llaman `renderStats()` en `render()` | Agregar `renderStats();` al final de `render()` |
+| El total baja al filtrar | Cuentan `plantillasVisibles()` en vez del estado | Stats cuentan `state.plantillas` (total real) |
+| El estado se reordena solo y "se rompe" | `.sort()` mutó `state.plantillas` | Copiar con `[...plantillas]` antes de ordenar |
+| Tildes mal ordenadas (A-Z) | Usan `<` en vez de `localeCompare` | Usar `a.titulo.localeCompare(b.titulo)` |
 
 ---
 
 ## ✅ Señales de Comprensión
 
 ### El estudiante ENTIENDE cuando:
-- Explica sin titubeos por qué `subscribe` se llama UNA vez pero se ejecuta MUCHAS.
-- Distingue `getState` (leer) de `setState` (cambiar) sin confundir.
-- Reemplaza `.push()` por spread sin que se lo recuerden.
+- Explica por qué un listener en el padre sobrevive al re-render.
+- Distingue una operación que muta de una inmutable.
+- Sabe que el total se **deriva** del estado y por eso nunca se desactualiza.
+- Lee `event.target` y `dataset.id` con naturalidad.
 
 ### El estudiante NECESITA AYUDA cuando:
-- Llama a `renderizar()` manualmente después de cada `setState`.
-- Hace `store.state = nuevoEstado` directo, sin pasar por `setState`.
-- No entiende por qué `state.plantillas.push(x)` "también funciona visualmente".
+- Pone un `addEventListener` dentro del loop de `render()`.
+- Modifica `p.titulo` directamente al editar.
+- Guarda el total en una variable que actualiza a mano.
+- Compara fechas o texto sin `new Date()` / `localeCompare`.
 
 ---
 
 ## 🎯 Checkpoints de Validación
 
-| Tiempo | Checkpoint | Cómo validar |
-|---|---|---|
-| ~30' | HU0 lista | Desde consola: `store.setState({plantillas:[{titulo:'X'}]})` actualiza la UI sin llamadas manuales. |
-| ~60' | HU1+HU2 listas | Submit del form agrega plantilla. Aparece en pantalla. El array NO es mutado (verificable con `Object.isFrozen` o comparando referencias antes/después). |
-| ~90' | HU3 lista | Click en botón eliminar → plantilla desaparece. Sin recarga. Estado consistente. |
+| Tiempo | Checkpoint | Cómo validar | Si no cumple |
+|---|---|---|---|
+| ~30' | HU1 | Agregar 3, eliminar la del medio: solo esa desaparece. | Revisar `classList.contains` y `Number(dataset.id)` |
+| ~55' | HU2 | Editar y guardar: se actualiza en su lugar, sin copia nueva. | Revisar uso de `state.editandoId` en el `submit` |
+| ~80' | HU3 | Panel muestra `Total` y conteo por hashtag; baja al eliminar. | Agregar `renderStats()` al final de `render()` |
+| ~100' | HU4 | Filtrar por hashtag muestra solo coincidencias; borrar → todas. | Recorrer `plantillasVisibles()` en `render()` |
+| ~115' | HU5 | Selector reordena (fecha / alfabético); el estado no se corrompe. | Copiar con `[...plantillas]` antes de `.sort()` |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-### Si alguien dice "esto es muy parecido a React":
-> "Exacto. Lo que aprenden hoy en vanilla es el patrón que React encapsula en `useState`. Cuando lleguen a React no van a aprender un patrón nuevo — solo otra sintaxis."
+- **Grupo callado:** haz clic en distintas zonas de una tarjeta y muestra `console.log(e.target)`; el cambio del target genera preguntas.
+- **Alguien ya sabía delegación:** pídele que explique por qué `dataset.id` necesita `Number()`.
+- **Terminan antes:** sugiere los Logros (cancelar edición, hashtag más usado, confirmar al eliminar).
+- **Se atrasan:** prioriza HU1-HU3 (delegación + CRUD + stats); HU4-HU5 pueden quedar como extensión.
+- **Preguntas fuera de alcance (persistencia):** "Eso es exactamente C15. Hoy todo vive en memoria a propósito."
 
-### Si alguien quiere usar Redux directo:
-> "Mejor entiendan el patrón sin librería primero. Cuando agreguen Redux, sabrán qué problema resuelve y por qué."
+---
 
-### Si la mayoría termina antes:
-- Pídeles agregar un **segundo subscriber** que loguee cambios al store. Esto refuerza el patrón sin agregar complejidad.
+## 🔀 Diferenciación
 
-### Si están atorados en HU0:
-- Pasa a una pizarra y dibuja la secuencia: `setState → state cambia → notify → listeners corren`. Sin código.
+### Para estudiantes avanzados:
+- Logro "hashtag más usado" con `contarPorHashtag` + `Object.entries` + `.sort()`.
+- Pregunta de extensión: "¿Cómo harías que un clic en el `<strong>` del título también edite?"
+
+### Para estudiantes con dificultades:
+- Empezar SOLO con eliminar (HU1) hasta que la delegación haga clic.
+- Checkpoint intermedio: que logren un `console.log` del `id` correcto antes de borrar.
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### P: ¿Por qué no usar simplemente `addEventListener` para sincronizar UI?
-**R:** Funciona, pero acopla cada cambio del estado con un evento DOM. El Store desacopla: el estado puede cambiar por mil razones, todas pasan por `setState`.
+**P: ¿Por qué no un `addEventListener` por cada botón?**
+R: Porque al re-renderizar se destruyen los nodos y sus listeners. Un listener en el padre persiste y atiende a todos.
 
-### P: ¿Puedo tener varios stores?
-**R:** Técnicamente sí, en producción a veces sí (auth store + ui store). Para esta clase, **uno solo**. Más stores = más complejidad sin beneficio aquí.
+**P: ¿Por qué `Number(e.target.dataset.id)`?**
+R: `dataset` siempre devuelve texto. Si `p.id` es número, `"123" === 123` es falso. Convertir evita ese bug.
 
-### P: ¿`setState` es síncrono?
-**R:** En esta implementación vanilla sí — los listeners corren inmediatamente. En React es asíncrono (batched). Diferencia que verán en Code 301.
+**P: ¿Por qué copiar el array antes de `.sort()`?**
+R: `.sort()` ordena el array original (lo muta). Copiar con `[...]` mantiene el estado intacto (inmutabilidad).
 
-### P: ¿Y la inmutabilidad con objetos anidados?
-**R:** Para esta clase basta con spread superficial. Inmutabilidad profunda (Immer, Immutable.js) es Code 301.
+**P: ¿Y si quiero que las plantillas sigan ahí al recargar?**
+R: Eso es persistencia con `localStorage`, tema de C15. Hoy viven en memoria.
 
 ---
 
@@ -252,24 +233,23 @@ renderizar(store.getState()); // primera vez
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C13 | Estado local vs global | Hoy le pones una API formal al estado global. |
-| C10 (M3) | Callbacks como ciudadanos de primera clase | `subscribe` es callback puro. |
-| C11 (M3) | `addEventListener` | El submit del form dispara `setState`. |
+| C13 | Clase `Template`, estado central, `render()` | Se reusan; hoy se les añade `id` e interacción |
+| M2 | `.filter`, `.map`, `.reduce`, spread | Base del CRUD inmutable y de los datos derivados |
 
-### Conexión con la Próxima Clase (C15)
+### Conexión con C15
 
 Al cerrar, planta la semilla:
 
-> "Hoy tienen un Store funcionando. Pero si cierran el navegador y vuelven a abrir, todo desaparece. La próxima clase aprenden **JSON + LocalStorage** para que ese estado persista. Y agregamos `try/catch/finally` (refuerzo de C12) para que la app no se rompa si LocalStorage tiene datos corruptos. Es la combinación obligatoria para M5."
+> "Hoy tu app edita, elimina, cuenta y ordena. Pero si recargan la página, todo desaparece — vive en memoria. En C15 le pondrán `localStorage` y `JSON` para que las plantillas sobrevivan al cierre del navegador."
 
-**Pre-work implícito:** Que prueben recargar su app hoy y vean cómo todo se pierde. Esa fricción motiva C15.
+**Pre-work / Tarea implícita:** que reflexionen dónde guarda WhatsApp Web sus datos cuando cierras y vuelves a abrir.
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
 ### Preguntas para el facilitador:
-- ¿Cuántos siguieron llamando `renderizar()` manualmente después de HU0? Si más del 30%, refuerza en C15 antes de empezar.
-- ¿Alguien intentó mutar con `push`? Marca como "necesita refuerzo de inmutabilidad" antes de Code 301.
-- ¿Cuántos preguntaron por React/Redux? Buena señal — están conectando con el ecosistema mayor.
-- ¿La HU0 tomó más de 40 min para el promedio? Considera dar más tiempo de demo en la próxima cohorte.
+- ¿Vieron claro por qué un listener en el padre basta?
+- ¿Distinguen mutar de no mutar al editar/eliminar?
+- ¿Entendieron "dato derivado" (se calcula, no se guarda)?
+- ¿Quedó alguien atascado en el `Number(dataset.id)`? Reforzar en C15.

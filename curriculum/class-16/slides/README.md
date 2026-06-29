@@ -1,120 +1,157 @@
-# Clase 16: Persistencia y Sincronización
-
-## 🎯 Módulo 4 - Estado y Persistencia
-**Duración total:** 180 minutos
-
----
-
-## ⏰ 1. Preparación Activa (25 min)
-
-- **Reflexión inicial:** ¿Por qué es importante sincronizar el estado persistente con la interfaz visual?
-- **Revisión de conceptos clave:**
-  - Persistencia con LocalStorage
-  - Sincronización dinámica (Store - UI)
-  - Buenas prácticas de UX en persistencia
+<!-- .slide: data-background="#0A192F" -->
+# Clase 16: Módulos (ESM) y Cierre
+## Code 201 · Módulo 4 · Proyecto: Gestor de Plantillas
 
 ---
 
-## 🧠 2. Debate Guiado (35 min)
+## TRANSICIÓN: C15 → C16
 
-**Pregunta base:** ¿Cuáles son las mejores estrategias para asegurar una persistencia robusta y una sincronización visual inmediata?
+### Clase anterior:
+- Tu app **persiste** con JSON + LocalStorage
+- Crear, editar, eliminar, filtrar, ordenar
 
-- Ventajas y desventajas técnicas de LocalStorage para persistencia robusta
-- Técnicas eficaces para sincronización instantánea
-- Rol crítico de la UX en operaciones sensibles (eliminación, modificación)
+### Hoy:
+- Repartir el código en **módulos ESM**
+- Modal de confirmación propio + estado vacío
+- **Cerrar** el proyecto del módulo
 
-> "La sincronización eficiente mejora drásticamente la experiencia de usuario en aplicaciones web modernas."
-
----
-
-## 📋 3. Laboratorio Guiado (100 min)
-
-**Repositorio:** `whatsapp-templates`
-
-**Historias de Usuario:**
-1. **Guardado automático al editar plantillas**
-   - Persistencia instantánea y automática en LocalStorage.
-2. **Sincronización instantánea del Store y UI**
-   - Actualización inmediata en la interfaz al cambiar datos.
-3. **Confirmación previa al eliminar plantilla**
-   - Confirmaciones visuales antes de acciones críticas.
-
-> Las instrucciones detalladas se encuentran en el README del Laboratorio 16.
+> "Hoy dejas tu app lista para mostrar."
 
 ---
 
-## ✨ Logros Adicionales (Opcionales)
+## QUIZ PRE-LAB
 
-- Mensaje de estado del almacenamiento claro y visible
-- Botón para recuperación rápida de la última plantilla eliminada
+### Pregunta:
+Tu app crece y ya tienes 300 líneas en un solo archivo. ¿Qué problema empieza a aparecer?
 
----
-
-## 📊 Checklist de Persistencia y Sincronización
-
-- [ ] Guardado automático efectivo tras edición
-- [ ] Sincronización visual inmediata del estado con interfaz
-- [ ] Confirmación previa funcional antes de eliminar
-- [ ] Código limpio, modular y bien organizado
-- [ ] Retroalimentación visual clara al usuario en cada operación
+*Toma 2-3 respuestas antes de continuar*
 
 ---
 
-## ⚖️ Comparativa Rápida: Sincronización UI
+## COMPROBACIÓN
 
-| Estrategia          | Complejidad | UX Final           | Rendimiento     |
-|---------------------|-------------|--------------------|-----------------|
-| Recarga manual      | Baja        | Regular            | Bajo            |
-| Polling periódico   | Media       | Mejorable          | Medio           |
-| Eventos directos    | Alta        | Excelente          | Alto            |
+### ¿Por qué los módulos ESM no funcionan al abrir el HTML con doble clic?
 
----
-
-## 🎯 Delegación de eventos: 1 listener para N botones
-
-```js
-document.querySelector('#listaPlantillas').addEventListener('click', (event) => {
-  if (event.target.classList.contains('btn-eliminar')) {
-    const id = event.target.dataset.id;
-    // ... eliminar
-  }
-});
-```
-
-* En lugar de **N listeners** (uno por botón), un **único listener en el contenedor**.
-* `event.target` te dice exactamente qué botón fue clickeado.
-* Funciona para botones agregados **después** del render inicial.
-
-> Patrón crítico para M5: cuando agregas/eliminas elementos dinámicamente, no quieres re-vincular listeners cada vez.
+A. Porque Tailwind bloquea el acceso a archivos
+B. Porque `file://` no permite cargar módulos por seguridad; necesitas un servidor
+C. Porque falta declarar las variables globales
+D. Porque el navegador no entiende `import`
 
 ---
 
-## ✨ Bonus: Cálculo sobre estado
+## COMPROBACIÓN - Respuesta
 
-```js
-function calcularEstadisticas(state) {
-  return {
-    total: state.plantillas.length,
-    porHashtag: state.plantillas.reduce((acc, p) => {
-      acc[p.hashtag] = (acc[p.hashtag] || 0) + 1;
-      return acc;
-    }, {})
-  };
-}
+**Respuesta correcta:** B
 
-store.subscribe(state => {
-  renderEstadisticas(calcularEstadisticas(state));
-});
-```
+**Análisis de opciones:**
+- **A:** Tailwind no tiene nada que ver con la carga de módulos.
+- **B:** Correcto. Los módulos se cargan por HTTP; con `file://` el navegador los bloquea. Usa Live Server o `python -m http.server`.
+- **C:** Justo lo contrario: ESM **elimina** la necesidad de globales.
+- **D:** El navegador sí entiende `import`; el problema es el protocolo `file://`.
 
-* **Función pura(state) → resultado derivado**, sin mutar estado.
-* Usa propiedades obligatorias de `Template` (`hashtag`, `mensaje`) — independiente de las 2 adicionales del alumno.
-* En M5: balances de cada persona, transferencias mínimas, total gastado.
+> **Clave:** ESM necesita un servidor local. GitHub Pages también funciona.
 
 ---
 
-## 📆 4. Cierre y Reflexión (20 min)
+## CHECKPOINT HU1: Modal de confirmación
 
-- Revisión de dificultades técnicas encontradas durante la implementación
-- Ronda rápida de aprendizajes individuales: ¿qué estrategias descubriste hoy para mejorar la sincronización?
-- Discusión grupal: ¿En qué casos específicos optarías por otras técnicas más robustas como WebSockets o IndexedDB?
+### Verificar:
+Pulsa eliminar → aparece tu modal propio
+
+**¿Qué debe verse?**
+- "Cancelar" deja la plantilla intacta
+- "Eliminar" la borra y, al recargar, no vuelve
+
+**Problemas comunes:**
+- El modal no aparece → revisa `classList.remove("hidden")`
+- Borra sin preguntar → faltó envolver la acción en `pedirConfirmacion`
+
+---
+
+## CHECKPOINT HU2: Estado vacío amigable
+
+### Verificar:
+App sin plantillas y filtro sin resultados
+
+**¿Qué debe verse?**
+- Sin datos: "Aún no tienes plantillas. ¡Crea la primera!"
+- Filtro sin match: "No se encontraron plantillas"
+
+**Problemas comunes:**
+- Mismo mensaje en ambos casos → distingue con `state.plantillas.length === 0`
+
+---
+
+## CHECKPOINT HU3: Modularizar con ESM
+
+### Verificar:
+Tras separar en `state` / `storage` / `ui` / `app`, la app hace **todo lo de antes**
+
+**¿Qué debe funcionar?**
+- Crear, editar, eliminar, filtrar, ordenar, persistir
+
+**Problemas comunes:**
+- "Failed to load module" → usa servidor local, no `file://`
+- 404 en import → ruta con `./` y extensión `.js`
+
+---
+
+## CHECKPOINT HU4: Resumen + cierre
+
+### Verificar:
+El panel muestra total y la plantilla más reciente
+
+**¿Qué debe verse?**
+- El resumen cambia al agregar/eliminar
+- Ciclo completo: crear → recargar → editar → vaciar con confirmación
+
+**Problemas comunes:**
+- El resumen no cambia → llámalo dentro de `render()`
+
+---
+
+## REFLEXIÓN: Globales vs Módulos
+
+| Aspecto | Antes (globales) | Con ESM |
+|---------|------------------|---------|
+| Comunicación | Variables globales | `export` / `import` |
+| Orden de `<script>` | Importa mucho | Ya no importa |
+| Ámbito | Compartido (choques) | Propio por archivo |
+
+> **Regla:** un archivo, una responsabilidad. Y `resumen(plantillas)` es **función pura**: recibe datos, devuelve texto, no toca el DOM.
+
+---
+
+## 🎉 Cierre del Módulo 4
+
+### Hoy lograste:
+- Modularizar tu app con ESM
+- Confirmaciones y estado vacío
+- Sincronización completa estado ↔ storage ↔ UI
+
+### En este módulo:
+- De eventos y datos derivados → a persistencia → a una app organizada y entregable
+
+> "Hace 4 clases tu app no guardaba nada. Hoy es un proyecto completo."
+
+---
+
+## Preguntas de Cierre
+
+1. ¿Por qué separar `state`, `storage` y `ui` en archivos distintos?
+
+2. ¿Cuándo SÍ y cuándo NO pedir una confirmación al usuario?
+
+3. ¿Qué decisión técnica de tu proyecto defenderías en la demo?
+
+---
+
+## Entrega
+
+- Repo `whatsapp-templates` con **2 HUs propias** fusionadas en `main`
+- **README** con app, arquitectura ESM y persistencia
+- **URL de GitHub Pages** desplegada
+- **Demo en vivo (máx. 10 min)** + 2 decisiones técnicas
+- Screenshot del flujo completo funcionando
+
+### ¡Felicidades por cerrar el Módulo 4! 🙌

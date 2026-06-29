@@ -4,84 +4,83 @@
 
 ## Resumen
 
-En la clase 15 profundizamos en cómo utilizar **JSON y LocalStorage** para asegurar la persistencia robusta del estado en aplicaciones web. Aplicamos conceptos clave de serialización y deserialización de datos, integrando estas técnicas con un manejo centralizado del estado (Store). Además, fortalecimos la práctica de análisis crítico de código generado por inteligencia artificial (IA), explorando sus beneficios y limitaciones.
+Hasta ahora tu **Gestor de Plantillas para WhatsApp** funcionaba bien... hasta que recargabas la página. En ese instante, todo desaparecía. En esta clase resuelves ese problema de raíz: aprenderás a **guardar el estado de tu app en el navegador** para que tus plantillas sobrevivan al cierre de la pestaña.
 
-## Estructura sugerida
+Lo lograrás con dos herramientas nuevas: **`localStorage`**, el pequeño almacén que el navegador te presta, y **JSON**, el formato que convierte tus objetos en texto guardable y de vuelta. En M3 solo *leías* JSON que venía de una API; hoy lo *escribes* tú para persistir tus propios datos.
 
-| **Fase** | **Duración** | **Descripción** |
-|---------|--------------|-----------------|
-| **1. Refuerzo Práctico Inicial** | 30 min | Ejercicios rápidos para activar conocimientos sobre el estado de una aplicación y el problema de la persistencia. |
-| **2. Debate Técnico y Demo** | 20 min | Debate crítico sobre JSON y LocalStorage. Demo técnica de serialización y deserialización. |
-| **Break** | 10 min | Descanso previo al laboratorio |
-| **3. Laboratorio Práctico** | 100 min | Implementación hands-on de persistencia en el navegador con JSON y LocalStorage en el proyecto integrador. |
-| **4. Síntesis** | 20 min | Consolidación de aprendizajes, retroalimentación grupal y revisión crítica de implementaciones destacadas |
-
-## 🧐 Preparación para la clase
-
-### ➤ Reflexiones a plantearse
-
-> Antes de llegar a clase, reflexiona sobre estas preguntas y apóyate de los recursos sugeridos o de herramientas de IA:
-
-1. Piensa en 2 situaciones en donde la persistencia de los datos en una aplicación web es imprescindible.
-
-2. ¿Cuáles son los métodos que tiene una aplicación web para guardar información (persistencia) en el lado del cliente (navegador)?
-
-3. ¿En qué situaciones es más conveniente almacenar información en LocalStorage comparado con otros métodos de almacenamiento persistente (como IndexedDB o bases de datos)?
-
-4. ¿Qué ventajas concretas tiene utilizar JSON como formato de almacenamiento en aplicaciones web modernas?
-
-5. ¿Por qué es importante aplicar técnicas de inmutabilidad en el manejo de datos del estado cuando trabajamos con persistencia?
-
-6. ¿Consideras adecuado el operador ternario en todos los casos de validación? ¿Cuándo podría reducir la claridad del código?
-
-### ➤ Recursos para investigar
-> **Usa este prompt para conversar con un modelo de IA y aclarar tus ideas:**
-
-> Eres un mentor experto en desarrollo web frontend. Me orientarás sabiendo que tengo conocimientos en formación sobre Javascript (Algoritmos, Estructuras de datos, DOM y gestión del estado). Quiero aprender sobre persistencia de datos en el navegador. ¿Cuáles son los métodos disponibles? ¿Cuál es el más utilizado? ¿Qué es JSON y porqué se utiliza por defecto? ¿Cómo me puede ayudar el operador ternario en la gestión de LocalStorage?
-INSTRUCCIONES: Dame respuestas concisas y muy bien planificadas. Con una secuencia coherente en cuanto a complejidad. Proporciona ejemplos muy simples con comentarios concisos. Hazme preguntas para validar mi aprendizaje antes de pasar a un siguiente concepto. 
-RESTRICCIONES: no profundices en ejemplos sobre métodos que no necesito aprender ahora, como sessionStorage, cookies, indexedDB.
-Empieza generando una tabla donde me especifiques la ruta que seguiremos y los 5 conceptos ordenados que vamos a aprender.
+Este es el corazón del Módulo 4. Lo que construyas aquí —guardar, cargar y proteger el estado— es exactamente la base del Proyecto Integrador final.
 
 ---
 
-## Resultados Esperados
+## ¿Por qué te sirve?
 
-Al finalizar esta clase, los estudiantes podrán:
-
-1. **Configurar persistencia de Estado con LocalStorage:**  
-   Guardar, cargar y eliminar datos de forma persistente usando JSON y LocalStorage, asegurando continuidad y robustez en aplicaciones web.
-
-2. **Implementar un Estado Centralizado:**  
-   Vincular efectivamente la persistencia con el patrón de estado centralizado (Store), reflejando cambios inmediatos y automáticos en la interfaz de usuario.
-
-3. **Simplificar validaciones usando el Operador Ternario:**  
-   Usar operadores ternarios eficientemente para validaciones simples y asignaciones condicionales durante la persistencia de datos.
-
-4. **Explicar la serialización y deserialización con JSON:**  
-   El proceso técnico y las ventajas de convertir objetos JavaScript a formato JSON y viceversa para almacenamiento persistente.
-
-5. **Comprender las ventajas y limitaciones del LocalStorage:**  
-   Justificar el uso apropiado de LocalStorage, reconociendo escenarios ideales y limitaciones técnicas concretas.
-
-6. **Manejar datos corruptos con `try/catch/finally`:**
-   Envolver `JSON.parse(localStorage.getItem(...))` en `try/catch/finally` (refuerzo de C12) para que la app **nunca se rompa** ante datos malformados y la UI siempre quede en estado consistente. **Obligatorio en al menos una HU** del lab.
+- **Casi toda app web usa almacenamiento del cliente.** El carrito que no se vacía al recargar, el modo oscuro que recuerdas, el borrador de un mensaje: todo eso suele vivir en `localStorage`.
+- **JSON es el idioma universal de los datos.** APIs, archivos de configuración, bases de datos: convertir entre objetos y texto JSON es una habilidad que usarás todos los días como desarrollador.
+- **Una app que pierde datos no es profesional.** Persistir el estado es la diferencia entre un ejercicio de clase y un producto que la gente realmente usaría.
 
 ---
 
-## Glosario de nuevos términos
+## 🎯 ¿Qué haremos en clase?
 
-- **Persistencia de datos:** Capacidad de una aplicación para mantener datos guardados entre sesiones, evitando que se pierdan al cerrar o actualizar el navegador.
+1. **Descubriremos por qué se pierden los datos** - Veremos en vivo cómo una recarga borra todo y por qué pasa.
+2. **Guardarás el estado con `localStorage`** - Serializarás tu array de plantillas a texto y lo persistirás.
+3. **Cargarás lo guardado al abrir la app** - Reconstruirás tus objetos con `JSON.parse` al arrancar.
+4. **Blindarás la app contra datos corruptos** - Usarás `try/catch` para que nada rompa tu pantalla.
 
-- **LocalStorage:** Mecanismo del navegador que permite almacenar datos de manera persistente (hasta que el usuario los borre), accesibles incluso tras recargar la página.
+---
 
-- **JSON (JavaScript Object Notation):** Formato de texto ligero para estructurar datos. Se usa para enviar y guardar información entre cliente y servidor o en almacenamiento local. Muy legible y compatible con JavaScript.
+## Objetivos de Aprendizaje
 
-- **Serialización:** Proceso de convertir un objeto JavaScript en una cadena de texto (JSON) para poder almacenarlo o enviarlo.
+Al finalizar esta clase, podrás:
 
-- **Deserialización:** Inversa de la serialización: convertir una cadena JSON de vuelta a un objeto JavaScript utilizable.
+1. **Serializar** un objeto a texto con `JSON.stringify` y **deserializar** texto a objeto con `JSON.parse`.
+2. **Persistir** el estado de tu app en `localStorage` usando `setItem`, `getItem` y `removeItem`.
+3. **Cargar** el estado guardado al iniciar la app y mantenerlo sincronizado tras cada cambio.
+4. **Proteger** la carga de datos corruptos envolviendo `JSON.parse` en `try/catch`.
 
-- **Estado Centralizado (Store):** Patrón de diseño donde el estado de la aplicación se concentra en un único objeto fuente, facilitando control, trazabilidad y sincronización con la UI.
+---
 
-- **Operador Ternario:** Forma concisa de hacer condicionales (`condición ? valorSiVerdadero : valorSiFalso`). Útil para simplificar asignaciones o decisiones rápidas.
+## ✅ Preparación para la Clase
 
-- **Inmutabilidad:** Principio de no modificar directamente estructuras de datos existentes, sino crear nuevas versiones modificadas. Facilita el control del estado y la depuración.
+### De clases anteriores
+
+- Tu proyecto `whatsapp-templates` con el CRUD funcionando en memoria (C13–C14).
+- El objeto de estado (`state.plantillas`) y la función `render()` que dibuja la lista.
+- El `try/catch` que viste en C12 (M3) para manejar errores.
+
+### Reflexión previa
+
+Antes de llegar a clase, reflexiona sobre:
+
+- ¿Qué apps que usas a diario "recuerdan" cosas aunque cierres la pestaña? ¿Dónde crees que guardan eso?
+- Si el navegador solo puede guardar texto, ¿cómo guardarías una lista de objetos?
+
+### Herramientas
+
+- [ ] **Tu repositorio `whatsapp-templates`** - Con el CRUD de C14 funcionando.
+- [ ] **DevTools del navegador** - Revisa dónde está la pestaña *Application → Local Storage*.
+
+### Lectura sugerida
+
+- [MDN: Window.localStorage](https://developer.mozilla.org/es/docs/Web/API/Window/localStorage){:target="_blank"} - Qué es y cómo se usa el almacén del navegador.
+- [MDN: JSON.stringify()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify){:target="_blank"} - Cómo convertir objetos a texto.
+
+---
+
+## Glosario
+
+| Término | Definición |
+|---------|------------|
+| **`localStorage`** | Almacén del navegador (clave→texto) que persiste aunque cierres la pestaña. Métodos: `setItem`, `getItem`, `removeItem`. |
+| **JSON** | Formato de texto para representar datos. Es el puente entre tus objetos y lo que el navegador puede guardar. |
+| **Serializar** | Convertir un objeto JavaScript en texto con `JSON.stringify` (para guardarlo o enviarlo). |
+| **Deserializar** | Reconstruir un objeto a partir de texto JSON con `JSON.parse`. |
+| **Persistencia** | Que los datos sobrevivan al cierre o recarga del navegador. |
+| **Operador ternario** | `condicion ? valorSi : valorNo` — un `if/else` corto para asignar un valor. |
+
+---
+
+## Recursos Adicionales
+
+- [MDN: JSON.parse()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse){:target="_blank"} - Reconstruir objetos desde texto JSON.
+- [MDN: Operador condicional (ternario)](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Conditional_operator){:target="_blank"} - El `if/else` en una línea.

@@ -6,37 +6,36 @@
 
 ## 🔑 Conceptos Clave
 
-- **Serialización**: convertir un objeto JS en string con `JSON.stringify(obj)`. LocalStorage solo guarda strings.
-- **Deserialización**: convertir un string JSON de vuelta a objeto con `JSON.parse(str)`. Donde puede fallar.
-- **LocalStorage API**: `setItem(key, value)`, `getItem(key)`, `removeItem(key)`. Datos persisten hasta que el usuario los borre.
-- **`try/catch/finally` aplicado**: refuerzo de C12 (M3) ahora obligatorio en `cargarPlantillas()` — porque `JSON.parse` puede explotar con datos corruptos.
+- **`localStorage`** (NUEVO): almacén del navegador clave→texto. `setItem`, `getItem`, `removeItem`. Persiste hasta que el usuario lo borra.
+- **Serializar / deserializar** (NUEVO): `JSON.stringify(obj)` convierte un objeto a texto guardable; `JSON.parse(texto)` lo reconstruye. En M3 solo *leían* JSON de una API; hoy lo *escriben* para persistir.
+- **`try/catch` sobre `JSON.parse`** (refuerzo de C12): `JSON.parse` lanza error con texto corrupto. Envolverlo evita que un dato dañado rompa la app.
+- **Rehidratar fechas** (detalle clave del lab): JSON convierte un `Date` en string. Al cargar, hay que reconstruirlo con `new Date(p.fecha)`.
+
+> ❗ **Solo 2 herramientas nuevas:** `localStorage` y `JSON.stringify`/`parse`. El operador ternario y `try/catch` son refuerzo. No introduzcas `sessionStorage`, cookies ni IndexedDB.
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Serialización <> Empacar para mudanza:**
-No puedes meter un sofá en una caja. Lo desarmas, empacas las piezas en una caja con etiqueta. Al llegar, lo armas. JSON es esa caja — empaca el objeto en texto plano que LocalStorage puede guardar.
+**Serializar ⟷ Empacar para mudanza:** no metes un sofá en una caja; lo desarmas, empacas las piezas y las armas al llegar. `JSON.stringify` empaca tu objeto en texto que `localStorage` puede guardar; `JSON.parse` lo arma de vuelta.
 
-**LocalStorage <> Cuaderno de notas en tu computadora:**
-Cabe poca información (~5 MB). No se sincroniza con otros dispositivos. Funciona offline. Si formateas la computadora, se pierde. Útil para datos personales, inútil para datos compartidos o sensibles.
+**`localStorage` ⟷ Cuaderno pegado a tu navegador:** cabe poco, no se sincroniza entre dispositivos, funciona offline y sobrevive a recargas. Ideal para datos personales de la app.
 
-**`try/catch/finally` <> Mecánico revisando un auto usado:**
-Intenta arrancar (`try`). Si no prende, busca el problema (`catch`). En cualquier caso, cierra el capó al terminar (`finally`). Aquí: intentas parsear, si falla limpias el localStorage corrupto, siempre actualizas el indicador "Listo".
+**`try/catch` ⟷ Red de seguridad del trapecista:** el salto (parsear) casi siempre sale bien, pero la red existe para el día que no. Sin red, una sola caída (dato corrupto) tumba toda la función.
 
 ---
 
 ## 📚 Contexto Actual
 
-### LocalStorage en producción real
+### `localStorage` en producción real
 
-Empresas como Figma, Notion y Trello usan LocalStorage como caché local para responder instantáneamente antes de sincronizar con el backend. Spotify guarda volumen, tema y posición de la última canción. **No es juguete académico** — es una API que resuelve problemas reales de UX percibida.
+Figma, Notion y Trello usan `localStorage` como caché local para responder al instante antes de sincronizar con el backend. Spotify guarda volumen, tema y la última canción. **No es un juguete académico**: resuelve UX percibida real.
 
-> **Para contar en clase:** "Cuando abren Notion offline y ven sus notas, LocalStorage está trabajando. Lo que aprenden hoy es lo que ellos usan en producción."
+> **Para contar en clase:** "Cuando abren Notion y ven sus notas al instante, `localStorage` está trabajando. Lo de hoy es lo que ellos usan en producción."
 
-### Por qué `try/catch/finally` es OBLIGATORIO con LocalStorage
+### Por qué el `try/catch` no es opcional
 
-`JSON.parse('texto-cualquiera')` lanza excepción. ¿Qué pasa si un alumno (o un hacker) abre DevTools y modifica el valor en LocalStorage a mano? La app explota. **Sin `try/catch`, una sola comilla mal puesta rompe toda la app**. M5 lo exige textualmente — aquí los alumnos aprenden el patrón.
+`JSON.parse('texto-cualquiera')` lanza excepción. Si alguien abre DevTools y edita el valor a mano (o un bug viejo dejó datos malformados), la carga falla y la app queda en blanco. **Una comilla mal puesta puede tumbar toda la app.** El proyecto M5 lo exige textualmente; aquí lo aprenden.
 
 **Fuentes:** [MDN: Web Storage API](https://developer.mozilla.org/es/docs/Web/API/Web_Storage_API){:target="_blank"}, [MDN: try...catch](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch){:target="_blank"}
 
@@ -44,136 +43,127 @@ Empresas como Figma, Notion y Trello usan LocalStorage como caché local para re
 
 ## 🎯 Momentos Clave de la Clase
 
-### Demo Principal — Dañar el LocalStorage en vivo
+### Pregunta Detonadora (QUIZ PRE-LAB)
 
-**Qué mostrar:** 3 minutos. Carga la app con plantillas. Recarga, todo OK. Abre DevTools → Application → Local Storage. Edita el valor manualmente a `no-es-json` (texto inválido). Recarga la página. La app **explota** porque `JSON.parse` falla. Ahora envuelve `JSON.parse` en `try/catch/finally` y muéstrales: la app sobrevive, muestra mensaje claro, y el indicador termina en "Listo" siempre.
+**Pregunta:** "`localStorage` solo guarda texto. ¿Cómo metes una lista de objetos dentro de algo que solo acepta texto?"
+
+**Respuesta esperada (no la des de inmediato):** hay que **convertir** el objeto a texto (`JSON.stringify`) y al leer **reconstruirlo** (`JSON.parse`).
+
+**Tip:** Deja que propongan ("¿guardo cada campo por separado?"). Llega solo a la idea de serializar; ahí entra la demo.
+
+### Demo Principal — Dañar el `localStorage` en vivo
+
+**Qué mostrar (3 min):** carga la app con plantillas. Recarga: todo OK. Abre DevTools → Application → Local Storage. Edita el valor a `[{titulo` (inválido). Recarga: la app **explota** porque `JSON.parse` falla. Ahora envuelve `JSON.parse` en `try/catch` y repite: la app sobrevive, arranca vacía, y en consola aparece el aviso.
 
 **Script sugerido:**
 ```
-Facilitador: "Mi app funciona. Pero voy a hacer algo cruel.
-[Abre LocalStorage en DevTools]
-Facilitador: "Cambio este valor a basura.
-[Edita a algo inválido]
-Facilitador: "Recargo... y la app explota.
-[Muestra error en consola, pantalla rota]
-Facilitador: "Ahora añado try/catch/finally...
+Facilitador: "Mi app funciona. Voy a hacer algo cruel."
+[Abre Local Storage en DevTools y edita el valor a basura]
+Facilitador: "Recargo... y la app explota."
+[Muestra el error en consola, pantalla rota]
+Facilitador: "Ahora envuelvo JSON.parse en try/catch..."
 [Refactor en vivo]
-Facilitador: "Recargo... la app sobrevive, dice 'datos corruptos, empezando de cero'. Esa es la diferencia."
+Facilitador: "Recargo... sobrevive y avisa 'datos corruptos'. Esa es la diferencia."
 ```
 
-**Plan B (si la demo falla):** CodePen pre-armado con las dos versiones (con/sin try-catch) en pestañas.
+**Plan B (si la demo falla):** CodePen pre-armado con las dos versiones (con / sin `try/catch`) en pestañas.
 
 ### Transición al Lab
 
-**Momento crítico:** HU1-HU3 son rutina. HU4 (`try/catch/finally`) es la clase real.
+**Momento crítico:** HU1–HU2 son la mecánica de guardar/cargar. HU3 (`try/catch`) es lo que vuelve la app profesional.
 
 **Script sugerido:**
 ```
-Facilitador: "HU1, HU2, HU3: guardar, cargar, reset. Rutina.
-HU4 es donde su app se vuelve PROFESIONAL: protege contra datos corruptos.
-Si saltan HU4, su app de M5 va a fallar el primer día que alguien toque
-localStorage a mano. No es opcional."
+Facilitador: "HU1 guarda, HU2 carga, HU4 vacía. Mecánica.
+HU3 es donde su app se vuelve PROFESIONAL: aguanta datos corruptos.
+Si la saltan, su app de M5 fallará el primer día que alguien toque localStorage."
 ```
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Romper LocalStorage a propósito"
+### Dinámica 1: "Romper el `localStorage` a propósito" (en HU3)
 
-Antes del Checkpoint 4:
-
-> "Abran DevTools → Application → Local Storage. Editen el valor a `'basura'`. Recarguen. Sin `try/catch/finally`, ¿qué pasa?"
+> "Abran DevTools → Application → Local Storage. Editen el valor a `[{titulo`. Recarguen. Sin `try/catch`, ¿qué pasa?"
 
 **Dinámica sugerida:**
 ```
-Facilitador: "¿Quién vio la app rota? Manos arriba.
+Facilitador: "¿Quién vio la app rota? Manos arriba."
 [Cuenta]
-Ahora envuelvan JSON.parse en try/catch/finally.
-Vuelvan a romper. ¿Qué cambió?
-La app SOBREVIVE. ESA es la diferencia entre prototipo y producción."
+Facilitador: "Ahora envuelvan JSON.parse en try/catch. Vuelvan a romper."
+Facilitador: "La app SOBREVIVE. Esa es la diferencia entre prototipo y producción."
 ```
 
-### Dinámica 2: "Los 3 escenarios de `finally`"
+### Dinámica 2: "¿Dónde quedó mi fecha?" (en HU2)
 
-Durante HU4:
-
-> "Prueben los 3 escenarios: vacío, válido, corrupto. Confirmen que el indicador 'Cargando…' siempre termina en 'Listo'."
+> "Recargaron y la fecha falla. ¿Por qué? ¿Qué tipo era antes y qué tipo es ahora?"
 
 **Dinámica sugerida:**
 ```
-Facilitador: "Si el indicador queda en 'Cargando…' en algún caso, su finally está mal puesto.
-Es la prueba más simple: el indicador es un termómetro. Siempre 'Listo' al final."
+Facilitador: "Antes era un objeto Date. Tras JSON, es un string."
+Facilitador: "JSON solo guarda datos simples. Rehidraten con new Date(p.fecha) en render()."
 ```
 
-### Dinámica 3: "¿Por qué LocalStorage y no IndexedDB?"
+### Dinámica 3: "¿Cuándo SÍ y cuándo NO `localStorage`?" (antes del cierre)
 
-Antes del cierre:
-
-> "Cuándo sí y cuándo NO LocalStorage. Den 2 ejemplos de cada caso."
+> "Den 2 ejemplos donde usarían persistencia en el cliente y 2 donde NO."
 
 **Dinámica sugerida:**
 ```
-Facilitador: "LocalStorage: notas personales, preferencias, carrito de compras local.
-NO LocalStorage: 50MB de datos, sincronización entre pestañas en tiempo real,
-datos sensibles (es accesible desde cualquier JS de la página).
-La elección importa."
+Facilitador: "SÍ: preferencias, borradores, una colección personal como la de hoy.
+NO: datos sensibles (cualquier JS de la página los lee), o datos que deben compartirse entre usuarios."
 ```
 
 ---
 
 ## 💡 Ejemplos Listos para Usar
 
-### Ejemplo 1: Guardar con stringify
-
-**Cuándo usarlo:** En HU1.
+### Ejemplo 1: Guardar con `stringify` (HU1)
 
 ```javascript
-function guardarPlantillas() {
-  localStorage.setItem('plantillas', JSON.stringify(store.getState().plantillas));
+function guardar() {
+  localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
 }
 ```
 
 **Tip:** Sin `JSON.stringify`, queda `"[object Object]"` y al recuperar es basura. Insiste en este detalle.
 
-### Ejemplo 2: Cargar con try/catch/finally (verbatim)
-
-**Cuándo usarlo:** En HU4.
+### Ejemplo 2: Cargar con `try/catch` (HU3)
 
 ```javascript
-function cargarPlantillas() {
-  document.getElementById('estado').textContent = 'Cargando...';
+function cargar() {
+  const guardado = localStorage.getItem(CLAVE);
+  if (!guardado) return [];
   try {
-    const raw = localStorage.getItem('plantillas');
-    if (!raw) return [];
-    const datos = JSON.parse(raw);
-    if (!Array.isArray(datos)) throw new Error('Formato corrupto');
-    return datos;
+    return JSON.parse(guardado);
   } catch (error) {
-    console.error('Error al cargar:', error);
-    alert('Datos corruptos. Empezando de cero.');
-    localStorage.removeItem('plantillas');
+    console.warn("Datos corruptos, empiezo de cero:", error);
     return [];
-  } finally {
-    document.getElementById('estado').textContent = 'Listo';
   }
 }
 ```
 
-**Tip:** Resaltar las 4 secciones (`try`, validación, `catch`, `finally`) con colores en pizarra.
+**Tip:** Resalta las 3 partes: el caso "no hay nada" (`return []`), el intento (`try`) y la red (`catch`).
 
-### Ejemplo 3: Reset
-
-**Cuándo usarlo:** En HU3.
+### Ejemplo 3: Rehidratar la fecha en `render()` (HU2)
 
 ```javascript
-function resetearPlantillas() {
-  localStorage.removeItem('plantillas');
-  store.setState({ ...store.getState(), plantillas: [] });
-}
+// p.fecha llega como string tras JSON.parse → reconstruir
+const texto = new Date(p.fecha).toLocaleDateString("es-PE");
 ```
 
-**Tip:** Notar que se actualiza tanto LocalStorage como el Store. Si solo limpian uno, queda inconsistencia.
+**Tip:** Es la lección viva de "JSON solo guarda datos simples".
+
+### Ejemplo 4: Vaciar con `removeItem` (HU4)
+
+```javascript
+state.plantillas = [];
+localStorage.removeItem(CLAVE);
+render();
+```
+
+**Tip:** Si solo limpian el estado y no el navegador, al recargar reaparecen. Hay que limpiar ambos.
 
 ---
 
@@ -181,26 +171,26 @@ function resetearPlantillas() {
 
 | Síntoma | Qué está pasando | Qué hacer |
 |---|---|---|
-| Al recuperar veo `"[object Object]"` | Olvidaron `JSON.stringify` al guardar | Verificar que `setItem` siempre va con `stringify` |
-| `JSON.parse` falla con `null` | Es la primera vez, no hay datos guardados | Validar `if (!raw) return [];` antes de parsear |
-| El indicador queda en "Cargando..." | El `finally` no se ejecuta porque hay `return` dentro del `try` sin catch | `finally` SÍ corre con return — revisar implementación |
-| La app rompe al borrar localStorage manualmente | No envolvieron `JSON.parse` en `try/catch` | Aplicar HU4 obligatoria |
-| El store y el localStorage no se sincronizan | Olvidaron actualizar uno de los dos en alguna operación | Hacer que `subscribe` del Store dispare `guardarPlantillas` automáticamente |
-| El operador ternario lo usan en todas partes | Querían "verse modernos" | Recordar: ternario solo si mejora claridad |
+| Al recuperar veo `"[object Object]"` | Olvidaron `JSON.stringify` al guardar | `setItem` siempre con `JSON.stringify` |
+| No aparece nada en Local Storage | `guardar()` no se llama tras los cambios | Llamar `guardar()` dentro de `render()` |
+| Lista vacía al recargar | No cargan el estado al arrancar | `state.plantillas = cargar()` antes del primer `render()` |
+| `Invalid Date` o error con la fecha | `p.fecha` es string tras JSON | Rehidratar con `new Date(p.fecha)` en `render()` |
+| Pantalla en blanco al recargar | `JSON.parse` falló con dato corrupto | Envolver en `try/catch` (HU3) |
+| Al recargar reaparecen tras vaciar | Solo limpiaron el estado, no el navegador | Añadir `localStorage.removeItem(CLAVE)` |
 
 ---
 
 ## ✅ Señales de Comprensión
 
 ### El estudiante ENTIENDE cuando:
-- Explica sin titubeos por qué `JSON.stringify/parse` son necesarios (LocalStorage solo strings).
-- Predice qué pasa con la app si `JSON.parse` falla y NO hay `try/catch`.
-- Aplica `finally` para el indicador sin que se lo recuerden.
+- Explica por qué `JSON.stringify`/`parse` son necesarios (`localStorage` solo guarda texto).
+- Predice que sin `try/catch` un dato corrupto rompe la app.
+- Entiende que un `Date` se vuelve string y hay que rehidratarlo.
 
 ### El estudiante NECESITA AYUDA cuando:
-- Llama `setItem(key, obj)` sin stringify.
-- Olvida que `getItem` devuelve `null` si la clave no existe.
-- Pone `removeItem` dentro del `try` en vez del `catch`.
+- Llama `setItem(CLAVE, objeto)` sin `stringify`.
+- Olvida que `getItem` devuelve `null` la primera vez.
+- Copia el `try/catch` sin saber qué lo dispara.
 
 ---
 
@@ -208,42 +198,42 @@ function resetearPlantillas() {
 
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
-| ~30' | HU1 lista | Agregar plantilla → ver clave `plantillas` en DevTools Application con JSON válido. |
-| ~60' | HU2 lista | Recargar página → plantillas siguen ahí. |
-| ~80' | HU3 lista | Click "Eliminar Todo" → localStorage y store quedan vacíos. |
-| ~110' | HU4 lista | Romper localStorage manualmente → app sobrevive, mensaje claro, indicador "Listo". |
+| ~30' | HU1 | Agregar plantilla → ver la clave `whatsapp-templates` en DevTools → Local Storage con JSON. |
+| ~60' | HU2 | Recargar la página → las plantillas siguen ahí con su fecha correcta. |
+| ~90' | HU3 | Corromper la clave a mano y recargar → la app no explota, arranca vacía, avisa en consola. |
+| ~110' | HU4 | "Vaciar todo" deja lista y Local Storage limpios; el indicador `#estado` cambia. |
 
 ---
 
 ## 🧑‍🏫 Tips de Facilitación
 
-### Si saltan HU4 "porque ya funciona":
-> "Funciona con datos limpios. Pero su app de M5 va a fallar el primer día que alguien toque localStorage. HU4 es la diferencia entre demo y producción."
+### Si saltan HU3 "porque ya funciona":
+> "Funciona con datos limpios. Pero su app de M5 fallará el primer día que alguien toque localStorage. HU3 es la diferencia entre demo y producción."
 
-### Si alguien quiere usar IndexedDB:
-> "Mejor que entiendan LocalStorage primero. IndexedDB es Code 301."
+### Si alguien pregunta por `sessionStorage`, cookies o IndexedDB:
+> "Hoy solo `localStorage`. Lo otro tiene otros usos y lo verán más adelante. Una herramienta nueva a la vez."
 
-### Si la mayoría termina HU3 antes:
-- Mándalos directamente a HU4. No es opcional pedagógicamente.
+### Si la mayoría termina HU2 antes:
+- Mándalos directo a HU3. No es opcional pedagógicamente.
 
-### Si alguien pregunta por cookies:
-> "Para esta clase no. Cookies tienen otros usos (sesiones del servidor). LocalStorage es lado cliente puro."
+### Si abusan del operador ternario:
+> "El ternario es para asignaciones simples. Si necesitan anidar dos, usen `if`. Claridad antes que ser cortos."
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### P: ¿Puedo guardar funciones en LocalStorage?
-**R:** No. `JSON.stringify` ignora funciones. Solo datos (números, strings, booleans, arrays, objetos planos).
+### P: ¿Puedo guardar funciones o un `Date` en `localStorage`?
+**R:** Funciones, no (`JSON.stringify` las ignora). Un `Date` se guarda como texto y al leer hay que rehidratarlo con `new Date(...)`. Solo datos simples sobreviven intactos.
 
-### P: ¿LocalStorage es seguro para guardar tokens de autenticación?
-**R:** No. Cualquier JS de la página puede leerlo (incluye XSS). Para tokens, mejor cookies httpOnly. Esto es Code 301.
+### P: ¿`getItem` de una clave que no existe es un error?
+**R:** No. Devuelve `null`. Por eso el `if (!guardado) return []` antes de parsear: la primera vez es normal que no haya nada.
 
-### P: ¿`sessionStorage` y `localStorage` son distintos?
-**R:** Sí: `sessionStorage` muere al cerrar la pestaña, `localStorage` persiste. Misma API.
+### P: ¿Cuánto cabe en `localStorage`?
+**R:** ~5 MB por dominio. Suficiente para texto y configuraciones, no para imágenes o videos.
 
-### P: ¿Cuánto cabe en LocalStorage?
-**R:** ~5 MB por dominio. Suficiente para text y configs, NO para imágenes o videos.
+### P: ¿Y si quiero guardado automático sin pensar en cada acción?
+**R:** Ya lo tienen: `guardar()` vive dentro de `render()`, y todo cambio termina en `render()`. Persistencia automática sin botón.
 
 ---
 
@@ -253,24 +243,24 @@ function resetearPlantillas() {
 
 | Clase | Concepto | Cómo se conecta |
 |---|---|---|
-| C12 (M3) | `try/catch/finally` con spinner | Refuerzo aplicado a LocalStorage corrupto |
-| C14 | Patrón Store | Hoy haces que el Store persista entre sesiones |
-| C10 (M3) | Callbacks | `subscribe(guardarPlantillas)` automatiza persistencia |
+| C12 (M3) | `try/catch` | Refuerzo aplicado a `JSON.parse` de datos corruptos |
+| C13–C14 | Estado (`state.plantillas`), `render()` | Hoy ese estado persiste entre sesiones |
+| M3 | Leer JSON de una API | Hoy invierten el flujo: *escriben* JSON para guardar |
 
 ### Conexión con la Próxima Clase (C16)
 
 Al cerrar, planta la semilla:
 
-> "Hoy persistieron datos manualmente. La próxima clase: **guardado automático** suscrito al Store (cada `setState` dispara `guardarPlantillas` solo) + **sincronización UI** + **delegación de eventos** + bonus de **cálculo sobre estado**. Es la última clase antes del proyecto integrador M5 — todo lo que viene en M5 son piezas que ya conocen."
+> "Hoy su Gestor de Plantillas recuerda lo que escriben, aunque cierren el navegador. C16 cierra el Módulo 4: integran estado y persistencia, pulen la app y la dejan lista para el proyecto integrador. Todo lo que viene en M5 son piezas que ya conocen."
 
-**Pre-work implícito:** Que prueben deliberadamente romper su localStorage manualmente y compartan capturas del comportamiento (con vs sin try/catch).
+**Pre-work implícito:** Que rompan deliberadamente su `localStorage` y comparen el comportamiento con y sin `try/catch`.
 
 ---
 
 ## 🪞 Reflexión Post-Clase
 
 ### Preguntas para el facilitador:
-- ¿Cuántos llegaron a HU4? Si menos del 70%, refuerza al inicio de C16 antes de empezar.
-- ¿Alguien intentó IndexedDB o cookies? Marca para Code 301.
-- ¿Confundieron `getItem(null)` con un error real? Refuerza el "null es normal la primera vez".
-- ¿La demo de "romper LocalStorage en vivo" generó el efecto deseado? Si no, prueba otra forma de mostrarlo.
+- ¿Cuántos llegaron a HU3? Si menos del 70%, refuerza al inicio de C16.
+- ¿Entendieron por qué la fecha falla tras recargar? Es el "ajá" más común de la clase.
+- ¿Alguien preguntó por cookies / IndexedDB? Recuérdate de no abrir ese tema aquí.
+- ¿La demo de "romper el localStorage" generó el efecto deseado? Si no, prueba otra forma de mostrarlo.
