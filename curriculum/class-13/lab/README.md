@@ -54,13 +54,15 @@
      <!-- Dos columnas: formulario a la izquierda, tarjetas a la derecha -->
      <div class="max-w-5xl mx-auto grid gap-6 md:grid-cols-[320px_1fr]">
 
-       <!-- Columna izquierda: formulario (no estira a lo alto con self-start) -->
-       <form id="form-plantilla" class="bg-white p-4 rounded-xl shadow grid gap-2 self-start">
-         <input id="titulo"  type="text" placeholder="Título"  class="p-2 border border-slate-300 rounded">
-         <input id="hashtag" type="text" placeholder="hashtag" class="p-2 border border-slate-300 rounded">
-         <textarea id="mensaje" rows="3" placeholder="Mensaje (usa {nombre})" class="p-2 border border-slate-300 rounded"></textarea>
-         <button class="bg-emerald-600 text-white py-2 rounded">Agregar plantilla</button>
-       </form>
+       <!-- Columna izquierda: acciones (formulario + el generador que agregarás en HU4) -->
+       <div class="grid gap-6 self-start">
+         <form id="form-plantilla" class="bg-white p-4 rounded-xl shadow grid gap-2">
+           <input id="titulo"  type="text" placeholder="Título"  class="p-2 border border-slate-300 rounded">
+           <input id="hashtag" type="text" placeholder="hashtag" class="p-2 border border-slate-300 rounded">
+           <textarea id="mensaje" rows="3" placeholder="Mensaje (usa {nombre})" class="p-2 border border-slate-300 rounded"></textarea>
+           <button class="bg-emerald-600 text-white py-2 rounded">Agregar plantilla</button>
+         </form>
+       </div>
 
        <!-- Columna derecha: grid de tarjetas (el JS las pinta; empieza vacío) -->
        <ul id="listaPlantillas" class="grid gap-3 sm:grid-cols-2 content-start"></ul>
@@ -209,53 +211,88 @@ form.addEventListener("submit", function (e) {
 
 ---
 
-### HU4: Construir el mensaje final con variables
+### HU4: Usar la plantilla — generador de mensaje
 
-> *"Como usuario, quiero escribir plantillas con variables como `{nombre}` y ver una vista previa con un valor real, para reutilizar el mensaje al instante."*
+> *"Como usuario, quiero elegir una plantilla, escribir un nombre real y obtener el mensaje final listo para copiar, para enviarlo por WhatsApp en segundos."*
 
 **Criterios de Aceptación:**
-- Una plantilla con `{nombre}` muestra una **vista previa** donde `{nombre}` fue reemplazado por un valor real.
-- Si el mensaje es largo, la vista previa se muestra **recortada** (no ocupa toda la pantalla).
-- Los **hashtags se muestran como etiquetas** separadas, no como un texto pegado.
+- Puedo **elegir** una de mis plantillas y escribir un **nombre real**.
+- Al generar, veo el **mensaje completo** con la variable `{nombre}` ya reemplazada.
+- Un botón **"Copiar"** copia ese mensaje al portapapeles.
+- En la lista, cada tarjeta muestra sus **hashtags como etiquetas** separadas.
 
-Aquí está lo jugoso de la clase: **transformar texto**.
+Hasta ahora las tarjetas solo *muestran* tus plantillas. Aquí construyes una zona aparte para **usarlas**: defines a la izquierda, ves a la derecha, y aquí generas el mensaje real. Agrega esta sección dentro de la columna izquierda (debajo del formulario):
+
+```html
+<section id="generador" class="bg-white p-4 rounded-xl shadow grid gap-2">
+  <h2 class="font-bold text-slate-800">Usar plantilla</h2>
+  <select id="selector" class="p-2 border border-slate-300 rounded"></select>
+  <input id="valorNombre" type="text" placeholder="Nombre real (ej. Ana)" class="p-2 border border-slate-300 rounded">
+  <button id="btn-generar" class="bg-emerald-600 text-white py-2 rounded">Generar</button>
+  <p id="mensaje-final" class="text-sm text-slate-700 whitespace-pre-wrap"></p>
+  <button id="btn-copiar" class="text-xs text-emerald-700">📋 Copiar</button>
+</section>
+```
+
+Lo "jugoso" de la clase: reemplazar la variable por el valor real con `.replaceAll`:
 
 ```javascript
 function generarMensajeFinal(plantilla, valorNombre) {
-  return plantilla.mensaje.replaceAll("{nombre}", valorNombre);  // sustituye la variable
-}
-
-function vistaPrevia(texto) {
-  return texto.length > 40 ? texto.slice(0, 40) + "…" : texto;   // recorta si es largo
+  return plantilla.mensaje.replaceAll("{nombre}", valorNombre);
 }
 ```
 
-Úsalas dentro de `render()` para enriquecer cada `<li>`:
+Llena el `<select>` con tus plantillas (hazlo dentro de `render()` para que esté siempre al día):
 
 ```javascript
-const final = generarMensajeFinal(p, "Ana");
+const selector = document.getElementById("selector");
+
+function renderSelector() {
+  selector.innerHTML = state.plantillas
+    .map((p, i) => `<option value="${i}">${p.titulo}</option>`)   // value = posición en el array
+    .join("");
+}
+```
+
+> Agrega `renderSelector();` al final de `render()`, junto a lo que ya tienes.
+
+Conecta el botón **Generar**: toma la plantilla elegida y el nombre, y muestra el mensaje **completo** (sin recortar):
+
+```javascript
+const salida = document.getElementById("mensaje-final");
+
+document.getElementById("btn-generar").addEventListener("click", function () {
+  const plantilla = state.plantillas[Number(selector.value)];   // la elegida en el select
+  const nombre = document.getElementById("valorNombre").value.trim();
+  salida.textContent = generarMensajeFinal(plantilla, nombre);
+});
+```
+
+Y el botón **Copiar** lleva ese texto al portapapeles:
+
+```javascript
+document.getElementById("btn-copiar").addEventListener("click", function () {
+  navigator.clipboard.writeText(salida.textContent);
+});
+```
+
+Por último, ahora que conoces `.split`, muestra los hashtags como **etiquetas separadas** en cada tarjeta. Dentro de `render()`, reemplaza la píldora única del hashtag por:
+
+```javascript
 const etiquetas = p.hashtag.split(" ")                  // separa varios hashtags
   .map(h => `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">${h}</span>`)
   .join("");
-
-li.innerHTML = `
-  <div class="flex items-start justify-between gap-2">
-    <strong class="text-slate-800">${p.titulo}</strong>
-    <span class="text-xs text-slate-400 shrink-0">${p.fecha.toLocaleDateString("es-PE")}</span>
-  </div>
-  <p class="text-sm text-slate-600 mt-1">${vistaPrevia(final)}</p>
-  <div class="flex gap-1 mt-2 flex-wrap">${etiquetas}</div>
-`;
+// y en el innerHTML: <div class="flex gap-1 mt-2 flex-wrap">${etiquetas}</div>
 ```
 
-- **Checkpoint 4 (~110 min):** crea una plantilla con mensaje `Hola {nombre}, gracias por tu compra` → la vista previa muestra `Hola Ana, gracias...`. Un mensaje muy largo aparece recortado con `…`.
+- **Checkpoint 4 (~110 min):** crea una plantilla con mensaje `Hola {nombre}, gracias por tu compra`. En "Usar plantilla", elígela, escribe `Ana` y dale **Generar** → ves `Hola Ana, gracias por tu compra` completo. Pulsa **Copiar** y pégalo en cualquier lado.
 
 ---
 
 ## 🌟 Logros Adicionales (Opcionales)
 
 - **Logro 1 — Contador de caracteres:** muestra `p.mensaje.length` en cada tarjeta (útil para WhatsApp).
-- **Logro 2 — Botón Copiar:** copia el mensaje final al portapapeles con `navigator.clipboard.writeText(...)`.
+- **Logro 2 — Recortar en la tarjeta:** si el mensaje es muy largo, muéstralo recortado con `.slice()` (ej. `texto.slice(0, 60) + "…"`) para que la rejilla quede pareja.
 - **Logro 3 — Más variables:** soporta `{nombre}` y `{producto}` encadenando `.replaceAll()`.
 
 ## 📝 Instrucciones de Entrega

@@ -25,7 +25,7 @@ El corazón de la clase es **manipular texto**. Aprenderás los métodos de Stri
 1. **Modelaremos la plantilla** - Crearás la clase `Template` y un estado central que sea la verdad de tu app.
 2. **Dibujarás desde el estado** - Implementarás `render()`: limpiar y redibujar la lista cada vez que cambian los datos.
 3. **Limpiarás y normalizarás texto** - Usarás métodos de String para quitar espacios, unificar hashtags y validar campos.
-4. **Construirás el mensaje final** - Reemplazarás variables como `{nombre}` y mostrarás una vista previa recortada.
+4. **Usarás la plantilla** - En un generador aparte elegirás una plantilla, reemplazarás `{nombre}` por un valor real y copiarás el mensaje final completo.
 
 ---
 

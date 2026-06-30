@@ -51,7 +51,7 @@ Un error clásico: creer que `texto.trim()` cambia `texto`. No lo hace. Los stri
 | Refuerzo | 30 min | `class`, estado central, "cambias estado → render" (de M3) |
 | Debate + Demo | 20 min | Métodos de String: ¿mutan o devuelven nuevo? |
 | Break | 10 min | — |
-| Lab (HU1-HU4) | 100 min | HU1 modelar+estado · HU2 render+Date · HU3 limpiar/normalizar · HU4 mensaje final |
+| Lab (HU1-HU4) | 100 min | HU1 modelar+estado · HU2 render+Date · HU3 limpiar/normalizar · HU4 generador (usar plantilla) |
 | Cierre | 20 min | Síntesis + preview C14 (editar/eliminar) |
 
 ---
@@ -87,7 +87,7 @@ Facilitador: "No. El método NO modifica: devuelve uno nuevo. Hay que guardarlo.
 ```
 Facilitador: "HU1: clase Template + estado central. HU2: render con la fecha (Date).
 HU3: limpiar y normalizar con métodos de String + validar campos vacíos.
-HU4: reemplazar {nombre} y mostrar la vista previa recortada.
+HU4: usar la plantilla en un generador aparte (elegir + nombre + Generar + Copiar) que muestra el mensaje completo.
 Levanten la mano al terminar cada HU."
 ```
 
@@ -167,7 +167,7 @@ new Date().toLocaleDateString("es-PE");   // "29/6/2026"
 | ~30' | HU1 | En consola, `agregarPlantilla(...)` un par de veces hace crecer `state.plantillas`; cada item tiene `titulo`, `mensaje`, `hashtag`, `fecha`. |
 | ~60' | HU2 | Al enviar el formulario, la plantilla aparece sola en la lista, con la **fecha de hoy** legible; agregar otra no borra la anterior. |
 | ~90' | HU3 | `  Ventas ` se guarda como `#ventas`; con el mensaje vacío no deja agregar. |
-| ~110' | HU4 | `Hola {nombre}...` muestra `Hola Ana...` en la vista previa; un mensaje largo aparece recortado con `…`; los hashtags se ven como etiquetas. |
+| ~110' | HU4 | En el generador "Usar plantilla": elige la plantilla, escribe `Ana`, **Generar** muestra `Hola Ana...` completo y **Copiar** lo lleva al portapapeles; los hashtags se ven como etiquetas. |
 
 ---
 
@@ -180,10 +180,10 @@ new Date().toLocaleDateString("es-PE");   // "29/6/2026"
 - Pídele que explique por qué los strings son inmutables, o que implemente un logro extra (más variables, contador de caracteres).
 
 ### Si la mayoría termina antes:
-- Logros adicionales: contador de caracteres, botón Copiar, soportar `{producto}`.
+- Logros adicionales: contador de caracteres, recortar mensajes largos con `.slice()`, soportar `{producto}`.
 
 ### Si la mayoría se atrasa:
-- Prioriza HU1-HU3. HU4 (mensaje final) puede quedar como post-clase si el tiempo aprieta.
+- Prioriza HU1-HU3. HU4 (el generador) puede quedar como post-clase si el tiempo aprieta.
 
 ### Si hay preguntas fuera de alcance (persistencia):
 > "Guardar al recargar es persistencia — eso es C15, con `localStorage`. Hoy todo vive en memoria, a propósito."

@@ -104,15 +104,15 @@ Escribe `  Ventas ` en el hashtag y deja el mensaje vacío.
 
 ---
 
-## 🟢 CHECKPOINT HU4: Mensaje final con variables
+## 🟢 CHECKPOINT HU4: Usar la plantilla (generador)
 
 ### Verificar:
 Crea una plantilla con `Hola {nombre}, gracias por tu compra`.
 
 **¿Qué debe verse?**
-- La vista previa muestra `Hola Ana, gracias...`
-- Un mensaje largo aparece recortado con `…`
-- Los hashtags se ven como etiquetas separadas
+- En "Usar plantilla": eliges la plantilla, escribes `Ana` y al **Generar** sale el mensaje completo `Hola Ana, gracias por tu compra`
+- El botón **Copiar** lo lleva al portapapeles
+- Los hashtags se ven como etiquetas separadas en la tarjeta
 
 **Problemas comunes:**
 - `{nombre}` no se reemplaza → revisar `replaceAll("{nombre}", ...)`
@@ -166,6 +166,6 @@ Si quieres convertir `"Promo {nombre}"` en `"Promo Ana"`, ¿qué método usas? �
 
 - Repo `whatsapp-templates` en GitHub Pages
 - `README.md` describiendo la clase `Template` y los métodos de String usados
-- Screenshot de la lista con una plantilla y su vista previa con `{nombre}` reemplazado
+- Screenshot del generador "Usar plantilla" con el mensaje final (`{nombre}` reemplazado) listo para copiar
 
 ### Próxima clase: Editar y eliminar plantillas
