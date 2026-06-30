@@ -219,8 +219,7 @@ form.addEventListener("submit", function (e) {
 - Puedo **elegir** una de mis plantillas y escribir un **nombre real**.
 - Al generar, veo el **mensaje completo** con la variable `{nombre}` ya reemplazada.
 - Un botón **"Copiar"** copia ese mensaje al portapapeles.
-- En la lista, cada tarjeta muestra sus **hashtags como etiquetas** separadas.
-
+- 
 Hasta ahora las tarjetas solo *muestran* tus plantillas. Aquí construyes una zona aparte para **usarlas**: defines a la izquierda, ves a la derecha, y aquí generas el mensaje real. Agrega esta sección dentro de la columna izquierda (debajo del formulario):
 
 ```html
@@ -287,15 +286,6 @@ Y el botón **Copiar** lleva ese texto al portapapeles:
 document.getElementById("btn-copiar").addEventListener("click", function () {
   navigator.clipboard.writeText(salida.textContent);
 });
-```
-
-Por último, ahora que conoces `.split`, muestra los hashtags como **etiquetas separadas** en cada tarjeta. Dentro de `render()`, reemplaza la píldora única del hashtag por:
-
-```javascript
-const etiquetas = p.hashtag.split(" ")                  // separa varios hashtags
-  .map(h => `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">${h}</span>`)
-  .join("");
-// y en el innerHTML: <div class="flex gap-1 mt-2 flex-wrap">${etiquetas}</div>
 ```
 
 - **Checkpoint 4 (~110 min):** crea una plantilla con mensaje `Hola {nombre}, gracias por tu compra`. En "Usar plantilla", elígela, escribe `Ana` y dale **Generar** → ves `Hola Ana, gracias por tu compra` completo. Pulsa **Copiar** y pégalo en cualquier lado.
