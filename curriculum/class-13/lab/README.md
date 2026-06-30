@@ -224,13 +224,26 @@ form.addEventListener("submit", function (e) {
 Hasta ahora las tarjetas solo *muestran* tus plantillas. Aquí construyes una zona aparte para **usarlas**: defines a la izquierda, ves a la derecha, y aquí generas el mensaje real. Agrega esta sección dentro de la columna izquierda (debajo del formulario):
 
 ```html
-<section id="generador" class="bg-white p-4 rounded-xl shadow grid gap-2">
-  <h2 class="font-bold text-slate-800">Usar plantilla</h2>
-  <select id="selector" class="p-2 border border-slate-300 rounded"></select>
-  <input id="valorNombre" type="text" placeholder="Nombre real (ej. Ana)" class="p-2 border border-slate-300 rounded">
-  <button id="btn-generar" class="bg-emerald-600 text-white py-2 rounded">Generar</button>
-  <p id="mensaje-final" class="text-sm text-slate-700 whitespace-pre-wrap"></p>
-  <button id="btn-copiar" class="text-xs text-emerald-700">📋 Copiar</button>
+<section id="generador" class="bg-white p-4 rounded-xl shadow grid gap-3">
+  <h2 class="font-bold text-slate-800">✨ Usar plantilla</h2>
+
+  <label class="grid gap-1 text-xs text-slate-500">
+    Plantilla
+    <select id="selector" class="p-2 border border-slate-300 rounded text-slate-800"></select>
+  </label>
+
+  <label class="grid gap-1 text-xs text-slate-500">
+    Nombre real
+    <input id="valorNombre" type="text" placeholder="ej. Ana" class="p-2 border border-slate-300 rounded text-slate-800">
+  </label>
+
+  <button id="btn-generar" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded transition">Generar</button>
+
+  <!-- Resultado: el mensaje final y el botón copiar -->
+  <div class="bg-slate-50 border border-slate-200 rounded p-3 grid gap-2">
+    <p id="mensaje-final" class="text-sm text-slate-700 whitespace-pre-wrap min-h-[1.5rem]"></p>
+    <button id="btn-copiar" class="justify-self-end text-xs text-emerald-700 hover:text-emerald-800">📋 Copiar</button>
+  </div>
 </section>
 ```
 
