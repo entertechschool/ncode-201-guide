@@ -133,11 +133,14 @@ function render() {
   state.plantillas.forEach(function (p) {
     const fechaTexto = p.fecha.toLocaleDateString("es-PE");   // Date → texto legible
     const li = document.createElement("li");
-    li.className = "bg-white p-3 rounded-lg shadow";
+    li.className = "bg-white p-4 rounded-lg shadow";
     li.innerHTML = `
-      <strong>${p.titulo}</strong>
-      <span class="text-xs text-slate-400">${fechaTexto}</span>
-      <br>${p.mensaje}`;
+      <div class="flex items-start justify-between gap-2">
+        <strong class="text-slate-800">${p.titulo}</strong>
+        <span class="text-xs text-slate-400 shrink-0">${fechaTexto}</span>
+      </div>
+      <p class="text-sm text-slate-600 mt-1">${p.mensaje}</p>
+      <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${p.hashtag}</span>`;
     lista.appendChild(li);                     // 2. agrega un nodo por dato
   });
 }
@@ -226,13 +229,16 @@ function vistaPrevia(texto) {
 ```javascript
 const final = generarMensajeFinal(p, "Ana");
 const etiquetas = p.hashtag.split(" ")                  // separa varios hashtags
-  .map(h => `<span class="text-xs bg-slate-200 px-2 py-1 rounded-full">${h}</span>`)
+  .map(h => `<span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">${h}</span>`)
   .join("");
 
 li.innerHTML = `
-  <strong>${p.titulo}</strong>
-  <p class="text-slate-600">${vistaPrevia(final)}</p>
-  <div class="flex gap-1 mt-1 flex-wrap">${etiquetas}</div>
+  <div class="flex items-start justify-between gap-2">
+    <strong class="text-slate-800">${p.titulo}</strong>
+    <span class="text-xs text-slate-400 shrink-0">${p.fecha.toLocaleDateString("es-PE")}</span>
+  </div>
+  <p class="text-sm text-slate-600 mt-1">${vistaPrevia(final)}</p>
+  <div class="flex gap-1 mt-2 flex-wrap">${etiquetas}</div>
 `;
 ```
 
