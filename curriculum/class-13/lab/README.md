@@ -51,15 +51,21 @@
    <body class="bg-slate-100 min-h-screen p-6">
      <h1 class="text-3xl font-bold text-center text-slate-800 mb-6">Mis Plantillas</h1>
 
-     <form id="form-plantilla" class="max-w-md mx-auto bg-white p-4 rounded-xl shadow mb-6 grid gap-2">
-       <input id="titulo"  type="text" placeholder="Título"  class="p-2 border border-slate-300 rounded">
-       <input id="hashtag" type="text" placeholder="hashtag" class="p-2 border border-slate-300 rounded">
-       <textarea id="mensaje" rows="3" placeholder="Mensaje (usa {nombre})" class="p-2 border border-slate-300 rounded"></textarea>
-       <button class="bg-emerald-600 text-white py-2 rounded">Agregar plantilla</button>
-     </form>
+     <!-- Dos columnas: formulario a la izquierda, tarjetas a la derecha -->
+     <div class="max-w-5xl mx-auto grid gap-6 md:grid-cols-[320px_1fr]">
 
-     <!-- Aquí el JS pintará las plantillas. Empieza vacío. -->
-     <ul id="listaPlantillas" class="max-w-md mx-auto grid gap-3"></ul>
+       <!-- Columna izquierda: formulario (no estira a lo alto con self-start) -->
+       <form id="form-plantilla" class="bg-white p-4 rounded-xl shadow grid gap-2 self-start">
+         <input id="titulo"  type="text" placeholder="Título"  class="p-2 border border-slate-300 rounded">
+         <input id="hashtag" type="text" placeholder="hashtag" class="p-2 border border-slate-300 rounded">
+         <textarea id="mensaje" rows="3" placeholder="Mensaje (usa {nombre})" class="p-2 border border-slate-300 rounded"></textarea>
+         <button class="bg-emerald-600 text-white py-2 rounded">Agregar plantilla</button>
+       </form>
+
+       <!-- Columna derecha: grid de tarjetas (el JS las pinta; empieza vacío) -->
+       <ul id="listaPlantillas" class="grid gap-3 sm:grid-cols-2 content-start"></ul>
+
+     </div>
 
      <script src="js/models/Template.js"></script>
      <script src="js/app.js"></script>
@@ -67,7 +73,7 @@
    </html>
    ```
 
-   > 📌 **Convención del proyecto** (la reusarás en C14-C16): el formulario es `<form id="form-plantilla">`, la lista es `<ul id="listaPlantillas">`. No les cambies el `id`.
+   > 📌 **Convención del proyecto** (la reusarás en C14-C16): el formulario es `<form id="form-plantilla">`, la lista es `<ul id="listaPlantillas">`. No les cambies el `id`. El layout de dos columnas (formulario + grid de tarjetas) también se mantiene.
 
 ---
 
