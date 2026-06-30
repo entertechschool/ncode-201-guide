@@ -42,13 +42,7 @@
    }
    ```
 
-3. **Agrega un panel de estadísticas** en `index.html`, encima de la lista:
-
-   ```html
-   <aside id="panel-stats" class="max-w-md mx-auto mb-4 text-sm text-slate-600"></aside>
-   ```
-
-   > 📌 **Convención del proyecto:** el panel de stats es `<aside id="panel-stats">`. El botón eliminar usará `class="btn-eliminar"` y el de editar `class="btn-editar"`, ambos con `data-id`.
+> 📌 **Convención del proyecto** (la irás aplicando en cada HU): el panel de estadísticas será `<aside id="panel-stats">`; el botón eliminar `class="btn-eliminar"` y el de editar `class="btn-editar"`, ambos con `data-id`.
 
 ---
 
@@ -157,7 +151,13 @@ form.reset();
 - Se muestra un **conteo por hashtag**.
 - Estos números **se actualizan solos** al agregar, editar o eliminar.
 
-Una **función pura** recibe el estado y devuelve un resultado, sin tocar nada más:
+Primero agrega el panel en tu `index.html`, **encima de la lista** de plantillas:
+
+```html
+<aside id="panel-stats" class="mb-2 text-sm text-slate-600"></aside>
+```
+
+Luego, una **función pura** recibe el estado y devuelve un resultado, sin tocar nada más:
 
 ```javascript
 function contarPorHashtag(plantillas) {
