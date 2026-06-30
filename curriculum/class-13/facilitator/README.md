@@ -6,7 +6,7 @@
 
 ## 🔑 Conceptos Clave
 
-- **Estado central** (refuerzo): un único objeto `state = { plantillas: [] }` que es la verdad de la app. Si algo no está ahí, no existe en pantalla. Lo reasignamos, no lo mutamos.
+- **Estado central** (refuerzo): un único objeto `state = { plantillas: [] }` que es la verdad de la app. Si algo no está ahí, no existe en pantalla. Lo modificas agregando/quitando plantillas y luego redibujas. (La inmutabilidad llega en C14.)
 - **Patrón render** (refuerzo): `render()` limpia el contenedor y redibuja TODO desde el estado. La regla de oro: cambias el estado → llamas `render()`.
 - **Métodos de String** (NUEVO, ancla): un texto es un objeto con métodos. `.trim()`, `.toLowerCase()`, `.startsWith()`, `.includes()`, `.replaceAll()`, `.split()`, `.slice()`. **No mutan**: devuelven un texto nuevo.
 - **Sustitución de variables** (NUEVO): reemplazar `{nombre}` dentro de la plantilla por un valor real con `.replaceAll()` → el "mensaje final".

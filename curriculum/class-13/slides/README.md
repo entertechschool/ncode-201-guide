@@ -123,8 +123,8 @@ Crea una plantilla con `Hola {nombre}, gracias por tu compra`.
 
 | Acción | Resultado |
 |---|---|
-| `texto.trim()` | Devuelve un **texto nuevo** (no muta) |
-| `state.plantillas = [...]` | **Reasignamos** el estado (no mutamos) |
+| `texto.trim()` | Devuelve un **texto nuevo** (no muta) — los strings son inmutables |
+| `state.plantillas.push(...)` | **Modifica** el array (sí muta) — los arrays son mutables |
 
 > **Regla memorable:** "Cambias el estado → llamas `render()`. Y `render()` siempre limpia y redibuja todo."
 
