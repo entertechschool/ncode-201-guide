@@ -138,17 +138,17 @@ const lista = document.getElementById("listaPlantillas");
 
 function render() {
   lista.innerHTML = "";                       // 1. limpia lo anterior
-  state.plantillas.forEach(function (p) {
-    const fechaTexto = p.fecha.toLocaleDateString("es-PE");   // Date → texto legible
+  state.plantillas.forEach(function (plantilla) {
+    const fechaTexto = plantilla.fecha.toLocaleDateString("es-PE");   // Date → texto legible
     const li = document.createElement("li");
     li.className = "bg-white p-4 rounded-lg shadow";
     li.innerHTML = `
       <div class="flex items-start justify-between gap-2">
-        <strong class="text-slate-800">${p.titulo}</strong>
+        <strong class="text-slate-800">${plantilla.titulo}</strong>
         <span class="text-xs text-slate-400 shrink-0">${fechaTexto}</span>
       </div>
-      <p class="text-sm text-slate-600 mt-1">${p.mensaje}</p>
-      <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${p.hashtag}</span>`;
+      <p class="text-sm text-slate-600 mt-1">${plantilla.mensaje}</p>
+      <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>`;
     lista.appendChild(li);                     // 2. agrega un nodo por dato
   });
 }
@@ -159,8 +159,8 @@ Conecta el formulario: al enviarlo, agrega al estado y vuelve a renderizar.
 ```javascript
 const form = document.getElementById("form-plantilla");
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+form.addEventListener("submit", function (evento) {
+  evento.preventDefault();
   agregarPlantilla(titulo.value, mensaje.value, hashtag.value);
   render();           // ← el estado cambió, redibujamos
   form.reset();
@@ -192,16 +192,16 @@ function normalizarHashtag(texto) {
 Aplica la limpieza y valida antes de agregar:
 
 ```javascript
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  const t = titulo.value.trim();
-  const m = mensaje.value.trim();
+form.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+  const tituloTexto = titulo.value.trim();
+  const mensajeTexto = mensaje.value.trim();
 
-  if (t.length === 0 || m.length === 0) {              // validación
+  if (tituloTexto.length === 0 || mensajeTexto.length === 0) {              // validación
     alert("Título y mensaje son obligatorios");
     return;
   }
-  agregarPlantilla(t, m, normalizarHashtag(hashtag.value));
+  agregarPlantilla(tituloTexto, mensajeTexto, normalizarHashtag(hashtag.value));
   render();
   form.reset();
 });
@@ -261,7 +261,7 @@ const selector = document.getElementById("selector");
 
 function renderSelector() {
   selector.innerHTML = state.plantillas
-    .map((p, i) => `<option value="${i}">${p.titulo}</option>`)   // value = posición en el array
+    .map((plantilla, indice) => `<option value="${indice}">${plantilla.titulo}</option>`)   // value = posición en el array
     .join("");
 }
 ```

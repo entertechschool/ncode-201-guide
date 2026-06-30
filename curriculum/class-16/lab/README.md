@@ -85,7 +85,7 @@ Ahora eliminar y vaciar **piden confirmación** pasando su acción:
 ```javascript
 function eliminarPlantilla(id) {
   pedirConfirmacion("¿Eliminar esta plantilla?", function () {
-    state.plantillas = state.plantillas.filter(p => p.id !== id);
+    state.plantillas = state.plantillas.filter(plantilla => plantilla.id !== id);
     render();
   });
 }

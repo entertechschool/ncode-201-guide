@@ -61,10 +61,10 @@ Primero, cada `<li>` necesita su botón con el `data-id`. En `render()`, dentro 
 
 ```javascript
 li.innerHTML = `
-  <strong>${p.titulo}</strong>
-  <span class="text-xs text-slate-400">${p.fecha.toLocaleDateString("es-PE")}</span>
-  <br>${p.mensaje}
-  <button class="btn-eliminar text-red-600 text-xs" data-id="${p.id}">Eliminar</button>
+  <strong>${plantilla.titulo}</strong>
+  <span class="text-xs text-slate-400">${plantilla.fecha.toLocaleDateString("es-PE")}</span>
+  <br>${plantilla.mensaje}
+  <button class="btn-eliminar text-red-600 text-xs" data-id="${plantilla.id}">Eliminar</button>
 `;
 ```
 
@@ -72,13 +72,13 @@ Ahora, en vez de poner un listener por cada botón, pones **uno solo** en la lis
 
 ```javascript
 function eliminarPlantilla(id) {
-  state.plantillas = state.plantillas.filter(p => p.id !== id);  // sin mutar: filtra
+  state.plantillas = state.plantillas.filter(plantilla => plantilla.id !== id);  // sin mutar: filtra
   render();
 }
 
-lista.addEventListener("click", function (e) {
-  if (e.target.classList.contains("btn-eliminar")) {     // ¿se hizo clic en un botón eliminar?
-    const id = Number(e.target.dataset.id);              // lee el data-id
+lista.addEventListener("click", function (evento) {
+  if (evento.target.classList.contains("btn-eliminar")) {     // ¿se hizo clic en un botón eliminar?
+    const id = Number(evento.target.dataset.id);              // lee el data-id
     eliminarPlantilla(id);
   }
 });
@@ -102,23 +102,23 @@ lista.addEventListener("click", function (e) {
 Agrega el botón editar en `render()` (junto al de eliminar):
 
 ```javascript
-`<button class="btn-editar text-blue-600 text-xs" data-id="${p.id}">Editar</button>`
+`<button class="btn-editar text-blue-600 text-xs" data-id="${plantilla.id}">Editar</button>`
 ```
 
 Amplía el mismo listener de la lista para atender también "editar":
 
 ```javascript
-lista.addEventListener("click", function (e) {
-  const id = Number(e.target.dataset.id);
-  if (e.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
-  if (e.target.classList.contains("btn-editar"))   cargarEnFormulario(id);
+lista.addEventListener("click", function (evento) {
+  const id = Number(evento.target.dataset.id);
+  if (evento.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
+  if (evento.target.classList.contains("btn-editar"))   cargarEnFormulario(id);
 });
 
 function cargarEnFormulario(id) {
-  const p = state.plantillas.find(t => t.id === id);
-  titulo.value = p.titulo;
-  mensaje.value = p.mensaje;
-  hashtag.value = p.hashtag;
+  const plantilla = state.plantillas.find(plantilla => plantilla.id === id);
+  titulo.value = plantilla.titulo;
+  mensaje.value = plantilla.mensaje;
+  hashtag.value = plantilla.hashtag;
   state.editandoId = id;          // recordamos que estamos editando, no creando
 }
 ```
@@ -127,12 +127,12 @@ Y en el `submit`, decide si **actualizas** o **creas**:
 
 ```javascript
 if (state.editandoId) {
-  state.plantillas = state.plantillas.map(p =>     // actualiza solo esa, sin mutar
-    p.id === state.editandoId ? { ...p, titulo: t, mensaje: m, hashtag: normalizarHashtag(hashtag.value) } : p
+  state.plantillas = state.plantillas.map(plantilla =>     // actualiza solo esa, sin mutar
+    plantilla.id === state.editandoId ? { ...plantilla, titulo: tituloTexto, mensaje: mensajeTexto, hashtag: normalizarHashtag(hashtag.value) } : plantilla
   );
   state.editandoId = null;
 } else {
-  agregarPlantilla(t, m, normalizarHashtag(hashtag.value));
+  agregarPlantilla(tituloTexto, mensajeTexto, normalizarHashtag(hashtag.value));
 }
 render();
 form.reset();
@@ -161,8 +161,8 @@ Luego, una **función pura** recibe el estado y devuelve un resultado, sin tocar
 
 ```javascript
 function contarPorHashtag(plantillas) {
-  return plantillas.reduce(function (conteo, p) {       // reduce: lo viste en M2
-    conteo[p.hashtag] = (conteo[p.hashtag] ?? 0) + 1;
+  return plantillas.reduce(function (conteo, plantilla) {       // reduce: lo viste en M2
+    conteo[plantilla.hashtag] = (conteo[plantilla.hashtag] ?? 0) + 1;
     return conteo;
   }, {});
 }
@@ -174,7 +174,7 @@ Dibuja el panel desde esa función, y llámalo dentro de `render()` para que se 
 function renderStats() {
   const total = state.plantillas.length;
   const porTag = contarPorHashtag(state.plantillas);
-  const detalle = Object.entries(porTag).map(([tag, n]) => `${tag}: ${n}`).join(" · ");
+  const detalle = Object.entries(porTag).map(([hashtag, cantidad]) => `${hashtag}: ${cantidad}`).join(" · ");
   document.getElementById("panel-stats").textContent = `Total: ${total}  |  ${detalle}`;
 }
 ```
@@ -205,17 +205,17 @@ Calcula **qué mostrar** con una función derivada (reutiliza `.includes()` y `.
 
 ```javascript
 function plantillasVisibles() {
-  const f = (state.filtro ?? "").toLowerCase();
-  if (f === "") return state.plantillas;
-  return state.plantillas.filter(p => p.hashtag.toLowerCase().includes(f));
+  const filtroTexto = (state.filtro ?? "").toLowerCase();
+  if (filtroTexto === "") return state.plantillas;
+  return state.plantillas.filter(plantilla => plantilla.hashtag.toLowerCase().includes(filtroTexto));
 }
 ```
 
 En `render()`, recorre `plantillasVisibles()` en vez de `state.plantillas`. Y conecta el buscador:
 
 ```javascript
-document.getElementById("buscador").addEventListener("input", function (e) {
-  state.filtro = e.target.value;   // el filtro vive en el estado
+document.getElementById("buscador").addEventListener("input", function (evento) {
+  state.filtro = evento.target.value;   // el filtro vive en el estado
   render();                        // mismo render, datos distintos
 });
 ```
@@ -249,8 +249,8 @@ Encadena el orden **después** del filtro, dentro de tu pipeline de "qué mostra
 
 ```javascript
 function plantillasVisibles() {
-  const f = (state.filtro ?? "").toLowerCase();
-  const filtradas = f === "" ? state.plantillas : state.plantillas.filter(p => p.hashtag.toLowerCase().includes(f));
+  const filtroTexto = (state.filtro ?? "").toLowerCase();
+  const filtradas = filtroTexto === "" ? state.plantillas : state.plantillas.filter(plantilla => plantilla.hashtag.toLowerCase().includes(filtroTexto));
   return ordenar(filtradas);     // primero filtra, luego ordena
 }
 ```
