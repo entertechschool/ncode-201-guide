@@ -28,20 +28,6 @@
 
 1. **Repositorio:** continúa en `whatsapp-templates`. Crea una rama `lab14-interaccion`.
 
-2. **Da un `id` a cada plantilla** — lo necesitarás para saber sobre cuál actúas. En `js/models/Template.js`:
-
-   ```javascript
-   class Template {
-     constructor(titulo, mensaje, hashtag) {
-       this.id = Date.now();        // ← id único (reutilizamos Date de C13)
-       this.titulo = titulo;
-       this.mensaje = mensaje;
-       this.hashtag = hashtag;
-       this.fecha = new Date();
-     }
-   }
-   ```
-
 > 📌 **Convención del proyecto** (la irás aplicando en cada HU): el panel de estadísticas será `<aside id="panel-stats">`; el botón eliminar `class="btn-eliminar"` y el de editar `class="btn-editar"`, ambos con `data-id`.
 
 ---
@@ -57,7 +43,21 @@
 - Al pulsarlo, **esa** plantilla desaparece y **las demás permanecen**.
 - La lista en pantalla sigue reflejando exactamente el estado.
 
-Primero, cada `<li>` necesita su botón con el `data-id`. En `render()`, dentro del `innerHTML`:
+Primero, dale un **`id` único** a cada plantilla — es lo que el botón usará para saber sobre cuál actuar. En `js/models/Template.js`:
+
+```javascript
+class Template {
+  constructor(titulo, mensaje, hashtag) {
+    this.id = Date.now();        // ← id único (reutilizamos Date de C13)
+    this.titulo = titulo;
+    this.mensaje = mensaje;
+    this.hashtag = hashtag;
+    this.fecha = new Date();
+  }
+}
+```
+
+Ahora cada `<li>` necesita su botón con el `data-id`. En `render()`, dentro del `innerHTML`:
 
 ```javascript
 li.innerHTML = `
