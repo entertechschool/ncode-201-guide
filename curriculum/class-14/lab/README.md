@@ -161,10 +161,19 @@ Luego, una **función pura** recibe el estado y devuelve un resultado, sin tocar
 
 ```javascript
 function contarPorHashtag(plantillas) {
-  return plantillas.reduce(function (conteo, plantilla) {       // reduce: lo viste en M2
-    conteo[plantilla.hashtag] = (conteo[plantilla.hashtag] ?? 0) + 1;
-    return conteo;
-  }, {});
+  // 1. Declaramos explícitamente nuestra "caja" como un objeto vacío
+  const conteo = {};
+  // 2. Recorremos el array de plantillas una por una
+  plantillas.forEach(function (plantilla) {
+    const elHashtag = plantilla.hashtag;
+    // 3. Aplicamos la misma lógica del if...else
+    if (conteo[elHashtag]) {
+      conteo[elHashtag] = conteo[elHashtag] + 1; // Si ya existe, sumamos 1
+    } else {
+      conteo[elHashtag] = 1; // Si es nuevo, lo inicializamos en 1
+    }
+  });
+  return conteo;
 }
 ```
 
