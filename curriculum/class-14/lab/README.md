@@ -211,7 +211,20 @@ function plantillasVisibles() {
 }
 ```
 
-En `render()`, recorre `plantillasVisibles()` en vez de `state.plantillas`. Y conecta el buscador:
+Ahora, en tu `render()`, **recorre `plantillasVisibles()` en vez de `state.plantillas`** — ese es el único cambio:
+
+```javascript
+function render() {
+  lista.innerHTML = "";
+  plantillasVisibles().forEach(function (plantilla) {   // ← antes: state.plantillas.forEach
+    // ...crea el <li> igual que en HU1/HU2 (título, fecha, mensaje, botones)...
+    lista.appendChild(li);
+  });
+  renderStats();   // las stats siguen calculándose sobre el total real
+}
+```
+
+Por último, conecta el buscador para que guarde el filtro en el estado y redibuje:
 
 ```javascript
 document.getElementById("buscador").addEventListener("input", function (evento) {
