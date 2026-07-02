@@ -122,7 +122,7 @@ Lista cosas de apps reales (no leídos de WhatsApp, total del carrito, likes) y 
 ### Un listener atiende dos botones
 ```javascript
 lista.addEventListener("click", function (e) {
-  const id = Number(e.target.dataset.id);
+  const id = e.target.dataset.id;
   if (e.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
   if (e.target.classList.contains("btn-editar"))   cargarEnFormulario(id);
 });
@@ -152,7 +152,7 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 |---|---|---|
 | El clic en eliminar no hace nada | Mal nombre de clase en `classList.contains` | Debe coincidir con `btn-eliminar` exacto |
 | `eliminarPlantilla(undefined)` | `data-id` no está en el botón, o leen otro nodo | Verificar `data-id="${p.id}"` y `e.target.dataset.id` |
-| `id` no coincide nunca | `dataset.id` es texto, `p.id` es número | Envolver con `Number(e.target.dataset.id)` |
+| `id` no coincide nunca | Comparan ids de tipos distintos | Con `crypto.randomUUID()` el id es texto en ambos lados; compara `dataset.id` (texto) directo, sin `Number()` |
 | Al editar se crea una copia | No usan `state.editandoId` en el `submit` | Decidir `map` (editar) vs `agregar` (crear) según `editandoId` |
 | Las stats no se actualizan | No llaman `renderStats()` en `render()` | Agregar `renderStats();` al final de `render()` |
 | El total baja al filtrar | Cuentan `plantillasVisibles()` en vez del estado | Stats cuentan `state.plantillas` (total real) |
@@ -181,7 +181,7 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 
 | Tiempo | Checkpoint | Cómo validar | Si no cumple |
 |---|---|---|---|
-| ~30' | HU1 | Agregar 3, eliminar la del medio: solo esa desaparece. | Revisar `classList.contains` y `Number(dataset.id)` |
+| ~30' | HU1 | Agregar 3, eliminar la del medio: solo esa desaparece. | Revisar `classList.contains` y que el `data-id` lleve `plantilla.id` |
 | ~55' | HU2 | Editar y guardar: se actualiza en su lugar, sin copia nueva. | Revisar uso de `state.editandoId` en el `submit` |
 | ~80' | HU3 | Panel muestra `Total` y conteo por hashtag; baja al eliminar. | Agregar `renderStats()` al final de `render()` |
 | ~100' | HU4 | Filtrar por hashtag muestra solo coincidencias; borrar → todas. | Recorrer `plantillasVisibles()` en `render()` |
@@ -192,7 +192,7 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 ## 🧑‍🏫 Tips de Facilitación
 
 - **Grupo callado:** haz clic en distintas zonas de una tarjeta y muestra `console.log(e.target)`; el cambio del target genera preguntas.
-- **Alguien ya sabía delegación:** pídele que explique por qué `dataset.id` necesita `Number()`.
+- **Alguien ya sabía delegación:** pídele que explique por qué el listener en el padre sigue funcionando aunque se recreen las tarjetas.
 - **Terminan antes:** sugiere los Logros (cancelar edición, hashtag más usado, confirmar al eliminar).
 - **Se atrasan:** prioriza HU1-HU3 (delegación + CRUD + stats); HU4-HU5 pueden quedar como extensión.
 - **Preguntas fuera de alcance (persistencia):** "Eso es exactamente C15. Hoy todo vive en memoria a propósito."
@@ -216,8 +216,8 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 **P: ¿Por qué no un `addEventListener` por cada botón?**
 R: Porque al re-renderizar se destruyen los nodos y sus listeners. Un listener en el padre persiste y atiende a todos.
 
-**P: ¿Por qué `Number(e.target.dataset.id)`?**
-R: `dataset` siempre devuelve texto. Si `p.id` es número, `"123" === 123` es falso. Convertir evita ese bug.
+**P: ¿Por qué `crypto.randomUUID()` y no un contador?**
+R: Genera un id único garantizado y, como es texto, sobrevive a la persistencia de C15 sin chocar con los ids ya guardados (un contador se reiniciaría al recargar). Además `dataset.id` ya es texto, así que se compara directo, sin `Number()`.
 
 **P: ¿Por qué copiar el array antes de `.sort()`?**
 R: `.sort()` ordena el array original (lo muta). Copiar con `[...]` mantiene el estado intacto (inmutabilidad).
@@ -252,4 +252,4 @@ Al cerrar, planta la semilla:
 - ¿Vieron claro por qué un listener en el padre basta?
 - ¿Distinguen mutar de no mutar al editar/eliminar?
 - ¿Entendieron "dato derivado" (se calcula, no se guarda)?
-- ¿Quedó alguien atascado en el `Number(dataset.id)`? Reforzar en C15.
+- ¿Entienden por qué el id se genera con `crypto.randomUUID()` (único y persistente)?

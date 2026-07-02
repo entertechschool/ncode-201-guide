@@ -115,7 +115,7 @@
       <h3><span class="tag-green">1.</span> Delegación de eventos</h3>
       <p class="desc"><strong>Un solo</strong> listener en el contenedor padre atiende los clics de todas las tarjetas. Según en qué hijo se hizo clic (<code>event.target</code>), decide la acción. Sobrevive a cada <code>render()</code>.</p>
       <pre><code>lista.addEventListener(<span class="tag-green">"click"</span>, (e) =&gt; {
-  <span class="tag-muted">const</span> id = Number(e.target.dataset.id);
+  <span class="tag-muted">const</span> id = e.target.dataset.id;
   <span class="tag-muted">if</span> (e.target.classList.contains(<span class="tag-green">"btn-eliminar"</span>)) eliminarPlantilla(id);
   <span class="tag-muted">if</span> (e.target.classList.contains(<span class="tag-green">"btn-editar"</span>))   cargarEnFormulario(id);
 });</code></pre>

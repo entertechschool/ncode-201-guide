@@ -48,7 +48,7 @@ Primero, dale un **`id` único** a cada plantilla — es lo que el botón usará
 ```javascript
 class Template {
   constructor(titulo, mensaje, hashtag) {
-    this.id = Date.now();        // ← id único (reutilizamos Date de C13)
+    this.id = crypto.randomUUID();   // ← id único garantizado (un texto)
     this.titulo = titulo;
     this.mensaje = mensaje;
     this.hashtag = hashtag;
@@ -78,7 +78,7 @@ function eliminarPlantilla(id) {
 
 lista.addEventListener("click", function (evento) {
   if (evento.target.classList.contains("btn-eliminar")) {     // ¿se hizo clic en un botón eliminar?
-    const id = Number(evento.target.dataset.id);              // lee el data-id
+    const id = evento.target.dataset.id;              // lee el data-id
     eliminarPlantilla(id);
   }
 });
@@ -109,7 +109,7 @@ Amplía el mismo listener de la lista para atender también "editar":
 
 ```javascript
 lista.addEventListener("click", function (evento) {
-  const id = Number(evento.target.dataset.id);
+  const id = evento.target.dataset.id;
   if (evento.target.classList.contains("btn-eliminar")) eliminarPlantilla(id);
   if (evento.target.classList.contains("btn-editar"))   cargarEnFormulario(id);
 });

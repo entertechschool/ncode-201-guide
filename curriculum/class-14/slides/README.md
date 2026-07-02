@@ -67,7 +67,7 @@ Agrega 3 plantillas y elimina la del medio.
 
 **Problemas comunes:**
 - No pasa nada al clic → revisa `classList.contains("btn-eliminar")`
-- `id` no coincide → falta `Number(e.target.dataset.id)`
+- `id` no coincide → asegúrate de comparar `dataset.id` (texto) con `plantilla.id`
 
 ---
 
