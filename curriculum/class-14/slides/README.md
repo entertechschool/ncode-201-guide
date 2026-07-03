@@ -13,7 +13,7 @@
 ### Hoy:
 - Tu app se vuelve **interactiva**: editar y eliminar
 - **Delegación de eventos**: un solo listener para todo
-- **Datos derivados** y orden con `.sort()`
+- **Datos derivados** y filtro por hashtag
 
 > "El estado manda; la pantalla solo lo refleja."
 
@@ -92,26 +92,12 @@ Pulsa "Editar", cambia el mensaje y guarda.
 Agrega hashtags repetidos; luego escribe en el buscador.
 
 **¿Qué debe verse?**
-- Panel: `Total: 3 | #ventas: 2 · #soporte: 1`
+- Panel: `3 plantilla(s)` con etiquetas `#ventas · 2`, `#soporte · 1`
 - Al filtrar `vent` quedan solo las `#ventas`; al borrar, vuelven todas
 
 **Problemas comunes:**
 - Stats no cambian → falta `renderStats()` al final de `render()`
 - El total baja al filtrar → cuenta `plantillasVisibles()`, debe contar el estado real
-
----
-
-## 📍 CHECKPOINT HU5: Ordenar con `.sort()`
-
-### Verificar:
-Cambia el selector a "Alfabético" y luego a "Más recientes".
-
-**¿Qué debe verse?**
-- Alfabético → lista ordenada A-Z
-- Más recientes → arriba la última creada
-
-**Problemas comunes:**
-- El estado se desordena solo → falta copiar con `[...plantillas]` antes de `.sort()`
 
 ---
 
@@ -121,7 +107,6 @@ Cambia el selector a "Alfabético" y luego a "Más recientes".
 |---|---|---|
 | Eliminar | `splice` | `.filter` |
 | Editar | `p.titulo = ...` | `.map` + `{ ...p }` |
-| Ordenar | `arr.sort()` | `[...arr].sort()` |
 
 > **Regla memorable:** "Crea una versión nueva; no toques la original."
 
@@ -134,7 +119,7 @@ El `Total` y el conteo por hashtag **no se guardan**: se recalculan en cada `ren
 ### Hoy lograste:
 - Delegación de eventos (un listener para todo)
 - CRUD completo e inmutable
-- Datos derivados y orden con `.sort()`
+- Datos derivados y filtro por hashtag
 
 ### Próxima clase:
 - **Persistencia**: tus plantillas sobrevivirán al recargar
@@ -154,7 +139,7 @@ El `Total` y el conteo por hashtag **no se guardan**: se recalculan en cada `ren
 
 ## 📦 Entrega
 
-- Repositorio `whatsapp-templates` con las 5 HU funcionando
+- Repositorio `whatsapp-templates` con las 4 HU funcionando
 - Desplegado en GitHub Pages
 - README que explique tu **delegación de eventos** y tu función `contarPorHashtag`
 

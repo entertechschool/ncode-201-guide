@@ -105,7 +105,7 @@
   <section class="hero">
     <div class="badge">Módulo 4 · Clase 14</div>
     <h1>Interacción y datos derivados</h1>
-    <p class="subtitle">Un solo listener para todo, CRUD inmutable y orden con .sort()</p>
+    <p class="subtitle">Un solo listener para todo, CRUD inmutable y datos derivados</p>
   </section>
 
   <section>
@@ -153,16 +153,6 @@
 }</code></pre>
     </div>
 
-    <!-- 4: ordenar con sort -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Ordenar con <code>.sort()</code></h3>
-      <p class="desc"><code>.sort()</code> usa un <strong>comparador</strong> <code>(a, b)</code>: negativo si <code>a</code> va antes, positivo si va después. <strong>Muta</strong>, por eso copiamos con <code>[...]</code> antes.</p>
-      <pre><code><span class="tag-muted">const</span> copia = [...plantillas];   <span class="tag-muted">// no mutar el estado</span>
-
-<span class="tag-muted">// alfabético:</span> copia.sort((a, b) =&gt; a.titulo.localeCompare(b.titulo));
-<span class="tag-muted">// recientes:</span>  copia.sort((a, b) =&gt; new Date(b.fecha) - new Date(a.fecha));</code></pre>
-    </div>
-
   </section>
 
   <section>
@@ -178,10 +168,6 @@
       <div class="term">
         <strong>Función pura</strong>
         <span>Recibe datos y devuelve un resultado, sin efectos externos.</span>
-      </div>
-      <div class="term">
-        <strong>Comparador</strong>
-        <span>Función <code>(a, b)</code> que dice quién va primero en <code>.sort()</code>.</span>
       </div>
     </div>
   </section>

@@ -2,7 +2,7 @@
 
 ¡Segundo laboratorio del **Gestor de Plantillas para WhatsApp**! En C13 montaste el estado central y el `render()`. Hoy tu app se vuelve **interactiva de verdad**: vas a **eliminar y editar** plantillas, y a calcular **datos derivados** (totales y conteos) a partir del estado. La pieza nueva es la **delegación de eventos**: un solo listener que atiende los clics de muchas tarjetas.
 
-> ⏱️ **Checkpoints**: 5 momentos de validación (~30, ~55, ~80, ~100, ~115 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación (~30, ~60, ~90, ~110 min).
 >
 > 🧠 Seguimos **sin persistencia**: todo vive en memoria. En C15 le pondrás `localStorage`.
 
@@ -11,8 +11,7 @@
 1. Aplicar **delegación de eventos**: un único listener en el contenedor que atiende los clics de N elementos hijos.
 2. Completar el **CRUD** del estado: eliminar y editar plantillas de forma inmutable.
 3. Calcular **datos derivados** con funciones puras: total de plantillas y conteo por hashtag.
-4. **Ordenar** la lista con `.sort()` (por fecha y alfabético).
-5. Reutilizar el patrón **estado → `render()`** para que toda la UI refleje cada cambio.
+4. Reutilizar el patrón **estado → `render()`** para que toda la UI refleje cada cambio.
 
 ## 🔑 Conceptos Clave
 
@@ -22,7 +21,6 @@
 | **`data-id`** | Atributo HTML (`data-id="..."`) para guardar el id de cada elemento y saber sobre cuál se actuó. |
 | **CRUD** | Las 4 operaciones sobre datos: Crear, Leer, Actualizar (editar) y Borrar (eliminar). |
 | **Función pura** | Función que recibe datos y **devuelve un resultado** sin modificar nada externo: `(estado) → resultado`. |
-| **`.sort()` + comparador** | Ordena un array. Recibe una función `(a, b)` que devuelve negativo/positivo para decidir quién va primero. |
 
 ## ⚙️ Setup Inicial
 
@@ -57,14 +55,19 @@ class Template {
 }
 ```
 
-Ahora cada `<li>` necesita su botón con el `data-id`. En `render()`, dentro del `innerHTML`:
+Ahora, en `render()`, agrega a cada tarjeta una **fila de acciones** con el botón eliminar (lleva su `data-id`). El `innerHTML` de cada `<li>` queda así:
 
 ```javascript
 li.innerHTML = `
-  <strong>${plantilla.titulo}</strong>
-  <span class="text-xs text-slate-400">${plantilla.fecha.toLocaleDateString("es-PE")}</span>
-  <br>${plantilla.mensaje}
-  <button class="btn-eliminar text-red-600 text-xs" data-id="${plantilla.id}">Eliminar</button>
+  <div class="flex items-start justify-between gap-2">
+    <strong class="text-slate-800">${plantilla.titulo}</strong>
+    <span class="text-xs text-slate-400 shrink-0">${plantilla.fecha.toLocaleDateString("es-PE")}</span>
+  </div>
+  <p class="text-sm text-slate-600 mt-1">${plantilla.mensaje}</p>
+  <span class="inline-block text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full mt-2">${plantilla.hashtag}</span>
+  <div class="flex gap-2 mt-3 pt-2 border-t border-slate-100">
+    <button class="btn-eliminar text-xs px-2.5 py-1 rounded-md bg-red-50 text-red-600 hover:bg-red-100 transition" data-id="${plantilla.id}">Eliminar</button>
+  </div>
 `;
 ```
 
@@ -78,7 +81,7 @@ function eliminarPlantilla(id) {
 
 lista.addEventListener("click", function (evento) {
   if (evento.target.classList.contains("btn-eliminar")) {     // ¿se hizo clic en un botón eliminar?
-    const id = evento.target.dataset.id;              // lee el data-id
+    const id = evento.target.dataset.id;                      // lee el data-id
     eliminarPlantilla(id);
   }
 });
@@ -99,10 +102,10 @@ lista.addEventListener("click", function (evento) {
 - Al pulsarlo, sus datos **se cargan en el formulario**.
 - Al guardar, la plantilla **se actualiza en su lugar** (no se crea una nueva) y la lista muestra el cambio.
 
-Agrega el botón editar en `render()` (junto al de eliminar):
+Agrega el botón editar en la fila de acciones de `render()`, **antes** del de eliminar:
 
 ```javascript
-`<button class="btn-editar text-blue-600 text-xs" data-id="${plantilla.id}">Editar</button>`
+<button class="btn-editar text-xs px-2.5 py-1 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition" data-id="${plantilla.id}">Editar</button>
 ```
 
 Amplía el mismo listener de la lista para atender también "editar":
@@ -138,7 +141,7 @@ render();
 form.reset();
 ```
 
-- **Checkpoint 2 (~55 min):** pulsa "Editar" en una plantilla, cambia el mensaje y guarda. Se actualiza en su sitio; no aparece una copia nueva.
+- **Checkpoint 2 (~60 min):** pulsa "Editar" en una plantilla, cambia el mensaje y guarda. Se actualiza en su sitio; no aparece una copia nueva.
 
 ---
 
@@ -151,46 +154,55 @@ form.reset();
 - Se muestra un **conteo por hashtag**.
 - Estos números **se actualizan solos** al agregar, editar o eliminar.
 
-Primero agrega el panel en tu `index.html`, **encima de la lista** de plantillas:
+Un detalle de layout primero: si pones el panel suelto arriba de la lista, el grid principal (el de dos columnas) lo toma como **otra columna**. Para evitarlo, **envuelve el panel y la lista en un contenedor** — ese contenedor es tu columna derecha:
 
 ```html
-<aside id="panel-stats" class="mb-2 text-sm text-slate-600"></aside>
+<div class="grid gap-4 content-start">
+  <aside id="panel-stats" class="bg-slate-100 rounded-lg p-3"></aside>
+  <ul id="listaPlantillas" class="grid gap-3 sm:grid-cols-2"></ul>
+</div>
 ```
 
-Luego, una **función pura** recibe el estado y devuelve un resultado, sin tocar nada más:
+> El buscador de la HU4 también irá **dentro** de este contenedor.
+
+Ahora, una **función pura** recibe el estado y devuelve un resultado, sin tocar nada más:
 
 ```javascript
 function contarPorHashtag(plantillas) {
-  // 1. Declaramos explícitamente nuestra "caja" como un objeto vacío
-  const conteo = {};
-  // 2. Recorremos el array de plantillas una por una
+  const conteo = {};                              // "caja" vacía
   plantillas.forEach(function (plantilla) {
     const elHashtag = plantilla.hashtag;
-    // 3. Aplicamos la misma lógica del if...else
     if (conteo[elHashtag]) {
-      conteo[elHashtag] = conteo[elHashtag] + 1; // Si ya existe, sumamos 1
+      conteo[elHashtag] = conteo[elHashtag] + 1;  // si ya existe, suma 1
     } else {
-      conteo[elHashtag] = 1; // Si es nuevo, lo inicializamos en 1
+      conteo[elHashtag] = 1;                      // si es nuevo, empieza en 1
     }
   });
   return conteo;
 }
 ```
 
-Dibuja el panel desde esa función, y llámalo dentro de `render()` para que se mantenga sincronizado:
+Dibuja el panel desde esa función (con el total en negrita y cada hashtag como una etiqueta), y llámalo dentro de `render()` para mantenerlo sincronizado:
 
 ```javascript
 function renderStats() {
   const total = state.plantillas.length;
   const porTag = contarPorHashtag(state.plantillas);
-  const detalle = Object.entries(porTag).map(([hashtag, cantidad]) => `${hashtag}: ${cantidad}`).join(" · ");
-  document.getElementById("panel-stats").textContent = `Total: ${total}  |  ${detalle}`;
+  const etiquetas = Object.entries(porTag)
+    .map(([hashtag, cantidad]) =>
+      `<span class="text-xs bg-white border border-slate-200 px-2 py-0.5 rounded-full">${hashtag} · ${cantidad}</span>`)
+    .join("");
+  document.getElementById("panel-stats").innerHTML = `
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-sm font-semibold text-slate-700">${total} plantilla(s)</span>
+      ${etiquetas}
+    </div>`;
 }
 ```
 
 > 💡 Agrega `renderStats();` al final de `render()`. Como todo pasa por `render()`, las estadísticas nunca quedan desactualizadas.
 
-- **Checkpoint 3 (~80 min):** agrega plantillas con hashtags repetidos (ej. dos `#ventas`) → el panel muestra `Total: 3 | #ventas: 2 · #soporte: 1`. Elimina una y los números bajan solos.
+- **Checkpoint 3 (~90 min):** agrega plantillas con hashtags repetidos (ej. dos `#ventas`) → el panel muestra `3 plantilla(s)` y las etiquetas `#ventas · 2`, `#soporte · 1`. Elimina una y los números bajan solos.
 
 ---
 
@@ -203,14 +215,14 @@ function renderStats() {
 - Al borrar el texto, **vuelven todas**.
 - El filtrado ocurre **al instante** mientras escribes.
 
-Agrega un buscador encima de la lista en `index.html`:
+Agrega un buscador **dentro del contenedor de la derecha** (el mismo `<div>` de la HU3), encima del panel:
 
 ```html
 <input id="buscador" type="text" placeholder="Filtra por hashtag…"
-       class="max-w-md mx-auto block w-full p-2 mb-4 border border-slate-300 rounded">
+       class="w-full p-2 border border-slate-300 rounded-lg">
 ```
 
-Calcula **qué mostrar** con una función derivada (reutiliza `.includes()` y `.toLowerCase()` de C13) y haz que `render()` la use:
+Calcula **qué mostrar** con una función derivada (reutiliza `.includes()` y `.toLowerCase()` de C13):
 
 ```javascript
 function plantillasVisibles() {
@@ -238,59 +250,11 @@ Por último, conecta el buscador para que guarde el filtro en el estado y redibu
 ```javascript
 document.getElementById("buscador").addEventListener("input", function (evento) {
   state.filtro = evento.target.value;   // el filtro vive en el estado
-  render();                        // mismo render, datos distintos
+  render();                             // mismo render, datos distintos
 });
 ```
 
-- **Checkpoint 4 (~100 min):** escribe `vent` → quedan solo las `#ventas`; borra el texto → vuelven todas. (Nota: las estadísticas siguen contando el total real, no solo lo filtrado.)
-
----
-
-### HU5: Ordenar las plantillas
-
-> *"Como usuario, quiero ordenar mis plantillas (las más recientes primero o por orden alfabético), para encontrarlas como me resulte más cómodo."*
-
-**Criterios de Aceptación:**
-- La lista puede mostrarse con las plantillas **más recientes primero**.
-- La lista puede mostrarse en **orden alfabético** por título.
-- El orden elegido se mantiene al agregar, editar o filtrar.
-
-`.sort()` ordena un array usando un **comparador**: una función `(a, b)` que devuelve un número negativo si `a` va antes, o positivo si va después.
-
-```javascript
-function ordenar(plantillas) {
-  const copia = [...plantillas];                 // copiamos: .sort() muta el array original
-  if (state.orden === "alfabetico") {
-    return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));   // texto: localeCompare
-  }
-  return copia.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));  // recientes primero
-}
-```
-
-Encadena el orden **después** del filtro, dentro de tu pipeline de "qué mostrar":
-
-```javascript
-function plantillasVisibles() {
-  const filtroTexto = (state.filtro ?? "").toLowerCase();
-  const filtradas = filtroTexto === "" ? state.plantillas : state.plantillas.filter(plantilla => plantilla.hashtag.toLowerCase().includes(filtroTexto));
-  return ordenar(filtradas);     // primero filtra, luego ordena
-}
-```
-
-Agrega un selector en `index.html` que cambie `state.orden` y vuelva a renderizar:
-
-```html
-<select id="orden" class="max-w-md mx-auto block mb-4 p-2 border border-slate-300 rounded">
-  <option value="fecha">Más recientes</option>
-  <option value="alfabetico">Alfabético (A-Z)</option>
-</select>
-```
-
-> 💡 **`.sort()` muta** el array sobre el que actúa. Por eso copiamos con `[...plantillas]` antes de ordenar: así no alteramos el estado original (inmutabilidad, igual que en eliminar/editar).
->
-> 💡 Comparamos fechas con `new Date(...)`: así el orden funciona tanto si `p.fecha` es un objeto `Date` como si es texto (te será útil cuando guardes los datos en C15).
-
-- **Checkpoint 5 (~115 min):** cambia el selector a "Alfabético" → la lista se reordena A-Z; vuelve a "Más recientes" → aparece arriba la última que creaste.
+- **Checkpoint 4 (~110 min):** escribe `vent` → quedan solo las `#ventas`; borra el texto → vuelven todas. (Nota: las estadísticas siguen contando el total real, no solo lo filtrado.)
 
 ---
 

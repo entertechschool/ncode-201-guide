@@ -8,11 +8,10 @@
 
 - **Delegación de eventos** (NUEVO, ancla): un solo `addEventListener` en el contenedor padre que, según `event.target`, decide qué hacer. Reemplaza el "un listener por botón" que no sobrevive a un re-render.
 - **`data-id` + `dataset`** (NUEVO): se guarda el id en el HTML (`data-id="${p.id}"`) y se lee con `e.target.dataset.id`. Es el puente entre el clic y la plantilla correcta.
-- **`.sort()` + comparador** (NUEVO, 2ª herramienta): ordena un array con una función `(a, b)`. Por fecha (`new Date(b.fecha) - new Date(a.fecha)`) o alfabético (`localeCompare`). **Muta**, por eso se copia con `[...]` antes.
 - **CRUD inmutable** (REFUERZO): eliminar con `.filter`, editar con `.map` + spread. Nunca se toca el array original.
 - **Datos derivados / función pura** (REFUERZO): `contarPorHashtag` con `.reduce` recibe el estado y devuelve un conteo, sin guardar nada. Se recalcula en cada `render()`.
 
-> ❗ **El patrón estado → `render()` no cambia.** Todo lo nuevo (eliminar, editar, stats, filtro, orden) pasa por el mismo `render()` que ya tenían de C13. Las únicas APIs nuevas son **delegación de eventos** y **`.sort()`** (respeta MAX_TWO_NEW_TOOLS).
+> ❗ **El patrón estado → `render()` no cambia.** Todo lo nuevo (eliminar, editar, stats, filtro) pasa por el mismo `render()` que ya tenían de C13. La única API nueva es la **delegación de eventos** (respeta MAX_TWO_NEW_TOOLS).
 
 ---
 
@@ -40,7 +39,7 @@ Un error clásico de principiante es guardar el total en una variable y actualiz
 
 Hoy todo vive en memoria: al recargar, se pierde. **Persistir** con `localStorage` + `JSON.stringify/parse` es C15. No lo adelantes.
 
-**Fuentes:** [MDN: Delegación de eventos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Events){:target="_blank"}, [MDN: Array.sort()](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort){:target="_blank"}
+**Fuentes:** [MDN: Delegación de eventos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Events){:target="_blank"}
 
 ---
 
@@ -51,7 +50,7 @@ Hoy todo vive en memoria: al recargar, se pierde. **Persistir** con `localStorag
 | Refuerzo | 15 min | El `render()` de C13. "¿Cómo le agrego un botón a cada tarjeta?" |
 | Debate / Demo | 30 min | Listener por botón vs delegación; qué es un dato derivado. |
 | Demo | 15 min | Un listener en la lista atiende clics de varias tarjetas. |
-| Lab (HU1-HU5) | 100 min | HU1 eliminar · HU2 editar · HU3 stats · HU4 filtro · HU5 ordenar |
+| Lab (HU1-HU4) | 100 min | HU1 eliminar · HU2 editar · HU3 stats · HU4 filtro |
 | Cierre | 20 min | Síntesis + "si recargas, se pierde" → C15. |
 
 ---
@@ -98,7 +97,6 @@ Facilitador: "Re-renderizo... y miren: sigue funcionando sin reenganchar nada. �
  HU2: botón Editar que carga el formulario y actualiza en su lugar (state.editandoId).
  HU3: panel de stats con contarPorHashtag (función pura, reduce).
  HU4: buscador que filtra por hashtag (la lista reacciona).
- HU5: selector que ordena con .sort() (fecha o alfabético).
  Todo pasa por el mismo render(). Si recargan la página... se pierde. Eso es C15."
 ```
 
@@ -110,7 +108,7 @@ Facilitador: "Re-renderizo... y miren: sigue funcionando sin reenganchar nada. �
 Proyecta una tarjeta con título, mensaje y dos botones. Haz clic en distintas zonas y pregunta "¿qué creen que es `event.target` aquí?". Conecta con `classList.contains` para distinguir.
 
 ### Dinámica 2: "Mutar o no mutar" (en HU2)
-Da tres operaciones (eliminar, editar, ordenar) y que digan cuál es la versión inmutable. Refuerza `.filter` / `.map` / `[...arr]`.
+Da dos operaciones (eliminar, editar) y que digan cuál es la versión inmutable. Refuerza `.filter` / `.map` / `{ ...p }`.
 
 ### Dinámica 3: "¿Se guarda o se calcula?" (en HU3)
 Lista cosas de apps reales (no leídos de WhatsApp, total del carrito, likes) y que clasifiquen: ¿dato guardado o derivado del estado?
@@ -137,13 +135,6 @@ state.plantillas = state.plantillas.map(p =>
 ```
 "`.map` devuelve un array nuevo; el spread copia la plantilla y cambia solo lo necesario."
 
-### Ordenar copiando primero
-```javascript
-const copia = [...plantillas];
-return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
-```
-".sort() muta; por eso copiamos antes."
-
 ---
 
 ## ⚠️ Errores Comunes
@@ -156,8 +147,6 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 | Al editar se crea una copia | No usan `state.editandoId` en el `submit` | Decidir `map` (editar) vs `agregar` (crear) según `editandoId` |
 | Las stats no se actualizan | No llaman `renderStats()` en `render()` | Agregar `renderStats();` al final de `render()` |
 | El total baja al filtrar | Cuentan `plantillasVisibles()` en vez del estado | Stats cuentan `state.plantillas` (total real) |
-| El estado se reordena solo y "se rompe" | `.sort()` mutó `state.plantillas` | Copiar con `[...plantillas]` antes de ordenar |
-| Tildes mal ordenadas (A-Z) | Usan `<` en vez de `localeCompare` | Usar `a.titulo.localeCompare(b.titulo)` |
 
 ---
 
@@ -173,7 +162,7 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 - Pone un `addEventListener` dentro del loop de `render()`.
 - Modifica `p.titulo` directamente al editar.
 - Guarda el total en una variable que actualiza a mano.
-- Compara fechas o texto sin `new Date()` / `localeCompare`.
+- Filtra creando una vista sin recalcular desde el estado.
 
 ---
 
@@ -185,7 +174,6 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 | ~55' | HU2 | Editar y guardar: se actualiza en su lugar, sin copia nueva. | Revisar uso de `state.editandoId` en el `submit` |
 | ~80' | HU3 | Panel muestra `Total` y conteo por hashtag; baja al eliminar. | Agregar `renderStats()` al final de `render()` |
 | ~100' | HU4 | Filtrar por hashtag muestra solo coincidencias; borrar → todas. | Recorrer `plantillasVisibles()` en `render()` |
-| ~115' | HU5 | Selector reordena (fecha / alfabético); el estado no se corrompe. | Copiar con `[...plantillas]` antes de `.sort()` |
 
 ---
 
@@ -194,7 +182,7 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 - **Grupo callado:** haz clic en distintas zonas de una tarjeta y muestra `console.log(e.target)`; el cambio del target genera preguntas.
 - **Alguien ya sabía delegación:** pídele que explique por qué el listener en el padre sigue funcionando aunque se recreen las tarjetas.
 - **Terminan antes:** sugiere los Logros (cancelar edición, hashtag más usado, confirmar al eliminar).
-- **Se atrasan:** prioriza HU1-HU3 (delegación + CRUD + stats); HU4-HU5 pueden quedar como extensión.
+- **Se atrasan:** prioriza HU1-HU3 (delegación + CRUD + stats); HU4 puede quedar como extensión.
 - **Preguntas fuera de alcance (persistencia):** "Eso es exactamente C15. Hoy todo vive en memoria a propósito."
 
 ---
@@ -202,7 +190,7 @@ return copia.sort((a, b) => a.titulo.localeCompare(b.titulo));
 ## 🔀 Diferenciación
 
 ### Para estudiantes avanzados:
-- Logro "hashtag más usado" con `contarPorHashtag` + `Object.entries` + `.sort()`.
+- Logro "hashtag más usado": con `contarPorHashtag` + `Object.entries`, encontrar la entrada de mayor conteo.
 - Pregunta de extensión: "¿Cómo harías que un clic en el `<strong>` del título también edite?"
 
 ### Para estudiantes con dificultades:
@@ -218,9 +206,6 @@ R: Porque al re-renderizar se destruyen los nodos y sus listeners. Un listener e
 
 **P: ¿Por qué `crypto.randomUUID()` y no un contador?**
 R: Genera un id único garantizado y, como es texto, sobrevive a la persistencia de C15 sin chocar con los ids ya guardados (un contador se reiniciaría al recargar). Además `dataset.id` ya es texto, así que se compara directo, sin `Number()`.
-
-**P: ¿Por qué copiar el array antes de `.sort()`?**
-R: `.sort()` ordena el array original (lo muta). Copiar con `[...]` mantiene el estado intacto (inmutabilidad).
 
 **P: ¿Y si quiero que las plantillas sigan ahí al recargar?**
 R: Eso es persistencia con `localStorage`, tema de C15. Hoy viven en memoria.
@@ -240,7 +225,7 @@ R: Eso es persistencia con `localStorage`, tema de C15. Hoy viven en memoria.
 
 Al cerrar, planta la semilla:
 
-> "Hoy tu app edita, elimina, cuenta y ordena. Pero si recargan la página, todo desaparece — vive en memoria. En C15 le pondrán `localStorage` y `JSON` para que las plantillas sobrevivan al cierre del navegador."
+> "Hoy tu app edita, elimina, cuenta y filtra. Pero si recargan la página, todo desaparece — vive en memoria. En C15 le pondrán `localStorage` y `JSON` para que las plantillas sobrevivan al cierre del navegador."
 
 **Pre-work / Tarea implícita:** que reflexionen dónde guarda WhatsApp Web sus datos cuando cierras y vuelves a abrir.
 
