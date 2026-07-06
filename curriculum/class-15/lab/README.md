@@ -144,27 +144,31 @@ Agrega en `index.html` un botón y el indicador:
 <p id="estado" class="text-xs text-slate-400">Listo</p>
 ```
 
-Para vaciar, limpia el estado **y** el navegador con `removeItem`:
+Para vaciar, basta con limpiar el estado y renderizar (recuerda: `render()` ya persiste por ti):
 
 ```javascript
 document.getElementById("btn-vaciar").addEventListener("click", function () {
   state.plantillas = [];
-  localStorage.removeItem(CLAVE);    // borra la clave del navegador
-  render();
+  render();     // render → guardar(); como no queda nada, se borra la clave
 });
 ```
 
-Y actualiza el indicador dentro de `guardar()` con un ternario sencillo:
+Ahora ajusta `guardar()` para dos cosas: usar **`removeItem`** cuando no queda nada (con un **ternario**) y mostrar el indicador de estado:
 
 ```javascript
 function guardar() {
-  localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
-  const estado = document.getElementById("estado");
-  estado.textContent = state.plantillas.length > 0 ? "Guardado ✓" : "Vacío";
+  // si no hay plantillas, borra la clave; si hay, guárdalas
+  state.plantillas.length === 0
+    ? localStorage.removeItem(CLAVE)
+    : localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+
+  document.getElementById("estado").textContent = state.plantillas.length > 0 ? "Guardado ✓" : "Vacío";
 }
 ```
 
-- **Checkpoint 4 (~100 min):** pulsa "Vaciar todo" → la lista y el Local Storage quedan vacíos, y el indicador cambia. Agrega una plantilla → vuelve a decir "Guardado ✓".
+> 💡 Si `guardar()` siempre hiciera `setItem`, "vaciar" dejaría la clave con `[]` en vez de borrarla (porque `guardar()` corre en cada `render()`). Por eso, cuando el estado queda vacío, usamos `removeItem`: el almacenamiento queda **realmente** limpio.
+
+- **Checkpoint 4 (~100 min):** pulsa "Vaciar todo" → la lista se vacía y la **clave `whatsapp-templates` desaparece** del Local Storage; el indicador dice "Vacío". Agrega una plantilla → la clave vuelve y el indicador dice "Guardado ✓".
 
 ---
 
@@ -182,7 +186,9 @@ El filtro (`state.filtro`) también es parte del estado, así que **también se 
 const CLAVE_FILTRO = "whatsapp-templates-filtro";
 
 function guardar() {
-  localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+  state.plantillas.length === 0
+    ? localStorage.removeItem(CLAVE)
+    : localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
   localStorage.setItem(CLAVE_FILTRO, state.filtro ?? "");   // el filtro es texto: sin stringify
   // ...indicador de estado de la HU4...
 }
