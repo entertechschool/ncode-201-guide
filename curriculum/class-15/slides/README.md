@@ -112,6 +112,20 @@ Pulsa "Vaciar todo", luego agrega una plantilla
 
 ---
 
+## 📌 CHECKPOINT HU5: Recordar el filtro
+
+### Verificar:
+Escribe `vent` en el buscador y **recarga** la página
+
+**¿Qué debe verse?**
+- El filtro sigue aplicado (solo se ven las `#ventas`)
+- El buscador muestra `vent`
+
+**Problemas comunes:**
+- El filtro no vuelve → falta guardarlo (`CLAVE_FILTRO`) o reflejarlo en `buscador.value` al cargar
+
+---
+
 ## 🪞 REFLEXIÓN: Memoria vs Persistencia
 
 | Aspecto | En memoria (C13–C14) | Persistido (C15) |

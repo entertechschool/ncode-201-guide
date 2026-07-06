@@ -1,10 +1,10 @@
 # Laboratorio 15: JSON y LocalStorage
 
-¡Tercer laboratorio del **Gestor de Plantillas para WhatsApp**! Hasta ahora tu app funcionaba, pero al recargar **se perdía todo**. Hoy resuelves eso: vas a **guardar el estado en el navegador** con `localStorage` y a convertir tus datos a texto y de vuelta con **JSON**. Al terminar, tus plantillas sobreviven al cierre del navegador.
+¡Tercer laboratorio del **Gestor de Plantillas para WhatsApp**! Hasta ahora tu app funcionaba, pero al recargar **se perdía todo**. Hoy resuelves eso: vas a **guardar el estado en el navegador** con `localStorage` y a convertir tus datos a texto y de vuelta con **JSON**. Al terminar, tus plantillas (y hasta tu filtro) sobreviven al cierre del navegador.
 
-> ⏱️ **Checkpoints**: 4 momentos de validación (~30, ~60, ~90, ~110 min).
+> ⏱️ **Checkpoints**: 5 momentos de validación (~30, ~55, ~80, ~100, ~115 min).
 >
-> 🧠 Este es el tema central del módulo: **persistencia**. Lo que construyas hoy es la base del proyecto final (M5).
+> 🧠 Este es el tema central del módulo: **persistencia**.
 
 ## 🎯 Objetivos de Aprendizaje
 
@@ -26,14 +26,6 @@
 
 1. **Repositorio:** continúa en `whatsapp-templates`. Crea una rama `lab15-localstorage`.
 
-2. **Crea `js/persistence.js`** (cárgalo en `index.html` **antes** de `app.js`) y define una clave única para tus datos:
-
-   ```javascript
-   const CLAVE = "whatsapp-templates";   // la "etiqueta" bajo la que guardas en el navegador
-   ```
-
-   > 📌 **Convención del proyecto:** toda la persistencia vive en `persistence.js`. Usa siempre la misma `CLAVE`.
-
 ---
 
 ## 📋 Historias de Usuario
@@ -46,6 +38,14 @@
 - Al **agregar, editar o eliminar**, los datos quedan guardados en el navegador.
 - El guardado ocurre **solo** (sin un botón "guardar").
 - Se puede comprobar en *DevTools → Application → Local Storage* que los datos están ahí.
+
+Primero, **crea `js/persistence.js`** (cárgalo en `index.html` **antes** de `app.js`) y define una clave única bajo la que guardarás:
+
+```javascript
+const CLAVE = "whatsapp-templates";   // la "etiqueta" bajo la que guardas en el navegador
+```
+
+> 📌 **Convención del proyecto:** toda la persistencia vive en `persistence.js`. Usa siempre la misma `CLAVE`.
 
 `localStorage` solo guarda **texto**. Como tu estado es un array de objetos, primero lo conviertes a texto con `JSON.stringify`:
 
@@ -95,9 +95,9 @@ state.plantillas = cargar();
 render();
 ```
 
-> 💡 **Ojo con las fechas:** JSON no guarda objetos `Date`, los convierte a texto. Al cargar, `p.fecha` será un string. Para que `.toLocaleDateString()` siga funcionando, reconstruye la fecha en `render()`: `new Date(p.fecha).toLocaleDateString("es-PE")`. Es una lección real: **JSON solo guarda datos simples**, no tipos como `Date`.
+> 💡 **Ojo con las fechas:** JSON no guarda objetos `Date`, los convierte a texto. Al cargar, `plantilla.fecha` será un string. Para que `.toLocaleDateString()` siga funcionando, reconstruye la fecha en `render()`: `new Date(plantilla.fecha).toLocaleDateString("es-PE")`. Es una lección real: **JSON solo guarda datos simples**, no tipos como `Date`.
 
-- **Checkpoint 2 (~60 min):** crea 2 plantillas, **recarga la página**: siguen ahí, con su fecha correcta. Esa es la diferencia con C13–C14.
+- **Checkpoint 2 (~55 min):** crea 2 plantillas, **recarga la página**: siguen ahí, con su fecha correcta. Esa es la diferencia con C13–C14.
 
 ---
 
@@ -124,7 +124,7 @@ function cargar() {
 }
 ```
 
-- **Checkpoint 3 (~90 min):** en *DevTools → Application*, edita a mano el valor de la clave y déjalo inválido (ej. `[{titulo`). Recarga: la app **no explota**, arranca vacía y en consola ves el aviso.
+- **Checkpoint 3 (~80 min):** en *DevTools → Application*, edita a mano el valor de la clave y déjalo inválido (ej. `[{titulo`). Recarga: la app **no explota**, arranca vacía y en consola ves el aviso.
 
 ---
 
@@ -164,7 +164,42 @@ function guardar() {
 }
 ```
 
-- **Checkpoint 4 (~110 min):** pulsa "Vaciar todo" → la lista y el Local Storage quedan vacíos, y el indicador cambia. Agrega una plantilla → vuelve a decir "Guardado ✓".
+- **Checkpoint 4 (~100 min):** pulsa "Vaciar todo" → la lista y el Local Storage quedan vacíos, y el indicador cambia. Agrega una plantilla → vuelve a decir "Guardado ✓".
+
+---
+
+### HU5: Recordar también el filtro
+
+> *"Como usuario, quiero que el filtro que escribí siga aplicado si recargo la página, para no perder mi búsqueda."*
+
+**Criterios de Aceptación:**
+- Al escribir un filtro y **recargar**, el filtro **sigue aplicado** y el buscador muestra el texto.
+- Si no había filtro guardado, el buscador arranca **vacío**.
+
+El filtro (`state.filtro`) también es parte del estado, así que **también se persiste**. Como ya es texto, aquí **no** necesitas `JSON.stringify`. Usa una segunda clave y guárdalo dentro de `guardar()` (que corre en cada `render()`):
+
+```javascript
+const CLAVE_FILTRO = "whatsapp-templates-filtro";
+
+function guardar() {
+  localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+  localStorage.setItem(CLAVE_FILTRO, state.filtro ?? "");   // el filtro es texto: sin stringify
+  // ...indicador de estado de la HU4...
+}
+```
+
+Al arrancar la app, **recupera el filtro** y refléjalo en el buscador antes de renderizar:
+
+```javascript
+state.plantillas = cargar();
+state.filtro = localStorage.getItem(CLAVE_FILTRO) ?? "";     // recupera el filtro (o vacío)
+document.getElementById("buscador").value = state.filtro;    // muéstralo en el input
+render();
+```
+
+> 💡 Fíjate en el contraste: las plantillas (un array) **sí** necesitan `JSON.stringify`/`parse`; el filtro (un texto) va directo. `localStorage` siempre guarda texto — cuando tu dato ya es texto, no hay nada que convertir.
+
+- **Checkpoint 5 (~115 min):** escribe `vent` en el buscador, **recarga** → el filtro sigue aplicado (solo se ven las `#ventas`) y el buscador muestra `vent`.
 
 ---
 

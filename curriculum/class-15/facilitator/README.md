@@ -74,7 +74,7 @@ Facilitador: "Recargo... sobrevive y avisa 'datos corruptos'. Esa es la diferenc
 
 **Script sugerido:**
 ```
-Facilitador: "HU1 guarda, HU2 carga, HU4 vacía. Mecánica.
+Facilitador: "HU1 guarda, HU2 carga, HU4 vacía, HU5 recuerda el filtro. Mecánica.
 HU3 es donde su app se vuelve PROFESIONAL: aguanta datos corruptos.
 Si la saltan, su app de M5 fallará el primer día que alguien toque localStorage."
 ```
@@ -199,9 +199,10 @@ render();
 | Tiempo | Checkpoint | Cómo validar |
 |---|---|---|
 | ~30' | HU1 | Agregar plantilla → ver la clave `whatsapp-templates` en DevTools → Local Storage con JSON. |
-| ~60' | HU2 | Recargar la página → las plantillas siguen ahí con su fecha correcta. |
-| ~90' | HU3 | Corromper la clave a mano y recargar → la app no explota, arranca vacía, avisa en consola. |
-| ~110' | HU4 | "Vaciar todo" deja lista y Local Storage limpios; el indicador `#estado` cambia. |
+| ~55' | HU2 | Recargar la página → las plantillas siguen ahí con su fecha correcta. |
+| ~80' | HU3 | Corromper la clave a mano y recargar → la app no explota, arranca vacía, avisa en consola. |
+| ~100' | HU4 | "Vaciar todo" deja lista y Local Storage limpios; el indicador `#estado` cambia. |
+| ~115' | HU5 | Escribir un filtro y recargar → el filtro sigue aplicado y el buscador lo muestra. |
 
 ---
 
