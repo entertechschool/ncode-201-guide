@@ -47,6 +47,14 @@ const CLAVE = "whatsapp-templates";   // la "etiqueta" bajo la que guardas en el
 
 > 📌 **Convención del proyecto:** toda la persistencia vive en `persistence.js`. Usa siempre la misma `CLAVE`.
 
+Y **cárgalo en `index.html` justo antes de `app.js`**:
+
+```html
+<script src="js/models/Template.js"></script>
+<script src="js/persistence.js"></script>   <!-- ← nuevo, antes de app.js -->
+<script src="js/app.js"></script>
+```
+
 `localStorage` solo guarda **texto**. Como tu estado es un array de objetos, primero lo conviertes a texto con `JSON.stringify`:
 
 ```javascript
@@ -54,6 +62,8 @@ function guardar() {
   localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));   // objeto → texto → navegador
 }
 ```
+
+> 💡 **¿`guardar()` puede usar `state` si `persistence.js` carga antes que `app.js`?** Sí. El cuerpo de una función se ejecuta **al llamarla**, no al definirla. Cuando `render()` llama a `guardar()`, `app.js` ya creó `state`, así que existe. (Por eso el orden importa solo para que `app.js` pueda llamar a `cargar()`; en C16, con módulos ESM, esta dependencia se hará explícita con `import`.)
 
 Llama `guardar()` cada vez que el estado cambia. La forma más limpia: ponerlo **dentro de `render()`**, ya que todo cambio termina ahí.
 
@@ -137,12 +147,16 @@ function cargar() {
 - Al vaciar, la lista y el almacenamiento quedan **limpios**.
 - Un pequeño indicador muestra el estado (ej. "Guardado").
 
-Agrega en `index.html` un botón y el indicador:
+Agrega una pequeña **barra de acciones** al final del contenedor de la derecha (debajo de la lista), con el indicador de estado a la izquierda y el botón "Vaciar todo" a la derecha:
 
 ```html
-<button id="btn-vaciar" class="text-xs text-red-600">Vaciar todo</button>
-<p id="estado" class="text-xs text-slate-400">Listo</p>
+<div class="flex items-center justify-between border-t border-slate-200 pt-3 mt-1">
+  <p id="estado" class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">Listo</p>
+  <button id="btn-vaciar" class="text-xs px-3 py-1.5 rounded-md border border-red-200 text-red-600 hover:bg-red-50 transition">Vaciar todo</button>
+</div>
 ```
+
+> El indicador (`#estado`) es un "chip" que muestra el estado de guardado; el botón queda separado a la derecha para que "Vaciar todo" no se pulse por accidente. Va **dentro** del contenedor de la derecha (el mismo `<div>` que envuelve buscador, panel y lista), así no rompe las columnas.
 
 Para vaciar, basta con limpiar el estado y renderizar (recuerda: `render()` ya persiste por ti):
 
