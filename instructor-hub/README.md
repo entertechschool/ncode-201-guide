@@ -31,7 +31,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 01](https://entertechschool.github.io/ncode-201-guide/curriculum/class-01/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 01](https://entertechschool.github.io/ncode-201-guide/curriculum/class-01/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 01](https://entertechschool.github.io/public/slides/?class=code-201_01){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 01](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_01){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 01](https://entertechschool.github.io/ncode-201-guide/curriculum/class-01/facilitator/){:target="_blank"} |
 
 ### Clase 02 — CSS Layout con Flexbox
@@ -40,7 +40,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 02](https://entertechschool.github.io/ncode-201-guide/curriculum/class-02/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 02](https://entertechschool.github.io/ncode-201-guide/curriculum/class-02/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 02](https://entertechschool.github.io/public/slides/?class=code-201_02){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 02](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_02){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 02](https://entertechschool.github.io/ncode-201-guide/curriculum/class-02/facilitator/){:target="_blank"} |
 
 ### Clase 03 — CSS Grid Layout
@@ -49,7 +49,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 03](https://entertechschool.github.io/ncode-201-guide/curriculum/class-03/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 03](https://entertechschool.github.io/ncode-201-guide/curriculum/class-03/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 03](https://entertechschool.github.io/public/slides/?class=code-201_03){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 03](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_03){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 03](https://entertechschool.github.io/ncode-201-guide/curriculum/class-03/facilitator/){:target="_blank"} |
 
 ### ⭐ Clase 04 — Frameworks CSS Modernos *(Lab Evaluado M1)*
@@ -58,7 +58,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 04](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 04](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 04](https://entertechschool.github.io/public/slides/?class=code-201_04){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 04](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_04){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 04](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M1 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-04/project/){:target="_blank"} |
 
@@ -74,7 +74,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 05](https://entertechschool.github.io/ncode-201-guide/curriculum/class-05/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 05](https://entertechschool.github.io/ncode-201-guide/curriculum/class-05/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 05](https://entertechschool.github.io/public/slides/?class=code-201_05){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 05](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_05){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 05](https://entertechschool.github.io/ncode-201-guide/curriculum/class-05/facilitator/){:target="_blank"} |
 
 ### Clase 06 — Programación Funcional
@@ -83,7 +83,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 06](https://entertechschool.github.io/ncode-201-guide/curriculum/class-06/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 06](https://entertechschool.github.io/ncode-201-guide/curriculum/class-06/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 06](https://entertechschool.github.io/public/slides/?class=code-201_06){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 06](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_06){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 06](https://entertechschool.github.io/ncode-201-guide/curriculum/class-06/facilitator/){:target="_blank"} |
 
 ### Clase 07 — Objetos + POO con `class`
@@ -92,7 +92,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 07](https://entertechschool.github.io/public/slides/?class=code-201_07){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 07](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_07){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 07](https://entertechschool.github.io/ncode-201-guide/curriculum/class-07/facilitator/){:target="_blank"} |
 
 ### ⭐ Clase 08 — Tailwind CSS e Interfaz del Gestor *(Lab Evaluado M2)*
@@ -101,7 +101,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 08](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 08](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 08](https://entertechschool.github.io/public/slides/?class=code-201_08){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 08](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_08){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 08](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M2 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-08/project/){:target="_blank"} |
 
@@ -117,7 +117,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 09](https://entertechschool.github.io/public/slides/?class=code-201_09){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 09](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_09){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 09](https://entertechschool.github.io/ncode-201-guide/curriculum/class-09/facilitator/){:target="_blank"} |
 
 ### Clase 10 — Datos desde la web (fetch, Promesas y JSON)
@@ -126,7 +126,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 10](https://entertechschool.github.io/public/slides/?class=code-201_10){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 10](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_10){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 10](https://entertechschool.github.io/ncode-201-guide/curriculum/class-10/facilitator/){:target="_blank"} |
 
 ### Clase 11 — async/await y búsqueda en la API
@@ -135,7 +135,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 11](https://entertechschool.github.io/public/slides/?class=code-201_11){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 11](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_11){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 11](https://entertechschool.github.io/ncode-201-guide/curriculum/class-11/facilitator/){:target="_blank"} |
 
 ### ⭐ Clase 12 — Manejo de Errores y Estados *(Lab Evaluado M3)*
@@ -144,7 +144,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 12](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 12](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 12](https://entertechschool.github.io/public/slides/?class=code-201_12){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 12](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_12){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 12](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M3 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/project/){:target="_blank"} |
 | 📝 Test Diagnóstico M3 | [Ver Test](https://entertechschool.github.io/ncode-201-guide/curriculum/class-12/test/){:target="_blank"} |
@@ -161,7 +161,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 13](https://entertechschool.github.io/public/slides/?class=code-201_13){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 13](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_13){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 13](https://entertechschool.github.io/ncode-201-guide/curriculum/class-13/facilitator/){:target="_blank"} |
 
 ### Clase 14 — Interacción y Datos Derivados
@@ -170,7 +170,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 14](https://entertechschool.github.io/public/slides/?class=code-201_14){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 14](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_14){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/facilitator/){:target="_blank"} |
 
 ### Clase 15 — JSON y LocalStorage
@@ -179,7 +179,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 15](https://entertechschool.github.io/public/slides/?class=code-201_15){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 15](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_15){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/facilitator/){:target="_blank"} |
 
 ### ⭐ Clase 16 — Módulos ESM y Cierre del Proyecto *(Lab Evaluado M4)*
@@ -188,7 +188,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 16](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 16](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 16](https://entertechschool.github.io/public/slides/?class=code-201_16){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 16](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_16){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 16](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M4 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/project/){:target="_blank"} |
 
@@ -207,7 +207,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 17](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 17](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 17](https://entertechschool.github.io/public/slides/?class=code-201_17){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 17](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_17){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 17](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/facilitator/){:target="_blank"} |
 | 📦 Proyecto Integrador M5 | [Ver Proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/project/){:target="_blank"} |
 
@@ -217,7 +217,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 18](https://entertechschool.github.io/ncode-201-guide/curriculum/class-18/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 18](https://entertechschool.github.io/ncode-201-guide/curriculum/class-18/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 18](https://entertechschool.github.io/public/slides/?class=code-201_18){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 18](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_18){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 18](https://entertechschool.github.io/ncode-201-guide/curriculum/class-18/facilitator/){:target="_blank"} |
 
 ### Clase 19 — User Validation + Sprint 2
@@ -226,7 +226,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 19](https://entertechschool.github.io/ncode-201-guide/curriculum/class-19/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 19](https://entertechschool.github.io/ncode-201-guide/curriculum/class-19/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 19](https://entertechschool.github.io/public/slides/?class=code-201_19){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 19](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_19){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 19](https://entertechschool.github.io/ncode-201-guide/curriculum/class-19/facilitator/){:target="_blank"} |
 
 ### ⭐ Clase 20 — Demo Day *(Lab Evaluado M5 — Presentación final del Proyecto)*
@@ -235,7 +235,7 @@ Cada clase cuenta con los siguientes documentos:
 |-----------|--------|
 | 📄 Resumen de la clase | [Ver Clase 20](https://entertechschool.github.io/ncode-201-guide/curriculum/class-20/){:target="_blank"} |
 | 🧪 Laboratorio | [Ver Lab 20](https://entertechschool.github.io/ncode-201-guide/curriculum/class-20/lab/){:target="_blank"} |
-| 🖥️ Presentación | [Ver Slides 20](https://entertechschool.github.io/public/slides/?class=code-201_20){:target="_blank"} |
+| 🖥️ Presentación | [Ver Slides 20](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_20){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 20](https://entertechschool.github.io/ncode-201-guide/curriculum/class-20/facilitator/){:target="_blank"} |
 | 📦 Envío del Proyecto Final | [Ver Envío](https://entertechschool.github.io/ncode-201-guide/curriculum/class-20/project/){:target="_blank"} |
 
