@@ -107,9 +107,10 @@
 - Estado central y patrón `render()`
 - Métodos de String y objeto `Date`
 - Delegación de eventos y CRUD
-- Datos derivados (funciones puras) y `.sort()`
+- Datos derivados (funciones puras) y filtro por hashtag
 - Serialización (JSON) y persistencia (LocalStorage)
 - Módulos ESM (`import` / `export`)
+- Ordenar arrays con `.sort()` y comparador (por fecha)
 
 > #### Proyecto Integrador: **Gestor de Plantillas para WhatsApp**
 > Este proyecto consiste en desarrollar una aplicación web interactiva para gestionar plantillas personalizadas destinadas a facilitar la atención rápida y efectiva de clientes o usuarios a través de WhatsApp. La aplicación permitirá crear, editar, eliminar y consultar fácilmente las plantillas guardadas, ofreciendo funcionalidades avanzadas como filtrado rápido mediante hashtags relacionados. Se utilizarán técnicas avanzadas de gestión del estado centralizado, persistencia de datos mediante JSON y LocalStorage, y una interfaz responsiva diseñada para maximizar la usabilidad tanto en escritorio como en dispositivos móviles.

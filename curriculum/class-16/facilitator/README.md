@@ -10,9 +10,9 @@
 - **`<script type="module">`** (NUEVO): activa ESM con un único punto de entrada (`app.js`). Requiere servidor local — **no** funciona con `file://`.
 - **Modal de confirmación propio** (NUEVO, menor): cuadro de HTML + Tailwind que se muestra/oculta con `classList`, reutilizable guardando la acción en una variable (`accionPendiente`).
 - **Estado vacío** (refuerzo): distinguir "no hay nada creado" de "el filtro no encontró nada", con un mensaje distinto para cada caso.
-- **Función pura** (refuerzo): `resumen(plantillas)` recibe datos y devuelve texto sin tocar el DOM ni el estado.
+- **`.sort()` + comparador** (refuerzo): ordenar la colección por fecha con `.sort((a, b) => ...)`. Como `.sort()` **muta**, se copia con `[...]` antes de ordenar (inmutabilidad, como en C14).
 
-> ❗ **Solo hay UN tema nuevo de peso: los módulos ESM.** El modal es un detalle de UX, y el estado vacío + resumen son integración. El resto de la clase es cerrar el proyecto del módulo.
+> ❗ **Solo hay UN tema nuevo de peso: los módulos ESM.** El modal es un detalle de UX, y el estado vacío + orden son integración. El resto de la clase es cerrar el proyecto del módulo.
 
 ---
 
@@ -30,7 +30,7 @@
 
 ### Por qué ESM cierra el módulo
 
-Durante M4 la app creció: estado, persistencia, filtros, orden. En un solo archivo eso ya pesa. Modularizar no agrega features — **reorganiza** lo que ya funciona. Es el paso natural cuando un proyecto madura, y es exactamente lo que hace cualquier herramienta moderna (Vite, React, Vue) por debajo.
+Durante M4 la app creció: estado, persistencia, filtros. En un solo archivo eso ya pesa. Modularizar no agrega features — **reorganiza** lo que ya funciona. Es el paso natural cuando un proyecto madura, y es exactamente lo que hace cualquier herramienta moderna (Vite, React, Vue) por debajo.
 
 > **Para contar en clase:** "Los `import`/`export` que aprenden hoy son los mismos que verán en cualquier proyecto profesional de frontend. No es una versión 'de juguete'."
 
@@ -48,7 +48,7 @@ Durante M4 la app creció: estado, persistencia, filtros, orden. En un solo arch
 |---|---|---|
 | Refuerzo | 15 min | Repaso de C15. "¿Cómo se hablan tus archivos hoy?" |
 | Debate + Demo | 30 min | Globales vs ESM; demo del antes/después de `import`. |
-| Lab (HU1-HU4) | 100 min | HU1 modal · HU2 estado vacío · HU3 modularizar · HU4 resumen + cierre |
+| Lab (HU1-HU4) | 100 min | HU1 modal · HU2 estado vacío · HU3 modularizar · HU4 ordenar con `.sort()` |
 | Cierre + Presentaciones | 35 min | Demos de proyecto, síntesis del módulo. |
 
 > Ajusta los tiempos a la duración real de tu sesión. La clase es un **lab calificado** de cierre de módulo.
@@ -139,7 +139,8 @@ const vacio = state.plantillas.length === 0
 | El modal nunca aparece | No quitan la clase `hidden` | `modal.classList.remove("hidden")` |
 | Borra sin preguntar | La acción no se envolvió en `pedirConfirmacion` | Pasar la acción como callback al modal |
 | Mismo mensaje en ambos vacíos | No distinguen los dos casos | Comparar `state.plantillas.length === 0` |
-| El resumen no se actualiza | `resumen()` no se llama en `render()` | Invocarlo dentro de `render()` |
+| La lista no se reordena | El `change` del selector no llama `render()` | Guardar `state.orden` y llamar `render()` |
+| El estado se desordena | `.sort()` muta el array original | Copiar con `[...]` antes de ordenar |
 
 ---
 
@@ -163,10 +164,10 @@ const vacio = state.plantillas.length === 0
 
 | Tiempo | Checkpoint | Cómo validar | Si no cumple |
 |---|---|---|---|
-| ~30' | HU1 modal | Eliminar abre el modal; Cancelar conserva; Eliminar borra y persiste | Revisar `classList` y el callback |
-| ~60' | HU2 estado vacío | App vacía y filtro sin match muestran mensajes distintos | Distinguir con `length === 0` |
+| ~25' | HU1 modal | Eliminar abre el modal; Cancelar conserva; Eliminar borra y persiste | Revisar `classList` y el callback |
+| ~40' | HU2 estado vacío | App vacía y filtro sin match muestran mensajes distintos | Distinguir con `length === 0` |
 | ~90' | HU3 ESM | Tras modularizar, la app hace TODO lo de antes | Verificar servidor local y rutas `./...js` |
-| ~110' | HU4 resumen | El resumen refleja el total y cambia al agregar/eliminar | Llamar `resumen()` en `render()` |
+| ~110' | HU4 ordenar | El selector reordena por fecha; "Más antiguas" sube la primera creada, "Más recientes" la última | Guardar `state.orden`, copiar con `[...]` y llamar `render()` |
 
 ---
 
@@ -182,7 +183,7 @@ const vacio = state.plantillas.length === 0
 - Logros adicionales: cerrar el modal al clic afuera, "deshacer" tras eliminar.
 
 ### Si la mayoría se atrasa:
-- Prioriza HU3 (ESM, el tema nuevo). HU4 (resumen) puede quedar como refuerzo en casa.
+- Prioriza HU3 (ESM, el tema nuevo). HU4 (ordenar) puede quedar como refuerzo en casa.
 
 ### Si hay preguntas fuera de alcance:
 > "Buena pregunta. Hoy enfoquémonos en cerrar bien el módulo; lo que viene después lo hablamos en su momento."

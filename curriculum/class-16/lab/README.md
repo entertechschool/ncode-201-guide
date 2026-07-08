@@ -1,8 +1,8 @@
 # Laboratorio 16: Módulos (ESM) y Cierre del Proyecto
 
-¡Último laboratorio del **Gestor de Plantillas para WhatsApp**! Ya tienes una app que crea, edita, ordena y persiste. Hoy la dejas **lista para mostrar** y, sobre todo, la organizas como un profesional: aprendes **módulos ESM** (`export`/`import`) para repartir tu código en archivos que se comunican entre sí. Además agregas **confirmaciones** para acciones peligrosas y un **estado vacío amigable**.
+¡Último laboratorio del **Gestor de Plantillas para WhatsApp**! Ya tienes una app que crea, edita, filtra y persiste. Hoy la dejas **lista para mostrar** y, sobre todo, la organizas como un profesional: aprendes **módulos ESM** (`export`/`import`) para repartir tu código en archivos que se comunican entre sí. Además agregas **confirmaciones** para acciones peligrosas, un **estado vacío amigable** y la opción de **ordenar** tu colección.
 
-> ⏱️ **Checkpoints**: 4 momentos de validación (~30, ~60, ~90, ~110 min).
+> ⏱️ **Checkpoints**: 4 momentos de validación (~25, ~40, ~90, ~110 min).
 >
 > 🧠 El tema nuevo de hoy son los **módulos ESM**; el resto consolida e integra para cerrar el Módulo 4.
 
@@ -11,7 +11,7 @@
 1. Mejorar la **experiencia de usuario (UX)** con confirmaciones antes de acciones destructivas.
 2. Manejar **estados vacíos** de forma clara (sin plantillas y sin resultados de búsqueda).
 3. Modularizar el código con **módulos ESM** (`export` / `import`) en `state.js`, `storage.js`, `ui.js` y `app.js`.
-4. Verificar la **sincronización completa** estado ↔ almacenamiento ↔ interfaz y preparar la demo.
+4. **Ordenar** la colección con `.sort()` y un comparador, sin mutar el estado.
 
 ## 🔑 Conceptos Clave
 
@@ -21,12 +21,12 @@
 | **`export` / `import`** | `export` expone algo de un archivo; `import` lo trae en otro (por su ruta). |
 | **`<script type="module">`** | Activa los módulos ESM: cada archivo tiene su propio ámbito (sin variables globales) y el orden de carga ya no importa. |
 | **Ventana modal** | Un cuadro de confirmación propio (HTML + Tailwind) que se muestra u oculta alternando una clase. |
-| **Estado vacío** | Lo que ve el usuario cuando no hay datos: un mensaje claro en vez de una pantalla en blanco. |
+| **`.sort()` + comparador** | Ordena un array. Recibe una función `(a, b)` que devuelve negativo/positivo para decidir quién va primero. |
 
 ## ⚙️ Setup Inicial
 
 1. **Repositorio:** continúa en `whatsapp-templates`. Crea una rama `lab16-cierre`.
-2. Parte del código que ya tienes funcionando de C15 (estado, render, persistencia, filtro y orden).
+2. Parte del código que ya tienes funcionando de C15 (estado, render, persistencia y filtro).
 3. **Importante para ESM:** los módulos **no funcionan abriendo el HTML con doble clic** (`file://`). Usa un servidor local: la extensión **Live Server** de VS Code, o `python -m http.server` en la carpeta del proyecto. En GitHub Pages funcionan sin problema.
 
 ---
@@ -80,7 +80,7 @@ document.getElementById("modal-confirmar").addEventListener("click", function ()
 });
 ```
 
-Ahora eliminar y vaciar **piden confirmación** pasando su acción:
+Ahora eliminar y vaciar **piden confirmación** pasando su acción (recuerda: `render()` ya persiste, así que no toques `localStorage` aquí):
 
 ```javascript
 function eliminarPlantilla(id) {
@@ -94,15 +94,14 @@ const btnVaciar = document.getElementById("btn-vaciar");
 btnVaciar.addEventListener("click", function () {
   pedirConfirmacion("Esto borrará TODAS tus plantillas. ¿Continuar?", function () {
     state.plantillas = [];
-    localStorage.removeItem(CLAVE);
-    render();
+    render();     // render → guardar(); como queda vacío, guardar() borra la clave
   });
 });
 ```
 
 > 💡 Guardar la acción en `accionPendiente` (una **función**) hace el modal **reutilizable**: el mismo cuadro sirve para borrar una o todas. Y las confirmaciones solo valen para acciones **irreversibles** — no las pidas al agregar o editar.
 
-- **Checkpoint 1 (~30 min):** pulsa eliminar → aparece tu modal. "Cancelar" → la plantilla sigue ahí. "Eliminar" → desaparece y, al recargar, no vuelve.
+- **Checkpoint 1 (~25 min):** pulsa eliminar → aparece tu modal. "Cancelar" → la plantilla sigue ahí. "Eliminar" → desaparece y, al recargar, no vuelve.
 
 ---
 
@@ -138,7 +137,7 @@ function render() {
 
 > 💡 Distinguimos dos vacíos distintos: "no hay nada creado" vs. "hay cosas pero el filtro no las encuentra". Un buen mensaje le dice al usuario **qué hacer**.
 
-- **Checkpoint 2 (~60 min):** con la app vacía ves el mensaje de bienvenida; escribe un filtro que no exista → ves "No se encontraron…"; borra el filtro → vuelve la lista.
+- **Checkpoint 2 (~40 min):** con la app vacía ves el mensaje de bienvenida; escribe un filtro que no exista → ves "No se encontraron…"; borra el filtro → vuelve la lista.
 
 ---
 
@@ -153,29 +152,31 @@ function render() {
 
 Hasta ahora tus archivos se hablaban por **variables globales** y dependías del orden de los `<script>`. Los **módulos ESM** lo resuelven: cada archivo declara qué comparte con `export` y trae lo que necesita con `import`.
 
-Reparte el código en cuatro archivos:
+Reparte el código en cinco archivos. Esta es la **guía de qué exporta cada uno** (lo demás queda privado a su archivo):
 
-```
-js/
-├── models/
-│   └── Template.js   # export class Template
-├── state.js     # el estado + agregar/editar/eliminar/ordenar/contar
-├── storage.js   # CLAVE + guardar() y cargar()  (era persistence.js)
-├── ui.js        # render(), renderStats() y los listeners del DOM
-└── app.js       # arranque de la app
-```
+| Archivo | Exporta con `export` |
+|---|---|
+| `models/Template.js` | `class Template` |
+| `state.js` | `state`, `contarPorHashtag`, `plantillasVisibles`, `normalizarHashtag` |
+| `storage.js` | `CLAVE`, `CLAVE_FILTRO`, `guardar`, `cargar` |
+| `ui.js` | `render` |
+| `app.js` | (no exporta; solo importa y arranca) |
 
-En cada archivo pones `export` delante de lo que comparte (la clase `Template`, el `state`, las funciones) e `import` para traer lo que usa. Por ejemplo, `state.js` importa la clase: `import { Template } from "./models/Template.js"`.
+> Las funciones que solo se usan dentro de un archivo (los listeners, `eliminarPlantilla`, `cargarEnFormulario`, el `submit` del form) **no** necesitan `export`: viven en `ui.js` y usan lo que importaron.
 
-**a) Exportar** lo que cada archivo comparte. En `storage.js` (importa `state` para seguir usando `guardar()` y `cargar()` igual que en C15):
+**a) Exportar** lo que cada archivo comparte. En `storage.js` (importa `state` para que `guardar()`/`cargar()` funcionen igual que en C15, con el `removeItem` cuando queda vacío y el guardado del filtro):
 
 ```javascript
 import { state } from "./state.js";
 
 export const CLAVE = "whatsapp-templates";
+export const CLAVE_FILTRO = "whatsapp-templates-filtro";
 
 export function guardar() {
-  localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+  state.plantillas.length === 0
+    ? localStorage.removeItem(CLAVE)
+    : localStorage.setItem(CLAVE, JSON.stringify(state.plantillas));
+  localStorage.setItem(CLAVE_FILTRO, state.filtro ?? "");
 }
 
 export function cargar() {
@@ -216,39 +217,71 @@ render();
 
 > 💡 Con ESM, el **orden ya no importa**: los `import` arman el rompecabezas solos. Y como cada módulo tiene su propio ámbito, se acabaron los choques de variables globales.
 
-- **Checkpoint 3 (~90 min):** tras modularizar, la app hace **todo lo de antes** (crear, editar, eliminar, filtrar, ordenar, persistir). Si algo no carga, revisa que uses un **servidor local** (no `file://`) y que las rutas de los `import` lleven `./` y la extensión `.js`.
+- **Checkpoint 3 (~90 min):** tras modularizar, la app hace **todo lo de antes** (crear, editar, eliminar, filtrar, persistir). Si algo no carga, revisa que uses un **servidor local** (no `file://`) y que las rutas de los `import` lleven `./` y la extensión `.js`.
 
 ---
 
-### HU4: Resumen de la colección + cierre
+### HU4: Ordenar la colección
 
-> *"Como usuario, quiero un resumen rápido de mi colección (total y la más reciente), para tener una vista general."*
+> *"Como usuario, quiero ordenar mis plantillas por fecha (más recientes o más antiguas), para revisarlas como me convenga."*
 
 **Criterios de Aceptación:**
-- Se muestra un **resumen** calculado desde el estado (total y la plantilla más reciente).
-- El resumen **se actualiza solo** ante cualquier cambio.
+- Un selector permite elegir entre **más recientes primero** y **más antiguas primero**.
+- La lista se **reordena al instante** al cambiar la opción.
+- El orden se mantiene al agregar, editar o filtrar.
 
-Calcula el resumen con una **función pura** que recibe el estado y devuelve un resultado, sin tocar el DOM ni el estado:
+Ahora que tu código es modular, agregar una función nueva es limpio: tocas `state.js` (la lógica) y `ui.js` (el control), sin enredar el resto.
+
+`.sort()` ordena un array con un **comparador** `(a, b)` que devuelve un número negativo/positivo para decidir el orden. Como `.sort()` **muta** el array, copiamos primero con `[...]`. En `state.js`:
 
 ```javascript
-function resumen(plantillas) {
-  if (plantillas.length === 0) return "Sin plantillas todavía";
-  const masReciente = [...plantillas].sort((a, b) => new Date(b.fecha) - new Date(a.fecha))[0];
-  return `${plantillas.length} plantillas · última: "${masReciente.titulo}"`;
+function ordenar(plantillas) {
+  const copia = [...plantillas];   // copiamos: .sort() muta el array original
+  return state.orden === "antiguas"
+    ? copia.sort((a, b) => new Date(a.fecha) - new Date(b.fecha))   // más antiguas primero
+    : copia.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));  // más recientes primero
 }
 ```
 
-Muéstralo en el panel de stats dentro de `render()`.
+Encadena el orden **después** del filtro, dentro de `plantillasVisibles()`:
 
-- **Checkpoint 4 (~110 min):** el resumen refleja el total real y cambia al agregar/eliminar. Verifica el ciclo completo: crea → recarga → sigue ahí → edita → vacía con confirmación.
+```javascript
+export function plantillasVisibles() {
+  const filtroTexto = (state.filtro ?? "").toLowerCase();
+  const filtradas = filtroTexto === ""
+    ? state.plantillas
+    : state.plantillas.filter(plantilla => plantilla.hashtag.toLowerCase().includes(filtroTexto));
+  return ordenar(filtradas);       // primero filtra, luego ordena
+}
+```
+
+Agrega el selector en `index.html` (dentro del contenedor de la derecha) y conéctalo en `ui.js`:
+
+```html
+<select id="orden" class="w-full p-2 border border-slate-300 rounded-lg">
+  <option value="recientes">Más recientes</option>
+  <option value="antiguas">Más antiguas</option>
+</select>
+```
+
+```javascript
+document.getElementById("orden").addEventListener("change", function (evento) {
+  state.orden = evento.target.value;   // el orden vive en el estado
+  render();
+});
+```
+
+> 💡 Mira cómo la modularidad ayudó: la lógica de orden quedó en `state.js` y el control en `ui.js`, sin tocar el resto. Y `.sort()` **muta**, por eso copiamos con `[...]` antes (inmutabilidad, como en C14).
+
+- **Checkpoint 4 (~110 min):** cambia el selector a "Más antiguas" → la primera plantilla que creaste sube arriba; vuelve a "Más recientes" → la última aparece primero. Filtra y comprueba que el orden se mantiene.
 
 ---
 
 ## 🌟 Logros Adicionales (Opcionales)
 
 - **Logro 1 — Cerrar al hacer clic fuera:** cierra el modal si el usuario hace clic en el fondo oscuro (no en el cuadro blanco).
-- **Logro 2 — Mensaje "deshacer":** tras eliminar, muestra por unos segundos la opción de recuperar la última plantilla borrada.
-- **Logro 3 — Filtro + orden combinados:** asegura que filtrar y ordenar funcionen a la vez sin perder el resumen.
+- **Logro 2 — Orden alfabético:** agrega al selector una tercera opción que ordene por título con `.localeCompare()` (respeta tildes y mayúsculas).
+- **Logro 3 — Limpiar filtro:** agrega un botón ✕ que borra el buscador y vuelve a mostrar todas las plantillas.
 
 ## 📝 Cierre del Proyecto (Módulo 4)
 

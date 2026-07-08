@@ -4,9 +4,9 @@
 
 ## Resumen
 
-Llegaste al último laboratorio del **Gestor de Plantillas para WhatsApp**. Tu app ya crea, edita, ordena y persiste plantillas; hoy la dejarás lista para mostrar y, sobre todo, la organizarás como un profesional. Aprenderás **módulos ESM** (`export`/`import`): en lugar de un solo archivo lleno de variables globales, repartirás tu código en piezas que se comunican entre sí.
+Llegaste al último laboratorio del **Gestor de Plantillas para WhatsApp**. Tu app ya crea, edita, filtra y persiste plantillas; hoy la dejarás lista para mostrar y, sobre todo, la organizarás como un profesional. Aprenderás **módulos ESM** (`export`/`import`): en lugar de un solo archivo lleno de variables globales, repartirás tu código en piezas que se comunican entre sí.
 
-Además mejorarás la experiencia de usuario con dos detalles que separan un prototipo de una app de verdad: un **modal de confirmación propio** antes de borrar (nada de cuadros nativos feos) y un **estado vacío amigable** que guía al usuario en vez de mostrarle una pantalla en blanco.
+Además mejorarás la experiencia de usuario con detalles que separan un prototipo de una app de verdad: un **modal de confirmación propio** antes de borrar (nada de cuadros nativos feos), un **estado vacío amigable** que guía al usuario en vez de mostrarle una pantalla en blanco y la opción de **ordenar** la colección por fecha con `.sort()`.
 
 Al cerrar, integrarás todo lo del módulo en una entrega completa: tus propias historias de usuario, un README, el despliegue en GitHub Pages y una demo en vivo.
 
@@ -25,7 +25,8 @@ Al cerrar, integrarás todo lo del módulo en una entrega completa: tus propias 
 1. **Construiremos un modal de confirmación** - Reemplazarás el cuadro nativo por uno propio con HTML y Tailwind.
 2. **Manejarás los estados vacíos** - Distinguirás "no hay nada" de "el filtro no encontró nada".
 3. **Modularizarás con ESM** - Repartirás el código en `state.js`, `storage.js`, `ui.js` y `app.js`.
-4. **Cerrarás el proyecto** - Integrarás tus HUs, documentarás, desplegarás y prepararás tu demo.
+4. **Ordenarás la colección** - Con un selector y `.sort()`, mostrarás las plantillas por fecha (más recientes o más antiguas).
+5. **Cerrarás el proyecto** - Integrarás tus HUs, documentarás, desplegarás y prepararás tu demo.
 
 ---
 
@@ -36,7 +37,8 @@ Al finalizar esta clase, podrás:
 1. **Construir** un modal de confirmación reutilizable que guarde la acción pendiente en una variable.
 2. **Diferenciar** los dos estados vacíos de una lista y mostrar un mensaje claro para cada uno.
 3. **Modularizar** una app con `export`/`import` y `<script type="module">`, sin variables globales.
-4. **Verificar** la sincronización completa estado ↔ almacenamiento ↔ interfaz y preparar una demo del proyecto.
+4. **Ordenar** la colección por fecha con `.sort()` y un comparador, copiando el array antes de mutarlo.
+5. **Verificar** la sincronización completa estado ↔ almacenamiento ↔ interfaz y preparar una demo del proyecto.
 
 ---
 
@@ -44,7 +46,7 @@ Al finalizar esta clase, podrás:
 
 ### De clases anteriores
 
-- Tu **Gestor de Plantillas** de C15 funcionando: crear, editar, eliminar, filtrar, ordenar y persistir con `LocalStorage`.
+- Tu **Gestor de Plantillas** de C15 funcionando: crear, editar, eliminar, filtrar y persistir con `LocalStorage`.
 - Las funciones de estado (`plantillasVisibles`, contar) y de persistencia (`guardar`, `cargar`) operativas.
 
 ### Reflexión previa
@@ -74,7 +76,7 @@ Antes de llegar a clase, reflexiona sobre:
 | **`<script type="module">`** | Activa los módulos: cada archivo tiene su propio ámbito y el orden de carga deja de importar. |
 | **Modal** | Ventana de confirmación propia (HTML + Tailwind) que se muestra u oculta alternando una clase. |
 | **Estado vacío** | Lo que ve el usuario cuando no hay datos: un mensaje claro en vez de una pantalla en blanco. |
-| **Función pura** | Función que recibe datos y devuelve un resultado, sin tocar el DOM ni el estado externo. |
+| **`.sort()` + comparador** | Ordena un array con una función `(a, b)`; como `.sort()` muta, se copia con `[...]` antes de ordenar. |
 
 ---
 

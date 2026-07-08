@@ -13,7 +13,7 @@ Este proyecto consolida todo lo aprendido durante el **Módulo 4: Estado y Persi
 | Laboratorio        | Contribución al Proyecto |
 |--------------------|--------------------------|
 | **Lab 13: Modelado de Datos y Manipulación de Texto**   | Modelar la plantilla como dato y transformar el texto del mensaje dinámicamente. |
-| **Lab 14: Interacción y Datos Derivados**               | Delegación de eventos, operaciones CRUD y ordenar (sort) sobre la colección. |
+| **Lab 14: Interacción y Datos Derivados**               | Delegación de eventos, operaciones CRUD y datos derivados (filtro y estadísticas) sobre la colección. |
 | **Lab 15: JSON y LocalStorage**                         | Guardar y cargar plantillas personalizadas de forma persistente. |
 | **Lab 16: Módulos ESM y Cierre**                        | Repartir el código en módulos (`state`/`storage`/`ui`/`app`) y cerrar el proyecto. |
 

@@ -8,7 +8,7 @@
 
 ### Clase anterior:
 - Tu app **persiste** con JSON + LocalStorage
-- Crear, editar, eliminar, filtrar, ordenar
+- Crear, editar, eliminar, filtrar
 
 ### Hoy:
 - Repartir el código en **módulos ESM**
@@ -88,7 +88,7 @@ App sin plantillas y filtro sin resultados
 Tras separar en `state` / `storage` / `ui` / `app`, la app hace **todo lo de antes**
 
 **¿Qué debe funcionar?**
-- Crear, editar, eliminar, filtrar, ordenar, persistir
+- Crear, editar, eliminar, filtrar, persistir
 
 **Problemas comunes:**
 - "Failed to load module" → usa servidor local, no `file://`
@@ -96,17 +96,19 @@ Tras separar en `state` / `storage` / `ui` / `app`, la app hace **todo lo de ant
 
 ---
 
-## CHECKPOINT HU4: Resumen + cierre
+## CHECKPOINT HU4: Ordenar la colección
 
-### Verificar:
-El panel muestra total y la plantilla más reciente
+### Verificar (~110 min):
+Un selector reordena la lista por fecha al instante
 
 **¿Qué debe verse?**
-- El resumen cambia al agregar/eliminar
-- Ciclo completo: crear → recargar → editar → vaciar con confirmación
+- "Más antiguas" → sube la primera plantilla que creaste
+- "Más recientes" → aparece primero la última
+- El orden se mantiene al filtrar
 
 **Problemas comunes:**
-- El resumen no cambia → llámalo dentro de `render()`
+- No reordena → falta llamar `render()` en el `change`
+- Se desordena el estado → `.sort()` muta; copia con `[...]` antes
 
 ---
 
@@ -118,7 +120,7 @@ El panel muestra total y la plantilla más reciente
 | Orden de `<script>` | Importa mucho | Ya no importa |
 | Ámbito | Compartido (choques) | Propio por archivo |
 
-> **Regla:** un archivo, una responsabilidad. Y `resumen(plantillas)` es **función pura**: recibe datos, devuelve texto, no toca el DOM.
+> **Regla:** un archivo, una responsabilidad. Y `.sort()` **muta** el array: por eso `ordenar(plantillas)` copia con `[...]` antes de ordenar.
 
 ---
 
@@ -126,7 +128,7 @@ El panel muestra total y la plantilla más reciente
 
 ### Hoy lograste:
 - Modularizar tu app con ESM
-- Confirmaciones y estado vacío
+- Confirmaciones, estado vacío y orden por fecha
 - Sincronización completa estado ↔ storage ↔ UI
 
 ### En este módulo:
