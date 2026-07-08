@@ -45,12 +45,12 @@
 En vez del cuadro nativo del navegador, construyes tu **propio modal** con HTML y Tailwind. Agrégalo al final de `index.html` (empieza oculto con la clase `hidden`):
 
 ```html
-<div id="modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
-  <div class="bg-white p-6 rounded-xl shadow max-w-xs text-center">
-    <p id="modal-texto" class="mb-4 text-slate-700">¿Seguro?</p>
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+  <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+    <p id="modal-texto" class="text-slate-700 mb-5">¿Seguro?</p>
     <div class="flex gap-2 justify-center">
-      <button id="modal-cancelar"  class="px-4 py-2 rounded bg-slate-200">Cancelar</button>
-      <button id="modal-confirmar" class="px-4 py-2 rounded bg-red-600 text-white">Eliminar</button>
+      <button id="modal-cancelar"  class="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">Cancelar</button>
+      <button id="modal-confirmar" class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">Eliminar</button>
     </div>
   </div>
 </div>
@@ -125,7 +125,11 @@ function render() {
     const vacio = state.plantillas.length === 0
       ? "Aún no tienes plantillas. ¡Crea la primera!"
       : "No se encontraron plantillas con ese filtro.";
-    lista.innerHTML = `<li class="text-center text-slate-400 py-6">${vacio}</li>`;
+    lista.innerHTML = `
+      <li class="sm:col-span-2 text-center text-slate-400 py-10">
+        <div class="text-4xl mb-2">📭</div>
+        ${vacio}
+      </li>`;
   } else {
     visibles.forEach(/* ...crea cada <li> como siempre... */);
   }
