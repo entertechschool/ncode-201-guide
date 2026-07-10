@@ -291,7 +291,5 @@ document.getElementById("orden").addEventListener("change", function (evento) {
 
 Esta es la entrega del **proyecto integrador del Módulo 4**:
 
-1. **Tus 2 HUs propias:** implementa al menos **2 Historias de Usuario** adicionales (cada una en su rama → Pull Request a `main`), con criterios de aceptación orientados a resultado.
-2. **Documentación (`README.md`):** describe la app, la arquitectura modular con ESM (`state`/`storage`/`ui`) y cómo persistes los datos.
-3. **Despliegue:** publica en GitHub Pages.
-4. **Demo en vivo (máx. 10 min):** muestra el flujo completo y argumenta 2 decisiones técnicas (ver rúbrica oficial, 5 criterios × 20 pts).
+1. **Documentación (`README.md`):** describe la app, la arquitectura modular con ESM (`state`/`storage`/`ui`) y cómo persistes los datos.
+2. **Despliegue:** publica en GitHub Pages.
