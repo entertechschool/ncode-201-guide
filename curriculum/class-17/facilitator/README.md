@@ -1,204 +1,236 @@
-# Guía del Facilitador - Clase 17: Ideation + Research + Stories
+# Guía del Facilitador - Clase 17: Ideación y Planificación con IA
 
-> Tiempo de lectura: 7 minutos | Prepárate antes de clase
+> Tiempo de lectura: 9 minutos | Prepárate antes de clase
+
+Esta clase inaugura un formato distinto: **tú dejas de dictar y pasas a mentorear**. El lab ya no trae código; el alumno construye con la IA como copiloto y contigo como criterio experto. Tu trabajo de hoy es modelar cómo se piensa con una IA, y después circular, detectar y destrabar.
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Historia de usuario**: Funcionalidad descrita en formato "Como [rol] quiero [acción] para [beneficio]".
-- **Criterio de aceptación**: Condición verificable que define "terminado" sin ambigüedad.
-- **Sprint**: Iteración de trabajo con una meta concreta y un tiempo acotado.
-- **MVP**: La versión más simple del producto que cumple el valor central prometido.
-- **Alcance**: Lista explícita de lo que está dentro y fuera del proyecto.
+- **Prompt estructurado**: contexto + tarea + formato + restricciones. Las 4 partes o la IA inventa.
+- **Contrato técnico**: el bloque del enunciado que el alumno pega en sus prompts para que la IA no proponga React ni backend.
+- **HU con criterios orientados a resultado**: el criterio describe lo que se ve en pantalla, nunca el código.
+- **Ciclo prompt → crítica → re-prompt**: el output de la IA es un borrador que se audita, no una respuesta que se acepta.
 
 ---
 
 ## 🔗 Analogías Útiles
 
-**Historia de usuario <> Pedido en un restaurante:**
-El cliente no dice "usa la sartén #3 y calienta a 180°C". Dice "quiero un lomo saltado término medio". La historia es el pedido; la tarea técnica es la receta. Cuando los estudiantes escriben historias con detalle técnico, recuérdales esta analogía.
+**IA sin contexto <> practicante sin briefing:**
+Un practicante brillante al que le dices "hazme un informe" te entrega algo genérico. Con briefing (contexto, formato, restricciones) te entrega algo usable. La IA es ese practicante: velocísima, pero solo tan buena como tu briefing.
 
-**Sprint <> Viaje en bus con paradas:**
-No intentas llegar del Cusco a Lima sin parar. Te detienes en Nazca, Ica, Paracas. Cada parada es un sprint: algo concreto terminado, con punto de validación, antes de seguir.
+**Criterio de aceptación <> prueba de sonido:**
+Antes del concierto no preguntas "¿el técnico conectó bien los cables?" — pides "que suene la guitarra por los monitores". Verificas resultados observables, no implementación.
 
-**Alcance <> Lista de compras antes del súper:**
-Sin lista, sales con cosas que no necesitabas y sin lo que buscabas. El alcance escrito es la lista del súper del proyecto.
-
-**MVP <> Skateboard, no un coche con tres ruedas:**
-La famosa imagen de Henrik Kniberg: un MVP no es media solución; es la solución mínima que ya mueve al usuario de A a B. Si tu proyecto solo muestra la pantalla pero no calcula nada, no es MVP.
-
----
-
-## 📚 Contexto Actual
-
-### Splitwise y la economía compartida: por qué este proyecto importa
-
-Splitwise se fundó en 2011 cuando tres roommates de Boston se cansaron de pelear por cuentas. Hoy tiene más de 50 millones de usuarios en más de 190 países y procesa miles de millones de dólares en balances mensuales. El algoritmo que usan para minimizar transferencias entre miembros de un grupo es materia obligatoria en entrevistas técnicas de mid y senior level en empresas como Google, Meta y Uber.
-
-> **Para contar en clase:** "La aplicación que van a construir es la misma idea que mueve el negocio de Splitwise. Un producto que empezó resolviendo un pleito entre roommates hoy tiene más usuarios que la población del Perú."
-
-### Agile en Latinoamérica: la adopción silenciosa
-
-Según el State of Agile Report 2024, el 71% de los equipos de desarrollo en Perú, Chile, Colombia y México ya usan algún framework ágil (Scrum, Kanban o híbridos). Las historias de usuario son el artefacto más común, más que las tareas tradicionales. Aprender a leerlas y escribirlas bien es una habilidad más transferible que saber un framework específico.
-
-**Fuentes:** [Splitwise blog](https://blog.splitwise.com/){:target="_blank"}, [State of Agile Report](https://stateofagile.com/){:target="_blank"}
+**PROMPTS.md <> bitácora de laboratorio:**
+Un científico no anota solo qué funcionó: anota qué descartó y por qué. Eso es lo que convierte el uso de IA en evidencia de criterio.
 
 ---
 
 ## 🎯 Momentos Clave de la Clase
 
-### Pregunta Detonadora
+### Demo Principal: planificar CON la IA en vivo (min 35-60)
 
-**Pregunta:** Si tú y tres amigos pagan distintos gastos en un viaje a Máncora, ¿cómo calcularías quién le debe a quién al final?
+Es el momento más importante del módulo: aquí modelas el estándar de trabajo de las próximas 4 clases.
 
-**Respuesta esperada:** No hay una única correcta. Se busca que salgan 2-3 enfoques: "hoja de cálculo", "cada uno anota lo suyo y al final sumamos", "paga uno todo y después dividimos". Todas son válidas y todas son distintas a lo que van a construir.
+**Qué mostrar:** toma la funcionalidad 1 del MVP (buscar canciones) y conviértela en HUs con la IA, frente a todos, en tres rondas:
 
-**Script post-votación:**
-```
-Facilitador: "¿Alguno ha sentido que terminó pagando más que los demás en un viaje?"
-[Escuchar 2-3 respuestas, típicamente hay una risa nerviosa]
-Facilitador: "Eso que acaban de describir es el problema. Hoy empiezan a construir la solución."
-```
-
-**Tip:** No bajes inmediatamente al proyecto. Deja que el dolor se sienta 1-2 minutos. Eso motiva el resto de la clase.
-
-### Demo Principal
-
-**Qué mostrar:** Abrir [Splitwise](https://www.splitwise.com/){:target="_blank"} en el navegador y mostrar (con una cuenta propia, demo o screenshots) cómo funciona la interfaz: crear grupo, agregar gastos, ver balance.
+1. **Prompt malo a propósito:** "hazme las historias de usuario de una app de música". Muestra el resultado: historias genéricas, features inventadas (login, social), criterios vagos.
+2. **Prompt estructurado:** pega el contrato técnico + MVP, pide formato HU con criterios observables, restringe al MVP. Compara la diferencia en voz alta.
+3. **Crítica en vivo:** aun el buen output tendrá defectos. Encuentra al menos uno (un criterio que describe código, una historia gigante) y re-promptea o corrígelo a mano.
 
 **Script sugerido:**
 ```
-Facilitador: "Este es Splitwise. Fíjense en 3 cosas:
-  1. La lista de gastos — ordenada por fecha, muestra quién pagó qué.
-  2. El panel de balances — quién debe, cuánto.
-  3. Las transferencias sugeridas — la magia está aquí.
-No vamos a construir todo Splitwise. Vamos a construir la versión académica: sin backend, sin login, todo en el navegador. Pero lo esencial es lo mismo."
+Facilitador: "Le voy a pedir mal a propósito. Miren lo que pasa..."
+[Prompt vago → output genérico]
+Facilitador: "¿Qué inventó que NO está en el MVP?"
+[Escuchar 2-3 respuestas]
+Facilitador: "Ahora con contrato y restricciones. Misma IA, otro resultado."
 ```
 
-**Plan B (si no hay acceso a Splitwise):** Usar el mockup ASCII del [enunciado del proyecto](../project/) como referencia. Es suficiente para transmitir la idea.
+**Plan B (si la herramienta de IA falla en vivo):** ten capturas de las tres rondas preparadas de antemano y nárralas. El punto pedagógico se sostiene igual.
+
+---
+
+## 💡 Prompts Listos para Usar
+
+### Ronda 1 de la demo — el prompt malo (a propósito)
+
+```text
+hazme las historias de usuario de mi app de música
+```
+
+**Tip de facilitación:** deja que el output genérico hable solo. Pregunta al grupo: "¿qué inventó que no está en el MVP?"
+
+### Ronda 2 de la demo — el prompt maestro (el estándar a modelar)
+
+```text
+CONTEXTO: Estoy construyendo "Mi Setlist", una app web con JavaScript
+vanilla y módulos ESM (sin frameworks, sin backend, sin librerías de
+estado). Arquitectura: estado central + render(), CRUD inmutable,
+localStorage con try/catch, API de iTunes solo lectura. Soy una sola
+persona y tengo 2 sprints de una clase cada uno.
+El MVP tiene estas 10 funcionalidades: [pegar la lista del enunciado]
+
+TAREA: Descompón este MVP en unas 8 historias de usuario.
+
+FORMATO: Cada historia con "Como... quiero... para..." + 3 a 5
+criterios de aceptación.
+
+RESTRICCIONES: Los criterios describen resultados observables en
+pantalla, nunca código ni nombres de funciones. No agregues nada
+que no esté en el MVP. No sugieras librerías externas.
+```
+
+**Tip de facilitación:** nombra las 4 partes en voz alta mientras lo pegas. Es la plantilla que el alumno replica en el lab.
+
+### Ronda 3 de la demo — re-prompts de crítica
+
+```text
+El criterio "la búsqueda usa fetch con async/await" describe
+implementación. Reescríbelo como algo observable en pantalla.
+```
+
+```text
+La HU de estadísticas mezcla duración total, género top y orden.
+Es muy grande para una fracción de clase. Divídela.
+```
+
+### Para las rondas de la Parte 2 — distribución de sprints
+
+Si un alumno está trabado, muéstrale este pedido:
+
+```text
+Estas son mis 8 historias finales: [pega HISTORIAS.md]
+Propón cómo distribuirlas en Sprint 1 y Sprint 2 (una clase cada uno).
+Justifica cada asignación, señala las dependencias y dime cuál
+historia es la más difícil técnicamente.
+```
+
+**Tip de facilitación:** después del output, pregúntale al ALUMNO (no a la IA): "¿tu Sprint 1 termina en algo demostrable?"
 
 ### Transición al Lab
 
-**Momento crítico:** Algunos estudiantes van a querer empezar a codear de inmediato. Freno explícito.
+**Momento crítico:** el alumno pasa de ver a hacer, y la tentación es aceptar el primer output.
 
-**Script sugerido:**
 ```
-Facilitador: "Hoy no vamos a tocar JavaScript. Entiendo la ansiedad. Pero si salen de aquí sin entender lo que van a construir, el próximo Sprint es un desastre.
-Abran VS Code, abran el enunciado del proyecto. Van a hacer tres cosas: leer, planificar, configurar el repo. En ese orden."
-```
-
----
-
-## 🎭 Dinámicas de Clase
-
-### Dinámica 1: "Cacería de entidades"
-
-Cuando abordan el Paso 1.1 del lab, algunos estudiantes se atrancan identificando entidades.
-
-> "Si algo se puede crear, editar o borrar, probablemente es una entidad. Si es un verbo, no."
-
-**Dinámica sugerida:**
-```
-Facilitador: "Apunten todos los sustantivos que aparecen en el enunciado."
-(Esperan)
-Facilitador: "Ahora marquen los que tienen datos propios (nombre, monto, id). Esos son entidades."
-```
-
-### Dinámica 2: "Dependencia cruzada"
-
-En el Paso 2, algunos replican al dedo la distribución HU1-HU4 / HU5-HU8 sin pensar. Para romper ese automatismo:
-
-> "¿Y si yo les dijera que la HU5 depende de algo del Sprint 1? ¿Qué cambia?"
-
-**Dinámica sugerida:**
-```
-Facilitador: "Levanten la mano los que pusieron HU5 en Sprint 2 sin preguntarse nada."
-(La mitad)
-Facilitador: "Piensen: ¿qué información necesita HU5 (balance) para funcionar?"
-(Pista que los lleva a: necesita tener gastos, o sea necesita HU3 terminada)
-```
-
-### Dinámica 3: "Alcance fuera"
-
-El alcance "fuera" casi siempre queda pobre. Los estudiantes listan solo cosas obvias ("no va a tener IA").
-
-> "Háganlo concreto. Si pensaron en algo cool que les daría ganas de construir, probablemente va fuera del alcance."
-
-**Dinámica sugerida:**
-```
-Facilitador: "¿Alguien pensó en agregar notificaciones push? ¿En exportar a PDF? ¿En login con Google?"
-(Manos arriba)
-Facilitador: "Perfecto, todo eso va en 'fuera del alcance'. No lo pierdan, pero no lo construyan hoy."
+Facilitador: "Ahora ustedes. La meta NO es tener historias rápido:
+es rechazarle algo a la IA y saber por qué. Ese rechazo vale más
+que 10 historias aceptadas."
 ```
 
 ---
 
-## 💡 Ejemplos Listos para Usar
+## 📋 Lista Maestra de HUs (NO pública — tu vara de validación)
 
-### Ejemplo 1: Historia floja vs sólida
+El alumno deriva sus propias HUs; no tienen que coincidir palabra por palabra con estas, pero **el conjunto debe cubrir el MVP**. Usa esta tabla en las rondas:
 
-**Cuándo usarlo:** Cuando estén escribiendo su análisis y copien literal la HU sin entenderla.
+| # | HU de referencia | Sprint | Cubre MVP |
+|---|------------------|--------|-----------|
+| 1 | Buscar canciones por artista/título y ver resultados (carátula, nombre, artista, duración) | 1 | 1 |
+| 2 | Ver estados de carga, error y "sin resultados" en la búsqueda | 1 | 2 |
+| 3 | Crear una playlist con nombre propio | 1 | 3 |
+| 4 | Agregar canciones de los resultados a una playlist, verlas listadas y persistidas | 1 | 4, 5, 10 (parcial) |
+| 5 | Quitar canciones y eliminar playlists con modal de confirmación | 2 | 6 |
+| 6 | Ver duración total formateada y estadísticas (canciones, género top, artista top) | 2 | 7, 8 |
+| 7 | Ordenar canciones (recientes/antiguas, alfabético) | 2 | 9 |
+| 8 | Restaurar todo al recargar y resistir datos corruptos ("Empezar de cero") | 2 | 10 |
 
-**Historia floja:**
-```
-Agregar gastos al grupo.
-```
+**Válido también:** fusionar 1+2, separar 6 en dos, mover 5 al Sprint 1. **Inválido:** playlists sin búsqueda previa, persistencia "para el final del Sprint 2", features fuera del MVP como historias base.
 
-**Historia sólida:**
-```
-Como usuario quiero registrar un gasto indicando descripción, monto y quién pagó,
-para llevar cuenta de lo que se gasta.
+---
 
-Criterios:
-- Monto debe ser > 0.
-- Descripción no puede estar vacía.
-- Quien pagó debe ser una persona del grupo.
-```
+## 🚨 Señales de Alerta en las Rondas
 
-**Tip de facilitación:** Mostrar ambas. Preguntar "¿Cuál te dice qué vas a codear?". La respuesta obvia es la lección.
+| Señal | Qué está pasando | Qué hacer |
+|-------|------------------|-----------|
+| 12+ historias | Aceptó el output inflado de la IA | "¿Cuáles de estas caben en 2 clases? Fusiona o recorta" |
+| Criterios tipo "usa fetch con try/catch" | Confunde criterio con implementación | Volver a la regla: ¿se VE en pantalla? |
+| HU "compartir en redes" o "login" | La IA inventó alcance y no lo filtró | Señalar el MVP: ¿en qué punto está eso? |
+| PROMPTS.md vacío al min 100 | Usa la IA sin registrar nada | Recordar que es entregable y parte de la rúbrica |
+| Sus HUs son el output crudo de la IA (mismo texto y orden) | No está criticando, solo consumiendo | Auditar 2 HUs juntos con la tabla de checks del lab |
+| Copió el contrato pero no lo lee | Ritual sin comprensión | Pregunta: "¿por qué el contrato prohíbe confirm()?" |
 
-### Ejemplo 2: Estructura inicial del repo
+---
 
-**Cuándo usarlo:** Cuando se atranquen en el Paso 3.
+## 🎯 Checkpoints de Validación
 
-```
-gastos-compartidos/
-├── index.html
-├── css/styles.css
-└── js/
-    ├── app.js       # entrada
-    ├── state.js     # estado central
-    ├── storage.js   # LocalStorage
-    ├── balance.js   # cálculo
-    └── ui.js        # DOM
-```
-
-**Tip de facilitación:** Enfatiza que los archivos JS pueden estar vacíos hoy. Solo la estructura y los `<script>` en el orden correcto.
+| Minuto | Checkpoint | Cómo validar | Si no cumple |
+|--------|------------|--------------|--------------|
+| 15 | Módulo presentado | Entienden que el lab ya no trae código | Reforzar: "el código sale de ustedes + IA" |
+| 35 | Enunciado claro | Nadie pregunta "¿qué vamos a construir?" | Releer MVP en voz alta, resolver dudas de alcance |
+| 60 | Demo cerrada | Pueden nombrar las 4 partes del prompt | Repetir ronda 2 vs ronda 1 en 3 minutos |
+| 105 | HUs listas | `HISTORIAS.md` ~8 HUs + `PROMPTS.md` con ≥2 entradas | Sentarse con el alumno y criticar 1 HU juntos |
+| 130 | Sprints planificados | `SPRINTS.md` con metas y dependencias | Pregunta guía: "¿qué necesitas ANTES de poder hacer X?" |
+| 165 | Repo corriendo | "Módulos ESM funcionando ✅" en Live Server | Verificar `file://` vs Live Server, orden de imports |
+| 180 | Standup cerrado | Todos mostraron repo + reto en 30 seg | Los que falten lo mandan por el canal de entrega |
 
 ---
 
 ## ⚠️ Errores Comunes
 
-- **"El estudiante quiere inventar su propio proyecto."** Recordarle amablemente que el proyecto ya está definido. Puede proponer retos adicionales en Sprint 2, no cambiar el enunciado.
-- **"Todos copian exactamente la distribución sugerida HU1-HU4 / HU5-HU8."** Fuérzalos a escribir por qué. Si no pueden justificar, no entendieron.
-- **"Repositorio privado."** Pedir que lo hagan público en ese momento. Lo privado se convertirá en problema para el portafolio.
-- **"Escriben 'En construcción' pero el navegador muestra consola con errores."** Verificar orden de scripts y rutas de archivos antes de pasar a Parte 3.3.
+| Señal | Qué está pasando | Qué hacer |
+|-------|------------------|-----------|
+| "CORS policy" o import falla | Abrió `index.html` con doble clic | Live Server; ESM no corre en `file://` |
+| La IA le respondió con React | No incluyó el contrato en el prompt | Pegar contrato + re-prompt; es el ejemplo perfecto de por qué existe |
+| "Ya terminé" en 20 min | Aceptó todo sin criticar | Auditar 2 HUs con la lista maestra; suele faltar cobertura del MVP |
+| Parálisis: no sabe qué pedirle a la IA | Nunca conversó con una IA | Sentarse 3 min, escribir el primer prompt juntos con la plantilla del lab |
+| Quiere empezar a codear la app | Ansiedad de producto | "El Sprint 1 es en 48h. Hoy planificar ES avanzar" |
 
 ---
 
-## 📍 Cierre de Clase
+## ✅ Señales de Comprensión
 
-Antes de que se vayan, asegúrate de que cada estudiante:
+### El estudiante ENTIENDE cuando:
+- Sus HUs difieren del output crudo de la IA y puede decir qué cambió y por qué.
+- Puede explicar por qué una HU va en Sprint 1 y no en Sprint 2.
+- Re-promptea con restricciones nuevas en lugar de aceptar el segundo intento.
 
-- [ ] Tiene URL pública de su repo.
-- [ ] Puede mostrar `index.html` cargando sin errores.
-- [ ] Sabe qué 4 HU va a atacar en Sprint 1.
-- [ ] Identificó qué HU es su reto técnico principal.
+### El estudiante NECESITA AYUDA cuando:
+- Sus HUs son idénticas al output crudo de la IA (mismos textos, mismo orden).
+- No puede decir qué funcionalidad del MVP cubre una de sus historias.
+- Su plan pone todo lo difícil en el Sprint 2.
 
-**Frase de cierre sugerida:**
-```
-"Hoy no escribieron código del producto, pero hicieron la parte que distingue
-a un proyecto que se termina de uno que se abandona. La próxima clase empezamos
-a codear con todo. Vengan descansados."
-```
+---
+
+## ❓ Preguntas Frecuentes
+
+### P: ¿Y si un alumno no tiene cuenta en la herramienta de IA?
+**R:** La versión gratuita basta. Si hay bloqueo (correo, teléfono), que trabaje en pareja esta clase y resuelva la cuenta antes de C18 — en Sprint 1 es indispensable.
+
+### P: ¿Puedo darles yo las historias si van muy lento?
+**R:** No las entregues: valida contra la lista maestra y guía con preguntas. Un alumno con 6 HUs propias bien criticadas está mejor parado que uno con 8 copiadas. El mínimo para C18 es tener el Sprint 1 definido.
+
+### P: ¿Qué herramienta de IA usamos?
+**R:** La que defina la coordinación (pendiente). La clase funciona igual con cualquier chat de IA generalista; lo que se enseña es el método, no la herramienta.
+
+### P: ¿La rúbrica evalúa "usar mucho la IA"?
+**R:** No: evalúa **criterio**. Un PROMPTS.md corto y honesto, más la capacidad de explicar su código en el Q&A, vale más que 20 prompts pegados sin análisis.
+
+---
+
+## 🔗 Conexiones del Curriculum
+
+### Esta clase construye sobre:
+
+| Clase | Concepto | Cómo se conecta |
+|-------|----------|-----------------|
+| C16 | Módulos ESM | La estructura del repo de hoy es la arquitectura con la que cerraron M4 |
+| C13-C15 | Estado + render, localStorage | El contrato técnico exige exactamente esos patrones |
+| C12 | try/catch, estados de UI | Aparecerán como criterios en las HUs de búsqueda |
+
+### Conexión con la Próxima Clase
+
+> "En 48 horas esto deja de ser un plan. La Clase 18 es Sprint 1: búsqueda en la API de iTunes funcionando, con ustedes al teclado y la IA de copiloto. Traigan el repo listo y las HUs frescas."
+
+**Pre-work implícito:** si algún alumno no cerró el checkpoint del repo, debe llegarlo resuelto a C18.
+
+---
+
+## 🪞 Reflexión Post-Clase
+
+- ¿Quiénes aceptaron el output de la IA sin criticar? Son tu foco de rondas en C18.
+- ¿El grupo entendió el formato nuevo, o hubo ansiedad por "no recibir código"? Ajustar el briefing de C18.
+- ¿La demo en vivo funcionó o el Plan B fue necesario? Documentar para la próxima cohorte.
+- ¿Algún plan de sprints quedó tan frágil que amerita mensaje antes de C18?

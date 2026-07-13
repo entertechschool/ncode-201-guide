@@ -1,133 +1,126 @@
-# Rubrica - Lab Modulo 5: Agenda de Gastos Compartidos (Proyecto Integrador Final)
+# Rúbrica - Lab Módulo 5: Mi Setlist (Proyecto Integrador Final)
 
 > 📋 **Documento interno para evaluadores**
 
-> ⚠️ **Nota especial:** Esta rúbrica evalúa el **Proyecto Integrador Final de M5** que se entrega y presenta en el **Demo Day (Clase 20)**. El lab de la Clase 17 es solo el kickoff de planificación; las HU1-HU8 se construyen durante los Sprints 1 y 2 (Clases 18-19). La rúbrica se publica en C17 para que el estudiante la conozca desde el primer día del módulo.
+> ⚠️ **Nota especial:** Esta rúbrica evalúa el **Proyecto Integrador Final de M5**, que se entrega y presenta en el **Demo Day (Clase 20)**. La Clase 17 es el kickoff de planificación; el MVP se construye durante los Sprints 1 y 2 (Clases 18-19) con la IA como copiloto. La rúbrica se publica desde C17 para que el estudiante la conozca desde el primer día del módulo.
 
-## Informacion General
+## Información General
 
 | Aspecto | Detalle |
 |---------|---------|
-| **Proyecto** | Agenda de Gastos Compartidos |
-| **Modulo** | M5 — Proyecto Integrador (Code 201 Final) |
+| **Proyecto** | Mi Setlist (iTunes Search API + playlists persistidas) |
+| **Módulo** | M5 — Proyecto Integrador (Code 201 Final) |
 | **Clase** | C17 (kickoff) → C20 (Demo Day, entrega y presentación) |
 | **Puntaje Total** | 100 puntos. Aprobación mínima: 70/100 |
 
 ---
 
-## Criterios de Evaluacion
+## Criterios de Evaluación
 
 ### 1. Funcionalidades del MVP (20 puntos)
 
-| Nivel | Puntos | Descripcion |
+| Nivel | Puntos | Descripción |
 |-------|--------|-------------|
-| **Excelente** | 20 | Las 8 historias base (HU1-HU8) están implementadas y funcionan correctamente al 100% |
-| **Bueno** | 15 | 6-7 HU funcionales, 1-2 con bugs menores que no rompen el flujo |
-| **Satisfactorio** | 10 | 4-5 HU funcionales, el resto incompletas o rotas |
-| **Bajo** | 5 | <4 HU funcionales o el flujo principal no completa |
+| **Excelente** | 20 | Los 10 puntos del MVP implementados y funcionando al 100% |
+| **Bueno** | 15 | 8-9 puntos funcionales, 1-2 con bugs menores que no rompen el flujo |
+| **Satisfactorio** | 10 | 6-7 puntos funcionales, el resto incompletos |
+| **Bajo** | 5 | <6 puntos funcionales o el flujo principal roto |
 | **No entregado** | 0 | App no funciona o sin MVP entregable |
 
-**Aspectos evaluados:**
-- HU1: crear grupo con nombre
-- HU2: agregar y eliminar personas (sin duplicados, mínimo 2)
-- HU3: registrar gasto con validaciones (monto >0, descripción, divididoEntre)
-- HU4: ver lista de gastos ordenada por fecha
-- HU5: calcular balance neto (positivo verde, negativo rojo)
-- HU6: transferencias mínimas sugeridas
-- HU7: eliminar gasto con confirmación + recálculo
-- HU8: persistencia completa + recuperación ante datos corruptos
+**Aspectos evaluados (los 10 del MVP):**
+- Búsqueda en la API con resultados visuales (carátula, nombre, artista, duración)
+- Estados de carga / error / vacío en la búsqueda
+- Crear playlists con nombre; agregar canciones desde resultados
+- Ver contenido de playlist con fecha de agregado
+- Quitar canciones / eliminar playlists con modal de confirmación propio
+- Duración total formateada + estadísticas (canciones, género top, artista top)
+- Ordenar canciones (fecha y alfabético)
+- Persistencia completa + recuperación ante datos corruptos ("Empezar de cero")
 
 ---
 
 ### 2. Calidad Técnica (20 puntos)
 
-| Nivel | Puntos | Descripcion |
+| Nivel | Puntos | Descripción |
 |-------|--------|-------------|
-| **Excelente** | 20 | Estado centralizado correcto, `localStorage` con `try/catch`, código organizado en archivos separados (state, storage, balance, ui, app), algoritmo de transferencias mínimo |
-| **Bueno** | 15 | Estado correcto, persistencia funcional, código separado en archivos pero con alguna lógica filtrada |
-| **Satisfactorio** | 10 | Funcional pero todo el código en un solo archivo o sin manejo de errores en localStorage |
-| **Bajo** | 5 | Código monolítico, estado fragmentado, sin manejo de errores |
+| **Excelente** | 20 | Contrato técnico respetado por completo: ESM, estado central + render, CRUD inmutable, try/catch en storage, delegación de eventos |
+| **Bueno** | 15 | Arquitectura correcta con desvíos menores (alguna mutación aislada, un listener por ítem) |
+| **Satisfactorio** | 10 | Funcional pero monolítico o sin manejo de errores en localStorage |
+| **Bajo** | 5 | Código sin estructura, estado fragmentado, contrato ignorado |
 | **No entregado** | 0 | Sin estructura técnica reconocible |
 
 **Aspectos evaluados:**
-- Estado centralizado en `state.js` con estructura `{ grupo: { nombre, personas: [], gastos: [] } }`
-- `storage.js` envuelve `localStorage.setItem`/`getItem` en `try/catch`
-- `balance.js` con cálculo de balance neto y algoritmo de transferencias mínimas
-- `ui.js` con renderizado y eventos del DOM
-- Validaciones de campos obligatorios y montos positivos
-- HTML semántico, CSS responsivo (Flexbox/Grid)
+- Módulos ESM: `models/Cancion.js`, `state.js`, `storage.js`, `api.js`, `ui.js`, `app.js` con `import`/`export`
+- Patrón "cambias estado → guardar() → render()"
+- CRUD inmutable (`.filter`/`.map`/spread) e ids con `crypto.randomUUID()`
+- `storage.js` con `try/catch` y rehidratación de fechas
+- Adaptación del JSON de la API a un modelo propio limpio
+- HTML semántico, CSS responsivo
 
 ---
 
-### 3. Historias Adicionales / Retos (20 puntos)
+### 3. Uso Responsable de IA + HU Propia (20 puntos)
 
-| Nivel | Puntos | Descripcion |
+| Nivel | Puntos | Descripción |
 |-------|--------|-------------|
-| **Excelente** | 20 | ≥2 HU adicionales del listado de retos (o propias aprobadas) implementadas completamente con criterios cumplidos |
-| **Bueno** | 15 | 1 HU adicional implementada con criterios cumplidos al 100% |
-| **Satisfactorio** | 10 | 1 HU adicional implementada parcialmente |
-| **Bajo** | 5 | HU adicional planteada pero no funciona |
-| **No entregado** | 0 | Sin HU adicionales |
+| **Excelente** | 20 | `PROMPTS.md` con prompts contextualizados (contrato + HU) y decisiones registradas (10) + ≥1 HU propia completa con criterios cumplidos (10) |
+| **Bueno** | 15 | `PROMPTS.md` completo + HU propia implementada con detalles menores pendientes |
+| **Satisfactorio** | 10 | Solo una de las dos mitades cumplida (registro O HU propia) |
+| **Bajo** | 5 | `PROMPTS.md` de trámite (prompts sueltos sin contexto) y HU propia no funcional |
+| **No entregado** | 0 | Sin registro de IA y sin HU propia |
 
 **Aspectos evaluados:**
-- División desigual (porcentajes personalizados)
-- Múltiples grupos simultáneos
-- Exportar resumen a texto plano (para WhatsApp)
-- Modo oscuro persistente
-- Filtrar gastos por persona o rango
-- O cualquier HU propia aprobada por el instructor
+- Los prompts muestran el método del módulo: contexto (contrato) + tarea + formato + restricciones
+- Las 2 HUs propias están definidas en `HISTORIAS.md` con criterios orientados a resultado
+- La HU propia implementada funciona y está en la demo
+- Coherencia: lo que dice `PROMPTS.md` coincide con lo que el alumno explica en Q&A
 
 ---
 
 ### 4. Presentación en Vivo — Demo Day (20 puntos)
 
-| Nivel | Puntos | Descripcion |
+| Nivel | Puntos | Descripción |
 |-------|--------|-------------|
-| **Excelente** | 20 | Demo clara en ≤10 min mostrando flujo completo (crear grupo → personas → gastos → balance → transferencias → eliminar), navegación fluida, sin errores en vivo |
-| **Bueno** | 15 | Demo cubre el flujo principal pero omite alguna funcionalidad clave o tiene 1-2 tropiezos |
-| **Satisfactorio** | 10 | Demo entrega lo pedido pero excede tiempo o omite funcionalidades importantes |
-| **Bajo** | 5 | Demo confusa, no muestra el flujo completo, app falla en vivo |
+| **Excelente** | 20 | Demo clara en ≤10 min sobre la URL pública: flujo completo (buscar → agregar → stats → ordenar → eliminar con modal → recargar) + HU propia, sin errores en vivo |
+| **Bueno** | 15 | Cubre el flujo principal pero omite una funcionalidad o tiene 1-2 tropiezos |
+| **Satisfactorio** | 10 | Entrega lo pedido pero excede tiempo u omite funcionalidades importantes |
+| **Bajo** | 5 | Demo confusa, sin flujo completo, app falla sin plan B |
 | **No entregado** | 0 | Sin presentación |
 
 **Aspectos evaluados:**
-- Tiempo: máximo 5 min para demo en vivo (parte del bloque de 10 min total)
-- Crea grupo nuevo durante la demo
-- Agrega ≥3 personas
-- Registra ≥3 gastos diferentes
-- Muestra balance y transferencias sugeridas
-- Elimina al menos 1 gasto y muestra el recálculo automático
-- No se evalúa fluidez verbal ni nervios
+- La demo corre sobre el deploy público (no localhost, salvo plan B declarado)
+- La recarga en vivo demuestra la persistencia
+- El modal de confirmación propio aparece al eliminar
+- La HU propia se muestra como cierre
+- No se evalúan nervios ni fluidez verbal
 
 ---
 
 ### 5. Argumentación Técnica + Q&A (20 puntos)
 
-| Nivel | Puntos | Descripcion |
+| Nivel | Puntos | Descripción |
 |-------|--------|-------------|
-| **Excelente** | 20 | Justifica ≥2 decisiones técnicas (modelado del estado, algoritmo de transferencias, manejo de errores) con argumentos sólidos; responde correctamente Q&A sobre fragmento específico solicitado por el instructor |
-| **Bueno** | 15 | Justifica 1 decisión técnica con claridad, responde con dificultad pero correcto a Q&A |
-| **Satisfactorio** | 10 | Argumentación superficial, identifica conceptos sin profundizar |
-| **Bajo** | 5 | No justifica decisiones o no puede responder Q&A básico |
+| **Excelente** | 20 | Justifica ≥2 decisiones (≥1 sobre la IA: qué pidió, qué recibió, qué cambió y por qué) y explica correctamente el fragmento de código que el instructor elija |
+| **Bueno** | 15 | Justifica 1 decisión con claridad; responde el Q&A con dificultad pero correcto |
+| **Satisfactorio** | 10 | Argumentación superficial; en Q&A describe el código sin explicar el porqué |
+| **Bajo** | 5 | No justifica decisiones o no puede explicar su propio código |
 | **No entregado** | 0 | Sin argumentación |
 
 **Aspectos evaluados:**
-- Tiempo: 3 min argumentación + 2 min Q&A (parte del bloque de 10 min total)
-- Explica modelado del estado (estructura del objeto grupo)
-- Justifica el algoritmo de transferencias mínimas (separar deudores/acreedores, emparejar, repetir)
-- Explica manejo de errores en `localStorage` (try/catch, datos corruptos)
-- Responde Q&A sobre 1 fragmento de código que elige el instructor
-- Si usó IA: explica qué porción del código entiende técnicamente
+- Al menos una decisión narra el ciclo con la IA (propuesta → crítica → decisión propia)
+- El Q&A se hace sobre el repo del alumno: el instructor elige el fragmento (adaptador de API, CRUD inmutable, stats o HU propia)
+- **Regla de oro del módulo:** código que el alumno no puede explicar baja este criterio, aunque la app funcione
 
 ---
 
-## Escala de Calificacion
+## Escala de Calificación
 
-| Rango | Nota | Descripcion |
+| Rango | Nota | Descripción |
 |-------|------|-------------|
 | 90-100 | A | Excelente — Dominio completo del curso Code 201 |
 | 80-89 | B | Bueno — Comprensión sólida con áreas menores a mejorar |
 | 70-79 | C | Satisfactorio — Cumple requisitos mínimos de aprobación |
-| < 70 | F | No aprueba — Requiere completar trabajo antes de cierre |
+| < 70 | F | No aprueba — Requiere completar trabajo antes del cierre |
 
 ---
 
@@ -136,39 +129,36 @@
 ### Archivos Requeridos
 - [ ] URL del repositorio público en GitHub
 - [ ] URL del deploy en GitHub Pages funcional
-- [ ] Commits frecuentes durante los Sprints 1 y 2 (no solo commits del día final)
+- [ ] Commits frecuentes durante los Sprints 1 y 2 (no solo del día final)
 
-### Documentacion
-- [ ] README del repo con HU implementadas (HU1-HU8 + adicionales)
-- [ ] README del repo con decisiones técnicas clave explicadas brevemente
-- [ ] README del repo con instrucciones para correr localmente
-- [ ] README del repo con enlace al deploy
+### Documentación
+- [ ] `README.md` del repo: descripción, stack, HUs implementadas (base + propias), decisiones técnicas, cómo correr
+- [ ] `HISTORIAS.md` con las HUs derivadas en C17 + las 2 propias
+- [ ] `PROMPTS.md` con el registro del trabajo con la IA
 
-### Verificacion Tecnica
-- [ ] Crear grupo → agregar personas → registrar gastos → ver balance correcto
-- [ ] Algoritmo de transferencias minimiza el número total de movimientos
-- [ ] Recargar página: grupo + personas + gastos persisten
-- [ ] DevTools > Application > LocalStorage muestra los datos estructurados
-- [ ] Borrar manualmente LocalStorage o corromper datos → app no se rompe, muestra mensaje y ofrece "Empezar de cero"
-- [ ] El sitio carga sin errores en consola
+### Verificación Técnica
+- [ ] Buscar → agregar a playlist → recargar: todo persiste
+- [ ] Duración total y estadísticas correctas con ≥5 canciones
+- [ ] Corromper LocalStorage manualmente → la app ofrece "Empezar de cero", no crashea
+- [ ] El sitio público carga sin errores en consola
 
 ---
 
 ## Notas para el Evaluador
 
-1. **No penalices nervios en la presentación.** Lo que se evalúa es la comprensión técnica, no fluidez verbal.
-2. **El uso de IA está permitido**, pero el estudiante debe poder explicar técnicamente el código que entrega. Si no puede argumentar una decisión, baja el Criterio 5.
-3. **El fragmento del Criterio 5 (Q&A) lo eliges tú** en vivo durante la presentación — pide explícitamente "explícame el algoritmo de transferencias mínimas" o "explícame cómo modelaste un gasto" señalando una porción del código.
-4. **El algoritmo de transferencias es el reto técnico más alto** del proyecto. Si el estudiante no lo implementó (o lo copió sin entenderlo), baja Criterios 1 y 5.
-5. **Verifica commits frecuentes:** si solo hay commits del día final del Sprint 2, indica que no siguió el ritmo de los sprints. Bajar Criterio 2.
-6. **Aprobación mínima 70/100.** Si el puntaje es < 70, el estudiante debe completar el trabajo faltante antes del cierre formal del curso.
+1. **No penalices nervios.** Se evalúa comprensión técnica, no fluidez verbal.
+2. **La IA es parte oficial del flujo** — lo que se evalúa es la dirección y validación, nunca "cuánta IA usó". Un `PROMPTS.md` corto y honesto vale más que 20 prompts pegados.
+3. **El fragmento del Q&A elígelo tú** cruzando el repo con tus notas de C18-C19 (HU propia prometida, zonas frágiles vistas en rondas).
+4. **Si la respuesta del Q&A suena memorizada**, repregunta con una variación pequeña ("¿y si quisiera ordenar por artista?").
+5. **Commits solo del día final** = no siguió el ritmo de sprints → baja Criterio 2.
+6. **Aprobación mínima 70/100.** Si es < 70, el estudiante completa el trabajo faltante antes del cierre formal.
 
 ---
 
-## Ejemplo de Retroalimentacion
+## Ejemplo de Retroalimentación
 
-### Retroalimentacion Positiva
-> "Las 8 HU base están todas funcionales, el algoritmo de transferencias mínimas minimiza correctamente los movimientos (verificado con un grupo de 4 personas con balances dispares), y la separación de archivos (`state.js`, `storage.js`, `balance.js`, `ui.js`) facilita el mantenimiento. La argumentación sobre el modelado del estado como objeto único vs múltiples arrays fue precisa. La HU adicional de exportar a WhatsApp es un detalle pro que muestra atención al usuario final."
+### Retroalimentación Positiva
+> "El MVP completo funciona sobre el deploy, la recarga en vivo demostró la persistencia y tu modal propio se ve profesional. Tu argumentación sobre por qué rechazaste el debounce que te propuso la IA (rate limit + simplicidad) fue exactamente el tipo de criterio que buscamos. La HU propia de favoritos con filtro está bien lograda y tu explicación del adaptador de la API en el Q&A fue precisa."
 
-### Areas de Mejora
-> "Las HU1-HU7 funcionan correctamente pero la HU8 (persistencia + recuperación ante errores) está incompleta: al corromper manualmente los datos en LocalStorage, la app muestra 'Cannot read property' en consola en vez de un mensaje al usuario y opción de 'Empezar de cero'. Revisa el `try/catch` en `storage.js`. El algoritmo de transferencias funciona pero genera N transferencias en vez de minimizarlas — revisa la estrategia de emparejar mayor deudor con mayor acreedor."
+### Áreas de Mejora
+> "La búsqueda y las playlists funcionan, pero al corromper LocalStorage la app muestra 'Cannot read property' en vez de ofrecer 'Empezar de cero' — revisa el try/catch de `storage.js` y la validación de estructura. En el Q&A pudiste describir qué hace `calcularEstadisticas` pero no por qué es una función pura que recibe el estado; repasa datos derivados (C14). Tu `PROMPTS.md` registra prompts pero no las decisiones que tomaste — el registro es de decisiones, no solo de pedidos."

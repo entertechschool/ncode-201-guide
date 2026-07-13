@@ -1,31 +1,29 @@
 > **Módulo 5:** Clase 2 de 4
 
-# Clase 18: Sprint 1 — Construcción base del proyecto
+# Clase 18: Sprint 1 — Construcción del proyecto
 
 ## Resumen
 
-Después de planificar el proyecto, hoy empiezas a construir. En esta clase levantas la **primera versión funcional** de tu Agenda de Gastos Compartidos: el HTML semántico que estructura la interfaz, el CSS responsivo que la hace usable en cualquier pantalla y el JavaScript que permite **crear un grupo, agregar personas, registrar gastos y verlos listados**. Al cierre de la sesión, tu app no calcula balances todavía, pero ya hace algo real: guarda información y la muestra.
+Se acabó la planificación: hoy tu Mi Setlist empieza a existir. En esta clase implementas las historias de tu Sprint 1 — típicamente la búsqueda de canciones en la API de iTunes con sus estados de carga, error y vacío, y las primeras playlists persistidas — trabajando con la IA como copiloto y con el instructor como mentor de piso.
 
-Este es el sprint donde conectas todo lo aprendido en los Módulos 1, 2 y 4: layout con Flexbox o Grid (C02–C03), **formularios accesibles de C01 con validación nativa de C04**, **CSS Variables (`:root`) introducidas en C04**, clases ES6 para modelar un gasto, eventos del DOM para capturar formularios y LocalStorage para que nada se pierda al recargar. No vas a aprender nada conceptualmente nuevo hoy. Vas a **aplicar en conjunto** lo que hasta ahora viste por separado.
-
-El objetivo no es terminar el proyecto, es tener las **HU1 a HU4 funcionando** y un commit pusheado al cierre de la clase. El cálculo de balances y las transferencias llegan en la Clase 19.
+Hay una regla nueva en cómo le pides código a la IA: **no te puede codear sin preguntarte primero**. Le exigirás que, antes de escribir una línea, te haga preguntas estratégicas — ¿búsqueda con botón o en vivo? ¿qué pasa si no hay resultados? — y esas respuestas son tuyas. Cada decisión que tomes hoy es un argumento para tu Demo Day. Al cierre, tu app se demuestra en pantalla contra lo que tu propio `SPRINTS.md` prometió.
 
 ---
 
 ## ¿Por qué te sirve?
 
-- **Integrar tecnologías es el día a día de un dev.** Saber HTML, CSS y JS por separado es una cosa; orquestarlos en una app que guarda estado es otra distinta, y es la habilidad que te contratan.
-- **El primer sprint define el ritmo.** Estudios de equipos ágiles muestran que los proyectos que llegan al 50% antes de la mitad del tiempo tienen 3x más probabilidad de terminarse. Arrancar bien hoy te salva la Clase 19.
-- **Tu repo crece y se vuelve portafolio.** Cada commit con mensaje claro es una línea en tu historia profesional. En entrevistas, los reclutadores miran tu gráfico de actividad antes que tu CV.
+- **Así se trabaja hoy en la industria.** Un desarrollador con copiloto de IA no escribe menos software: decide más. Las preguntas de diseño (UX, casos borde, datos) siguen siendo humanas, y son las que se evalúan en las entrevistas.
+- **Integrar API + estado + persistencia es el corazón de casi toda app real.** Buscar datos afuera, transformarlos y guardar lo que el usuario construye encima: ese patrón lo repetirás toda tu carrera.
+- **Un sprint que cierra genera confianza.** Aprender a prometer 4 historias y demostrar lo que realmente lograste — ajustando el plan sin drama — es práctica ágil auténtica.
 
 ---
 
 ## 🎯 ¿Qué haremos en clase?
 
-1. **Revisaremos tu plan** - Recordarás las HU de Sprint 1 y qué significa "terminar" cada una.
-2. **Construirás el esqueleto HTML** - Estructurarás las tres zonas: integrantes, formulario de gasto y lista de gastos.
-3. **Aplicarás estilos con CSS** - Darás diseño responsivo usando Flexbox o Grid.
-4. **Implementarás la lógica base** - Codearás HU1 (crear grupo), HU2 (agregar personas), HU3 (registrar gasto) y HU4 (listar gastos) con LocalStorage.
+1. **Veremos el primer slice en vivo** - El instructor codeará con la IA el primer `fetch` a la API, frente a todos.
+2. **Implementarás tu primera HU** - La búsqueda con estados de UI, siguiendo el ritual de implementación.
+3. **Construirás tus playlists** - Crear, agregar canciones y persistir en LocalStorage.
+4. **Cerrarás con standup** - Demostrarás tu avance contra tu propio plan de sprint.
 
 ---
 
@@ -33,10 +31,10 @@ El objetivo no es terminar el proyecto, es tener las **HU1 a HU4 funcionando** y
 
 Al finalizar esta clase, podrás:
 
-1. **Estructurar** una interfaz web con HTML semántico para una aplicación de gestión.
-2. **Aplicar** CSS responsivo usando Flexbox/Grid sobre un layout real con múltiples zonas.
-3. **Implementar** funcionalidades CRUD básicas (crear, listar) conectando formularios con estado centralizado.
-4. **Persistir** el estado en LocalStorage con serialización JSON y recuperación al recargar.
+1. **Implementar** historias de usuario con la IA en modo interactivo, tomando las decisiones de diseño tú.
+2. **Consumir** una API real con `fetch`, `async/await` y estados de carga, error y vacío.
+3. **Persistir** el estado de tu aplicación en LocalStorage respetando el contrato técnico.
+4. **Evaluar** tu avance real contra lo planificado y ajustar el alcance del sprint.
 
 ---
 
@@ -44,28 +42,26 @@ Al finalizar esta clase, podrás:
 
 ### De clases anteriores
 
-- Clase 17 terminada: repositorio creado, estructura de carpetas (`css/`, `js/`), `index.html` con placeholder y scripts en orden correcto.
-- `SPRINTS.md` con tu distribución de las 8 HU entre Sprint 1 y Sprint 2.
-- Fresco de los Módulos 1-4: Flexbox/Grid, clases ES6, eventos del DOM y LocalStorage.
+- Clase 17 cerrada: repo con estructura ESM corriendo, `HISTORIAS.md`, `SPRINTS.md` y `PROMPTS.md` pusheados.
+- Frescos de M3 y M4: `fetch` + `async/await` + estados de UI (C10-C12), estado central + `render()`, LocalStorage con `try/catch` (C13-C15).
 
 ### Reflexión previa
 
 Antes de llegar a clase, reflexiona sobre:
 
-- Si tuvieras que elegir entre "se ve bonito pero no guarda nada" o "no se ve bien pero guarda todo correctamente", ¿cuál priorizarías hoy y por qué?
-- ¿Qué pasa en tu app si el usuario cierra la pestaña mientras está registrando un gasto? ¿Se pierde?
+- Si la IA te pregunta "¿la búsqueda se dispara con cada tecla o con un botón?", ¿qué responderías sabiendo que la API acepta ~20 solicitudes por minuto?
+- ¿Qué prefieres demostrar al cierre: 4 historias a medias o 2 completamente terminadas? ¿Por qué?
 
 ### Herramientas
 
-- [ ] **VS Code** con Live Server corriendo tu proyecto.
-- [ ] **Navegador** con DevTools abierto (pestañas Console y Application).
-- [ ] **Terminal** lista para `git add / commit / push` frecuentes.
+- [ ] **VS Code + Live Server** - Tu repo de C17 abierto y corriendo.
+- [ ] **Herramienta de IA** - Sesión activa, con tu contrato técnico a la mano para pegarlo.
+- [ ] **Navegador con DevTools** - Pestañas Console, Network y Application a la vista.
 
 ### Lectura sugerida
 
-- [Formularios accesibles con labels](https://developer.mozilla.org/es/docs/Learn/Forms/Basic_native_form_controls){:target="_blank"} - Cómo conectar `<label>` con `<input>` correctamente.
-- [LocalStorage API](https://developer.mozilla.org/es/docs/Web/API/Window/localStorage){:target="_blank"} - Referencia rápida de `setItem`, `getItem`, `removeItem`.
-- [CSS Tricks — A complete guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/){:target="_blank"} - Referencia visual rápida.
+- [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html){:target="_blank"} - Parámetros y campos de la API que consumirás.
+- [Documento del proyecto](../class-17/project/){:target="_blank"} - Contrato técnico y MVP, tus fuentes de verdad.
 
 ---
 
@@ -73,16 +69,16 @@ Antes de llegar a clase, reflexiona sobre:
 
 | Término | Definición |
 |---------|------------|
-| **HTML semántico** | Uso de etiquetas que describen el propósito del contenido (`<header>`, `<section>`, `<form>`, `<ul>`) en lugar de solo `<div>`. |
-| **Estado centralizado** | Un único objeto JavaScript que contiene toda la información viva de la app (integrantes, gastos). |
-| **CRUD** | Create, Read, Update, Delete. Las 4 operaciones básicas sobre datos. Hoy trabajas Create y Read. |
-| **Serialización** | Convertir un objeto JS en un string (`JSON.stringify`) para poder guardarlo en LocalStorage. |
-| **Commit atómico** | Un commit por cambio conceptual claro. No mezclar "agregué personas + cambié colores" en el mismo commit. |
+| **Modo interactivo** | Forma de trabajar con la IA en la que ella pregunta antes de codear y tú decides. Lo contrario de "máquina expendedora de código". |
+| **Pregunta estratégica** | Pregunta de la IA sobre una decisión que le corresponde al desarrollador: UX, casos borde, estructura de datos. |
+| **Slice** | Porción mínima probable de una historia. Se implementa, se prueba y se commitea antes de seguir. |
+| **Rate limit** | Límite de solicitudes por minuto que impone una API. Excederlo devuelve error `403`. |
+| **Standup** | Reunión breve donde cada quien reporta avance real contra lo planificado. |
 
 ---
 
 ## Recursos Adicionales
 
-- [Proyecto Integrador del Módulo 5](../class-17/project/){:target="_blank"} - Enunciado, historias de usuario y criterios de aceptación.
-- [Mensajes de commit convencionales](https://www.conventionalcommits.org/es/v1.0.0/){:target="_blank"} - Formato `feat: ...`, `fix: ...`, `docs: ...`.
-- [Responsive design patterns](https://web.dev/patterns/layout/){:target="_blank"} - Patrones comunes para layouts responsivos con Grid y Flexbox.
+- [Proyecto Integrador del Módulo 5](../class-17/project/){:target="_blank"} - Enunciado completo y rúbrica.
+- [Async/await en MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function){:target="_blank"} - Referencia del patrón que usará tu búsqueda.
+- [LocalStorage API](https://developer.mozilla.org/es/docs/Web/API/Window/localStorage){:target="_blank"} - Referencia rápida de `setItem`, `getItem`, `removeItem`.

@@ -1,31 +1,29 @@
 > **Módulo 5:** Clase 3 de 4
 
-# Clase 19: User Validation + Sprint 2
+# Clase 19: IA como Corrector + Sprint 2
 
 ## Resumen
 
-Tu app ya hace algo real: crea grupos, agrega personas, registra gastos y los lista persistentes. Hoy das los dos pasos que separan a un proyecto académico de un producto: **validar con usuarios reales** y **completar la lógica no trivial**. En la primera mitad de la clase un compañero probará tu app como si la usara por primera vez, y tú probarás la suya. El feedback que reciban será incómodo y valiosísimo: descubrirán bugs que no habían visto, flujos confusos que creían obvios y fricciones que solo aparecen con ojos ajenos.
+Tu app ya busca canciones en un catálogo real y guarda playlists que sobreviven al recargar. Hoy aprendes la tercera cara de trabajar con IA: después de guía (Clase 17) y copiloto (Clase 18), hoy es **correctora**. Le entregarás tu código para que lo audite contra el contrato técnico y te diseñe un plan de pruebas con casos borde — pero el veredicto de cada prueba sale de tu navegador, no de su opinión: la ejecutas tú.
 
-En la segunda mitad, entras al reto técnico más exigente del curso: **calcular balances netos** (HU5), **sugerir transferencias mínimas** (HU6), **eliminar gastos con recálculo automático** (HU7) y **manejar errores de persistencia** (HU8). El algoritmo de transferencias mínimas es un problema que aparece en entrevistas técnicas reales — hoy lo implementas por tu cuenta.
-
-Al cierre de la clase, tu app está lista para Demo Day: funciona, persiste, calcula correctamente y soporta errores sin romperse.
+Con los hallazgos en mano replanificas el Sprint 2 y cierras el MVP: estadísticas, ordenamiento, confirmaciones con modal propio y resistencia a datos corruptos. Ya con tu app completa, defines **2 historias propias** — features que tú decides, como favoritos o filtros — para implementar antes del Demo Day. Y al final del día tu app deja de vivir solo en tu máquina: la publicas en GitHub Pages con una URL que podrás poner en tu CV.
 
 ---
 
 ## ¿Por qué te sirve?
 
-- **El feedback de usuarios es el único filtro real.** Google Ventures popularizó el formato "5 Second Test": lo que el usuario no entiende en 5 segundos se pierde. Hoy lo experimentas en carne propia.
-- **El algoritmo de minimización de transferencias aparece en entrevistas de Google, Meta y Uber.** Es una variante del problema de "flujo mínimo en grafos". Implementarlo en 90 minutos te prepara para esas conversaciones.
-- **Manejar errores distingue código de juguete de código profesional.** Un `try/catch` bien puesto y un mensaje claro al usuario cuando algo falla es la diferencia entre app que crashea y app que resiste.
+- **El code review es rutina diaria en la industria.** Ningún equipo serio mergea código sin revisión; saber pedirla, leerla y filtrarla (también cuando viene de una IA) es una habilidad de trabajo real.
+- **Los bugs viven en los casos borde.** La diferencia entre código de juguete y código profesional es qué pasa con la lista vacía, el dato corrupto y el nombre con espacios. Hoy los cazas sistemáticamente.
+- **Proponer features es pensar producto.** Decidir qué vale la pena construir — y defenderlo — es lo que distingue a un desarrollador que ejecuta de uno que aporta.
 
 ---
 
 ## 🎯 ¿Qué haremos en clase?
 
-1. **Probarás la app de un compañero** - Seguirás un guion de validación y registrarás observaciones.
-2. **Recibirás feedback sobre tu app** - Otro compañero probará la tuya y anotará problemas.
-3. **Implementarás HU5 y HU6** - Calcularás balances netos y transferencias sugeridas.
-4. **Cerrarás con HU7 y HU8** - Podrás eliminar gastos con recálculo y manejarás errores de LocalStorage.
+1. **Veremos a la IA auditar código en vivo** - El instructor pedirá review y plan de pruebas sobre código real.
+2. **Auditarás tu Sprint 1** - Review contra el contrato + pruebas de casos borde ejecutadas por ti.
+3. **Definirás tus 2 HUs propias** - Features que tú eliges, redactadas con criterios y validadas.
+4. **Cerrarás y publicarás** - Sprint 2 completo y deploy en GitHub Pages.
 
 ---
 
@@ -33,10 +31,10 @@ Al cierre de la clase, tu app está lista para Demo Day: funciona, persiste, cal
 
 Al finalizar esta clase, podrás:
 
-1. **Evaluar** una interfaz con un guion de validación, distinguiendo problemas de producto de problemas de código.
-2. **Incorporar** feedback estructurado en tu propio proyecto sin perder el alcance del MVP.
-3. **Implementar** un algoritmo de cálculo sobre un array de objetos, transformando datos mediante iteración.
-4. **Manejar** errores de LocalStorage con `try/catch` y mensajes útiles al usuario.
+1. **Auditar** código propio usando la IA como revisora, verificando sus hallazgos contra la app real.
+2. **Diseñar y ejecutar** pruebas manuales de casos borde, clasificando hallazgos por severidad.
+3. **Proponer** historias de usuario propias con valor de producto, dentro de un contrato técnico.
+4. **Publicar** una aplicación web estática en GitHub Pages y verificarla en producción.
 
 ---
 
@@ -44,29 +42,27 @@ Al finalizar esta clase, podrás:
 
 ### De clases anteriores
 
-- Sprint 1 cerrado: HU1-HU4 funcionando en tu app, persistencia operativa, al menos 3 commits en GitHub.
-- App pusheada a `main` antes de llegar — tu compañero necesita acceder a una versión estable.
-- Papel y lápiz o una app de notas lista para anotar feedback.
+- **Sprint 1 cerrado** (requisito duro): búsqueda con estados de UI + playlists persistidas. Si te faltó en clase, ciérralo asíncrono antes de hoy.
+- Frescos de M4: el modal `pedirConfirmacion` y el `.sort()` inmutable de C16 — hoy los reutilizas en tu propia app.
 
 ### Reflexión previa
 
 Antes de llegar a clase, reflexiona sobre:
 
-- Si Ana pagó S/ 100 en una cena para 4 personas (incluyéndose), ¿cuánto le deben los demás? ¿Y cuánto debería quedar en su balance neto?
-- ¿Cuál es el mínimo de transferencias necesarias entre 4 personas para saldar cualquier situación?
-- Si tu app recibe feedback de que "la lista de gastos se ve mal en mobile", ¿eso entra en Sprint 2 o queda como reto adicional?
+- Si la IA revisa tu código y dice "todo perfecto", ¿le crees? ¿Cómo lo comprobarías?
+- De las ideas de inspiración del enunciado (favoritos, filtros, deshacer, modo oscuro), ¿cuál usaría de verdad la gente a la que le mostrarás tu app?
 
 ### Herramientas
 
-- [ ] **App de Sprint 1 desplegada o corriendo** localmente, accesible por un compañero.
-- [ ] **VS Code + Live Server** lista para el Sprint 2.
-- [ ] **DevTools** para revisar consola al probar la app del compañero.
+- [ ] **VS Code + Live Server** - Tu app del Sprint 1 corriendo.
+- [ ] **GitHub Copilot** - Extensión activa en VS Code (plan Free): hoy es tu auditor con acceso al proyecto.
+- [ ] **Chat de IA** - Sesión activa para el brainstorm de tus HUs propias.
+- [ ] **GitHub** - Acceso a Settings de tu repo (activarás Pages).
 
 ### Lectura sugerida
 
-- [Usability heuristics de Nielsen](https://www.nngroup.com/articles/ten-usability-heuristics/){:target="_blank"} - 10 principios clásicos para evaluar interfaces.
-- [Proyecto Integrador — HU5 a HU8](../class-17/project/){:target="_blank"} - Criterios de aceptación exactos.
-- [Greedy algorithms explicados simple](https://www.geeksforgeeks.org/greedy-algorithms/){:target="_blank"} - El enfoque detrás del algoritmo de transferencias.
+- [Documento del proyecto](../class-17/project/){:target="_blank"} - MVP, contrato y las ideas para tus HUs propias.
+- [GitHub Pages](https://docs.github.com/es/pages/getting-started-with-github-pages){:target="_blank"} - Cómo funciona el deploy que harás hoy.
 
 ---
 
@@ -74,16 +70,16 @@ Antes de llegar a clase, reflexiona sobre:
 
 | Término | Definición |
 |---------|------------|
-| **Validación cruzada** | Probar el trabajo de otro y recibir el propio con un guion común de verificación. |
-| **Balance neto** | Lo que una persona pagó menos su parte proporcional de los gastos donde aparece. Positivo = le deben. Negativo = debe. |
-| **Transferencia mínima** | Menor cantidad de movimientos necesarios para que todos los balances queden en cero. |
-| **Algoritmo greedy** | Estrategia que toma la decisión óptima en cada paso (emparejar mayor deudor con mayor acreedor). No siempre es óptimo globalmente, pero aquí sí. |
-| **Mensaje de error útil** | Texto que indica qué pasó, por qué, y qué hacer. No "Error 500". |
+| **Code review** | Revisión sistemática de código en busca de problemas de correctitud, estilo y arquitectura. |
+| **Caso borde** | Situación límite o inusual (vacío, corrupto, duplicado) donde suelen esconderse los bugs. |
+| **Severidad** | Clasificación de un hallazgo: crítico (rompe la app), mayor (deuda o confusión), menor (pulido). |
+| **Plan de pruebas** | Lista ordenada de verificaciones manuales con pasos y resultado esperado. |
+| **Deploy** | Publicar la app en una URL accesible para cualquiera. Hoy: GitHub Pages. |
 
 ---
 
 ## Recursos Adicionales
 
-- [Proyecto Integrador del Módulo 5](../class-17/project/){:target="_blank"} - Referencia completa del enunciado.
-- [Guion de validación cruzada](./lab/){:target="_blank"} - Lista de pasos para probar la app del compañero.
-- [Try/Catch en JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch){:target="_blank"} - Referencia rápida para HU8.
+- [Proyecto Integrador del Módulo 5](../class-17/project/){:target="_blank"} - Enunciado completo y rúbrica.
+- [Guía de code review de Google](https://google.github.io/eng-practices/review/){:target="_blank"} - Cómo revisan código los equipos profesionales.
+- [Try/Catch en MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch){:target="_blank"} - Referencia para tu manejo de datos corruptos.

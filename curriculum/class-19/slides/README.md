@@ -1,134 +1,153 @@
 <!-- .slide: data-background="#0A192F" -->
-# Clase 19: User Validation + Sprint 2
-## Validas, calculas y cierras el proyecto
+# Clase 19: IA como Corrector + Sprint 2
+## De "funciona" a "resiste" 🛡️
 
 ---
 
-## TRANSICION: Clase 18 → Clase 19
+## TRANSICIÓN: Clase 18 → Clase 19
 
-### Clase anterior:
-- Sprint 1 cerrado: HU1-HU4 funcionando con persistencia.
-- Tu app crea grupos, registra gastos y los lista.
+### Ya tienen:
+- Búsqueda en API real + playlists persistidas
+- El ritual: la IA pregunta, ustedes deciden
 
-### Hoy:
-- Validas tu trabajo con otro estudiante.
-- Implementas lo más duro del proyecto: balances y transferencias mínimas.
+### Hoy la IA cambia de rol:
+- Guía (C17) → Copiloto (C18) → **Correctora (C19)**
+- Audita SU código, diseña pruebas que USTEDES ejecutan
 
-> "Si sobrevives al feedback y al algoritmo de hoy, Demo Day es tuyo."
+> "Construir fue la mitad. Hoy: resistir, completar y publicar."
 
 ---
 
-## QUIZ PRE-LAB
+## 🎯 Las fases de hoy
+
+| Fase | Resultado |
+|------|-----------|
+| 1. Auditoría con Copilot (30 min) | Críticos arreglados |
+| 2. Replanificar (10 min) | `SPRINTS.md` v2 |
+| 3. Sprint 2 (75 min) | MVP completo |
+| 4. Tus 2 HUs propias (10 min) | Tu firma en la app ✍️ |
+| 5. Deploy (20 min) | URL pública 🌐 |
+
+---
+
+## 🔍 La auditoría con Copilot
+
+- **`@workspace`** → el agente ve TODO tu proyecto (encuentra bugs ENTRE archivos)
+- **Modo Ask** → hallazgos con severidad, NO ediciones
+- **Plan de pruebas de casos borde** — el agente lo diseña...
+
+> ...pero el veredicto sale de TU navegador. Las pruebas las ejecutas TÚ.
+
+*Presupuesto Free: ~50 chats/mes. La auditoría cuesta 3-4.*
+
+---
+
+## QUIZ PRE-LAB 🤖
 
 ### Pregunta:
-Si Ana pagó S/ 100 en una cena para 4 personas (Ana, Beto, Cami, Diana), ¿cuánto debería ser el balance de Ana al final?
+
+La IA revisó tu código y concluye: **"Todo se ve correcto ✅"**
+
+**¿Le crees? ¿Qué harías para comprobarlo?**
 
 *Toma 2-3 respuestas antes de continuar*
 
----
-
-## COMPROBACION
-
-### Pregunta:
-Ana, Beto y Cami tienen balances +60, -20, -40. ¿Cuántas transferencias mínimas se necesitan para saldar el grupo?
-
-A. 1 transferencia
-B. 2 transferencias
-C. 3 transferencias
-D. Depende de quién transfiera primero
+Note: Conducir hacia: los correctores también alucinan; la única verdad es la app corriendo — por eso el plan de pruebas se ejecuta a mano. Después viene la DEMO del corrector en vivo (guion en facilitator).
 
 ---
 
-## COMPROBACION - Respuesta
+## COMPROBACIÓN
 
-**Respuesta correcta:** B
+### ¿Cuál de estos hallazgos es CRÍTICO?
 
-**Análisis de opciones:**
-- **A:** Una sola no alcanza porque Ana tiene que recibir de dos deudores distintos.
-- **B:** Correcto. Beto → Ana: 20. Cami → Ana: 40. Dos transferencias, todos saldados.
-- **C:** Podrías hacer más, pero son redundantes. El objetivo es mínimo.
-- **D:** El resultado mínimo no depende del orden si aplicas greedy correctamente.
+A. El botón de eliminar es gris y "se ve poco moderno"
 
-> **Clave:** "Con N personas, el mínimo de transferencias está entre 0 y N-1."
+B. Una función de render tiene 30 líneas y podría dividirse
+
+C. Con localStorage corrupto, la app muere en pantalla blanca
+
+D. Sería buena idea agregar modo oscuro
 
 ---
 
-## CHECKPOINT Parte 1: Validación cruzada
+## COMPROBACIÓN - Respuesta
+
+**Respuesta correcta:** C
+
+- **A:** Menor — pulido visual, no afecta el funcionamiento.
+- **B:** Mayor — deuda técnica real, pero la app funciona; entra a la replanificación.
+- **C:** Crítico — rompe la app para el usuario. Se arregla HOY, antes que todo. ✅
+- **D:** No es un hallazgo: es una idea de feature (quizá tu HU propia).
+
+> **Clave:** Severidad = impacto en el usuario, no incomodidad del programador.
+
+---
+
+## CHECKPOINT Fase 1: Auditoría cerrada
 
 ### Verificar:
-Cada estudiante tiene feedback escrito (no verbal) y clasificado por severidad.
+La prueba de datos corruptos, en vivo
 
-**¿Qué deberías ver en pantalla?**
-- `FEEDBACK.md` con al menos 3 observaciones concretas.
-- Clasificación: crítico / mayor / menor.
-- Al menos un bug crítico arreglado antes de pasar a Parte 2.
+**¿Qué debe verse?**
+- Críticos corregidos: localStorage corrupto → "Empezar de cero", no pantalla blanca
+- Mayores identificados, listos para el plan v2
 
 **Problemas comunes:**
-- Feedback vago ("se ve feo") → pedir específico: "¿qué exactamente se ve feo?".
-- Tester amigable que solo dice "está bien" → recordar que el favor es detectar, no aprobar.
+- "La IA dijo que todo está bien" → ¿ejecutaste las pruebas?
+- Arregló primero un detalle visual → críticos primero, siempre
 
 ---
 
-## CHECKPOINT Parte 2: Balances y transferencias
+## CHECKPOINT Fase 3: MVP completo
 
 ### Verificar:
-Con 3 personas y 3 gastos variados, los números cuadran.
+Eliminar una canción, de principio a fin
 
-**¿Qué deberías ver?**
-- Suma total de balances = 0 (con tolerancia de redondeo).
-- Al aplicar mentalmente las transferencias sugeridas, todos quedan en cero.
-- Mensaje "¡Grupo saldado! 🎉" si no hay deudas.
-
-**Problemas comunes:**
-- Redondeo mete centavos fantasma → usar `Math.round(x * 100) / 100` al final.
-- No separar deudores/acreedores → el algoritmo no funciona.
-
----
-
-## CHECKPOINT Parte 3: Eliminar + errores
-
-### Verificar:
-Eliminar gasto actualiza todo. LocalStorage corrupto no crashea.
-
-**¿Qué deberías ver?**
-- Eliminar gasto → balances y transferencias se recalculan sin recargar.
-- LocalStorage corrupto manualmente → app muestra mensaje, ofrece "Empezar de cero".
-- Sin errores rojos en la consola.
+**¿Qué debe verse?**
+- TU modal de confirmación (no el del navegador)
+- Stats y duración se recalculan solas; el orden funciona
 
 **Problemas comunes:**
-- Eliminar no actualiza balances → falta llamar `renderBalances()` en el handler.
-- `alert()` en lugar de mensaje en DOM → menos profesional en Demo Day.
+- `confirm()` nativo → patrón `pedirConfirmacion` de C16
+- El orden "desordena" el estado → falta copiar antes de ordenar
 
 ---
 
-## REFLEXION: Por qué el algoritmo greedy funciona aquí
+## REFLEXIÓN: La IA revisa, tú verificas
 
-| Enfoque inocente | Enfoque greedy |
-|------------------|----------------|
-| Cada deudor paga a cualquier acreedor el monto completo | Mayor deudor paga al mayor acreedor el mínimo entre ambos |
-| Hasta N×M transferencias | Máximo N-1 transferencias |
+| Confiar a ciegas | Auditar con criterio |
+|------------------|----------------------|
+| "La IA dice que está bien" | Ejecuta las pruebas en SU app |
+| Arregla lo primero que señale | Críticos → mayores → menores |
+| Acepta severidades de la IA | Decide por impacto en el usuario |
 
-> **Regla memorable:** "Emparejar los extremos minimiza el trabajo del medio."
-
----
-
-## REFLEXION: Validar ≠ aprobar
-
-### Pregunta de consolidación
-
-Tu compañero te dijo "está todo bien, funciona". ¿Eso es validación útil?
-
-*(Pista: el objetivo del tester es encontrar problemas, no tranquilizar al programador.)*
+> **Regla memorable:** "El review es una opinión. Tu app corriendo es un hecho."
 
 ---
 
-## TRANSICION: Preview Clase 20
+## TRANSICIÓN: Preview Demo Day 🎤
 
 ### Hoy lograste:
-- Feedback real incorporado en tu app.
-- 8 HU terminadas (proyecto MVP completo).
-- Algoritmo de transferencias implementado.
+- App auditada, completa y **pública**
+- 2 HUs propias tuyas, con tu firma
 
-### Próxima clase:
-- **Demo Day.** 10 minutos por estudiante: demo en vivo + argumentación técnica + Q&A.
-- Llegas con app desplegada, README cuidado y tu historia lista.
+### Clase 20 — Demo Day:
+- 10 min: demo (5) + decisiones técnicas (3) + Q&A (2)
+- El Q&A es sobre TU código: si lo escribiste con criterio, ya estás listo
+
+> ⚠️ Lo pendiente se cierra asíncrono ANTES del Demo Day
+
+---
+
+## Entrega
+
+- Link al repo + **link al deploy público funcionando**
+- Críticos de la auditoría corregidos
+- 2 HUs propias en `HISTORIAS.md` (≥1 implementada antes de C20)
+- Standup: prometido vs demostrado + plan de cierre asíncrono
+
+### Preguntas de cierre:
+1. ¿Qué encontró la auditoría que tú no habías visto?
+2. ¿Tu HU propia: por qué esa y no otra?
+
+### Próxima clase: Demo Day 🎉

@@ -1,19 +1,21 @@
-# Lab 19: User Validation + Sprint 2 — HU5 a HU8
+# Lab 19: IA como Corrector + Sprint 2
+
+> 🧭 Hoy la IA cambia de rol: deja de escribir contigo y pasa a **auditar lo que construiste**. Después replanificas, cierras el Sprint 2, defines tus HUs propias y publicas tu app.
 
 ## 🎯 Objetivos
 
-1. Validar la app de un compañero con un guion estructurado y recibir feedback del tuyo.
-2. Implementar HU5 (balances) y HU6 (transferencias sugeridas) con lógica algorítmica.
-3. Completar HU7 (eliminar gastos) y HU8 (manejo robusto de errores de LocalStorage).
+1. Auditar tu Sprint 1 con la IA: revisión de código contra el contrato + plan de pruebas que TÚ ejecutas.
+2. Implementar las HUs restantes del MVP con el plan replanificado y publicar en GitHub Pages.
+3. Definir tus 2 HUs propias con criterios, para implementar antes del Demo Day.
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Guion de validación** - Lista fija de acciones que todo tester sigue, para comparar resultados.
-- **Balance neto** - Suma firmada: `(loQuePagó) - (suParteEnLosGastosQueParticipó)`.
-- **Greedy de transferencias** - Emparejar iterativamente el mayor deudor con el mayor acreedor.
-- **Manejo defensivo** - Asumir que LocalStorage puede fallar y anticipar caminos alternativos.
+- **Code review** - Revisión sistemática del código buscando problemas, no confirmación de que "funciona".
+- **Caso borde** - Situación extrema o rara (datos corruptos, lista vacía, texto con espacios) donde los bugs viven.
+- **Hallazgo con severidad** - Problema clasificado: crítico (rompe la app) / mayor (flujo confuso o deuda) / menor (pulido).
+- **HU propia** - Historia que TÚ propones más allá del MVP. Se define con la IA, se implementa al menos una.
 
 ---
 
@@ -21,273 +23,113 @@
 
 | ✓ | Requisito | Verificación |
 |---|-----------|--------------|
-| ☐ | App del Sprint 1 corriendo | HU1-HU4 funcionan en Live Server |
-| ☐ | Cambios pusheados a `main` | `git status` limpio |
-| ☐ | `js/balance.js` vacío listo | Archivo existe aunque sin contenido aún |
-| ☐ | Papel o nota digital abierta | Para anotar feedback al validar |
+| ☐ | Sprint 1 cerrado | Búsqueda + playlists persistidas funcionan en Live Server |
+| ☐ | Todo pusheado a `main` | `git status` limpio |
+| ☐ | **GitHub Copilot** activo en VS Code | El chat responde a `@workspace ¿qué archivos tiene mi proyecto?` |
+| ☐ | Chat web de IA con tu contrato | Para el brainstorm de HUs propias |
+| ☐ | DevTools a la mano | Pestañas Console y Application |
 
-> ⚠️ Si tu Sprint 1 no está cerrado, dedica los primeros 20 minutos a completarlo. Pide apoyo al instructor.
-
----
-
-## Parte 1: Validación cruzada (45 min)
-
-### 1.1 Intercambia con un compañero
-
-Formarás pareja con otro estudiante. Cada uno va a probar la app del otro durante **15 minutos**, siguiendo el guion fijo. El otro observa en silencio y anota.
-
-### 1.2 Guion de validación (copia esto en una nota)
-
-```markdown
-## Validación cruzada — App de: _____________
-Tester: _____________
-
-### Tareas a ejecutar
-- [ ] Crear un grupo llamado "Viaje de prueba"
-- [ ] Agregar 3 personas: Ana, Beto, Cami
-- [ ] Registrar 2 gastos: "Cena S/ 90 pagó Ana" y "Taxi S/ 30 pagó Beto"
-- [ ] Recargar la página
-- [ ] Intentar registrar un gasto con monto 0
-
-### Observaciones
-- ¿Qué fue intuitivo? _____
-- ¿Qué fue confuso? _____
-- ¿Algún error visible en pantalla? _____
-- ¿Algún error en la consola (F12)? _____
-- ¿Qué mejoraría si fuera mi app? _____
-```
-
-✅ **Checkpoint Parte 1:** Tienes la nota de tu compañero con observaciones concretas sobre tu app y tú le entregaste la tuya con las tuyas sobre la suya.
-
-### 1.3 Prioriza el feedback recibido
-
-En un archivo `FEEDBACK.md` local, clasifica:
-
-```markdown
-## Feedback recibido
-
-### Crítico (bug que rompe HU) — arreglar HOY
-- _____
-
-### Mayor (flujo confuso) — evaluar si entra hoy o queda para retos
-- _____
-
-### Menor (pulido visual) — NO entra hoy, puede quedar de reto
-- _____
-```
-
-> 💡 **Tip:** Si un crítico no lo tenías detectado, arréglalo antes de pasar a Parte 2. Los bugs base invalidan el cálculo de balances.
+> ⚠️ Si tu Sprint 1 no cerró, díselo al instructor AHORA: tu prioridad de hoy será el MVP, no las HUs propias.
 
 ---
 
-## Parte 2: HU5 + HU6 — Balances y transferencias (75 min)
+## Parte 1: Auditoría con Copilot (30 min)
 
-### 2.1 HU5: Calcular balance neto en `js/balance.js`
+La auditoría se hace con **GitHub Copilot en VS Code**: como tiene acceso a TODO tu proyecto (`@workspace`), encuentra problemas entre archivos que un chat viendo un archivo suelto no ve. Úsalo en **modo Ask** (pregunta), nunca en modo que edite archivos.
 
-Primero, asegúrate de tener los contenedores en `index.html` (agrégalos dentro del `<main>` si no estaban):
+> 💰 **Presupuesto:** el plan gratuito da ~50 mensajes de chat al mes. La auditoría completa debería costarte 3-4. Pide con intención.
 
-```html
-<section id="seccionBalances" aria-label="Balances del grupo">
-  <h2>Balances</h2>
-  <!-- aquí pintará renderBalances() -->
-</section>
+### 1.1 Pide el code review
 
-<section id="seccionTransferencias" aria-label="Transferencias sugeridas">
-  <h2>Transferencias sugeridas</h2>
-  <!-- aquí pintará renderTransferencias() -->
-</section>
+En el chat de Copilot (modo Ask):
+
+```text
+@workspace Haz un code review de mi proyecto contra este contrato:
+[contrato técnico]. Busca específicamente: mutaciones directas del
+estado, faltas de try/catch en storage.js, render olvidado tras
+cambios de estado, funciones exportadas que nadie importa, ids que
+no usan randomUUID y fechas sin rehidratar al cargar.
+
+FORMATO: Lista de hallazgos con archivo y línea, cada uno con
+severidad (crítico / mayor / menor) y por qué.
+
+RESTRICCIONES: NO edites ningún archivo ni me des código corregido
+todavía. Solo hallazgos.
 ```
 
-Implementa el cálculo de balances:
+### 1.2 Pide el plan de pruebas — y ejecútalo TÚ
 
-```javascript
-function calcularBalances() {
-  const balances = {};
-  // Inicializa balance en 0 para cada persona
-  state.grupo.personas.forEach((p) => { balances[p] = 0; });
+En el mismo chat:
 
-  state.grupo.gastos.forEach((gasto) => {
-    // Suma al balance de quien pagó el monto completo
-    balances[gasto.pagadoPor] += /* ¿qué valor? */;
-
-    // Resta la parte proporcional a cada persona entre las que se dividió
-    const parteIndividual = /* monto ÷ cuántos dividen */;
-    gasto.divididoEntre.forEach((persona) => {
-      balances[persona] -= parteIndividual;
-    });
-  });
-
-  return balances;
-}
+```text
+@workspace Ahora dame un plan de 6 a 8 pruebas manuales para mi app,
+priorizando casos borde: datos corruptos en localStorage, playlist
+vacía, búsqueda sin resultados, nombres duplicados o con espacios,
+recarga tras eliminar. Formato: paso a paso + resultado esperado.
 ```
 
-Conecta con el render:
+Ejecuta cada prueba **en tu navegador, a mano**, y anota pasó/falló. La IA diseña las pruebas; el veredicto sale de tu pantalla, no de su opinión.
 
-```javascript
-function renderBalances() {
-  const balances = calcularBalances();
-  const contenedor = document.getElementById('seccionBalances');
-  // Completa: pinta cada persona con su balance
-  // Positivo en verde, negativo en rojo, cero en neutro
-}
-```
+> 💡 Para la prueba de datos corruptos: DevTools → Application → LocalStorage → edita el valor a `{malformado}` → recarga. Tu app debe ofrecer "Empezar de cero", no morir.
 
-> 💡 **Tip:** Las diferencias pequeñas por decimales (0.000001) pueden hacer que "saldado" se vea como "debe 0.00001". Usa `Math.round(balance * 100) / 100` al final.
+### 1.3 Triage: arregla, anota o descarta (sin documentos nuevos)
 
-### 2.2 HU6: Transferencias sugeridas (algoritmo greedy)
+- **Críticos** (rompen la app): se arreglan **AHORA**, con el ritual de C18 — un hallazgo, una porción, probar.
+- **Mayores** (deuda, flujo confuso): se anotan como ítems del `SPRINTS.md` v2 en la siguiente parte.
+- **Menores** (pulido): se descartan. Hoy no hay tiempo para cosmética.
 
-```javascript
-function calcularTransferencias() {
-  const balances = calcularBalances();
-
-  // Separa en deudores (balance < 0) y acreedores (balance > 0)
-  const deudores = [];
-  const acreedores = [];
-  for (const persona in balances) {
-    const b = balances[persona];
-    if (b < -0.01) deudores.push({ persona, monto: -b });
-    else if (b > 0.01) acreedores.push({ persona, monto: b });
-  }
-
-  const transferencias = [];
-  // Ordena: mayor deudor vs mayor acreedor
-  while (deudores.length > 0 && acreedores.length > 0) {
-    deudores.sort((a, b) => b.monto - a.monto);
-    acreedores.sort((a, b) => b.monto - a.monto);
-
-    const d = deudores[0];
-    const a = acreedores[0];
-    const pago = Math.min(d.monto, a.monto);
-
-    transferencias.push({
-      de: d.persona,
-      a: a.persona,
-      monto: Math.round(pago * 100) / 100
-    });
-
-    d.monto -= pago;
-    a.monto -= pago;
-
-    // Si alguno quedó saldado, sácalo
-    if (d.monto < 0.01) deudores.shift();
-    if (a.monto < 0.01) acreedores.shift();
-  }
-
-  return transferencias;
-}
-```
-
-Conecta con el render (define `renderTransferencias` en `js/ui.js`):
-
-```javascript
-function renderTransferencias() {
-  const transferencias = calcularTransferencias();
-  const contenedor = document.getElementById('seccionTransferencias');
-  contenedor.innerHTML = '<h2>Transferencias sugeridas</h2>';
-
-  if (transferencias.length === 0) {
-    contenedor.innerHTML += '<p>¡Grupo saldado! 🎉</p>';
-    return;
-  }
-
-  const ul = document.createElement('ul');
-  transferencias.forEach((t) => {
-    const li = document.createElement('li');
-    li.textContent = `${t.de} paga S/ ${t.monto} a ${t.a}`;
-    ul.appendChild(li);
-  });
-  contenedor.appendChild(ul);
-}
-```
-
-Llama `renderBalances()` y `renderTransferencias()` desde `iniciar()` en `app.js` para que se rendericen al cargar.
-
-✅ **Checkpoint Parte 2:** Agregas 3 personas, registras 3 gastos variados, y ves:
-- Balances con signo correcto (suma total = 0).
-- Lista de transferencias que al aplicarlas mentalmente saldan a todos.
-- Si el grupo ya está saldado, ves "¡Grupo saldado! 🎉".
+✅ **Checkpoint (~min 60):** Los críticos están corregidos — la prueba de datos corruptos pasa ("Empezar de cero", no pantalla blanca) — y tienes claros tus mayores para el plan.
 
 ---
 
-## Parte 3: HU7 + HU8 — Eliminar y manejar errores (60 min)
+## Parte 2: Replanifica tu Sprint 2 (10 min)
 
-### 3.1 HU7: Eliminar gasto con recálculo
+Actualiza `SPRINTS.md` (v2) con la realidad: HUs del MVP pendientes + los hallazgos mayores de la auditoría. El MVP manda.
 
-```javascript
-function eliminarGasto(id) {
-  const confirmar = confirm('¿Eliminar este gasto?');
-  if (!confirmar) return;
-
-  state.grupo.gastos = state.grupo.gastos.filter(/* ¿qué condición? */);
-  guardarEstado();
-  renderGastos();
-  renderBalances();       // recalcula automáticamente
-  renderTransferencias(); // recalcula automáticamente
-}
-```
-
-Conecta cada gasto en la lista con un botón eliminar (usa delegación de eventos):
-
-```javascript
-document.getElementById('listaGastos').addEventListener('click', (e) => {
-  if (e.target.classList.contains('btn-eliminar')) {
-    const id = /* ¿de dónde lo sacas? pista: dataset */;
-    eliminarGasto(id);
-  }
-});
-```
-
-### 3.2 HU8: Manejo robusto de LocalStorage
-
-Refuerza `js/storage.js` para no crashear ante errores:
-
-```javascript
-function cargarEstado() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    const parsed = JSON.parse(raw);
-    // Validación defensiva: ¿tiene la forma esperada?
-    if (!parsed || !parsed.grupo || !Array.isArray(parsed.grupo.personas)) {
-      throw new Error('Estructura inesperada');
-    }
-    state.grupo = parsed.grupo;
-  } catch (error) {
-    console.warn('Estado corrupto, ofreciendo reinicio');
-    mostrarErrorDeCarga(error);
-  }
-}
-
-function mostrarErrorDeCarga(error) {
-  // Completa: muestra un mensaje en el DOM (no alert)
-  // "Los datos guardados no se pudieron cargar. ¿Empezar de cero?"
-  // Con un botón que haga localStorage.removeItem(STORAGE_KEY) y recargue.
-}
-```
-
-> 💡 **Tip para probar HU8:** En DevTools → Application → LocalStorage → edita manualmente el valor a algo corrupto (`{malformado}`) y recarga. Tu app debe mostrar el mensaje, no crashear.
-
-✅ **Checkpoint Parte 3:** Eliminas un gasto y los balances se actualizan sin recargar. Corrompes manualmente el LocalStorage y la app ofrece "Empezar de cero" en lugar de crashear.
+✅ **Checkpoint (~min 75):** `SPRINTS.md` v2 realista: sabes exactamente qué construyes en la próxima hora y cuarto.
 
 ---
 
-## 📁 Estructura del Proyecto al Cierre
+## Parte 3: Bloque de trabajo — Sprint 2 (75 min)
 
+Mismo **ritual de implementación** de la Clase 18, HU por HU según TU plan. Recordatorios del contrato para las HUs típicas de este sprint:
+
+| Pieza | Recuerda |
+|-------|----------|
+| Ordenar | Copia antes de ordenar: `[...canciones].sort(...)` — nunca mutes el estado |
+| Confirmar eliminación | Modal PROPIO (patrón `pedirConfirmacion` de C16), nada de `confirm()` |
+| Duración total / stats | Función pura sobre el estado (`reduce`); milisegundos → "1 h 23 min" |
+| Robustez | Al cargar, valida la estructura del JSON; si es inválida → mensaje + "Empezar de cero" |
+
+✅ **Checkpoint (~min 150):** Eliminas una canción y aparece TU modal; al confirmar, stats y duración se actualizan solas; el orden funciona; el localStorage corrupto muestra "Empezar de cero". Consola limpia.
+
+---
+
+## Parte 4: Define tus 2 HUs propias (10 min)
+
+Ahora que tu app está completa, decide qué feature lleva TU firma. Pide ideas en el **chat web** (no en Copilot: no necesita ver código y no gasta tu presupuesto):
+
+```text
+Mi app hace: [resumen de tu MVP actual]. Propón 5 features pequeñas
+"de producción" que aporten valor real al usuario, factibles con mi
+contrato (sin backend ni librerías). Una línea cada una.
 ```
-gastos-compartidos/
-├── index.html          # Con secciones de Balances y Transferencias agregadas
-├── css/
-│   └── styles.css      # Estilos para balance positivo/negativo/cero
-├── js/
-│   ├── state.js
-│   ├── storage.js      # Con manejo robusto de errores (HU8)
-│   ├── ui.js           # Con renderBalances, renderTransferencias
-│   ├── balance.js      # calcularBalances + calcularTransferencias
-│   └── app.js
-├── README.md           # 8 HU marcadas como hechas + link al deploy
-├── FEEDBACK.md         # Feedback recibido con prioridades
-└── .gitignore
-```
+
+Elige 2, redáctalas como HU con criterios (misma auditoría de la Clase 17: observables, tamaño sano, dentro del contrato) y agrégalas a `HISTORIAS.md`. **Implementarás al menos 1 de forma asíncrona antes del Demo Day** (las de inspiración del enunciado: favoritos, filtros, deshacer...).
+
+✅ **Checkpoint (~min 160):** 2 HUs propias con criterios en `HISTORIAS.md`, con la elegida para implementar marcada.
+
+---
+
+## 🚀 Publica tu app (últimos 20 min)
+
+1. En GitHub: **Settings → Pages → Deploy from a branch → `main` / root → Save**.
+2. Espera el build (~1-2 min) y abre la URL `https://TU_USUARIO.github.io/mi-setlist/`.
+3. Prueba el flujo completo EN la URL pública (busca, agrega, recarga).
+
+> 💡 ESM funciona en Pages sin cambios (es `https://`). Si algo no carga, revisa que las rutas de import sean relativas (`./`).
+
+✅ **Checkpoint final:** Tu app vive en una URL pública y el flujo completo funciona ahí.
 
 ---
 
@@ -295,25 +137,23 @@ gastos-compartidos/
 
 ### Checklist
 
-- [ ] HU5: balances calculados correctamente (suma = 0).
-- [ ] HU6: transferencias sugeridas mínimas.
-- [ ] HU7: eliminar gasto con recálculo automático.
-- [ ] HU8: LocalStorage corrupto no crashea la app.
-- [ ] `FEEDBACK.md` con feedback recibido clasificado.
-- [ ] App desplegada públicamente (GitHub Pages o similar).
-- [ ] Al menos 4 commits nuevos pusheados en este sprint.
+- [ ] Auditoría ejecutada: críticos corregidos (datos corruptos no rompen la app).
+- [ ] MVP completo o con plan concreto de cierre asíncrono antes del Demo Day.
+- [ ] 2 HUs propias definidas en `HISTORIAS.md` (≥1 implementada antes del Demo Day).
+- [ ] Deploy público funcionando.
+- [ ] ≥4 commits nuevos + `PROMPTS.md` actualizado.
 
 ### Qué entregar
 
-- **Link al repositorio** con el código del Sprint 2.
-- **Link al deploy público** (GitHub Pages recomendado).
-- **Screenshot** de tu app con balances y transferencias visibles.
+- **Link al repositorio** y **link al deploy público**.
+- Standup de cierre: prometido vs demostrado + qué cierras asíncrono.
+
+> ⚠️ El Demo Day no espera: lo que quede pendiente se termina asíncrono ANTES de la Clase 20.
 
 ---
 
 > ### 💡 Consejos
 >
-> - Arregla primero los críticos que detectó tu compañero. Un bug base invalida todo el cálculo.
-> - El algoritmo de transferencias parece complicado pero se entiende con un ejemplo en papel: dibuja 3 personas con balances +30, -20, -10 y aplica el greedy paso a paso.
-> - La HU8 no es opcional: un app que crashea por datos corruptos se ve poco profesional en Demo Day.
-> - Si llegas temprano al final, trabaja en 1 reto adicional del enunciado (división desigual, modo oscuro, exportar a WhatsApp). Eso te suma en rúbrica.
+> - No "arregles" nada que la IA señale sin comprobarlo antes en tu app: los correctores también alucinan.
+> - Críticos primero, siempre. Un modo oscuro precioso no compensa una app que muere al recargar.
+> - Tu HU propia es tu momento de brillar en el Demo Day: elige algo que TÚ usarías, no lo más fácil.

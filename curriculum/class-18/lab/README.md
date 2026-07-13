@@ -1,281 +1,130 @@
-# Lab 18: Sprint 1 — HU1 a HU4
+# Lab 18: Sprint 1 — Construye con tu Copiloto
+
+> 🧭 Este lab no trae el código de tu app. Trae el **ritual de implementación**: cómo convertir cada HU en código funcionando, con la IA preguntándote antes de codear y tú tomando las decisiones.
 
 ## 🎯 Objetivos
 
-1. Construir el esqueleto HTML semántico de la Agenda de Gastos Compartidos.
-2. Aplicar estilos CSS responsivos para las tres zonas principales.
-3. Implementar las HU1-HU4 conectando DOM, estado y LocalStorage.
+1. Implementar las HUs de tu Sprint 1 usando el prompt de implementación en modo interactivo.
+2. Tomar y registrar decisiones propias (UX, casos borde, datos) respondiendo las preguntas de la IA.
+3. Cerrar cada HU contra sus criterios de aceptación, con un commit por historia.
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Estado central** - Un objeto `state` con `{ grupo, personas, gastos }` es la única fuente de verdad.
-- **Render** - Función que dibuja el DOM a partir del estado. Si el estado cambia, se vuelve a renderizar.
-- **Delegación de eventos** - Un solo listener en el contenedor que maneja clicks de todos los items internos.
+- **Prompt de implementación** - Contexto + HU + modo + restricciones. Pide código en porciones, no la app entera.
+- **Modo interactivo** - Le exiges a la IA que te haga 2-3 preguntas estratégicas ANTES de darte código. Tú respondes, ella implementa lo que TÚ decidiste.
+- **Slice** - Porción mínima probable de una HU. Se implementa, se prueba, se commitea.
+- **Rate limit** - La API acepta ~20 solicitudes/minuto. Búsqueda con botón, nunca en cada tecla.
 
 ---
 
 ## ⚙️ Setup Inicial
 
-Continuación del Lab 17. Verifica:
-
 | ✓ | Requisito | Verificación |
 |---|-----------|--------------|
-| ☐ | Repositorio clonado localmente | `git pull origin main` funciona sin errores |
-| ☐ | `index.html` carga sin errores en consola | Live Server + F12 → Console |
-| ☐ | Estructura `css/` y `js/` creada | `js/state.js`, `js/storage.js`, etc. existen |
-| ☐ | Tu `SPRINTS.md` a la vista | Sabes qué 4 HU atacas hoy |
+| ☐ | Repo de C17 corriendo | Live Server muestra tu hola mundo ESM sin errores |
+| ☐ | `SPRINTS.md` a la vista | Sabes qué HU atacas primero |
+| ☐ | `HISTORIAS.md` con criterios | Cada HU del Sprint 1 tiene sus criterios claros |
+| ☐ | Sesión de IA activa | Con el contrato técnico ya pegado en el chat |
 
-> ⚠️ Si no terminaste el Lab 17, dedica los primeros 15 minutos a ponerte al día. No avances sin el setup.
-
----
-
-## Parte 1: HTML semántico y estilos base (45 min)
-
-### 1.1 Estructura el `index.html`
-
-Reemplaza el placeholder "En construcción…" por la estructura base. Nota los comentarios: esos son los **gaps** que debes completar.
-
-> 💡 **Recordatorio:** El patrón `<form>` + `<label for>` + `<input required>` lo viste en C01 (forms accesibles), lo validaste con `type/pattern/minlength` en C04, y capturaste sus inputs con JS (`querySelector('#id').value` + `addEventListener('submit')`) en C07-C08. Aquí lo orquestas con estado persistente.
-
-```html
-<body>
-  <header>
-    <h1>💸 Agenda de Gastos Compartidos</h1>
-    <p id="nombreGrupo"><!-- Aquí irá el nombre del grupo activo --></p>
-  </header>
-
-  <main>
-    <section id="seccionGrupo" aria-label="Gestión del grupo">
-      <!-- Formulario para crear grupo + input para nombre -->
-      <!-- Completa: botón "Nuevo grupo" que dispara el flujo -->
-    </section>
-
-    <section id="seccionPersonas" aria-label="Integrantes">
-      <h2>Integrantes</h2>
-      <!-- Formulario para agregar persona (input + botón) -->
-      <!-- Completa: el input debe tener un id único -->
-      <ul id="listaPersonas"><!-- Render dinámico --></ul>
-    </section>
-
-    <section id="seccionGasto" aria-label="Registrar gasto">
-      <h2>Registrar gasto</h2>
-      <form id="formGasto">
-        <!-- Completa los inputs: descripción (text), monto (number min=0.01), pagó (select) -->
-        <!-- Completa los checkboxes dinámicos para "entre quiénes se divide" -->
-        <button type="submit">Registrar</button>
-      </form>
-    </section>
-
-    <section id="seccionGastos" aria-label="Gastos del grupo">
-      <h2>Gastos</h2>
-      <ul id="listaGastos"><!-- Render dinámico --></ul>
-    </section>
-  </main>
-
-  <script src="js/state.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/app.js"></script>
-</body>
-```
-
-> 💡 **Tip:** Usar `<section>` con `aria-label` hace tu app accesible sin esfuerzo extra.
-
-### 1.2 Estilos base en `css/styles.css`
-
-Aplica un layout responsivo. Recomendación: mobile-first con Flexbox o Grid.
-
-> 💡 **Recordatorio:** Las **CSS Variables** (`:root { --primary }`) son el patrón que refactorizaste en C04. Aquí defines las del proyecto.
-
-```css
-/* Variables de tema */
-:root {
-  --primary: /* elige un color principal */;
-  --bg: /* fondo claro */;
-  --text: /* texto principal */;
-  --danger: /* rojo para errores y deudores */;
-  --success: /* verde para acreedores */;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  font-family: /* sans-serif legible */;
-  margin: 0;
-  padding: 1rem;
-  background: var(--bg);
-  color: var(--text);
-}
-
-main {
-  display: /* grid o flex, tu decisión */;
-  gap: 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* Completa: estilos para section, form, listas */
-/* Completa: breakpoint para pantallas > 768px si usas mobile-first */
-```
-
-✅ **Checkpoint:** Abres `index.html` y ves las 4 secciones (Grupo, Integrantes, Registrar gasto, Gastos) con separación visual clara. Se ve usable en mobile (narrow) y desktop (ancho).
+> ⚠️ Si no cerraste el checkpoint de C17, resuélvelo en los primeros 15 minutos con apoyo del instructor.
 
 ---
 
-## Parte 2: Estado central y persistencia (60 min)
+## 🔁 El ritual de implementación (tu referencia — aquí no se codea aún)
 
-### 2.1 Define el estado en `js/state.js`
+Esta sección no produce código: es el **ciclo que repetirás con cada HU** en las Partes 1 y 2. Léela después de la demo del instructor y vuelve a ella cada vez que abras una HU nueva:
 
-```javascript
-// Estado central — única fuente de verdad
-const state = {
-  grupo: {
-    nombre: /* ¿string vacío o null? elige */,
-    personas: [],   // array de strings con nombres
-    gastos: []      // array de objetos Gasto
-  }
-};
+> **prompt interactivo → tus decisiones → código en porciones → probar contra criterios → commit → registrar**
 
-// Clase ES6 para modelar un gasto (del Módulo 4)
-class Gasto {
-  constructor(descripcion, monto, pagadoPor, divididoEntre) {
-    this.id = /* ¿cómo generas un id único? Date.now() es válido */;
-    this.descripcion = descripcion;
-    this.monto = /* convierte a número aquí */;
-    this.pagadoPor = pagadoPor;
-    this.divididoEntre = divididoEntre;
-    this.fecha = new Date().toISOString();
-  }
-}
+### El prompt de implementación (modo interactivo)
+
+```text
+CONTEXTO: [contrato técnico] Mi proyecto ya tiene: [describe qué hay
+en cada archivo js/ o pega el código relevante].
+
+TAREA: Implementemos JUNTOS esta historia:
+[pega la HU con sus criterios de aceptación]
+
+MODO: Antes de escribir código, hazme 2 o 3 preguntas estratégicas
+sobre decisiones que me corresponden a mí (experiencia de usuario,
+casos borde, estructura de datos). Espera mis respuestas. Después
+dame el código en porciones pequeñas, explicando qué hace cada una
+y en qué archivo va.
+
+RESTRICCIONES: Respeta el contrato. No reescribas archivos que no
+te pedí. Si el contrato te impide algo, dímelo en vez de saltártelo.
 ```
 
-### 2.2 Funciones de LocalStorage en `js/storage.js`
+### Responde como dueño del producto
 
-```javascript
-const STORAGE_KEY = 'gastos-compartidos-v1';
+Las preguntas de la IA serán del estilo: *¿la búsqueda se dispara con botón o al tipear? ¿qué muestro si no hay resultados? ¿una canción puede repetirse en la playlist? ¿guardo la duración en milisegundos o formateada?*
 
-function guardarEstado() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch (error) {
-    // ¿Qué haces si LocalStorage falla? Piensa.
-    console.error('No se pudo guardar:', error);
-  }
-}
+No hay respuesta única — **tu respuesta es una decisión de diseño**. Decide con dos criterios: el contrato (ej: rate limit → botón) y tu MVP. Anota las decisiones importantes: son tu argumentación del Demo Day.
 
-function cargarEstado() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return; // primera vez, estado queda como está
-    const parsed = JSON.parse(raw);
-    // Completa: reemplaza las propiedades de state con las de parsed
-    state.grupo = /* ¿qué asignas? */;
-  } catch (error) {
-    // Si el JSON está corrupto, ¿qué hacemos?
-    console.warn('Estado corrupto, empezando de cero');
-    localStorage.removeItem(STORAGE_KEY);
-  }
-}
-```
+### Prueba, commitea, registra
 
-✅ **Checkpoint:** Abres la consola del navegador, ejecutas `guardarEstado()` y luego miras en `Application → LocalStorage` que existe la clave `gastos-compartidos-v1` con un JSON válido.
+- Prueba la porción contra los **criterios de la HU** (no contra "se ve bien").
+- HU terminada = commit: `feat: HU búsqueda con estados de UI`.
+- Registra en `PROMPTS.md` el prompt clave de la HU y las decisiones que tomaste.
+
+> 💡 **Tip:** Si la IA te da un archivo entero de 100 líneas, no lo pegues: pídele la porción de UNA función y su explicación. Código que no entiendes = deuda para el Q&A.
+>
+> 💰 **Herramientas hoy:** el modo interactivo vive bien en el **chat web** (gratis, ilimitado en la práctica). Usa **Copilot** en VS Code solo para porciones puntuales sobre tu código — su plan gratuito da ~50 mensajes/mes y la auditoría de la Clase 19 los necesita.
 
 ---
 
-## Parte 3: HU1 a HU4 funcionando (75 min)
+## Parte 1: Bloque de trabajo 1 — tu primera HU (60 min)
 
-### 3.1 HU1 + HU2: Crear grupo y agregar personas (`js/ui.js` + `js/app.js`)
+**El orden lo manda TU `SPRINTS.md`**, no este lab. Eso sí: la búsqueda en la API es la dependencia de casi todo (sin ella no hay canciones que agregar), así que si tu plan la dejó para el final, este es el momento de cuestionar tu plan.
 
-```javascript
-// js/ui.js
-function renderGrupo() {
-  const titulo = document.getElementById('nombreGrupo');
-  titulo.textContent = /* muestra el nombre del grupo o un placeholder si no hay */;
-}
+Guía de dónde va cada cosa cuando trabajes cada pieza (tu contrato lo exige):
 
-function renderPersonas() {
-  const lista = document.getElementById('listaPersonas');
-  lista.innerHTML = ''; // limpia antes de redibujar
-  state.grupo.personas.forEach((persona) => {
-    const li = document.createElement('li');
-    li.textContent = persona;
-    // Completa: agrega un botón × con data-persona="{nombre}" para eliminar
-    lista.appendChild(li);
-  });
-}
-```
+| Pieza | Archivo |
+|-------|---------|
+| `fetch` al endpoint + adaptación del JSON | `js/api.js` |
+| Modelo de canción (`class Cancion`) | `js/models/Cancion.js` |
+| Pintar resultados y estados carga/error/vacío | `js/ui.js` |
+| Conectar el formulario de búsqueda | `js/app.js` |
 
-```javascript
-// js/app.js (punto de entrada)
-function iniciar() {
-  cargarEstado();
-  renderGrupo();
-  renderPersonas();
-  // Completa: conecta eventos del formulario de grupo y personas
-}
+Reglas de la API (van también en tus prompts):
 
-document.addEventListener('DOMContentLoaded', iniciar);
-```
+- Endpoint: `https://itunes.apple.com/search?term=PALABRAS&entity=song&limit=10`
+- Buscar con **botón** (submit), nunca en cada tecla.
+- Respuesta `403` = te pasaste del límite → espera un minuto.
+- Campos útiles: `trackName`, `artistName`, `artworkUrl100`, `trackTimeMillis`, `primaryGenreName`.
 
-> 💡 **Tip:** Después de cada cambio al estado → `guardarEstado()` → `renderX()`. Siempre ese orden.
-
-### 3.2 HU3: Registrar gasto
-
-Conecta el formulario `#formGasto`:
-
-```javascript
-const form = document.getElementById('formGasto');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  // 1. Lee descripción, monto, pagadoPor, divididoEntre (checkboxes seleccionados)
-  // 2. Valida: monto > 0, descripción no vacía, al menos 1 persona en divididoEntre
-  // 3. Si todo OK, crea new Gasto(...) y hazle state.grupo.gastos.push
-  // 4. guardarEstado() + renderGastos() + form.reset()
-});
-```
-
-### 3.3 HU4: Listar gastos
-
-```javascript
-function renderGastos() {
-  const lista = document.getElementById('listaGastos');
-  lista.innerHTML = '';
-  if (state.grupo.gastos.length === 0) {
-    lista.innerHTML = '<li class="vacio">Aún no hay gastos registrados</li>';
-    return;
-  }
-  // Ordena del más reciente al más antiguo — ¿qué propiedad usas?
-  const ordenados = [...state.grupo.gastos].sort(/* completa */);
-  ordenados.forEach((gasto) => {
-    const li = document.createElement('li');
-    // Completa: muestra descripción, monto, quién pagó, entre quiénes, fecha legible
-    lista.appendChild(li);
-  });
-}
-```
-
-✅ **Checkpoint:** Creas un grupo "Viaje a Máncora", agregas 3 personas, registras 2 gastos, recargas la página, y todo sigue ahí. La consola no tiene errores.
+✅ **Checkpoint mitad de sprint (~min 90):** Sea cual sea tu orden, aquí la **búsqueda debe estar viva** (es la barra común del grupo): buscas "Soda Stereo" y ves resultados con carátula, nombre y artista; indicador mientras carga, mensaje de error sin WiFi, estado vacío con "zzzzz". Además, al menos una HU tuya cerrada con commit.
 
 ---
 
-## 📁 Estructura del Proyecto al Cierre
+## Parte 2: Bloque de trabajo 2 — el resto de tu Sprint 1 (60 min)
 
-```
-gastos-compartidos/
-├── index.html          # Con las 4 secciones completas
-├── css/
-│   └── styles.css      # Responsivo con Flexbox/Grid
-├── js/
-│   ├── state.js        # state + clase Gasto
-│   ├── storage.js      # guardarEstado + cargarEstado
-│   ├── ui.js           # renderGrupo, renderPersonas, renderGastos
-│   ├── balance.js      # (vacío, para Sprint 2)
-│   └── app.js          # iniciar() + listeners
-├── README.md           # Actualizado con HU1-HU4 marcadas como hechas
-└── .gitignore
-```
+Continúa con tu plan: **mismo ritual, HU por HU**, cerrando cada una antes de abrir la siguiente.
+
+Recordatorios del contrato para tus decisiones y tus prompts:
+
+- Ids con `crypto.randomUUID()`; agregar/quitar **inmutable** (`.filter`/`.map`/spread).
+- Cada cambio de estado termina en `guardar()` → `render()`. Siempre ese orden.
+- `storage.js` envuelve `localStorage` + `JSON.parse` en `try/catch`.
+- La fecha de agregado es un `Date` → recuerda rehidratarla al cargar (lo viste en C15).
+
+✅ **Checkpoint de cierre (~min 155):** Creas la playlist "Road trip", le agregas 2 canciones desde los resultados, **recargas la página** y siguen ahí. Consola sin errores.
+
+---
+
+## 🛠️ Errores frecuentes
+
+| Síntoma | Causa probable | Salida |
+|---------|----------------|--------|
+| Error CORS o import falla | Abriste con `file://` | Live Server |
+| `403` de la API | Rate limit (buscaste demasiado) | Espera 1 min; verifica que buscas con botón |
+| "Failed to resolve module" | Ruta de import mal escrita | Rutas relativas con `./` y extensión `.js` |
+| Agrego canción y no se ve | Cambiaste estado sin llamar `render()` | Revisa el ciclo guardar → render |
+| Al recargar, la fecha sale rara | No rehidrataste el `Date` | `new Date(texto)` al cargar |
+
+> 💡 **Prompt de depuración:** pega el error COMPLETO + el código de la función sospechosa y pide: "explícame la causa antes de darme la solución".
 
 ---
 
@@ -283,24 +132,23 @@ gastos-compartidos/
 
 ### Checklist
 
-- [ ] HU1: puedes crear un grupo con nombre.
-- [ ] HU2: puedes agregar y eliminar personas.
-- [ ] HU3: puedes registrar un gasto con validaciones.
-- [ ] HU4: puedes ver la lista de gastos ordenada.
-- [ ] Al recargar la página, todo persiste.
-- [ ] Al menos 3 commits pusheados a GitHub.
-- [ ] Sin errores en la consola del navegador.
+- [ ] **Mínimo innegociable:** búsqueda con estados de UI + agregar canciones a una playlist que sobrevive al recargar.
+- [ ] Ideal: todas las HUs de tu Sprint 1 demostrables.
+- [ ] ≥3 commits nuevos pusheados (uno por HU).
+- [ ] `PROMPTS.md` actualizado con prompts y decisiones del día.
+- [ ] `SPRINTS.md` ajustado si tu alcance real cambió.
 
 ### Qué entregar
 
 - **Link a tu repositorio** con los commits del Sprint 1.
-- **Screenshot** de tu app con al menos 1 grupo, 3 personas y 2 gastos visibles.
+- Participar en el **standup de cierre**: qué prometió tu `SPRINTS.md` vs qué demuestras, y qué te llevas de tarea asíncrona.
+
+> ⚠️ Lo que no cierres hoy se termina **antes de la Clase 19**: la validación cruzada necesita tu Sprint 1 completo.
 
 ---
 
 > ### 💡 Consejos
 >
-> - Codea una HU completa antes de pasar a la siguiente. No empieces las 4 en paralelo.
-> - Usa `console.log(state)` seguido a seguido. Ver el estado es la mejor forma de entender qué está pasando.
-> - Si el render se ve raro, problema casi siempre es olvidaste `renderX()` después de modificar el estado.
-> - Los commits pequeños y frecuentes te salvan cuando algo se rompe. Puedes volver atrás con `git checkout`.
+> - Una HU completa vale más que cuatro empezadas. Cierra antes de abrir.
+> - Cuando la IA te pregunte, no respondas "lo que sea mejor": esa decisión es tuya y te la preguntarán en el Demo Day.
+> - `console.log(state)` sigue siendo tu mejor amigo, con o sin IA.

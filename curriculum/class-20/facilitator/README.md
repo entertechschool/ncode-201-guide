@@ -1,183 +1,111 @@
 # Guía del Facilitador - Clase 20: Demo Day
 
-> Tiempo de lectura: 7 minutos | Prepárate antes de clase
+> Tiempo de lectura: 8 minutos | Prepárate antes de clase
+
+Hoy no enseñas: **evalúas y celebras**. Tu trabajo pesado ya está hecho — las notas que tomaste en las rondas de C18-C19 (decisiones interesantes, HUs propias prometidas, quién acumuló deuda de comprensión) son tu material para un Q&A justo y personalizado. El Q&A es la pieza que sostiene todo el modelo del módulo: es donde "no pegues código que no puedas explicar" deja de ser un consejo y se vuelve nota.
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Demo en vivo**: Mostrar la app funcionando mientras se explica, no screenshots estáticas.
-- **Argumentación técnica**: Explicar el porqué de decisiones con vocabulario preciso.
-- **Rúbrica oficial**: La del [proyecto integrador](../../class-17/project/), con 5 criterios sumando 100 puntos.
-- **Feedback individual**: Al cerrar cada presentación, 1-2 frases concretas de fortaleza y punto a reforzar.
-- **Ruta a Code 301**: La conversación que cierra el curso — [examen de admisión](../../../admission.md).
+- **Q&A como auditoría**: 2 minutos preguntando sobre código concreto del repo del alumno. Distingue a quien dirigió a su copiloto de quien copió.
+- **Argumentación con IA**: al menos 1 de las 2 decisiones debe involucrar a la IA (qué pidió, qué recibió, qué cambió y por qué).
+- **Plan B sin drama**: una app que falla en vivo no anula la evaluación; un alumno que no puede explicar su código, sí la afecta.
 
 ---
 
-## 🔗 Analogías Útiles
+## ⏱️ Logística (9-10 alumnos)
 
-**Demo Day <> Entrevista técnica real:**
-El formato 5+3+2 minutos es el mismo que Globant, MercadoLibre o Rappi usan en sus "tech interviews". No es simulacro: es práctica directa.
+| Bloque | Tiempo | Detalle |
+|--------|--------|---------|
+| Setup + sorteo | 0-10 | Proyector, orden sorteado, recordar formato |
+| Presentaciones | 10-130 | 10 × (10 min + 2 de transición) |
+| Colchón | 130-160 | Absorbe demoras; si sobra, ver "Tiempo extra" abajo |
+| Cierre del curso | 160-180 | Síntesis, feedback general, ruta a Code 301 |
 
-**Argumentación <> Receta explicada por un chef:**
-Un buen chef no dice "le puse sal y listo". Dice "le puse sal marina porque potencia el sabor sin amargar". El dev junior dice "usé greedy". El dev mid dice "usé greedy porque en un grupo pequeño la solución óptima es N-1 transferencias y el costo computacional es bajo".
-
-**Plan B <> Paracaídas de reserva:**
-Nunca lo usas, hasta el día que sí. Screenshots de respaldo son el paracaídas de reserva de Demo Day.
-
-**Rúbrica <> Mapa antes del viaje:**
-Si el estudiante ya vio la rúbrica, no hay sorpresas. La nota es una suma aritmética, no un juicio subjetivo.
+**Tiempo extra (si el grupo fue puntual):** ronda de feedback de pares ("dile al presentador una cosa que te robarías de su app"), o Q&A extendido a 3 min para los últimos, o demo cruzada informal: cada quien usa la app de otro 5 minutos.
 
 ---
 
-## 📚 Contexto Actual
+## ❓ Cómo elegir el fragmento para el Q&A
 
-### Por qué Demo Day importa en Latinoamérica
+No preguntes al azar: llega con un plan por alumno, armado en 2 minutos mientras presenta.
 
-Empresas como Rappi, Globant y MercadoLibre tienen procesos de entrevista que dedican 45-60 minutos a que el candidato presente un proyecto propio y responda preguntas técnicas. Es el filtro más importante después del CV. Los estudiantes que pasan Demo Day en Code 201 llegan con esa habilidad lista, mientras que muchos candidatos con más experiencia llegan sin ensayar.
+1. **Abre su repo** en una pestaña durante su demo.
+2. **Cruza con tus notas de C19**: ¿qué HU propia prometió? ¿dónde lo viste frágil en las rondas?
+3. **Elige un fragmento con decisión adentro**: el adaptador de la API, el `eliminarCancion` inmutable, el cálculo de stats, su HU propia.
+4. Preguntas que funcionan:
+   - "Explícame esta función línea por línea."
+   - "¿Qué parte de esto escribió la IA y cómo verificaste que estaba bien?"
+   - "Si iTunes cambia el nombre de un campo, ¿qué archivos tocas?"
+   - "¿Por qué esto usa spread y no push?"
 
-> **Para contar en clase:** "Esta es literalmente la primera mitad de una entrevista técnica. Si dominan esto, el resto del proceso es más fácil."
-
-### GitHub como carta de presentación
-
-En 2024, el 68% de los reclutadores técnicos en Perú revisan GitHub antes o durante la entrevista (fuente: encuesta Laboratoria 2024). Un repo público con commits frecuentes, README claro y un deploy funcional pesa más que un CV extenso.
-
-**Fuentes:** [Laboratoria Hiring Report 2024](https://www.laboratoria.la/insights){:target="_blank"}, [Tech interviews in Latam](https://mercadolibre.com/jobs/tech/){:target="_blank"}
-
----
-
-## 🎯 Momentos Clave de la Clase
-
-### Apertura
-
-**Qué decir:**
-```
-Facilitador: "Hoy no hay lab, hay presentación. La clase es para ustedes.
-Orden: sorteo. Cada uno tiene 10 minutos, ni uno más. Plan B listo por si falla el deploy.
-Rúbrica en pantalla, sin sorpresas. Empezamos."
-```
-
-**Duración sugerida:** 10 minutos máximo. Luego directo a sorteo y primera presentación.
-
-### Durante cada presentación
-
-**Tu rol:** Controla tiempo, toma notas de la rúbrica en tiempo real, prepara la pregunta de Q&A.
-
-**Reloj:**
-- 0:00 → 5:00 — Demo en vivo.
-- 5:00 → 8:00 — Argumentación técnica.
-- 8:00 → 10:00 — Q&A.
-- 10:00 → corte firme.
-
-**Pregunta de Q&A sugerida (adapta a cada estudiante):**
-Si el estudiante habló mucho del algoritmo → pregunta sobre la persistencia.
-Si habló del diseño → pregunta sobre el cálculo.
-Objetivo: evaluar profundidad transversal, no solo lo que vino preparado.
-
-### Entre presentaciones (2 min)
-
-**Qué hacer:**
-1. Llenar la rúbrica del estudiante anterior (30 segundos).
-2. Dar feedback oral de 1-2 frases: una fortaleza + una sugerencia.
-3. Llamar al siguiente por nombre.
-
-**Script sugerido para feedback:**
-```
-Facilitador: "[Nombre], tu [algo concreto] fue sólido.
-Para futuras presentaciones, trabajaría [sugerencia específica].
-Nota te llegará al cierre. Siguiente: [Nombre]."
-```
-
-### Cierre del curso (10 min finales)
-
-**Qué decir:**
-```
-Facilitador: "Cerramos Code 201. Lo que construyeron hoy es portafolio real.
-El curso está diseñado para Code 301 — los que siguen rinden el examen de admisión
-la próxima semana. Los que no, se quedan con el artefacto y las habilidades.
-Escríbanme si tienen preguntas. Gracias por estos dos meses y medio."
-```
-
-**Entregar:** Ruta individual hacia Code 301, notas finales, invitación al networking de egresados.
+**Señal de dominio:** responde desde las decisiones ("elegí X porque..."). **Señal de deuda:** describe el código leyéndolo ("aquí... eh... se hace un filter...") sin poder decir por qué.
 
 ---
 
 ## 🎭 Dinámicas de Clase
 
-### Dinámica 1: "Orden por sorteo"
+### Apertura
 
-Genera equidad y elimina presiones.
+> "Diez personas construyeron la misma app y van a mostrar diez soluciones distintas. Eso es exactamente lo que pasa en un equipo real. Hoy no compiten entre ustedes: cada uno compite contra su rúbrica."
 
-**Dinámica sugerida:**
+### Si una app falla en vivo
+
 ```
-Facilitador: "Saquen un papel con su nombre.
-Los voy llamando en orden aleatorio.
-Presenta de pie, mirando al grupo, no a la pantalla."
-```
-
-### Dinámica 2: "Feedback de pares entre presentaciones"
-
-Opcional si hay tiempo. Mantiene al grupo atento.
-
-**Dinámica sugerida:**
-```
-Facilitador: "Después de cada presentación, 1 compañero del público
-comparte 1 cosa que le gustó de la presentación.
-30 segundos, no feedback crítico.
-Esto sube la moral y refuerza hábitos buenos."
+Facilitador: "Tranquilo. Plan B: muéstranos los screenshots y
+cuéntanos qué estaríamos viendo."
+[Después, en privado: la falla técnica no es lo que más pesa;
+la argumentación y el Q&A siguen valiendo 40 puntos.]
 ```
 
-### Dinámica 3: "Pregunta abierta al público antes del corte"
+### Si alguien no terminó el MVP
 
-Cuando detectas que la presentación va floja, invita al grupo.
+> "Muéstranos lo que SÍ funciona y cuéntanos qué te faltó y por qué." Evalúa lo demostrable con la rúbrica tal cual; el criterio de funcionalidades baja, los demás se evalúan normal.
 
-**Dinámica sugerida:**
-```
-Facilitador: "¿Alguien del público tiene una pregunta sobre lo que vimos?"
-(Pausa 5 segundos)
-"Si no, la mía es: ..."
-```
+### Cierre de las presentaciones
+
+> "Hace 20 clases no sabían qué era una etiqueta HTML. Hoy tienen una app pública con API real, persistencia y un copiloto que aprendieron a dirigir. Eso no es un curso terminado: es una carrera empezada."
 
 ---
 
-## 💡 Aplicación de la Rúbrica
+## ☑️ Aplicando la rúbrica (recordatorios del nuevo modelo)
 
-La rúbrica oficial está en [`class-17/project/README.md`](../../class-17/project/). Resumen:
+| Criterio | En qué fijarte hoy |
+|----------|--------------------|
+| Funcionalidades del MVP | El flujo de demo cubre los 10 puntos; la recarga en vivo es obligatoria |
+| Calidad técnica | Pide ver 30 segundos de código si dudas: ESM, estado→render, inmutabilidad |
+| Uso responsable de IA + HU propia | `PROMPTS.md` con contexto real (10) + HU propia funcionando (10) |
+| Presentación | Flujo completo en ≤10 min, sin leer código en vivo |
+| Argumentación + Q&A | ≥1 decisión con IA bien contada; el Q&A confirma o desmiente |
 
-| Criterio | Peso | Qué mirar |
-|----------|------|-----------|
-| Funcionalidades MVP (HU1-HU8) | 30 pts | Todas funcionan en el deploy |
-| Calidad técnica | 25 pts | Código organizado, estado central, errores manejados |
-| Historias adicionales | 15 pts | Al menos 1 reto extra implementado |
-| Presentación en vivo | 15 pts | Fluidez, claridad, cumple tiempos |
-| Argumentación técnica | 15 pts | Explica decisiones con vocabulario preciso |
-
-**Umbral de aprobación:** 70/100.
-
-**Tip de facilitación:** Lleva la rúbrica impresa o en pestaña visible. Llena cada celda durante la presentación, no después — pierdes detalle si acumulas.
+**La regla de oro convertida en nota:** si la app es impecable pero el alumno no explica su código en el Q&A, los criterios de Argumentación (20) y Uso de IA (20) lo reflejan. Dilo sin rodeos en el feedback: es la lección más importante que se lleva a Code 301.
 
 ---
 
-## ⚠️ Errores Comunes
+## ⚠️ Situaciones Comunes
 
-- **"El deploy no responde en vivo."** Aceptar plan B sin penalización si tiene screenshots listos. La culpa no es del estudiante si GitHub Pages tardó en sincronizar.
-- **"Se excede del tiempo."** Corte firme a los 10:00. Se puede restar en el criterio "Presentación".
-- **"Solo lee el código."** Interrumpir cortésmente: "Mejor enséñanos la UI funcionando, ese es el demo".
-- **"No argumenta técnicamente, solo describe."** Preguntar durante el Q&A: "¿Por qué elegiste X y no Y?". Eso fuerza argumentación.
-- **"Estudiantes ansiosos que se bloquean."** Ofrecer 30 segundos para respirar, o saltar al Q&A primero y volver al demo.
+| Situación | Qué hacer |
+|-----------|-----------|
+| El deploy murió 5 min antes | Plan B con screenshots; si trae la app local con Live Server, vale |
+| Se pasa de los 10 min | Aviso a los 9; corte amable a los 11 — el tiempo es parte de la nota |
+| Respuesta de Q&A claramente memorizada | Repregunta con una variación pequeña ("¿y si quisiera ordenar por artista?") |
+| Nervios que bloquean | Pregunta puente: "cuéntame qué hace tu HU propia" — hablar de lo suyo destraba |
+| La API de iTunes caída el día D | Aviso general: demos con datos ya persistidos + screenshots de búsqueda |
 
 ---
 
-## 📍 Antes de que se vayan
+## 🔗 Cierre del curso y ruta a Code 301
 
-- [ ] Cada estudiante recibió nota final con rúbrica completa.
-- [ ] Cada estudiante recibió 1-2 frases de feedback oral.
-- [ ] Invitación explícita al examen de admisión de Code 301 (fecha + link).
-- [ ] Agradecimiento grupal + foto del curso si hay oportunidad.
+- Feedback individual: 1 fortaleza específica + 1 área concreta para 301, por alumno.
+- Recuérdales que el repo queda público: pulir el README post-curso suma a su portafolio.
+- Menciona `admission.md` para quienes siguen a Code 301.
 
-**Frase de cierre sugerida:**
-```
-"Empezaron sin saber HTML. Hoy presentaron una app con lógica, persistencia y deploy.
-Ese salto lo hicieron ustedes. Mi trabajo fue acompañar, no construir.
-El próximo paso es suyo. Nos vemos en Code 301, o en LinkedIn. Gracias."
-```
+---
+
+## 🪞 Reflexión Post-Clase (y post-módulo)
+
+- ¿El Q&A distinguió comprensión real? Anota qué preguntas funcionaron mejor para la próxima cohorte.
+- ¿Cuántos llegaron con HU propia funcionando? Si fueron pocos, C19 necesita más margen asíncrono.
+- ¿El modelo IA (guía → copiloto → corrector) produjo mejores demos que el M5 anterior? Tu impresión honesta alimenta la retro del curso.
+- ¿Qué app te sorprendió? Guárdala como ejemplo (con permiso) para inspirar a la siguiente cohorte.

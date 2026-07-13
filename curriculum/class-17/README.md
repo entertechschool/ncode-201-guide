@@ -1,31 +1,29 @@
 > **Módulo 5:** Clase 1 de 4
 
-# Clase 17: Ideation + Research + Stories
+# Clase 17: Ideación y Planificación con IA
 
 ## Resumen
 
-Llegaste al último módulo de Code 201 y entras al territorio donde todo lo aprendido se combina: HTML semántico, CSS responsivo, lógica en JavaScript, DOM, eventos, manejo de errores y persistencia con LocalStorage. Durante las próximas cuatro clases construirás una aplicación real de principio a fin: **Agenda de Gastos Compartidos**, una app inspirada en Splitwise que registra gastos entre amigos, roommates o equipos y calcula automáticamente quién le debe a quién.
+Llegaste al último módulo de Code 201, donde todo lo aprendido se combina en un proyecto final: **Mi Setlist**, una app que busca canciones en el catálogo real de iTunes y las organiza en playlists que sobreviven al recargar la página. Pero este módulo trae un cambio de reglas: el lab ya no te da el código. Desde hoy trabajas como un desarrollador junior con un copiloto de IA: el curso te da el enunciado y el contrato técnico, y tú construyes lo demás.
 
-En esta primera clase no escribirás código del producto aún. Lo que harás es entender el proyecto a fondo, descomponerlo en historias de usuario manejables y planificar cómo abordarlo en dos sprints. Este paso es el que suelen saltarse los desarrolladores junior, y es justamente el que separa un proyecto terminado de uno abandonado a mitad de camino.
-
-Al final de la clase tendrás tu repositorio configurado, tu plan de ataque por sprint y una visión clara de qué vas a construir la próxima sesión.
+En esta primera clase no escribes código del producto. Aprenderás a **planificar con la IA**: descomponer el MVP en historias de usuario, criticar lo que la IA te proponga y armar tu plan de dos sprints. Al final tendrás tu repositorio configurado y una visión clara de qué construir en la próxima sesión.
 
 ---
 
 ## ¿Por qué te sirve?
 
-- **El 70% del tiempo de un proyecto profesional se va en entender qué construir, no en construirlo.** Empresas como GitLab, Stripe y Basecamp tienen documentos de "product spec" de 20+ páginas antes de escribir la primera línea de código.
-- **Las historias de usuario son el lenguaje común entre desarrolladores, diseñadores y producto.** Aprender a leerlas y descomponerlas bien te hace valioso en cualquier equipo ágil.
-- **El algoritmo de división de gastos es un clásico de entrevistas técnicas.** Splitwise, Venmo y cientos de apps lo implementan. Tenerlo en tu portafolio demuestra pensamiento algorítmico, no solo UI.
+- **La mayoría de los desarrolladores ya programa con asistentes de IA.** Las encuestas de la industria (Stack Overflow, GitHub) lo confirman año tras año: saber dirigir y validar una IA es hoy parte del trabajo, no un extra.
+- **El que no sabe pedir, recibe cualquier cosa.** Un prompt sin contexto genera código genérico que no encaja en tu proyecto. Aprender a estructurar prompts con contexto y restricciones es la habilidad que separa "copiar de la IA" de "trabajar con la IA".
+- **Planificar antes de codear es lo que termina proyectos.** Descomponer un enunciado en historias pequeñas y verificables es el lenguaje común de los equipos ágiles, y es lo primero que harás en cualquier trabajo.
 
 ---
 
 ## 🎯 ¿Qué haremos en clase?
 
-1. **Conoceremos el proyecto** - El instructor presentará el enunciado oficial de Agenda de Gastos Compartidos y responderá dudas de alcance.
-2. **Descompondrás el proyecto** - Revisarás las 8 historias de usuario pre-redactadas y entenderás qué resuelve cada una.
-3. **Planificarás tus sprints** - Asignarás historias a Sprint 1 (construcción base) y Sprint 2 (cálculo y cierre) según la guía entregada.
-4. **Configurarás tu repositorio** - Crearás la estructura inicial de archivos, el README y el primer commit en GitHub.
+1. **Conoceremos el proyecto** - El instructor presentará Mi Setlist, su MVP y el contrato técnico que gobierna el módulo.
+2. **Verás planificar con IA en vivo** - El instructor modelará el ciclo prompt → crítica → re-prompt frente al grupo.
+3. **Derivarás tus historias de usuario** - Con la IA, descompondrás el MVP en historias con criterios verificables.
+4. **Configurarás tu repositorio** - Estructura ESM, plan de sprints y primer commit.
 
 ---
 
@@ -33,10 +31,10 @@ Al final de la clase tendrás tu repositorio configurado, tu plan de ataque por 
 
 Al finalizar esta clase, podrás:
 
-1. **Interpretar** el enunciado de un proyecto académico y traducirlo a funcionalidades concretas.
-2. **Descomponer** un proyecto en historias de usuario con criterios de aceptación verificables.
-3. **Planificar** una entrega por sprints identificando dependencias entre funcionalidades.
-4. **Configurar** un repositorio de proyecto con estructura de archivos profesional y documentación inicial.
+1. **Estructurar** prompts efectivos con contexto, tarea, formato y restricciones.
+2. **Evaluar** críticamente el output de una IA contra un contrato técnico y un alcance definido.
+3. **Descomponer** un MVP en historias de usuario con criterios de aceptación observables.
+4. **Configurar** un repositorio con arquitectura de módulos ESM y documentación de planificación.
 
 ---
 
@@ -44,29 +42,26 @@ Al finalizar esta clase, podrás:
 
 ### De clases anteriores
 
-- Tu cuenta de **GitHub** activa y conectada a tu Git local (lo usaste desde la Clase 01).
-- **VS Code** con las extensiones habituales (Live Server, Prettier).
-- Los conceptos de los Módulos 1-4 frescos: HTML semántico, Flexbox/Grid, clases ES6, eventos del DOM, try/catch y LocalStorage.
+- La arquitectura del Módulo 4 fresca: estado central + `render()`, `localStorage` con `try/catch`, y sobre todo los **módulos ESM** de la Clase 16 — tu proyecto final usa exactamente esa estructura.
+- Tu cuenta de **GitHub** activa y conectada a tu Git local.
 
 ### Reflexión previa
 
 Antes de llegar a clase, reflexiona sobre:
 
-- La última vez que compartiste un gasto con amigos (un viaje, un depto, una cena grupal): ¿cómo llevaron la cuenta? ¿Quedó alguien sintiendo que pagó de más?
-- Si tuvieras que modelar en código a una persona y un gasto, ¿qué datos mínimos tendría cada uno?
-- ¿Qué parte del proyecto te intimida más: el layout, la lógica de cálculo o la persistencia?
+- ¿Alguna vez le pediste algo a una IA y te respondió algo inservible? ¿Qué le faltó a tu pedido?
+- Piensa en tu playlist favorita: si tuvieras que modelarla en código, ¿qué datos tiene la playlist y qué datos tiene cada canción?
 
 ### Herramientas
 
-- [ ] **GitHub** - Sesión iniciada y lista para crear un repositorio nuevo.
-- [ ] **VS Code** - Carpeta de trabajo lista para el proyecto.
-- [ ] **Navegador moderno** (Chrome, Firefox o Edge) con DevTools.
+- [ ] **GitHub** - Sesión iniciada, lista para crear un repositorio nuevo.
+- [ ] **VS Code + Live Server** - Carpeta de trabajo lista.
+- [ ] **Herramienta de IA** - Cuenta activa en la herramienta indicada por tu instructor (versión gratuita es suficiente).
 
 ### Lectura sugerida
 
-- [Qué es una historia de usuario](https://www.atlassian.com/es/agile/project-management/user-stories){:target="_blank"} - Introducción corta de Atlassian al formato "Como… quiero… para…".
-- [Cómo funciona Splitwise](https://blog.splitwise.com/2012/07/24/splitwise-in-30-seconds/){:target="_blank"} - La inspiración directa de tu proyecto, explicada en 30 segundos.
-- [Documento oficial del proyecto](./project/){:target="_blank"} - Enunciado, historias y rúbrica del Módulo 5.
+- [Documento oficial del proyecto](./project/){:target="_blank"} - Enunciado, MVP, contrato técnico y rúbrica del Módulo 5.
+- [Qué es una historia de usuario](https://www.atlassian.com/es/agile/project-management/user-stories){:target="_blank"} - Introducción corta al formato "Como… quiero… para…".
 
 ---
 
@@ -74,17 +69,17 @@ Antes de llegar a clase, reflexiona sobre:
 
 | Término | Definición |
 |---------|------------|
-| **Historia de usuario** | Descripción breve de una funcionalidad desde la perspectiva del usuario final, con formato "Como [rol] quiero [acción] para [beneficio]". |
-| **Criterio de aceptación** | Condición verificable que debe cumplirse para considerar una historia como completada. Sin ambigüedades. |
-| **Sprint** | Iteración de trabajo acotada en tiempo donde se entrega un conjunto específico de historias. En este módulo hay 2 sprints. |
-| **MVP** | Minimum Viable Product: la versión más simple del producto que cumple con el valor central prometido. |
-| **Alcance (scope)** | Lista explícita de lo que está dentro y fuera del proyecto. Evita que el trabajo crezca sin control. |
-| **Balance neto** | En el proyecto: suma de lo que una persona pagó menos su parte proporcional de los gastos donde participa. |
+| **Prompt** | Instrucción que le das a una IA. Uno bueno tiene contexto, tarea, formato y restricciones. |
+| **Contrato técnico** | Reglas de stack y arquitectura del proyecto. Se incluye en los prompts para que la IA proponga soluciones compatibles. |
+| **Historia de usuario** | Funcionalidad descrita desde la perspectiva de quien la usa, con criterios de aceptación verificables. |
+| **Criterio de aceptación** | Condición observable en pantalla que define "terminado". Describe resultados, no código. |
+| **Sprint** | Iteración de trabajo con meta concreta. En este módulo: Sprint 1 (Clase 18) y Sprint 2 (Clase 19). |
+| **MVP** | Minimum Viable Product: la versión más simple que cumple el valor central prometido. |
 
 ---
 
 ## Recursos Adicionales
 
-- [Proyecto Integrador del Módulo 5](./project/){:target="_blank"} - Enunciado completo, historias de usuario, rúbrica y material de apoyo.
-- [INVEST: buenas historias de usuario](https://www.agilealliance.org/glossary/invest/){:target="_blank"} - Los 6 atributos que debe tener una buena historia.
-- [Ejemplos de criterios de aceptación](https://www.altexsoft.com/blog/business/acceptance-criteria-purposes-formats-and-best-practices/){:target="_blank"} - Guía práctica con ejemplos reales.
+- [Proyecto Integrador del Módulo 5](./project/){:target="_blank"} - Enunciado completo y rúbrica.
+- [INVEST: buenas historias de usuario](https://www.agilealliance.org/glossary/invest/){:target="_blank"} - Los 6 atributos de una buena historia.
+- [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html){:target="_blank"} - Documentación oficial de la API que consumirá tu app.

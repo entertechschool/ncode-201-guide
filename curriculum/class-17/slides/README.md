@@ -1,134 +1,168 @@
 <!-- .slide: data-background="#0A192F" -->
-# Clase 17: Ideation + Research + Stories
-## Arranca el Proyecto Integrador Final
+# Clase 17: Ideación y Planificación con IA
+## Tu proyecto final empieza hoy: Mi Setlist 🎵
 
 ---
 
-## TRANSICION: Clase 16 → Clase 17
+## TRANSICIÓN: Módulo 4 → Módulo 5
 
-### Clase anterior:
-- Cerraste el Módulo 4 con Gestor de Plantillas para WhatsApp.
-- Sabes manipular estado complejo y persistirlo con JSON + LocalStorage.
+### Ya saben:
+- Estado central + `render()`, CRUD inmutable, delegación
+- `localStorage` + JSON + `try/catch`
+- Módulos ESM (`import`/`export`)
 
-### Hoy:
-- Entras al último módulo: el Proyecto Final Integrador.
-- Hoy NO codeas. Planificas.
+### Hoy cambia el juego:
+- El lab ya no trae el código
+- Ustedes construyen, la IA acompaña, el instructor mentorea
 
-> "Un proyecto bien planificado es un proyecto medio terminado."
+> "En M1-M4 aprendieron las piezas. En M5 arman SU máquina."
 
 ---
 
-## QUIZ PRE-LAB
+## 🎵 El proyecto: Mi Setlist
+
+- Buscar canciones en el **catálogo real de iTunes**
+- Organizarlas en **playlists propias** que persisten
+- Duración total, estadísticas y orden
+
+**Hoy NO se codea el producto. Hoy se planifica.**
+
+*Enunciado completo en `class-17/project/`*
+
+---
+
+## ⚙️ El contrato técnico
+
+| Regla | Detalle |
+|-------|---------|
+| Stack | Vanilla JS + ESM, CSS propio o Tailwind |
+| Arquitectura | Estado central + `render()`, CRUD inmutable |
+| Persistencia | `localStorage` + JSON + `try/catch` |
+| Prohibido | Frameworks, librerías de estado, backend |
+
+> Este bloque viaja en **cada prompt** que le manden a la IA.
+
+---
+
+## QUIZ PRE-LAB 🤖
 
 ### Pregunta:
-Si tú y tres amigos pagan distintos gastos en un viaje a Máncora, ¿cómo calcularías quién le debe a quién al final?
+
+Le pido a la IA: *"hazme las historias de usuario de mi app de música"*.
+
+**¿Qué me va a devolver y qué le faltó a mi pedido?**
 
 *Toma 2-3 respuestas antes de continuar*
 
----
-
-## COMPROBACION
-
-### Pregunta:
-¿Cuál es la diferencia clave entre una **historia de usuario** y una **tarea técnica**?
-
-A. Las historias de usuario se escriben en inglés; las tareas en español.
-B. Las historias describen funcionalidades desde la perspectiva del usuario; las tareas describen el trabajo técnico para implementarlas.
-C. Las historias son para el diseñador; las tareas para el desarrollador.
-D. No hay diferencia: son sinónimos.
+Note: Conducir hacia las 4 partes del prompt. Después de esta discusión viene la DEMO EN VIVO de planificación con IA (guion en facilitator).
 
 ---
 
-## COMPROBACION - Respuesta
+## COMPROBACIÓN
 
-**Respuesta correcta:** B
+### ¿Cuál es un buen criterio de aceptación para "buscar canciones"?
 
-**Análisis de opciones:**
-- **A:** El idioma es irrelevante. Es una distinción de forma, no de contenido.
-- **B:** Correcto. La historia dice "el usuario quiere X para Y"; la tarea dice "crear función Z, editar archivo W".
-- **C:** Ambos artefactos los usa el equipo completo (PM, diseño, devs).
-- **D:** Son dos niveles distintos de abstracción y confundirlos lleva a malentendidos.
+A. La búsqueda usa `fetch` con `async/await` y `try/catch`
 
-> **Clave:** "Historia = para quién y por qué. Tarea = cómo."
+B. La app permite buscar canciones fácilmente
+
+C. Al buscar "Soda Stereo" aparecen resultados con carátula, nombre y artista
+
+D. El input de búsqueda tiene un `addEventListener` de tipo submit
 
 ---
 
-## CHECKPOINT Parte 1: Lectura activa del proyecto
+## COMPROBACIÓN - Respuesta
+
+**Respuesta correcta:** C
+
+- **A:** Describe implementación (el cómo), no resultado. Eso se decide al codear.
+- **B:** "Fácilmente" no es verificable. ¿Cómo compruebas "fácil"?
+- **C:** Observable y verificable en pantalla: cualquiera puede probarlo. ✅
+- **D:** Detalle de código. Si mañana cambias el listener, la historia sigue válida.
+
+> **Clave:** Los criterios describen lo que se VE, no lo que se ESCRIBE.
+
+---
+
+## CHECKPOINT Parte 1: Tus historias de usuario
 
 ### Verificar:
-Cada estudiante tiene su análisis inicial escrito (entidades + alcance).
+`HISTORIAS.md` con ~8 HUs + `PROMPTS.md` con ≥2 entradas
 
-**¿Qué deberías ver en pantalla?**
-- Lista de al menos 3 entidades del proyecto (Grupo, Persona, Gasto…).
-- `ALCANCE.md` con al menos 4 ítems "dentro" y "fuera".
+**¿Qué debe verse?**
+- Cada HU con 3-5 criterios observables
+- Las 10 funcionalidades del MVP cubiertas
+- `PROMPTS.md` con los prompts que usaste
 
 **Problemas comunes:**
-- Confunden entidades con acciones ("crear gasto" no es entidad) → pregunta "¿es un sustantivo?".
-- Listas de alcance muy cortas → empujar 2-3 ejemplos más de "fuera".
+- 15+ historias → alcance inflado, consolidar
+- Criterios con nombres de funciones → re-escribir como resultados
 
 ---
 
-## CHECKPOINT Parte 2: Planificación por sprints
+## CHECKPOINT Parte 2: Plan de sprints
 
 ### Verificar:
-`SPRINTS.md` con las 8 HU distribuidas y dependencias escritas.
+`SPRINTS.md` completo
 
-**¿Qué deberías ver?**
-- 4 HU en Sprint 1, 4 HU en Sprint 2 (o distribución propuesta con justificación).
-- Al menos 1 dependencia documentada entre historias.
-- Reto técnico principal identificado.
+**¿Qué debe verse?**
+- Meta de 1 línea por sprint
+- ~4 HUs por sprint + 1 dependencia documentada
+- Reto técnico personal identificado
 
 **Problemas comunes:**
-- Todos colocan exactamente HU1-HU4 / HU5-HU8 sin pensarlo → pedir que justifiquen por qué.
-- Nadie identifica dependencias → señalar que HU6 (transferencias) necesita HU5 (balance).
+- Playlists en Sprint 1 sin búsqueda → ¿de dónde salen las canciones?
 
 ---
 
-## CHECKPOINT Parte 3: Repositorio configurado
+## CHECKPOINT Parte 3: Repositorio listo
 
 ### Verificar:
-Repositorio en GitHub con estructura + `index.html` cargando en Live Server.
+Live Server: "Módulos ESM funcionando ✅" sin errores en consola
 
-**¿Qué deberías ver?**
-- URL pública de GitHub con el repo visible.
-- Estructura `css/` y `js/` con los 5 archivos vacíos.
-- `index.html` muestra "En construcción…" sin errores en consola.
-- Al menos un commit pusheado.
+**¿Qué debe verse?**
+- Repo público con estructura del contrato
+- `HISTORIAS.md`, `SPRINTS.md`, `PROMPTS.md` pusheados
 
 **Problemas comunes:**
-- Repo privado → recordar que debe ser público.
-- Script sin orden correcto → `state.js` debe ir antes que `ui.js`.
+- Error de CORS/import → abrió con `file://`, usar Live Server
 
 ---
 
-## REFLEXION: Historias bien escritas
+## REFLEXIÓN: La IA propone, tú decides
 
-| Historia floja | Historia sólida |
-|----------------|-----------------|
-| "Agregar gastos" | "Como usuario quiero registrar un gasto con descripción, monto y quién pagó, para llevar la cuenta" |
-| Sin criterios de aceptación | Con criterios verificables (monto > 0, campo obligatorio, etc.) |
+| Trabajar SIN criterio | Trabajar CON criterio |
+|-----------------------|----------------------|
+| Copia el primer output | Critica contra el contrato |
+| 15 historias infladas | 8 historias que caben en 2 sprints |
+| "La IA lo hizo" | "Yo decidí, la IA aceleró" |
 
-> **Regla memorable**: "Una historia sin criterios de aceptación es una esperanza, no un plan."
-
----
-
-## REFLEXION: El MVP honesto
-
-### Pregunta de consolidación
-
-Si mañana te bloqueas 2 horas con el algoritmo de transferencias, ¿sacrificas HU6 o sacrificas HU5? ¿Por qué?
-
-*(Pista: HU5 es el balance; HU6 son las transferencias sugeridas. Una depende de la otra.)*
+> **Regla memorable:** "No pegues nada que no puedas explicar."
 
 ---
 
-## TRANSICION: Preview Clase 18
+## TRANSICIÓN: Preview Clase 18
 
 ### Hoy lograste:
-- Entender el enunciado del proyecto a profundidad.
-- Distribuir las 8 historias entre Sprint 1 y Sprint 2.
-- Configurar tu repo con estructura profesional y primer commit.
+- Tus propias historias de usuario, criticadas y validadas
+- Plan de 2 sprints con dependencias
+- Repo con arquitectura ESM corriendo
 
-### Próxima clase:
-- **Sprint 1 completo:** construyes HTML + CSS + lógica base y dejas HU1-HU4 funcionando.
-- Llegarás con el repo listo y sales con una app que ya hace algo.
+### Próxima clase — Sprint 1:
+- Búsqueda en la API de iTunes con estados de UI
+- Tus primeras HUs funcionando, codeadas por ti + tu copiloto
+
+---
+
+## Entrega
+
+- Link a tu repositorio público
+- `HISTORIAS.md` + `SPRINTS.md` + `PROMPTS.md` visibles en GitHub
+- Standup de cierre: 30 segundos, tu repo + tu reto técnico
+
+### Preguntas de cierre:
+1. ¿Qué le corregiste hoy al output de la IA?
+2. ¿Cuál es tu reto técnico y cómo lo vas a atacar?
+
+### Próxima clase: Sprint 1 — a construir 🔨

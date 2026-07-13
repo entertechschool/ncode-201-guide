@@ -1,31 +1,30 @@
 # Proyecto del Módulo 5
 
-**Agenda de Gastos Compartidos**
+**Mi Setlist**
 
-Este es el **Proyecto Integrador Final** del curso Code 201. Consolida todo lo aprendido en los Módulos 1 al 4 en una sola aplicación web: layout responsivo con HTML + CSS, lógica algorítmica en JavaScript, manipulación del DOM con eventos y manejo de excepciones, y estado complejo persistido con JSON + LocalStorage.
+Este es el **Proyecto Integrador Final** del curso Code 201. Consolida todo lo aprendido en los Módulos 1 al 4 en una sola aplicación web: layout responsivo con HTML + CSS, lógica algorítmica en JavaScript, consumo de una API real con estados de carga y error, y estado complejo persistido con JSON + LocalStorage sobre una arquitectura de módulos ESM.
 
-A diferencia de los proyectos de los módulos anteriores, este proyecto es **común a toda la cohorte** y se desarrolla en **4 sesiones guiadas por el instructor** usando metodología ágil por sprints.
+A diferencia de los proyectos anteriores, aquí **el código lo escribes tú, con la IA como copiloto**. El curso te da el enunciado, el contrato técnico y el acompañamiento del instructor; las historias de usuario, las decisiones de implementación y cada línea de código salen de ti y de tu conversación con la IA.
 
-> 🔥 Cada estudiante presentará su proyecto en un **Demo Day** con **máximo 10 minutos** por presentación, donde debe demostrar funcionalidades clave y argumentar técnicamente sus decisiones de implementación.
+> 🔥 Cada estudiante presentará su proyecto en un **Demo Day** con **máximo 10 minutos**, donde debe demostrar funcionalidades clave, argumentar decisiones técnicas y explicar cómo usó (y validó) a la IA.
 
 ---
 
 ## 🎯 Objetivo del Proyecto
 
-Construir una aplicación web que permita a grupos de amigos, roommates o equipos pequeños **registrar gastos compartidos** y **calcular automáticamente quién le debe a quién**. La app calcula el balance neto de cada persona y sugiere las transferencias mínimas necesarias para saldar el grupo.
+Construir una aplicación web que permita **buscar canciones en un catálogo real** (API de iTunes) y **organizarlas en playlists personales** que sobreviven al recargar la página. La app calcula la duración total de cada playlist y muestra estadísticas de tu música.
 
-Inspiración: Splitwise simplificado, sin backend, con persistencia local.
+Inspiración: el "armador de playlists" de cualquier app de música, sin cuenta ni backend.
 
 ---
 
 ## 👤 Usuario Objetivo
 
-Grupos de 2 a 10 personas que comparten gastos recurrentes:
+Cualquier persona que arma listas de música con intención:
 
-- Viajes entre amigos (Máncora, Cusco, Tarapoto).
-- Roommates que comparten arriendo, servicios y compras del hogar.
-- Parejas que llevan cuentas juntas.
-- Equipos pequeños en salidas y eventos.
+- El setlist de una banda o DJ para su próxima tocada.
+- La playlist del viaje, la del gimnasio, la de estudiar.
+- El "top 10" que le quieres compartir a alguien.
 
 ---
 
@@ -33,10 +32,10 @@ Grupos de 2 a 10 personas que comparten gastos recurrentes:
 
 | Clase | Fase | Contribución al Proyecto |
 |-------|------|--------------------------|
-| **Clase 17: Ideation + Research + Stories** | Planificación | Analizar el proyecto, descomponer en historias y planificar sprints. |
-| **Clase 18: Sprint 1** | Construcción base | HTML semántico, diseño responsivo, estado inicial, agregar personas y gastos. |
-| **Clase 19: User Validation + Sprint 2** | Validación + cierre | Validación con compañeros, cálculo de balances, transferencias sugeridas, persistencia. |
-| **Clase 20: Demo Day** | Presentación | Demo en vivo, evaluación con rúbrica y cierre del curso. |
+| **Clase 17: Ideación y Planificación con IA** | Planificación | Descomponer el MVP en historias de usuario CON la IA, planificar sprints y configurar el repositorio. |
+| **Clase 18: Sprint 1** | Construcción base | Búsqueda en la API con estados de UI, playlists y persistencia base. |
+| **Clase 19: IA como Corrector + Sprint 2** | Auditoría + cierre | Revisión de código y pruebas con la IA, HUs propias, estadísticas, orden, robustez y deploy. |
+| **Clase 20: Demo Day** | Presentación | Demo en vivo, argumentación técnica y cierre del curso. |
 
 ---
 
@@ -44,241 +43,136 @@ Grupos de 2 a 10 personas que comparten gastos recurrentes:
 
 La aplicación debe permitir como mínimo:
 
-1. **Crear un grupo** con un nombre descriptivo (ej: "Viaje a Máncora", "Depto Miraflores").
-2. **Agregar y eliminar personas** del grupo.
-3. **Registrar un gasto** indicando: quién pagó, monto, descripción y entre quiénes se divide.
-4. **Ver la lista de gastos** del grupo ordenada por fecha de registro.
-5. **Calcular el balance neto** de cada persona (positivo = le deben, negativo = debe).
-6. **Sugerir transferencias mínimas** para saldar todas las deudas del grupo.
-7. **Eliminar un gasto** con recálculo automático del balance.
-8. **Validar entradas**: montos positivos, campos obligatorios, al menos un pagador y un receptor.
-9. **Persistir el grupo completo** (integrantes + gastos) en LocalStorage.
-10. **Restaurar automáticamente** el grupo al recargar la página.
+1. **Buscar canciones** por artista o título en la API, mostrando carátula, nombre, artista y duración.
+2. **Comunicar el estado de la búsqueda**: indicador de carga, mensaje de error si la API falla, mensaje amigable si no hay resultados.
+3. **Crear playlists** con nombre propio (ej: "Road trip", "Ensayo sábado").
+4. **Agregar canciones** desde los resultados de búsqueda a una playlist.
+5. **Ver el contenido de una playlist** con los datos de cada canción y la fecha en que se agregó.
+6. **Quitar canciones y eliminar playlists** con confirmación previa (modal propio).
+7. **Ver la duración total** de la playlist en formato legible (ej: "1 h 23 min").
+8. **Ver estadísticas** de la playlist: cantidad de canciones, género más frecuente, artista más repetido.
+9. **Ordenar las canciones** de una playlist (recientes/antiguas, alfabético).
+10. **Persistir todo** en LocalStorage y **restaurar** al recargar; si los datos están corruptos, la app no se rompe y ofrece "Empezar de cero".
+
+> 📖 **Sobre las historias de usuario:** este proyecto NO trae historias pre-redactadas. En la Clase 17 tú derivas tus propias HUs desde este MVP **trabajando con la IA**, y el instructor las valida. Ese es el primer entregable del módulo.
 
 ---
 
-## 📖 Historias de Usuario (pre-redactadas)
+## 🤖 La IA como copiloto (reglas del juego)
 
-Las siguientes historias son el **core del proyecto** y se distribuyen entre los dos sprints. Cada estudiante las implementa sobre su propio repositorio.
+La IA es parte oficial del proyecto, con tres roles: **guía** en la planificación (C17), **copiloto** al codear (C18-C19) y **correctora** al revisar. Las reglas:
 
-### Sprint 1 — Construcción base
+1. **Regla de oro: no pegues código que no puedas explicar.** En el Q&A del Demo Day el instructor te preguntará por fragmentos específicos de TU código.
+2. **Tus prompts clave quedan registrados en `PROMPTS.md`**: qué pediste, para qué y qué hiciste con el resultado. Es parte de la entrega final.
+3. **El contrato técnico viaja en tus prompts.** Cuando le pidas algo a la IA, dale el contexto del proyecto (stack, arquitectura, prohibiciones). Sin contexto, la IA te dará soluciones que no puedes usar.
+4. **La IA propone, tú decides.** Su output es un borrador para criticar, no una respuesta para copiar.
 
-#### HU1: Crear un grupo
-
-**Como** usuario, **quiero** crear un grupo con un nombre, **para** organizar gastos de una situación específica (viaje, depto, salida).
-
-**Criterios de Aceptación:**
-- Al hacer clic en "Nuevo grupo" se pide un nombre.
-- El nombre del grupo se muestra en el encabezado de la app.
-- El grupo queda guardado en LocalStorage al crearse.
-- Si ya hay un grupo activo, se pregunta antes de reemplazarlo.
-
-#### HU2: Agregar y eliminar personas
-
-**Como** usuario, **quiero** agregar y eliminar personas del grupo, **para** reflejar quiénes realmente participan de los gastos.
-
-**Criterios de Aceptación:**
-- Se puede agregar una persona escribiendo su nombre y presionando Enter o un botón.
-- Los nombres se muestran en una lista visible.
-- Cada persona se puede eliminar con un botón × al costado de su nombre.
-- No se permite agregar dos personas con el mismo nombre.
-- El grupo debe tener al menos 2 personas para poder registrar gastos.
-
-#### HU3: Registrar un gasto simple
-
-**Como** usuario, **quiero** registrar un gasto indicando quién pagó, cuánto y qué fue, **para** llevar cuenta de lo que se gasta.
-
-**Criterios de Aceptación:**
-- Formulario con: descripción (texto), monto (número > 0), quién pagó (select de personas del grupo), entre quiénes se divide (checkboxes).
-- Al enviar, el gasto aparece en la lista de gastos con fecha y hora.
-- Si el monto es 0 o negativo, se muestra error y no se registra.
-- Si no hay al menos una persona marcada en "entre quiénes se divide", se muestra error.
-- El gasto queda guardado en LocalStorage.
-
-#### HU4: Ver la lista de gastos
-
-**Como** usuario, **quiero** ver todos los gastos registrados del grupo, **para** saber qué se ha gastado.
-
-**Criterios de Aceptación:**
-- Los gastos se muestran en una lista ordenada por fecha (más reciente arriba).
-- Cada ítem muestra: descripción, monto, quién pagó, entre quiénes se divide, fecha.
-- Si no hay gastos, se muestra un estado vacío amigable ("Aún no hay gastos registrados").
-
-### Sprint 2 — Cálculo, validación y cierre
-
-#### HU5: Calcular el balance neto
-
-**Como** usuario, **quiero** ver cuánto debe o le deben a cada persona, **para** entender la situación económica del grupo.
-
-**Criterios de Aceptación:**
-- Se muestra una tabla o panel con el nombre de cada persona y su balance neto.
-- Balance positivo (le deben): se muestra en verde con signo `+`.
-- Balance negativo (debe): se muestra en rojo con signo `−`.
-- Balance cero: se muestra en color neutro.
-- El balance se recalcula automáticamente al agregar o eliminar gastos.
-
-#### HU6: Ver transferencias sugeridas
-
-**Como** usuario, **quiero** ver qué transferencias debe hacer cada persona para saldar el grupo, **para** cerrar cuentas con el menor número de movimientos.
-
-**Criterios de Aceptación:**
-- Se muestra una lista de transferencias con el formato "X debe transferir a Y: S/ monto".
-- El algoritmo minimiza el número total de transferencias.
-- Si el grupo ya está saldado (todos con balance 0), se muestra "¡Grupo saldado! 🎉".
-- La sección se actualiza automáticamente al modificar gastos.
-
-#### HU7: Eliminar un gasto
-
-**Como** usuario, **quiero** eliminar un gasto mal registrado, **para** corregir errores sin empezar de cero.
-
-**Criterios de Aceptación:**
-- Cada gasto tiene un botón "eliminar" con confirmación previa.
-- Al confirmar, el gasto desaparece de la lista y se elimina de LocalStorage.
-- El balance neto y las transferencias sugeridas se recalculan al instante.
-
-#### HU8: Persistencia completa y recuperación ante errores
-
-**Como** usuario, **quiero** que el grupo y sus gastos sobrevivan al recargar la página, **para** no perder información.
-
-**Criterios de Aceptación:**
-- Al recargar, el grupo, sus personas y sus gastos se muestran como estaban.
-- Si LocalStorage tiene datos corruptos, la app no se rompe: muestra un mensaje y ofrece "Empezar de cero".
-- El acceso a LocalStorage está envuelto en try/catch para capturar errores.
+**Herramientas del módulo:** un **chat de IA gratuito** (planificación, modo interactivo, brainstorms) + **GitHub Copilot Free en VS Code** (implementación puntual y la auditoría de la Clase 19, donde su acceso al proyecto completo con `@workspace` marca la diferencia). El plan gratuito de Copilot da ~50 mensajes de chat al mes: úsalo donde ver tu código importa, y el chat web para todo lo demás.
 
 ---
 
-## 🏆 Retos Adicionales (opcional, para puntaje extra)
+## ⚙️ Contrato Técnico
 
-Cada estudiante puede implementar **historias propias adicionales** para destacar en la presentación:
+Este bloque es tu **contexto para la IA**: cópialo (o resúmelo) al inicio de tus conversaciones.
 
-- **HU extra: División desigual** — permitir que una persona pague más que las demás (porcentajes personalizados).
-- **HU extra: Múltiples grupos** — gestionar más de un grupo simultáneamente y cambiar entre ellos.
-- **HU extra: Exportar a texto** — generar un resumen en texto plano para copiar y compartir por WhatsApp.
-- **HU extra: Modo oscuro** — toggle claro/oscuro persistente.
-- **HU extra: Filtrar gastos** — por persona que pagó o por rango de montos.
+- **Stack:** HTML5 semántico + CSS3 (propio o Tailwind Play CDN, a tu criterio) + **JavaScript vanilla con módulos ESM** (`import`/`export`, `<script type="module">`).
+- **Arquitectura:** estado central plano + patrón "cambias el estado → llamas `render()`". CRUD **inmutable** (`.filter`/`.map`/spread). **Delegación de eventos** para las listas. Ids con `crypto.randomUUID()`.
+- **Persistencia:** `localStorage` + `JSON.stringify`/`parse` envueltos en `try/catch`; fechas rehidratadas al cargar.
+- **UX:** confirmaciones con **modal propio** (nada de `confirm()` nativo); estados vacíos amigables.
+- **API:** iTunes Search API (solo lectura, sin key).
+- **Deploy:** GitHub Pages. ESM no corre con `file://` → usar Live Server.
 
----
+> **No se permite:** frameworks JS (React, Vue...), librerías de manejo de estado, backend, copiar código de la IA sin registrarlo en `PROMPTS.md`.
 
-## ⚙️ Stack Técnico
-
-- **HTML5** semántico (sin frameworks de UI).
-- **CSS3** con Flexbox y/o Grid. Se permite variables CSS. No se permite Bootstrap/Tailwind obligatoriamente (opcional a criterio del estudiante).
-- **JavaScript vanilla** (sin React, Vue, etc.). Se permite usar clases ES6 y arrow functions del Módulo 4.
-- **LocalStorage** para persistencia.
-- **Git + GitHub** para versionado.
-- **GitHub Pages** (o similar) para el deploy del MVP.
-
-> **No se permite:** librerías de manejo de estado (Redux, etc.), frameworks JS, backend.
-
----
-
-## 📁 Estructura de Archivos Sugerida
+### Estructura de archivos
 
 ```
-gastos-compartidos/
+mi-setlist/
 ├── index.html
-├── css/
-│   └── styles.css
+├── css/styles.css
 ├── js/
 │   ├── app.js             # Punto de entrada, inicialización
-│   ├── state.js           # Estado central del grupo (personas + gastos)
-│   ├── storage.js         # Funciones de LocalStorage (save/load/clear)
-│   ├── balance.js         # Cálculo de balances y transferencias
-│   └── ui.js              # Renderizado y eventos del DOM
+│   ├── models/Cancion.js  # Clase que modela una canción
+│   ├── state.js           # Estado central (playlists)
+│   ├── storage.js         # localStorage (guardar/cargar/limpiar)
+│   ├── api.js             # fetch a la API de iTunes
+│   └── ui.js              # render + eventos del DOM
+├── PROMPTS.md             # Registro de trabajo con la IA
 ├── README.md              # Documentación del proyecto
 └── .gitignore
 ```
 
 ---
 
+## 🎵 La API
+
+Endpoint de búsqueda (sin key, solo lectura):
+
+```
+https://itunes.apple.com/search?term=soda+stereo&entity=song&limit=10
+```
+
+Campos útiles de cada resultado: `trackName`, `artistName`, `collectionName`, `artworkUrl100`, `trackTimeMillis`, `primaryGenreName`.
+
+> ⚠️ **Límites conocidos:** la API acepta ~20 solicitudes por minuto. Usa `limit=10`, busca con un botón (no en cada tecla) y no hagas búsquedas en loop. Si responde `403`, espera un minuto.
+
+---
+
+## 🏆 Tus HUs Propias (para puntaje)
+
+Además del MVP, en la **Clase 19** definirás con la IA **2 historias de usuario propias** — features que TÚ decides — y debes **implementar al menos 1** antes del Demo Day. Ideas de inspiración, del tipo que verías en cualquier app de música en producción:
+
+- **Favoritos** — botón ⭐ en cada canción y vista/filtro "solo favoritas", persistido.
+- **Filtros** — filtrar la playlist por género, artista o texto, combinable con el orden.
+- **Cargar más resultados** — paginar la búsqueda (siguientes 10) sin repetir los ya mostrados.
+- **Deshacer eliminación** — al quitar una canción, aviso temporal con botón "Deshacer" (5 seg).
+- **Modo oscuro** — toggle claro/oscuro que persiste y respeta la preferencia del sistema.
+- **Compartir setlist** — exportar la playlist como texto listo para pegar en WhatsApp.
+
+Puedes proponer otras, siempre dentro del contrato técnico (sin backend ni librerías).
+
+---
+
 ## ☑️ Rúbrica de Evaluación
 
-> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts, aprobación mínima 70/100) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: funcionalidades del MVP (HU1-HU8), calidad técnica, historias adicionales, presentación en vivo (Demo Day C20), y argumentación técnica + Q&A.
+| Criterio | Pts | Qué evalúa |
+|----------|-----|------------|
+| **Funcionalidades del MVP** | 20 | Los 10 puntos del MVP implementados y funcionando |
+| **Calidad técnica** | 20 | Contrato técnico respetado: ESM, estado + render, CRUD inmutable, try/catch, delegación |
+| **Uso responsable de IA + HU propia** | 20 | `PROMPTS.md` completo, con prompts contextualizados (10) + ≥1 HU propia implementada (10) |
+| **Presentación en vivo — Demo Day** | 20 | Demo clara en ≤10 min del flujo completo, sin errores en vivo |
+| **Argumentación técnica + Q&A** | 20 | Justifica ≥2 decisiones (una debe involucrar a la IA) y explica fragmentos de su código |
+
+**Total: 100 puntos · Aprobación mínima: 70/100.** Detalle por niveles en la rúbrica oficial del lab.
 
 ---
 
 ## 📣 Presentación — Demo Day (Clase 20)
 
-Cada estudiante tendrá **máximo 10 minutos en total**, distribuidos en:
+Máximo **10 minutos** por estudiante:
 
-1. **Demo en vivo (5 min):** crear un grupo, agregar personas, registrar gastos, mostrar balance y transferencias sugeridas, eliminar un gasto.
-2. **Argumentación técnica (3 min):** explicar 2 decisiones técnicas importantes (ej: cómo modeló el estado, cómo implementó el algoritmo de transferencias, cómo manejó los errores de LocalStorage).
-3. **Q&A con el instructor (2 min):** responder preguntas sobre fragmentos de código específicos.
+1. **Demo en vivo (5 min):** buscar canciones, armar una playlist, mostrar duración y estadísticas, quitar una canción, recargar y demostrar persistencia.
+2. **Argumentación técnica (3 min):** 2 decisiones clave; al menos una sobre cómo usaste la IA y cómo validaste lo que te dio.
+3. **Q&A (2 min):** preguntas del instructor sobre fragmentos de TU código.
 
 ---
 
 ## 📝 Instrucciones de Envío
 
-Al cierre del Demo Day, cada estudiante debe entregar:
+Al cierre del Demo Day, cada estudiante entrega:
 
 - **Repositorio de GitHub** con commits frecuentes a lo largo de los sprints.
-- **URL pública del deploy** (GitHub Pages u otro).
-- **README.md del proyecto** que documente:
-    - Historias de usuario implementadas (base + adicionales).
-    - Decisiones técnicas clave explicadas brevemente.
-    - Enlace al deploy.
-    - Instrucciones para correr localmente.
-
----
-
-## 🛠️ Material de Apoyo
-
-### Mockup conceptual (referencial)
-
-```
-┌────────────────────────────────────────────────┐
-│  💸 Agenda de Gastos — "Viaje a Máncora"       │
-├────────────────────────────────────────────────┤
-│                                                │
-│  👥 Integrantes:                               │
-│  [Ana] [Beto] [Cami] [Diana] [+ agregar]       │
-│                                                │
-├────────────────────────────────────────────────┤
-│  ➕ Nuevo gasto                                 │
-│  [Descripción______] [Monto___] [Pagó ▼]       │
-│  ☐ Ana ☐ Beto ☐ Cami ☐ Diana      [Registrar]  │
-├────────────────────────────────────────────────┤
-│  📋 Gastos                                      │
-│  • Cena el sábado — S/ 120 — Pagó Ana          │
-│  • Gasolina — S/ 80 — Pagó Beto                │
-│  ...                                            │
-├────────────────────────────────────────────────┤
-│  📊 Balances                                    │
-│  Ana   +45.00                                  │
-│  Beto  +20.00                                  │
-│  Cami  −30.00                                  │
-│  Diana −35.00                                  │
-├────────────────────────────────────────────────┤
-│  🔄 Transferencias sugeridas                    │
-│  Cami → Ana: S/ 30.00                          │
-│  Diana → Ana: S/ 15.00                         │
-│  Diana → Beto: S/ 20.00                        │
-└────────────────────────────────────────────────┘
-```
-
-### Pistas técnicas clave
-
-- **Modelado del estado:** usar un objeto con estructura `{ grupo: { nombre, personas: [], gastos: [] } }`. Cada gasto: `{ id, descripcion, monto, pagadoPor, divididoEntre: [], fecha }`.
-- **Algoritmo de balances:** por cada persona, sumar lo que pagó y restar su parte proporcional en los gastos donde aparece como divisor.
-- **Algoritmo de transferencias mínimas:** separar deudores y acreedores, emparejar el mayor deudor con el mayor acreedor, transferir el mínimo de ambos montos, repetir hasta saldar.
-- **Persistencia:** envolver `localStorage.setItem` y `localStorage.getItem` en `try/catch`. Si el parse falla, retornar estado vacío y mostrar mensaje al usuario.
-
----
-
-> ### 💡 Tips para el Desarrollo
->
-> - **Empieza por el estado:** define cómo vas a modelar un gasto y una persona antes de tocar HTML.
-> - **Usa commits pequeños:** uno por historia de usuario o por criterio de aceptación cumplido.
-> - **Haz commits aunque no funcione todo:** los avances parciales son valiosos.
-> - **Prueba con datos reales:** simula un viaje con amigos para detectar casos borde.
-> - **No dejes el algoritmo de transferencias para el último día:** es el reto técnico más alto del proyecto.
+- **URL pública del deploy** (GitHub Pages).
+- **`PROMPTS.md`** con el registro del trabajo con la IA.
+- **`README.md` del proyecto**: descripción, stack, tus HUs implementadas (base + retos), decisiones técnicas, link al deploy, cómo correr localmente.
 
 ---
 
 > ### ⚠️ Limitaciones conocidas (parte del diseño pedagógico)
 >
-> - Sin backend: los datos viven solo en el navegador del usuario. No se sincroniza entre dispositivos.
-> - LocalStorage tiene un límite de ~5MB — suficiente para cientos de gastos pero no para millones.
-> - Sin autenticación: cualquiera con acceso al navegador ve el grupo. No es apto para datos sensibles reales.
+> - La API es de solo lectura: no puedes publicar nada en iTunes, solo consultar su catálogo.
+> - Los previews y carátulas pertenecen a Apple; tu app las consume, no las almacena.
+> - Sin backend ni cuentas: tus playlists viven solo en tu navegador.
+> - La IA se equivoca con confianza: valida todo contra el contrato técnico y contra lo que ves en pantalla.
 >
-> Estas limitaciones se discuten explícitamente en Clase 17 como parte del alcance del MVP.
+> Estas limitaciones se discuten en la Clase 17 como parte del alcance del MVP.

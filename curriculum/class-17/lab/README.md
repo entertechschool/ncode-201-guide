@@ -1,263 +1,202 @@
-# Lab 17: Entendiendo y Planificando tu Proyecto Final
+# Lab 17: Planifica tu Proyecto con la IA
 
-
+> 🧭 **Nuevo formato de lab.** A partir de este módulo el lab ya no trae el código: trae la misión, los tiempos y los criterios. El código de tu app lo escribes tú, junto con la IA y con el instructor como mentor.
 
 ## 🎯 Objetivos
 
-1. Interpretar el enunciado del proyecto Agenda de Gastos Compartidos y sus 8 historias de usuario.
-2. Planificar la distribución de trabajo entre Sprint 1 y Sprint 2 con criterios propios.
-3. Configurar el repositorio inicial con estructura de archivos, README y primer commit funcional.
+1. Descomponer el MVP de Mi Setlist en historias de usuario propias trabajando con la IA.
+2. Planificar la distribución de las historias en dos sprints con dependencias justificadas.
+3. Configurar el repositorio con la estructura ESM del contrato técnico y un primer commit funcional.
 
 ---
 
 ## 🔑 Conceptos Clave
 
-- **Historia de usuario** - Funcionalidad descrita desde la perspectiva de quien la usa.
-- **Criterio de aceptación** - Condición verificable que define "terminado".
-- **Sprint** - Ventana de trabajo con un objetivo concreto (Sprint 1: base funcional, Sprint 2: cálculo y cierre).
-- **Alcance** - Lo que el proyecto incluye y lo que deja fuera intencionalmente.
+- **Contrato técnico** - El bloque de stack + arquitectura + prohibiciones del enunciado. Es tu contexto para cada prompt.
+- **Prompt estructurado** - Contexto + tarea + formato + restricciones. Sin las 4 partes, la IA inventa.
+- **Historia de usuario (HU)** - "Como [rol] quiero [acción] para [beneficio]", con criterios de aceptación observables.
+- **Sprint** - Ventana de trabajo con meta concreta. Sprint 1 = Clase 18, Sprint 2 = Clase 19.
 
 ---
 
 ## ⚙️ Setup Inicial
 
-Esta clase abre el Módulo 5. Verifica que tengas todo listo antes de empezar:
-
 | ✓ | Requisito | Verificación |
 |---|-----------|--------------|
-| ☐ | Cuenta de GitHub activa | Puedes ingresar a `github.com` con tu usuario |
-| ☐ | Git configurado localmente | `git config user.name` retorna tu nombre |
-| ☐ | VS Code instalado | Abre desde la terminal con `code .` |
-| ☐ | Leíste el [enunciado del proyecto](../project/) | Sabes qué es "Agenda de Gastos Compartidos" en una línea |
-
-> ⚠️ Si no terminaste la lectura del enunciado, tómate 10 minutos ahora. El resto del lab depende de entenderlo.
-
----
-
-## Parte 1: Lectura activa del proyecto (30 min)
-
-### 1.1 Identifica las entidades del proyecto
-
-Lee el [enunciado del proyecto](../project/) con calma. En una hoja o archivo de texto, responde:
-
-```markdown
-<!-- Tu análisis inicial -->
-## Entidades principales
-1. ¿Cuáles son los "sustantivos importantes" del proyecto?
-   (pista: hay al menos 3 — completa con los que identifiques)
-   - _____________
-   - _____________
-   - _____________
-
-## Relaciones
-2. ¿Qué entidad "contiene" a las otras?
-3. ¿Qué dato une a un gasto con las personas involucradas?
-```
-
-> 💡 **Tip:** Si dudas, relee las 8 historias de usuario. Los sustantivos que se repiten son pistas fuertes.
-
-### 1.2 Define el alcance de tu MVP
-
-Crea un archivo `ALCANCE.md` (temporal, en tu carpeta local) y completa:
-
-```markdown
-## Dentro del alcance (lo que SÍ voy a construir)
-- [ ] Crear grupos
-- [ ] ...completa según las HU1-HU8...
-
-## Fuera del alcance (lo que NO voy a construir, aunque sería interesante)
-- [ ] Multi-usuario real (backend)
-- [ ] ...completa con 2-3 más...
-```
-
-✅ **Checkpoint:** Tienes identificadas al menos 3 entidades del proyecto y una lista de "dentro" y "fuera" del alcance con al menos 4 ítems por lado.
+| ☐ | Leíste el [enunciado del proyecto](../project/) | Puedes decir qué es Mi Setlist en una línea |
+| ☐ | Cuenta de GitHub activa y Git configurado | `git config user.name` retorna tu nombre |
+| ☐ | VS Code con Live Server | Abre desde la terminal con `code .` |
+| ☐ | Sesión iniciada en tu chat de IA | Puedes enviar un prompt y recibir respuesta |
+| ☐ | Extensión **GitHub Copilot** instalada (plan Free) | El ícono de Copilot aparece en VS Code — la usarás desde la Clase 18 |
 
 ---
 
-## Parte 2: Planificación por sprints (30 min)
+## Parte 1: Descompón el MVP en historias de usuario (45 min)
 
-### 2.1 Revisa la distribución propuesta
+El enunciado te da 10 funcionalidades del MVP, pero **no te da las historias**. Vas a derivarlas con la IA y quedarte solo con lo que resista tu crítica.
 
-El [enunciado del proyecto](../project/) sugiere una distribución: **HU1-HU4 en Sprint 1** (construcción base) y **HU5-HU8 en Sprint 2** (cálculo y cierre). Tu tarea aquí es **confirmar que te hace sentido** o proponer ajustes.
+### 1.1 Arma tu primer prompt con las 4 partes
 
-Crea un archivo `SPRINTS.md` en tu carpeta local:
+```text
+[CONTEXTO]  Pega aquí el contrato técnico del enunciado + la lista del MVP.
+[TAREA]     Pídele descomponer el MVP en historias de usuario para UNA persona
+            desarrollando en 2 sprints de una sesión cada uno.
+[FORMATO]   Historia ("Como... quiero... para...") + 3-5 criterios de aceptación.
+[RESTRICCIÓN] Los criterios describen RESULTADOS observables en pantalla,
+            no implementación. Nada fuera del MVP.
+```
+
+### 1.2 Audita cada historia (la IA se equivoca con confianza)
+
+Pasa cada HU por esta tabla. Si falla un check, **corrígela tú o re-promptea**:
+
+| Check | ❌ Falla | ✅ Pasa |
+|-------|---------|--------|
+| ¿Resultado observable? | "La búsqueda usa fetch con async/await" | "Al buscar 'Soda Stereo' aparecen resultados con carátula y artista" |
+| ¿Tamaño razonable? | 1 HU = "toda la gestión de playlists" | 1 HU = "crear una playlist con nombre" |
+| ¿Dentro del MVP? | "Compartir en redes", "login de usuarios" | Solo las 10 funcionalidades del enunciado |
+| ¿Cobertura completa? | Ninguna HU cubre los datos corruptos | Cada punto del MVP tiene una HU dueña |
+
+Re-prompts útiles para corregir (cópialos y adáptalos):
+
+```text
+El criterio "___" describe implementación. Reescríbelo como algo
+que un usuario pueda ver o probar en pantalla.
+```
+
+```text
+La HU "___" es demasiado grande para una fracción de clase.
+Divídela en dos historias independientes.
+```
+
+### 1.3 Registra tus prompts en `PROMPTS.md`
+
+Crea el archivo en tu carpeta del proyecto y registra los prompts que usaste y para qué:
 
 ```markdown
-## Sprint 1 (Clase 18) — Meta: [escribe en 1 línea qué se ve funcionando al final]
-- HU__: ______
-- HU__: ______
-- HU__: ______
-- HU__: ______
+## [Fecha] — Descomposición del MVP en HUs
+**Para qué:** derivar mis historias de usuario.
+**Prompt:** (el texto que enviaste)
+**Resultado:** base de mis 8 HUs; ajusté criterios y alcance a mano.
+```
 
-## Sprint 2 (Clase 19) — Meta: [escribe en 1 línea qué se ve funcionando al final]
+✅ **Checkpoint (~min 105 de la clase):** Tienes tus **8 HUs (±1)** con criterios de aceptación en `HISTORIAS.md`, cubren las 10 funcionalidades del MVP, y `PROMPTS.md` registra los prompts que usaste.
+
+---
+
+## Parte 2: Planifica tus sprints (25 min)
+
+### 2.1 Pide una propuesta de distribución a la IA
+
+En el mismo chat (ya tiene tu contexto), pide el plan:
+
+```text
+Estas son mis 8 historias finales: [pega HISTORIAS.md]
+Propón cómo distribuirlas en Sprint 1 y Sprint 2 (una clase cada uno).
+Justifica cada asignación, señala las dependencias (qué necesito
+tener antes de qué) y dime cuál historia es la más difícil técnicamente.
+```
+
+Audita la propuesta con estas tres preguntas:
+
+- ¿El Sprint 1 termina en algo **demostrable**, o es puro setup?
+- ¿Las dependencias son reales? (sin búsqueda no hay canciones que agregar a nada)
+- ¿La IA mandó todo lo difícil al Sprint 2? Si tu reto revienta en la Clase 19, ya no hay margen.
+
+### 2.2 Decide tú y escríbelo en `SPRINTS.md`
+
+La decisión final es tuya — la defenderás en el checkpoint. Crea `SPRINTS.md`:
+
+```markdown
+## Sprint 1 (Clase 18) — Meta: [qué se ve funcionando al final, en 1 línea]
+- HU__: ______ (por qué va primero)
+...
+
+## Sprint 2 (Clase 19) — Meta: [1 línea]
 - HU__: ______
-- HU__: ______
-- HU__: ______
-- HU__: ______
+...
 
 ## Dependencias detectadas
-- Para implementar HU__ necesito tener antes HU__ porque _______.
-```
+- Para HU__ necesito antes HU__ porque ______.
 
-> 💡 **Tip:** No hay una sola respuesta correcta. Si detectas una dependencia que obliga a cambiar el orden, documéntala y propón el cambio.
-
-### 2.2 Identifica tu reto técnico principal
-
-De las 8 historias, responde:
-
-```markdown
 ## Mi reto técnico principal
-La historia que más me intimida es la HU__ porque _______.
-Primera idea de cómo atacarla: _______.
+La HU que más me intimida es ______ porque ______.
 ```
 
-✅ **Checkpoint:** Tienes `SPRINTS.md` completo con 8 historias distribuidas, al menos 1 dependencia documentada y tu reto técnico identificado.
+✅ **Checkpoint (~min 130):** `SPRINTS.md` completo: metas por sprint, 4 HUs (±1) por sprint, ≥1 dependencia documentada y tu reto técnico identificado.
 
 ---
 
-## Parte 3: Configurar tu repositorio (60 min)
+## Parte 3: Configura tu repositorio (35 min)
 
-### 3.1 Crea el repositorio en GitHub
+### 3.1 Repo + estructura del contrato
 
-1. Entra a GitHub y crea un repositorio nuevo:
-   - Nombre sugerido: `gastos-compartidos` (o uno propio que tenga sentido).
-   - Visibilidad: **Público** (irá a tu portafolio).
-   - Inicializa con `README.md` y `.gitignore` (template: Node).
+Crea en GitHub el repo público `mi-setlist` (README + .gitignore Node), clónalo y crea la estructura de archivos del enunciado (los `.js` vacíos por ahora, excepto los dos de abajo).
 
-2. Clónalo en tu máquina:
+### 3.2 "Hola mundo" de módulos
 
-```bash
-git clone https://github.com/TU_USUARIO/gastos-compartidos.git
-cd gastos-compartidos
-```
-
-### 3.2 Crea la estructura de archivos
-
-Dentro de la carpeta, crea la estructura sugerida por el enunciado:
-
-```
-gastos-compartidos/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   ├── app.js
-│   ├── state.js
-│   ├── storage.js
-│   ├── balance.js
-│   └── ui.js
-├── README.md
-└── .gitignore
-```
-
-> 💡 **Tip:** Los archivos `.js` pueden estar vacíos por ahora. Solo la estructura.
-
-### 3.3 Escribe el `index.html` base
-
-Completa el esqueleto mínimo para que el navegador cargue todo:
+Este es el único código que te da el curso hoy — valida que tu entorno corre ESM:
 
 ```html
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><!-- ¿Cómo se llamará la app en la pestaña del navegador? --></title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <h1>💸 Agenda de Gastos Compartidos</h1>
-  <!-- Aquí irán las secciones principales; por ahora solo un placeholder -->
-  <p>En construcción…</p>
-
-  <!-- Scripts: orden importa. state y storage antes que ui y app -->
-  <script src="js/state.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/balance.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
+<!-- index.html (dentro de <body>) -->
+<h1>🎵 Mi Setlist</h1>
+<p id="app"></p>
+<script type="module" src="js/app.js"></script>
 ```
 
-### 3.4 Actualiza el `README.md` del repo
+```javascript
+// js/state.js
+export const mensaje = 'Módulos ESM funcionando ✅';
 
-Abre `README.md` y escribe tu versión inicial. Incluye al menos:
-
-```markdown
-# Agenda de Gastos Compartidos
-
-[Una línea describiendo qué hace la app]
-
-## Stack
-- HTML5 + CSS3 + JavaScript vanilla
-- LocalStorage para persistencia
-
-## Historias de usuario a implementar
-- HU1: ...
-- HU2: ...
-(...las 8)
-
-## Cómo correr el proyecto localmente
-1. Clonar el repo
-2. Abrir `index.html` con Live Server
+// js/app.js
+import { mensaje } from './state.js';
+document.querySelector('#app').textContent = mensaje;
 ```
 
-### 3.5 Primer commit y push
+> ⚠️ ESM no corre abriendo el archivo con doble clic (`file://`). Usa **Live Server**.
+
+### 3.3 README del repo + primer push
+
+Escribe el `README.md` con: una línea de descripción, stack, **tus HUs** (pega `HISTORIAS.md` o enlázalo) y cómo correr localmente. Luego:
 
 ```bash
 git add .
-git commit -m "chore: setup inicial del proyecto"
+git commit -m "chore: setup inicial con estructura ESM y plan del proyecto"
 git push origin main
 ```
 
-✅ **Checkpoint:** Al abrir tu repo en GitHub ves la estructura de carpetas, el `README.md` con las 8 HU listadas, y al abrir `index.html` con Live Server aparece "En construcción…" sin errores en la consola.
+✅ **Checkpoint (~min 165):** Tu repo en GitHub muestra la estructura completa + `HISTORIAS.md`, `SPRINTS.md` y `PROMPTS.md`; al abrir con Live Server ves "Módulos ESM funcionando ✅" sin errores en consola.
 
 ---
 
 ## 📁 Estructura Final del Proyecto
 
-Al cierre de la clase tu repositorio debe verse así:
-
 ```
-gastos-compartidos/
-├── index.html          # Esqueleto con título y placeholder
-├── css/
-│   └── styles.css      # Vacío, listo para Sprint 1
-├── js/
-│   ├── app.js
-│   ├── state.js
-│   ├── storage.js
-│   ├── balance.js
-│   └── ui.js           # Todos vacíos, listos para Sprint 1
-├── README.md           # Con stack, HU listadas y cómo correr
-├── ALCANCE.md          # (opcional, tu análisis)
-├── SPRINTS.md          # (opcional, tu planificación)
+mi-setlist/
+├── index.html          # Título + hola mundo ESM
+├── css/styles.css      # Vacío, listo para Sprint 1
+├── js/                 # app.js y state.js con el hola mundo;
+│   ├── models/         # el resto vacíos
+│   ├── api.js  state.js  storage.js  ui.js  app.js
+├── HISTORIAS.md        # Tus 8 HUs con criterios
+├── SPRINTS.md          # Tu plan de 2 sprints
+├── PROMPTS.md          # Registro del trabajo con la IA
+├── README.md
 └── .gitignore
 ```
 
 ---
 
-## Rubrica de Evaluacion
+## 🏆 Logros Adicionales (Opcional)
 
-> ⚠️ Esta rúbrica evalúa el **Proyecto Integrador Final M5** (Agenda de Gastos Compartidos), que se entrega y presenta en el **Demo Day (Clase 20)**. Se publica desde C17 para que la conozcas desde el primer día del módulo.
+### 🟢 Bosqueja tu UI con la IA
+Pídele a la IA un wireframe en ASCII de tu app y critícalo: ¿dónde va la búsqueda y dónde la playlist? Guárdalo en `HISTORIAS.md`.
 
-| Criterio | Excelente (20) | Bueno (15) | Satisfactorio (10) | Bajo (5) |
-|----------|----------------|------------|---------------------|----------|
-| **Funcionalidades del MVP** | Las 8 HU base (HU1-HU8) implementadas y funcionando al 100% | 6-7 HU funcionales, 1-2 con bugs menores | 4-5 HU funcionales, resto incompletas | <4 HU funcionales o flujo principal roto |
-| **Calidad Técnica** | Estado centralizado, `localStorage` con `try/catch`, código separado (state, storage, balance, ui, app), algoritmo de transferencias mínimo | Estado correcto, persistencia funcional, código separado pero con lógica filtrada | Funcional pero monolítico o sin manejo de errores | Código sin estructura, estado fragmentado |
-| **Historias Adicionales / Retos** | ≥2 HU adicionales del listado o propias aprobadas, completas con criterios cumplidos | 1 HU adicional con criterios al 100% | 1 HU adicional parcial | HU planteada pero no funciona |
-| **Presentación en Vivo — Demo Day** | Demo clara en ≤10 min, flujo completo (grupo→personas→gastos→balance→transferencias→eliminar), sin errores en vivo | Demo cubre flujo principal pero omite alguna funcionalidad o tiene tropiezos | Demo entrega lo pedido pero excede tiempo u omite funcionalidades | Demo confusa, app falla en vivo |
-| **Argumentación Técnica + Q&A** | Justifica ≥2 decisiones (modelado del estado, algoritmo de transferencias, manejo de errores) y responde correctamente Q&A sobre fragmento solicitado | Justifica 1 decisión claramente, responde Q&A con dificultad | Argumentación superficial sin profundizar | No justifica o no responde Q&A básico |
+### 🟡 Prueba la API desde la consola
+En la consola del navegador, haz un `fetch` al endpoint del enunciado y explora el JSON que responde (lo usarás en la Clase 18).
 
-**Total: 100 puntos** (5 criterios x 20 pts). **Aprobación mínima: 70/100**
-
-| Nota | Rango |
-|------|-------|
-| A | 90-100 |
-| B | 80-89 |
-| C | 70-79 |
-| F | < 70 |
+### 🔴 Semillas para tus HUs propias
+Pídele a la IA 3 ideas de features "de producción" para tu app (tipo favoritos o filtros) y guárdalas al final de `HISTORIAS.md` — en la Clase 19 definirás 2 HUs propias y esto te dará ventaja.
 
 ---
 
@@ -265,22 +204,21 @@ gastos-compartidos/
 
 ### Checklist
 
-- [ ] Repositorio público en GitHub con el nombre del proyecto.
-- [ ] Estructura de carpetas creada (css/, js/).
-- [ ] `index.html` carga sin errores en el navegador.
-- [ ] `README.md` del repo con stack, 8 HU y cómo correr.
-- [ ] Al menos un commit con mensaje claro.
-- [ ] `SPRINTS.md` con tu plan de distribución (aunque sea local).
+- [ ] Repo público con la estructura ESM y el hola mundo corriendo sin errores.
+- [ ] `HISTORIAS.md` con tus 8 HUs (±1) cubriendo todo el MVP.
+- [ ] `SPRINTS.md` con metas, distribución y dependencias.
+- [ ] `PROMPTS.md` con ≥2 entradas (prompt + para qué + resultado).
+- [ ] Commit y push realizados.
 
 ### Qué entregar
 
-- **Link a tu repositorio de GitHub** por el canal habitual (Blackboard / formulario).
-- **Screenshot** de `index.html` abierto en el navegador mostrando "En construcción…".
+- **Link a tu repositorio** por el canal habitual.
+- Participar en el **standup de cierre**: 30 segundos mostrando tu repo y tu reto técnico.
 
 ---
 
 > ### 💡 Consejos
 >
-> - No intentes codear las historias hoy. Hoy es planificar. Si sales con la cabeza clara sobre qué construir la próxima clase, ganaste.
-> - Si una historia no te queda clara, anótala y pregúntale al instructor. Las dudas a tiempo ahorran horas de refactor después.
-> - Tu `README.md` es la cara de tu proyecto en GitHub. Escríbelo pensando en que un reclutador pueda leerlo.
+> - Hoy no se codea el producto. Salir con un plan claro ES el entregable.
+> - Si la IA te da 15 historias, no es más completo: es alcance inflado. Menos historias, mejor definidas.
+> - La calidad de tu `PROMPTS.md` no se mide por cuántos prompts tiene, sino por si otro dev entendería cómo llegaste a tu plan.

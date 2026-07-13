@@ -1,107 +1,62 @@
 <!-- .slide: data-background="#0A192F" -->
-# Clase 20: Demo Day
-## Presentación final del Proyecto Integrador
+# Clase 20: Demo Day 🎉
+## Mi Setlist — 10 apps, 10 maneras, 10 minutos cada una
 
 ---
 
-## TRANSICION: Clase 19 → Clase 20
+## El formato: 10 minutos
 
-### Clase anterior:
-- Validaste tu app con un compañero.
-- Cerraste las 8 HU con balances, transferencias y manejo de errores.
+| Bloque | Tiempo |
+|--------|--------|
+| 🖥️ Demo en vivo (URL pública) | 5 min |
+| 🗣️ Argumentación: 2 decisiones (≥1 con IA) | 3 min |
+| ❓ Q&A sobre TU código | 2 min |
+
+> El orden se sortea ahora. Transición entre presentaciones: 2 min.
+
+---
+
+## El flujo mínimo de tu demo
+
+1. Buscar un artista → resultados con carátulas
+2. Agregar a playlist → duración y stats se actualizan
+3. Ordenar → eliminar con TU modal
+4. **Recargar** → todo sigue ahí
+5. Cierre: tu **HU propia** ✍️
+
+*Si algo falla: respira, plan B, sigue.*
+
+---
+
+## Mientras escuchas a tus compañeros
+
+- Misma app, decisiones distintas: anota UNA idea que te hubiera gustado tener
+- Los aplausos no se negocian 👏
+- Preguntas constructivas si hay tiempo extra
+
+---
+
+## TRANSICIÓN: El viaje completo
+
+### Hace 20 clases:
+- "¿Qué es una etiqueta HTML?"
 
 ### Hoy:
-- Presentas tu proyecto ante el grupo.
-- Cierras el curso con la rúbrica oficial aplicada.
+- App pública con API real, persistencia, arquitectura modular
+- Un copiloto de IA que aprendieron a **dirigir**: guía → copiloto → corrector
 
-> "Hoy no construyes. Hoy cuentas lo que construiste."
-
----
-
-## QUIZ PRE-LAB
-
-### Pregunta:
-Si tu deploy deja de funcionar justo antes de presentar, ¿qué haces?
-
-*Toma 2-3 respuestas antes de continuar*
+> "No aprendieron a usar una herramienta. Aprendieron a decidir con ella."
 
 ---
 
-## COMPROBACION
+## Cierre del curso
 
-### Pregunta:
-En tu presentación de 10 minutos, ¿cuál es el MEJOR orden?
+- Calificación con la rúbrica oficial + feedback individual
+- Tu repo y tu deploy quedan públicos: son tu portafolio desde hoy
+- **Siguiente parada: Code 301** — más profundidad, más autonomía
 
-A. 5 min explicando código + 3 min demo + 2 min Q&A
-B. 5 min demo en vivo + 3 min argumentación técnica + 2 min Q&A
-C. 10 min solo demo, sin argumentación
-D. 3 min demo + 7 min leyendo el código
+### Entrega final:
+- Link al repo + link al deploy
+- README completo + `PROMPTS.md` + `HISTORIAS.md`
 
----
-
-## COMPROBACION - Respuesta
-
-**Respuesta correcta:** B
-
-**Análisis de opciones:**
-- **A:** Explicar código antes que mostrar es abstracto; la audiencia pierde contexto.
-- **B:** Correcto. Primero funciona (demo), después el porqué (argumento), después apertura (Q&A).
-- **C:** Sin argumentación no demuestras profundidad técnica.
-- **D:** Leer código en vivo es aburrido y poco profesional en entornos técnicos.
-
-> **Clave:** "Primero muestra que funciona. Luego explica cómo. Luego invita a preguntar."
-
----
-
-## CHECKPOINT Presentaciones
-
-### Verificar:
-Cada estudiante presenta en su turno completando los 3 bloques.
-
-**¿Qué deberías ver en cada presentación?**
-- Demo en vivo con la app funcionando (no screenshots estáticas).
-- 2 decisiones técnicas explicadas con vocabulario preciso.
-- Respuestas a 1-2 preguntas sin defensividad.
-
-**Problemas comunes:**
-- Se exceden del tiempo → el instructor corta en 10:30.
-- Leen código → redirigir a mostrar la UI en acción.
-- "Todo funciona perfecto" sin argumentar → pedir explícitamente una decisión.
-
----
-
-## REFLEXION: Qué aprendiste del curso
-
-| Antes de Code 201 | Después de Code 201 |
-|-------------------|---------------------|
-| HTML y CSS sueltos | Layout responsivo con Grid/Flexbox |
-| JS como sintaxis | Estado centralizado + eventos + persistencia |
-| Archivos aislados | Proyecto integrado con Git + deploy |
-
-> **Regla memorable:** "Antes escribías código. Ahora entregas productos."
-
----
-
-## REFLEXION: Qué viene en Code 301
-
-### Pregunta de consolidación
-
-Si sigues en Code 301, ¿qué del proyecto de hoy replicarías con React? ¿Qué cambiaría en tu forma de modelar el estado?
-
-*(Pista: lo que hiciste a mano hoy es exactamente lo que frameworks como React resuelven en 3 líneas.)*
-
----
-
-## TRANSICION: Cierre del curso
-
-### Hoy lograste:
-- Presentaste un producto técnico propio ante una audiencia.
-- Cerraste 123 horas de formación con un artefacto portafoliable.
-- Recibiste tu calificación y feedback individual.
-
-### Próxima etapa:
-- **Code 301:** Intermediate Software Development (4.5 meses).
-- Frameworks, backend, bases de datos, despliegue profesional.
-- El examen de admisión es la puerta.
-
-> "Ya eres desarrollador. Lo que sigue es seguir construyendo."
+**¡Lo lograron! 🚀**

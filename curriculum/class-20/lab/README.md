@@ -2,19 +2,21 @@
 
 ## 🎯 Objetivos
 
-1. Presentar tu Agenda de Gastos Compartidos en 10 minutos con demo en vivo.
-2. Argumentar al menos 2 decisiones técnicas con lenguaje preciso.
-3. Responder preguntas del instructor y compañeros sin perder el hilo.
+1. Presentar tu Mi Setlist en 10 minutos con demo en vivo sobre tu URL pública.
+2. Argumentar 2 decisiones técnicas, incluida al menos una sobre cómo usaste y validaste la IA.
+3. Responder el Q&A sobre TU código sin abrir el chat de la IA.
 
 ---
 
-## 🔑 Formato de tu presentación (10 min)
+## 🎤 Formato de tu presentación (10 min)
 
 | Bloque | Tiempo | Qué hacer |
 |--------|--------|-----------|
-| **1. Demo en vivo** | 5 min | Crear grupo → agregar 3-4 personas → registrar 2-3 gastos → mostrar balances → mostrar transferencias → eliminar un gasto |
-| **2. Argumentación técnica** | 3 min | Explicar 2 decisiones clave (modelado, algoritmo, manejo de errores, UX) |
-| **3. Q&A** | 2 min | Responder 1-2 preguntas del instructor sobre tu código |
+| **1. Demo en vivo** | 5 min | Buscar un artista → agregar canciones a una playlist → mostrar duración total y estadísticas → ordenar → eliminar con TU modal → **recargar** (persistencia) → cerrar con tu **HU propia** |
+| **2. Argumentación técnica** | 3 min | 2 decisiones clave; al menos 1 sobre la IA: qué le pediste, qué te dio, qué cambiaste y por qué |
+| **3. Q&A** | 2 min | El instructor abre TU repo y pregunta por fragmentos concretos |
+
+> 💡 **Tip de demo:** llega con una playlist ya armada (para stats y orden con datos ricos) y construye OTRA en vivo. Así muestras el flujo completo sin depender de que la API esté rápida.
 
 ---
 
@@ -22,75 +24,61 @@
 
 | ✓ | Item | Verificación |
 |---|------|--------------|
-| ☐ | Deploy público responde | Abre la URL desde otro navegador/dispositivo |
-| ☐ | Crear grupo funciona en el deploy | Prueba el flujo completo |
-| ☐ | LocalStorage funciona en el deploy | Recarga la página y los datos siguen |
-| ☐ | README del repo pulido | Descripción, stack, HU, decisiones, cómo correr |
-| ☐ | 3 screenshots de respaldo | Principal, balances, transferencias |
-| ☐ | Guion mental ensayado | Hiciste el demo al menos 1 vez solo |
+| ☐ | Deploy público responde | Abre la URL desde otro navegador o tu celular |
+| ☐ | Flujo completo funciona EN el deploy | Buscar, agregar, recargar: todo en la URL pública |
+| ☐ | Playlist de demo preparada | Con 5+ canciones variadas (que las stats digan algo) |
+| ☐ | `README.md` del repo pulido | Descripción, stack, tus HUs (base + propias), decisiones, cómo correr |
+| ☐ | `PROMPTS.md` al día | Es parte de tu rúbrica: prompts con contexto y decisiones |
+| ☐ | 3 screenshots de respaldo | Búsqueda con resultados, playlist con stats, tu HU propia |
+| ☐ | Ensayo hecho | Corriste el demo completo al menos 1 vez, solo, con reloj |
 
-> ⚠️ Si tu deploy falla 30 minutos antes de empezar, avisa al instructor. Tienes plan B (screenshots + explicación oral).
+> ⚠️ Si tu deploy falla 30 minutos antes, avisa al instructor. Plan B: screenshots + explicación oral.
 
 ---
 
-## 🎤 Tu Argumentación Técnica (3 min)
+## 🗣️ Tu Argumentación Técnica (3 min)
 
-Elige **2 decisiones** para explicar. Ejemplos de buenas decisiones para argumentar:
+Elige **2 decisiones**. Buenos candidatos:
 
-- **Modelado del estado:** por qué elegiste un objeto `{ grupo, personas, gastos }` y no otros.
-- **Algoritmo de transferencias:** por qué greedy y no fuerza bruta.
-- **Manejo de errores:** por qué validaste en HTML, en JS y en LocalStorage (las 3 capas).
-- **Render declarativo:** por qué una función `renderX()` que repinta todo en lugar de mutar el DOM pieza a pieza.
-- **Persistencia:** por qué LocalStorage y qué harías diferente con backend.
+- **Una decisión que tomaste respondiendo a la IA:** "me preguntó si la búsqueda iba con botón o por tecla; elegí botón por el rate limit".
+- **Un output de la IA que corregiste o rechazaste:** qué te dio, qué estaba mal, cómo lo detectaste.
+- **Tu HU propia:** por qué esa feature, qué alternativas descartaste.
+- **Un hallazgo de la auditoría de la Clase 19:** qué encontró Copilot que tú no habías visto y cómo lo arreglaste.
+- **Modelado:** cómo estructuraste el estado de playlists y canciones, y qué simplificaste.
 
 **Fórmula sugerida:**
-> "Decidí usar [X] porque [razón técnica]. La alternativa era [Y], pero [desventaja]. La consecuencia fue [resultado]."
+> "Decidí [X] porque [razón]. La IA proponía / la alternativa era [Y], pero [desventaja]. El resultado fue [Z]."
 
 ---
 
 ## ❓ Preguntas típicas del Q&A
 
-Prepárate para responder cualquiera de estas (el instructor elegirá 1-2):
+El instructor elegirá 1-2, mirando TU código:
 
-1. Si el grupo tuviera 1000 personas, ¿tu algoritmo escala?
-2. ¿Qué pasa si dos usuarios editan el mismo grupo en pestañas distintas?
-3. ¿Cómo harías para que funcione offline completamente?
-4. Si tuvieras que migrar a backend, ¿por dónde empezarías?
-5. ¿Qué harías diferente si volvieras a empezar el proyecto?
+1. Explícame esta función: ¿qué hace línea por línea?
+2. ¿Qué parte de este archivo escribió la IA y cómo verificaste que estaba bien?
+3. Si iTunes cambiara el formato de su respuesta, ¿qué archivos tendrías que tocar y por qué?
+4. ¿Por qué tu `eliminarCancion` usa `.filter` en vez de borrar con `splice`?
+5. ¿Qué pasa si dos pestañas modifican la misma playlist? ¿Cómo lo resolverías?
 
-> 💡 **Tip:** Si no sabes, es válido decir "no lo resolví en este MVP, pero lo atacaría con X". Honestidad > improvisar.
+> 💡 **Tip:** "No lo resolví en este MVP, pero lo atacaría con X" es una respuesta válida. Inventar, no.
 
 ---
 
 ## 📝 Entrega Final
 
-- [ ] Link al repositorio público en GitHub (estará público después del curso también).
+- [ ] Link al repositorio público (quedará en tu portafolio).
 - [ ] Link al deploy funcional.
-- [ ] README con:
-    - Descripción de la app
-    - Stack técnico
-    - Listado de HU implementadas (base + adicionales)
-    - 2 decisiones técnicas explicadas
-    - Instrucciones para correr localmente
-- [ ] Auto-evaluación con la [rúbrica oficial](../class-17/project/) (informal, solo para ti).
-
----
-
-## ⏱️ Estructura de la sesión
-
-- **Minutos 0-10:** Verificación general, conexión de proyector, llamado a lista.
-- **Minutos 10-170:** Presentaciones (10 min × cantidad de estudiantes + 2 min de transición).
-- **Minutos 170-180:** Cierre del curso, feedback individual, ruta hacia Code 301.
-
-> La lista de orden de presentación se sortea al inicio.
+- [ ] `README.md` con: descripción, stack, HUs implementadas (base + propias), 2 decisiones técnicas explicadas, instrucciones para correr.
+- [ ] `PROMPTS.md` e `HISTORIAS.md` actualizados en el repo.
 
 ---
 
 > ### 💡 Consejos finales
 >
-> - No leas el código en vivo. La demo es tu app funcionando, no una lectura de archivos.
-> - Si algo falla, respira. Pasa al plan B sin disculparte excesivamente.
-> - Habla con volumen y pausas. La claridad supera a la velocidad.
-> - Termina en los 10 minutos. Exceder tiempo afecta tu evaluación de "Presentación".
+> - No leas código en vivo: la demo es tu app funcionando.
+> - Si algo falla, respira y pasa al plan B sin disculparte de más.
+> - En el Q&A, responde desde lo que TÚ decidiste. Ahí es donde se nota quién dirigió a su copiloto y quién solo copió.
+> - Termina en los 10 minutos: excederte afecta tu evaluación de Presentación.
 
-**¡Es el último lab del curso. Disfrútalo. Ya lo lograste.**
+**Es el último lab del curso. Construiste una app real, con API, persistencia y un copiloto que aprendiste a dirigir. Disfrútalo.**
