@@ -161,7 +161,7 @@ Leer de `README.md`. Reglas derivadas:
 | M2 — Fundamentos de Programación (imperativa, funcional, OOP, prototipos) | 5-8 | 80% | 20% | JS guiado: el estudiante completa funciones imperativas, funciones puras, constructores, prototipos y captura de input desde formulario HTML pre-armado |
 | M3 — Aplicaciones Web con Objetos | 9-12 | 75% | 25% | El estudiante manipula el DOM, modulariza con callbacks, gestiona eventos y maneja excepciones |
 | M4 — Modelado, Estado y Persistencia | 13-16 | 70% | 30% | El estudiante usa `class` ES6 (sin herencia, eso es Code 301), implementa Patrón Store completo (`subscribe`, `getState`, `setState`, `notify`), persiste en LocalStorage con `try/catch+finally`, sincroniza estado con UI, agrega delegación de eventos y cálculo sobre estado |
-| M5 — Proyecto Integrador Final | 17-20 | 70% | 30% | Guided: proyecto predefinido (Agenda de Gastos Compartidos) que integra M1-M4 por sprints ágiles |
+| M5 — Proyecto Integrador Final | 17-20 | 0% (brief, sin código) | 100% | Proyecto predefinido "Mi Setlist" (iTunes Search API) que integra M1-M4 por sprints. Los labs NO traen código: dan contrato técnico, MVP, timeboxes y checkpoints por resultado; el estudiante codea con la IA (guía → copiloto → corrector) y el instructor mentorea por rondas |
 
 ### Formato de Gaps por Nivel
 
@@ -186,7 +186,7 @@ Code 201 es un curso **introductorio para futuros desarrolladores sin experienci
 
 - M1-M2: Los labs guían al estudiante con editor local (VS Code) + navegador
 - M3-M4: Los labs integran manipulación avanzada del DOM, callbacks, event handling, try/catch y persistencia con LocalStorage
-- M5: El estudiante construye un proyecto predefinido (Agenda de Gastos Compartidos) por sprints ágiles, integrando los aprendizajes de M1 a M4
+- M5: El estudiante construye el proyecto predefinido "Mi Setlist" por sprints ágiles con la IA como copiloto (chat web + GitHub Copilot Free), integrando los aprendizajes de M1 a M4; los labs son briefs sin código
 - Los "gaps" son porciones de HTML, CSS o JavaScript que el estudiante completa
 - Herramientas máximas por clase: 2 nuevas (regla MAX_TWO_NEW_TOOLS)
 

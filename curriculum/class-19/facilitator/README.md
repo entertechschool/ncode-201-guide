@@ -118,7 +118,7 @@ backend ni librerías). Una línea cada una.
 | 10 | Estado real del grupo | Standup: quién cerró Sprint 1 | Los que no: su prioridad es MVP, sin HU propia hoy |
 | 30 | Demo entendida | Distinguen hallazgo de idea; severidad por impacto | Repasar la COMPROBACIÓN de los slides |
 | 60 | Auditoría cerrada | Críticos corregidos: prueba de corruptos pasa | Sentarse y correr las 2 pruebas clave juntos |
-| 75 | Plan v2 | `SPRINTS.md` v2: MVP pendiente + mayores | Pregunta guía: "¿qué construyes en la próxima hora?" |
+| 75 | Plan vigente | `SPRINTS.md` v2 (si hubo mayores/pendientes) o confirmado sin cambios | Pregunta guía: "¿qué construyes en la próxima hora?" |
 | 150 | MVP completo | Modal propio + stats/orden funcionando + robustez | Anotar pendientes exactos para cierre asíncrono |
 | 160 | 2 HUs propias definidas | En `HISTORIAS.md` con criterios, 1 marcada | Validar tamaño: "¿cabe en una sesión asíncrona?" |
 | 172 | Deploy activado | URL pública con flujo completo probado | Diagnóstico: ¿build pendiente? ¿rutas sin `./`? |

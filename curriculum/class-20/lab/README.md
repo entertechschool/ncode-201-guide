@@ -29,6 +29,7 @@
 | ☐ | Playlist de demo preparada | Con 5+ canciones variadas (que las stats digan algo) |
 | ☐ | `README.md` del repo pulido | Descripción, stack, tus HUs (base + propias), decisiones, cómo correr |
 | ☐ | `PROMPTS.md` al día | Es parte de tu rúbrica: prompts con contexto y decisiones |
+| ☐ | Segunda pasada de auditoría hecha | Corriste el review de Copilot sobre lo nuevo del Sprint 2 y no quedan críticos |
 | ☐ | 3 screenshots de respaldo | Búsqueda con resultados, playlist con stats, tu HU propia |
 | ☐ | Ensayo hecho | Corriste el demo completo al menos 1 vez, solo, con reloj |
 

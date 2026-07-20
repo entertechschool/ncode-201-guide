@@ -82,11 +82,16 @@ Ejecuta cada prueba **en tu navegador, a mano**, y anota pasó/falló. La IA dis
 
 ---
 
-## Parte 2: Replanifica tu Sprint 2 (10 min)
+## Parte 2: Replanifica tu Sprint 2 — solo si hace falta (10 min)
 
-Actualiza `SPRINTS.md` (v2) con la realidad: HUs del MVP pendientes + los hallazgos mayores de la auditoría. El MVP manda.
+Replanificar no es obligatorio. Pregúntate dos cosas:
 
-✅ **Checkpoint (~min 75):** `SPRINTS.md` v2 realista: sabes exactamente qué construyes en la próxima hora y cuarto.
+- ¿La auditoría dejó hallazgos **mayores**? → entran al plan.
+- ¿Arrastras HUs pendientes del Sprint 1? → el plan debe reflejarlo.
+
+Si ambas respuestas son "no" (Sprint 1 cerrado y auditoría limpia), tu `SPRINTS.md` original sigue vigente: agrega una línea de confirmación ("Plan sin cambios — auditoría sin mayores") y pasa directo al bloque de trabajo. Ganaste 10 minutos.
+
+✅ **Checkpoint (~min 75):** Tu plan del Sprint 2 está vigente (v2 o confirmado): sabes exactamente qué construyes en la próxima hora y cuarto.
 
 ---
 
@@ -148,7 +153,11 @@ Elige 2, redáctalas como HU con criterios (misma auditoría de la Clase 17: obs
 - **Link al repositorio** y **link al deploy público**.
 - Standup de cierre: prometido vs demostrado + qué cierras asíncrono.
 
-> ⚠️ El Demo Day no espera: lo que quede pendiente se termina asíncrono ANTES de la Clase 20.
+> ⚠️ **Tarea asíncrona antes del Demo Day (Clase 20):**
+>
+> 1. Cierra lo que quedó pendiente del MVP.
+> 2. Implementa tu HU propia elegida.
+> 3. **Segunda pasada de auditoría:** corre el mismo prompt de review de Copilot (`@workspace`, modo Ask) sobre los archivos que tocaste en el Sprint 2 (~3 requests) y arregla cualquier crítico. Así llegas al Demo Day con TODO tu código auditado.
 
 ---
 

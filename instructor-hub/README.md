@@ -194,14 +194,14 @@ Cada clase cuenta con los siguientes documentos:
 
 ---
 
-## 💸 Módulo 5: Proyecto Integrador Final
+## 🎵 Módulo 5: Proyecto Integrador Final
 
-**Proyecto Integrador:** Agenda de Gastos Compartidos
+**Proyecto Integrador:** Mi Setlist (consume la iTunes Search API)
 
-> El Módulo 5 integra todo lo aprendido en los Módulos 1 al 4. El proyecto es **predefinido** y común a toda la cohorte.
-> 👉 **[Documento oficial del proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/project/){:target="_blank"}** — enunciado, 8 historias de usuario, criterios de aceptación y rúbrica de 100 puntos.
+> El Módulo 5 integra todo lo aprendido en los Módulos 1 al 4, con la **IA como agente de apoyo** en tres roles: guía en la planificación, copiloto al construir y correctora al auditar. El proyecto es **predefinido** y común a la cohorte, pero cada estudiante deriva sus propias historias de usuario y escribe su propio código.
+> 👉 **[Documento oficial del proyecto](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/project/){:target="_blank"}** — enunciado, MVP, contrato técnico, reglas de IA y rúbrica de 100 puntos.
 
-### Clase 17 — Ideation + Research + Stories
+### Clase 17 — Ideación y Planificación con IA
 
 | Documento | Enlace |
 |-----------|--------|
@@ -220,7 +220,7 @@ Cada clase cuenta con los siguientes documentos:
 | 🖥️ Presentación | [Ver Slides 18](https://entertechschool.github.io/public-sylabus/slides/?class=code-201_18){:target="_blank"} |
 | 🎓 Guía del Facilitador | [Ver Guía 18](https://entertechschool.github.io/ncode-201-guide/curriculum/class-18/facilitator/){:target="_blank"} |
 
-### Clase 19 — User Validation + Sprint 2
+### Clase 19 — IA como Corrector + Sprint 2
 
 | Documento | Enlace |
 |-----------|--------|
@@ -261,9 +261,9 @@ Cada clase cuenta con los siguientes documentos:
 | 14 | Interacción y Datos Derivados | [Lab 14](https://entertechschool.github.io/ncode-201-guide/curriculum/class-14/lab/){:target="_blank"} | Regular |
 | 15 | JSON y LocalStorage | [Lab 15](https://entertechschool.github.io/ncode-201-guide/curriculum/class-15/lab/){:target="_blank"} | Regular |
 | **16** | **Módulos ESM y Cierre del Proyecto** | [**Lab 16**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-16/lab/){:target="_blank"} | ⭐ **Evaluado M4** |
-| 17 | Ideation + Research + Stories | [Lab 17](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/lab/){:target="_blank"} | Regular (Proyecto M5) |
+| 17 | Ideación y Planificación con IA | [Lab 17](https://entertechschool.github.io/ncode-201-guide/curriculum/class-17/lab/){:target="_blank"} | Regular (Proyecto M5) |
 | 18 | Sprint 1 | [Lab 18](https://entertechschool.github.io/ncode-201-guide/curriculum/class-18/lab/){:target="_blank"} | Regular (Proyecto M5) |
-| 19 | User Validation + Sprint 2 | [Lab 19](https://entertechschool.github.io/ncode-201-guide/curriculum/class-19/lab/){:target="_blank"} | Regular (Proyecto M5) |
+| 19 | IA como Corrector + Sprint 2 | [Lab 19](https://entertechschool.github.io/ncode-201-guide/curriculum/class-19/lab/){:target="_blank"} | Regular (Proyecto M5) |
 | **20** | **Demo Day** | [**Lab 20**](https://entertechschool.github.io/ncode-201-guide/curriculum/class-20/lab/){:target="_blank"} | ⭐ **Demo Day M5** |
 
 ---

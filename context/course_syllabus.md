@@ -123,26 +123,27 @@
 > - Copia rápida de contenido al portapapeles para facilitar el uso inmediato en WhatsApp Web.
 
 ### Módulo 5: Proyecto Integrador Final
-17. **Ideation + Research + Stories** (180 min, project)
+17. **Ideación y Planificación con IA** (180 min, project)
 18. **Sprint 1** (180 min, project)
-19. **User Validation + Sprint 2** (180 min, project)
+19. **IA como Corrector + Sprint 2** (180 min, project)
 20. **Demo Day** (180 min, project)
 
 #### Enfoque Pedagógico
 
-- **Proyecto predefinido** común a toda la cohorte (no cada alumno inventa uno distinto).
-- **Integrador**: consolida los aprendizajes de los Módulos 1 al 4 en una sola aplicación.
-- **Metodología ágil** por sprints con validación cruzada entre compañeros.
-- **El instructor asume el rol del "cliente académico"** del proyecto: presenta el enunciado, guía la descomposición, valida avances y evalúa el entregable final con rúbrica.
+- **Proyecto predefinido** común a toda la cohorte (no cada alumno inventa uno distinto), pero **el código lo escribe cada estudiante con la IA como copiloto** — los labs de M5 no traen código: dan el brief, el contrato técnico y los checkpoints por resultado observable.
+- **Integrador**: consolida los aprendizajes de los Módulos 1 al 4 en una sola aplicación (API + estado + persistencia + ESM).
+- **La IA en tres roles** (objetivo 2 del curso): guía en la planificación (C17: prompts estructurados, derivar HUs del MVP), copiloto en la construcción (C18: modo interactivo — la IA pregunta, el alumno decide) y correctora en la auditoría (C19: code review con agente `@workspace` + plan de pruebas que el alumno ejecuta). Regla de oro auditada en Demo Day: no entregar código que no se pueda explicar.
+- **Metodología ágil** por sprints con standup de cierre por clase y replanificación tras la auditoría.
+- **El instructor pasa de dictar a mentorear**: demo corta al abrir, rondas de mentoría durante los bloques de trabajo y validación por checkpoints.
 
-> #### Proyecto Integrador: **Agenda de Gastos Compartidos**
-> Una aplicación web para registrar gastos entre amigos, roommates o equipos pequeños y calcular automáticamente quién le debe a quién (estilo Splitwise simplificado). El estudiante crea grupos, agrega personas, registra gastos con descripción y divisiones, y la app muestra el balance neto de cada integrante y sugiere las transferencias mínimas para saldar todo. El proyecto integra los aprendizajes de los Módulos 1 al 4 en una sola aplicación funcional y portafoliable.
+> #### Proyecto Integrador: **Mi Setlist**
+> Una aplicación web que busca canciones en el catálogo real de iTunes (iTunes Search API, sin clave) y las organiza en playlists personales que persisten en LocalStorage. El estudiante deriva sus propias historias de usuario desde el MVP trabajando con la IA, las construye en dos sprints sobre la arquitectura ESM del Módulo 4, define además 2 historias propias (favoritos, filtros, deshacer...) y publica la app en GitHub Pages para el Demo Day.
 >
 > **Características clave**:
-> - Creación de grupos con múltiples integrantes.
-> - Registro de gastos: quién pagó, monto, descripción y entre quiénes se divide.
-> - Cálculo automático del balance neto de cada persona.
-> - Sugerencia de transferencias mínimas para saldar el grupo.
-> - Eliminación de gastos con recálculo automático.
-> - Interfaz responsiva y validación de entradas.
-> - Persistencia completa en LocalStorage (grupo + gastos + integrantes).
+> - Búsqueda de canciones por artista o título con carátulas y duración.
+> - Estados de UI (carga / error / vacío) sobre una API real.
+> - Playlists propias: crear, agregar, quitar (con modal propio) y eliminar.
+> - Duración total formateada y estadísticas (género top, artista top).
+> - Ordenamiento por fecha y alfabético.
+> - Persistencia completa en LocalStorage con recuperación ante datos corruptos.
+> - `PROMPTS.md` como registro del trabajo con la IA (parte de la rúbrica).

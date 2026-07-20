@@ -72,19 +72,19 @@ Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe
     - Modularización con `import` / `export`, confirmaciones de UX, orden de la colección con `.sort()` y cierre del proyecto.
 
 ### Módulo 5 — Proyecto Integrador Final
-> **Proyecto Integrador:** Agenda de Gastos Compartidos
+> **Proyecto Integrador:** Mi Setlist (consume la iTunes Search API)
 
-17. Ideation + Research + Stories
-    - Análisis del proyecto predefinido y descomposición en historias de usuario.
-    - Planificación por sprints con criterios de aceptación verificables.
+17. Ideación y Planificación con IA
+    - Descomposición del MVP en historias de usuario propias trabajando con la IA (prompts estructurados, crítica del output).
+    - Planificación por sprints y configuración del repositorio con arquitectura ESM.
 18. Sprint 1
-    - Construcción de la primera versión funcional (HU1–HU4).
-    - Estructura HTML, diseño CSS y lógica base en JavaScript.
-19. User Validation + Sprint 2
-    - Validación cruzada con compañeros y feedback estructurado.
-    - Implementación de funcionalidades restantes y persistencia (HU5–HU8).
+    - Construcción con la IA como copiloto en modo interactivo (la IA pregunta, el estudiante decide).
+    - Búsqueda en la API con estados de UI y playlists persistidas.
+19. IA como Corrector + Sprint 2
+    - Auditoría del código con agente de IA (`@workspace`), plan de pruebas de casos borde y replanificación.
+    - Cierre del MVP, historias de usuario propias y deploy en GitHub Pages.
 20. Demo Day
-    - Presentación formal del proyecto con rúbrica de 100 puntos.
+    - Presentación formal del proyecto con rúbrica de 100 puntos y Q&A sobre el código propio.
     - Cierre del curso y conexión con Code 301.
 
-> El Proyecto Integrador de M5 integra los aprendizajes de los Módulos 1 al 4: layout responsivo, lógica algorítmica, consumo de APIs con `fetch` y manejo de errores, y estado persistido con LocalStorage.
+> El Proyecto Integrador de M5 integra los aprendizajes de los Módulos 1 al 4 — layout responsivo, lógica algorítmica, consumo de APIs con `fetch` y manejo de errores, y estado persistido con LocalStorage sobre módulos ESM — e incorpora la IA como agente de apoyo en tres roles: guía en la planificación, copiloto al construir y correctora al auditar.
