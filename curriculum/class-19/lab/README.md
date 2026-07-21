@@ -62,10 +62,12 @@ todavía. Solo hallazgos.
 En el mismo chat:
 
 ```text
-@workspace Ahora dame un plan de 6 a 8 pruebas manuales para mi app,
-priorizando casos borde: datos corruptos en localStorage, playlist
-vacía, búsqueda sin resultados, nombres duplicados o con espacios,
-recarga tras eliminar. Formato: paso a paso + resultado esperado.
+@workspace Dame una lista de pruebas manuales que realizare en mi app,
+priorizando en caso existan los siguientes casos borde:
+datos corruptos en localStorage, playlist vacía,
+búsqueda sin resultados, nombres duplicados o con espacios,
+recarga tras eliminar,etc.
+Formato: paso a paso + resultado esperado.
 ```
 
 Ejecuta cada prueba **en tu navegador, a mano**, y anota pasó/falló. La IA diseña las pruebas; el veredicto sale de tu pantalla, no de su opinión.
