@@ -55,6 +55,10 @@ severidad (crítico / mayor / menor) y por qué.
 
 RESTRICCIONES: NO edites ningún archivo ni me des código corregido
 todavía. Solo hallazgos.
+
+Críticos (rompen la app): se arreglan AHORA, un hallazgo, una porción, probar.
+Mayores (deuda, flujo confuso): se anotan como ítems del SPRINTS.md en una seccion de Code Review.
+Menores (pulido): se descartan. Hoy no hay tiempo para cosmética.
 ```
 
 ### 1.2 Pide el plan de pruebas — y ejecútalo TÚ
