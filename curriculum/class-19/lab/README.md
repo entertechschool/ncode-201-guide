@@ -44,11 +44,11 @@ La auditoría se hace con **GitHub Copilot en VS Code**: como tiene acceso a TOD
 En el chat de Copilot (modo Ask):
 
 ```text
-@workspace Haz un code review de mi proyecto contra este contrato:
-[contrato técnico]. Busca específicamente: mutaciones directas del
+@workspace Haz un code review de mi proyecto.
+Busca específicamente: mutaciones directas del
 estado, faltas de try/catch en storage.js, render olvidado tras
 cambios de estado, funciones exportadas que nadie importa, ids que
-no usan randomUUID y fechas sin rehidratar al cargar.
+no usan randomUUID , fechas sin rehidratar al cargar y demas errores posibles.
 
 FORMATO: Lista de hallazgos con archivo y línea, cada uno con
 severidad (crítico / mayor / menor) y por qué.
