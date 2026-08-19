@@ -95,57 +95,53 @@
   <section class="hero">
     <div class="badge">Módulo 3 · Clase 10</div>
     <h1>Datos desde la web: fetch, Promesas y JSON</h1>
-    <p class="subtitle">Tu Pokédex deja el array local y carga sus datos de una API real</p>
+    <p class="subtitle">Cómo JavaScript maneja operaciones que tardan sin bloquear el programa: <strong>asincronía</strong>, <strong>Promesas</strong> y el consumo de datos de una API en formato <strong>JSON</strong>.</p>
   </section>
 
   <section>
 
-    <!-- 1: fetch + asincronía -->
+    <!-- 1: Asincronía -->
     <div class="card accent-cyan">
-      <h3><span class="tag-cyan">1.</span> fetch — los datos tardan en llegar</h3>
-      <p class="desc"><code>fetch</code> pide datos a una URL y devuelve una <strong>Promesa</strong>: un "ticket" por datos que llegarán. La red tarda, pero JavaScript <strong>no se congela</strong>.</p>
-      <pre><code>fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
-  .<span class="tag-cyan">then</span>(response =&gt; response.json())   <span class="tag-muted">// JSON → objeto</span>
-  .<span class="tag-cyan">then</span>(data =&gt; console.log(data))    <span class="tag-muted">// cuando LLEGAN</span>
-  .<span class="tag-orange">catch</span>(() =&gt; mostrarError());</code></pre>
+      <h3><span class="tag-cyan">1.</span> Asincronía</h3>
+      <p class="desc">Una operación <strong>asíncrona</strong> (red, temporizadores) no detiene el programa. JavaScript la inicia, <strong>sigue ejecutando</strong> el resto del código y atiende el resultado cuando está listo. El orden de ejecución no es lineal.</p>
+      <pre><code>console.log(<span class="tag-cyan">"1"</span>);
+setTimeout(() =&gt; console.log(<span class="tag-cyan">"2"</span>), 0); <span class="tag-muted">// asíncrono</span>
+console.log(<span class="tag-cyan">"3"</span>);
+
+<span class="tag-muted">// Orden en consola:  1  →  3  →  2</span></code></pre>
     </div>
 
-    <!-- 2: JSON + adapter -->
+    <!-- 2: Promesa -->
     <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> JSON y el adaptador</h3>
-      <p class="desc">La API responde en <strong>JSON</strong> con su propia estructura (anidada). Una <strong>función adaptadora</strong> la traduce a tu forma limpia, para reusar <code>crearTarjeta</code> de C09.</p>
-      <pre><code><span class="tag-muted">// la API: { name, sprites:{front_default}, types:[{type:{name}}] }</span>
-<span class="tag-muted">function</span> adaptarPokemon(data) {
-  <span class="tag-muted">return</span> {
-    nombre: data.name,
-    imagen: data.sprites<span class="tag-green">?.</span>front_default <span class="tag-green">??</span> "...",
-    tipos:  data.types.map(t =&gt; t.type.name)
-  };
-}</code></pre>
+      <h3><span class="tag-green">2.</span> Promesa (Promise)</h3>
+      <p class="desc">Objeto que representa el <strong>resultado futuro</strong> de una operación asíncrona. Tiene tres estados: <code>pending</code> (en curso), <code>fulfilled</code> (cumplida) o <code>rejected</code> (fallida). Se consume con <code>.then</code> (resultado) y <code>.catch</code> (error).</p>
+      <pre><code><span class="tag-muted">// pending  →  fulfilled (valor)</span>
+<span class="tag-muted">//          →  rejected  (error)</span>
+
+promesa
+  .<span class="tag-green">then</span>(valor =&gt; { <span class="tag-muted">/* fulfilled */</span> })
+  .<span class="tag-orange">catch</span>(error =&gt; { <span class="tag-muted">/* rejected */</span> });</code></pre>
     </div>
 
-    <!-- 3: Promise.all -->
+    <!-- 3: fetch + JSON -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">3.</span> Promise.all — varios a la vez</h3>
-      <p class="desc">La rejilla necesita varios Pokémon, y cada uno es un <code>fetch</code>. <code>Promise.all</code> los pide <strong>en paralelo</strong> y espera a que todos terminen.</p>
-      <pre><code><span class="tag-muted">const</span> promesas = ids.map(id =&gt;
-  fetch(`.../pokemon/${id}`).then(r =&gt; r.json())
-);
-
-<span class="tag-purple">Promise.all</span>(promesas)
-  .then(datos =&gt; render(datos.map(adaptarPokemon)));</code></pre>
+      <h3><span class="tag-purple">3.</span> fetch y JSON</h3>
+      <p class="desc"><code>fetch(url)</code> realiza una <strong>petición HTTP</strong> y devuelve una Promesa que resuelve en un objeto <code>Response</code>. <strong>JSON</strong> es un formato de texto para intercambiar datos; <code>response.json()</code> lo convierte en un objeto JavaScript (y devuelve otra Promesa).</p>
+      <pre><code><span class="tag-purple">fetch</span>("https://api.ejemplo.com/datos")
+  .then(response =&gt; response.<span class="tag-purple">json</span>()) <span class="tag-muted">// JSON → objeto JS</span>
+  .then(datos =&gt; console.log(datos))
+  .catch(error =&gt; console.error(error));</code></pre>
     </div>
 
-    <!-- 4: el buscador sigue vivo -->
+    <!-- 4: Promise.all -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> El buscador de C09 sigue vivo</h3>
-      <p class="desc">El <code>render</code> y el filtro de C09 no cambian: solo cambia <strong>de dónde</strong> vienen los datos. La rejilla ahora vive de la web.</p>
-      <pre><code>buscador.addEventListener("input", () =&gt; {
-  <span class="tag-muted">const</span> filtrados = <span class="tag-orange">pokedex</span>.filter(   <span class="tag-muted">// antes: pokemonLocal</span>
-    p =&gt; p.nombre.includes(buscador.value.toLowerCase())
-  );
-  render(filtrados);
-});</code></pre>
+      <h3><span class="tag-orange">4.</span> Promise.all</h3>
+      <p class="desc">Recibe un <strong>array de promesas</strong> y devuelve una sola promesa. Se cumple cuando <strong>todas</strong> se cumplen y entrega los resultados <strong>en orden</strong>; se rechaza si alguna falla. Permite ejecutar operaciones asíncronas <strong>en paralelo</strong>.</p>
+      <pre><code><span class="tag-orange">Promise.all</span>([promesaA, promesaB, promesaC])
+  .then(resultados =&gt; {
+    <span class="tag-muted">// resultados = [valorA, valorB, valorC]</span>
+  })
+  .catch(error =&gt; { <span class="tag-muted">/* si una falla, falla todo */</span> });</code></pre>
     </div>
 
   </section>
@@ -154,19 +150,19 @@
     <div class="glossary">
       <div class="term">
         <strong>Asincronía</strong>
-        <span>Los datos tardan (la red) y el programa sigue sin congelarse.</span>
+        <span>Modelo en que las operaciones que tardan no bloquean; su resultado se procesa al completarse.</span>
       </div>
       <div class="term">
-        <strong>fetch / JSON</strong>
-        <span>Pide datos a una URL; llegan en JSON, que se convierte a objeto.</span>
+        <strong>Promesa</strong>
+        <span>Objeto con el resultado futuro de una operación asíncrona. Estados: pending, fulfilled, rejected.</span>
       </div>
       <div class="term">
-        <strong>Adaptador</strong>
-        <span>Traduce la estructura de la API a tu forma limpia.</span>
+        <strong>fetch</strong>
+        <span>Función que hace una petición HTTP y devuelve una Promesa con la respuesta.</span>
       </div>
       <div class="term">
-        <strong>Promise.all</strong>
-        <span>Espera a que varias promesas terminen (carga en paralelo).</span>
+        <strong>JSON</strong>
+        <span>Formato de texto para intercambio de datos, basado en objetos y arrays.</span>
       </div>
     </div>
   </section>

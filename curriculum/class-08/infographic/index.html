@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tailwind CSS — La interfaz del Gestor</title>
+  <title>Tailwind CSS — Diseñar con clases utilitarias</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -119,8 +119,8 @@
 
   <section class="hero">
     <div class="badge">Módulo 2 · Clase 08 · Cierre</div>
-    <h1>Tailwind CSS — La interfaz del Gestor</h1>
-    <p class="subtitle">Utility-first, grupos de clases por capas, responsive mobile-first y la conexión del formulario con JavaScript</p>
+    <h1>Tailwind CSS — Diseñar con clases utilitarias</h1>
+    <p class="subtitle">Utility-first, clase-propiedad vs prefijo-modificador, construcción por capas y la reactividad de un formulario con JavaScript</p>
   </section>
 
   <section>
@@ -171,17 +171,16 @@
 <span class="tag-blue">P4 Modificador</span>  hover: · focus: · md:grid-cols-2   <span class="tag-muted">(mobile-first)</span></code></pre>
     </div>
 
-    <!-- 4: Conectar el Gestor -->
+    <!-- 4: Reactividad — formulario + JavaScript -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Conectar el Gestor — el formulario funciona</h3>
-      <p class="desc">Unas líneas de JavaScript conectan el formulario con tus clases de C07. El Gestor agrega movimientos y actualiza el saldo en vivo: el proyecto del módulo <strong>cierra funcionando</strong>.</p>
+      <h3><span class="tag-orange">4.</span> Reactividad — un formulario que responde</h3>
+      <p class="desc">El estilo es solo la mitad: una interfaz también <strong>reacciona</strong>. JavaScript escucha el <code>submit</code>, lee los valores del formulario, actualiza el estado y vuelve a <strong>pintar</strong> la pantalla. Es el mismo patrón en cualquier app.</p>
       <pre><code>form.<span class="tag-orange">addEventListener</span>(<span class="tag-orange">"submit"</span>, <span class="tag-muted">function</span> (e) {
-  e.preventDefault();
-  <span class="tag-muted">const</span> nombre = document.getElementById(<span class="tag-orange">"nombre"</span>).value;
-  <span class="tag-muted">// ...lee tipo y valor...</span>
-  presupuesto.<span class="tag-orange">agregar</span>(<span class="tag-muted">new</span> Movimiento(nombre, tipo, valor));  <span class="tag-muted">// ← reusa C07</span>
-  render();  <span class="tag-muted">// pinta lista + saldo</span>
-  e.target.reset();
+  e.<span class="tag-orange">preventDefault</span>();              <span class="tag-muted">// no recargar la página</span>
+  <span class="tag-muted">const</span> valor = document.getElementById(<span class="tag-orange">"campo"</span>).value;  <span class="tag-muted">// leer el input</span>
+  estado.push(valor);               <span class="tag-muted">// actualizar el estado</span>
+  render();                         <span class="tag-muted">// volver a pintar la UI</span>
+  e.target.reset();                 <span class="tag-muted">// limpiar el formulario</span>
 });</code></pre>
     </div>
 

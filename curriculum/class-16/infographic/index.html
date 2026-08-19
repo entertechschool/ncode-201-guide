@@ -113,7 +113,7 @@
   <section class="hero">
     <div class="badge">Módulo 4 · Clase 16</div>
     <h1>Módulos ESM y cierre del proyecto</h1>
-    <p class="subtitle">Organiza tu app en piezas, confirma antes de borrar y déjala lista para mostrar</p>
+    <p class="subtitle">Organiza tu app en módulos ESM, confirma antes de borrar, ordena la colección y déjala lista para mostrar</p>
   </section>
 
   <section>
@@ -149,27 +149,35 @@
         <div class="file">├── ui.js      <span class="cmt"># render + listeners</span></div>
         <div class="file">└── app.js     <span class="cmt"># arranque</span></div>
       </div>
-      <pre><code><span class="tag-muted">&lt;!-- un solo script --&gt;</span>
+      <pre><code><span class="tag-muted">&lt;!-- un solo script; el orden ya no importa --&gt;</span>
 &lt;script <span class="tag-blue">type</span>=<span class="tag-green">"module"</span> src=<span class="tag-green">"js/app.js"</span>&gt;&lt;/script&gt;</code></pre>
+      <p class="desc" style="margin-top:0.75rem;margin-bottom:0;">⚠️ ESM <strong>no</strong> carga con doble clic (<code>file://</code>): usa un servidor local (<code>python -m http.server</code> o Live Server). En GitHub Pages funciona sin problema.</p>
     </div>
 
-    <!-- 3: servidor local -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">3.</span> ESM necesita un servidor</h3>
-      <p class="desc">Los módulos <strong>no</strong> cargan al abrir el HTML con doble clic (<code>file://</code>). Usa un servidor local — o GitHub Pages, que funciona sin problema.</p>
-      <pre><code><span class="tag-muted"># opción rápida en la carpeta del proyecto</span>
-python -m http.server
-<span class="tag-muted"># o la extensión Live Server de VS Code</span></code></pre>
-    </div>
-
-    <!-- 4: modal de confirmacion -->
+    <!-- 3: UX de cierre — modal propio + estado vacio -->
     <div class="card accent-green">
-      <h3><span class="tag-green">4.</span> Modal propio para confirmar</h3>
-      <p class="desc">Antes de una acción irreversible (borrar), muestras tu <strong>propio modal</strong> (HTML + Tailwind). Guardas la acción en una variable para que el mismo cuadro sirva para todo.</p>
+      <h3><span class="tag-green">3.</span> UX de cierre: confirmar y estado vacío</h3>
+      <p class="desc">Antes de una acción irreversible (eliminar o vaciar) muestras tu <strong>propio modal</strong> (HTML + Tailwind), no el <code>confirm()</code> nativo. Guardas la acción en una variable para reusar el mismo cuadro.</p>
       <pre><code><span class="tag-muted">function</span> <span class="tag-green">pedirConfirmacion</span>(mensaje, accion) {
   textoModal.textContent = mensaje;
   accionPendiente = accion;        <span class="tag-muted">// qué hacer si acepta</span>
   modal.classList.remove(<span class="tag-green">"hidden"</span>);
+}</code></pre>
+      <p class="desc" style="margin-top:1rem;">Y en vez de una pantalla en blanco, un <strong>estado vacío amigable</strong> distingue dos casos:</p>
+      <pre><code><span class="tag-muted">const</span> vacio = state.plantillas.length === 0
+  ? <span class="tag-green">"Aún no tienes plantillas. ¡Crea la primera!"</span>
+  : <span class="tag-green">"No se encontraron plantillas con ese filtro."</span>;</code></pre>
+    </div>
+
+    <!-- 4: ordenar con .sort() -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Ordenar con <code>.sort()</code> y un comparador</h3>
+      <p class="desc"><code>.sort()</code> recibe un comparador <code>(a, b)</code> que devuelve negativo/positivo para decidir el orden. Como <strong><code>.sort()</code> muta</strong> el array, copiamos primero con <code>[...]</code>.</p>
+      <pre><code><span class="tag-muted">function</span> <span class="tag-orange">ordenar</span>(plantillas) {
+  <span class="tag-muted">const</span> copia = [<span class="tag-orange">...</span>plantillas];   <span class="tag-muted">// .sort() muta: copiamos antes</span>
+  <span class="tag-blue">return</span> state.orden === <span class="tag-green">"antiguas"</span>
+    ? copia.sort((a, b) => <span class="tag-orange">new Date</span>(a.fecha) - <span class="tag-orange">new Date</span>(b.fecha))   <span class="tag-muted">// antiguas primero</span>
+    : copia.sort((a, b) => <span class="tag-orange">new Date</span>(b.fecha) - <span class="tag-orange">new Date</span>(a.fecha));  <span class="tag-muted">// recientes primero</span>
 }</code></pre>
     </div>
 
@@ -183,8 +191,8 @@ python -m http.server
         <span>Repartir el código en archivos que se comunican con <code>import</code>/<code>export</code>.</span>
       </div>
       <div class="term">
-        <strong>type="module"</strong>
-        <span>Activa ESM: ámbito propio por archivo, el orden ya no importa.</span>
+        <strong>Modal de confirmación</strong>
+        <span>Cuadro propio (HTML + Tailwind) antes de borrar; reemplaza al <code>confirm()</code> nativo.</span>
       </div>
       <div class="term">
         <strong>Estado vacío</strong>

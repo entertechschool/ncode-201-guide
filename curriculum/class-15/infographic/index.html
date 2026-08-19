@@ -197,7 +197,10 @@ localStorage.<span class="tag-purple">removeItem</span>(CLAVE);</code></pre>
         </div>
       </div>
       <pre style="margin-top:0.75rem;"><code><span class="tag-muted">function</span> <span class="tag-green">guardar</span>() {
-  localStorage.setItem(CLAVE, <span class="tag-green">JSON.stringify</span>(state.plantillas));
+  <span class="tag-muted">// ternario: si no queda nada, borra la clave; si hay, guárdalas</span>
+  state.plantillas.length === 0
+    ? localStorage.<span class="tag-green">removeItem</span>(CLAVE)
+    : localStorage.<span class="tag-green">setItem</span>(CLAVE, <span class="tag-green">JSON.stringify</span>(state.plantillas));
 }</code></pre>
     </div>
 
@@ -226,6 +229,33 @@ localStorage.<span class="tag-purple">removeItem</span>(CLAVE);</code></pre>
 
 <span class="tag-muted">// ✅ reconstruye el Date al mostrar</span>
 <span class="tag-muted">const</span> texto = <span class="tag-orange">new Date</span>(p.fecha).toLocaleDateString(<span class="tag-orange">"es-PE"</span>);</code></pre>
+    </div>
+
+    <!-- 5: persistir tambien el filtro -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">5.</span> Persistir también el filtro</h3>
+      <p class="desc">El filtro (<code>state.filtro</code>) también es parte del estado, así que también se guarda. Pero <strong>ya es texto</strong>: va directo, sin <code>JSON.stringify</code>, en una segunda clave.</p>
+      <div class="json-flow">
+        <div class="json-node">
+          <div class="node-label">Array de plantillas</div>
+          <div class="node-val">necesita JSON.stringify</div>
+        </div>
+        <div class="json-arrow">
+          <div class="arrow-fn">vs</div>
+        </div>
+        <div class="json-node">
+          <div class="node-label">Filtro (texto)</div>
+          <div class="node-val">va directo, sin convertir</div>
+        </div>
+      </div>
+      <pre style="margin-top:0.75rem;"><code><span class="tag-muted">const</span> CLAVE_FILTRO = <span class="tag-purple">"whatsapp-templates-filtro"</span>;
+
+<span class="tag-muted">// el filtro ya es texto: NO necesita JSON.stringify</span>
+localStorage.setItem(CLAVE_FILTRO, state.filtro ?? <span class="tag-purple">""</span>);
+
+<span class="tag-muted">// al arrancar: recupéralo y refléjalo en el buscador</span>
+state.filtro = localStorage.getItem(CLAVE_FILTRO) ?? <span class="tag-purple">""</span>;
+buscador.value = state.filtro;</code></pre>
     </div>
 
   </section>

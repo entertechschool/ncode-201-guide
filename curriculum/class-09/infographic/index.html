@@ -118,60 +118,61 @@
   <section class="hero">
     <div class="badge">Módulo 3 · Clase 09 · Apertura</div>
     <h1>JavaScript Moderno y Render Dinámico</h1>
-    <p class="subtitle">Sintaxis ES6+, generar HTML desde datos y la base de la Pokédex</p>
+    <p class="subtitle">La idea que sostiene toda app web: <strong>los datos mandan y el HTML es su reflejo</strong>. La sintaxis ES6+ son las herramientas para lograrlo.</p>
   </section>
 
   <section>
 
-    <!-- 1: Template literals -->
+    <!-- 1: La idea central -->
     <div class="card accent-yellow">
-      <h3><span class="tag-yellow">1.</span> Template literals — construir HTML legible</h3>
-      <p class="desc">Strings con backticks que insertan valores con <code>${...}</code> y permiten varias líneas. Reemplazan la concatenación con <code>+</code>.</p>
-      <div class="comparison">
-        <div class="comparison-col">
-          <div class="col-label" style="color:#94a3b8;">Concatenación (vieja)</div>
-          <pre><code>"Hola, " + nombre + "!"</code></pre>
-        </div>
-        <div class="comparison-col">
-          <div class="col-label" style="color:#facc15;">Template literal</div>
-          <pre><code>`Hola, <span class="tag-yellow">${nombre}</span>!`</code></pre>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2: Patrón render -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> El patrón render — la UI refleja los datos</h3>
-      <p class="desc">Limpiar el contenedor → recorrer los datos → crear un nodo por cada uno y agregarlo. Cambias el array y la pantalla cambia, sin tocar el HTML.</p>
-      <pre><code><span class="tag-muted">function</span> render(lista) {
-  contenedor.innerHTML = <span class="tag-green">""</span>;               <span class="tag-muted">// 1. limpia</span>
+      <h3><span class="tag-yellow">1.</span> La idea central — los datos mandan</h3>
+      <p class="desc">En una app moderna <strong>no escribes el HTML a mano</strong>: lo generas desde datos. La pantalla es el <strong>reflejo</strong> de un array — cambian los datos, vuelves a dibujar. El patrón siempre es el mismo: <code>limpiar → recorrer → crear → agregar</code>.</p>
+      <pre><code><span class="tag-muted">// Datos  →  render()  →  UI en pantalla</span>
+<span class="tag-muted">function</span> render(lista) {
+  contenedor.innerHTML = <span class="tag-yellow">""</span>;               <span class="tag-muted">// 1. limpia</span>
   lista.forEach(pokemon => {
     <span class="tag-muted">const</span> tarjeta = crearTarjeta(pokemon); <span class="tag-muted">// 2. crea</span>
-    contenedor.<span class="tag-green">appendChild</span>(tarjeta);        <span class="tag-muted">// 3. agrega</span>
+    contenedor.appendChild(tarjeta);        <span class="tag-muted">// 3. agrega</span>
   });
 }</code></pre>
     </div>
 
-    <!-- 3: Destructuring -->
+    <!-- 2: Template literals -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> Template literals — el molde de HTML</h3>
+      <p class="desc">Para convertir un dato en HTML necesitas un <strong>molde de texto con huecos</strong>. Los backticks insertan valores con <code>${...}</code> y permiten varias líneas: por eso reemplazan la concatenación con <code>+</code>.</p>
+      <div class="comparison">
+        <div class="comparison-col">
+          <div class="col-label" style="color:#94a3b8;">Concatenación (vieja)</div>
+          <pre><code>"&lt;h2&gt;" + nombre + "&lt;/h2&gt;"</code></pre>
+        </div>
+        <div class="comparison-col">
+          <div class="col-label" style="color:#4ade80;">Template literal</div>
+          <pre><code>`&lt;h2&gt;<span class="tag-green">${nombre}</span>&lt;/h2&gt;`</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Destructuring + map -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Destructuring — datos limpios</h3>
-      <p class="desc">Sacas las propiedades de un objeto a variables en una sola línea, sin repetir <code>pokemon.</code> por todos lados.</p>
-      <pre><code><span class="tag-muted">// de un objeto a tres variables</span>
+      <h3><span class="tag-blue">3.</span> Preparar los datos — destructuring + map</h3>
+      <p class="desc">Antes de dibujar, <strong>extraes</strong> lo que necesitas (destructuring) y <strong>transformas</strong> listas en HTML (<code>map</code> + <code>join</code>). Es acomodar los datos para la vista.</p>
+      <pre><code><span class="tag-muted">// extraer: de un objeto a tres variables</span>
 <span class="tag-muted">const</span> { <span class="tag-blue">nombre</span>, <span class="tag-blue">imagen</span>, <span class="tag-blue">tipos</span> } = pokemon;
 
-<span class="tag-muted">// tipos como badges: map + join</span>
+<span class="tag-muted">// transformar: cada tipo → un badge</span>
 tipos.map(tipo => `&lt;span&gt;${tipo}&lt;/span&gt;`).join(<span class="tag-blue">""</span>);</code></pre>
     </div>
 
     <!-- 4: Optional chaining -->
     <div class="card accent-red">
-      <h3><span class="tag-red">4.</span> Acceso seguro: <code>??</code> y <code>?.</code></h3>
-      <p class="desc">Los datos a veces tienen huecos. <code>??</code> da un valor de respaldo; <code>?.</code> accede de forma segura a algo que podría no existir, sin romper el programa.</p>
-      <pre><code><span class="tag-muted">// ?? : respaldo si falta la imagen</span>
-<span class="tag-muted">const</span> img = pokemon.imagen <span class="tag-red">??</span> "placeholder.png";
+      <h3><span class="tag-red">4.</span> Datos reales = datos con huecos</h3>
+      <p class="desc">Cuando los datos vienen de afuera, <strong>no siempre están completos</strong>. El código debe sobrevivir a lo que falta: <code>?.</code> accede sin romper y <code>??</code> pone un valor de respaldo.</p>
+      <pre><code><span class="tag-muted">// ?. : acceso seguro si el dato no existe</span>
+<span class="tag-muted">const</span> cuantos = pokemon.tipos<span class="tag-red">?.</span>length <span class="tag-red">??</span> 0;
 
-<span class="tag-muted">// ?. : acceso seguro si el dato no existe</span>
-<span class="tag-muted">const</span> cuantos = pokemon.tipos<span class="tag-red">?.</span>length <span class="tag-red">??</span> 0;</code></pre>
+<span class="tag-muted">// ?? : respaldo si falta la imagen</span>
+<span class="tag-muted">const</span> img = pokemon.imagen <span class="tag-red">??</span> "placeholder.png";</code></pre>
     </div>
 
   </section>
@@ -180,12 +181,12 @@ tipos.map(tipo => `&lt;span&gt;${tipo}&lt;/span&gt;`).join(<span class="tag-blue
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Template literal</strong>
-        <span>String con backticks e interpolación <code>${...}</code>. Ideal para construir HTML.</span>
+        <strong>Render dinámico</strong>
+        <span>Generar el HTML desde datos, no a mano. La UI es el reflejo del array.</span>
       </div>
       <div class="term">
-        <strong>Patrón render</strong>
-        <span>Limpiar → recorrer → crear → agregar. La UI depende de los datos.</span>
+        <strong>Template literal</strong>
+        <span>String con backticks e interpolación <code>${...}</code>. El molde para construir HTML.</span>
       </div>
       <div class="term">
         <strong>Destructuring</strong>

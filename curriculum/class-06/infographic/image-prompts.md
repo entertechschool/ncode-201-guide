@@ -4,4 +4,4 @@
 
 ---
 
-No se requieren imágenes generadas con AI para esta infografía. Los conceptos de funciones puras, map/filter/find y la comparativa imperativo vs funcional son todos representables con bloques de código resaltado en HTML/CSS.
+No se requieren imágenes generadas con AI para esta infografía. Las arrow functions, las funciones puras, los métodos `map`/`filter`/`find`, la traza paso a paso de `reduce` y la comparativa declarativo vs imperativo son todos representables con bloques de código resaltado y tablas en HTML/CSS.

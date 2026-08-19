@@ -12,3 +12,6 @@ Thumbs.db
 
 
 .vscode/
+# Sesiones de Claude Code copiadas por error
+bd55f49b-a435-4cf8-8a77-c95de6fd25bd/
+*.jsonl

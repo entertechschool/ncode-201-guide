@@ -74,14 +74,14 @@
     .tag-muted  { color: #64748b; }
     .tag-red    { color: #f87171; }
 
-    /* Tabla de métodos */
-    .method-table {
+    /* Tabla de métodos / traza de reduce */
+    .data-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
       font-size: 0.85rem;
     }
-    .method-table th {
+    .data-table th {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
       text-align: left;
@@ -89,15 +89,19 @@
       color: #93c5fd;
       border-bottom: 1px solid rgba(147,197,253,0.2);
     }
-    .method-table td {
+    .data-table td {
       padding: 0.55rem 0.75rem;
       color: #94a3b8;
       border-bottom: 1px solid rgba(255,255,255,0.04);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8em;
     }
-    .method-table td:first-child { color: #93c5fd; }
-    .method-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { color: #93c5fd; }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .table-orange th { color: #fb923c; border-bottom-color: rgba(251,146,60,0.25); }
+    .table-orange td:first-child { color: #fb923c; }
+    .table-orange td:last-child { color: #4ade80; }
 
     /* Glosario */
     .glossary {
@@ -129,67 +133,55 @@
   <section class="hero">
     <div class="badge">Módulo 2 · Clase 06</div>
     <h1>Programación Funcional — Transforma datos sin efectos secundarios</h1>
-    <p class="subtitle">Funciones puras, inmutabilidad y métodos <code>map</code> / <code>filter</code> / <code>find</code> para código predecible y testeable</p>
+    <p class="subtitle">Arrow functions, funciones puras y los métodos <code>map</code> / <code>filter</code> / <code>reduce</code> para reemplazar el <code>for</code> por código predecible y testeable</p>
   </section>
 
   <section>
 
-    <!-- 1: Funciones puras vs impuras -->
+    <!-- 1: Arrow functions -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> Funciones Puras vs Impuras</h3>
-      <p class="desc">Una función <strong>pura</strong> siempre devuelve el mismo resultado para los mismos argumentos y no modifica nada fuera de ella.</p>
-      <pre><code><span class="tag-red">// ❌ IMPURA — modifica variable externa (efecto secundario)</span>
-<span class="tag-muted">let</span> total = 0;
-<span class="tag-muted">function</span> sumarImpuro(valor) {
-  total += valor;     <span class="tag-muted">// ← modifica estado externo</span>
-  <span class="tag-muted">return</span> total;
+      <h3><span class="tag-purple">1.</span> Arrow Functions — La forma corta</h3>
+      <p class="desc">Sintaxis compacta para escribir funciones. La verás en TODO código JS moderno — sobre todo como <strong>argumento</strong> de otros métodos.</p>
+      <pre><code><span class="tag-muted">// Forma "function" (la que ya conoces)</span>
+<span class="tag-purple">function</span> duplicar(valor) {
+  <span class="tag-purple">return</span> valor * 2;
 }
 
-<span class="tag-green">// ✅ PURA — solo depende de sus parámetros</span>
-<span class="tag-muted">function</span> sumarPuro(totalActual, valorNuevo) {
-  <span class="tag-muted">return</span> totalActual + valorNuevo;  <span class="tag-muted">// ← sin efectos secundarios</span>
-}</code></pre>
+<span class="tag-purple">// Arrow function — equivalente, más corta</span>
+<span class="tag-muted">const</span> duplicar = valor => valor * 2;
+<span class="tag-muted">// sin function, sin llaves, sin return</span></code></pre>
     </div>
 
-    <!-- 2: map() -->
+    <!-- 2: Función pura -->
     <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> map() — Transforma cada elemento</h3>
-      <p class="desc"><code>map()</code> recorre el array y retorna un <strong>nuevo array del mismo tamaño</strong> con los elementos transformados. El original no cambia.</p>
-      <pre><code><span class="tag-muted">const</span> movimientos = [
-  { nombre: "Salario",   valor: 3000 },
-  { nombre: "Freelance", valor: 500  },
-];
+      <h3><span class="tag-green">2.</span> Función Pura — La base del paradigma</h3>
+      <p class="desc">Es <strong>pura</strong> si: (1) mismo input → mismo output, siempre, y (2) no produce <strong>efectos secundarios</strong>. Por eso son fáciles de testear y razonar.</p>
+      <pre><code><span class="tag-green">// ✅ PURA — solo depende de su parámetro</span>
+<span class="tag-muted">const</span> cuadrado = valor => valor * valor;
 
-<span class="tag-muted">const</span> nombres = movimientos.<span class="tag-green">map</span>(mov => mov.nombre);
-<span class="tag-muted">// → ["Salario", "Freelance"]</span>
+<span class="tag-red">// ❌ IMPURA — depende de variable externa</span>
+<span class="tag-muted">let</span> factor = 10;
+<span class="tag-muted">const</span> escalar = valor => valor * factor;
 
-<span class="tag-muted">const</span> montos  = movimientos.<span class="tag-green">map</span>(mov => mov.valor * 1.18);
-<span class="tag-muted">// → [3540, 590]  ← array original intacto</span></code></pre>
+<span class="tag-red">// ❌ IMPURA — produce un efecto</span>
+<span class="tag-muted">const</span> imprimir = valor => console.log(valor);</code></pre>
     </div>
 
-    <!-- 3: filter() y find() -->
+    <!-- 3: map / filter / find -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> filter() y find() — Filtrar y buscar</h3>
-      <p class="desc">Ambos buscan por condición, pero retornan cosas distintas: <code>filter</code> devuelve todos los que cumplen, <code>find</code> solo el primero.</p>
-      <pre><code><span class="tag-muted">const</span> movs = [
-  { nombre:"Salario",   tipo:"ingreso", valor:3000 },
-  { nombre:"Comida",    tipo:"gasto",   valor:200  },
-  { nombre:"Freelance", tipo:"ingreso", valor:500  },
-];
+      <h3><span class="tag-blue">3.</span> map · filter · find — Transformar y filtrar</h3>
+      <p class="desc">Tres métodos que recorren un array y devuelven <strong>datos nuevos sin mutar</strong> el original. Reemplazan al <code>for</code> para transformar y buscar.</p>
+      <pre><code><span class="tag-muted">const</span> valores = [3000, -45.50, 500, -30];
 
-<span class="tag-blue">// filter() → array con TODOS los que cumplen</span>
-<span class="tag-muted">const</span> ingresos = movs.<span class="tag-blue">filter</span>(movimiento => movimiento.tipo === "ingreso");
-<span class="tag-muted">// → [{ Salario… }, { Freelance… }]</span>
-
-<span class="tag-blue">// find() → el PRIMER elemento que cumple (o undefined)</span>
-<span class="tag-muted">const</span> salario  = movs.<span class="tag-blue">find</span>(movimiento => movimiento.nombre === "Salario");
-<span class="tag-muted">// → { nombre:"Salario", tipo:"ingreso", valor:3000 }</span></code></pre>
-      <table class="method-table">
+valores.<span class="tag-blue">map</span>(valor => valor / 4);    <span class="tag-muted">// [750, -11.37, 125, -7.5]</span>
+valores.<span class="tag-blue">filter</span>(valor => valor > 0); <span class="tag-muted">// [3000, 500]</span>
+valores.<span class="tag-blue">find</span>(valor => valor < 0);   <span class="tag-muted">// -45.50  (no array)</span></code></pre>
+      <table class="data-table">
         <tr>
           <th>Método</th><th>Retorna</th><th>Uso principal</th>
         </tr>
         <tr>
-          <td>map()</td><td>Array mismo tamaño</td><td>Transformar datos</td>
+          <td>map()</td><td>Array mismo tamaño</td><td>Transformar cada elemento</td>
         </tr>
         <tr>
           <td>filter()</td><td>Array (puede ser menor)</td><td>Filtrar por condición</td>
@@ -200,19 +192,35 @@
       </table>
     </div>
 
-    <!-- 4: Declarativo vs Imperativo -->
+    <!-- 4: reduce -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Declarativo vs Imperativo — QUÉ vs CÓMO</h3>
-      <p class="desc">La programación funcional describe <strong>QUÉ</strong> queremos lograr. La imperativa describe <strong>CÓMO</strong> hacerlo paso a paso.</p>
+      <h3><span class="tag-orange">4.</span> reduce — El más poderoso</h3>
+      <p class="desc">Acumula <strong>todo el array en un solo valor</strong> (suma, máximo, promedio...). Reemplaza el <code>for</code> de C05 en una sola línea.</p>
+      <pre><code><span class="tag-muted">const</span> saldo = valores.<span class="tag-orange">reduce</span>((acumulador, valor) => acumulador + valor, <span class="tag-orange">0</span>);
+<span class="tag-muted">//                              ↑ resultado parcial          ↑ valor inicial</span></code></pre>
+      <table class="data-table table-orange">
+        <tr>
+          <th>Vuelta</th><th>acumulador</th><th>valor</th><th>nuevo acumulador</th>
+        </tr>
+        <tr><td>1</td><td>0</td><td>3000</td><td>3000</td></tr>
+        <tr><td>2</td><td>3000</td><td>-45.50</td><td>2954.50</td></tr>
+        <tr><td>3</td><td>2954.50</td><td>500</td><td>3454.50</td></tr>
+        <tr><td>4</td><td>3454.50</td><td>-30</td><td>3424.50</td></tr>
+      </table>
+    </div>
+
+    <!-- 5: Declarativo vs Imperativo -->
+    <div class="card accent-purple">
+      <h3><span class="tag-purple">5.</span> Declarativo vs Imperativo — QUÉ vs CÓMO</h3>
+      <p class="desc">La programación funcional describe <strong>QUÉ</strong> queremos lograr. La imperativa describe <strong>CÓMO</strong> hacerlo paso a paso. El <code>for</code> de C05 desaparece.</p>
       <pre><code><span class="tag-muted">// IMPERATIVO — describe cada paso</span>
 <span class="tag-muted">let</span> ingresos = [];
-<span class="tag-muted">for</span> (<span class="tag-muted">let</span> i = 0; i < movs.length; i++) {
-  <span class="tag-muted">if</span> (movs[i].tipo === "ingreso")
-    ingresos.push(movs[i]);
+<span class="tag-muted">for</span> (<span class="tag-muted">let</span> i = 0; i < valores.length; i++) {
+  <span class="tag-muted">if</span> (valores[i] > 0) ingresos.push(valores[i]);
 }
 
-<span class="tag-orange">// FUNCIONAL — describe el resultado deseado</span>
-<span class="tag-muted">const</span> ingresos = movs.filter(movimiento => movimiento.tipo === "ingreso");</code></pre>
+<span class="tag-purple">// FUNCIONAL — describe el resultado deseado</span>
+<span class="tag-muted">const</span> ingresos = valores.filter(valor => valor > 0);</code></pre>
     </div>
 
   </section>
@@ -225,16 +233,16 @@
         <span>Mismos inputs → mismo output. No modifica estado externo ni produce efectos secundarios.</span>
       </div>
       <div class="term">
-        <strong>Inmutabilidad</strong>
-        <span>No modificar datos existentes. Crear copias transformadas en su lugar.</span>
-      </div>
-      <div class="term">
         <strong>Efecto secundario</strong>
-        <span>Cualquier modificación fuera del scope de la función: <code>console.log</code>, mutar variables globales.</span>
+        <span>Cualquier acción fuera del retorno: <code>console.log</code>, mutar variables externas, hacer fetch.</span>
       </div>
       <div class="term">
-        <strong>Composición</strong>
-        <span>Combinar funciones simples para construir funciones más complejas.</span>
+        <strong>Inmutabilidad</strong>
+        <span>No modificar datos existentes. Los métodos funcionales devuelven copias transformadas.</span>
+      </div>
+      <div class="term">
+        <strong>Composición / DRY</strong>
+        <span>Combinar funciones pequeñas para construir grandes, sin repetir código.</span>
       </div>
     </div>
   </section>
