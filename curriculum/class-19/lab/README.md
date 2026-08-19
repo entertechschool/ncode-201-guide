@@ -44,17 +44,21 @@ La auditoría se hace con **GitHub Copilot en VS Code**: como tiene acceso a TOD
 En el chat de Copilot (modo Ask):
 
 ```text
-@workspace Haz un code review de mi proyecto contra este contrato:
-[contrato técnico]. Busca específicamente: mutaciones directas del
+@workspace Haz un code review de mi proyecto.
+Busca específicamente: mutaciones directas del
 estado, faltas de try/catch en storage.js, render olvidado tras
 cambios de estado, funciones exportadas que nadie importa, ids que
-no usan randomUUID y fechas sin rehidratar al cargar.
+no usan randomUUID , fechas sin rehidratar al cargar y demas errores posibles.
 
 FORMATO: Lista de hallazgos con archivo y línea, cada uno con
 severidad (crítico / mayor / menor) y por qué.
 
 RESTRICCIONES: NO edites ningún archivo ni me des código corregido
 todavía. Solo hallazgos.
+
+Críticos (rompen la app): se arreglan AHORA, un hallazgo, una porción, probar.
+Mayores (deuda, flujo confuso): se anotan como ítems del SPRINTS.md en una seccion de Code Review.
+Menores (pulido): se descartan. Hoy no hay tiempo para cosmética.
 ```
 
 ### 1.2 Pide el plan de pruebas — y ejecútalo TÚ
@@ -62,10 +66,12 @@ todavía. Solo hallazgos.
 En el mismo chat:
 
 ```text
-@workspace Ahora dame un plan de 6 a 8 pruebas manuales para mi app,
-priorizando casos borde: datos corruptos en localStorage, playlist
-vacía, búsqueda sin resultados, nombres duplicados o con espacios,
-recarga tras eliminar. Formato: paso a paso + resultado esperado.
+@workspace Dame una lista de pruebas manuales que realizare en mi app,
+priorizando en caso existan los siguientes casos borde:
+datos corruptos en localStorage, playlist vacía,
+búsqueda sin resultados, nombres duplicados o con espacios,
+recarga tras eliminar,etc.
+Formato: paso a paso + resultado esperado.
 ```
 
 Ejecuta cada prueba **en tu navegador, a mano**, y anota pasó/falló. La IA diseña las pruebas; el veredicto sale de tu pantalla, no de su opinión.
