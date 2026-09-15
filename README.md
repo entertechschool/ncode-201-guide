@@ -1,6 +1,6 @@
 # Code 201 — Fundamentals of Software Development
 
-Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe){:target="_blank"}. Contiene el currículum completo: resúmenes de clase, laboratorios, slides, guías de facilitador y tests. El curso forma desarrolladores desde cero en HTML, CSS y JavaScript, preparándolos para Code 301.
+Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe){:target="_blank"}. Contiene el currículum completo: resúmenes de clase, laboratorios, slides, guías de facilitador y tests. El curso consolida conocimientos básicos de HTML, CSS y JavaScript con fundamentos sólidos, preparando a los estudiantes para Code 301.
 
 📚 **Hub del instructor:** [entertechschool.github.io/ncode-201-guide/instructor-hub/](https://entertechschool.github.io/ncode-201-guide/instructor-hub/){:target="_blank"}
 
