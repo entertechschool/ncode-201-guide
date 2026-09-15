@@ -1,43 +1,33 @@
-# Debate 11
+# Lectura y Debate 11: async/await y búsqueda en la API
 
-## 🎯 Objetivos de la Preparación para el Debate
+## 🎯 Objetivos de la Lectura y el Debate
 
-La discusión en esta sesión está orientada a fortalecer tu capacidad para capturar y gestionar eventos básicos en JavaScript. A través del debate crítico, explorarás cómo implementar **event listeners**, manipular el **event object** y emplear eficazmente funciones **callback** para crear aplicaciones web interactivas. Al debatir estos conceptos, profundizarás en tu comprensión técnica y desarrollarás habilidades prácticas esenciales para la implementación del proyecto integrador.
+Debatir en esta sesión te permitirá entender que **`async/await`** no es una tecnología distinta de las Promesas, sino otra forma —más legible— de escribir lo mismo que viste en C10 con `.then`. Analizarás también la diferencia entre **filtrar** lo que ya tienes cargado y **buscar** un recurso en la API, y qué significa que el **estado** de tu app (tu colección) crezca según lo que el usuario hace.
 
 ## 🔑 Conceptos Clave a profundizar
 
-- **Event Listener:**
-  Comprender cómo registrar eventos mediante el método `addEventListener` para que los elementos HTML reaccionen dinámicamente a interacciones del usuario.
+- **`async/await`:** `async` marca una función asíncrona y `await` pausa hasta que una promesa resuelve. Es **azúcar sobre las Promesas** de C10; el código se lee como pasos secuenciales.
+- **Filtrar vs buscar:** filtrar recorre lo que ya está en memoria (la rejilla); buscar consulta la API por un recurso específico (aunque no lo tengas).
+- **Estado de la app:** `pokedex` es la lista de lo que tienes; agregar (sin duplicar) la hace crecer, y `render` la refleja.
 
-- **Event Object:**
-  Explorar el objeto evento generado automáticamente, sus propiedades y cómo usarlo para obtener información específica sobre la interacción del usuario.
+## 📚 Artículos recomendados para leer
 
-- **Callback:**
-  Entender cómo definir y utilizar funciones callback que gestionen la respuesta a eventos específicos, permitiendo modularidad y claridad en el código.
+- [MDN — async function](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function){:target="_blank"}
 
+- [MDN — await](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/await){:target="_blank"}
 
-## 🤖 Prompt sugerido para interacción con IA
+- [MDN — Array.prototype.some](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/some){:target="_blank"}
 
-Utiliza el siguiente prompt cuidadosamente diseñado para conversar con ChatGPT y obtener los conocimientos esenciales antes del debate en clase:
+## ☑️ Lista de Mitos y Verdades para Analizar
 
-> **Prompt:**
-> "Actúa como instructor experto en JavaScript y desarrollo web. Explícame detalladamente cómo funcionan los event listeners en JavaScript, incluyendo el método `addEventListener`. Detalla qué es el event object, qué información contiene y cómo puedo aprovecharlo en eventos comunes como `click`, `input` o `submit`. Finalmente, explícame qué es un callback, cuál es su rol dentro de los eventos y dame un ejemplo práctico de implementación combinando estos tres conceptos. Usa un lenguaje claro y proporciona ejemplos de código breves pero completos."
+1. "`async/await` reemplaza a las Promesas: son tecnologías distintas y opuestas."
 
-## 🧠 Reflexiones Clave para Analizar
+2. "Puedes usar `await` en cualquier función, no hace falta que sea `async`."
 
-1. ¿Qué ventajas ofrecen los event listeners frente a otros métodos tradicionales de gestión de eventos (por ejemplo, atributos HTML)?
+3. "Filtrar la rejilla y buscar en la API son lo mismo: ambos encuentran cualquier Pokémon."
 
-2. ¿Cómo impacta en la experiencia del usuario manejar adecuadamente el objeto evento en aplicaciones web?
+4. "`async/await` hace el código asíncrono más legible porque se lee de arriba a abajo, como código secuencial."
 
-3. ¿Cuáles son los criterios que debes considerar para elegir entre funciones anónimas o funciones nombradas como callbacks?
+5. "Agregar el mismo Pokémon dos veces a la colección no tiene ninguna consecuencia."
 
-4. ¿Qué implicaciones tiene la correcta eliminación de event listeners en la gestión del rendimiento de una aplicación?
-
-5. ¿De qué manera facilita el uso de callbacks la modularidad y la reutilización del código en proyectos de desarrollo?
-
-6. ¿Cómo podemos prevenir errores comunes relacionados con la gestión de eventos al implementar event listeners y callbacks?
-
----
-
-> **Instrucción:** Utiliza las reflexiones anteriores como guía para profundizar en tu preparación y argumentar tus respuestas durante el debate en clase. Prepárate para aportar experiencias prácticas o ejemplos concretos obtenidos mediante la interacción con la IA.
-
+> **Instrucción:** Identifica cuáles de las afirmaciones anteriores consideras mitos y cuáles verdades, y prepárate para justificar tus respuestas con evidencia de las lecturas o con lo que comprobaste al reformular y buscar en tu Pokédex.

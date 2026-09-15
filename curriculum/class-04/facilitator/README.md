@@ -1,128 +1,312 @@
-﻿# Guía del Instructor: Funciones en JS, Pair Programming, e Introducción a CSS: Layout
+# Guía del Facilitador - Clase 04: CSS Variables + Forms Validados + Git Workflow
 
-## Resumen
+> Tiempo de lectura: 8 minutos | Lab CALIFICADO | Prepárate ANTES de clase
 
-### ¿Qué lugar ocupa este tema?
+---
 
-**¿Qué hicimos?**:
+## 🔑 Conceptos Clave
 
-En la clase anterior, los estudiantes aprendieron más acerca del control de flujo con la introducción a los bucles. Aprendieron acerca del CSS box model.
+- **CSS Custom Properties (Variables)**: tokens definidos en `:root` con `--nombre` y usados con `var(--nombre)`. Hoy es donde el alumno define la ESTÉTICA de su producto (colores, tipografía, radius, shadow), no solo refactoriza.
+- **Validación nativa HTML**: el navegador valida sin JS si el form tiene `required`, `type`, `pattern` o `minlength`. Primera línea de defensa.
+- **Git workflow profesional**: `git branch` → `git checkout -b` → commits → `git push -u` → Pull Request → merge → `git checkout main` → `git pull`. Nunca `main` directo cuando se trabaja en equipo.
+- **GitFlow básico**: convención donde `main` siempre está estable y desplegada, y cada feature vive en su propia rama hasta ser revisada en PR.
 
-**¿En qué nos centraremos en esta clase?**:
+---
 
-En esta clase enseñaremos CSS positioning, funciones, y pair programming. Esta clase es un poco pesada, así que gestiona tu tiempo mientras trabajas con el contenido de la clase.
+## 🔗 Analogías Útiles
 
-**¿Qué haremos?**:
+**CSS Variables <> Receta con ingredientes en una lista al inicio:**
+Una buena receta declara los ingredientes arriba ("2 tazas de azúcar") y los menciona por nombre en los pasos. Si quieres reducir azúcar, cambias UN número y toda la receta se ajusta. Eso son las CSS Variables en `:root`.
 
-En la siguiente clase nos centraremos más en las funciones y su sentencia return. Los estudiantes también terminarán con su laboratorio "About Me".  Las tres tareas de los laboratorios consisten en desarrollar el proyecto "About Me", práctica de CSS y Git branching.
+**Validación nativa <> Portero del bar:**
+El portero (navegador) verifica edad antes de dejar entrar. Tú (servidor) ya no necesitas verificarlo otra vez. La validación nativa hace de portero gratis. JS se reserva para reglas que el portero no puede saber ("esta persona ya entró hoy").
 
-## Objetivos de aprendizaje
+**Git branches <> Hojas paralelas del cuaderno:**
+`main` es la hoja oficial. Cada `feature/...` es una hoja paralela donde experimentas. El Pull Request es cuando pides revisión antes de pegar tu hoja paralela en la oficial.
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+**`git pull` <> Sincronizar tu carpeta con Dropbox:**
+Alguien (en este caso, GitHub al mergear el PR) modificó archivos en el remoto. `git pull` baja esos cambios a tu local. Sin él, tu `main` local queda desfasado.
 
-## Preparativos
+---
 
-1. Hojea la lectura de la clase y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Los instructores tendrán una idea clara de los alumnos que están comenzando a abrumarse y quienes corren el riesgo de no completar el curso.
-   - ***Es importante pasar tiempo con estos estudiantes que nos preocupan, ayudarlos y evaluar en qué punto se encuentran.***
-1. Revisa los [diagramas en la pizarra](https://code-fellows.invisionapp.com/freehand/201-Whiteboards-8r4qFnMn2) en la cuenta de Invision de Code Fellow o [aquí](whiteboards/class04WB.png) para la clase.
+## 📚 Contexto Actual
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+### CSS Variables: del hack al estándar
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+Antes de 2017, los proyectos grandes usaban preprocesadores como Sass o Less solo para tener variables. Cuando Chrome y Firefox completaron soporte para Custom Properties, muchos equipos eliminaron sus preprocesadores. Hoy frameworks como Tailwind, Bootstrap 5 y Material UI las usan internamente.
 
-### Revisión del código
+> **Para contar en clase:** "Lo que están aprendiendo hoy es lo que reemplazó a herramientas que se enseñaban como obligatorias hace 5 años."
 
-- Repasa Verdadero/Falso
-- Repasa Arrays
-- Repasa Bucles
+### Git Workflow: por qué nadie pushea a main
 
-### Funciones en JS 
+GitHub publicó en su Octoverse Report que el 87% de los repos activos protegen `main` y exigen PR para mergear. No es paranoia — es práctica estándar. El flujo `branch + PR + merge` es lo que cualquier entrevista técnica espera que sepas explicar.
 
-- **¿Por qué?**
-  - Las funciones son uno de los componentes fundamentales en JavaScript.
-  - Las funciones se pueden reutilizar y ahorrar tiempo.
-- **¿Qué?**
-  - Una función es un conjunto de declaraciones que ejecutan una tarea o calculan un valor. Deben tomar un input y retornar un output.
-  - Para utilizar una función debes definirla y luego llamarla.
-- **¿Cómo?**
-  - El instructor puede escoger utilizar replit para hacer la demostración.
-  - Demuestra cómo declarar y llamar varias funciones:
-    - funciones sin parámetros
-    - funciones con parámetros y luego llamadas con argumentos
-    - funcioenes con una sentencia return
-    - guardar el valor retornado de la función a una variable
-  - Abarca el scope de las funciones con algunos ejemplos.
+**Fuente:** [GitHub Octoverse](https://octoverse.github.com){:target="_blank"}, [W3C CSS Custom Properties](https://www.w3.org/TR/css-variables-1/){:target="_blank"}
 
-### CSS layout - Positioning
+---
 
-- **¿Por qué?**
-  - Algunos beneficios de utilizar CSS para el layout:
-    - Mantenimiento - es más fácil hacer cambios cuando tu layout está descrito en CSS.
-    - Mejor accesibilidad - organizar tu documento en base a su contenido ayuda a aquellos con lectores de pantalla.
-- **¿Qué?**
-  - El positioning te permite tomar elementos del flujo normal del layout del documento y hacer que se comporte diferente.
-  - Algunos ejemplos para demostrar es tener un elemento encima de otro o que un elemento se mantenga en el mismo lugar dentro del viewport.
-- **¿Cómo?**
-  - Utiliza Code Pen en esta demostración para que pueda ser compartido en el repositorio de la clase.
-  - Demuestra los siguientes valores de position a los alumnos:
-    - Absolute
-    - Relative
-    - Fixed
+## 🎯 Estructura Resumida
 
-### Pair programming
+| **Fase** | **Tiempo** | **Foco** |
+|---|---|---|
+| Intro | 15 min | Hasta C03 solo layout/espaciado. Hoy le das identidad visual al producto. Por qué validación nativa antes de JS. Por qué nadie pushea a `main`. |
+| Demo Técnica | 15 min | Refactor en vivo: hardcoded → `:root` con tokens. Agregar shadow + hover. Crear una rama y mergear vía PR. |
+| Lab (P1–P5) | 95 min | Variables (estética) → Crear rama → Form validado en rama → Push + PR + merge + pull → Deploy. |
+| Cierre | 15 min | Retrospectiva, preview de M2 (JavaScript). |
 
-- **¿Por qué?**
-  - Algunos beneficios de pair programming:
-    - ¡Dos cabezas piensan mejor que una!
-    - Es una forma efectiva de compartir conocimiento.
-    - Desarrolla las habilidades interpresonales.
-    - Ayuda a desarrollar un código de buena calidad más rápido a la vez que reduce el riesgo.
-- **¿Qué?**
-  - El pair programming es una técnica de desarrollo de software en la que dos programadores trabajan juntos en una estación de trabajo.
-- **¿Cómo?**
-  - Define los roles de Navigator y Driver.
-  - Demuestra cómo planear un enfoque antes de comenzar a escribir código.
-  - Fomenta la comunicación al programar.
-  - Si se puede, haz pair programming con un TA u otro instructor.
+---
 
-### Preparación para el laboratorio
+## 🎯 Momentos Clave de la Clase
 
-- **¿Por qué?**
-  - Les proporciona a los estudiantes las herramientas para que cumplan con su laboratorio.
-- **¿Qué?**
-  - Revisa las instrucciones del Laboratorio 04 en Canvas.
-- **¿Cómo?**
-  - Este laboratorio se centrará principalmente en el pair programming.
-  - Escribe en una pizarra el flujo de git que se utilizará durante el pair programming:
-    - Fork, clonar, ACP, crear un Pull Request, y luego merge.
-  - Haz que un TA, otro instructor, o quizás un alumno se ofrezca como apoyo para ayudarte con la demostración.
-    - Consulta el [ejemplo de la clase](LECTURE-EXAMPLE.md) para más detalles acerca de lo que necesitas lograr durante el laboratorio de pair programming de los estudiantes.
+### Demo Principal — refactor + estética en vivo
 
-## Notas de Laboratorio
+**Qué mostrar:** Tomar el CSS de las 3 páginas (C01-C03), contar cuántas veces aparece `#1a1a1a`, `#e0e0e0`, `8px`. Refactorizar a `:root` y agregar `box-shadow` + `transition` + `:hover` a las cards. El sitio gana profundidad visual ante los ojos del alumno.
 
-Este laboratorio requiere del pair programming. Asegúrate de repasar con los estudiantes cuáles son los diferentes roles y cómo deberán trabajar juntos para cumplir con el objetivo.
+**Script sugerido:**
+```
+Facilitador: "Cuento las veces que aparece '#e0e0e0' en mi CSS... 5 veces.
+Si cambio mi paleta mañana, son 5 líneas a tocar y rezar.
+Pero más importante: ¿notan que las cards se ven planas? Sin sombra,
+sin hover, sin profundidad. Hoy arreglamos las dos cosas."
+[Refactoriza a :root con var() + agrega shadow y hover]
+Facilitador: "Cambio --color-accent y todos los hovers cambian.
+Eso es ESTÉTICA controlada con variables."
+```
 
-- Los estudiantes serán emparejados con otros estudiantes con habilidades similares.
-  - p.ej. Si calificas a tus estudiantes en una escala del 1-10 en base a su habilidad general, evita emparejar un 4 con un 10. Empareja un 0 con otro alumno que no sea más de un 5, y empareja a un 10 con otro alumno que no sea menos que un 6.
-- Utiliza gurpos de 3 si es necesario, especialmente en equipos en donde sospechas que alguien puede que no se presente. Este es un problema más frecuente en el horario nocturno en donde esta tarea se realiza en noches consecutivas.
-- Anuncia a las parejas por el canal de slack, no en clase.
-  - De esta forma no habrá problemas con las expresiones faciales en Zoom cuando las personas sepan quién es su compañero.
+**Plan B (si la demo falla):** Tener un CodePen pre-creado con el ejemplo funcionando. Mostrar el cambio de token y el efecto visual.
 
-Puede ser de ayuda mostrarle [learnlayout.com](http://learnlayout.com) a los estudiantes como instroducción a CSS layouts.
+### Transición al Lab — la regla de oro de las ramas
 
-[Este artículo de freecodecamp.org](https://medium.freecodecamp.org/css-floats-explained-by-riding-an-escalator-57fa55232333) también es un buen recurso para que los alumnos entiendan cómo funcionan los floats en CSS.
+**Momento crítico:** P2 introduce ramas. Es donde más se confunden. Refuerza:
 
-## ¿Qué cambió desde la clase anterior?
+```
+Facilitador: "P1 lo commitean a main porque ese es el estado actual
+de su flujo: 'todo a main'. Pero a partir de P2 cambia el juego.
+Repitan conmigo: NUNCA pushees al main directo cuando trabajas en equipo.
+La rama feature es donde el experimento vive hasta que esté listo."
+```
 
-Los alumnos aprenderán nuevos flujos de trabajo de Git y GitHub que pueden ser un poco difíciles.
+---
 
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+## 🎭 Dinámicas de Clase
 
-Cada uno de los dos temas principales trae desafíos. Con las funciones, los estudiantes suelen hacerlas más complicadas de lo que realmente son, en vez de simplemente ser una envoltura alrededor de la lógica que ya han demostrado poder manejar. Además, usualmente hay mucha confusión con los conceptos básicos acerca del funcionamiento de los parámetros y los argumentos, la diferencia entre declarar y llamar una función, y el uso de las declaraciones ‘return’. La experiencia demuestra que probablemente el 50% o más de los estudiantes en realidad conocen muy poco acerca de cómo funcionan las funciones... y eso es antes de llevar el concepto de ‘scope’ a la conversación. Así mismo, la mayoría de los estudiantes han visto y suelen utilizar declaraciones de funciones y expresiones function al azar, y se necesita guiarlos con cuidado (por ahora) por el camino de las declaraciones, sin dejarse absorver por el concepto del hoisting y el comportamiento de interpretación de JS si los estudiantes por lo general tienen dificultaddes con los conceptos básicos.
+### Dinámica 1: "Token explorer"
 
-Con CSS Layout, hay una gran rango de posibilidades que es imposible de gestionar sin el dominio de un puñado de conceptos fundamentales; aún así, toma más trabajo del esperado entender los conceptos básicos de forma efectiva. Los estudiantes están acostumbrados a pensar en el formato en los documentos procesados con word, y la facilidad de solo resaltar y hacer click en opciones hasta que se alcance la apariencia deseada. Con la interacción entre CSS y HTML, se debe prestar atención a la planeación y organización del documento dentro de las limitaciones de los conceptos fundamentales de CSS Layout. Esto señala la necesidad de tener un plan establecido antes de maquetar, ya que la estuctura y los detalles están entrelazados. El dominio de la terminología es la clase, y este es otro espacio importante para resaltar el rol de las habilidades de comunicación sólidas.
+Cuando varios estudiantes terminan P1, hacer pausa de 3 minutos:
 
-Además, esta clase es su primera experiencia con el pair programming, así que hay muchos aspectos técnicos y sociales/de comunicación a considerar. No calcules mal el tiempo necesario para demostrar el flujo de Git a la clase. Prevee que será un laboratorio largo y resalta la importancia de la gestión del tiempo.
+> "Levanten la mano quienes definieron `--color-accent` distinto a `#0066cc`. ¿Qué color escogieron? ¿Por qué encaja con su producto?"
+
+**Dinámica sugerida:**
+```
+Facilitador: "Su paleta es la primera decisión de marca que toman.
+¿Por qué Velocity es negro y no morado? ¿Por qué Foodly es naranja?
+Compartan en chat su accent y por qué."
+```
+
+### Dinámica 2: "Romper el form a propósito"
+
+En P3, después de validar el form lleno con datos correctos:
+
+> "Ahora intenten romperlo. Email sin @. Teléfono con letras. Submit vacío. Checkbox sin marcar."
+
+**Dinámica sugerida:**
+```
+Facilitador: "Su navegador es su primer QA. Vamos a verlo trabajar:
+- Vacíen el form, click en Enviar. ¿Qué dice el navegador?
+- Escriban 'abc' en el email. Click Enviar. ¿Qué dice?
+- Pongan 5 dígitos en el teléfono. Click Enviar.
+Si el navegador NO los detuvo, su validación está mal escrita."
+```
+
+### Dinámica 3: "Tú eres el PR reviewer"
+
+Cuando alguien termine P3 (form en la rama) y abra el PR (P4.2), pedirle que **revise el PR de otro compañero** antes de mergear:
+
+```
+Facilitador: "Alex ya tiene su PR abierto. Maru: entra a su PR y déjale un
+comentario sobre el código. No es para criticar, es para practicar leer
+código ajeno. Después Maru abre el suyo y Alex revisa."
+```
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### Ejemplo 1: Paleta mínima viable
+
+**Cuándo usarlo:** Si alguien dice "no sé qué poner en `:root`".
+
+```css
+:root {
+  --color-primary: #1a1a1a;
+  --color-accent: #0066cc;
+  --color-text: #1a1a1a;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f5;
+  --color-border: #e0e0e0;
+
+  --font-text: system-ui, sans-serif;
+  --font-size: 16px;
+  --font-size-title: 28px;
+
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+
+  --radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+}
+```
+
+**Tip:** Pedir que copien esto en pizarra (no entregarlo digital). Copiar a mano refuerza.
+
+### Ejemplo 2: Validación nativa en 30 segundos
+
+**Cuándo usarlo:** Demo del navegador como QA.
+
+```html
+<input type="email" id="email" required>
+<input type="tel" id="tel" pattern="[0-9]{9}" required>
+<select required>
+  <option value="">Selecciona</option>
+  <option value="a">A</option>
+</select>
+<input type="checkbox" required>
+<button type="submit">Enviar</button>
+```
+
+**Tip:** Submit con el form vacío. El navegador hace toda la magia. Ni una línea de JS.
+
+### Ejemplo 3: Flujo completo de un feature
+
+**Cuándo usarlo:** Si alguien se pierde entre P2, P3 y P4.
+
+```bash
+# Estoy en main, paleta ya commiteada
+git branch                              # confirmar dónde estoy
+git checkout -b feature/form-validado   # crear y cambiar
+
+# ... editar index.html ...
+git add index.html
+git commit -m "feat: agrega validacion nativa al form"
+git push -u origin feature/form-validado
+
+# Ir a GitHub, abrir PR, mergear
+
+git checkout main
+git pull                                # traer el merge a local
+git branch -d feature/form-validado     # limpiar
+```
+
+**Tip:** Pegar el bloque en pizarra y resaltar la secuencia. Es la columna vertebral de P2 + P4.
+
+---
+
+## ⚠️ Errores Comunes
+
+| Señal | Qué está pasando | Qué hacer |
+|---|---|---|
+| `var(--color-primary)` no se aplica | El token no está en `:root` o tiene typo (`--color-primay`) | Abrir DevTools → Computed → ver si el navegador lo reconoce |
+| El form se envía aunque esté vacío | Falta el atributo `required` o el botón no es `type="submit"` | Verificar atributos del input y del botón |
+| `pattern` no rechaza letras | La regex está mal escrita | `pattern="[0-9]{9}"` exacto. Si quiere espacios o guiones, agregar a la regex |
+| El `<select>` permite enviar sin elegir | La primera opción no tiene `value=""` | Cambiar la primera opción a `<option value="">Selecciona...</option>` |
+| `git push` da "src refspec ... does not match any" | Ejecutó `git push` sin `-u` la primera vez | Usar `git push -u origin feature/...` la primera vez |
+| `git pull` da error "no tracking information" | Está en una rama local sin remoto | Hacer `git checkout main` antes de `git pull` |
+| Quiere borrar la rama feature pero `git branch -d` falla | La rama no fue mergeada todavía | Confirmar merge en GitHub y `git pull` antes de borrar |
+| Push directo a `main` "porque era más fácil" | Saltarse P2 | Hacer reset suave: `git reset HEAD~1`, mover los cambios a una rama feature, repetir el flujo |
+
+---
+
+## ✅ Señales de Comprensión
+
+### El estudiante ENTIENDE cuando:
+- Puede explicar por qué `--color-primary` en `:root` reemplaza a múltiples ocurrencias hardcoded.
+- Diferencia `required` (obligatorio) de `pattern` (formato) sin dudar.
+- Puede dictar el flujo `branch → commit → push → PR → merge → pull` sin mirar apuntes.
+
+### El estudiante NECESITA AYUDA cuando:
+- Copia los tokens del ejemplo sin renombrarlos a sus necesidades ni adaptar los colores a su producto.
+- No revisa el feedback nativo del navegador y agrega JS para validar lo que `type="email"` ya valida.
+- Mergea su PR sin abrirlo (botón "Merge" sin leer el diff).
+- Olvida `git pull` después del merge y empieza a trabajar en un `main` local desfasado.
+
+---
+
+## 🎯 Checkpoints de Validación
+
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~35' | P1 lista | El alumno cambia `--color-accent` en `:root` y demuestra que afecta ≥2 elementos (hover de nav + algo más) en vivo. Cards tienen sombra visible. |
+| ~50' | P2 lista | `git branch` muestra `feature/form-validado` con asterisco. Aún no hay commits nuevos en la rama. |
+| ~80' | P3 lista | Submit vacío → bloqueado. Submit con email mal → bloqueado. Submit válido → pasa. `git log` muestra el commit en la rama feature. |
+| ~100' | P4 lista | GitHub muestra el PR mergeado. `git log` local en `main` incluye el commit de merge tras `git pull`. |
+| ~110' | P5 lista | URL pública funcional con las 3 páginas + README del repo documentado con tokens y validaciones. |
+
+---
+
+## 🧑‍🏫 Tips de Facilitación
+
+### Si el grupo está callado en el debate:
+- "Pregunta para todos: ¿alguien ha visto un proyecto donde se cambia el color de marca? ¿Cuánto tomó?"
+
+### Si alguien ya sabía Git:
+- Mandarlo a hacer el reto del README (tabla de tokens) o a ayudar a un compañero atrasado.
+
+### Si el lab se está pasando:
+- A los 80 min: asegurar que P4 (push + PR + merge) esté en curso. P5 puede ser tarea inmediata post-clase pero el flujo Git debe completarse antes de terminar.
+
+### Si alguien usa JavaScript para validar el form:
+- "Tu JS funciona, pero el reto era validación nativa. Quita tu JS y prueba con `required`/`type`/`pattern`. Vas a ver que el navegador hace lo mismo."
+
+### Si alguien pregunta por `merge conflict`:
+- "Hoy no lo vemos. Si tu `git pull` te da conflicto, avisa — lo resolvemos juntos. Pero la clase no evalúa eso."
+
+---
+
+## ❓ Preguntas Frecuentes
+
+### P: ¿Por qué definir `--color-text` y `--color-primary` si son el mismo `#1a1a1a`?
+**R:** Porque sirven a roles distintos. Si mañana decides que tu texto es gris oscuro (`#333`) pero los botones siguen negros, cambias `--color-text` sin tocar `--color-primary`. **Los tokens reflejan ROLES, no valores.**
+
+### P: ¿`pattern` reemplaza a regex en JS?
+**R:** Para validar formato de input, sí. Para reglas de negocio (ej. "el email no está duplicado"), no — eso requiere servidor.
+
+### P: ¿Puedo mergear sin abrir PR (con `git merge` local)?
+**R:** Sí técnicamente, pero la clase evalúa el flujo profesional. En equipos reales el PR es donde sucede la revisión.
+
+### P: ¿Qué pasa si me equivoco en la rama y commiteo a main?
+**R:** No es destructivo. Puedes hacer `git reset HEAD~1` (deshace el último commit manteniendo cambios) y repetir el flujo correcto. Pero si ya pusheaste a main, es más difícil — por eso el flujo importa.
+
+---
+
+## 🔗 Conexiones del Curriculum
+
+### Esta clase construye sobre:
+
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C01 | `<form>`, `<label for>`, `<input>`, `<textarea>` | El form de `<section id="contacto">` se enriquece con validación nativa + campos nuevos. |
+| C01 | Repositorio Git + GitHub Pages | El workflow profesional se monta sobre el repo que ya existe; el deploy verifica las 3 páginas. |
+| C02 | CSS con `#1a1a1a`, `#e0e0e0`, `#f5f5f5`, padding/border-radius hardcoded | Refactorizado con `var(--token)`. |
+| C03 | `.plan`, `.faq-layout`, `.faq-nav`, `.logos` con colores y radius hardcoded | Refactorizado con `var(--token)`. Las cards y plans ganan `box-shadow` por primera vez. |
+
+### Conexión con la Próxima Clase (C05)
+
+Al cerrar, planta la semilla:
+
+> "El M1 cierra hoy. La próxima clase ya no es CSS — entran a JavaScript con variables, condicionales y bucles. Su landing seguirá ahí; en M2 le pondrán JS al formulario que hoy validaron con HTML."
+
+**Pre-work implícito:** Que pusheen su sitio a GitHub Pages y compartan la URL en el canal de la cohorte.
+
+---
+
+## 🪞 Reflexión Post-Clase
+
+### Preguntas para el facilitador:
+- ¿Cuántos estudiantes adaptaron `--color-accent` a su producto vs lo dejaron en azul default?
+- ¿Alguno usó JS para validar el form a pesar de la indicación? → seguimiento individual.
+- ¿Cuántos PRs se mergearon sin que nadie revisara el diff? → reforzar la lección de revisión en C08.
+- ¿Quiénes olvidaron `git pull` y trabajaron sobre un `main` desfasado? → enseñar a verificar con `git status` antes de empezar.
+
+> Lab calificado: tras la clase, revisar los PR mergeados y el sitio en GitHub Pages para calificar contra la rúbrica del lab/README.md.

@@ -1,244 +1,259 @@
-﻿# Guía del Facilitador: Programación Orientada a Objetos
+# Guía del Facilitador — Clase 07: Objetos + POO con `class`
 
-## 1. El momento pedagógico clave
+> Tiempo de lectura: 8 minutos | Tercera clase del M2 | Prepárate antes de clase
 
-Los estudiantes llegan a esta clase con una mentalidad completamente funcional después de haber experimentado las transformaciones elegantes de `map()`, `filter()` y `reduce()`. El "click" mental que deben experimentar aquí no es solo entender la sintaxis de funciones constructoras, sino reconocer que la arquitectura de software tiene múltiples paradigmas y que cada uno resuelve problemas específicos de manera diferente.
+---
+
+## 🔑 Conceptos Clave
+
+- **Objeto literal** (NUEVO): `{ key: value }`, acceso/modificación con `.prop`. Es la base — todo lo demás se construye sobre esto.
+- **`class`** (NUEVO): el **molde** para crear muchos objetos con la misma forma y comportamiento. Se enseña **por capas**: propiedades → constructor → métodos.
+- **`constructor` + `this` + `new`**: el `constructor` corre al hacer `new` e inicializa las propiedades con `this` (el objeto que se está creando).
+- **Método**: función dentro de la clase que usa las propiedades (`this.x`).
+- **Encapsulación**: datos (propiedades) + comportamientos (métodos) viven dentro del mismo objeto (`class Presupuesto`).
+
+> ❗ C07 es **solo lógica, en consola**. No hay HTML/CSS ni DOM (eso es C08/M3). No hay herencia ni prototipos (unidad de POO posterior).
+
+---
+
+## 🔗 Analogías Útiles
+
+**Objeto literal ⟷ Ficha de inscripción:** una ficha tiene campos con etiquetas (nombre, edad). Cada campo es una **propiedad**. Un array sería una pila de fichas numeradas; un objeto es UNA ficha llena.
+
+**`class` ⟷ Molde de galletas:** el molde define la forma; cada galleta sale igual de forma pero con distinto sabor. La clase es el molde; las **instancias** (`new`) son las galletas.
+
+**`this` ⟷ "Yo" en un CV:** la plantilla del CV es la misma, pero "Yo" apunta al postulante que lo está llenando AHORA. Dentro de la clase, `this` apunta al objeto que se crea en ese momento.
+
+**Encapsulación ⟷ Caja de herramientas:** cada herramienta vive con sus accesorios (taladro + brocas), no todo suelto. Un objeto encapsula datos + sus métodos.
+
+**Arrays paralelos → Objeto ⟷ Hojas sueltas vs ficha unificada:** antes una hoja de nombres y otra de valores; si las descalibras, todo se corrompe. Ahora UNA ficha por movimiento, imposible desincronizar.
+
+---
+
+## 📚 Contexto Actual
+
+### Por qué objetos primero, `class` después
+
+Pedagógicamente CRÍTICO. Si saltas directo a `class`, el alumno aprende `class` + `constructor` + `this` + `new` al mismo tiempo que aprende qué es un objeto. **Demasiado.** Primero (P0+P1) usa objetos literales directamente; cuando llegue `class` (P2), el `this.x = ...` se siente "ah, está armando el objeto que ya entendí".
+
+### Por qué `class` y NO funciones constructoras
+
+En M2 ya **no enseñamos prototipos** (se difieren). La única razón para empezar con funciones constructoras era revelar después "class es azúcar sobre prototipos" — sin esa revelación, las constructoras son solo una forma más vieja y enredada de lo mismo. Ventajas de `class`: (1) transición casi nula desde el objeto literal (el `metodo() {}` se escribe igual); (2) **más seguro** — sin `new` lanza un error claro; (3) es el estándar moderno.
+
+### Por qué construir `class` por capas (no de golpe)
+
+Mostrar la clase completa de una abruma. La secuencia **propiedades → constructor → métodos** hace que cada capa **motive** la siguiente: "asignar propiedades a mano es tedioso → el constructor las pone solas → ahora dales comportamiento con métodos". Es construcción de aprendizaje, no volcado.
+
+**Fuentes:** [MDN — Trabajando con objetos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics){:target="_blank"}, [MDN — Classes](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes){:target="_blank"}
+
+---
+
+## 🎯 Estructura Resumida
+
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Intro + repaso | 15 min | El dolor de arrays paralelos + motivación: ¿y si fueran un objeto? |
+| Demo Técnica | 20 min | Objeto literal → array de objetos → `class` por capas. |
+| Lab (P0-P3) | 120 min | P0 Objetos · P1 Refactor del modelo · P2 `class` por capas · P3 `class Presupuesto`. |
+| Cierre | 15 min | Qué ganamos con objetos + `class` · semilla C08 (interfaz con Tailwind). |
+
+---
+
+## 🎯 Momentos Clave de la Clase
+
+### Demo Principal — el refactor del modelo (5 min)
+
+Lado a lado, arrays paralelos vs array de objetos:
 
 ```javascript
-// El "antes" - pensamiento funcional puro
-const calcularBalance = (movimientos) => {
-  return movimientos
-    .filter(m => m.tipo === 'ingreso')
-    .reduce((total, m) => total + m.valor, 0) - 
-  movimientos
-    .filter(m => m.tipo === 'gasto')  
-    .reduce((total, m) => total + m.valor, 0);
-};
+// ANTES
+let nombres = ['Salario', 'Cena'];
+let valores = [3000, -45.50];          // tipo por signo
 
-// El "después" - pensamiento orientado a objetos
-function Presupuesto() {
-  this.movimientos = [];
-  this.calcularBalance = function() {
-    return this.obtenerIngresos() - this.obtenerGastos();
-  };
+// AHORA
+let movimientos = [
+  { nombre: 'Salario', tipo: 'ingreso', valor: 3000 },
+  { nombre: 'Cena',    tipo: 'gasto',   valor: 45.50 }
+];
+
+// Eliminar el primer movimiento:
+// ANTES: nombres.shift(); valores.shift();  ← 2 ops; si olvidas una, corrupción silenciosa
+// AHORA: movimientos.shift();               ← 1 op, integridad garantizada
+```
+
+> **Script:** "Antes el nombre y el valor eran entradas separadas. Si las desincronizabas, nadie te avisaba. Ahora viajan JUNTAS — imposible desincronizar."
+
+⚠️ **Aviso clave del refactor:** con `tipo` explícito y `valor` positivo, **`calcularSaldo` cambia** (ya no es sumar el array; es `ingresos - gastos`) y **`imprimirReporte` pasa de `(nombres, valores)` a `(movimientos)`**. Es el punto donde más alumnos se traban.
+
+### Demo de `class` por capas (5 min en pizarra)
+
+```
+1. Molde vacío + propiedades a mano:
+   class Movimiento {}
+   const m = new Movimiento();  m.nombre = 'Cena';  m.valor = 45.5;
+   → "ponerlas a mano cada vez es tedioso..."
+
+2. Constructor: las pone solas
+   class Movimiento { constructor(nombre, tipo, valor) { this.nombre = nombre; ... } }
+   const cena = new Movimiento('Cena', 'gasto', 45.5);
+
+3. Métodos: comportamiento sobre las propiedades
+   esIngreso() { return this.tipo === 'ingreso'; }
+```
+
+> El alumno ve la clase **nacer por capas**, no caer del cielo completa.
+
+### Transición al Lab
+
+```
+"P0 son 15 min de objetos básicos. P1 refactoriza TODO el código de C06
+(registrarMovimiento, las funciones, imprimirReporte) — ojo con calcularSaldo.
+P2 construye class por capas. P3 encapsula en Presupuesto.
+Todo en consola: hoy no se toca HTML."
+```
+
+---
+
+## 🎭 Dinámicas de Clase
+
+### Dinámica 1: "Escribe el objeto" (tras P0.1)
+3 alumnos escriben en pizarra un objeto de "su mascota" o "su libro favorito"; comparas las propiedades. Pierden el miedo: un objeto es una "ficha" con campos.
+
+### Dinámica 2: "Elimina sin desincronizar" (antes de P1)
+"En C05 tenías `nombres` y `valores`. ¿Cómo borras el movimiento #2? ¿Y si olvidas el segundo `splice`?" → discusión sobre corrupción silenciosa → "hoy con objetos, `movimientos.splice(2,1)` y listo."
+
+### Dinámica 3: "Predice `Presupuesto`" (antes de P3)
+"Ya tienen `class Movimiento`. Ahora `class Presupuesto`: ¿qué propiedad tendría? ¿qué métodos?" → recoger ideas (`this.movimientos = []`, `agregar`, `saldo`, `resumen`) → implementan P3 y verifican su intuición.
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### Ejemplo 1: el `this` se decide al invocar
+
+```javascript
+const cena = new Movimiento('Cena', 'gasto', 45);
+cena.esIngreso();   // this = cena (el objeto a la izquierda del punto)
+```
+**Tip:** "El método sabe quién es `this` PORQUE se invocó con `cena.esIngreso()`."
+
+### Ejemplo 2: la trampa del refactor (`calcularSaldo`)
+
+```javascript
+// ❌ Heredado de C06 (valores con signo): ahora da MAL el saldo
+const calcularSaldo = movimientos =>
+  movimientos.reduce((a, m) => a + m.valor, 0);   // suma TODO como si fuera ingreso
+
+// ✅ Correcto: el tipo es explícito, valor es positivo
+const calcularSaldo = movimientos =>
+  totalIngresos(movimientos) - totalGastos(movimientos);
+```
+**Tip:** "Si copian `calcularSaldo` de C06 tal cual, el saldo sale inflado. El signo ya no existe."
+
+### Ejemplo 3: clase vacía → con constructor
+
+```javascript
+class Movimiento {}                     // molde vacío, instancia "manual"
+const a = new Movimiento(); a.nombre = 'Cena';
+
+class Movimiento {                       // con constructor: automático
+  constructor(nombre, tipo, valor) { this.nombre = nombre; this.tipo = tipo; this.valor = valor; }
 }
+const b = new Movimiento('Cena', 'gasto', 45);
 ```
+**Tip:** "Mismas propiedades; el constructor solo automatiza lo que hacías a mano."
 
-Este cambio marca la transición desde "¿cómo proceso estos datos?" hacia "¿cómo organizo este comportamiento?". Es fundamental porque prepara la mentalidad arquitectónica que necesitarán para frameworks modernos como React, donde todo es un componente con estado y comportamiento encapsulado.
+---
 
-## 2. Funciones Constructoras: Más que alternativa a `class`
+## ⚠️ Errores Comunes
 
-La decisión de enseñar funciones constructoras antes que la sintaxis `class` ES6 no es nostálgica, es estratégicamente pedagógica. Los estudiantes necesitan entender cómo JavaScript realmente construye objetos bajo el capó antes de usar abstracciones sintácticas que ocultan esta mecánica.
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| `Class constructor ... cannot be invoked without 'new'` | Llamó la clase sin `new` | Siempre `new Movimiento(...)` |
+| Saldo inflado / incorrecto | Copió `calcularSaldo` de C06 (suma con signo) | Ahora `saldo = totalIngresos - totalGastos` |
+| `imprimirReporte` falla | Sigue pasando `(nombres, valores)` | Ahora recibe `(movimientos)` — un solo array |
+| `montosAbsolutos` ya no se usa | Quedó de C06 para quitar el signo | Bórrala: `valor` ya es positivo |
+| `this is undefined` en un método | Llamó el método sin punto | `cena.esIngreso()` — `this` viene del objeto a la izquierda |
+| Propiedad compartida entre instancias | Definió el dato fuera del `constructor` | Las propiedades van en el `constructor` con `this.x = ...` |
+| Sigue con 2 arrays paralelos | No internalizó el refactor | Volver a la Dinámica 2 (desincronización) |
 
-```javascript
-// Función constructora: el mecanismo real de JavaScript
-function Movimiento(nombre, tipo, valor) {
-  // `this` se crea automáticamente cuando usas `new`
-  this.nombre = nombre;        // Propiedad de instancia
-  this.tipo = tipo;
-  this.valor = valor;
-  this.fecha = new Date();
-  
-  // Método como propiedad de función
-  this.esIngreso = function() {
-    return this.tipo === 'ingreso';  // `this` referencia la instancia
-  };
-}
+---
 
-// Cada instancia tiene sus propias copias de todo
-const salario = new Movimiento('Salario', 'ingreso', 3000);
-console.log(salario.esIngreso()); // true
-```
+## ✅ Señales de Comprensión
 
-La comprensión profunda de `this`, `new`, y la creación manual de objetos es crucial porque cuando lleguen a React, entenderán por qué `this.setState()` funciona como funciona, y por qué los arrow functions tienen problemas con `this` en métodos de clase.
+**ENTIENDE cuando:**
+- Diferencia objeto literal de `class` (instancia vs molde).
+- Explica que el `constructor` "pone las propiedades" al hacer `new`.
+- Reconoce que `cena.esIngreso()` funciona porque `this = cena`.
+- Corrige `calcularSaldo` al nuevo modelo sin ayuda.
 
-## 3. `this` vs. la complejidad de contextos
+**NECESITA AYUDA cuando:**
+- Confunde `this` con una variable normal.
+- Olvida `new` al crear instancias.
+- Mantiene 2 arrays paralelos.
+- Trata métodos como funciones globales (`esIngreso(cena)` en vez de `cena.esIngreso()`).
 
-El concepto de `this` es donde muchos bootcamps fracasan porque lo enseñan como una regla abstracta en lugar de como el mecanismo fundamental de contexto en JavaScript. En esta clase, `this` debe entenderse como "el objeto que está siendo construido o manipulado en este momento".
+---
 
-```javascript
-function Presupuesto() {
-  this.movimientos = [];
-  this.meta = 0;
-  
-  this.agregarMovimiento = function(movimiento) {
-    // `this` aquí siempre referencia la instancia de Presupuesto
-    this.movimientos.push(movimiento);
-    this.recalcularEstado(); // método interno
-  };
-  
-  this.recalcularEstado = function() {
-    // Evitamos el problema de contexto perdido manteniendo todo dentro del constructor
-    console.log(`Balance actual: ${this.calcularBalance()}`);
-  };
-}
+## 🎯 Checkpoints de Validación
 
-// El patrón claro: `new` + función constructora = contexto garantizado
-const miPresupuesto = new Presupuesto();
-```
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~15' | P0 | Crea un objeto con 3 propiedades y lee/modifica una con `.`. |
+| ~50' | P1 | `movimientos` es array de objetos; `registrarMovimiento` hace 1 push; `calcularSaldo` resta gastos; `imprimirReporte(movimientos)` correcto. |
+| ~90' | P2 | Construyó `Movimiento` por capas; crea instancias con `new`; `.formatear()` y `.esIngreso()` funcionan. |
+| ~120' | P3 | `miPresupuesto.resumen()` devuelve cantidad/ingresos/gastos/saldo; `eliminar` y `buscarPorNombre` funcionan. |
 
-Esta comprensión sólida de `this` previene la confusión que viene después con arrow functions, métodos de array, y event handlers en el DOM.
+---
 
-## 4. Encapsulación: Sintaxis con propósito arquitectónico
+## 🧑‍🏫 Tips de Facilitación
 
-La encapsulación en esta clase no es un concepto académico, es una necesidad práctica. Los estudiantes vienen de funciones que operan sobre datos externos y deben adoptar la mentalidad de "datos y comportamientos que van juntos, viven juntos".
+- **Grupo callado:** "¿Qué propiedades tendría un objeto `Producto` de un e-commerce?" — práctica de modelado.
+- **Alguien ya conocía `class`:** pídele que explique al grupo qué hace `new` por dentro (crea el objeto, corre el constructor).
+- **Terminan P2 antes:** reto `obtenerMovimientosPorMes(mes)` usando la propiedad `fecha`.
+- **Preguntan por herencia (`extends`):** "Es la unidad de POO posterior. Hoy: una sola clase, sin herencia."
+- **Preguntan por arrow `this`:** "Hoy los métodos de `class` usan `this` clásico. Las diferencias con arrow las vemos más adelante."
 
-```javascript
-// Encapsulación efectiva: todo lo relacionado con un movimiento vive en Movimiento
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-  this.fecha = new Date().toLocaleDateString();
-  
-  // Validaciones encapsuladas
-  this.esValido = function() {
-    return this.valor > 0 && ['ingreso', 'gasto'].includes(this.tipo);
-  };
-  
-  // Transformaciones encapsuladas  
-  this.formatearPorTipo = function() {
-    return this.tipo === 'ingreso' ? `+$${this.valor}` : `-$${this.valor}`;
-  };
-}
-```
+---
 
-Esta organización prepara para el pensamiento de componentes donde cada pieza de la UI es responsable de su propio estado y comportamiento.
+## ❓ Preguntas Frecuentes
 
-## 5. Instanciación: La unidad fundamental de escalabilidad
+**P: ¿Cuál es la diferencia entre la clase y la instancia?**
+R: La clase es el **molde** (`class Movimiento`); la instancia es un **objeto concreto** creado con `new Movimiento(...)`. Una clase, muchas instancias.
 
-Cada instancia que crean con `new` es una unidad independiente con su propio estado. Esto es fundamentalmente diferente al paradigma funcional donde todo state era externo. Los estudiantes deben experimentar la libertad de crear múltiples presupuestos sin interferencia entre ellos.
+**P: ¿Puedo usar un objeto literal en vez de una clase?**
+R: Sí: `{ nombre: 'Cena', tipo: 'gasto', valor: 45 }`. La clase aporta consistencia + métodos compartidos cuando creas MUCHOS objetos del mismo "tipo".
 
-Los principios universales que aprenden aquí son:
-- **Aislamiento de estado**: Cada instancia mantiene su propio estado sin contaminación
-- **Composición**: Los objetos complejos se construyen combinando objetos simples  
-- **Responsabilidad única**: Cada constructor tiene una responsabilidad clara y específica
+**P: ¿`this` es como `self` en Python?**
+R: Muy parecido — apunta al objeto actual. En Python `self` es explícito en cada método; en JS `this` es implícito y depende de cómo se invoque.
 
-```javascript
-// Múltiples instancias = múltiples contextos independientes
-const presupuestoPersonal = new Presupuesto();
-const presupuestoFamiliar = new Presupuesto();
+**P: ¿Por qué los nombres de clase van en mayúscula (`Movimiento`)?**
+R: Convención: señala que es una clase y que se usa con `new`.
 
-presupuestoPersonal.agregarMovimiento(new Movimiento('Salario', 'ingreso', 3000));
-presupuestoFamiliar.agregarMovimiento(new Movimiento('Mercado', 'gasto', 500));
+---
 
-// Cada uno mantiene su estado independiente
-console.log(presupuestoPersonal.movimientos.length); // 1
-console.log(presupuestoFamiliar.movimientos.length);  // 1
-```
+## 🔗 Conexiones del Curriculum
 
-## 6. Funciones vs Constructores: Pragmatismo sobre purismo
+### Construye sobre:
 
-Los puristas del paradigma funcional argumentarán que los objetos introducen complejidad innecesaria. Sin embargo, para estudiantes que se dirigen hacia el ecosistema profesional de JavaScript (React, Node.js, frameworks), la orientación a objetos es inevitable y necesaria.
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C05 | Arrays + `push` | Hoy guardamos OBJETOS (instancias) en el array |
+| C06 | `.filter`, `.reduce` | Hoy operan sobre objetos: `m => m.tipo === 'ingreso'` — y se corrigen al nuevo modelo |
 
-```javascript
-// Pragmático: usar constructores cuando la agrupación lógica lo justifica
-function Presupuesto() {
-  this.movimientos = [];
-  
-  // Múltiples métodos relacionados agrupados logicamente
-  this.agregarMovimiento = function(movimiento) { /*...*/ };
-  this.eliminarMovimiento = function(index) { /*...*/ };
-  this.editarMovimiento = function(index, nuevoDatos) { /*...*/ };
-  this.obtenerResumen = function() { /*...*/ };
-}
+### Conexión con C08 (Tailwind)
 
-// En lugar de 4 funciones separadas que necesitan pasar el array como parámetro
-```
+Al cerrar:
 
-La realidad es que el código profesional usa paradigmas híbridos. Esta clase enseña cuándo la agrupación orientada a objetos es superior a funciones dispersas.
+> "El modelo del Gestor ya está completo, pero solo lo ven en consola. En C08 aprenden **Tailwind CSS** para darle una **interfaz visual** — el Gestor por fin tendrá cara. Conectar esa UI a estas clases (clicks, formulario en vivo) es M3, con el DOM."
 
-## 7. Gestión de la frustración inicial
+**Más adelante (unidad de POO):** `extends`/`super` (herencia), polimorfismo y los prototipos que `class` usa por debajo.
 
-**Frustración típica:** "Esto es más complejo que las funciones puras. ¿Por qué no seguimos usando `map()` y `filter()`?"
+---
 
-**Estrategia de facilitación:** Reconoce que la complejidad aumentó, pero enfoca en el *tipo* de complejidad. No es complejidad técnica arbitraria, es complejidad arquitectónica que resuelve problemas reales de organización y escalabilidad.
+## 🪞 Reflexión Post-Clase
 
-**Pregunta clave para la clase:** "Si tuvieras que agregar 15 métodos más para manejar presupuestos, ¿prefieres 15 funciones separadas que todas necesitan recibir el mismo array como parámetro, o un objeto que ya tiene todo agrupado?"
-
-**Frustración típica:** "`this` cambia de significado y me confunde."
-
-**Estrategia de facilitación:** Mantén `this` siempre dentro del contexto de constructores durante esta clase. No introducir métodos de arrays, event handlers, o arrow functions que cambien el contexto. La confusión viene de ejemplos prematuros.
-
-**Pregunta clave para la clase:** "Dentro de una función constructora, ¿`this` puede ser otra cosa que no sea el objeto que se está creando?"
-
-## 8. El error más común: Llamar constructores sin `new`
-
-```javascript
-// ❌ Error típico que cometerán
-function Movimiento(nombre, tipo, valor) {
-  this.nombre = nombre;
-  this.tipo = tipo;
-  this.valor = valor;
-}
-
-const movimiento = Movimiento('Salario', 'ingreso', 3000); // Sin `new`
-console.log(movimiento); // undefined
-console.log(nombre); // 'Salario' - contaminó el global scope
-
-// ✅ Versión correcta con explicación
-const movimiento = new Movimiento('Salario', 'ingreso', 3000);
-console.log(movimiento.nombre); // 'Salario'
-// `new` creó un objeto, enlazó `this` a ese objeto, y retornó el objeto automáticamente
-```
-
-Este error es pedagógicamente perfecto porque enseña la diferencia fundamental entre invocar una función y construir un objeto. Úsalo para explicar que `new` no es cosmético, es funcionalmente esencial para la construcción de objetos.
-
-## 9. Señales de comprensión exitosa
-
-Al final de la clase, busca estas evidencias de comprensión genuina:
-
-- **Vocabulario apropiado**: Usan "instancia", "constructor", "encapsular" naturalmente, no "función que crea objetos"
-- **Pensamiento arquitectónico**: Agrupan automáticamente datos y comportamientos relacionados sin ser dirigidos
-- **Comprensión del flujo**: Pueden explicar paso a paso qué sucede cuando llamas `new Constructor()`
-
-**Pregunta de validación final:** "Si quisieras crear un sistema para manejar estudiantes de un bootcamp, cada uno con nombre, progreso, y métodos para calificar tareas, ¿cómo lo organizarías usando lo que aprendiste hoy?"
-
-Solo responden correctamente si pueden diseñar un constructor `Estudiante` con propiedades y métodos encapsulados, no si proponen funciones separadas.
-
-## 10. Preparación para la siguiente clase
-
-Los conceptos de esta clase son prerrequisito directo para prototipos y herencia. La próxima clase introducirá `Constructor.prototype` para compartir métodos entre instancias, optimizando memoria y creando jerarquías.
-
-**Conceptos que DEBEN estar sólidos:**
-- **Función constructora vs función regular**: Deben distinguir inmediatamente por nomenclatura y uso de `new`
-- **`this` en contexto de constructor**: Sin confusión sobre a qué referencia dentro del constructor
-
-**Conceptos que pueden seguir madurando:**
-- **Cuándo usar objetos vs funciones**: La intuición arquitectónica se desarrolla con práctica
-- **Patrones de organización**: Mejora con exposición a más casos de uso
-
-La clase fue exitosa si los estudiantes salen pensando: *"Ahora puedo organizar mi código como entidades que tienen tanto datos como comportamientos, en lugar de solo funciones que procesan datos externos."*
-
-## Notas técnicas y troubleshooting
-
-### Configuración crítica
-- Validar que todos tienen `console.log` visible en DevTools antes de empezar
-- Confirmar que pueden crear archivos `.js` y vincularlos a HTML
-
-### Errores comunes del entorno
-- **Error**: `Uncaught ReferenceError: Movimiento is not defined`
-- **Solución**: Verificar que el script esté correctamente vinculado y que la función constructora esté declarada antes de usarse
-- **Prevención**: Usar `<script>` al final del `<body>` y declarar constructores al inicio del archivo
-
-### Errores comunes de concepto
-- **Error**: `Cannot read property 'nombre' of undefined` después de llamar constructor sin `new`
-- **Solución**: Mostrar la diferencia lado a lado con y sin `new`
-- **Prevención**: Crear un checklist: "¿Usé `new`? ¿La función empieza con mayúscula?"
-
-### Recursos de emergencia
-- [MDN: Constructor functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#using_a_constructor_function)
-- Código de ejemplo para compartir pantalla si hay problemas técnicos:
-
-```javascript
-// Ejemplo de rescate completo
-function EjemploBasico(nombre) {
-  this.nombre = nombre;
-  this.saludar = function() {
-    return `Hola, soy ${this.nombre}`;
-  };
-}
-
-const ejemplo = new EjemploBasico('Estudiante');
-console.log(ejemplo.saludar());
-```
+- ¿Cuántos olvidaron `new` al menos una vez? Si fue mayoría, refuerza al inicio de C08.
+- ¿Cuántos copiaron `calcularSaldo` de C06 sin corregirlo? Es el error más típico del refactor.
+- ¿La construcción de `class` por capas funcionó, o hubo que volver a "propiedad → constructor"?
+- ¿Algún alumno conectó con otro lenguaje (Python/Java)? Buena señal — están generalizando POO.

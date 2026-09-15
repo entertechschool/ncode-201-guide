@@ -1,64 +1,90 @@
-# Code 201 - Fundalmentals Software Development
+# Code 201 — Fundamentals of Software Development
 
-## Duración mínima
-- 81 horas en vivo
-- 36 horas asíncronas
-- 6 horas de networking
+Repositorio del curso **Code 201** de [EnterTechSchool](https://www.enter.edu.pe){:target="_blank"}. Contiene el currículum completo: resúmenes de clase, laboratorios, slides, guías de facilitador y tests. El curso consolida conocimientos básicos de HTML, CSS y JavaScript con fundamentos sólidos, preparando a los estudiantes para Code 301.
 
-**Total: 123 horas**
+📚 **Hub del instructor:** [entertechschool.github.io/ncode-201-guide/instructor-hub/](https://entertechschool.github.io/ncode-201-guide/instructor-hub/){:target="_blank"}
+
+---
+
+## Duración
+
+| Modalidad | Horas |
+|-----------|-------|
+| Sesiones en vivo | 81 h |
+| Trabajo asíncrono | 36 h |
+| Networking | 6 h |
+| **Total** | **123 h** |
+
+---
 
 ## Sílabo del Curso
-1. HTML y CSS
-    - Manipulacion avanzada de HTML.
-    - Manipulacion avanzada de CSS.
-2. Box Model en CSS
-    - Concepto del `box model` en CSS.
-    - Unidades de medida en CSS.
-3. Flexbox en CSS y colores
-    - Fundamentos de `FlexBox`.
-    - Uso de paleta de colores.
-4. Manipulacion del DOM
-    - Creación de elementos Dinamicos.
-    - Modificación de atributos y clases.
-5. Objetos en JavaScript
-    - Conceptos basicos de objetos.
-    - Propiedades y metodos de un objeto.
-6. Tablas en HTML
-    - Creación y uso de tablas en HTML.
-    - Secciones y atributos de un tabla.
-7. Funciones constructoras.
-    - Sintaxis Básica de una función constructora.
-    - Propiedades y metodos de una función constructora.
-8. Formularios en JavaScript
-    - Estructura de un formulario, elementos de entrada(inputs) y etiquetas `<label>`.
-    - Botones y envío de formularios.
-9. Eventos en JavaScript
-    - Implementación de eventos, funcion manejadora de eventos.
-    - Obejto `event`, uso del `preventDefault()` y remover eventos.
-10. Depuración de código y manejo de errores
-    - Uso de herramientas de depuración en el navegador
-    - Manejo de errores con `try`, `catch` en JavaScript.
-11. Canvas y gráficos con chart.js
-    - Uso de etiquetas `<canvas>`.
-    - Graficos interactivos con `Chart.js`.
-12. Persistencia de datos en LocalStorage
-    - Funcionamiento de `localStorage`,limitaciones y beneficios.
-    - Almacenamiento y recuperación de datos en `localStorage`.
-13. Documentación y animaciones en CSS
-    - Importancia de la documentación en proyectos web.
-    - Introducción a animaciones y transiciones en CSS.
-14. Clases en JavaScript
-    - Sintaxis básica, propiedades y metodos estaticos.
-    - Constructor e instancia de una clase, Herencia.
-15. Arrow functions y forEach
-    - Sintaxis básica de arrow function y el uso del this.
-    - Estructura báica y parametros de forEach.
-16. Metodo Map en JavaScript
-    - Sintaxis básica y parametros `callback`.
-    - Transformación de objetos usando `map()`.
-17. Seleccion de proyecto Final.
-    - Eleccion y preparación del proyeco.
-    - Planificación del proyecto.
-18. Examen Final
-    - Examen final code-301.
-    - Presentacion Final del Proyecto.
+
+### Módulo 1 — Fundamentos de la Web Moderna
+> **Proyecto Integrador:** Product Landing Page
+
+1. HTML5 Semántico, Accesibilidad y Formularios
+    - Estructura semántica con etiquetas HTML5, buenas prácticas de accesibilidad y formularios accesibles (`<form>`, `<label for>`, `<input>`).
+2. CSS Layout con Flexbox
+    - Fundamentos de `Flexbox` (incluyendo `flex-grow`) y construcción de layouts responsivos verificables.
+3. CSS Grid Esencial y Flexbox Profundo
+    - Grid esencial con `grid-template-columns`, refuerzo de Flexbox (`flex-basis`, `align-self`) y responsividad con media queries.
+4. CSS Moderno y Git Workflow
+    - CSS Variables (`:root { --token }`), formularios validados con HTML nativo (`required`, `type`, `pattern`), branches, Pull Requests y resolución de conflictos.
+
+### Módulo 2 — Fundamentos de Programación
+> **Proyecto Integrador:** Gestor de Presupuesto Personal
+
+5. Programación Imperativa
+    - Variables, loops (`for`, `while`) y condicionales como herramientas principales.
+6. Programación Funcional
+    - Funciones puras, `map()`, `filter()`, `reduce()` y principio DRY.
+7. Programación Orientada a Objetos con `class`
+    - Clases con `class`, `constructor`, `this` y `new`, construidas por capas (propiedades → constructor → métodos) y encapsulación.
+8. Tailwind CSS e Interfaz del Gestor
+    - Utility-first con Tailwind (Play CDN), construcción de la UI por grupos de clases (layout, espaciado, estética, modificadores) y conexión del formulario con JavaScript para cerrar el proyecto del módulo.
+
+### Módulo 3 — JavaScript Moderno y Consumo de APIs
+> **Proyecto Integrador:** Pokédex (consume la PokeAPI)
+
+9. JavaScript Moderno y Render Dinámico
+    - Sintaxis ES6+: template literals, destructuring, spread y optional chaining.
+    - Generar HTML desde datos con `createElement` / `appendChild` (patrón render).
+10. Datos desde la web: fetch, Promesas y JSON
+    - Consumo de una API real con `fetch`, Promesas (`.then`/`.catch`) y el formato JSON.
+    - Adaptación de la estructura de la API y carga en paralelo con `Promise.all`.
+11. async/await y búsqueda en la API
+    - Reformulación del código asíncrono con `async/await` (azúcar sobre Promesas).
+    - Búsqueda de recursos por nombre en la API y crecimiento del estado (la colección).
+12. Manejo de Errores y Estados
+    - `try`, `catch`, `finally`, `throw` y validación de `response.ok`.
+    - Estados de UI (carga / error / vacío) y documentación con Markdown.
+
+### Módulo 4 — Estado y Persistencia
+> **Proyecto Integrador:** Gestor de Plantillas para WhatsApp
+
+13. Modelado de Datos y Manipulación de Texto
+    - Estado central y patrón `render()`; métodos de String y objeto `Date`.
+14. Interacción y Datos Derivados
+    - Delegación de eventos, CRUD completo, datos derivados y filtro por hashtag.
+15. JSON y LocalStorage
+    - Serialización con `JSON.stringify` / `JSON.parse` y persistencia en `localStorage`.
+16. Módulos ESM y Cierre
+    - Modularización con `import` / `export`, confirmaciones de UX, orden de la colección con `.sort()` y cierre del proyecto.
+
+### Módulo 5 — Proyecto Integrador Final
+> **Proyecto Integrador:** Mi Setlist (consume la iTunes Search API)
+
+17. Ideación y Planificación con IA
+    - Descomposición del MVP en historias de usuario propias trabajando con la IA (prompts estructurados, crítica del output).
+    - Planificación por sprints y configuración del repositorio con arquitectura ESM.
+18. Sprint 1
+    - Construcción con la IA como copiloto en modo interactivo (la IA pregunta, el estudiante decide).
+    - Búsqueda en la API con estados de UI y playlists persistidas.
+19. IA como Corrector + Sprint 2
+    - Auditoría del código con agente de IA (`@workspace`), plan de pruebas de casos borde y replanificación.
+    - Cierre del MVP, historias de usuario propias y deploy en GitHub Pages.
+20. Demo Day
+    - Presentación formal del proyecto con rúbrica de 100 puntos y Q&A sobre el código propio.
+    - Cierre del curso y conexión con Code 301.
+
+> El Proyecto Integrador de M5 integra los aprendizajes de los Módulos 1 al 4 — layout responsivo, lógica algorítmica, consumo de APIs con `fetch` y manejo de errores, y estado persistido con LocalStorage sobre módulos ESM — e incorpora la IA como agente de apoyo en tres roles: guía en la planificación, copiloto al construir y correctora al auditar.

@@ -1,151 +1,224 @@
-# Laboratorio 17: Descubriendo el Proyecto Final 🔍
+# Lab 17: Planifica tu Proyecto con la IA
 
-## Descripción
-En este laboratorio, trabajarás con tu equipo para analizar un problema real de una empresa, definir los requerimientos iniciales y crear la documentación base del proyecto. Aprenderás a usar herramientas de IA para explorar soluciones técnicas y documentarlas efectivamente.
+> 🧭 **Nuevo formato de lab.** A partir de este módulo el lab ya no trae el código: trae la misión, los tiempos y los criterios. El código de tu app lo escribes tú, junto con la IA y con el instructor como mentor.
 
-## 🎯 Objetivos de Aprendizaje
-- Analizar y documentar requerimientos técnicos para una solución web
-- Comprender cómo utilizar la metodología AGILE en gestión de proyectos
-- Crear historias de usuario efectivas que guíen el desarrollo
-- Utilizar IA estratégicamente para explorar soluciones técnicas
+## 🎯 Objetivos
 
-> 🔴 **IMPORTANTE:** \
-> Este es el inicio del proyecto final. Será realizado a lo largo de 4 laboratorios y al finalizar se presentará la solución en un Demo Day. \
-> Es muy importante considerar que se busca la **implementación de una solución a nivel de MVP**, y no una solución perfecta, ya que el tiempo será el principal desafío.
+1. Descomponer el MVP de Mi Setlist en historias de usuario propias trabajando con la IA.
+2. Planificar la distribución de las historias en dos sprints con dependencias justificadas.
+3. Configurar el repositorio con la estructura ESM del contrato técnico y un primer commit funcional.
 
-## 🧠 Conceptos Clave
-1. Análisis de requerimientos
-2. Gestión ágil de proyectos y MVP
-3. Historias de usuario
-4. Documentación técnica
-5. Alcance del proyecto (scope)
-6. Arquitectura de solución web
+---
 
-## 🚀 Setup Inicial
+## 🔑 Conceptos Clave
 
-### 1. Repositorio grupal
+- **Contrato técnico** - El bloque de stack + arquitectura + prohibiciones del enunciado. Es tu contexto para cada prompt.
+- **Prompt estructurado** - Contexto + tarea + formato + restricciones. Sin las 4 partes, la IA inventa.
+- **Historia de usuario (HU)** - "Como [rol] quiero [acción] para [beneficio]", con criterios de aceptación observables.
+- **Sprint** - Ventana de trabajo con meta concreta. Sprint 1 = Clase 18, Sprint 2 = Clase 19.
+
+---
+
+## ⚙️ Setup Inicial
+
+| ✓ | Requisito | Verificación |
+|---|-----------|--------------|
+| ☐ | Leíste el [enunciado del proyecto](../project/) | Puedes decir qué es Mi Setlist en una línea |
+| ☐ | Cuenta de GitHub activa y Git configurado | `git config user.name` retorna tu nombre |
+| ☐ | VS Code con Live Server | Abre desde la terminal con `code .` |
+| ☐ | Sesión iniciada en tu chat de IA | Puedes enviar un prompt y recibir respuesta |
+| ☐ | Extensión **GitHub Copilot** instalada (plan Free) | El ícono de Copilot aparece en VS Code — la usarás desde la Clase 18 |
+
+---
+
+## Parte 1: Descompón el MVP en historias de usuario (45 min)
+
+El enunciado te da 10 funcionalidades del MVP, pero **no te da las historias**. Vas a derivarlas con la IA y quedarte solo con lo que resista tu crítica.
+
+### 1.1 Arma tu primer prompt con las 4 partes
+
+```text
+[CONTEXTO]  Pega aquí el contrato técnico del enunciado + la lista del MVP.
+[TAREA]     Pídele descomponer el MVP en historias de usuario para UNA persona
+            desarrollando en 2 sprints de una sesión cada uno.
+[FORMATO]   Historia ("Como... quiero... para...") + 3-5 criterios de aceptación.
+[RESTRICCIÓN] Los criterios describen RESULTADOS observables en pantalla,
+            no implementación. Nada fuera del MVP.
+```
+
+### 1.2 Audita cada historia (la IA se equivoca con confianza)
+
+Pasa cada HU por esta tabla. Si falla un check, **corrígela tú o re-promptea**:
+
+| Check | ❌ Falla | ✅ Pasa |
+|-------|---------|--------|
+| ¿Resultado observable? | "La búsqueda usa fetch con async/await" | "Al buscar 'Soda Stereo' aparecen resultados con carátula y artista" |
+| ¿Tamaño razonable? | 1 HU = "toda la gestión de playlists" | 1 HU = "crear una playlist con nombre" |
+| ¿Dentro del MVP? | "Compartir en redes", "login de usuarios" | Solo las 10 funcionalidades del enunciado |
+| ¿Cobertura completa? | Ninguna HU cubre los datos corruptos | Cada punto del MVP tiene una HU dueña |
+
+Re-prompts útiles para corregir (cópialos y adáptalos):
+
+```text
+El criterio "___" describe implementación. Reescríbelo como algo
+que un usuario pueda ver o probar en pantalla.
+```
+
+```text
+La HU "___" es demasiado grande para una fracción de clase.
+Divídela en dos historias independientes.
+```
+
+### 1.3 Registra tus prompts en `PROMPTS.md`
+
+Crea el archivo en tu carpeta del proyecto y registra los prompts que usaste y para qué:
+
+```markdown
+## [Fecha] — Descomposición del MVP en HUs
+**Para qué:** derivar mis historias de usuario.
+**Prompt:** (el texto que enviaste)
+**Resultado:** base de mis 8 HUs; ajusté criterios y alcance a mano.
+```
+
+✅ **Checkpoint (~min 105 de la clase):** Tienes tus **8 HUs (±1)** con criterios de aceptación en `HISTORIAS.md`, cubren las 10 funcionalidades del MVP, y `PROMPTS.md` registra los prompts que usaste.
+
+---
+
+## Parte 2: Planifica tus sprints (25 min)
+
+### 2.1 Pide una propuesta de distribución a la IA
+
+En el mismo chat (ya tiene tu contexto), pide el plan:
+
+```text
+Estas son mis 8 historias finales: [pega HISTORIAS.md]
+Propón cómo distribuirlas en Sprint 1 y Sprint 2 (una clase cada uno).
+Justifica cada asignación, señala las dependencias (qué necesito
+tener antes de qué) y dime cuál historia es la más difícil técnicamente.
+```
+
+Audita la propuesta con estas tres preguntas:
+
+- ¿El Sprint 1 termina en algo **demostrable**, o es puro setup?
+- ¿Las dependencias son reales? (sin búsqueda no hay canciones que agregar a nada)
+- ¿La IA mandó todo lo difícil al Sprint 2? Si tu reto revienta en la Clase 19, ya no hay margen.
+
+### 2.2 Decide tú y escríbelo en `SPRINTS.md`
+
+La decisión final es tuya — la defenderás en el checkpoint. Crea `SPRINTS.md`:
+
+```markdown
+## Sprint 1 (Clase 18) — Meta: [qué se ve funcionando al final, en 1 línea]
+- HU__: ______ (por qué va primero)
+...
+
+## Sprint 2 (Clase 19) — Meta: [1 línea]
+- HU__: ______
+...
+
+## Dependencias detectadas
+- Para HU__ necesito antes HU__ porque ______.
+
+## Mi reto técnico principal
+La HU que más me intimida es ______ porque ______.
+```
+
+✅ **Checkpoint (~min 130):** `SPRINTS.md` completo: metas por sprint, 4 HUs (±1) por sprint, ≥1 dependencia documentada y tu reto técnico identificado.
+
+---
+
+## Parte 3: Configura tu repositorio (35 min)
+
+### 3.1 Repo + estructura del contrato
+
+Crea en GitHub el repo público `mi-setlist` (README + .gitignore Node), clónalo y crea la estructura de archivos del enunciado (los `.js` vacíos por ahora, excepto los dos de abajo).
+
+### 3.2 "Hola mundo" de módulos
+
+Este es el único código que te da el curso hoy — valida que tu entorno corre ESM:
+
+```html
+<!-- index.html (dentro de <body>) -->
+<h1>🎵 Mi Setlist</h1>
+<p id="app"></p>
+<script type="module" src="js/app.js"></script>
+```
+
+```javascript
+// js/state.js
+export const mensaje = 'Módulos ESM funcionando ✅';
+
+// js/app.js
+import { mensaje } from './state.js';
+document.querySelector('#app').textContent = mensaje;
+```
+
+> ⚠️ ESM no corre abriendo el archivo con doble clic (`file://`). Usa **Live Server**.
+
+### 3.3 README del repo + primer push
+
+Escribe el `README.md` con: una línea de descripción, stack, **tus HUs** (pega `HISTORIAS.md` o enlázalo) y cómo correr localmente. Luego:
+
 ```bash
-# Crear nuevo repositorio en GitHub
-nombre-proyecto/
-├── README.md  <-- equipo, requerimientos, historias de usuario
-├── prompt.md  <-- System Prompt
-├── wireframes/ <-- imagenes
-├── ... <-- archivos / directorios del código
+git add .
+git commit -m "chore: setup inicial con estructura ESM y plan del proyecto"
+git push origin main
+```
+
+✅ **Checkpoint (~min 165):** Tu repo en GitHub muestra la estructura completa + `HISTORIAS.md`, `SPRINTS.md` y `PROMPTS.md`; al abrir con Live Server ves "Módulos ESM funcionando ✅" sin errores en consola.
+
+---
+
+## 📁 Estructura Final del Proyecto
+
+```
+mi-setlist/
+├── index.html          # Título + hola mundo ESM
+├── css/styles.css      # Vacío, listo para Sprint 1
+├── js/                 # app.js y state.js con el hola mundo;
+│   ├── models/         # el resto vacíos
+│   ├── api.js  state.js  storage.js  ui.js  app.js
+├── HISTORIAS.md        # Tus 8 HUs con criterios
+├── SPRINTS.md          # Tu plan de 2 sprints
+├── PROMPTS.md          # Registro del trabajo con la IA
+├── README.md
 └── .gitignore
 ```
 
-### 2. Configuración de Github
-- Agregar integrantes
-- Crear ramas necesarias
-   - main
-   - dev (o nombre_alumno, a elección del instructor)
+---
 
-### 3. System Prompt
-> `prompt.md`
-- Conocimientos del estudiante (101 + 201)
-- Stack del proyecto
-- Alcance del proyecto (lo que NO se tocará)
-- Rol de la IA en el proyecto
+## 🏆 Logros Adicionales (Opcional)
 
-## 📋 Retos a Cumplir
+### 🟢 Bosqueja tu UI con la IA
+Pídele a la IA un wireframe en ASCII de tu app y critícalo: ¿dónde va la búsqueda y dónde la playlist? Guárdalo en `HISTORIAS.md`.
 
-### 1. Documentación de Requerimientos (README.md)
-Usando IA como asistente de documentación:
+### 🟡 Prueba la API desde la consola
+En la consola del navegador, haz un `fetch` al endpoint del enunciado y explora el JSON que responde (lo usarás en la Clase 18).
 
-a) Analizar el problema:
-- Descripción del negocio
-- Dolor actual (pain point)
-- Beneficios esperados
+### 🔴 Semillas para tus HUs propias
+Pídele a la IA 3 ideas de features "de producción" para tu app (tipo favoritos o filtros) y guárdalas al final de `HISTORIAS.md` — en la Clase 19 definirás 2 HUs propias y esto te dará ventaja.
 
-b) Definir el alcance:
-- Funcionalidades core
-- Restricciones técnicas
-- Entregables mínimos
+---
 
-c) Wireframes y bocetos:
-- Mapa del sitio
-- Interfaces de baja fidelidad
-- Flujos
+## 📝 Entrega
 
-d) Estructurar el documento:
-- Ordenar lógicamente
-- Filtrar los resultados clave
-- Mantener el formato markdown
+### Checklist
 
-### 2. Historias de Usuario (README.md)
-Para cada funcionalidad core:
+- [ ] Repo público con la estructura ESM y el hola mundo corriendo sin errores.
+- [ ] `HISTORIAS.md` con tus 8 HUs (±1) cubriendo todo el MVP.
+- [ ] `SPRINTS.md` con metas, distribución y dependencias.
+- [ ] `PROMPTS.md` con ≥2 entradas (prompt + para qué + resultado).
+- [ ] Commit y push realizados.
 
-```markdown
-### Historia de Usuario: [Título]
-Como [rol]
-Quiero [acción]
-Para [beneficio]
+### Qué entregar
 
-#### Criterios de Aceptación:
-1. Dado [contexto]
-   Cuando [evento]
-   Entonces [resultado]
+- **Link a tu repositorio** por el canal habitual.
+- Participar en el **standup de cierre**: 30 segundos mostrando tu repo y tu reto técnico.
 
-#### Notas Técnicas:
-- Componentes necesarios
-- Modelos de datos
-- Interacciones
-```
+---
 
-### 3. README.md del Proyecto
-Documentar:
-- Descripción general
-- Tecnologías a utilizar
-- Imágenes a los wireframes (opcional)
-
-## 🛠️ Herramientas de IA Recomendadas
-
-### 1. Para Análisis
-Prompt sugerido:
-```
-Actúa como consultor técnico. Necesito analizar este problema:
-[descripción del problema]
-
-Por favor ayúdame a:
-1. Identificar los principales pain points
-2. Sugerir posibles soluciones técnicas
-3. Listar consideraciones importantes
-```
-
-### 2. Para Documentación
-Prompt sugerido:
-```
-Eres un Technical Writer. Necesito documentar:
-[aspecto técnico]
-
-Por favor genera:
-1. Descripción clara y concisa
-2. Ejemplos relevantes
-3. Consideraciones técnicas importantes
-```
-
-## 📤 Instrucciones de Envío
-
-### Entregables Grupales
-1. Link al repositorio con:
-   - README.md completo
-   - Todos los integrantes como colaboradores
-
-2. Link a la primera versión de la web desplegada
-   - Github Pages
-   - Home page
-   - header y footer
-
-## ⚠️ Consideraciones Importantes
-- Mantén el alcance realista para 2 semanas
-- Mantén el concepto de MVP
-- Enfócate en funcionalidades core
-- Documenta asunciones importantes
-- Usa la IA como herramienta de apoyo, no como solución completa
-
-## 💡 Consejos para el Éxito
-- Divide el tiempo equitativamente entre análisis y documentación
-- Valida ideas con el instructor
-- Itera sobre la documentación
-- Usa diagramas simples cuando sea necesario
-- Mantén las historias de usuario enfocadas y específicas
+> ### 💡 Consejos
+>
+> - Hoy no se codea el producto. Salir con un plan claro ES el entregable.
+> - Si la IA te da 15 historias, no es más completo: es alcance inflado. Menos historias, mejor definidas.
+> - La calidad de tu `PROMPTS.md` no se mide por cuántos prompts tiene, sino por si otro dev entendería cómo llegaste a tu plan.

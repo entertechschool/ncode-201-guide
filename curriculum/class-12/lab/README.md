@@ -1,92 +1,221 @@
-# Laboratorio 12: Manejo de Excepciones en Javascript
+# Laboratorio 12: Manejo de Errores y Estados (Lab Evaluado M3)
 
-📘 Bienvenido al **laboratorio 12** de tu proyecto integrador. En esta sesión trabajaremos exclusivamente el manejo de **excepciones en operaciones de validación y transformación de texto Markdown**, sin depender de carga de archivos externos. El objetivo es robustecer el editor capturando errores en entradas erróneas o mal estructuradas por parte del usuario.
+Última clase del módulo. Tu Pokédex ya carga de la web y busca Pokémon… pero si buscas un nombre que no existe, o se cae la red, **se rompe**. Hoy la haces **robusta**: manejas errores con `try/catch`, detectas respuestas fallidas (404) y muestras estados claros de **carga** y **error**. Al final documentas el proyecto con un **README en Markdown** y cierras el Módulo 3.
+
+> ⏱️ **Checkpoints**: 3 momentos de validación (~30, ~60, ~90 min).
+>
+> 📋 **Lab evaluado:** se califica con la rúbrica de [rubric.md](rubric.md) (5 criterios × 20 pts = 100). Incluye el README documentado.
 
 ## 🎯 Objetivos de Aprendizaje
 
-1. **Comprender el concepto de Excepciones en JavaScript**  
-   - Qué es una excepción, cuándo ocurre y cómo debe manejarse.  
-   - Su utilidad para anticipar fallas y brindar retroalimentación controlada.
-
-2. **Manejar validaciones con `try/catch` y `throw`**  
-   - Detectar entradas vacías, sintaxis mal estructurada o uso incorrecto de Markdown.  
-   - Lanzar errores personalizados que ayuden al usuario a corregir su contenido.
+1. Capturar errores con `try/catch/finally` y lanzar los propios con `throw`.
+2. Detectar respuestas HTTP fallidas (`response.ok`) y comunicarlas al usuario.
+3. Mostrar estados de UI (cargando / error) y documentar el proyecto en **Markdown**.
 
 ## 🔑 Conceptos Clave
 
-1. **Excepción**  
-   Evento inesperado que interrumpe la ejecución normal del programa.
-
-2. **try...catch**  
-   Estructura para capturar y manejar errores sin detener el flujo general de ejecución.
-
-3. **throw**  
-   Herramienta para lanzar manualmente un error con un mensaje específico cuando se detecta una condición inválida.
+| Concepto | Definición |
+|---|---|
+| **`try / catch`** | `try` ejecuta código que podría fallar; `catch (error)` lo atrapa sin que la app muera. |
+| **`throw new Error(msg)`** | Lanza un error propio con un mensaje claro. |
+| **`response.ok`** | `false` si la respuesta HTTP fue un error (ej. 404). `fetch` **no** falla solo por un 404. |
+| **`finally`** | Bloque que corre **siempre**, haya éxito o error. Ideal para ocultar un spinner. |
+| **Estados de UI** | Loading (cargando) y error (mensaje): lo que el usuario ve en cada momento. |
+| **Markdown** | Formato de texto para documentar (títulos, listas, links, código). Se usa en el `README.md`. |
 
 ## ⚙️ Setup Inicial
 
-1. **Repositorio**  
-   - Continúa trabajando en tu repositorio del editor de Markdown.  
-   - Crea una rama nueva llamada `lab12-excepciones`.
+1. **Repositorio:** sigue en `pokedex`. Crea la rama `lab12-errores`.
+2. **Punto de partida:** tu app de C11 (`obtenerPokemon`, `buscarPokemon`, `mostrarBusqueda`, `mostrarResultado`, `capturar`, `cargarPokedex`, `cargarMas`, `adaptarPokemon`, `pokedex`, `render`, `#buscador`, `#btn-buscar`, `#cargar-mas`).
+3. **Agrega las zonas de estado** al `index.html`, debajo del buscador y encima de `#resultado`:
 
-2. **Librería Marked**
-   - Enlaza marked vía CDN en tu index.html:
    ```html
-   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+   <div id="spinner" class="hidden text-center text-slate-500 my-4">Cargando…</div>
+   <div id="mensaje" class="hidden text-center text-red-600 font-medium my-4"></div>
    ```
-   > Es importante importar la librería marked ANTES de tu script de lógica `app.js`
 
+   > 📌 Convención del proyecto: `#spinner` (estado de carga) y `#mensaje` (errores). La clase `hidden` de Tailwind los oculta hasta que el JS los muestre.
 
+---
 
-## 🏆 Historias de Usuario
+## 📋 Historias de Usuario
 
-1. **HU1: Validación de entrada vacía**  
-   > "Como usuario, quiero recibir un mensaje si intento procesar Markdown sin haber escrito nada."
+### HU1: Atrapar errores con `try/catch`
 
-   - Criterios de aceptación:
-     - Validación con `if` dentro de `try`.
-     - `throw new Error("No se ingresó contenido")`.
-     - Mensaje claro mostrado en la interfaz.
-   
-   - **[30'] Checkpoint 1:** Validación de entrada vacía o inválida con `throw`.
+> *"Como usuario, si algo falla al buscar, quiero ver un mensaje claro en vez de que la app se rompa."*
 
-2. **HU2: Validación de sintaxis Markdown mal formada**  
-   > "Como usuario, quiero que el sistema detecte si escribí encabezados o listas con errores."
+**Criterios de Aceptación:**
+- Si la búsqueda falla (p. ej. sin internet), aparece un **mensaje claro** en vez de una pantalla rota.
+- La app **sigue viva** tras el fallo: puedes volver a buscar sin recargar.
 
-   - Criterios de aceptación:
-     - Detección de patrones como `##Título`, `-elemento` sin espacio, etc.
-     - Lanzar errores con `throw` y capturarlos con `catch`.
-     - Mensajes descriptivos en UI sin detener el flujo.
-   
-   - **[60'] Checkpoint 2:** Manejo adecuado de errores durante la conversión con `marked()`.
+Envuelve la lógica que puede fallar (la búsqueda de C11) en `try`; si algo sale mal, `catch` lo maneja:
 
-3. **HU3: Manejo general de errores inesperados en la conversión**  
-   > "Como usuario, quiero que si hay un error interno durante la conversión, se me notifique sin que el editor se bloquee."
+```javascript
+const mensaje = document.getElementById("mensaje");
 
-   - Criterios de aceptación:
-     - Envolver `marked()` en `try/catch`.
-     - Captura de errores con `console.error` + alerta visual o log en interfaz.
-   
-   - **[90'] Checkpoint 3:** Comunicación clara al usuario de errores capturados.
+async function mostrarBusqueda(nombre) {
+  mensaje.classList.add("hidden");   // limpia errores anteriores
 
+  try {
+    const pokemon = await buscarPokemon(nombre);
+    mostrarResultado(pokemon);   // muestra la tarjeta con el botón Capturar (de C11)
+  } catch (error) {
+    mensaje.textContent = "Algo salió mal. Revisa tu conexión.";
+    mensaje.classList.remove("hidden");
+  }
+}
+```
 
-## 🌟 Logros Adicionales
+> 💡 `catch (error)` recibe un objeto `Error` con un `.message`. Hoy la app ya no muere: el fallo se convierte en un mensaje.
 
-1. **Logro 1: Simular errores intencionales**  
-   - Crear un botón que inyecte texto erróneo para probar el manejo de excepciones.
+- **Checkpoint 1 (~30 min):** con internet, busca normal. Desconecta la red y busca: ves el mensaje de error, la app sigue viva.
 
-2. **Logro 2: Cancelar la conversión en caso de error**  
-   - Impedir ejecución de `marked()` si se detecta fallo previo.
+---
+
+### HU2: Detectar "Pokémon no encontrado" con `throw`
+
+> *"Como usuario, si escribo un nombre que no existe, quiero un mensaje que diga exactamente eso."*
+
+**Criterios de Aceptación:**
+- Buscar un nombre que no existe (p. ej. "pikachuu") muestra el mensaje "No se encontró 'pikachuu'".
+- El mensaje es **específico** (nombra lo que se buscó), no genérico.
+- Un nombre válido sigue mostrándose con normalidad.
+
+Ojo: `fetch` **no** falla solo porque la API responda 404. Hay que revisarlo con `response.ok` y **lanzar** nuestro propio error. Modifica tu `obtenerPokemon` de C11:
+
+```javascript
+async function obtenerPokemon(idONombre) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${idONombre}`);
+
+  if (!response.ok) {                                    // 404, 500, etc.
+    throw new Error(`No se encontró "${idONombre}"`);    // lanza un error propio
+  }
+
+  return response.json();
+}
+```
+
+Y en el `catch` de `mostrarBusqueda`, usa el mensaje del error:
+
+```javascript
+} catch (error) {
+  mensaje.textContent = error.message;   // "No se encontró 'pikachuu'"
+  mensaje.classList.remove("hidden");
+}
+```
+
+> 💡 `throw` interrumpe el `try` y salta directo al `catch`. Por eso el `error.message` que defines es el que se muestra. Un buen mensaje de error es parte de una buena app.
+
+- **Checkpoint 2 (~60 min):** busca "pikachuu" → mensaje "No se encontró…". Busca "pikachu" → se muestra normal (con su botón Capturar).
+
+---
+
+### HU3: Estado de carga con `finally` (búsqueda y carga inicial)
+
+> *"Como usuario, quiero ver 'Cargando…' mientras espera y que desaparezca siempre, tenga éxito o falle."*
+
+**Criterios de Aceptación:**
+- Mientras la búsqueda está en curso, se ve un indicador de **"Cargando…"**.
+- El indicador **siempre desaparece** al terminar, haya éxito o error.
+- Si la carga inicial de la rejilla falla, también se ve un mensaje (no una página en blanco).
+
+Muestra el spinner al empezar y ocúltalo en `finally` (corre **siempre**):
+
+```javascript
+const spinner = document.getElementById("spinner");
+
+async function mostrarBusqueda(nombre) {
+  spinner.classList.remove("hidden");   // ⏳ muestra carga
+  mensaje.classList.add("hidden");
+
+  try {
+    const pokemon = await buscarPokemon(nombre);
+    mostrarResultado(pokemon);
+  } catch (error) {
+    mensaje.textContent = error.message;
+    mensaje.classList.remove("hidden");
+  } finally {
+    spinner.classList.add("hidden");      // ✅ oculta carga SIEMPRE
+  }
+}
+```
+
+**Robustece también la carga inicial.** Tu `cargarPokedex` de C11 también puede fallar (sin red al abrir). Envuélvela en `try/catch`:
+
+```javascript
+async function cargarPokedex() {
+  spinner.classList.remove("hidden");
+  try {
+    const nombres = ["bulbasaur", "charmander", "squirtle", "pikachu", "jigglypuff", "gengar"];
+    const datos = await Promise.all(nombres.map(obtenerPokemon));
+    pokedex = datos.map(adaptarPokemon);
+    render(pokedex);
+  } catch (error) {
+    mensaje.textContent = "No se pudo cargar la Pokédex.";
+    mensaje.classList.remove("hidden");
+  } finally {
+    spinner.classList.add("hidden");
+  }
+}
+```
+
+- **Checkpoint 3 (~90 min):** el spinner aparece durante la búsqueda/carga y **siempre** desaparece (éxito, no encontrado, sin red).
+
+🏆 **Reto autónomo (5 min):** mueve `spinner.classList.add("hidden")` del `finally` al final del `try`. Busca un nombre inexistente: el spinner **se queda pegado**. Eso prueba por qué va en `finally`.
+
+> 🎯 **Logro opcional — "no encontrado" ≠ error** (un gran candidato para tu **HU adicional**, que la rúbrica premia): hoy, si buscas un Pokémon que no existe, el `throw` de HU2 lo muestra como un **error**. Pero "no existe" no es un fallo de tu app: la búsqueda funcionó, solo que no hay resultado. Haz que se vea distinto:
+> - En `obtenerPokemon`, ante un `404` (`response.status === 404`) **devuelve `null`** en vez de lanzar.
+> - En `mostrarBusqueda`, si el resultado es `null`, muestra un aviso neutro (*"No se encontró 'X'"*) en `#resultado`, separado del mensaje de error de conexión.
+>
+> Así tu app distingue **"no hay nada"** (resultado vacío) de **"algo se rompió"** (error) — un detalle de apps profesionales.
+
+---
+
+## 📄 Documentación: tu primer README en Markdown
+
+Un repositorio profesional siempre lleva un **`README.md`** que explica el proyecto. Se escribe en **Markdown**, un formato de texto simple:
+
+```markdown
+# Pokédex
+
+Buscador de Pokémon que consume la PokeAPI.
+
+## Cómo usarlo
+1. Abre el sitio desplegado.
+2. Escribe el nombre de un Pokémon y presiona **Buscar** para agregarlo.
+
+## Tecnologías
+- JavaScript (`fetch`, `async/await`, `Promise.all`)
+- Tailwind CSS
+- [PokeAPI](https://pokeapi.co/)
+
+## Demo
+🔗 [Ver en GitHub Pages](https://tu-usuario.github.io/pokedex/)
+```
+
+| Sintaxis | Resultado |
+|---|---|
+| `# Título` / `## Subtítulo` | Encabezados |
+| `**negrita**` · `*cursiva*` | Énfasis |
+| `- item` | Lista con viñetas |
+| `` `código` `` | Código en línea |
+| `[texto](url)` | Enlace |
+
+**Crea un `README.md`** en la raíz de tu repo con: título, descripción, cómo usarlo, tecnologías y el enlace al sitio desplegado.
+
+---
+
+## 🌟 Logros Adicionales (Opcionales)
+
+- **Logro 1 — Botón reintentar:** tras un error, muestra un botón "Reintentar" que repite la última búsqueda.
+- **Logro 2 — Spinner animado:** reemplaza "Cargando…" por un spinner con `animate-spin` de Tailwind.
+- **Logro 3 — Capturas en el README:** agrega imágenes de la app funcionando con `![alt](ruta)`.
 
 ## 📝 Instrucciones de Entrega
 
-1. **Documentación en README**  
-   - Explica cómo usaste las promesas o el bloque try/catch en cada historia de usuario.  
-   - Añade capturas de pantalla de los mensajes de “cargando…” y de error.
+1. **Documentación:** `README.md` completo en Markdown (título, descripción, uso, tecnologías, enlace).
+2. **Mezcla de ramas:** Pull Request de `lab12-errores` a `main` y fusiónalo.
+3. **Despliegue:** actualiza GitHub Pages.
+4. **Entrega Final:** URL del repositorio + URL del sitio desplegado.
 
-2. **Despliegue**  
-   - Fusiona tu rama `lab12-excepciones` a `main` y actualiza la versión desplegada en GitHub Pages (o la plataforma que uses).
-
-3. **Entrega Final**  
-   - URL del repositorio.  
-   - URL del sitio desplegado.
+> 📋 Evaluado con [rubric.md](rubric.md). Prepárate para explicar un fragmento de tu código a solicitud del instructor.

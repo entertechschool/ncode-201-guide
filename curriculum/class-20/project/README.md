@@ -1,28 +1,60 @@
-# Proyecto final: Envío
+# Proyecto Final — Envío (Demo Day)
 
-## Responde sinceramente:
+> **Referencia oficial del proyecto:** [Proyecto Integrador del Módulo 5](../../class-17/project/) — ahí están el enunciado, el MVP, el contrato técnico, las reglas de IA y la rúbrica completa.
 
-### Contribuciones generales
+Este documento solo contiene el **checklist de envío individual** para Demo Day.
 
-_40%_
+---
 
-¿Qué contribuciones hiciste personalmente? Por favor describe tus contribuciones (p.ej. ilustraciones, videografía, animaciones, layout, tipografía y otros estilos, estructura en HTML, JS para la manipulación del DOM, lógica de JS, almecenamiento local, investigación de herramientas y técnicas, pruebas, etc).
+## ✅ Checklist de Entrega
 
-### Contribuciones al código
+Al cierre de Demo Day, cada estudiante debe haber entregado:
 
-_30%_
+- [ ] **Link al repositorio público en GitHub** — con historial de commits del Sprint 1 y Sprint 2.
+- [ ] **Link al deploy funcional** — GitHub Pages, probado desde otro navegador.
+- [ ] **README del repo pulido** — descripción, stack, HUs implementadas (base + propias), decisiones técnicas, instrucciones para correr localmente.
+- [ ] **`PROMPTS.md`** — registro del trabajo con la IA (es parte de la rúbrica).
+- [ ] **`HISTORIAS.md`** — tus HUs derivadas en C17 + tus 2 HUs propias.
+- [ ] **Auto-evaluación con la rúbrica oficial** (opcional pero recomendada, solo para ti).
 
-Proporciona un enlace al gráfico de tu proyecto (o equivalente) para cualquier cosa que quieras resaltar (p.ej. implementaciones de funcionalidades, README.md, pruebas automatizadas, documentos de prueba, tareas descritas en GitHub issues, etc).
+---
 
-### Contribuciones de colaboración
+## 📣 Formato de presentación
 
-_30%_
+10 minutos en total, divididos así:
 
-Describe cómo colaboraste con tu equipo a lo largo del proceso de desarrollo (p.ej. issues asignados en GitHub, reuniones coordinadas con el equipo, etc).
+| Bloque | Tiempo | Contenido |
+|--------|--------|-----------|
+| **Demo en vivo** | 5 min | Buscar canciones, armar playlist, duración y estadísticas, ordenar, eliminar con tu modal, recargar (persistencia) y cerrar con tu HU propia |
+| **Argumentación técnica** | 3 min | 2 decisiones clave; al menos 1 sobre cómo usaste y validaste la IA |
+| **Q&A** | 2 min | Preguntas del instructor sobre fragmentos de TU código |
 
-## ✅ Instrucciones de Envío
-- Responde a esta actividad compartiendo:
-    - Las respuestas a las preguntas de arriba
-    - Link al repo del proyecto
-    - Link del sitio desplegado
-    - Link de la presentación final
+---
+
+## 📊 Evaluación
+
+Tu proyecto se evalúa con la [rúbrica oficial](../../class-17/project/):
+
+| Criterio | Puntos |
+|----------|--------|
+| Funcionalidades del MVP | 20 |
+| Calidad técnica (contrato) | 20 |
+| Uso responsable de IA + HU propia | 20 |
+| Presentación en vivo | 20 |
+| Argumentación técnica + Q&A | 20 |
+
+**Puntaje total:** 100. **Mínimo de aprobación:** 70/100.
+
+---
+
+## 📝 Canales de envío
+
+- Blackboard (formulario oficial del curso).
+- Los links se conservan como parte de tu historial y pueden referenciarse en tu ficha de ingreso a Code 301.
+
+---
+
+> 💡 Si llegas temprano a Demo Day, usa los minutos previos para:
+> 1. Confirmar que tu deploy responde y correr el flujo completo una vez.
+> 2. Verificar que tu playlist de demo tiene 5+ canciones (para que las stats digan algo).
+> 3. Repasar tus 2 decisiones y el porqué de tu HU propia.

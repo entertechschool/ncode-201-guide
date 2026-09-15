@@ -3,7 +3,7 @@
 
 ¡Bienvenido al curso Código 201!
 
-A medida que este curso se acerque a su fecha de inicio y completas tu inscripción, serás invitado a Canvas, nuestro Sistema de Administración de Aprendizaje. Entonces podrás confirmar que tu trabajo previo está completo, y podrás enviar las tareas correspondientes según se requiera.
+A medida que este curso se acerque a su fecha de inicio y completas tu inscripción, serás invitado a Blackboard, nuestro Sistema de Administración de Aprendizaje. Entonces podrás confirmar que tu trabajo previo está completo, y podrás enviar las tareas correspondientes según se requiera.
 
 Comienza con este trabajo previo tan pronto como puedas y asegúrate de reservar el tiempo adecuado para completarlo. Si te has inscrito en esta clase, probablemente necesitarás un par de horas dedicadas a completar la configuración de tu equipo, la cual es esencial para comenzar la clase sin problemas.
 

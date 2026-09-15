@@ -1,3 +1,5 @@
+> 🚫 **DESACTIVADO** — Este test no se aplica en el curso actual. El único test diagnóstico vigente es el del Módulo 3 (clase 12).
+
 # Test Diagnóstico - Módulo 4: Estado y Persistencia
 
 ## Información General
@@ -27,7 +29,7 @@ Este test verifica tu comprensión de los conceptos de las Clases 13 a 16:
 
 ## Instrucciones
 
-1. Se realiza en Canvas durante la clase
+1. Se realiza en Blackboard durante la clase
 2. Tienes 15 minutos
 3. Individual y sin materiales de apoyo
 

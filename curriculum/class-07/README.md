@@ -1,29 +1,28 @@
-﻿> 📦 **Módulo 2:** Clase 4 de 4
+> 📦 **Módulo 2:** Clase 3 de 4
 
-# Clase 07: Programación Orientada a Objetos
+# Clase 07: Objetos + POO con `class`
 
 ## Resumen
 
-En esta clase transformamos nuestro enfoque hacia la programación orientada a objetos usando funciones constructoras en JavaScript. Refactorizaremos el **Gestor de Presupuesto Personal** reemplazando las funciones puras del laboratorio anterior con objetos que encapsulen tanto datos como comportamientos. Esta transición nos permitirá crear código más organizado, escalable y mantenible. Es un momento crucial donde los estudiantes comprenden cómo la programación puede organizarse de manera más estructurada y profesional, consolidando los tres paradigmas aprendidos en el módulo.
+En esta clase resuelves el dolor de los **2 arrays paralelos** de C05/C06 y dejas **terminada la lógica** del proyecto **Gestor de Presupuesto Personal**. Primero conoces lo básico de los **objetos** (declarar, acceder, modificar, array de objetos); luego **refactorizas** el modelo: cada movimiento pasa de dos entradas sueltas en `nombres[]` y `valores[]` a UN objeto `{ nombre, tipo, valor }` con el **tipo explícito** (ya no codificado con el signo). Sobre esa base aprendes **Programación Orientada a Objetos con `class`**, construida **por capas**: primero las **propiedades**, luego el **constructor** que las inicializa, y al final los **métodos** que les dan comportamiento. Cierras con la clase `Presupuesto`, que **encapsula** el array de movimientos junto a sus métodos. Todo se prueba en **consola** — la interfaz visual llega en C08.
 
 ## Estructura sugerida
 
-| **Fase** | **Duración** | **Descripción**   |
-| ---- | ---- | ---- |
-| **1. Introducción y Contexto**   | 15 min | Conexión con programación funcional y motivación para usar objetos en el presupuesto   |
-| **2. Demo Inicial y Debate Técnico** | 30 min | Funciones constructoras vs funciones regulares + demostración de `this` keyword | 
-| **3. Laboratorio Principal - Parte 1**  | 30 min | Creación de funciones constructoras básicas. Checkpoint: instancias de Movimiento y Presupuesto creadas  |
-| **4. Laboratorio Principal - Parte 2**  | 40 min | Encapsulación de comportamientos en métodos. Reto en vivo + Checkpoint: métodos funcionando correctamente |
-| **5. Laboratorio Principal - Parte 3**  | 50 min | Refactorización completa e integración con DOM. Reto en vivo + Retos autónomos + Checkpoint: aplicación completamente funcional con objetos   |
-| **6. Síntesis y Cierre**  | 15 min | Consolidación de conceptos OOP + conexión con taller integrador en la próxima clase   |
+| **Fase** | **Duración** | **Descripción** |
+|---|---|---|
+| **1. Introducción y Contexto** | 15 min | El dolor de los arrays paralelos + motivación: ¿y si cada movimiento fuera un objeto? |
+| **2. Demo Técnica** | 20 min | Objeto literal → array de objetos → `class` por capas (propiedad → constructor → método). |
+| **3. Laboratorio (4 partes)** | 120 min | P0 Objetos básicos (~15) · P1 Refactor del modelo (~35) · P2 `class` paso a paso (~40) · P3 `class Presupuesto` (~30). |
+| **4. Cierre y Síntesis** | 15 min | ¿Qué ganamos con objetos + `class`? + semilla C08 (interfaz con Tailwind). |
 
 ## 🎯 Objetivos de aprendizaje
 
 Al finalizar esta clase, serás capaz de:
 
-1. **Implementar** funciones constructoras usando la sintaxis `function Constructor() {}` y la palabra clave `new`
-2. **Encapsular** datos y comportamientos relacionados en objetos usando `this.propiedad` y `this.metodo`
-3. **Refactorizar** código existente desde un paradigma funcional hacia orientación a objetos mantenible
+1. **Manipular objetos** literales: acceder y modificar propiedades con `obj.prop` y leer un array de objetos.
+2. **Refactorizar** el modelo de 2 arrays paralelos a UN array de objetos, adaptando el código de C06.
+3. **Construir una clase por capas** con `class`, `constructor`, `this` y `new`: propiedades → constructor → métodos.
+4. **Encapsular** datos + métodos en una clase `Presupuesto` que gestiona todo el estado del Gestor.
 
 ---
 
@@ -33,63 +32,69 @@ Al finalizar esta clase, serás capaz de:
 
 #### 🔍 Misión de Investigación
 
-**1. ¿Qué es la palabra clave `this` en JavaScript?**
-Investiga cómo `this` cambia de contexto dependiendo de dónde se use. Busca ejemplos de `this` en objetos vs `this` en funciones normales.
+**1. Objetos en JavaScript:**
+- Investiga: ¿Cómo se declara un objeto con `{}` y cómo se accede/modifica una propiedad con `.`?
+- Encuentra: 3 ejemplos de datos del mundo real modelados como objeto (persona, libro, producto).
+- Prepárate para explicar: ¿Cuál es la diferencia entre un array y un objeto?
 
-**2. ¿Qué diferencia hay entre una función normal y una función constructora?**
-Explora la diferencia entre `function miFuncion()` y `function MiConstructor()`. ¿Por qué una comienza con mayúscula?
+**2. La palabra clave `class`:**
+- Investiga: ¿Qué es una `class` en JavaScript y para qué sirve `new`?
+- Encuentra: Un ejemplo simple de `class` con `constructor` en MDN o JavaScript.info.
+- Prepárate para explicar: ¿Qué diferencia hay entre la **clase** (el molde) y una **instancia** (un objeto creado con `new`)?
 
-**3. ¿Para qué se usa la palabra clave `new` en JavaScript?**
-Busca ejemplos de cómo `new` crea objetos. ¿Qué pasa si llamas una función constructora sin `new`?
+**3. `constructor` y `this`:**
+- Investiga: ¿Qué hace el método `constructor` cuando creas una instancia con `new`?
+- Encuentra: Qué representa `this` dentro de una clase.
+- Prepárate para explicar: ¿Por qué `this.nombre = nombre` "guarda" un dato en el objeto?
 
-**4. ¿Qué ventajas tiene organizar código en objetos?**
-Investiga conceptos como encapsulación y reutilización. ¿Por qué es mejor agrupar datos y funciones relacionadas?
-
-#### 🧠 Preguntas de reflexión
-
-Después de tu investigación, reflexiona:
-
-- ¿Cómo organizarías la información de un presupuesto usando objetos?
-- ¿Qué datos y comportamientos van juntos en un "movimiento" de presupuesto?
-- ¿Por qué crees que es útil poder crear múltiples objetos del mismo tipo?
-- ¿Cómo se conecta esto con lo que aprendiste sobre programación funcional?
+**4. Métodos dentro de una clase:**
+- Investiga: ¿Cómo se define un método dentro de una `class` y cómo se invoca (`obj.metodo()`)?
+- Encuentra: Un método que use una propiedad del propio objeto con `this`.
+- Prepárate para explicar: ¿Por qué agrupar datos + métodos en un objeto (encapsulación) es útil?
 
 #### 📚 Recursos sugeridos
 
-1. **Artículo:** [MDN - Trabajando con objetos](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics)  
-   _Explica los fundamentos de crear y manipular objetos en JavaScript, incluyendo funciones constructoras._
+1. **MDN — Trabajando con objetos**
+   [https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics](https://developer.mozilla.org/es/docs/Learn/JavaScript/Objects/Basics){:target="_blank"}
 
-2. **Artículo:** [Funciones Constructoras en JavaScript](https://www.javascripttutorial.net/javascript-constructor-function/)  
-   _Conceptos principales sobre cómo escribir una función constructora, el uso de `this`, y la relación con prototipos._
+2. **MDN — Classes (JavaScript)**
+   [https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes){:target="_blank"}
 
-3. **Video (opcional):** [JavaScript CONSTRUCTORS in 5 minutes! 🛠)](https://www.youtube.com/watch?v=WPmAu26LZKo)  
-   _Ejemplo práctico para ilustrar la creación de objetos usando funciones constructoras y `new`._
+3. **JavaScript.info — Class basic syntax**
+   [https://javascript.info/class](https://javascript.info/class){:target="_blank"}
 
 ---
 
 ## Resultados esperados
 
 ### Podrán hacer
-1. **Crear funciones constructoras** que encapsulen la lógica del presupuesto personal
-2. **Usar `this` correctamente** para acceder a propiedades y métodos dentro de objetos
-3. **Refactorizar aplicaciones existentes** hacia un modelo orientado a objetos más mantenible
+1. **Declarar objetos** y leer/modificar sus propiedades con `.`.
+2. **Refactorizar** el proyecto: de 2 arrays paralelos a un array de objetos (corrigiendo `registrarMovimiento`, las funciones de filtro/total e `imprimirReporte`).
+3. **Definir clases** con `class`, `constructor`, `this` y crear instancias con `new`.
 
 ### Podrán explicar
-1. **La diferencia conceptual** entre programación funcional y orientada a objetos
-2. **Cuándo usar objetos vs funciones** según el tipo de problema que estén resolviendo
-3. **Por qué la encapsulación** mejora la organización y mantenibilidad del código
+1. **Diferencia entre array y objeto** — orden por índice vs. acceso por nombre de propiedad.
+2. **Por qué objetos resuelven el dolor de arrays paralelos** — los datos viajan juntos, imposible desincronizar.
+3. **Qué hace el `constructor`** — inicializa las propiedades de cada instancia al hacer `new`.
 
 ### Podrán implementar
-1. **Un sistema de objetos integrado** para manejar movimientos y presupuestos
-2. **Métodos de validación y cálculo** encapsulados dentro de los objetos apropiados
-3. **Una interfaz HTML funcional** que interactúe con el modelo de objetos creado
+1. **`class Movimiento`** con propiedades + métodos (`esIngreso`, `esGasto`, `formatear`).
+2. **`class Presupuesto`** que encapsula el array de movimientos y sus métodos (`agregar`, `eliminar`, `saldo`, `resumen`, ...).
+3. **El modelo completo del Gestor** funcionando y probado en consola.
+
+> 📝 **Nota:** En esta clase NO se escribe HTML/CSS ni se conecta a la página — todo es lógica en consola. La **interfaz visual** del Gestor se construye en C08 (Tailwind), y la conexión real UI↔lógica (clicks, formularios en vivo) llega en **M3** con el DOM.
 
 ---
 
 ## Glosario de Nuevos Términos
 
-- **Objetos**: Estructuras que combinan datos (propiedades) y comportamientos (métodos).
-- **Abstracción**: Enfoque para simplificar la realidad, resaltando solo los rasgos esenciales.
-- **POO (Programación Orientada a Objetos)**: Paradigma que modela el software en términos de objetos que se comunican entre sí.
-- **Funciones Constructoras**: Forma tradicional en JavaScript de crear objetos utilizando la palabra clave `new`.
-- **Encapsulación**: Técnica para ocultar los detalles de implementación y exponer solo los métodos o propiedades necesarias.
+- **Objeto literal:** Colección de pares `key: value` declarada con `{}`. Ej. `{ nombre: 'Ana', edad: 30 }`.
+- **Propiedad:** Cada par `key: value` de un objeto. Se accede con `obj.key`.
+- **Array de objetos:** Lista de objetos (`[{...}, {...}]`); combina orden + nombres descriptivos.
+- **`class`:** Molde para crear muchos objetos con la misma forma y comportamiento.
+- **Instancia:** Objeto concreto creado a partir de una clase con `new`. Ej. `new Movimiento(...)`.
+- **`new`:** Operador que crea una instancia y ejecuta el `constructor` de la clase.
+- **`constructor`:** Método especial que corre al hacer `new` e inicializa las propiedades con `this`.
+- **`this`:** Dentro de una clase, apunta al objeto que se está creando/usando.
+- **Método:** Función dentro de una clase que usa las propiedades del objeto (`this.x`).
+- **Encapsulación:** Agrupar datos (propiedades) + comportamientos (métodos) relacionados dentro de un mismo objeto.

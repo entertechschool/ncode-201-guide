@@ -1,7 +1,7 @@
-# Image Prompts — Clase 12: Manejo de Excepciones en JavaScript
+# Image Prompts — Clase 12: Manejo de Errores y Estados
 
 > Prompts para generar imágenes con AI. Cada imagen corresponde a un `<img src="...">` en `index.html`.
 
 ---
 
-No se requieren imágenes generadas con AI para esta infografía. Los conceptos de try/catch/finally, throw, el objeto Error y los criterios de captura son representables con bloques de código resaltado y elementos visuales CSS.
+**No se requieren imágenes.** Toda la infografía es representable en HTML/CSS (código resaltado, grilla de estados y glosario), por lo que `index.html` no contiene ningún `<img src="...">`.

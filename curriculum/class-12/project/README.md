@@ -1,22 +1,21 @@
 # Proyecto del Módulo 3
 
-**Editor Avanzado de Markdown en Vivo**
+**Pokédex — buscador que consume la PokeAPI**
 
-Este proyecto consolida todo lo aprendido durante el **Módulo 3: Aplicaciones Web con Objetos**. El objetivo es que cada estudiante desarrolle un editor avanzado de Markdown en tiempo real, integrando conceptos de manipulación del DOM, funciones avanzadas, manejo de eventos básicos y **manejo efectivo de excepciones para validación y robustez funcional**, creando una herramienta interactiva y confiable.
+Este proyecto consolida todo lo aprendido durante el **Módulo 3: JavaScript Moderno y Consumo de APIs**. El objetivo es que cada estudiante desarrolle una Pokédex que consume una API real, integrando sintaxis moderna de JavaScript, render dinámico del DOM, asincronía con `fetch`/`async/await`, y manejo robusto de errores y estados de UI, creando una aplicación interactiva y confiable.
 
-> ⏳ Cada estudiante presentará su proyecto en una **demostración en vivo de máximo 10 minutos**, explicando sus **decisiones técnicas clave**.
+> ⏳ Cada estudiante presentará su proyecto en una **presentación en vivo de máximo 10 minutos** (5 de demostración + 5 de argumentación técnica), explicando sus **decisiones técnicas clave**.
 
 ---
 
 ## 🧩 Relación Secuencial de Laboratorios
 
-| **Laboratorio**                                 | **Contribución al Proyecto**                                                                                                                               |
-| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Lab 9: DOM como API de Objetos**              | Crear la interfaz dinámica del editor, transformando contenido Markdown a HTML mediante manipulación avanzada del DOM y Regex.                             |
-| **Lab 10: Funciones y Callbacks en JavaScript** | Modularizar la transformación del contenido mediante funciones de orden superior y callbacks para formatear texto y generar listas automáticamente.        |
-| **Lab 11: Event Handling Básico**               | Mejorar la interactividad del editor implementando manejo dinámico de eventos como escritura, clics y actualización automática del contenido HTML.         |
-| **Lab 12: Excepciones en JavaScript**           | Validar entradas y sintaxis Markdown usando `try/catch` y `throw`, mostrando mensajes útiles y evitando que errores detengan el funcionamiento del editor. |
-
+| **Laboratorio** | **Contribución al Proyecto** |
+| --- | --- |
+| **Lab 9: JavaScript Moderno y Render Dinámico** | Construir la base de la Pokédex renderizando tarjetas desde un array local con `createElement`, template literals, destructuring y optional chaining. |
+| **Lab 10: Datos desde la web (fetch, Promesas y JSON)** | Reemplazar el array local por datos reales de la PokeAPI con `fetch` y Promesas (`.then`/`.catch`), adaptar la estructura JSON y cargar la rejilla en paralelo con `Promise.all`. |
+| **Lab 11: async/await y búsqueda en la API** | Reformular la carga con `async/await`, buscar Pokémon por nombre en la API y **capturarlos** (botón en la tarjeta) en la colección (`pokedex`) sin duplicar. |
+| **Lab 12: Manejo de Errores y Estados** | Hacer la app robusta con `try/catch/finally`, validación de `response.ok` (404) y estados de carga/error (en la búsqueda y la carga), y documentar el proyecto en Markdown. |
 
 ## 🎯 Retos
 
@@ -31,6 +30,8 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
         - [Condición 2: Comportamientos esperados o validaciones necesarias]
         - [Condición 3: Consideraciones adicionales de UI/UX o manejo de errores]
 
+> 💡 Ideas de retos: buscar por número además de por nombre; mostrar las estadísticas (`stats`) con barras; una lista inicial con `?limit=N`; filtrar por tipo; botón "reintentar" tras un error.
+
 ### Implementación:
 - Cada **Historia de Usuario** debe estar implementada en una rama específica. Una vez cumplidos los **criterios de aceptación**, se realizará un Pull Request hacia la rama `main`.
 
@@ -38,39 +39,33 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 
 ## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Historias de Usuario implementadas** | Claridad, relevancia y exactitud en la implementación, cubriendo criterios de aceptación específicos. | **20 pts** |
-| **Calidad Técnica Implementada** | Integración efectiva y clara de manipulación del DOM, funciones avanzadas, eventos y manejo de promesas, demostrando comprensión y buenas prácticas (modularización, reutilización, asincronía). | **20 pts** |
-| **Presentación de funcionalidades en vivo** | Demostración breve (3 minutos máx.) mostrando transformación en tiempo real, interactividad del editor, funciones adicionales implementadas y navegación clara por la interfaz. | **25 pts** |
-| **Argumentación Técnica** | Justificación técnica clara sobre: <br> - Uso del DOM para transformar y renderizar. <br> - Diseño de funciones reutilizables y eventos. <br> - Implementación de validaciones y errores gestionados correctamente. | **35 pts** |
-
-> **Puntaje Total:** 100 puntos
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: HU implementadas, calidad técnica (async + fetch + manejo de errores), presentación en vivo, argumentación técnica, y desafío (explicación de fragmento de código a solicitud del instructor + deploy + README).
 
 ## 📣 Presentación en Vivo
 
 - Cada estudiante tendrá **máximo 5 minutos** para:
-    1. Mostrar el editor funcionando (transformación Markdown → HTML, eventos y funcionalidades adicionales).
+    1. Mostrar la Pokédex funcionando (búsqueda de un Pokémon real, render de la tarjeta y funcionalidades adicionales).
     2. Explicar claramente qué retos adicionales eligió y cómo los implementó.
 
 - Adicionalmente, tendrá **máximo 5 minutos** para:
-    3. Justificar al menos **2 decisiones técnicas relevantes**.
+    3. Justificar al menos **2 decisiones técnicas relevantes** (flujo async, manejo de errores, render).
     4. Explicar al menos **1 fragmento de código** solicitado por el **Instructor**.
+    5. Provocar un error (buscar un Pokémon inexistente) para demostrar que la app no se rompe.
 
 ## 📝 Instrucciones de envío
 
 - **Repositorio actualizado** con ramas fusionadas en `main`.
 - **URL de GitHub Pages** desplegado.
-- **README actualizado** documentando:
+- **README.md en Markdown** documentando:
     - Historias de usuario implementadas.
     - Decisiones técnicas clave explicadas brevemente.
+    - Tecnologías usadas (`fetch`, `async/await`, Tailwind, PokeAPI).
     - Enlace al proyecto desplegado.
 
 ---
 
 > ### 💡 Tips para la Presentación
 >
-> - **Sé claro y técnico:** Resume tus decisiones técnicas de manera precisa.
-> - **Usa casos prácticos:** Muestra ejemplos concretos que justifiquen claramente tus decisiones (formateo dinámico, eventos interactivos, manejo asíncrono).
-> - **Enfócate en el pensamiento crítico:** Fundamenta tus decisiones técnicas con base en los conceptos aprendidos durante el módulo.
-
+> - **Sé claro y técnico:** resume tus decisiones técnicas de manera precisa.
+> - **Muestra los estados:** demuestra la búsqueda exitosa, el "no encontrado" y el spinner.
+> - **Enfócate en el pensamiento crítico:** fundamenta por qué validas `response.ok` y por qué usas `finally`.

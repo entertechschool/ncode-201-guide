@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Programación Imperativa — Controla el flujo paso a paso</title>
+  <title>Programación Imperativa + Arrays — Controla el flujo paso a paso</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -80,7 +80,7 @@
       align-items: center;
       gap: 0.5rem;
       flex-wrap: wrap;
-      margin-top: 0.75rem;
+      margin-top: 1.1rem;
     }
     .flow-step {
       background: rgba(217, 70, 239, 0.1);
@@ -93,14 +93,36 @@
     }
     .flow-arrow { color: #475569; font-size: 0.85em; }
 
+    /* Array visual — índice arranca en 0 */
+    .array-viz { margin-top: 1.1rem; }
+    .array-row { display: flex; gap: 0; }
+    .array-row .cell {
+      flex: 1;
+      text-align: center;
+      padding: 0.7rem 0.5rem;
+      background: #161b22;
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82em;
+      color: #e2e8f0;
+    }
+    .array-row .cell + .cell { border-left: none; }
+    .array-row .cell:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+    .array-row .cell:last-child  { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+    .array-idx { display: flex; gap: 0; margin-top: 0.3rem; }
+    .array-idx .idx {
+      flex: 1; text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78em; color: #4ade80;
+    }
+
     /* Tabla ventajas/limitaciones */
     .tradeoffs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      margin-top: 0.75rem;
+      margin-top: 1rem;
     }
-    .tradeoff-col { }
     .tradeoff-col .col-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.85rem;
@@ -126,8 +148,8 @@
       left: 0;
       font-size: 0.85em;
     }
-    .col-pros li::before { content: "✓"; color: #4ade80; }
-    .col-cons li::before { content: "✗"; color: #f87171; }
+    .col-pros li::before { content: "\2713"; color: #4ade80; }
+    .col-cons li::before { content: "\2717"; color: #f87171; }
 
     /* Glosario */
     .glossary {
@@ -158,16 +180,16 @@
 
   <section class="hero">
     <div class="badge">Módulo 2 · Clase 05</div>
-    <h1>Programación Imperativa — Controla el flujo paso a paso</h1>
-    <p class="subtitle">Variables, estructuras de control y funciones para describir exactamente cómo debe ejecutarse cada instrucción</p>
+    <h1>Programación Imperativa + Arrays</h1>
+    <p class="subtitle">Tu primera estructura de datos en JavaScript: arrays, bucles y funciones imperativas para describir exactamente <strong>CÓMO</strong> se ejecuta cada paso</p>
   </section>
 
   <section>
 
-    <!-- 1: Qué es -->
+    <!-- 1: Paradigma imperativo -->
     <div class="card accent-purple">
       <h3><span class="tag-purple">1.</span> ¿Qué es la Programación Imperativa?</h3>
-      <p class="desc">Describes <strong>CÓMO</strong> se hace cada paso. El programa sigue instrucciones secuenciales exactas — como una receta de cocina.</p>
+      <p class="desc">Un paradigma que describe <strong>CÓMO</strong> se hace cada paso. El programa sigue instrucciones secuenciales y exactas — como una receta de cocina.</p>
       <div class="flow">
         <div class="flow-step">1. capturar input</div>
         <div class="flow-arrow">→</div>
@@ -181,66 +203,83 @@
       </div>
     </div>
 
-    <!-- 2: Control de Flujo -->
+    <!-- 2: Arrays -->
     <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> Estructuras de Control</h3>
-      <p class="desc"><code>if</code> toma decisiones, <code>while</code> repite mientras se cumpla una condición, <code>for</code> itera un número conocido de veces.</p>
-      <pre><code><span class="tag-muted">// if — valida antes de guardar</span>
-<span class="tag-green">if</span> (nombre && duracion > 0) {
-  actividades.push({ nombre, duracion });
-} <span class="tag-green">else</span> {
-  alert("Datos inválidos.");
-}
+      <h3><span class="tag-green">2.</span> Arrays — La estructura de datos más usada</h3>
+      <p class="desc">Una <strong>lista ordenada</strong> de valores. Se declara con <code>[]</code> y se accede por <strong>índice</strong>... que arranca en <strong>0</strong>, no en 1.</p>
+      <pre><code><span class="tag-muted">const</span> frutas = [<span class="tag-green">'manzana'</span>, <span class="tag-green">'pera'</span>, <span class="tag-green">'uva'</span>];
 
-<span class="tag-muted">// while — sigue capturando hasta que el usuario pare</span>
-<span class="tag-green">while</span> (continuar) {
-  registrarActividad();
-  continuar = confirm("¿Registrar otra?");
-}</code></pre>
+frutas.<span class="tag-green">push</span>(<span class="tag-green">'mango'</span>);      <span class="tag-muted">// agrega al final</span>
+frutas.<span class="tag-green">length</span>;             <span class="tag-muted">// 4 → cuántos hay</span>
+frutas[<span class="tag-orange">0</span>];               <span class="tag-muted">// 'manzana' ← el primero</span>
+frutas[frutas.length - <span class="tag-orange">1</span>]; <span class="tag-muted">// 'mango'   ← el último</span></code></pre>
+      <div class="array-viz">
+        <div class="array-row">
+          <div class="cell">'manzana'</div>
+          <div class="cell">'pera'</div>
+          <div class="cell">'uva'</div>
+          <div class="cell">'mango'</div>
+        </div>
+        <div class="array-idx">
+          <div class="idx">0</div>
+          <div class="idx">1</div>
+          <div class="idx">2</div>
+          <div class="idx">3</div>
+        </div>
+      </div>
     </div>
 
-    <!-- 3: Funciones Imperativas -->
+    <!-- 3: Control de flujo -->
     <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Funciones Imperativas — Organizar las instrucciones</h3>
-      <p class="desc">Cada función hace una tarea específica y usa el estado global compartido del programa.</p>
-      <pre><code><span class="tag-blue">let</span> actividades = [];           <span class="tag-muted">// estado global</span>
-
-<span class="tag-blue">function</span> registrarActividad() {
-  <span class="tag-blue">let</span> nombre   = prompt("Nombre:");
-  <span class="tag-blue">let</span> duracion = parseInt(prompt("Minutos:"));
-  <span class="tag-green">if</span> (nombre && duracion > 0)
-    actividades.push({ nombre, duracion });
+      <h3><span class="tag-blue">3.</span> Control de Flujo — if · while · for</h3>
+      <p class="desc"><code>if</code> valida (con valores <strong>falsy</strong>), <code>while</code> repite mientras se cumpla una condición, <code>for</code> recorre el array un número conocido de veces.</p>
+      <pre><code><span class="tag-muted">// if + falsy — valida antes de guardar</span>
+<span class="tag-blue">if</span> (!nombre || isNaN(monto) || monto <= <span class="tag-orange">0</span>) {
+  alert(<span class="tag-green">'Datos inválidos.'</span>);
+  <span class="tag-blue">return</span>;
 }
 
-<span class="tag-blue">function</span> calcularTiempoTotal() {
-  <span class="tag-blue">let</span> total = 0;
-  <span class="tag-green">for</span> (<span class="tag-blue">let</span> i = 0; i < actividades.length; i++)
-    total += actividades[i].duracion;
-  <span class="tag-green">return</span> total;
+<span class="tag-muted">// while — repite hasta que el usuario pare</span>
+<span class="tag-blue">while</span> (continuar === <span class="tag-green">'si'</span>) {
+  registrarMovimiento();
+  continuar = prompt(<span class="tag-green">'¿Otro? (si/no):'</span>);
+}
+
+<span class="tag-muted">// for — recorre el array y acumula</span>
+<span class="tag-blue">let</span> saldo = <span class="tag-orange">0</span>;
+<span class="tag-blue">for</span> (<span class="tag-blue">let</span> i = <span class="tag-orange">0</span>; i < valores.length; i++) {
+  saldo = saldo + valores[i];
 }</code></pre>
     </div>
 
-    <!-- 4: Ventajas y Limitaciones -->
+    <!-- 4: Funciones imperativas + límites -->
     <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Ventajas y Limitaciones</h3>
-      <p class="desc">El paradigma imperativo es el punto de partida ideal — pero tiene un techo natural a medida que el programa crece.</p>
+      <h3><span class="tag-orange">4.</span> Funciones Imperativas — y su techo</h3>
+      <p class="desc">Organizan el código en tareas que <strong>leen y modifican el estado global</strong>. Punto de partida ideal — pero con un límite natural a medida que el programa crece.</p>
+      <pre><code><span class="tag-orange">let</span> valores = [];                 <span class="tag-muted">// estado global</span>
+
+<span class="tag-orange">function</span> registrarMovimiento() {  <span class="tag-muted">// modifica global, NO retorna</span>
+  <span class="tag-muted">// prompt → if → push</span>
+}
+
+<span class="tag-orange">function</span> calcularSaldo() {        <span class="tag-muted">// recorre con for, SÍ retorna</span>
+  <span class="tag-orange">return</span> saldo;
+}</code></pre>
       <div class="tradeoffs">
         <div class="tradeoff-col col-pros">
           <div class="col-title" style="color:#4ade80;">Ventajas</div>
           <ul>
             <li>Fácil de leer y entender</li>
             <li>Ideal para scripts pequeños</li>
-            <li>Sin abstracciones adicionales</li>
             <li>Control total del flujo</li>
           </ul>
         </div>
         <div class="tradeoff-col col-cons">
           <div class="col-title" style="color:#f87171;">Limitaciones</div>
           <ul>
-            <li>Funciones acopladas a variables globales</li>
-            <li>Difícil de escalar y mantener</li>
-            <li>Repetición de lógica (DRY)</li>
-            <li>Testar es complicado</li>
+            <li>Estado global → bugs sutiles</li>
+            <li>Funciones acopladas entre sí</li>
+            <li>Difícil de testear y escalar</li>
           </ul>
         </div>
       </div>
@@ -252,20 +291,20 @@
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Paradigma Imperativo</strong>
-        <span>Estilo de programación que describe CÓMO ejecutar cada paso de forma secuencial.</span>
+        <strong>Paradigma imperativo</strong>
+        <span>Estilo que describe CÓMO ejecutar cada paso de forma secuencial.</span>
       </div>
       <div class="term">
-        <strong>prompt()</strong>
-        <span>Función del navegador que muestra un cuadro de diálogo para capturar texto del usuario.</span>
+        <strong>Array</strong>
+        <span>Lista ordenada de valores con <code>[]</code>. Se accede por índice, que arranca en <code>0</code>.</span>
       </div>
       <div class="term">
-        <strong>Variable global</strong>
-        <span>Variable accesible desde cualquier función del programa — compartida por todas.</span>
+        <strong>Falsy</strong>
+        <span>Valores que <code>if</code> trata como <code>false</code>: <code>""</code>, <code>0</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>.</span>
       </div>
       <div class="term">
-        <strong>Función acoplada</strong>
-        <span>Función que depende de variables globales o de otras funciones directamente.</span>
+        <strong>Función imperativa</strong>
+        <span>Modifica estado externo (variables globales) y/o produce efectos como <code>prompt</code> o <code>alert</code>.</span>
       </div>
     </div>
   </section>

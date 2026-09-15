@@ -156,37 +156,49 @@
   <section class="hero">
     <div class="badge">Módulo 2 · Clase 07</div>
     <h1>POO en JavaScript — Objetos que agrupan datos y comportamientos</h1>
-    <p class="subtitle">Funciones constructoras, <code>this</code>, instancias con <code>new</code> y el primer puente JavaScript ↔ HTML</p>
+    <p class="subtitle">Objetos, <code>class</code> por capas (propiedades → constructor → métodos), instancias con <code>new</code> y encapsulación</p>
   </section>
 
   <section>
 
-    <!-- 1: Función Constructora -->
+    <!-- 1: Objeto literal -->
     <div class="card accent-purple">
-      <h3><span class="tag-purple">1.</span> Función Constructora — El molde del objeto</h3>
-      <p class="desc">Una función constructora define la forma de un objeto. Cada vez que usas <code>new</code>, JavaScript crea una instancia nueva con sus propias propiedades.</p>
-      <pre><code><span class="tag-muted">// PascalCase por convención — es una señal visual de "constructor"</span>
-<span class="tag-purple">function</span> Movimiento(nombre, tipo, valor) {
-  <span class="tag-purple">this</span>.nombre = nombre;           <span class="tag-muted">// propiedad del objeto</span>
-  <span class="tag-purple">this</span>.tipo   = tipo;
-  <span class="tag-purple">this</span>.valor  = valor;
-  <span class="tag-purple">this</span>.fecha  = <span class="tag-purple">new</span> Date().toLocaleDateString();
+      <h3><span class="tag-purple">1.</span> Objeto literal — datos con nombre</h3>
+      <p class="desc">Cada movimiento pasa de dos arrays paralelos (tipo por signo) a UN objeto con propiedades nombradas. El nombre y el valor viajan juntos: imposible desincronizar.</p>
+      <pre><code><span class="tag-muted">// ANTES: 2 arrays paralelos · AHORA: 1 array de objetos</span>
+<span class="tag-muted">let</span> movimientos = [
+  { nombre: <span class="tag-purple">"Salario"</span>, tipo: <span class="tag-purple">"ingreso"</span>, valor: 3000 },
+  { nombre: <span class="tag-purple">"Comida"</span>,  tipo: <span class="tag-purple">"gasto"</span>,   valor: 200 }
+];
 
-  <span class="tag-purple">this</span>.esIngreso = <span class="tag-purple">function</span>() {       <span class="tag-muted">// método del objeto</span>
-    <span class="tag-muted">return</span> <span class="tag-purple">this</span>.tipo === "ingreso";
-  };
+movimientos[0].nombre;   <span class="tag-muted">// "Salario" — acceso por nombre</span></code></pre>
+    </div>
+
+    <!-- 2: class por capas -->
+    <div class="card accent-green">
+      <h3><span class="tag-green">2.</span> <code>class</code> — el molde, por capas</h3>
+      <p class="desc">Una clase se construye en 3 capas: <strong>propiedades</strong> (los datos) → <strong>constructor</strong> (las pone al crear) → <strong>métodos</strong> (comportamiento que usa <code>this</code>).</p>
+      <pre><code><span class="tag-green">class</span> Movimiento {
+  <span class="tag-green">constructor</span>(nombre, tipo, valor) {   <span class="tag-muted">// ② las pone al crear</span>
+    <span class="tag-green">this</span>.nombre = nombre;              <span class="tag-muted">// ① propiedades</span>
+    <span class="tag-green">this</span>.tipo   = tipo;
+    <span class="tag-green">this</span>.valor  = valor;
+  }
+  <span class="tag-green">esIngreso</span>() {                        <span class="tag-muted">// ③ método</span>
+    <span class="tag-muted">return</span> <span class="tag-green">this</span>.tipo === <span class="tag-green">"ingreso"</span>;
+  }
 }</code></pre>
     </div>
 
-    <!-- 2: Instanciación con new -->
-    <div class="card accent-green">
-      <h3><span class="tag-green">2.</span> Instanciación — Crear objetos con <code>new</code></h3>
-      <p class="desc"><code>new</code> crea un objeto vacío, vincula <code>this</code> a ese objeto, ejecuta el constructor y retorna el objeto listo para usar.</p>
-      <pre><code><span class="tag-muted">const</span> salario = <span class="tag-green">new</span> Movimiento(<span class="tag-green">"Salario"</span>, <span class="tag-green">"ingreso"</span>, 3000);
-<span class="tag-muted">const</span> comida  = <span class="tag-green">new</span> Movimiento(<span class="tag-green">"Comida"</span>,  <span class="tag-green">"gasto"</span>,   200);
+    <!-- 3: Instancias con new -->
+    <div class="card accent-blue">
+      <h3><span class="tag-blue">3.</span> Instancias con <code>new</code></h3>
+      <p class="desc"><code>new</code> crea un objeto a partir del molde, ejecuta el <code>constructor</code> y lo devuelve listo. Una clase, muchas instancias.</p>
+      <pre><code><span class="tag-muted">const</span> salario = <span class="tag-blue">new</span> Movimiento(<span class="tag-blue">"Salario"</span>, <span class="tag-blue">"ingreso"</span>, 3000);
+<span class="tag-muted">const</span> comida  = <span class="tag-blue">new</span> Movimiento(<span class="tag-blue">"Comida"</span>,  <span class="tag-blue">"gasto"</span>,   200);
 
 salario.esIngreso();   <span class="tag-muted">// → true</span>
-comida.esIngreso();    <span class="tag-muted">// → false</span></code></pre>
+comida.esIngreso();    <span class="tag-muted">// → false  ·  sin new → error claro</span></code></pre>
       <div class="instances">
         <div class="instance-box">
           <div class="instance-title">salario</div>
@@ -203,45 +215,28 @@ comida.esIngreso();    <span class="tag-muted">// → false</span></code></pre>
       </div>
     </div>
 
-    <!-- 3: Encapsulación -->
-    <div class="card accent-blue">
-      <h3><span class="tag-blue">3.</span> Encapsulación — Datos y comportamientos juntos</h3>
-      <p class="desc">El objeto <code>Presupuesto</code> guarda sus movimientos <em>y</em> sabe cómo calcular su propio balance.</p>
-      <pre><code><span class="tag-blue">function</span> Presupuesto() {
-  <span class="tag-blue">this</span>.movimientos = [];
-
-  <span class="tag-blue">this</span>.agregarMovimiento = <span class="tag-blue">function</span>(mov) {
-    <span class="tag-blue">this</span>.movimientos.push(mov);
-  };
-
-  <span class="tag-blue">this</span>.calcularBalance = <span class="tag-blue">function</span>() {
-    <span class="tag-blue">return this</span>.movimientos.reduce((acc, m) =>
-      m.esIngreso() ? acc + m.valor : acc - m.valor, 0
-    );
-  };
+    <!-- 4: Encapsulación -->
+    <div class="card accent-orange">
+      <h3><span class="tag-orange">4.</span> Encapsulación — <code>class Presupuesto</code></h3>
+      <p class="desc">El objeto <code>Presupuesto</code> guarda sus movimientos <em>y</em> sabe calcular su propio saldo. Datos + métodos viven juntos.</p>
+      <pre><code><span class="tag-orange">class</span> Presupuesto {
+  <span class="tag-orange">constructor</span>() {
+    <span class="tag-orange">this</span>.movimientos = [];        <span class="tag-muted">// propiedad: el array</span>
+  }
+  <span class="tag-orange">agregar</span>(mov) {
+    <span class="tag-orange">this</span>.movimientos.push(mov);
+  }
+  <span class="tag-orange">saldo</span>() {
+    <span class="tag-muted">return</span> <span class="tag-orange">this</span>.totalIngresos() - <span class="tag-orange">this</span>.totalGastos();
+  }
 }</code></pre>
       <table class="oop-table">
         <tr><th>Concepto</th><th>Descripción</th><th>Ejemplo</th></tr>
+        <tr><td>class</td><td>Molde: forma + comportamiento</td><td>class Movimiento</td></tr>
         <tr><td>new</td><td>Crea la instancia</td><td>new Movimiento()</td></tr>
         <tr><td>this</td><td>Referencia al objeto actual</td><td>this.nombre</td></tr>
-        <tr><td>Encapsulación</td><td>Datos + métodos juntos</td><td>presupuesto.calcularBalance()</td></tr>
+        <tr><td>Encapsulación</td><td>Datos + métodos juntos</td><td>presupuesto.saldo()</td></tr>
       </table>
-    </div>
-
-    <!-- 4: Puente JS-HTML -->
-    <div class="card accent-orange">
-      <h3><span class="tag-orange">4.</span> Primer Puente JS ↔ HTML — Capturar input del form</h3>
-      <p class="desc">Con 4 líneas de JS conectas un formulario HTML a tu modelo de objetos. El HTML ya viene listo — solo escribes el JS.</p>
-      <pre><code><span class="tag-muted">const</span> form = document.querySelector(<span class="tag-orange">"#form-movimiento"</span>);
-
-form.addEventListener(<span class="tag-orange">"submit"</span>, <span class="tag-muted">function</span>(event) {
-  event.preventDefault();                         <span class="tag-muted">// ← evita la recarga</span>
-  <span class="tag-muted">const</span> nombre = document.querySelector(<span class="tag-orange">"#nombre"</span>).value;
-  <span class="tag-muted">const</span> tipo   = document.querySelector(<span class="tag-orange">"#tipo"</span>).value;
-  <span class="tag-muted">const</span> valor  = parseFloat(document.querySelector(<span class="tag-orange">"#valor"</span>).value);
-  miPresupuesto.agregarMovimiento(<span class="tag-muted">new</span> Movimiento(nombre, tipo, valor));
-  form.reset();
-});</code></pre>
     </div>
 
   </section>
@@ -250,20 +245,20 @@ form.addEventListener(<span class="tag-orange">"submit"</span>, <span class="tag
   <section>
     <div class="glossary">
       <div class="term">
-        <strong>Función constructora</strong>
-        <span>Molde para crear objetos. Por convención lleva PascalCase y se llama con <code>new</code>.</span>
+        <strong>Objeto literal</strong>
+        <span>Colección de pares <code>key: value</code> dentro de <code>{}</code>. Se accede con <code>.prop</code>.</span>
+      </div>
+      <div class="term">
+        <strong>class</strong>
+        <span>Molde para crear muchos objetos con la misma forma. Se usa con <code>new</code>.</span>
       </div>
       <div class="term">
         <strong>this</strong>
-        <span>Dentro de un constructor, <code>this</code> referencia el objeto que está siendo creado.</span>
+        <span>Dentro de la clase, referencia el objeto que se está creando o usando.</span>
       </div>
       <div class="term">
         <strong>Encapsulación</strong>
         <span>Agrupar datos (propiedades) y comportamientos (métodos) en un mismo objeto.</span>
-      </div>
-      <div class="term">
-        <strong>event.preventDefault()</strong>
-        <span>Cancela el comportamiento por defecto del form (recargar la página al hacer submit).</span>
       </div>
     </div>
   </section>

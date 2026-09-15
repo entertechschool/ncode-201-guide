@@ -1,146 +1,154 @@
-# Clase 11  
-## Event Handling Básico en JavaScript
+# Clase 11 — async/await y búsqueda en la API
+### Code 201 · Módulo 3 · Proyecto: Pokédex
 
 ---
 
-### Bienvenida y Conexión Inicial
-- ¿Has creado algo interactivo con JavaScript?
-- Recordamos: funciones y manipulación DOM
+## 🎯 Objetivo de la Clase
+
+- **Reformular** el `.then` de C10 con **`async/await`**.
+- **Buscar** un Pokémon por nombre en la API.
+- **Capturar** lo buscado en tu colección (`pokedex`).
+
+> Misma lógica de C10, más legible — y el buscador ahora va a la API.
 
 ---
 
-## 📌 Pero primero, recordamos:
+## 🔁 .then → async/await
 
-## Funciones y callbacks:
+```javascript
+// C10
+fetch(url).then(r => r.json()).then(data => { ... });
 
-> Crea una función llamada `ejecutarOperacion` que reciba **tres parámetros**:
->
-> * `a`: número 1
-> * `b`: número 2
-> * `operacion`: una función callback que indique qué operación realizar (`suma`, `multiplicacion`, `potencia`, etc.)
-
----
-
-## 📌 Ahora, recordamos:
-
-## Manipulación DOM:
-
-> Crea una función llamada `aplicarEstilo` que reciba:
->
-> * un **selector CSS** (ej. `"#titulo"`),
-> * y una **función callback** que indique cómo modificar ese elemento.
->
-> Por ejemplo: `aplicarEstilo("#titulo", mayusculas);`
-
----
-
-## 🔑 Conceptos Clave a profundizar
-
-1. **Event Object**
-2. **Event Listener**
-3. **Callback**
-
----
-
-### ¿Qué es un Evento?
-- Un evento es cualquier interacción del usuario con la página (click, keydown, etc)
-- JavaScript puede "escuchar" y reaccionar
-
----
-
-### addEventListener: Sintaxis
-```js
-element.addEventListener("click", function() {
-  console.log("Haz hecho clic!");
-});
+// C11 — mismo resultado
+const response = await fetch(url);
+const data     = await response.json();
 ```
 
----
-
-### Demo en Vivo
-
-* Crear botón que cambia de color al hacer clic
-* Agregar lógica condicional en la función
+> No es nuevo: es la **misma promesa**, escrita como pasos.
 
 ---
 
-### ¿Qué es el `event`?
+## 🔑 async / await
 
-* Objeto especial que contiene detalles del evento
-* `event.target`, `event.type`, `event.key`, etc
-
----
-
-### Exploración Guiada
-
-```js
-button.addEventListener("click", function(event) {
-  console.log(event);
-});
-```
-
----
-
-### Funciones Callback Reusables
-
-```js
-function cambiarColor() {
-  caja.classList.toggle("activo");
+```javascript
+async function obtenerPokemon(idONombre) {
+  const response = await fetch(`.../pokemon/${idONombre}`);
+  return response.json();
 }
-boton.addEventListener("click", cambiarColor);
+```
+
+* `async` habilita `await` dentro.
+* `await` **pausa** hasta que la promesa resuelve.
+* Más legible que `.then` encadenado.
+
+---
+
+## ⚡ Reformular la carga
+
+```javascript
+async function cargarPokedex() {
+  const datos = await Promise.all(ids.map(obtenerPokemon));
+  pokedex = datos.map(adaptarPokemon);
+  render(pokedex);
+}
+```
+
+> El `Promise.all` de C10, ahora con `await`.
+
+---
+
+## 🔍 De filtrar a buscar
+
+| C10 | C11 |
+|---|---|
+| filtra `pokedex` (lo que ya tienes) | consulta la **API** por nombre |
+| solo lo de la rejilla | **cualquier** Pokémon |
+
+```javascript
+async function buscarPokemon(nombre) {
+  const data = await obtenerPokemon(nombre.toLowerCase());
+  return adaptarPokemon(data);
+}
 ```
 
 ---
 
-### HTML onEvent vs JS moderno
+## ⚡ Capturar (botón en la tarjeta)
 
-* `<button onclick="alert('Hola')">` ❌
-* `addEventListener()` ✅
+```javascript
+// el resultado de búsqueda lleva un botón "Capturar"
+boton.addEventListener("click", () => capturar(pokemon));
 
----
+function capturar(pokemon) {
+  if (!pokedex.some(p => p.nombre === pokemon.nombre)) {
+    pokedex.push(pokemon);     // crece tu colección
+  }
+  render(pokedex);             // vuelve la colección, ya con el nuevo
+}
+```
 
-## 🧠 Reflexiones Clave para Analizar
-
-1. ¿Qué ventajas ofrecen los event listeners frente a otros métodos tradicionales de gestión de eventos (por ejemplo, atributos HTML)?
-> Separación de Estructura y Lógica.
-
-2. ¿Cómo impacta en la experiencia del usuario manejar adecuadamente el objeto evento en aplicaciones web?
-> Acceso detallado al contexto de la interacción.
-
-3. ¿Cuáles son los criterios que debes considerar para elegir entre funciones anónimas o funciones nombradas como callbacks?
-> Reutilización.
+> `crearTarjeta` es de C09 y devuelve un nodo → le añades el botón **solo** al resultado.
 
 ---
 
-### Desafío de Laboratorio (Parte 1)
+## 📊 Explorar la respuesta (stats)
 
-* Objetivo: Crear vista previa de Markdown en vivo
-* Capturar `input` del usuario y actualizar un div
+```javascript
+// la API trae MUCHO más: stats, height, weight, abilities…
+stats: data.stats.map(s => ({ nombre: s.stat.name, valor: s.base_stat }))
+```
 
----
-
-### Checkpoint 1
-
-* Input actualizado dinámicamente al escribir
-* Uso de `input.addEventListener("input", ...)`
-
----
-
-### Checkpoint 2
-
-* Separar lógica en funciones reusables
-* Limpiar espacios y texto con `.trim()`
+* Hoy solo usabas `name`, `sprites`, `types`.
+* Navegas el JSON anidado y extraes lo que importa.
+* Las stats van **solo en el resultado** (no en `crearTarjeta`).
 
 ---
 
-### Revisión entre Pares
+## 🔗 Parámetros: ruta vs consulta
 
-* Validar estructura
-* Probar eventos cruzados y refactor
+```
+/pokemon/pikachu            → parámetro de RUTA (qué recurso)
+/pokemon?limit=12&offset=0  → parámetros de CONSULTA (cómo)
+```
+
+```javascript
+fetch(`...pokemon?limit=12&offset=${offset}`);
+offset += 12;   // siguiente página → paginación
+```
+
+> Subir `offset` = la siguiente "página". Está en casi toda API.
 
 ---
 
-### Cierre y Conexión con Clase 12
+## ⚙️ Estructura del Lab
 
-* ¿Qué aprendiste hoy?
+| HU | Tiempo | Contenido |
+|---|---|---|
+| **HU1** | ~15 min | Reformular la carga con `async/await` |
+| **HU2** | ~20 min | Buscar y traer (mostrar el resultado) |
+| **HU3** | ~20 min | Capturar (botón en la tarjeta, sin duplicar) |
+| **HU4** | ~20 min | Estadísticas (explorar la respuesta) |
+| **HU5** | ~20 min | Cargar más (`?limit`/`?offset`) |
 
+---
+
+## 🤔 Discusión
+
+- ¿Por qué `async/await` se lee mejor que `.then` encadenado?
+- ¿Qué diferencia hay entre filtrar lo local y buscar en la API?
+- ¿Qué pasa si buscas un Pokémon que no existe? (👀 C12)
+
+> **Idea clave:** el estado de tu app crece según lo que el usuario hace.
+
+---
+
+## ➡️ Lo que viene (C12)
+
+Si buscas "pikachuu", la app **se rompe**. Una app real no puede.
+
+> En C12: manejar errores con `try/catch`, estados de carga, y cerrar el módulo.
+
+---
+
+## ¡Gracias! 🙌
+### Code 201 · Enter Tech School

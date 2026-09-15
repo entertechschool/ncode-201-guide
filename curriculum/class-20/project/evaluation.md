@@ -1,6 +1,6 @@
 # Rúbrica de Evaluación - Proyecto Final Code 201 (100 puntos)
 
-En el módulo 5 hemos trabajado un proyecto para un caso real de una empresa. Esta aplicación web trabajada debe haber sido desarrollada de forma grupal y con un alcance de MVP. **Sin embargo, la evaluación aquí descrita es individual**.
+En el Módulo 5 cada estudiante desarrolla de forma **individual** el proyecto integrador **Mi Setlist** (alcance MVP, con la IA como copiloto dirigido). La evaluación es individual y se realiza en el Demo Day (Clase 20).
 
 ---
 
@@ -8,11 +8,13 @@ En el módulo 5 hemos trabajado un proyecto para un caso real de una empresa. Es
 
 | **Criterio** | **Descripción Detallada** | **Puntaje** |
 |-------------|---------------------------|-------------|
-| **1. Presentación y Defensa Técnica** | El/la estudiante demuestra dominio del proyecto en una presentación clara: explica objetivos, arquitectura, flujo de usuario, y justifica decisiones técnicas. Responde preguntas con argumentos fundamentados. | **30 pts** |
-| **2. Implementación Técnica (JS Moderno)** | La solución usa correctamente clases, métodos, DOM, eventos y localStorage. Se valida estructura y funcionalidad del MVP como producto interactivo. | **25 pts** |
-| **3. Documentación Técnica y Git** | El repositorio está completo: `README.md`, `requirements.md`, `user-stories.md`, wireframes, uso de ramas, historial de commits significativo. | **15 pts** |
-| **4. Diseño y Experiencia de Usuario (UI/UX)** | Interfaz clara, coherente, responsive. Navegación intuitiva, uso de HTML semántico y atención mínima a accesibilidad. | **15 pts** |
-| **5. Proceso de Desarrollo y Validación** | Evidencia de trabajo iterativo: checkpoints cumplidos, revisión con instructor, mejoras aplicadas. Participación activa en el proceso. | **15 pts** |
+| **1. Funcionalidades del MVP** | Los 10 puntos del MVP implementados y funcionando: búsqueda en la API con estados de UI, playlists persistidas, estadísticas, orden y robustez ante datos corruptos. | **20 pts** |
+| **2. Calidad Técnica** | El contrato técnico se respeta: módulos ESM, estado central + `render()`, CRUD inmutable, `try/catch` en persistencia, delegación de eventos. | **20 pts** |
+| **3. Uso Responsable de IA + HU Propia** | `PROMPTS.md` con prompts contextualizados y decisiones registradas (10) + al menos 1 historia de usuario propia implementada (10). | **20 pts** |
+| **4. Presentación en Vivo — Demo Day** | Demo clara en ≤10 min sobre la URL pública, flujo completo con recarga en vivo y cierre con la HU propia. | **20 pts** |
+| **5. Argumentación Técnica + Q&A** | Justifica ≥2 decisiones (≥1 sobre la IA) y explica el fragmento de su código que el instructor elija. | **20 pts** |
+
+> Detalle por niveles en la [rúbrica oficial del proyecto](../../class-17/lab/rubric.md).
 
 ---
 

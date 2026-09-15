@@ -12,7 +12,7 @@ Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de h
 
 1. Hojea las lecturas diarias y prepárate en caso de que los alumnos tengan preguntas. 
 1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Este es el primer día de clase, así que asegúrate de que las tareas de Canvas del curso estén publicadas y que el repositorio de GitHub esté creado y lleno con los README de las clases.
+1. Este es el primer día de clase, así que asegúrate de que las tareas de Blackboard del curso estén publicadas y que el repositorio de GitHub esté creado y lleno con los README de las clases.
 
 ## Descripción de la Clase
 <!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
@@ -27,7 +27,7 @@ Consulta el `lecture.md` para los detalles de la clase.
 
 ## Todo acerca del Code 201
 
-- Introducción a Canvas
+- Introducción a Blackboard
   - Muéstrales la herramienta y cómo encontrar y enviar las tareas
 - Repaso de las lecturas
   - Resumen rápido acerca de cómo "hojear" las lecturas
@@ -67,7 +67,7 @@ Los alumnos habrán completado una tarea de trabajo previo, lab-01a, para config
 
 El laboratorio utilizar la funcionalidad gist de GitHub. [Esta es una descripción de un gist](https://docs.github.com/es/get-started/writing-on-github/editing-and-sharing-content-with-gists/creating-gists).
 
-Al final de la clase, publica tu código en un gist y muéstrales cómo obtener el enlace para sus gists y dónde enviarlos en Canvas para el lab-b.
+Al final de la clase, publica tu código en un gist y muéstrales cómo obtener el enlace para sus gists y dónde enviarlos en Blackboard para el lab-b.
 
 Un detalle a tomar en cuenta: En lab-b, ayudamos a los alumnos a configurar su linter de JS en VSCode y también a configurar un .bash_profile personalizado que al final les mostrará su Git status cuando comencemos a trabajar con Git. Hacer esto tiene dos fines: 1) Nos da otra forma de verificar sus configuraciones de computadora; 2) Crea un punto de interacción individual con los estudiantes para conocerlos mejor. Trata de aprenderte sus nombres mientras interactúas con los alumnos.
 

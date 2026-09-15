@@ -7,3 +7,15 @@ kramdown:
   hard_wrap: false
   syntax_highlighter: rouge
   parse_block_html: true
+
+exclude:
+  - dev/
+  - README.md_old
+  - CLAUDE.md
+  - AGENTS.md
+  - "**/*.docx"
+  # Tests ocultos (M3 es el unico test activo del curso)
+  - tests/
+  - curriculum/class-04/test/
+  - curriculum/class-08/test/
+  - curriculum/class-16/test/

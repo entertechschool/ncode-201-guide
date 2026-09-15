@@ -1,4 +1,4 @@
-# Test Diagnóstico - Módulo 3: Aplicaciones Web con Objetos
+# Test Diagnóstico - Módulo 3: JavaScript Moderno y Consumo de APIs
 
 ## Información General
 
@@ -6,8 +6,8 @@
 |---------|---------|
 | **Módulo** | 3 |
 | **Clases cubiertas** | Clase 09 - Clase 12 |
-| **Duración** | 15 minutos |
-| **Preguntas** | 8 (opción múltiple) |
+| **Duración** | 10 minutos |
+| **Preguntas** | 5 (opción múltiple) |
 | **Tipo** | Diagnóstico (formativo) |
 
 ---
@@ -18,17 +18,17 @@ Este test verifica tu comprensión de los conceptos de las Clases 09 a 12:
 
 | Clase | Temas |
 |-------|-------|
-| Clase 09 | DOM como API de Objetos (`querySelector`, jerarquía DOM, Regex básico) |
-| Clase 10 | Funciones y Callbacks (funciones de primera clase, orden superior) |
-| Clase 11 | Event Handling Básico (`addEventListener`, objeto `event`, callbacks) |
-| Clase 12 | Manejo de Excepciones (`try/catch/finally`, `throw`, errores personalizados) |
+| Clase 09 | JavaScript Moderno y Render Dinámico (template literals, destructuring, `createElement`) |
+| Clase 10 | Datos desde la web (`fetch`, Promesas `.then`/`.catch`, JSON, `Promise.all`) |
+| Clase 11 | async/await y búsqueda en la API (`async`/`await`, buscar por nombre, agregar al estado) |
+| Clase 12 | Manejo de Errores y Estados (`try/catch/finally`, `throw`, `response.ok`) |
 
 ---
 
 ## Instrucciones
 
-1. Se realiza en Canvas durante la clase
-2. Tienes 15 minutos
+1. Se realiza en Blackboard durante la clase
+2. Tienes 10 minutos
 3. Individual y sin materiales de apoyo
 
 > **Nota:** Este test es diagnóstico — nos ayuda a identificar qué temas necesitan más práctica. **No afecta tu calificación**.

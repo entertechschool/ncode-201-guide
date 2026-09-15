@@ -1,3 +1,5 @@
+> 🚫 **DESACTIVADO** — Este test no se aplica en el curso actual. El único test diagnóstico vigente es el del Módulo 3 (clase 12).
+
 # Test Diagnóstico - Módulo 2: Fundamentos de Programación
 
 ## Información General
@@ -20,14 +22,14 @@ Este test verifica tu comprensión de los conceptos de las Clases 05 a 08:
 |-------|-------|
 | Clase 05 | Programación Imperativa (control de flujo, variables, funciones acopladas) |
 | Clase 06 | Programación Funcional (funciones puras, `map()`, `filter()`, `find()`) |
-| Clase 07 | Programación Orientada a Objetos (funciones constructoras, `this`, `new`) |
-| Clase 08 | Prototipos en JavaScript (`prototype`, herencia prototipal, `instanceof`) |
+| Clase 07 | Programación Orientada a Objetos con `class` (`constructor`, `this`, `new`, encapsulación) |
+| Clase 08 | Tailwind CSS e interfaz del Gestor (utility-first, clases por grupos, conexión con JavaScript) |
 
 ---
 
 ## Instrucciones
 
-1. Se realiza en Canvas durante la clase
+1. Se realiza en Blackboard durante la clase
 2. Tienes 15 minutos
 3. Individual y sin materiales de apoyo
 

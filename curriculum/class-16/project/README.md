@@ -2,7 +2,7 @@
 
 **Gestor de Plantillas para WhatsApp**
 
-Este proyecto consolida todo lo aprendido durante el **Módulo 4: Eventos y Persistencia**. El objetivo es construir una aplicación **capaz de crear, guardar y gestionar plantillas reutilizables** de mensajes de WhatsApp, utilizando eventos del DOM, estado reactivo, persistencia con `LocalStorage` y sincronización visual.
+Este proyecto consolida todo lo aprendido durante el **Módulo 4: Estado y Persistencia**. El objetivo es construir una aplicación **capaz de crear, guardar y gestionar plantillas reutilizables** de mensajes de WhatsApp, utilizando modelado de datos, manipulación del DOM, persistencia con `LocalStorage` y una arquitectura modular con módulos ESM.
 
 > 🔥 Cada estudiante presentará su proyecto en una **demostración en vivo de máximo 10 minutos**, donde debe mostrar funcionalidades clave y argumentar técnicamente sus decisiones de implementación.
 
@@ -12,10 +12,10 @@ Este proyecto consolida todo lo aprendido durante el **Módulo 4: Eventos y Pers
 
 | Laboratorio        | Contribución al Proyecto |
 |--------------------|--------------------------|
-| **Lab 13: Event Handling Básico**       | Capturar eventos del DOM para actualizar dinámicamente el contenido de la plantilla. |
-| **Lab 14: App State Management**        | Centralizar el estado actual de la aplicación y reflejarlo en la UI. |
-| **Lab 15: JSON y LocalStorage**         | Guardar y cargar plantillas personalizadas de forma persistente. |
-| **Lab 16: Persistencia + Sincronización** | Sincronizar automáticamente la información visible y los datos almacenados. |
+| **Lab 13: Modelado de Datos y Manipulación de Texto**   | Modelar la plantilla como dato y transformar el texto del mensaje dinámicamente. |
+| **Lab 14: Interacción y Datos Derivados**               | Delegación de eventos, operaciones CRUD y datos derivados (filtro y estadísticas) sobre la colección. |
+| **Lab 15: JSON y LocalStorage**                         | Guardar y cargar plantillas personalizadas de forma persistente. |
+| **Lab 16: Módulos ESM y Cierre**                        | Repartir el código en módulos (`state`/`storage`/`ui`/`app`) y cerrar el proyecto. |
 
 ---
 
@@ -55,19 +55,12 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 
 ## ☑️ Rúbrica de Evaluación
 
-| **Criterio** | **Descripción** | **Puntaje Máximo** |
-|---|---|---|
-| **Historias de Usuario Implementadas** | Se implementaron al menos 2 historias propias relevantes con criterios de aceptación claros y funcionales. | 20 pts |  |  |
-| **Calidad Técnica Implementada** | Uso correcto y efectivo de estado (store), persistencia con LocalStorage, sincronización visual, manejo de eventos y validaciones. | 25 pts |  |  |
-| **Presentación de funcionalidades en vivo** | La app fue demostrada correctamente en máximo 5 minutos, mostrando: creación, edición, restauración y visualización de plantillas. Navegación clara y fluidez. | 25 pts |  |  |
-| **Argumentación Técnica** | El estudiante explicó con claridad 2 decisiones técnicas importantes (estado, persistencia, validación, estructura del código) y respondió preguntas del instructor. | 30 pts |  |  |
-
-**🔸 Puntaje Total: 100 puntos**
+> 📋 La rúbrica oficial (5 criterios × 20 pts = 100 pts) vive en [../lab/rubric.md](../lab/rubric.md). Evalúa: HU implementadas, calidad técnica (estado + persistencia + sincronización), presentación en vivo, argumentación técnica, y desafío (explicación de fragmento de código a solicitud del instructor + deploy).
 
 ## 📣 Presentación en Vivo
 
 - Cada estudiante tendrá **máximo 5 minutos** para:
-    1. Mostrar el editor funcionando (transformación Markdown → HTML, eventos y funcionalidades adicionales).
+    1. Mostrar la app funcionando (crear, editar, eliminar, filtrar, ordenar y persistir plantillas).
     2. Explicar claramente qué retos adicionales eligió y cómo los implementó.
 
 - Adicionalmente, tendrá **máximo 5 minutos** para:
@@ -88,5 +81,5 @@ Como [tipo de usuario], quiero [acción o funcionalidad específica] para [objet
 > ### 💡 Tips para la Presentación
 >
 > - **Sé claro y técnico:** Resume tus decisiones técnicas de manera precisa.
-> - **Usa casos prácticos:** Muestra ejemplos concretos que justifiquen claramente tus decisiones (formateo dinámico, eventos interactivos, manejo asíncrono).
+> - **Usa casos prácticos:** Muestra ejemplos concretos que justifiquen claramente tus decisiones (arquitectura modular con ESM, persistencia con LocalStorage, manejo de eventos y datos derivados).
 > - **Enfócate en el pensamiento crítico:** Fundamenta tus decisiones técnicas con base en los conceptos aprendidos durante el módulo.

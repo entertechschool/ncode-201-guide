@@ -1,74 +1,246 @@
-﻿# Guía del Instructor: Conceptos de Local Storage y UI/UX
+# Guía del Facilitador — Clase 13: Modelado de Datos y Manipulación de Texto
 
-## Resumen
+> Tiempo de lectura: 8 minutos | Primera clase del M4 · Proyecto: Gestor de Plantillas para WhatsApp | Prepárate antes de clase
 
-En esta clase presentaremos el concepto de estado de aplicación persistente con local storage. Este es el único tema nuevo que abarcaremos. Si hay tiempo al final de la clase, también podrías presentar algunos conceptos básicos de diseño UI/UX.
+---
 
-### ¿Qué lugar ocupa este tema?
+## 🔑 Conceptos Clave
 
-**¿Qué hicimos?**:
+- **Estado central** (refuerzo): un único objeto `state = { plantillas: [] }` que es la verdad de la app. Si algo no está ahí, no existe en pantalla. Lo modificas agregando/quitando plantillas y luego redibujas. (La inmutabilidad llega en C14.)
+- **Patrón render** (refuerzo): `render()` limpia el contenedor y redibuja TODO desde el estado. La regla de oro: cambias el estado → llamas `render()`.
+- **Métodos de String** (NUEVO, ancla): un texto es un objeto con métodos. `.trim()`, `.toLowerCase()`, `.startsWith()`, `.includes()`, `.replaceAll()`, `.split()`, `.slice()`. **No mutan**: devuelven un texto nuevo.
+- **Sustitución de variables** (NUEVO): reemplazar `{nombre}` dentro de la plantilla por un valor real con `.replaceAll()` → el "mensaje final".
+- **`Date`** (NUEVO, 2ª herramienta): `new Date()` captura el momento de creación; `.toLocaleDateString("es-PE")` lo vuelve texto legible.
 
-En la clase anterior, los estudiantes aprendieron a utilizar una librería de terceros en su aplicación. Aprendieron a utilizar el elemento `<canvas>` para mostrar sus votos recolectados en un gráfico.
+> ❗ **MAX_TWO_NEW_TOOLS:** las dos nuevas son **String** (familia de métodos) y **Date**. El `class`/`state`/`render` son **refuerzo** de C08 y M3.
 
-**¿En qué nos centraremos en esta clase?**:
+---
 
-En esta clase, los estudiantes aprenderán acerca de los datos persistentes en su aplicación con local storage.
+## 🔗 Analogías Útiles
 
-**¿Qué haremos?**:
+**Métodos de String ⟷ Herramientas de cocina:** un texto crudo es un ingrediente. `.trim()` le quita lo de los bordes, `.toLowerCase()` lo unifica, `.split()` lo corta en pedazos. No cambias el ingrediente original: produces uno preparado.
 
-¡En la siguiente clase los estudiantes terminarán con su aplicación Odd Duck Products y se prepararán para sus proyectos finales!
+**Normalizar ⟷ Etiquetar carpetas:** si cada persona escribe la categoría a su manera (`Ventas`, ` ventas`, `#VENTAS`), el archivo es un caos. Normalizar es decidir UNA forma (`#ventas`) y forzar todo a ella.
 
-## Objetivos de aprendizaje
+**Sustitución de variables ⟷ Carta modelo con espacios en blanco:** la plantilla es la carta con `{nombre}`; `replaceAll` rellena el espacio con el destinatario real. Una plantilla, mil mensajes.
 
-Revisa los objetivos detallados en el [readme de los alumnos](../README.md) de esta clase.
+**Estado → render ⟷ Pizarra que se vuelve a copiar:** no editas la pizarra a mano; cambias tu cuaderno (estado) y vuelves a copiar todo a la pizarra (`render`). Siempre coinciden.
 
-## Preparativos
+---
 
-1. Hojea las lecturas y prepárate en caso de que los alumnos tengan preguntas. 
-1. Revisa las demostraciones de código y asegúrate de entender cómo recrearlas durante la clase. Revisa el archivo markdown respectivo de cada demostración.
-1. Revisa los [diagramas en la pizarra](https://code-fellows.invisionapp.com/freehand/201-Whiteboards-8r4qFnMn2) en la cuenta de Invision de Code Fellow o [aquí](whiteboards/class13WB.png) para la clase.
+## 📚 Contexto Actual
 
-## Descripción de la Clase
-<!-- NOTA PARA EL INSTRUCTOR: Si haces algún cambio en la clase, haz los cambios correspondientes en el LECTURE.md -->
+### Por qué el texto es el verdadero protagonista
 
-Consulta el [ejemplo de clase](LECTURE.md) para los detalles de la clase.
+Casi todo lo que un usuario produce es texto: nombres, mensajes, búsquedas. Antes de guardarlo o mostrarlo, una app lo limpia y normaliza. Los métodos de String son el día a día de cualquier desarrollador — más usados que cualquier algoritmo "elegante". Hoy los alumnos los aplican a un problema real: que sus plantillas se vean limpias.
 
-### Revisión del código
+> **Para contar en clase:** "WhatsApp Business manda millones de mensajes con plantillas: `Hola {1}, tu pedido {2} llegó`. Ustedes están construyendo exactamente ese motor, en pequeño."
 
-- Revisa los requisitos de laboratorio de la clase anterior:
-  - Genera imágenes únicas entre rondas de votos.
-  - Instala y muestra gráficos con ChartJS.
+### Inmutabilidad de los strings (anti-hype honesto)
 
-### Administrando el estado de la aplicación (persistencia de datos) con local storage
+Un error clásico: creer que `texto.trim()` cambia `texto`. No lo hace. Los strings son **inmutables**; los métodos devuelven uno nuevo. Si no guardas el resultado (`texto = texto.trim()`), se pierde. Vale la pena mostrarlo en consola — ahorra horas de confusión.
 
-- **¿Por qué?**
-  - Queremos que el usuario de nuestra aplicación sea capaz de retener los datos entre actualizaciones de página y en diferentes partes de la aplicación.
-- **¿Qué?**
-  - El local storage es un objeto que se almacena entre los archivos de la aplicación (del navegador) en tu computadora.
-- **¿Cómo?**
-  - Demuéstrale a los estudiantes cómo ver su local storage en las herramientas para desarrolladores del navegador.
-  - Utiliza la consola para demostrar cómo establecer, obtener, actualizar y eliminar datos del local storage.
-  - Continúa con la demostración del local storage en la aplicación Goat Vote Tracker.
+**Fuentes:** [MDN: String](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String){:target="_blank"}, [MDN: Date](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Date){:target="_blank"}
 
-### UI/UX
+---
 
-### Preparación para el laboratorio
+## 🎯 Estructura Resumida
 
-- **¿Por qué?**
-  - Les proporciona a los estudiantes las herramientas para que cumplan con su laboratorio.
-- **¿Qué?**
-  - Revisa las instrucciones del Laboratorio 13 en Canvas.
-- **¿Cómo?**
-  - Consulta las notas del laboratorio a continuación para más información.
+| Fase | Tiempo | Foco |
+|---|---|---|
+| Refuerzo | 30 min | `class`, estado central, "cambias estado → render" (de M3) |
+| Debate + Demo | 20 min | Métodos de String: ¿mutan o devuelven nuevo? |
+| Break | 10 min | — |
+| Lab (HU1-HU4) | 100 min | HU1 modelar+estado · HU2 render+Date · HU3 limpiar/normalizar · HU4 generador (usar plantilla) |
+| Cierre | 20 min | Síntesis + preview C14 (editar/eliminar) |
 
-## Notas de Laboratorio
+---
 
-Algunos estudiantes todavía se están poniendo al día con el trabajo de la clase anterior. Este laboratorio es más ligero, requiere que los estudiantes añadan el local storage a la aplicación vote tracker. Una vez que la funcionalidad esté lista, añadir el local storage no debería tomar mucho tiempo. Los estudiantes necesitan ser conscientes de cuándo y dónde están almacenando los datos extraídos. Un error común es olvidar convertir a string (stringify) o utilizar parse con los datos.
+## 🎯 Momentos Clave de la Clase
 
-## ¿Qué cambió desde la clase anterior?
+### Pregunta Detonadora (QUIZ PRE-LAB)
 
-No hubieron grandes cambios desde la clase anterior.
+**Pregunta:** Tres usuarios escriben el mismo hashtag de tres formas (`  Ventas `, `#VENTAS`, `ventas`). ¿Cómo logras que se guarden idénticos?
 
-## ¿Qué errores, problemas o sorpresas han aparecido en el pasado en esta clase?
+No hay opción correcta única — es abierta. Deja que propongan ("comparar uno por uno", "obligar formato"). Conduce hacia: *normalizar con métodos de String*.
 
-No han surgido errores o problemas para este clase.
+**Tip:** No reveles `trim().toLowerCase()`. Que el lab lo descubra.
+
+### Demo Principal — Los strings no mutan (4 min)
+
+**Qué mostrar:** En consola, `let s = "  Hola "`. Ejecuta `s.trim()` → devuelve `"Hola"`. Luego muestra `s` otra vez → **sigue con espacios**. "El método devolvió un texto nuevo; el original no cambió. Por eso guardamos: `s = s.trim()`." Encadena `"  VENTAS ".trim().toLowerCase()` → `"ventas"`.
+
+**Script sugerido:**
+```
+Facilitador: "Voy a limpiar este texto. [s.trim()] ¿Ya quedó limpio s?"
+[Mostrar s todavía con espacios]
+Facilitador: "No. El método NO modifica: devuelve uno nuevo. Hay que guardarlo."
+```
+
+**Plan B (si falla):** Tener una página con los ejemplos en `console.log` listos para abrir.
+
+### Transición al Lab
+
+**Momento crítico:** El salto de "modelar" (HU1-HU2) a "transformar texto" (HU3-HU4) es donde está lo nuevo.
+
+**Script sugerido:**
+```
+Facilitador: "HU1: clase Template + estado central. HU2: render con la fecha (Date).
+HU3: limpiar y normalizar con métodos de String + validar campos vacíos.
+HU4: usar la plantilla en un generador aparte (elegir + nombre + Generar + Copiar) que muestra el mensaje completo.
+Levanten la mano al terminar cada HU."
+```
+
+---
+
+## 🎭 Dinámicas de Clase
+
+### Dinámica 1: "¿Muta o devuelve?" (en HU3)
+Lanza expresiones (`texto.trim()`, `arr.push(x)`, `texto.toLowerCase()`) y que digan si modifican el original o devuelven algo nuevo. Refuerza la inmutabilidad de strings.
+
+### Dinámica 2: "Arma el método" (en HU3)
+Da el objetivo ("que `#VENTAS` y ` ventas ` queden iguales") y que propongan el encadenamiento de métodos antes de ver `normalizarHashtag`.
+
+### Dinámica 3: "Una plantilla, mil mensajes" (en HU4)
+Escribe `Hola {nombre}` en la pizarra y pide nombres del grupo. Reemplaza en vivo mentalmente — eso es `replaceAll`. Conecta con casos reales de mensajería.
+
+---
+
+## 💡 Ejemplos Listos para Usar
+
+### Encadenar métodos (no mutan)
+```javascript
+let hashtag = "  VENTAS ";
+hashtag = hashtag.trim().toLowerCase();   // "ventas" — hay que reasignar
+```
+"Si no guardas el resultado, se pierde. Los strings no se modifican solos."
+
+### Sustituir una variable
+```javascript
+"Hola {nombre}, gracias".replaceAll("{nombre}", "Ana");
+// "Hola Ana, gracias"
+```
+"Una plantilla con `{nombre}` se vuelve un mensaje real."
+
+### Date legible
+```javascript
+new Date().toLocaleDateString("es-PE");   // "29/6/2026"
+```
+
+---
+
+## ⚠️ Errores Comunes
+
+| Síntoma | Qué está pasando | Qué hacer |
+|---|---|---|
+| `texto.trim()` "no hace nada" | No reasignaron el resultado | `texto = texto.trim()` — los strings no mutan |
+| El hashtag se guarda con espacios/mayúsculas | Falta `.trim().toLowerCase()` en `normalizarHashtag` | Revisar el encadenamiento |
+| El `#` se duplica o falta | No revisan con `startsWith("#")` | Usar el ternario `startsWith("#") ? ... : "#" + ...` |
+| `{nombre}` aparece literal en pantalla | No llamaron `replaceAll` (o usaron `replace`, solo 1 vez) | Usar `replaceAll("{nombre}", valor)` |
+| La fecha sale como objeto raro o `Invalid Date` | Usaron el objeto `Date` sin formatear | `.toLocaleDateString("es-PE")` |
+| Se agregan plantillas vacías | Falta la validación de `length === 0` | Validar `titulo`/`mensaje` antes de agregar |
+| La lista no se actualiza | No llaman `render()` tras cambiar el estado | Recordar: cambias estado → `render()` |
+| `state is not defined` | Orden de los `<script>` o falta el archivo | `Template.js` antes de `app.js` |
+
+---
+
+## ✅ Señales de Comprensión
+
+### El estudiante ENTIENDE cuando:
+- Explica que `trim()` devuelve un texto nuevo y no muta el original.
+- Encadena métodos de String con intención (limpiar → unificar → asegurar `#`).
+- Usa `replaceAll` para convertir `{nombre}` en un valor real.
+- Sabe que tras cambiar el estado debe llamar `render()`.
+
+### El estudiante NECESITA AYUDA cuando:
+- Cree que `texto.trim()` modifica `texto`.
+- Usa `replace` esperando que cambie todas las apariciones.
+- Edita el DOM a mano en vez de cambiar el estado y re-renderizar.
+- Guarda plantillas vacías o con espacios sin notarlo.
+
+---
+
+## 🎯 Checkpoints de Validación
+
+| Tiempo | Checkpoint | Cómo validar |
+|---|---|---|
+| ~30' | HU1 | En consola, `agregarPlantilla(...)` un par de veces hace crecer `state.plantillas`; cada item tiene `titulo`, `mensaje`, `hashtag`, `fecha`. |
+| ~60' | HU2 | Al enviar el formulario, la plantilla aparece sola en la lista, con la **fecha de hoy** legible; agregar otra no borra la anterior. |
+| ~90' | HU3 | `  Ventas ` se guarda como `#ventas`; con el mensaje vacío no deja agregar. |
+| ~110' | HU4 | En el generador "Usar plantilla": elige la plantilla, escribe `Ana`, **Generar** muestra `Hola Ana...` completo y **Copiar** lo lleva al portapapeles; los hashtags se ven como etiquetas. |
+
+---
+
+## 🧑‍🏫 Tips de Facilitación
+
+### Si el grupo está callado:
+- Muestra el antes/después de `s.trim()` en consola y que voten si `s` cambió.
+
+### Si alguien ya domina los métodos de String:
+- Pídele que explique por qué los strings son inmutables, o que implemente un logro extra (más variables, contador de caracteres).
+
+### Si la mayoría termina antes:
+- Logros adicionales: contador de caracteres, recortar mensajes largos con `.slice()`, soportar `{producto}`.
+
+### Si la mayoría se atrasa:
+- Prioriza HU1-HU3. HU4 (el generador) puede quedar como post-clase si el tiempo aprieta.
+
+### Si hay preguntas fuera de alcance (persistencia):
+> "Guardar al recargar es persistencia — eso es C15, con `localStorage`. Hoy todo vive en memoria, a propósito."
+
+---
+
+## 🔀 Diferenciación
+
+### Para estudiantes avanzados:
+- Soportar varias variables encadenando `.replaceAll()`.
+- Pregunta de extensión: "¿Por qué `replaceAll` y no `replace`?"
+
+### Para estudiantes con dificultades:
+- Pair programming.
+- Que primero hagan funcionar `normalizarHashtag` solo en consola antes de conectarlo al formulario.
+
+---
+
+## ❓ Preguntas Frecuentes
+
+### P: ¿Por qué `replaceAll` y no `replace`?
+**R:** `replace` solo cambia la **primera** aparición. Si la plantilla usa `{nombre}` dos veces, `replace` deja una sin reemplazar. `replaceAll` cambia todas.
+
+### P: ¿Los métodos de String modifican mi variable?
+**R:** No. Los strings son inmutables; cada método devuelve uno nuevo. Hay que reasignar: `s = s.trim()`.
+
+### P: ¿Por qué guardamos `new Date()` y no la fecha como texto?
+**R:** Guardar el objeto `Date` deja abierta la posibilidad de formatearlo distinto luego (hora, año, etc.). Formatear es decisión de presentación, va en `render`.
+
+### P: ¿Y si quiero que las plantillas se guarden al recargar?
+**R:** Eso es persistencia (`localStorage`), tema de C15. Hoy todo vive en memoria.
+
+---
+
+## 🔗 Conexiones del Curriculum
+
+### Construye sobre:
+
+| Clase | Concepto | Cómo se conecta |
+|---|---|---|
+| C08 (M2) | `class`, `constructor`, `this` | Se reusa para modelar `Template` |
+| C09-C12 (M3) | DOM, `createElement`, eventos, "estado que crece" | Se reusan para `render` y el formulario |
+
+### Conexión con C14
+
+Al cerrar:
+
+> "Hoy su app crea, limpia y muestra plantillas. Pero solo crece: no pueden editar ni borrar una. La próxima clase su estado va a **cambiar y menguar** — editar y eliminar plantillas. Lo que aprendieron hoy de 'cambias el estado → render' es exactamente lo que van a reusar."
+
+**Pre-work implícito:** Que piensen "si quisiera borrar una plantilla, ¿qué tendría que pasarle al array `state.plantillas`?"
+
+---
+
+## 🪞 Reflexión Post-Clase
+
+### Preguntas para el facilitador:
+- ¿Quedó claro que los strings no mutan? Si no, refuérzalo al inicio de C14.
+- ¿Confundieron `replace` con `replaceAll`? Marca para repaso.
+- ¿Entendieron "cambias estado → render" como regla, no como receta memorizada?
+- ¿Alguien preguntó por persistencia? Está listo para entender C15 con profundidad.
